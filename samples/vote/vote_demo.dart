@@ -1,5 +1,6 @@
 #import('dart:html');
-#import('../../src/_dartlib.dart');
+#import('../../lib/core.dart', prefix:'core');
+#import('../../lib/experimental.dart');
 #source('VoterMap.dart');
 
 main(){
@@ -36,7 +37,7 @@ class VoteDemo{
   }
 
   void _canvas_mouseMove(MouseEvent e){
-    _voterMap.mouse = new Coordinate(e.offsetX, e.offsetY);
+    _voterMap.mouse = new core.Coordinate(e.offsetX, e.offsetY);
   }
 
   void _canvas_mouseOut(MouseEvent e){
