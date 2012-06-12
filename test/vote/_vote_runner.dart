@@ -6,6 +6,7 @@
 void runVoteTests() {
   group('vote -- ', (){
     test('random vote test', randomVoteTest);
+    test('Plurality Election Hates Double Votes', testPluralityElectionHatesDoubleVotes);
   });
 }
 
@@ -27,4 +28,24 @@ void randomVoteTest(){
 
   print(election.voters);
   print(election.ballots);
+}
+
+void testPluralityElectionHatesDoubleVotes(){
+  var c1 = "candidate 1";
+
+  var voter = "Bad Voter";
+  var voters = [voter, voter];
+
+
+  var ballots = new List.from(voters.map((v) => new PluralityBallot(v, c1)));
+
+  bool exception = false;
+  try {
+    var election = new PluralityElection(ballots);
+  }
+  catch(final e) {
+    exception = true;
+  }
+  expect(exception).isTrue();
+
 }

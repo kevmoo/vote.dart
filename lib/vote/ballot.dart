@@ -1,4 +1,4 @@
-class Ballot<TVoter extends Hashable, TCandidate extends Hashable>
+class Ballot<TVoter extends Player, TCandidate extends Player>
   implements Hashable {
   final TVoter voter;
   final TCandidate choice;
