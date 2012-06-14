@@ -1,5 +1,4 @@
 class CollectionUtil {
-  // TODO: needs test
   static bool allUnique(List items) {
     assert(items != null);
     for(int i = 0; i < items.length; i++) {
@@ -10,5 +9,16 @@ class CollectionUtil {
       }
     }
     return true;
+  }
+
+  static Object aggregate(Iterable source, Object seed, Func2 func) {
+    assert(source != null);
+    assert(func != null);
+
+    for (final Object local in source) {
+      seed = func(seed, local);
+    }
+
+    return seed;
   }
 }
