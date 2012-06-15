@@ -2,6 +2,7 @@
 
 #import('core.dart');
 
+#source('vote/election_place.dart');
 #source('vote/player.dart');
 #source('vote/election.dart');
 #source('vote/ballot.dart');
