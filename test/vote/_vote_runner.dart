@@ -34,11 +34,11 @@ void testSingleVoteSingleWinner(){
   var ballots = new List.from(voters.map((v) => new PluralityBallot(v, c1)));
 
   var election = new PluralityElection(ballots);
-  expect(election.singleWinner).equals(c1);
-  expect(election.places.length).equals(1);
+  expect(election.singleWinner, equals(c1));
+  expect(election.places.length, equals(1));
   var firstPlace = election.places[0];
-  expect(firstPlace.length).equals(1);
-  expect(firstPlace[0]).equals(c1);
+  expect(firstPlace.length, equals(1));
+  expect(firstPlace[0], equals(c1));
 }
 
 void testTiedforFirst() {
@@ -70,17 +70,17 @@ void testTiedforFirst() {
   ballots.addAll(voters.map((v) => new PluralityBallot(v, c3)));
 
   var election = new PluralityElection(ballots);
-  expect(election.singleWinner).isNull();
-  expect(election.places.length).equals(2);
+  expect(election.singleWinner, isNull);
+  expect(election.places.length, equals(2));
 
   var firstPlace = election.places[0];
-  expect(firstPlace.place).equals(1);
-  expect(firstPlace.length).equals(2);
+  expect(firstPlace.place, equals(1));
+  expect(firstPlace.length, equals(2));
 
   var thirdPlace = election.places[1];
-  expect(thirdPlace.place).equals(3);
-  expect(thirdPlace.length).equals(1);
-  expect(thirdPlace[0]).equals(c3);
+  expect(thirdPlace.place, equals(3));
+  expect(thirdPlace.length, equals(1));
+  expect(thirdPlace[0], equals(c3));
 }
 
 void testPluralityElectionHatesDoubleVotes(){
@@ -93,12 +93,6 @@ void testPluralityElectionHatesDoubleVotes(){
   var ballots = new List.from(voters.map((v) => new PluralityBallot(v, c1)));
 
   bool exception = false;
-  try {
-    var election = new PluralityElection(ballots);
-  }
-  catch(final e) {
-    exception = true;
-  }
-  expect(exception).isTrue();
+  expect(() { new PluralityElection(ballots); }, throws);
 
 }
