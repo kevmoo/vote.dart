@@ -165,7 +165,7 @@ class HtmlEnhancedConfiguration extends Configuration {
                 <div ${_isIE ? "style='display:inline-block' ": ""}>
                     ${test_.currentGroup}</div>
                 <div ${_isIE ? "style='display:inline-block' ": ""}>
-                    (${groupTestPassedCount}/${groupTotalTestCount})</div>
+                    &nbsp;(${groupTestPassedCount}/${groupTotalTestCount})</div>
               </div>
             </div>"""));
 
@@ -255,6 +255,7 @@ class HtmlEnhancedConfiguration extends Configuration {
     color: WhiteSmoke;
     font-weight: bold;
     padding: 6px;
+    cursor: pointer;
 
     /* Provide some visual separation between groups for IE */
     ${_isIE ? "border-bottom:solid black 1px;": ""}

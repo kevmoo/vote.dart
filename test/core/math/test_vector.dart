@@ -1,6 +1,6 @@
 class TestVector {
   static void run(){
-    group('Vector -- ', (){
+    group('Vector', (){
       test('should be sum with other Vector', (){
         Vector v = new Vector(1,1) + new Vector(2,1);
         Expect.equals(3, v.x);
@@ -44,8 +44,8 @@ class TestVector {
 
       test('should have valid normal', (){
         var n = new Vector(4, 4);
-        Expect.approxEquals(4 * Math.SQRT2, n.length);
-        Expect.approxEquals(1, n.normal.length);
+        expect(n.length, closeTo(4 * Math.SQRT2, 0.001));
+        expect(n.normal.length, closeTo(1, 0.001));
       });
     });
   }
