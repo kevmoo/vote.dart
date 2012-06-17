@@ -8,3 +8,4 @@
 #source('vote/ballot.dart');
 #source('vote/plurality_ballot.dart');
 #source('vote/plurality_election.dart');
+#source('vote/plurality_election_place.dart');

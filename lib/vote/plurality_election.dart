@@ -1,9 +1,12 @@
 class PluralityElection<TVoter extends Player, TCandidate extends Player>
   implements Election<TVoter, TCandidate> {
   final Grouping<TCandidate, PluralityBallot<TVoter, TCandidate>> _ballots;
-  final List<ElectionPlace<TCandidate>> _places;
+  final ReadOnlyCollection<PluralityElectionPlace<TCandidate>> places;
 
-  PluralityElection._internal(this._ballots, this._places);
+  PluralityElection._internal(
+    this._ballots,
+    Iterable<PluralityElectionPlace<TCandidate>> sourcePlaces) :
+      places = new ReadOnlyCollection(sourcePlaces);
 
   factory PluralityElection(
     Collection<PluralityBallot<TVoter, TCandidate>> ballots) {
@@ -43,9 +46,9 @@ class PluralityElection<TVoter extends Player, TCandidate extends Player>
     ballotCounts.sort((a,b) => b.compareTo(a));
 
     int place = 1;
-    var places = new List<ElectionPlace<TCandidate>>();
+    var places = new List<PluralityElectionPlace<TCandidate>>();
     for (final int count in ballotCounts) {
-      var p = new ElectionPlace(place, voteCounts[count]);
+      var p = new PluralityElectionPlace(place, voteCounts[count], count);
       places.add(p);
       place += p.length;
     }
@@ -66,6 +69,4 @@ class PluralityElection<TVoter extends Player, TCandidate extends Player>
       return places[0][0];
     }
   }
-
-  List<ElectionPlace<TCandidate>> get places() => _places;
 }
