@@ -1,5 +1,5 @@
 class RankedBallot<TVoter extends Player, TCandidate extends Player>
-  extends Ballot {
+  extends PluralityBallot<TVoter, TCandidate> {
   final ReadOnlyCollection<TCandidate> rank;
 
   RankedBallot._internal(TVoter voter, ReadOnlyCollection<TCandidate> items):

@@ -1,6 +1,6 @@
 class PluralityBallot<TVoter extends Player, TCandidate extends Player>
   extends Ballot {
+  final TCandidate choice;
 
-  PluralityBallot(TVoter voter, TCandidate choice):super(voter, choice);
-
+  PluralityBallot(TVoter voter, this.choice):super(voter);
 }
