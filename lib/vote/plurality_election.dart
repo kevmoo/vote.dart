@@ -69,5 +69,8 @@ class PluralityElection<TVoter extends Player, TCandidate extends Player>
     if(places.length > 0 && places[0].length == 1) {
       return places[0][0];
     }
+    else {
+      return null;
+    }
   }
 }
