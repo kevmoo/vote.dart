@@ -7,20 +7,12 @@ class RankedBallot<TVoter extends Player, TCandidate extends Player>
     rank = items;
 
   factory RankedBallot(TVoter voter, Iterable<TCandidate> rank) {
-    if(voter == null) {
-      throw const IllegalArgumentException('voter');
-    }
+    requireArgumentNotNull(voter, 'voter');
+    requireArgumentNotNull(rank, 'rank');
 
-    if(rank == null) {
-      throw const IllegalArgumentException('rank');
-    }
     var items = new ReadOnlyCollection(rank);
-    if(items.length == 0) {
-      throw const IllegalArgumentException('rank');
-    }
-    if(!CollectionUtil.allUnique(items)) {
-      throw const IllegalArgumentException('rank');
-    }
+    requireArgument(items.length > 0, 'rank');
+    requireArgument(CollectionUtil.allUnique(items), 'rank');
 
     return new RankedBallot._internal(voter, items);
   }

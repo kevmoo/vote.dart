@@ -13,9 +13,9 @@ class PluralityElection<TVoter extends Player, TCandidate extends Player>
 
     // Check voter uniqueness
     List<Player> voterList = new List.from(ballots.map((pb) => pb.voter));
-    if(!CollectionUtil.allUnique(voterList)) {
-      throw "Only one ballot per voter is allowed";
-    }
+    requireArgument(CollectionUtil.allUnique(voterList),
+      "Only one ballot per voter is allowed");
+
 
     var map = new HashSet<PluralityBallot<TVoter, TCandidate>>();
     map.addAll(ballots);
@@ -23,7 +23,8 @@ class PluralityElection<TVoter extends Player, TCandidate extends Player>
     Func1<PluralityBallot<TVoter, TCandidate>, TCandidate> getKeyFunc =
         (pb) => pb.choice;
 
-    var group = new Grouping<TCandidate, PluralityBallot<TVoter, TCandidate>>(ballots, getKeyFunc);
+    var group = new Grouping<TCandidate,
+        PluralityBallot<TVoter, TCandidate>>(ballots, getKeyFunc);
 
     //
     // create a hashmap of candidates keyed on their vote count
