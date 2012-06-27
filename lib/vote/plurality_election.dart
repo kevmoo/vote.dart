@@ -16,7 +16,6 @@ class PluralityElection<TVoter extends Player, TCandidate extends Player>
     requireArgument(CollectionUtil.allUnique(voterList),
       "Only one ballot per voter is allowed");
 
-
     var map = new HashSet<PluralityBallot<TVoter, TCandidate>>();
     map.addAll(ballots);
 

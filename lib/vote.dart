@@ -10,3 +10,5 @@
 #source('vote/plurality_election.dart');
 #source('vote/plurality_election_place.dart');
 #source('vote/ranked_ballot.dart');
+#source('vote/condorcet_election.dart');
+#source('vote/condorcet_pair.dart');
