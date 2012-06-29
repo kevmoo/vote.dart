@@ -16,4 +16,6 @@ class RankedBallot<TVoter extends Player, TCandidate extends Player>
 
     return new RankedBallot._internal(voter, items);
   }
+
+  String toString() => "[RankedBallot for '$voter', ranked ${rank.length} candidates]";
 }
