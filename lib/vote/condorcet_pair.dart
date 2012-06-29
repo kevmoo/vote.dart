@@ -53,6 +53,21 @@ class CondorcetPair<TVoter extends Player, TCandidate extends Player>
     }
 
   }
+  
+  TCandidate get winner() {
+    if(firstOverSecond > secondOverFirst) {
+      return Item1;
+    }
+    else if(secondOverFirst > firstOverSecond) {
+      return Item2;
+    }
+    else {
+      assert(isTie);
+      return null;
+    }
+  }
 
+  bool get isTie() => firstOverSecond == secondOverFirst;
+  
   int hashCode() => Util.getHashCode([Item1, Item2]);
 }
