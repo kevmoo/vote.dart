@@ -9,7 +9,7 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
     requireArgument(CollectionUtil.allUnique(voterList),
       "Only one ballot per voter is allowed");
 
-    var hashMap = new HashMap<CondorcetPair<TCandidate>, List<RankedBallot<TVoter, TCandidate>>>();
+    var hashMap = new HashMap<CondorcetPair<TVoter, TCandidate>, List<RankedBallot<TVoter, TCandidate>>>();
 
     for(final ballot in ballots) {
       for (var i = 0; i < ballot.rank.length; i++) {

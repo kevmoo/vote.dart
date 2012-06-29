@@ -1,14 +1,20 @@
-class CondorcetPair<TCandidate extends Player>
+class CondorcetPair<TVoter extends Player, TCandidate extends Player>
   extends Tuple<TCandidate, TCandidate>
   implements Hashable {
 
-  CondorcetPair._internal(TCandidate can1, TCandidate can2) :
+  final ReadOnlyCollection<RankedBallot<TVoter, TCandidate>> ballots;
+  final int firstOverSecond;
+  final int secondOverFirst;
+
+  CondorcetPair._internal(TCandidate can1, TCandidate can2,
+    this.ballots, this.firstOverSecond, this.secondOverFirst) :
     super(can1, can2);
 
-  factory CondorcetPair(TCandidate can1, TCandidate can2) {
+  factory CondorcetPair(TCandidate can1, TCandidate can2,
+    [Collection<RankedBallot<TVoter, TCandidate>> bals = null]) {
     requireArgumentNotNull(can1, 'can1');
     requireArgumentNotNull(can2, 'can2');
-    requireArgument(can1 != can2, 'can1 and can2 cannot be null');
+    requireArgument(can1 != can2, 'can1 and can2 must be different');
 
     if(can1.compareTo(can2) > 0) {
       var temp = can2;
@@ -16,7 +22,36 @@ class CondorcetPair<TCandidate extends Player>
       can1 = temp;
     }
 
-    return new CondorcetPair._internal(can1, can2);
+    if(bals == null) {
+      return new CondorcetPair._internal(can1, can2, null, 0, 0);
+    }
+    else {
+      var roBallots = new ReadOnlyCollection<RankedBallot<TVoter, TCandidate>>(bals);
+
+      requireArgument(CollectionUtil.allUnique(roBallots),
+        "Only one ballot per voter is allowed");
+
+      int fos = 0;
+      int sof = 0;
+      roBallots.forEach((b) {
+        final firstIndex = b.rank.indexOf(can1);
+        requireArgument(firstIndex >= 0);
+
+        final secondIndex = b.rank.indexOf(can2);
+        requireArgument(secondIndex >= 0);
+
+        assert(firstIndex != secondIndex);
+        if(firstIndex < secondIndex) {
+          fos++;
+        }
+        else {
+          sof++;
+        }
+      });
+
+      return new CondorcetPair._internal(can1, can2, roBallots, fos, sof);
+    }
+
   }
 
   int hashCode() => Util.getHashCode([Item1, Item2]);

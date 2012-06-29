@@ -2,6 +2,8 @@
 
 #import('../../../dartlib/vendor/unittest/unittest.dart');
 #import('../../lib/vote.dart');
+#import('../../../dartlib/lib/test.dart');
+
 #source('test_plurality.dart');
 #source('test_ranked_ballot.dart');
 #source('test_condorcet.dart');
