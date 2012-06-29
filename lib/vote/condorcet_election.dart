@@ -1,6 +1,10 @@
 class CondorcetElection<TVoter extends Player, TCandidate extends Player>
   implements Election<TVoter, TCandidate> {
 
+  final HashSet<CondorcetPair<TVoter, TCandidate>> _pairs;
+
+  CondorcetElection._internal(this._pairs);
+
   factory CondorcetElection(
     Collection<RankedBallot<TVoter, TCandidate>> ballots) {
 
@@ -21,6 +25,18 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
         }
       }
     }
+
+    var hashSet = new HashSet<CondorcetPair<TVoter, TCandidate>>();
+    hashMap.forEach((k,v) {
+      var c = new CondorcetPair(k.Item1, k.Item2, v);
+      hashSet.add(c);
+    });
+
+    //
+    // And now we find the smith set :-)
+    //
+
+    return new CondorcetElection._internal(hashSet);
   }
 
   Iterable<TCandidate> get candidates() {
