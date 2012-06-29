@@ -86,8 +86,8 @@ class TestCondorcetElection {
       ballots.add(new RankedBallot("Voter ${voter++}", [canC, canCC, canVan]));
     }
 
-    // 60 v, c, cc
-    for(var i=0;i<60;i++) {
+    // 40 v, c, cc
+    for(var i=0;i<40;i++) {
       ballots.add(new RankedBallot("Voter ${voter++}", [canVan, canC, canCC]));
     }
 
