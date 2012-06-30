@@ -66,7 +66,10 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
         }
       }
 
-      var profile = new CondorcetCandidateProfile._internal(candidate, lostTo, beat, tied);
+      var profile = new CondorcetCandidateProfile._internal(candidate,
+        new ReadOnlyCollection(lostTo),
+        new ReadOnlyCollection(beat),
+        new ReadOnlyCollection(tied));
       candidateProfiles[candidate] = profile;
 
       if(profile.tied.length == 0 && profile.lostTo.length == 0) {
