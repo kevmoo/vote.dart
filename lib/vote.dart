@@ -12,3 +12,4 @@
 #source('vote/ranked_ballot.dart');
 #source('vote/condorcet_election.dart');
 #source('vote/condorcet_pair.dart');
+#source('vote/condorcet_candidate_profile.dart');
