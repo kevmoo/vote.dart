@@ -56,13 +56,9 @@ class PluralityElection<TVoter extends Player, TCandidate extends Player>
     return new PluralityElection._internal(group, places);
   }
 
-  Iterable<TCandidate> get candidates() {
-    return _ballots.getKeys();
-  }
+  Collection<TCandidate> get candidates() => _ballots.getKeys();
 
-  Iterable<Ballot<TVoter, TCandidate>> get ballots() {
-    return _ballots.getValues();
-  }
+  Collection<Ballot<TVoter, TCandidate>> get ballots() => _ballots.getValues();
 
   TCandidate get singleWinner() {
     if(places.length > 0 && places[0].length == 1) {

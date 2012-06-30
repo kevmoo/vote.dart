@@ -15,7 +15,8 @@ class TestCondorcetElection {
 
     expect(ce, isNotNull);
     expect(ce.singleWinner, equals(c));
-    expect(ce.candidates, someElement(equals(c)));
+    expect(ce.candidates, unorderedEquals([c]));
+    expect(ce.ballots, unorderedEquals([b]));
   }
 
   static void _sample2() {
@@ -46,8 +47,7 @@ class TestCondorcetElection {
 
     expect(ce, isNotNull);
     expect(ce.singleWinner, equals(canC));
-    expect(ce.candidates, someElement(equals(canC)));
-    expect(ce.candidates, someElement(equals(canCC)));
-    expect(ce.candidates, someElement(equals(canVan)));
+    expect(ce.candidates, unorderedEquals([canC, canCC, canVan]));
+    expect(ce.ballots, unorderedEquals(ballots));
   }
 }

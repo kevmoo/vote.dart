@@ -3,12 +3,16 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
 
   final HashSet<CondorcetPair<TVoter, TCandidate>> _pairs;
   final HashMap<TCandidate, CondorcetCandidateProfile<TCandidate>> _profiles;
+  final ReadOnlyCollection<RankedBallot<TVoter, TCandidate>> ballots;
   final TCandidate singleWinner;
 
-  CondorcetElection._internal(this._pairs, this._profiles, this.singleWinner);
+  CondorcetElection._internal(this._pairs, this._profiles, this.ballots,
+    this.singleWinner);
 
   factory CondorcetElection(
     Collection<RankedBallot<TVoter, TCandidate>> ballots) {
+
+    var bals = new ReadOnlyCollection<RankedBallot<TVoter, TCandidate>>(ballots);
 
     // Check voter uniqueness
     List<Player> voterList = new List.from(ballots.map((pb) => pb.voter));
@@ -78,14 +82,11 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
       }
     }
 
-    return new CondorcetElection._internal(hashSet, candidateProfiles, singleWinner);
+    return new CondorcetElection._internal(hashSet, candidateProfiles, bals,
+      singleWinner);
   }
 
-  Iterable<TCandidate> get candidates() => _profiles.getKeys();
-
-  Iterable<RankedBallot<TVoter, TCandidate>> get ballots() {
-    throw const NotImplementedException();
-  }
+  Collection<TCandidate> get candidates() => _profiles.getKeys();
 
   ReadOnlyCollection<ElectionPlace<TCandidate>> get places() {
     throw const NotImplementedException();
