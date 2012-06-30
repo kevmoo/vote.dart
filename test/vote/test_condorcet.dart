@@ -62,9 +62,7 @@ class TestCondorcetElection {
 
     expect(ce, isNotNull);
     expect(ce.singleWinner, equals(c));
-
-
-    // 1 place, 1 single winner,
+    expect(ce.candidates, someElement(equals(c)));
   }
 
   static void _sample2() {
@@ -95,5 +93,8 @@ class TestCondorcetElection {
 
     expect(ce, isNotNull);
     expect(ce.singleWinner, equals(canC));
+    expect(ce.candidates, someElement(equals(canC)));
+    expect(ce.candidates, someElement(equals(canCC)));
+    expect(ce.candidates, someElement(equals(canVan)));
   }
 }

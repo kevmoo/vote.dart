@@ -2,9 +2,10 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
   implements Election<TVoter, TCandidate> {
 
   final HashSet<CondorcetPair<TVoter, TCandidate>> _pairs;
+  final HashMap<TCandidate, CondorcetCandidateProfile<TCandidate>> _profiles;
   final TCandidate singleWinner;
 
-  CondorcetElection._internal(this._pairs, this.singleWinner);
+  CondorcetElection._internal(this._pairs, this._profiles, this.singleWinner);
 
   factory CondorcetElection(
     Collection<RankedBallot<TVoter, TCandidate>> ballots) {
@@ -74,12 +75,10 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
       }
     }
 
-    return new CondorcetElection._internal(hashSet, singleWinner);
+    return new CondorcetElection._internal(hashSet, candidateProfiles, singleWinner);
   }
 
-  Iterable<TCandidate> get candidates() {
-    throw const NotImplementedException();
-  }
+  Iterable<TCandidate> get candidates() => _profiles.getKeys();
 
   Iterable<RankedBallot<TVoter, TCandidate>> get ballots() {
     throw const NotImplementedException();
