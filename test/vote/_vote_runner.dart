@@ -7,11 +7,13 @@
 #source('test_plurality.dart');
 #source('test_ranked_ballot.dart');
 #source('test_condorcet.dart');
+#source('test_condorcet_pair.dart');
 
 void runVoteTests() {
   group('vote', (){
     TestPlurality.run();
     TestRankedBallot.run();
     TestCondorcetElection.run();
+    TestCondorcetPair.run();
   });
 }
