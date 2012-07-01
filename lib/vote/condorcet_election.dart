@@ -4,10 +4,10 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
   final HashSet<CondorcetPair<TVoter, TCandidate>> _pairs;
   final HashMap<TCandidate, CondorcetCandidateProfile<TCandidate>> _profiles;
   final ReadOnlyCollection<RankedBallot<TVoter, TCandidate>> ballots;
-  final TCandidate singleWinner;
+  final ReadOnlyCollection<ElectionPlace<TCandidate>> places;
 
   CondorcetElection._internal(this._pairs, this._profiles, this.ballots,
-    this.singleWinner);
+    this.places);
 
   factory CondorcetElection(
     Collection<RankedBallot<TVoter, TCandidate>> ballots) {
@@ -43,7 +43,6 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
     });
 
     var candidateProfiles = new HashMap<TCandidate, CondorcetCandidateProfile<TCandidate>>();
-    TCandidate singleWinner = null;
 
     //
     // And now we find the smith set :-)
@@ -75,20 +74,48 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
         new ReadOnlyCollection(beat),
         new ReadOnlyCollection(tied));
       candidateProfiles[candidate] = profile;
-
-      if(profile.tied.length == 0 && profile.lostTo.length == 0) {
-        assert(singleWinner == null);
-        singleWinner = candidate;
-      }
     }
 
-    return new CondorcetElection._internal(hashSet, candidateProfiles, bals,
-      singleWinner);
+    var leftCandidates = new HashSet<TCandidate>.from(candidateHashSet);
+    var placedCandidates = new HashSet<TCandidate>();
+    var places = new List<ElectionPlace<TCandidate>>();
+
+    // we have candidates left
+    int place = 1;
+    while(leftCandidates.length > 0) {
+      // get all candidates who have not lost to already placed candidates.
+      final thisRound = new HashSet<TCandidate>();
+      for(final testCan in leftCandidates) {
+
+        final lostToExceptPlaced = candidateProfiles[testCan].lostTo
+            .filter((o) => !placedCandidates.contains(o));
+
+        if(lostToExceptPlaced.length == 0) {
+          leftCandidates.remove(testCan);
+          thisRound.add(testCan);
+        }
+      }
+
+      assert(thisRound.length > 0);
+      final thisPlace = new ElectionPlace<TCandidate>(place++, thisRound);
+      places.add(thisPlace);
+
+      placedCandidates.addAll(thisRound);
+    }
+
+    return new CondorcetElection._internal(
+      hashSet, candidateProfiles, bals,
+      new ReadOnlyCollection<ElectionPlace<TCandidate>>(places));
   }
 
   Collection<TCandidate> get candidates() => _profiles.getKeys();
 
-  ReadOnlyCollection<ElectionPlace<TCandidate>> get places() {
-    throw const NotImplementedException();
+  TCandidate get singleWinner() {
+    if(places.length > 0 && places[0].length == 1) {
+      return places[0][0];
+    }
+    else {
+      return null;
+    }
   }
 }

@@ -17,6 +17,10 @@ class TestCondorcetElection {
     expect(ce.singleWinner, equals(c));
     expect(ce.candidates, unorderedEquals([c]));
     expect(ce.ballots, unorderedEquals([b]));
+    expect(ce.places.length, equals(1));
+
+    var first = ce.places[0];
+    expect(first, unorderedEquals([c]));
   }
 
   static void _sample2() {
@@ -49,5 +53,16 @@ class TestCondorcetElection {
     expect(ce.singleWinner, equals(canC));
     expect(ce.candidates, unorderedEquals([canC, canCC, canVan]));
     expect(ce.ballots, unorderedEquals(ballots));
+
+    expect(ce.places.length, equals(3));
+
+    expect(ce.places[0].place, equals(1));
+    expect(ce.places[0], unorderedEquals([canC]));
+
+    expect(ce.places[1].place, equals(2));
+    expect(ce.places[1], unorderedEquals([canCC]));
+
+    expect(ce.places[2].place, equals(3));
+    expect(ce.places[2], unorderedEquals([canVan]));
   }
 }
