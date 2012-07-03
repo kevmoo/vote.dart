@@ -43,14 +43,14 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
     });
 
     var candidateProfiles = new HashMap<TCandidate, CondorcetCandidateProfile<TCandidate>>();
+    var tarjanMap = new HashMap<TCandidate, HashSet<TCandidate>>();
 
-    //
-    // And now we find the smith set :-)
-    //
     for(final candidate in candidateHashSet) {
       var lostTo = new List<TCandidate>();
       var beat = new List<TCandidate>();
       var tied = new List<TCandidate>();
+
+      final tarjanLostTiedSet = new HashSet<TCandidate>();
 
       for(final pair in hashSet) {
         if(pair.Item1 == candidate || pair.Item2 == candidate) {
@@ -58,6 +58,7 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
 
           if(pair.isTie) {
             tied.add(other);
+            tarjanLostTiedSet.add(other);
           }
           else if(pair.winner == candidate) {
             beat.add(other);
@@ -65,6 +66,7 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
           else {
             assert(pair.winner == other);
             lostTo.add(other);
+            tarjanLostTiedSet.add(other);
           }
         }
       }
@@ -74,14 +76,9 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
         new ReadOnlyCollection(beat),
         new ReadOnlyCollection(tied));
       candidateProfiles[candidate] = profile;
-    }
 
-    var tarjanMap = new HashMap<TCandidate, HashSet<TCandidate>>();
-    candidateProfiles.forEach((k,v) {
-      final list = new HashSet<TCandidate>.from(v.lostTo);
-      list.addAll(v.tied);
-      tarjanMap[k] = list;
-    });
+      tarjanMap[candidate] = tarjanLostTiedSet;
+    }
 
     var components = TarjanCycleDetect.getStronglyConnectedComponents(tarjanMap);
 
