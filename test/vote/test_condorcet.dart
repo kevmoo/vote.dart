@@ -3,6 +3,7 @@ class TestCondorcetElection {
     group('CondorcetElection', (){
       test('simple', _sample1);
       test('ice cream', _sample2);
+      test('3-Way Tie For First', _threeWayTieForFirst);
     });
   }
 
@@ -64,5 +65,40 @@ class TestCondorcetElection {
 
     expect(ce.places[2].place, equals(3));
     expect(ce.places[2], unorderedEquals([canVan]));
+  }
+
+  static void _threeWayTieForFirst() {
+    // 1st, 4th, 5th, 7th
+    // 3,   1,   2,   1
+    var cA1 = "A1";
+    var cA2 = "A2";
+    var cA3 = "A3";
+    var cB1 = "B1";
+    var cC1 = "C1";
+    var cC2 = "C2";
+    var cD1 = "D1";
+
+    var voter = 1;
+
+    var ballots = new List<RankedBallot>();
+
+    ballots.add(new RankedBallot("Voter ${voter++}", [cA1, cA2, cA3, cB1, cC1, cC2, cD1]));
+    ballots.add(new RankedBallot("Voter ${voter++}", [cA1, cA2, cA3, cB1, cC2, cC1, cD1]));
+    ballots.add(new RankedBallot("Voter ${voter++}", [cA2, cA3, cA1, cB1, cC1, cC2, cD1]));
+    ballots.add(new RankedBallot("Voter ${voter++}", [cA2, cA3, cA1, cB1, cC2, cC1, cD1]));
+    ballots.add(new RankedBallot("Voter ${voter++}", [cA3, cA1, cA2, cB1, cC1, cC2, cD1]));
+    ballots.add(new RankedBallot("Voter ${voter++}", [cA3, cA1, cA2, cB1, cC2, cC1, cD1]));
+
+
+    var ce = new CondorcetElection(ballots);
+
+  }
+
+  static void _threeWayTieForSecond() {
+    pending();
+  }
+
+  static void _twoWayTie() {
+    pending();
   }
 }

@@ -76,31 +76,21 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
       candidateProfiles[candidate] = profile;
     }
 
-    var leftCandidates = new HashSet<TCandidate>.from(candidateHashSet);
-    var placedCandidates = new HashSet<TCandidate>();
+    var tarjanMap = new HashMap<TCandidate, HashSet<TCandidate>>();
+    candidateProfiles.forEach((k,v) {
+      final list = new HashSet<TCandidate>.from(v.lostTo);
+      list.addAll(v.tied);
+      tarjanMap[k] = list;
+    });
+
+    var components = TarjanCycleDetect.getStronglyConnectedComponents(tarjanMap);
+
     var places = new List<ElectionPlace<TCandidate>>();
-
-    // we have candidates left
-    int place = 1;
-    while(leftCandidates.length > 0) {
-      // get all candidates who have not lost to already placed candidates.
-      final thisRound = new HashSet<TCandidate>();
-      for(final testCan in leftCandidates) {
-
-        final lostToExceptPlaced = candidateProfiles[testCan].lostTo
-            .filter((o) => !placedCandidates.contains(o));
-
-        if(lostToExceptPlaced.length == 0) {
-          leftCandidates.remove(testCan);
-          thisRound.add(testCan);
-        }
-      }
-
-      assert(thisRound.length > 0);
-      final thisPlace = new ElectionPlace<TCandidate>(place++, thisRound);
-      places.add(thisPlace);
-
-      placedCandidates.addAll(thisRound);
+    int placeNumber = 1;
+    for(final round in components) {
+      final place = new ElectionPlace(placeNumber, round);
+      places.add(place);
+      placeNumber += round.length;
     }
 
     return new CondorcetElection._internal(
