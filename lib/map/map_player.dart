@@ -17,4 +17,6 @@ class MapPlayer implements Player {
   int compareTo(MapPlayer other) => _id.compareTo(other._id);
 
   int hashCode() => _id.hashCode();
+
+  String toString() => "MapPlayer at $_location";
 }
