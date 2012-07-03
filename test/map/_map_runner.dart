@@ -8,7 +8,5 @@
 #source('test_map_election.dart');
 
 void runMapTests() {
-  group('simple, obvious map', (){
-    TestMapElection.run();
-  });
+  TestMapElection.run();
 }

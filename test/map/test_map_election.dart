@@ -11,41 +11,43 @@ class TestMapElection {
 
     var ballots = MapElection.createBallots([v1,v2,v3,v4,v5], [c0, c1]);
 
-    test('MapElection.createBallots', (){
-      expect(ballots, isNotNull);
-      expect(ballots.length, equals(5));
+    group('simple, obvious map', () {
+      test('MapElection.createBallots', (){
+        expect(ballots, isNotNull);
+        expect(ballots.length, equals(5));
 
-      for(final b in ballots.getRange(0, 4)) {
-        expect(b.choice, equals(c0));
-        expect(b.rank.length, equals(2));
-        expect(b.rank[0], equals(c0));
-        expect(b.rank[1], equals(c1));
-      }
+        for(final b in ballots.getRange(0, 4)) {
+          expect(b.choice, equals(c0));
+          expect(b.rank.length, equals(2));
+          expect(b.rank[0], equals(c0));
+          expect(b.rank[1], equals(c1));
+        }
 
-      expect(ballots[4].choice, equals(c1));
-      expect(ballots[4].rank.length, equals(2));
-      expect(ballots[4].rank[0], equals(c1));
-      expect(ballots[4].rank[1], equals(c0));
-    });
+        expect(ballots[4].choice, equals(c1));
+        expect(ballots[4].rank.length, equals(2));
+        expect(ballots[4].rank[0], equals(c1));
+        expect(ballots[4].rank[1], equals(c0));
+      });
 
-    test('PluralityElection', (){
-      var pluralityElection = new PluralityElection(ballots);
-      expect(pluralityElection.singleWinner, equals(c0));
-      expect(pluralityElection.places.length, equals(2));
-      expect(pluralityElection.places[0].length, equals(1));
-      expect(pluralityElection.places[0][0], equals(c0));
-      expect(pluralityElection.places[1].length, equals(1));
-      expect(pluralityElection.places[1][0], equals(c1));
-    });
+      test('PluralityElection', (){
+        var pluralityElection = new PluralityElection(ballots);
+        expect(pluralityElection.singleWinner, equals(c0));
+        expect(pluralityElection.places.length, equals(2));
+        expect(pluralityElection.places[0].length, equals(1));
+        expect(pluralityElection.places[0][0], equals(c0));
+        expect(pluralityElection.places[1].length, equals(1));
+        expect(pluralityElection.places[1][0], equals(c1));
+      });
 
-    test('CondorcetElection', () {
-      var condorcetElection = new CondorcetElection(ballots);
-      expect(condorcetElection.singleWinner, equals(c0));
-      expect(condorcetElection.places.length, equals(2));
-      expect(condorcetElection.places[0].length, equals(1));
-      expect(condorcetElection.places[0][0], equals(c0));
-      expect(condorcetElection.places[1].length, equals(1));
-      expect(condorcetElection.places[1][0], equals(c1));
+      test('CondorcetElection', () {
+        var condorcetElection = new CondorcetElection(ballots);
+        expect(condorcetElection.singleWinner, equals(c0));
+        expect(condorcetElection.places.length, equals(2));
+        expect(condorcetElection.places[0].length, equals(1));
+        expect(condorcetElection.places[0][0], equals(c0));
+        expect(condorcetElection.places[1].length, equals(1));
+        expect(condorcetElection.places[1][0], equals(c1));
+      });
     });
   }
 }
