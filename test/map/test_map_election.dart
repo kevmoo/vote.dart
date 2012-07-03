@@ -37,5 +37,15 @@ class TestMapElection {
       expect(pluralityElection.places[1].length, equals(1));
       expect(pluralityElection.places[1][0], equals(c1));
     });
+
+    test('CondorcetElection', () {
+      var condorcetElection = new CondorcetElection(ballots);
+      expect(condorcetElection.singleWinner, equals(c0));
+      expect(condorcetElection.places.length, equals(2));
+      expect(condorcetElection.places[0].length, equals(1));
+      expect(condorcetElection.places[0][0], equals(c0));
+      expect(condorcetElection.places[1].length, equals(1));
+      expect(condorcetElection.places[1][0], equals(c1));
+    });
   }
 }
