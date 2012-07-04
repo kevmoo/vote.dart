@@ -1,7 +1,7 @@
 #import('dart:html');
 #import('../../../dartlib/lib/core.dart', prefix:'core');
 #import('../../../dartlib/lib/retained.dart');
-#source('VoterMap.dart');
+#import('../../lib/retained.dart');
 
 main(){
   CanvasElement canvas = document.query("#content");

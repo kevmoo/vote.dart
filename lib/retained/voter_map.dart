@@ -1,8 +1,11 @@
 class VoterMap extends PElement {
   static final num _count = 10;
   core.Coordinate _mouse;
+  final HashSet<MapPlayer> _points;
 
-  VoterMap(int w, int h):super(w, h);
+  VoterMap(int w, int h) :
+    _points = new HashSet<MapPlayer>(),
+    super(w, h);
 
   core.Coordinate get mouse(){
     return _mouse;
