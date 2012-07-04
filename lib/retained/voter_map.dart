@@ -4,10 +4,12 @@ class VoterMap extends PElement {
   num _averageCloseness;
   core.Rect _bounds;
 
-  num _txX, _txY, _txScale, _radius;
+  num _radius;
+  final core.AffineTransform _tx;
 
   VoterMap(int w, int h) :
     _players = new HashSet<MapPlayer>(),
+    _tx = new core.AffineTransform(),
     super(w, h);
 
   core.Coordinate get mouse(){
@@ -30,7 +32,7 @@ class VoterMap extends PElement {
     _bounds = vals.Item2;
     assert(_bounds.isValid);
 
-    _txX = _txY = _txScale = _radius = null;
+    _radius = null;
     invalidateDraw();
   }
 
@@ -40,37 +42,37 @@ class VoterMap extends PElement {
     ctx.fillRect(0, 0, width, height);
 
     // calculate important bits if we need to
-    if(_txX == null) {
-      [_txX, _txY, _txScale, _radius].every((v) => !core.isValidNumber(v));
+    if(_radius == null) {
 
       // dimensions of the points factoring in the radius
       final dataScale = new core.Size(_bounds.width + _averageCloseness,
         _bounds.height + _averageCloseness);
 
+      num scale;
       // now are we bound by width or height?
       if(dataScale.aspectRatio > size.aspectRatio) {
         // bound by width
-        _txScale = width / dataScale.width;
+        scale = width / dataScale.width;
       }
       else {
-        _txScale = height / dataScale.height;
+        scale = height / dataScale.height;
       }
+      _tx.setToScale(scale, scale);
 
       // TODO: center the output, but this is pretty good for now
-      _txX = _bounds.left + _averageCloseness / 2;
-      _txY = _bounds.top + _averageCloseness / 2;
+      _tx.translate(_bounds.left + _averageCloseness / 2,
+        _bounds.top + _averageCloseness / 2);
 
       // radius is used to space items.
       // should be less than half of the average Closeness
       _radius = _averageCloseness * 0.4;
     }
-    assert([_txX, _txY, _txScale, _radius].every(core.isValidNumber));
+    assert(core.isValidNumber(_radius));
 
     // start our transform and draw
     ctx.save();
 
-    ctx.scale(_txScale, _txScale);
-    ctx.translate(_txX, _txY);
+    CanvasUtil.transform(ctx, _tx);
 
     ctx.fillStyle = 'red';
 
@@ -82,14 +84,15 @@ class VoterMap extends PElement {
       ctx.fill();
     }
 
-    ctx.restore();
-
     if(_mouse != null){
       ctx.fillStyle = 'blue';
-      CanvasUtil.centeredCircle(ctx, _mouse.x, _mouse.y, _txScale / 2);
+      var mouseCoord = new core.Coordinate(_mouse.x, _mouse.y);
+      mouseCoord = _tx.createInverse().transformCoordinate(mouseCoord);
+      CanvasUtil.centeredCircle(ctx, mouseCoord.x, mouseCoord.y, _radius);
       ctx.fill();
     }
 
+    ctx.restore();
   }
 
   // For each player
