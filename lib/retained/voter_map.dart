@@ -48,20 +48,27 @@ class VoterMap extends PElement {
       final dataScale = new core.Size(_bounds.width + _averageCloseness,
         _bounds.height + _averageCloseness);
 
-      num scale;
+      num scale, offsetX = 0, offsetY = 0;
       // now are we bound by width or height?
       if(dataScale.aspectRatio > size.aspectRatio) {
         // bound by width
         scale = width / dataScale.width;
+
+        final targetHeight = height / scale;
+        offsetY = (targetHeight - dataScale.height) / 2;
       }
       else {
+        // bound by height
         scale = height / dataScale.height;
+
+        final targetWidth = width / scale;
+        offsetX = (targetWidth - dataScale.width) / 2;
       }
       _tx.setToScale(scale, scale);
 
-      // TODO: center the output, but this is pretty good for now
-      _tx.translate(_bounds.left + _averageCloseness / 2,
-        _bounds.top + _averageCloseness / 2);
+      // Traslate the topLeft
+      _tx.translate(_bounds.left + _averageCloseness / 2 + offsetX,
+        _bounds.top + _averageCloseness / 2 + offsetY);
 
       // radius is used to space items.
       // should be less than half of the average Closeness
