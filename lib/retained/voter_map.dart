@@ -95,7 +95,7 @@ class VoterMap extends PElement {
       ctx.fillStyle = 'blue';
       var mouseCoord = new core.Coordinate(_mouse.x, _mouse.y);
       mouseCoord = _tx.createInverse().transformCoordinate(mouseCoord);
-      CanvasUtil.centeredCircle(ctx, mouseCoord.x, mouseCoord.y, _radius);
+      CanvasUtil.star(ctx, mouseCoord.x, mouseCoord.y, _radius);
       ctx.fill();
     }
 
