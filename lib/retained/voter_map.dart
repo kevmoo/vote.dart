@@ -1,5 +1,5 @@
 class VoterMap extends PElement {
-  final HashSet<MapPlayer> _players;
+  final List<MapPlayer> _players;
   final core.AffineTransform _tx;
 
   num _averageCloseness;
@@ -10,7 +10,7 @@ class VoterMap extends PElement {
   core.Coordinate mouse;
 
   VoterMap(int w, int h) :
-    _players = new HashSet<MapPlayer>(),
+    _players = new List<MapPlayer>(),
     _tx = new core.AffineTransform(),
     super(w, h);
 
