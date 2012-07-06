@@ -26,24 +26,27 @@ class VoteDemo{
   factory VoteDemo(CanvasElement canvas, DivElement pluralityDiv) {
     var voterMap = new VoterMap(canvas.width, canvas.height);
 
+    final span = 20;
+    final spanTweak = span / (span - 1);
+
     // 100 voters from 1,1 to 10,10
     final voters = new List<MapPlayer>();
-    for(var i = 0; i < 10; i++) {
-      for(var j = 0; j < 10; j++) {
-        voters.add(new MapPlayer(new core.Coordinate(i, j)));
+    for(var i = 0; i < span; i++) {
+      for(var j = 0; j < span; j++) {
+        voters.add(new MapPlayer(new core.Coordinate(i * spanTweak, j * spanTweak)));
       }
     }
 
     final candidates = new List<MapPlayer>();
 
     // center
-    candidates.add(new MapPlayer(const core.Coordinate(4.5, 4.5)));
+    candidates.add(new MapPlayer(new core.Coordinate(0.5 * span, 0.5 * span)));
 
     // left at 4
-    candidates.add(new MapPlayer(const core.Coordinate(2.5, 3.5)));
+    candidates.add(new MapPlayer(new core.Coordinate(spanTweak * 6.5, spanTweak * 7.5)));
 
     // spoiler at 7
-    candidates.add(new MapPlayer(const core.Coordinate(7.5, 5.5)));
+    candidates.add(new MapPlayer(new core.Coordinate(spanTweak * 13.5, spanTweak * 10.5)));
 
     var ballots = MapElection.createBallots(voters, candidates);
 
