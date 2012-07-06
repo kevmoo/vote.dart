@@ -1,24 +1,18 @@
 class VoterMap extends PElement {
-  core.Coordinate _mouse;
   final HashSet<MapPlayer> _players;
+  final core.AffineTransform _tx;
+
   num _averageCloseness;
   core.Rect _bounds;
-
   num _radius;
-  final core.AffineTransform _tx;
+
+  core.Action3<CanvasRenderingContext2D, MapPlayer, num> drawer;
+  core.Coordinate mouse;
 
   VoterMap(int w, int h) :
     _players = new HashSet<MapPlayer>(),
     _tx = new core.AffineTransform(),
     super(w, h);
-
-  core.Coordinate get mouse(){
-    return _mouse;
-  }
-
-  void set mouse(core.Coordinate value){
-    _mouse = value;
-  }
 
   Iterable<MapPlayer> get players() => _players;
 
@@ -38,7 +32,7 @@ class VoterMap extends PElement {
 
   void drawOverride(CanvasRenderingContext2D ctx){
     // Draw in a background
-    ctx.fillStyle = '#999999';
+    ctx.fillStyle = '#dddddd';
     ctx.fillRect(0, 0, width, height);
 
     // calculate important bits if we need to
@@ -72,7 +66,7 @@ class VoterMap extends PElement {
 
       // radius is used to space items.
       // should be less than half of the average Closeness
-      _radius = _averageCloseness * 0.4;
+      _radius = _averageCloseness * 0.3;
     }
     assert(core.isValidNumber(_radius));
 
@@ -81,25 +75,33 @@ class VoterMap extends PElement {
 
     CanvasUtil.transform(ctx, _tx);
 
-    ctx.fillStyle = 'red';
 
     for(final player in _players) {
-      final x = player.location.x;
-      final y = player.location.y;
-      CanvasUtil.centeredCircle(ctx, x, y, _radius);
-
-      ctx.fill();
+      _drawPlayer(ctx, player, _radius);
     }
 
-    if(_mouse != null){
-      ctx.fillStyle = 'blue';
-      var mouseCoord = new core.Coordinate(_mouse.x, _mouse.y);
+    if(mouse != null){
+      ctx.fillStyle = 'yellow';
+      var mouseCoord = new core.Coordinate(mouse.x, mouse.y);
       mouseCoord = _tx.createInverse().transformCoordinate(mouseCoord);
-      CanvasUtil.star(ctx, mouseCoord.x, mouseCoord.y, _radius);
+      CanvasUtil.star(ctx, mouseCoord.x, mouseCoord.y, _radius, 6);
       ctx.fill();
     }
 
     ctx.restore();
+  }
+
+  void _drawPlayer(CanvasRenderingContext2D ctx, MapPlayer player, num radius) {
+    if(drawer == null) {
+      ctx.fillStyle = '#aaaaaa';
+      final x = player.location.x;
+      final y = player.location.y;
+      CanvasUtil.centeredCircle(ctx, x, y, radius);
+      ctx.fill();
+    }
+    else {
+      drawer(ctx, player, radius);
+    }
   }
 
   // For each player
