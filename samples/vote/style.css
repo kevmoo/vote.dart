@@ -1,0 +1,27 @@
+table {
+  border-collapse: collapse;
+}
+
+td, th {
+  padding: 5px;
+}
+
+td.vote-count {
+  text-align: right;
+}
+
+tr.place-row-even {
+  background: #ccc;
+} 
+
+tr.place-row-odd {
+  background: #ddd;
+} 
+
+tr.candidate-row-even td.candidate-cell {
+  background: #eee;
+}
+
+tr.candidate-row-odd td.candidate-cell {
+  background: #fff;
+}

@@ -4,10 +4,12 @@
 #import('../../lib/vote.dart');
 #import('../../lib/map.dart');
 #import('../../lib/retained.dart');
+#import('../../lib/html.dart');
 
 main(){
   CanvasElement canvas = document.query("#content");
-  var demo = new VoteDemo(canvas);
+  DivElement pluralityDiv = document.query('#pluralityView');
+  var demo = new VoteDemo(canvas, pluralityDiv);
   demo.requestFrame();
 }
 
@@ -16,29 +18,36 @@ class VoteDemo{
   final Stage _stage;
   final VoterMap _voterMap;
 
-  factory VoteDemo(CanvasElement canvas){
+  final PluralityElection _pluralityElection;
+  final PluralityView _pluralityView;
+
+  factory VoteDemo(CanvasElement canvas, DivElement pluralityDiv) {
     var voterMap = new VoterMap(canvas.width, canvas.height);
 
     //
     // Populate
     //
-    // 11 voters from 0,0 to 10,0
     var voters = new List<MapPlayer>();
-    for(var i = 0; i <= 10; i++) {
-      voters.add(new MapPlayer(new core.Coordinate(i,0)));
+    for(var i = 0; i < 10; i++) {
+      for(var j = 0; j < 10; j++) {
+        voters.add(new MapPlayer(new core.Coordinate(i,j)));
+      }
     }
 
     voterMap.players = voters;
 
-    // center at 5
-    //var canCenter = new MapPlayer(const core.Coordinate(5, 0));
+    // center
+    var canCenter = new MapPlayer(const core.Coordinate(3.5, 5));
 
-    // left at 4
-    //var canLeft = new MapPlayer(const core.Coordinate(4, 0));
+    // left
+    var canLeft = new MapPlayer(const core.Coordinate(5.5, 5));
 
     // spoiler at 7
-    //var canSpoiler = new MapPlayer(const core.Coordinate(7, 0));
+    var canSpoiler = new MapPlayer(const core.Coordinate(4.5, 0));
 
+    var ballots = MapElection.createBallots(voters, [canCenter, canLeft, canSpoiler]);
+
+    var pe = new PluralityElection(ballots);
 
     //
     // Create the stage, etc
@@ -46,10 +55,14 @@ class VoteDemo{
 
     var stage = new Stage(canvas, voterMap);
 
-    return new VoteDemo._internal(canvas, stage, voterMap);
+    var pv = new PluralityView(pluralityDiv);
+    pv.election = pe;
+
+    return new VoteDemo._internal(canvas, stage, voterMap, pv, pe);
   }
 
-  VoteDemo._internal(this._canvas, this._stage, this._voterMap){
+  VoteDemo._internal(this._canvas, this._stage, this._voterMap,
+    this._pluralityView, this._pluralityElection){
     _canvas.on.mouseMove.add(_canvas_mouseMove);
     _canvas.on.mouseOut.add(_canvas_mouseOut);
   }
