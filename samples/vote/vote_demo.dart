@@ -24,6 +24,8 @@ class VoteDemo{
   final PluralityElection _pluralityElection;
   final PluralityView _pluralityView;
 
+  bool _frameRequested = false;
+
   factory VoteDemo(CanvasElement canvas, DivElement pluralityDiv) {
     var voterMap = new VoterMap(canvas.width, canvas.height);
 
@@ -93,20 +95,25 @@ class VoteDemo{
   }
 
   void requestFrame(){
-    window.webkitRequestAnimationFrame(_onFrame);
+    if(!_frameRequested) {
+      _frameRequested = true;
+      window.webkitRequestAnimationFrame(_onFrame);
+    }
   }
 
   bool _onFrame(num highResTime){
     _stage.draw();
-    requestFrame();
+    _frameRequested = false;
   }
 
   void _canvas_mouseMove(MouseEvent e){
     _voterMap.mouse = new core.Coordinate(e.offsetX, e.offsetY);
+    requestFrame();
   }
 
   void _canvas_mouseOut(MouseEvent e){
     _voterMap.mouse = null;
+    requestFrame();
   }
 
   void _drawVoter(CanvasRenderingContext2D ctx, MapPlayer player,
