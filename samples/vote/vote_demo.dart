@@ -63,8 +63,7 @@ class VoteDemo{
 
     final stage = new Stage(canvas, voterMap);
 
-    var pv = new PluralityView(pluralityDiv);
-    pv.election = pe;
+    var pv = new PluralityView(pluralityDiv, election: pe);
 
     return new VoteDemo._internal(canvas, stage, voterMap, pv, pe,
       voters, candidates);

@@ -3,7 +3,8 @@ class PluralityView {
   PluralityElection _election;
   core.Func1<MapPlayer, num> _mapper;
 
-  PluralityView(this._node) {
+  PluralityView(this._node, [PluralityElection election = null]) {
+    _election = election;
     _updateElement();
   }
 
