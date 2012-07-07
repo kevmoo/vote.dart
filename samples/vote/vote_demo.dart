@@ -9,7 +9,8 @@
 main(){
   CanvasElement canvas = document.query("#content");
   DivElement pluralityDiv = document.query('#pluralityView');
-  var demo = new VoteDemo(canvas, pluralityDiv);
+  DivElement distanceDiv = document.query('#distanceView');
+  var demo = new VoteDemo(canvas, pluralityDiv, distanceDiv);
   demo.requestFrame();
 }
 
@@ -23,10 +24,12 @@ class VoteDemo{
 
   final PluralityElection _pluralityElection;
   final PluralityView _pluralityView;
+  final DistanceView _distanceView;
 
   bool _frameRequested = false;
 
-  factory VoteDemo(CanvasElement canvas, DivElement pluralityDiv) {
+  factory VoteDemo(CanvasElement canvas, DivElement pluralityDiv,
+    DivElement distanceDiv) {
     var voterMap = new VoterMap(canvas.width, canvas.height);
 
     final span = 20;
@@ -40,7 +43,7 @@ class VoteDemo{
       }
     }
 
-    print(Clock.now() % 1000);
+    // silly spinning wheels to get a semi-random value out of Math.random
     final blah = Clock.now() % 1000;
     for(int i = 0; i < blah; i++) {
       Math.random();
@@ -65,12 +68,20 @@ class VoteDemo{
 
     var pv = new PluralityView(pluralityDiv, election: pe);
 
-    return new VoteDemo._internal(canvas, stage, voterMap, pv, pe,
+    var dv = new DistanceView(distanceDiv, voters: voters, candidates: candidates);
+
+    return new VoteDemo._internal(canvas, stage, voterMap, pv, dv, pe,
       voters, candidates);
   }
 
-  VoteDemo._internal(this._canvas, this._stage, this._voterMap,
-    this._pluralityView, this._pluralityElection, voters, candidates) :
+  VoteDemo._internal(this._canvas,
+    this._stage,
+    this._voterMap,
+    this._pluralityView,
+    this._distanceView,
+    this._pluralityElection,
+    voters,
+    candidates) :
     this._voters = new HashSet<MapPlayer>.from(voters),
     this._candidates = new HashSet<MapPlayer>.from(candidates),
     this._candidateHues = new HashMap<MapPlayer, num>() {
@@ -84,7 +95,9 @@ class VoteDemo{
       index++;
     });
 
-    _pluralityView.setCandidateColorMap( (c) => _candidateHues[c]);
+    core.Func1<MapPlayer, num> mapper = (c) => _candidateHues[c];
+    _pluralityView.setCandidateColorMap(mapper);
+    _distanceView.setCandidateColorMap(mapper);
 
     var allPlayers = new List<MapPlayer>();
     allPlayers.addAll(_voters);

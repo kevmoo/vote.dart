@@ -1,3 +1,8 @@
+.content-block {
+  float: left;
+  margin: 15px;
+}
+
 table {
   border-collapse: collapse;
 }
