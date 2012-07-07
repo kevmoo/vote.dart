@@ -31,10 +31,6 @@ class VoterMap extends PElement {
   }
 
   void drawOverride(CanvasRenderingContext2D ctx){
-    // Draw in a background
-    ctx.fillStyle = '#dddddd';
-    ctx.fillRect(0, 0, width, height);
-
     // calculate important bits if we need to
     if(_radius == null) {
 
