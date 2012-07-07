@@ -18,5 +18,6 @@ class MapPlayer implements Player {
 
   int hashCode() => _id.hashCode();
 
-  String toString() => "MapPlayer at $_location";
+  String toString() =>
+      "MapPlayer at [${_location.x.toStringAsFixed(1)}, ${_location.y.toStringAsFixed(1)}]";
 }
