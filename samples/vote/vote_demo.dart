@@ -19,6 +19,7 @@ class VoteDemo{
   final VoterMap _voterMap;
   final HashSet<MapPlayer> _voters;
   final HashSet<MapPlayer> _candidates;
+  final HashMap<MapPlayer, core.RgbColor> _candidateColors;
 
   final PluralityElection _pluralityElection;
   final PluralityView _pluralityView;
@@ -68,9 +69,20 @@ class VoteDemo{
   VoteDemo._internal(this._canvas, this._stage, this._voterMap,
     this._pluralityView, this._pluralityElection, voters, candidates) :
     this._voters = new HashSet<MapPlayer>.from(voters),
-    this._candidates = new HashSet<MapPlayer>.from(candidates) {
+    this._candidates = new HashSet<MapPlayer>.from(candidates),
+    this._candidateColors = new HashMap<MapPlayer, core.RgbColor>() {
     _canvas.on.mouseMove.add(_canvas_mouseMove);
     _canvas.on.mouseOut.add(_canvas_mouseOut);
+
+    var index = 0;
+    _candidates.forEach((c) {
+      final spot = 360 * index / _candidates.length;
+      var hsl = new core.HslColor(spot, 0.5, 0.5);
+      _candidateColors[c] = hsl.toRgb();
+      index++;
+    });
+
+    _pluralityView.setCandidateColorMap( (c) => _candidateColors[c]);
 
     var allPlayers = new List<MapPlayer>();
     allPlayers.addAll(_voters);
@@ -100,7 +112,7 @@ class VoteDemo{
   void _drawVoter(CanvasRenderingContext2D ctx, MapPlayer player,
                          num radius) {
     if(_candidates.contains(player)) {
-      ctx.fillStyle = 'green';
+      ctx.fillStyle = _candidateColors[player].toHex();
     }
     else {
       ctx.fillStyle = '#999999';
