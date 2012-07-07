@@ -1,7 +1,7 @@
 class PluralityView {
   final DivElement _node;
   PluralityElection _election;
-  core.Func1<MapPlayer, core.RgbColor> _mapper;
+  core.Func1<MapPlayer, num> _mapper;
 
   PluralityView(this._node) {
     _updateElement();
@@ -14,7 +14,7 @@ class PluralityView {
     _updateElement();
   }
 
-  void setCandidateColorMap(core.Func1<MapPlayer, core.RgbColor> value) {
+  void setCandidateColorMap(core.Func1<MapPlayer, num> value) {
     _mapper = value;
     _updateElement();
   }
@@ -70,12 +70,10 @@ class PluralityView {
           cell = row.insertCell(-1);
           cell.classes.add('candidate-cell');
           if(_mapper != null) {
-            var rgb = _mapper(candidate);
-            if(rgb != null) {
-              var hsl = rgb.toHsl();
-              final newL = 0.5 + hsl.l / 2;
-              final newS = 0.5 * hsl.s;
-              rgb = (new core.HslColor(hsl.h, newS, newL)).toRgb();
+            final hue = _mapper(candidate);
+            if(hue != null) {
+              final hsl = new core.HslColor(hue, 1, 0.75);
+              final rgb = hsl.toRgb();
               cell.style.background = rgb.toHex();
             }
           }

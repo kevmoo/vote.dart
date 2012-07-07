@@ -19,7 +19,7 @@ class VoteDemo{
   final VoterMap _voterMap;
   final HashSet<MapPlayer> _voters;
   final HashSet<MapPlayer> _candidates;
-  final HashMap<MapPlayer, core.RgbColor> _candidateColors;
+  final HashMap<MapPlayer, num> _candidateHues;
 
   final PluralityElection _pluralityElection;
   final PluralityView _pluralityView;
@@ -40,16 +40,18 @@ class VoteDemo{
       }
     }
 
+    print(Clock.now() % 1000);
+    final blah = Clock.now() % 1000;
+    for(int i = 0; i < blah; i++) {
+      Math.random();
+    }
+
     final candidates = new List<MapPlayer>();
 
-    // center
-    candidates.add(new MapPlayer(new core.Coordinate(0.5 * span, 0.5 * span)));
-
-    // left at 4
-    candidates.add(new MapPlayer(new core.Coordinate(spanTweak * 6.5, spanTweak * 7.5)));
-
-    // spoiler at 7
-    candidates.add(new MapPlayer(new core.Coordinate(spanTweak * 13.5, spanTweak * 10.5)));
+    for(var i = 0; i < 6; i++) {
+      candidates.add(new MapPlayer(
+        new core.Coordinate(Math.random() * span, Math.random() * span)));
+    }
 
     var ballots = MapElection.createBallots(voters, candidates);
 
@@ -72,19 +74,18 @@ class VoteDemo{
     this._pluralityView, this._pluralityElection, voters, candidates) :
     this._voters = new HashSet<MapPlayer>.from(voters),
     this._candidates = new HashSet<MapPlayer>.from(candidates),
-    this._candidateColors = new HashMap<MapPlayer, core.RgbColor>() {
+    this._candidateHues = new HashMap<MapPlayer, num>() {
     _canvas.on.mouseMove.add(_canvas_mouseMove);
     _canvas.on.mouseOut.add(_canvas_mouseOut);
 
     var index = 0;
     _candidates.forEach((c) {
       final spot = 360 * index / _candidates.length;
-      var hsl = new core.HslColor(spot, 0.5, 0.5);
-      _candidateColors[c] = hsl.toRgb();
+      _candidateHues[c] = spot;
       index++;
     });
 
-    _pluralityView.setCandidateColorMap( (c) => _candidateColors[c]);
+    _pluralityView.setCandidateColorMap( (c) => _candidateHues[c]);
 
     var allPlayers = new List<MapPlayer>();
     allPlayers.addAll(_voters);
@@ -119,10 +120,12 @@ class VoteDemo{
   void _drawVoter(CanvasRenderingContext2D ctx, MapPlayer player,
                          num radius) {
     if(_candidates.contains(player)) {
-      ctx.fillStyle = _candidateColors[player].toHex();
+      final hue = _candidateHues[player];
+      final rgb = (new core.HslColor(hue, 1, 0.5)).toRgb();
+      ctx.fillStyle = rgb.toHex();
     }
     else {
-      ctx.fillStyle = '#999999';
+      ctx.fillStyle = '#cccccc';
     }
 
     final x = player.location.x;
