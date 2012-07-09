@@ -1,6 +1,7 @@
 class MapPlayer implements Player {
   final GlobalId _id;
   Coordinate _location;
+  String name;
 
   MapPlayer(Coordinate value) :
     _id = new GlobalId() {
@@ -18,6 +19,11 @@ class MapPlayer implements Player {
 
   int hashCode() => _id.hashCode();
 
-  String toString() =>
-      "MapPlayer at [${_location.x.toStringAsFixed(1)}, ${_location.y.toStringAsFixed(1)}]";
+  String toString() {
+    if(name == null) {
+      return "MapPlayer at [${_location.x.toStringAsFixed(1)}, ${_location.y.toStringAsFixed(1)}]";
+    } else {
+      return name;
+    }
+  }
 }

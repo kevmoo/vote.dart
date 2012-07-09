@@ -52,8 +52,10 @@ class VoteDemo{
     final candidates = new List<MapPlayer>();
 
     for(var i = 0; i < 6; i++) {
-      candidates.add(new MapPlayer(
-        new core.Coordinate(Math.random() * span, Math.random() * span)));
+      final candidate = new MapPlayer(
+        new core.Coordinate(Math.random() * span, Math.random() * span));
+      candidate.name = new String.fromCharCodes([i+65]);
+      candidates.add(candidate);
     }
 
     var ballots = MapElection.createBallots(voters, candidates);
