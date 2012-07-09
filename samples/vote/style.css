@@ -1,3 +1,7 @@
+body {
+  font-family: Helvetica;
+}
+
 .content-block {
   float: left;
   margin: 15px;
@@ -11,22 +15,18 @@ td, th {
   padding: 5px;
 }
 
-td.vote-count {
+td.vote-count, td.average-distance {
   text-align: right;
 }
 
-tr.place-row-even {
+tr.row-even {
   background: #ccc;
 } 
 
-tr.place-row-odd {
+tr.row-odd {
   background: #ddd;
 } 
 
-tr.candidate-row-even td.candidate-cell {
-  background: #eee;
-}
-
-tr.candidate-row-odd td.candidate-cell {
-  background: #fff;
+td.candidate-cell {
+  text-align: center;
 }

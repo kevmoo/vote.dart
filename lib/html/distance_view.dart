@@ -43,6 +43,10 @@ class DistanceView {
     row = table.insertRow(-1);
     cell = new Element.tag('th');
     row.elements.add(cell);
+    cell.innerHTML = "Place";
+
+    cell = new Element.tag('th');
+    row.elements.add(cell);
     cell.innerHTML = "Candidate";
 
     cell = new Element.tag('th');
@@ -54,10 +58,16 @@ class DistanceView {
 
     _updateDistances();
     if(_distances != null) {
-      for(final pair in _distances) {
+      for(var i = 0; i < _distances.length; i++) {
+        final pair = _distances[i];
 
         row = table.insertRow(-1);
-        row.classes.add(evenCandidateRow ? 'distance-row-even' : 'distance-row-odd');
+        row.classes.add(evenCandidateRow ? 'row-even' : 'row-odd');
+
+        cell = new Element.tag('th');
+        row.elements.add(cell);
+        cell.classes.add('place-number');
+        cell.innerHTML = (i+1).toString();
 
         cell = row.insertCell(-1);
         cell.classes.add('candidate-cell');
@@ -72,6 +82,7 @@ class DistanceView {
         cell.innerHTML = pair.Item1.toString();
 
         cell = row.insertCell(-1);
+        cell.classes.add('average-distance');
         cell.innerHTML = pair.Item2.toStringAsFixed(1);
 
 

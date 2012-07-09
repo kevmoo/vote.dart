@@ -45,7 +45,7 @@ class PluralityView {
 
     cell = new Element.tag('th');
     row.elements.add(cell);
-    row.classes.add('place-row-odd');
+    row.classes.add('row-odd');
     cell.innerHTML = "Votes";
 
     var evenPlaceRow = true;
@@ -57,13 +57,12 @@ class PluralityView {
         for(final candidate in place) {
 
           row = table.insertRow(-1);
-          row.classes.add(evenPlaceRow ? 'place-row-even' : 'place-row-odd');
-          row.classes.add(evenCandidateRow ? 'candidate-row-even' : 'candidate-row-odd');
+          row.classes.add(evenPlaceRow ? 'row-even' : 'row-odd');
 
           if(first) {
             cell = new Element.tag('th');
             row.elements.add(cell);
-            cell.classes.add('rank-number');
+            cell.classes.add('place-number');
             cell.rowSpan = place.length;
             cell.innerHTML = place.place.toString();
           }
