@@ -3,7 +3,7 @@ class DistanceView {
   core.Func1<MapPlayer, num> _mapper;
   Iterable<MapPlayer> _voters;
   Iterable<MapPlayer> _candidates;
-  List<core.Tuple<MapPlayer, num>> _distances;
+  List<core.Tuple3<MapPlayer, num, num>> _distances;
 
   DistanceView(this._node,
     [core.Func1<MapPlayer, num> mapper, Iterable<MapPlayer> voters = null, Iterable<MapPlayer> candidates= null]) {
@@ -37,10 +37,11 @@ class DistanceView {
     TableRowElement row = table.insertRow(-1);
     TableCellElement cell = new Element.tag('th');
     row.elements.add(cell);
-    cell.colSpan = 2;
+    cell.colSpan = 4;
     cell.innerHTML = "Distance";
 
     row = table.insertRow(-1);
+    row.classes.add('row-odd');
     cell = new Element.tag('th');
     row.elements.add(cell);
     cell.innerHTML = "Place";
@@ -51,8 +52,11 @@ class DistanceView {
 
     cell = new Element.tag('th');
     row.elements.add(cell);
-    row.classes.add('distance-row-odd');
-    cell.innerHTML = "Distance";
+    cell.innerHTML = "Average Distance";
+
+    cell = new Element.tag('th');
+    row.elements.add(cell);
+    cell.innerHTML = "Average Distance\u00B2";
 
     var evenCandidateRow = true;
 
@@ -85,6 +89,10 @@ class DistanceView {
         cell.classes.add('average-distance');
         cell.innerHTML = pair.Item2.toStringAsFixed(1);
 
+        cell = row.insertCell(-1);
+        cell.classes.add('average-distance');
+        cell.innerHTML = pair.Item3.toStringAsFixed(1);
+
 
         evenCandidateRow = !evenCandidateRow;
       }
@@ -96,15 +104,19 @@ class DistanceView {
   void _updateDistances() {
     if(_voters != null && _candidates != null) {
       if(_distances == null) {
-        _distances = new List<core.Tuple<MapPlayer, num>>();
+        _distances = new List<core.Tuple3<MapPlayer, num, num>>();
         for(final candidate in _candidates) {
-          num totalDistance = 0;
+          num sumOfDistance = 0;
+          num sumOfSquaredDistance = 0;
           int count = 0;
           for(final v in _voters) {
-            totalDistance += candidate.location.getDistance(v.location);
+            final distance = candidate.location.getDistance(v.location);
+            sumOfDistance += distance;
+            sumOfSquaredDistance += distance * distance;
             count++;
           }
-          _distances.add(new core.Tuple<MapPlayer, num>(candidate, totalDistance / count));
+          _distances.add(new core.Tuple3<MapPlayer, num, num>(candidate,
+              sumOfDistance / count, sumOfSquaredDistance / count));
         }
 
         // sort!
