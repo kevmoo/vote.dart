@@ -20,10 +20,6 @@ class PluralityView {
     _updateElement();
   }
 
-  // some element to hold onto
-
-  // void updateElection(PluralityElection election)
-
   void _updateElement() {
     _node.elements.clear();
 
