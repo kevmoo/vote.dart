@@ -8,3 +8,4 @@
 
 #source('html/plurality_view.dart');
 #source('html/distance_view.dart');
+#source('html/condorcet_view.dart');

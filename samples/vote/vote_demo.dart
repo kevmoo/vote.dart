@@ -10,7 +10,8 @@ main(){
   CanvasElement canvas = document.query("#content");
   DivElement pluralityDiv = document.query('#pluralityView');
   DivElement distanceDiv = document.query('#distanceView');
-  var demo = new VoteDemo(canvas, pluralityDiv, distanceDiv);
+  DivElement condorcetDiv = document.query('#condorcetView');
+  var demo = new VoteDemo(canvas, pluralityDiv, distanceDiv, condorcetDiv);
   demo.requestFrame();
 }
 
@@ -25,11 +26,12 @@ class VoteDemo{
   final PluralityElection _pluralityElection;
   final PluralityView _pluralityView;
   final DistanceView _distanceView;
+  final CondorcetView _condorcetView;
 
   bool _frameRequested = false;
 
   factory VoteDemo(CanvasElement canvas, DivElement pluralityDiv,
-    DivElement distanceDiv) {
+    DivElement distanceDiv, DivElement condorcetDiv) {
     var voterMap = new VoterMap(canvas.width, canvas.height);
 
     final span = 20;
@@ -65,19 +67,21 @@ class VoteDemo{
 
     var ballots = MapElection.createBallots(voters, candidates);
 
-    var pe = new PluralityElection(ballots);
-
     //
     // Create the stage, etc
     //
 
     final stage = new Stage(canvas, voterMap);
 
-    var pv = new PluralityView(pluralityDiv, election: pe);
-
     var dv = new DistanceView(distanceDiv, voters: voters, candidates: candidates);
 
-    return new VoteDemo._internal(canvas, stage, voterMap, pv, dv, pe,
+    var pluralityElection = new PluralityElection(ballots);
+    var pv = new PluralityView(pluralityDiv, election: pluralityElection);
+
+    var condorcetElection = new CondorcetElection(ballots);
+    var condorcetView = new CondorcetView(condorcetDiv, condorcetElection);
+
+    return new VoteDemo._internal(canvas, stage, voterMap, pv, dv, pluralityElection, condorcetView,
       voters, candidates);
   }
 
@@ -87,6 +91,7 @@ class VoteDemo{
     this._pluralityView,
     this._distanceView,
     this._pluralityElection,
+    this._condorcetView,
     voters,
     candidates) :
     this._voters = new HashSet<MapPlayer>.from(voters),
