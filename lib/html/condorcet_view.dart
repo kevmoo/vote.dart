@@ -51,6 +51,7 @@ class CondorcetView {
           row.classes.add(evenPlaceRow ? 'row-even' : 'row-odd');
 
           if(first) {
+            first = false;
             cell = new Element.tag('th');
             row.elements.add(cell);
             cell.classes.add('place-number');
