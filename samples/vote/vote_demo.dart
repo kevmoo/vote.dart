@@ -143,18 +143,32 @@ class VoteDemo{
 
   void _drawVoter(CanvasRenderingContext2D ctx, MapPlayer player,
                          num radius) {
+    String fillStyle;
+    String text = null;
+
     if(_candidates.contains(player)) {
       final hue = _candidateHues[player];
-      final rgb = (new core.HslColor(hue, 1, 0.5)).toRgb();
-      ctx.fillStyle = rgb.toHex();
+      final rgb = (new core.HslColor(hue, 1, 0.75)).toRgb();
+      fillStyle = rgb.toHex();
+      radius = radius * 2;
+      text = player.name;
     }
     else {
-      ctx.fillStyle = '#cccccc';
+      fillStyle = '#cccccc';
     }
 
+    ctx.fillStyle = fillStyle;
     final x = player.location.x;
     final y = player.location.y;
     CanvasUtil.centeredCircle(ctx, x, y, radius);
     ctx.fill();
+
+    if(text != null) {
+      ctx.font = '1px Helvetica';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillStyle = 'black';
+      ctx.fillText(text, x, y - radius);
+    }
   }
 }
