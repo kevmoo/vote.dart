@@ -14,7 +14,14 @@ class MapBallot<TVoter extends MapPlayer, TCandidate extends MapPlayer>
     var rank = new List<MapPlayer>.from(candidates);
     requireArgument(rank.length > 0, 'candidates');
     requireArgument(CollectionUtil.allUnique(rank), 'candidates');
-    rank.sort((a,b) => distances[a].compareTo(distances[b]));
+    rank.sort((a,b) {
+      var d = distances[a].compareTo(distances[b]);
+      if(d == 0) {
+        // ensure ranking of tied candidates is random-ish
+        d = (Math.random() < 0.5) ? -1 : 1;
+      }
+      return d;
+    });
 
     var items = new ReadOnlyCollection(rank);
 
