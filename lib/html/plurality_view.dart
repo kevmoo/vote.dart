@@ -24,14 +24,9 @@ class PluralityView {
     _node.elements.clear();
 
     var table = new TableElement();
+
     TableRowElement row = table.insertRow(-1);
     TableCellElement cell = new Element.tag('th');
-    row.elements.add(cell);
-    cell.colSpan = 3;
-    cell.innerHTML = "Plurality";
-
-    row = table.insertRow(-1);
-    cell = new Element.tag('th');
     row.elements.add(cell);
     cell.innerHTML = "Place";
 
