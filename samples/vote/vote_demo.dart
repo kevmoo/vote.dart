@@ -54,12 +54,18 @@ class VoteDemo{
     final coords = new List<core.Vector>();
     final middle = new core.Vector(0.5, 0.5);
     coords.add(middle);
-    
+
+    final bool mirror = false;
+
     for(var i = 0; i < 5; i++) {
       var coord = new core.Vector(Math.random(), Math.random());
       coords.add(coord);
+      if(mirror) {
+        final delta = middle - coord;
+        coords.add(middle + delta);
+      }
     }
-    
+
     final candidates = new List<MapPlayer>();
     core.$(coords)
       .select((c) => c.scale(span))
