@@ -28,6 +28,7 @@ class CondorcetView {
     TableRowElement row = table.insertRow(-1);
     TableCellElement cell = new Element.tag('th');
     row.elements.add(cell);
+    row.classes.add('row-odd');
     cell.innerHTML = "Place";
 
     cell = new Element.tag('th');
