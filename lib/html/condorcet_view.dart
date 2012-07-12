@@ -24,14 +24,9 @@ class CondorcetView {
     _node.elements.clear();
 
     var table = new TableElement();
+
     TableRowElement row = table.insertRow(-1);
     TableCellElement cell = new Element.tag('th');
-    row.elements.add(cell);
-    cell.colSpan = 2;
-    cell.innerHTML = "Condorcet";
-
-    row = table.insertRow(-1);
-    cell = new Element.tag('th');
     row.elements.add(cell);
     cell.innerHTML = "Place";
 
@@ -39,12 +34,30 @@ class CondorcetView {
     row.elements.add(cell);
     cell.innerHTML = "Candidate";
 
-    var evenPlaceRow = true;
-    var evenCandidateRow = true;
-
     if(_election != null) {
+      var evenPlaceRow = true;
+      var evenCandidateRow = true;
+
+      // add columns for opponents
+      var opps = _election.places.selectMany((p) => p).toReadOnlyCollection();
+
+      for(final opp in opps) {
+        cell = new Element.tag('th');
+        row.elements.add(cell);
+        cell.innerHTML = opp.name;
+
+        if(_mapper != null) {
+          final hue = _mapper(opp);
+          if(hue != null) {
+            final hsl = new core.HslColor(hue, 1, 0.75);
+            final rgb = hsl.toRgb();
+            cell.style.background = rgb.toHex();
+          }
+        }
+      }
+
       for(final place in _election.places) {
-        var first = true;
+        bool first = true;
         for(final candidate in place) {
 
           row = table.insertRow(-1);
@@ -61,15 +74,41 @@ class CondorcetView {
 
           cell = row.insertCell(-1);
           cell.classes.add('candidate-cell');
+
+          var candidateBackground = null;
+
           if(_mapper != null) {
             final hue = _mapper(candidate);
             if(hue != null) {
               final hsl = new core.HslColor(hue, 1, 0.75);
               final rgb = hsl.toRgb();
-              cell.style.background = rgb.toHex();
+              candidateBackground = rgb.toHex();
             }
           }
+          if(candidateBackground != null) {
+            cell.style.background = candidateBackground;
+          }
           cell.innerHTML = candidate.toString();
+
+          for(final opp in opps) {
+            cell = row.insertCell(-1);
+            if(opp == candidate) {
+              cell.style.background = '#999999';
+            } else {
+              var pair = _election.getPair(candidate, opp);
+              assert(pair != null);
+              cell.innerHTML = "${pair.firstOverSecond} | ${pair.secondOverFirst}";
+              if(candidate == pair.winner) {
+                cell.style.background = 'white';
+              } else if(opp == pair.winner) {
+                cell.style.background = 'black';
+                cell.style.color = 'white';
+              } else {
+                assert(pair.isTie);
+                cell.style.background = '#cccccc';
+              }
+            }
+          }
 
           evenCandidateRow = !evenCandidateRow;
         }
