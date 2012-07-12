@@ -51,20 +51,24 @@ class VoteDemo{
       Math.random();
     }
 
-    final candidates = new List<MapPlayer>();
-
-    for(var i = 0; i < 6; i++) {
-      core.Coordinate coord;
-      if(i == 0) {
-        coord = new core.Coordinate(0.5 * span, 0.5 * span);
-      } else {
-        coord = new core.Coordinate(Math.random() * span, Math.random() * span);
-      }
-      final candidate = new MapPlayer(coord);
-      candidate.name = new String.fromCharCodes([i+65]);
-      candidates.add(candidate);
+    final coords = new List<core.Vector>();
+    final middle = new core.Vector(0.5, 0.5);
+    coords.add(middle);
+    
+    for(var i = 0; i < 5; i++) {
+      var coord = new core.Vector(Math.random(), Math.random());
+      coords.add(coord);
     }
-
+    
+    final candidates = new List<MapPlayer>();
+    core.$(coords)
+      .select((c) => c.scale(span))
+      .forEachWithIndex((c,i) {
+        final candidate = new MapPlayer(c);
+        candidate.name = new String.fromCharCodes([i+65]);
+        candidates.add(candidate);
+      });
+    
     var ballots = MapElection.createBallots(voters, candidates);
 
     //
