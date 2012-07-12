@@ -15,7 +15,8 @@ class TestSpoilerMap {
     // spoiler at 7
     var canSpoiler = new MapPlayer(const Coordinate(7, 0));
 
-    var ballots = MapElection.createBallots(voters, [canCenter, canLeft, canSpoiler]);
+    final mapElection = new MapElection(voters, [canCenter, canLeft, canSpoiler]);
+    final ballots = mapElection.ballots;
 
     group('spoiler map', () {
       test('PluralityElection', (){

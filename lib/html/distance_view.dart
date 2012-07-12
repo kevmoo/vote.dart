@@ -1,15 +1,12 @@
 class DistanceView {
   final DivElement _node;
   core.Func1<MapPlayer, num> _mapper;
-  Iterable<MapPlayer> _voters;
-  Iterable<MapPlayer> _candidates;
-  List<core.Tuple3<MapPlayer, num, num>> _distances;
+  MapElection<MapPlayer, MapPlayer> _election;
 
   DistanceView(this._node,
-    [core.Func1<MapPlayer, num> mapper, Iterable<MapPlayer> voters = null, Iterable<MapPlayer> candidates= null]) {
+    [core.Func1<MapPlayer, num> mapper, MapElection<MapPlayer, MapPlayer> election = null]) {
     _mapper = mapper;
-    _voters = voters;
-    _candidates = candidates;
+    _election = election;
     _updateElement();
   }
 
@@ -18,16 +15,9 @@ class DistanceView {
     _updateElement();
   }
 
-  void setVoters(Iterable<MapPlayer> value) {
-    _voters = value;
-    _distances = null;
+  void setElection(MapElection<MapPlayer, MapPlayer> value) {
+    _election = value;
     _updateElement;
-  }
-
-  void setCandidates(Iterable<MapPlayer> value) {
-    _candidates = value;
-    _distances = null;
-    _updateElement();
   }
 
   void _updateElement() {
@@ -52,72 +42,59 @@ class DistanceView {
     row.elements.add(cell);
     cell.innerHTML = "Avg Dist\u00B2";
 
+    var evenPlaceRow = true;
     var evenCandidateRow = true;
 
-    _updateDistances();
-    if(_distances != null) {
-      for(var i = 0; i < _distances.length; i++) {
-        final pair = _distances[i];
+    if(_election != null) {
+      for(final place in _election.places) {
+        var first = true;
+        for(final candidate in place) {
 
-        row = table.insertRow(-1);
-        row.classes.add(evenCandidateRow ? 'row-even' : 'row-odd');
+          row = table.insertRow(-1);
+          row.classes.add(evenPlaceRow ? 'row-even' : 'row-odd');
 
-        cell = new Element.tag('th');
-        row.elements.add(cell);
-        cell.classes.add('place-number');
-        cell.innerHTML = (i+1).toString();
-
-        cell = row.insertCell(-1);
-        cell.classes.add('candidate-cell');
-        if(_mapper != null) {
-          final hue = _mapper(pair.Item1);
-          if(hue != null) {
-            final hsl = new core.HslColor(hue, 1, 0.75);
-            final rgb = hsl.toRgb();
-            cell.style.background = rgb.toHex();
+          if(first) {
+            cell = new Element.tag('th');
+            row.elements.add(cell);
+            cell.classes.add('place-number');
+            cell.rowSpan = place.length;
+            cell.innerHTML = place.place.toString();
           }
+
+          cell = row.insertCell(-1);
+          cell.classes.add('candidate-cell');
+          if(_mapper != null) {
+            final hue = _mapper(candidate);
+            if(hue != null) {
+              final hsl = new core.HslColor(hue, 1, 0.75);
+              final rgb = hsl.toRgb();
+              cell.style.background = rgb.toHex();
+            }
+          }
+          cell.innerHTML = candidate.toString();
+
+
+          if(first) {
+            first = false;
+
+            cell = row.insertCell(-1);
+            cell.rowSpan = place.length;
+            cell.innerHTML = place.avgDistance.toString();
+            cell.classes.add('vote-count');
+
+            cell = row.insertCell(-1);
+            cell.rowSpan = place.length;
+            cell.innerHTML = place.avgDistanceSquared.toString();
+            cell.classes.add('vote-count');
+          }
+
+          evenCandidateRow = !evenCandidateRow;
         }
-        cell.innerHTML = pair.Item1.toString();
-
-        cell = row.insertCell(-1);
-        cell.classes.add('average-distance');
-        cell.innerHTML = pair.Item2.toStringAsFixed(1);
-
-        cell = row.insertCell(-1);
-        cell.classes.add('average-distance');
-        cell.innerHTML = pair.Item3.toStringAsFixed(1);
-
-
-        evenCandidateRow = !evenCandidateRow;
+        evenPlaceRow = !evenPlaceRow;
       }
+
     }
 
     _node.elements.add(table);
-  }
-
-  void _updateDistances() {
-    if(_voters != null && _candidates != null) {
-      if(_distances == null) {
-        _distances = new List<core.Tuple3<MapPlayer, num, num>>();
-        for(final candidate in _candidates) {
-          num sumOfDistance = 0;
-          num sumOfSquaredDistance = 0;
-          int count = 0;
-          for(final v in _voters) {
-            final distance = candidate.location.getDistance(v.location);
-            sumOfDistance += distance;
-            sumOfSquaredDistance += distance * distance;
-            count++;
-          }
-          _distances.add(new core.Tuple3<MapPlayer, num, num>(candidate,
-              sumOfDistance / count, sumOfSquaredDistance / count));
-        }
-
-        // sort!
-        _distances.sort((p1, p2) => p1.Item2.compareTo(p2.Item2));
-      }
-    } else {
-      _distances = null;
-    }
   }
 }

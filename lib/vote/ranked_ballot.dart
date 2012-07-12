@@ -2,7 +2,7 @@ class RankedBallot<TVoter extends Player, TCandidate extends Player>
   extends PluralityBallot<TVoter, TCandidate> {
   final ReadOnlyCollection<TCandidate> rank;
 
-  RankedBallot._internal(TVoter voter, ReadOnlyCollection<TCandidate> items):
+  RankedBallot.protected(TVoter voter, ReadOnlyCollection<TCandidate> items):
     super(voter, items[0]),
     rank = items;
 
@@ -14,7 +14,7 @@ class RankedBallot<TVoter extends Player, TCandidate extends Player>
     requireArgument(items.length > 0, 'rank');
     requireArgument(CollectionUtil.allUnique(items), 'rank');
 
-    return new RankedBallot._internal(voter, items);
+    return new RankedBallot.protected(voter, items);
   }
 
   String toString() => "[RankedBallot for '$voter', ranked ${rank.length} candidates]";

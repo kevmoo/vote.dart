@@ -68,8 +68,7 @@ class VoteDemo{
         candidate.name = new String.fromCharCodes([i+65]);
         candidates.add(candidate);
       });
-    
-    var ballots = MapElection.createBallots(voters, candidates);
+
 
     //
     // Create the stage, etc
@@ -77,12 +76,13 @@ class VoteDemo{
 
     final stage = new Stage(canvas, voterMap);
 
-    var dv = new DistanceView(distanceDiv, voters: voters, candidates: candidates);
+    final mapElection = new MapElection(voters, candidates);
+    var dv = new DistanceView(distanceDiv, election: mapElection);
 
-    var pluralityElection = new PluralityElection(ballots);
+    var pluralityElection = new PluralityElection(mapElection.ballots);
     var pv = new PluralityView(pluralityDiv, election: pluralityElection);
 
-    var condorcetElection = new CondorcetElection(ballots);
+    var condorcetElection = new CondorcetElection(mapElection.ballots);
     var condorcetView = new CondorcetView(condorcetDiv, condorcetElection);
 
     return new VoteDemo._internal(canvas, stage, voterMap, pv, dv, pluralityElection, condorcetView,

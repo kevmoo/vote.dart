@@ -1,21 +1,61 @@
-class MapElection {
-  static List<RankedBallot<MapPlayer, MapPlayer>> createBallots(
-    Iterable<MapPlayer> voters, Iterable<MapPlayer> candidates) {
+class MapElection <TVoter extends MapPlayer, TCandidate extends MapPlayer>
+  implements Election<TVoter, TCandidate> {
 
-    var ballots = new List<RankedBallot<MapPlayer, MapPlayer>>();
-    for (final voter in voters) {
-      var distances = new HashMap<MapPlayer, num>();
+  final ReadOnlyCollection<TCandidate> candidates;
+  final ReadOnlyCollection<MapBallot<TVoter, TCandidate>> ballots;
+  final ReadOnlyCollection<MapElectionPlace<TCandidate>> places;
 
-      for (final candidate in candidates) {
-        distances[candidate] = voter.location.getDistance(candidate.location);
+  MapElection._internal(this.candidates, this.ballots, this.places);
+
+  factory MapElection(Iterable<TVoter> voters, Iterable<TCandidate> candidates) {
+    final cans = new ReadOnlyCollection<TCandidate>(candidates);
+
+    final ballots = $(voters)
+        .select((voter) {
+          final distances = $(candidates).toHashMap((c) {
+            return voter.location.getDistance(c.location).toInt();
+          });
+
+          var canList = new List<MapPlayer>.from(cans);
+          canList.sort((a,b) => distances[a].compareTo(distances[b]));
+
+          return new MapBallot<MapPlayer, MapPlayer>(voter, canList, distances);
+        })
+        .toReadOnlyCollection();
+
+    //
+    // Places
+    //
+    final distanceGroups = $(cans).group((candidate) {
+      num sumOfDistance = 0;
+      num sumOfSquaredDistance = 0;
+      int count = 0;
+      for(final b in ballots) {
+        final distance = b.getDistance(candidate);
+        sumOfDistance += distance;
+        sumOfSquaredDistance += distance * distance;
+        count++;
       }
 
-      var canList = new List<MapPlayer>.from(candidates);
-      canList.sort((a,b) => distances[a].compareTo(distances[b]));
+      return new Tuple<num, num>(sumOfDistance / count, sumOfSquaredDistance / count);
+    });
 
-      ballots.add(new RankedBallot<MapPlayer, MapPlayer>(voter, canList));
-    }
+    final distances = new List<Tuple<num,num>>.from(distanceGroups.getKeys());
+    distances.sort((a,b) => a.Item1.compareTo(b.Item1));
 
-    return ballots;
+    int placeNumber = 1;
+    final places = $(distances).select((d) {
+      var placeCans = distanceGroups[d];
+      final place = new MapElectionPlace(placeNumber, placeCans,
+        d.Item1, d.Item2);
+      placeNumber += placeCans.length;
+      return place;
+    }).toReadOnlyCollection();
+
+    return new MapElection._internal(cans, ballots, places);
+  }
+
+  TCandidate get singleWinner() {
+    throw 'not implemented';
   }
 }
