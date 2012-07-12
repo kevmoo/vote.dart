@@ -110,6 +110,7 @@ class VoteDemo{
     core.Func1<MapPlayer, num> mapper = (c) => _candidateHues[c];
     _pluralityView.setCandidateColorMap(mapper);
     _distanceView.setCandidateColorMap(mapper);
+    _condorcetView.setCandidateColorMap(mapper);
 
     var allPlayers = new List<MapPlayer>();
     allPlayers.addAll(_voters);
