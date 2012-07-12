@@ -6,21 +6,17 @@ class MapBallot<TVoter extends MapPlayer, TCandidate extends MapPlayer>
     this._distances):
     super.protected(voter, items);
 
-  // TODO: distances is mutable -- scary
-  factory MapBallot(TVoter voter, Iterable<TCandidate> rank,
-    HashMap<TCandidate, num> distances) {
-    requireArgumentNotNull(voter, 'voter');
-    requireArgumentNotNull(rank, 'rank');
-    requireArgumentNotNull(distances, 'distances');
+  factory MapBallot(TVoter voter, Iterable<TCandidate> candidates) {
+    final distances = $(candidates).toHashMap((c) {
+      return voter.location.getDistance(c.location).toInt();
+    });
+
+    var rank = new List<MapPlayer>.from(candidates);
+    requireArgument(rank.length > 0, 'candidates');
+    requireArgument(CollectionUtil.allUnique(rank), 'candidates');
+    rank.sort((a,b) => distances[a].compareTo(distances[b]));
 
     var items = new ReadOnlyCollection(rank);
-    requireArgument(items.length > 0, 'rank');
-    requireArgument(CollectionUtil.allUnique(items), 'rank');
-
-    assert(distances.length == items.length);
-    items.forEach((c) {
-      assert(distances.containsKey(c));
-    });
 
     return new MapBallot._internal(voter, items, distances);
   }

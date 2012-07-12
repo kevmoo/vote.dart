@@ -11,16 +11,7 @@ class MapElection <TVoter extends MapPlayer, TCandidate extends MapPlayer>
     final cans = new ReadOnlyCollection<TCandidate>(candidates);
 
     final ballots = $(voters)
-        .select((voter) {
-          final distances = $(candidates).toHashMap((c) {
-            return voter.location.getDistance(c.location).toInt();
-          });
-
-          var canList = new List<MapPlayer>.from(cans);
-          canList.sort((a,b) => distances[a].compareTo(distances[b]));
-
-          return new MapBallot<MapPlayer, MapPlayer>(voter, canList, distances);
-        })
+        .select((voter) => new MapBallot<MapPlayer, MapPlayer>(voter, cans))
         .toReadOnlyCollection();
 
     //
