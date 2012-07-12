@@ -35,14 +35,8 @@ class DistanceView {
 
     var table = new TableElement();
     TableRowElement row = table.insertRow(-1);
-    TableCellElement cell = new Element.tag('th');
-    row.elements.add(cell);
-    cell.colSpan = 4;
-    cell.innerHTML = "Distance";
-
-    row = table.insertRow(-1);
     row.classes.add('row-odd');
-    cell = new Element.tag('th');
+    TableCellElement cell = new Element.tag('th');
     row.elements.add(cell);
     cell.innerHTML = "Place";
 
@@ -52,11 +46,11 @@ class DistanceView {
 
     cell = new Element.tag('th');
     row.elements.add(cell);
-    cell.innerHTML = "Average Distance";
+    cell.innerHTML = "Avg Dist";
 
     cell = new Element.tag('th');
     row.elements.add(cell);
-    cell.innerHTML = "Average Distance\u00B2";
+    cell.innerHTML = "Avg Dist\u00B2";
 
     var evenCandidateRow = true;
 
