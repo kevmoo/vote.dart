@@ -143,23 +143,42 @@ class VoteDemo{
                          num radius) {
     String fillStyle;
     String text = null;
+    bool shadow = false;
+
+    MapPlayer candidate;
+    num sat;
 
     if(_candidateHues.containsKey(player)) {
-      final hue = _candidateHues[player];
-      final rgb = (new core.HslColor(hue, 1, 0.75)).toRgb();
-      fillStyle = rgb.toHex();
+      candidate = player;
+      sat = 1;
       radius = radius * 2;
       text = player.name;
+      shadow = true;
     }
     else {
+      final ballot = _mapElection.ballots
+          .where((b) => b.voter == player)
+          .toList()[0];
+      sat = 0.5;
+      candidate = ballot.rank[0];
       fillStyle = '#cccccc';
     }
+    final hue = _candidateHues[candidate];
+    final rgb = (new core.HslColor(hue, sat, 0.75)).toRgb();
+    fillStyle = rgb.toHex();
 
     ctx.fillStyle = fillStyle;
     final x = player.location.x;
     final y = player.location.y;
     CanvasUtil.centeredCircle(ctx, x, y, radius);
+    if(shadow) {
+      ctx.shadowColor = 'black';
+      ctx.shadowBlur = 6;
+      ctx.shadowOffsetX = 2;
+      ctx.shadowOffsetY = 2;
+    }
     ctx.fill();
+    ctx.shadowColor = 'transparent';
 
     if(text != null) {
       ctx.font = '1px Helvetica';

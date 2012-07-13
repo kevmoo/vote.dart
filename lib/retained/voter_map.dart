@@ -73,7 +73,9 @@ class VoterMap extends PElement {
 
 
     for(final player in _players) {
+      ctx.save();
       _drawPlayer(ctx, player, _radius);
+      ctx.restore();
     }
 
     if(mouse != null){
