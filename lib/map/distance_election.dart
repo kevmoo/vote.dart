@@ -1,11 +1,12 @@
 class DistanceElection <TVoter extends MapPlayer, TCandidate extends MapPlayer>
-  implements Election<TVoter, TCandidate> {
+  extends Election<TVoter, TCandidate> {
 
   final ReadOnlyCollection<TCandidate> candidates;
   final ReadOnlyCollection<DistanceBallot<TVoter, TCandidate>> ballots;
   final ReadOnlyCollection<DistanceElectionPlace<TCandidate>> places;
 
-  DistanceElection._internal(this.candidates, this.ballots, this.places);
+  DistanceElection._internal(this.candidates, this.ballots,
+    this.places);
 
   factory DistanceElection(Iterable<TVoter> voters, Iterable<TCandidate> candidates) {
     final cans = new ReadOnlyCollection<TCandidate>(candidates);
@@ -44,13 +45,5 @@ class DistanceElection <TVoter extends MapPlayer, TCandidate extends MapPlayer>
     }).toReadOnlyCollection();
 
     return new DistanceElection._internal(cans, ballots, places);
-  }
-
-  TCandidate get singleWinner() {
-    if(places.length > 0 && places[0].length == 1) {
-      return places[0][0];
-    } else {
-      return null;
-    }
   }
 }

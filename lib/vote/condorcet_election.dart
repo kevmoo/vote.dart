@@ -1,5 +1,5 @@
 class CondorcetElection<TVoter extends Player, TCandidate extends Player>
-  implements Election<TVoter, TCandidate> {
+  extends Election<TVoter, TCandidate> {
 
   final HashSet<CondorcetPair<TVoter, TCandidate>> _pairs;
   final HashMap<TCandidate, CondorcetCandidateProfile<TCandidate>> _profiles;
@@ -96,15 +96,6 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
   }
 
   Collection<TCandidate> get candidates() => _profiles.getKeys();
-
-  TCandidate get singleWinner() {
-    if(places.length > 0 && places[0].length == 1) {
-      return places[0][0];
-    }
-    else {
-      return null;
-    }
-  }
 
   CondorcetPair<TVoter, TCandidate> getPair(TCandidate c1, TCandidate c2) {
     var filter = _pairs.filter((p) => p.matches(c1, c2));

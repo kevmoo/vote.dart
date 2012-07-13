@@ -1,5 +1,5 @@
 class PluralityElection<TVoter extends Player, TCandidate extends Player>
-  implements Election<TVoter, TCandidate> {
+  extends Election<TVoter, TCandidate> {
   final Grouping<TCandidate, PluralityBallot<TVoter, TCandidate>> _ballots;
   final ReadOnlyCollection<PluralityElectionPlace<TCandidate>> places;
 
@@ -59,13 +59,4 @@ class PluralityElection<TVoter extends Player, TCandidate extends Player>
   Collection<TCandidate> get candidates() => _ballots.getKeys();
 
   Iterable<Ballot<TVoter, TCandidate>> get ballots() => _ballots.getValues();
-
-  TCandidate get singleWinner() {
-    if(places.length > 0 && places[0].length == 1) {
-      return places[0][0];
-    }
-    else {
-      return null;
-    }
-  }
 }
