@@ -1,5 +1,31 @@
-class TestMapElection {
+class TestDistanceElection {
   static void run() {
+    group('DistanceElection', (){
+      _testSimpleElection();
+      test('tie', _testTie);
+    });
+  }
+
+  static void _testTie() {
+    var voters = new List<MapPlayer>();
+    for(int i = -2; i <= 2; i++) {
+      for(int j = -2; j <= 2; j++) {
+        voters.add(new MapPlayer(new Coordinate(i,j)));
+      }
+    }
+
+    var c0 = new MapPlayer(const Coordinate(-1, 0));
+    var c1 = new MapPlayer(const Coordinate(1, 0));
+
+    var mapElection = new DistanceElection(voters, [c0, c1]);
+
+    expect(mapElection.singleWinner, isNull);
+    expect(mapElection.places.length, equals(1));
+    expect(mapElection.places[0].length, equals(2));
+    expect(mapElection.places[0], unorderedEquals([c0, c1]));
+  }
+
+  static void _testSimpleElection() {
     var v1 = new MapPlayer(const Coordinate(1,1));
     var v2 = new MapPlayer(const Coordinate(-1, 1));
     var v3 = new MapPlayer(const Coordinate(-1, -1));
@@ -13,7 +39,7 @@ class TestMapElection {
     final ballots = mapElection.ballots;
 
     group('simple, obvious map', () {
-      test('MapElection.createBallots', (){
+      test('ballots', (){
         expect(ballots, isNotNull);
         expect(ballots.length, equals(5));
 
@@ -28,6 +54,10 @@ class TestMapElection {
         expect(ballots[4].rank.length, equals(2));
         expect(ballots[4].rank[0], equals(c1));
         expect(ballots[4].rank[1], equals(c0));
+      });
+
+      test('singleWinner', () {
+        expect(mapElection.singleWinner, equals(c0));
       });
 
       test('PluralityElection', (){

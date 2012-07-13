@@ -5,10 +5,10 @@
 #import('../../lib/vote.dart');
 #import('../../lib/map.dart');
 
-#source('test_map_election.dart');
+#source('test_distance_election.dart');
 #source('test_spoiler_map.dart');
 
 void runMapTests() {
-  TestMapElection.run();
+  TestDistanceElection.run();
   TestSpoilerMap.run();
 }

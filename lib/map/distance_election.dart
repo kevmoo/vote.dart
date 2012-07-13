@@ -47,6 +47,10 @@ class DistanceElection <TVoter extends MapPlayer, TCandidate extends MapPlayer>
   }
 
   TCandidate get singleWinner() {
-    throw 'not implemented';
+    if(places.length > 0 && places[0].length == 1) {
+      return places[0][0];
+    } else {
+      return null;
+    }
   }
 }
