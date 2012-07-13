@@ -8,7 +8,8 @@ class MapBallot<TVoter extends MapPlayer, TCandidate extends MapPlayer>
 
   factory MapBallot(TVoter voter, Iterable<TCandidate> candidates) {
     final distances = $(candidates).toHashMap((c) {
-      return voter.location.getDistance(c.location).toInt();
+      var d = voter.location.getDistance(c.location);
+      return (d * 128).toInt() / 128;
     });
 
     var rank = new List<MapPlayer>.from(candidates);
