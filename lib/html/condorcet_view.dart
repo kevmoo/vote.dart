@@ -76,19 +76,7 @@ class CondorcetView {
           cell = row.insertCell(-1);
           cell.classes.add('candidate-cell');
 
-          var candidateBackground = null;
-
-          if(_mapper != null) {
-            final hue = _mapper(candidate);
-            if(hue != null) {
-              final hsl = new core.HslColor(hue, 1, 0.75);
-              final rgb = hsl.toRgb();
-              candidateBackground = rgb.toHex();
-            }
-          }
-          if(candidateBackground != null) {
-            cell.style.background = candidateBackground;
-          }
+          cell.style.background = colors[candidate];
           cell.innerHTML = candidate.toString();
 
           for(final opp in opps) {
@@ -99,22 +87,27 @@ class CondorcetView {
             } else {
               String bg;
               String fg = 'black';
+              String leftColor, rightColor;
               var pair = _election.getPair(candidate, opp);
               assert(pair != null);
               if(candidate == pair.winner) {
                 bg = 'white';
+                leftColor = rightColor = fg;
               } else if(opp == pair.winner) {
                 bg = 'black';
                 fg = 'white';
+                leftColor = colors[candidate];
+                rightColor = colors[opp];
               } else {
                 assert(pair.isTie);
                 bg = '#cccccc';
+                leftColor = rightColor = fg;
               }
 
               cell = row.insertCell(-1);
               cell.innerHTML = pair.firstOverSecond.toString();
               cell.style.background = bg;
-              cell.style.color = fg;
+              cell.style.color = leftColor;
               cell.style.paddingRight = '0';
               cell.classes.add('vote-count');
 
@@ -126,7 +119,7 @@ class CondorcetView {
               cell = row.insertCell(-1);
               cell.innerHTML = pair.secondOverFirst.toString();
               cell.style.background = bg;
-              cell.style.color = fg;
+              cell.style.color = rightColor;
               cell.style.paddingLeft = '0';
               cell.classes.add('vote-count');
             }
