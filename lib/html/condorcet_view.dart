@@ -48,6 +48,12 @@ class CondorcetView {
         return hsl.toRgb().toHex();
       });
 
+      final darkColors = opps.toHashMap((c) {
+        final hue = _mapper(c);
+        final hsl = new core.HslColor(hue, 1, 0.3);
+        return hsl.toRgb().toHex();
+      });
+
       for(final opp in opps) {
         cell = new Element.tag('th');
         row.elements.add(cell);
@@ -85,6 +91,7 @@ class CondorcetView {
               cell.style.background = '#999999';
               cell.colSpan = 3;
             } else {
+              String middleText;
               String bg;
               String fg = 'black';
               String leftColor, rightColor;
@@ -92,16 +99,21 @@ class CondorcetView {
               assert(pair != null);
               if(candidate == pair.winner) {
                 bg = 'white';
-                leftColor = rightColor = fg;
+                leftColor = darkColors[candidate];
+                rightColor = darkColors[opp];
+                middleText = '&gt;';
               } else if(opp == pair.winner) {
                 bg = 'black';
                 fg = 'white';
                 leftColor = colors[candidate];
                 rightColor = colors[opp];
+                middleText = '&lt;';
               } else {
                 assert(pair.isTie);
                 bg = '#cccccc';
-                leftColor = rightColor = fg;
+                leftColor = darkColors[candidate];
+                rightColor = darkColors[opp];
+                middleText = '=';
               }
 
               cell = row.insertCell(-1);
@@ -112,7 +124,7 @@ class CondorcetView {
               cell.classes.add('vote-count');
 
               cell = row.insertCell(-1);
-              cell.innerHTML = '|';
+              cell.innerHTML = middleText;
               cell.style.background = bg;
               cell.style.color = fg;
 
