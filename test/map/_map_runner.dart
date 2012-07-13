@@ -9,6 +9,8 @@
 #source('test_spoiler_map.dart');
 
 void runMapTests() {
-  TestDistanceElection.run();
-  TestSpoilerMap.run();
+  group('map', () {
+    TestDistanceElection.run();
+    TestSpoilerMap.run();
+  });
 }

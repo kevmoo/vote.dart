@@ -18,7 +18,7 @@ class TestSpoilerMap {
     final mapElection = new DistanceElection(voters, [canCenter, canLeft, canSpoiler]);
     final ballots = mapElection.ballots;
 
-    group('spoiler map', () {
+    group('spoiler', () {
       test('PluralityElection', (){
         var election = new PluralityElection(ballots);
         expect(election.singleWinner, equals(canLeft));
