@@ -1,17 +1,17 @@
-class MapElection <TVoter extends MapPlayer, TCandidate extends MapPlayer>
+class DistanceElection <TVoter extends MapPlayer, TCandidate extends MapPlayer>
   implements Election<TVoter, TCandidate> {
 
   final ReadOnlyCollection<TCandidate> candidates;
-  final ReadOnlyCollection<MapBallot<TVoter, TCandidate>> ballots;
-  final ReadOnlyCollection<MapElectionPlace<TCandidate>> places;
+  final ReadOnlyCollection<DistanceBallot<TVoter, TCandidate>> ballots;
+  final ReadOnlyCollection<DistanceElectionPlace<TCandidate>> places;
 
-  MapElection._internal(this.candidates, this.ballots, this.places);
+  DistanceElection._internal(this.candidates, this.ballots, this.places);
 
-  factory MapElection(Iterable<TVoter> voters, Iterable<TCandidate> candidates) {
+  factory DistanceElection(Iterable<TVoter> voters, Iterable<TCandidate> candidates) {
     final cans = new ReadOnlyCollection<TCandidate>(candidates);
 
     final ballots = $(voters)
-        .select((voter) => new MapBallot<MapPlayer, MapPlayer>(voter, cans))
+        .select((voter) => new DistanceBallot<MapPlayer, MapPlayer>(voter, cans))
         .toReadOnlyCollection();
 
     //
@@ -37,13 +37,13 @@ class MapElection <TVoter extends MapPlayer, TCandidate extends MapPlayer>
     int placeNumber = 1;
     final places = $(distances).select((d) {
       var placeCans = distanceGroups[d];
-      final place = new MapElectionPlace(placeNumber, placeCans,
+      final place = new DistanceElectionPlace(placeNumber, placeCans,
         d.Item1, d.Item2);
       placeNumber += placeCans.length;
       return place;
     }).toReadOnlyCollection();
 
-    return new MapElection._internal(cans, ballots, places);
+    return new DistanceElection._internal(cans, ballots, places);
   }
 
   TCandidate get singleWinner() {

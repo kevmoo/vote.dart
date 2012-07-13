@@ -20,7 +20,7 @@ class VoteDemo{
   final Stage _stage;
   final VoterMap _voterMap;
   final HashMap<MapPlayer, num> _candidateHues;
-  final MapElection _mapElection;
+  final DistanceElection _mapElection;
 
   bool _frameRequested = false;
 
@@ -87,7 +87,7 @@ class VoteDemo{
 
     core.Func1<MapPlayer, num> mapper = (c) => candidateHues[c];
 
-    final mapElection = new MapElection(voters, candidates);
+    final mapElection = new DistanceElection(voters, candidates);
     var distanceView = new DistanceView(distanceDiv, mapElection, mapper);
 
     var pluralityElection = new PluralityElection(mapElection.ballots);

@@ -4,6 +4,6 @@
 #import('vote.dart');
 
 #source('map/map_player.dart');
-#source('map/map_election.dart');
-#source('map/map_election_place.dart');
-#source('map/map_ballot.dart');
+#source('map/distance_election.dart');
+#source('map/distance_election_place.dart');
+#source('map/distance_ballot.dart');

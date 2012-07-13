@@ -1,12 +1,12 @@
-class MapBallot<TVoter extends MapPlayer, TCandidate extends MapPlayer>
+class DistanceBallot<TVoter extends MapPlayer, TCandidate extends MapPlayer>
   extends RankedBallot<TVoter, TCandidate> {
   final HashMap<TCandidate, num> _distances;
 
-  MapBallot._internal(TVoter voter, ReadOnlyCollection<TCandidate> items,
+  DistanceBallot._internal(TVoter voter, ReadOnlyCollection<TCandidate> items,
     this._distances):
     super.protected(voter, items);
 
-  factory MapBallot(TVoter voter, Iterable<TCandidate> candidates) {
+  factory DistanceBallot(TVoter voter, Iterable<TCandidate> candidates) {
     final distances = $(candidates).toHashMap((c) {
       var d = voter.location.getDistance(c.location);
       return (d * 128).toInt() / 128;
@@ -26,7 +26,7 @@ class MapBallot<TVoter extends MapPlayer, TCandidate extends MapPlayer>
 
     var items = new ReadOnlyCollection(rank);
 
-    return new MapBallot._internal(voter, items, distances);
+    return new DistanceBallot._internal(voter, items, distances);
   }
 
   num getDistance(TCandidate candidate) {

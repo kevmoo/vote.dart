@@ -9,7 +9,7 @@ class TestMapElection {
     var c0 = new MapPlayer(const Coordinate());
     var c1 = new MapPlayer(const Coordinate(10,10));
 
-    final mapElection = new MapElection([v1,v2,v3,v4,v5], [c0, c1]);
+    final mapElection = new DistanceElection([v1,v2,v3,v4,v5], [c0, c1]);
     final ballots = mapElection.ballots;
 
     group('simple, obvious map', () {

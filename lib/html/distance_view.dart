@@ -1,7 +1,7 @@
 class DistanceView {
   final DivElement _node;
   core.Func1<MapPlayer, num> _mapper;
-  MapElection<MapPlayer, MapPlayer> _election;
+  DistanceElection<MapPlayer, MapPlayer> _election;
 
   DistanceView(this._node, this._election, this._mapper) {
     _updateElement();
@@ -13,7 +13,7 @@ class DistanceView {
     _updateElement();
   }
 
-  void setElection(MapElection<MapPlayer, MapPlayer> value) {
+  void setElection(DistanceElection<MapPlayer, MapPlayer> value) {
     _election = value;
     _updateElement;
   }
