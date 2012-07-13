@@ -75,12 +75,12 @@ class DistanceView {
 
             cell = row.insertCell(-1);
             cell.rowSpan = place.length;
-            cell.innerHTML = place.avgDistance.toString();
+            cell.innerHTML = place.avgDistance.toStringAsFixed(2);
             cell.classes.add('vote-count');
 
             cell = row.insertCell(-1);
             cell.rowSpan = place.length;
-            cell.innerHTML = place.avgDistanceSquared.toString();
+            cell.innerHTML = place.avgDistanceSquared.toStringAsFixed(2);
             cell.classes.add('vote-count');
           }
 
