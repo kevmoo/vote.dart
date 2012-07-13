@@ -49,9 +49,9 @@ class VoteDemo{
     final middle = new core.Vector(0.5, 0.5);
     coords.add(middle);
 
-    final bool mirror = false;
+    final bool mirror = true;
 
-    for(var i = 0; i < 5; i++) {
+    for(var i = 0; i < 2; i++) {
       var coord = new core.Vector(Math.random(), Math.random());
       coords.add(coord);
       if(mirror) {
