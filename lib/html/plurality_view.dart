@@ -3,8 +3,7 @@ class PluralityView {
   PluralityElection _election;
   core.Func1<MapPlayer, num> _mapper;
 
-  PluralityView(this._node, [PluralityElection election = null]) {
-    _election = election;
+  PluralityView(this._node, this._election, this._mapper) {
     _updateElement();
   }
 
@@ -16,6 +15,7 @@ class PluralityView {
   }
 
   void setCandidateColorMap(core.Func1<MapPlayer, num> value) {
+    assert(value != null);
     _mapper = value;
     _updateElement();
   }
@@ -60,13 +60,11 @@ class PluralityView {
 
           cell = row.insertCell(-1);
           cell.classes.add('candidate-cell');
-          if(_mapper != null) {
-            final hue = _mapper(candidate);
-            if(hue != null) {
-              final hsl = new core.HslColor(hue, 1, 0.75);
-              final rgb = hsl.toRgb();
-              cell.style.background = rgb.toHex();
-            }
+          final hue = _mapper(candidate);
+          if(hue != null) {
+            final hsl = new core.HslColor(hue, 1, 0.75);
+            final rgb = hsl.toRgb();
+            cell.style.background = rgb.toHex();
           }
           cell.innerHTML = candidate.toString();
 

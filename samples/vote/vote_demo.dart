@@ -19,14 +19,8 @@ class VoteDemo{
   final CanvasElement _canvas;
   final Stage _stage;
   final VoterMap _voterMap;
-  final HashSet<MapPlayer> _voters;
-  final HashSet<MapPlayer> _candidates;
   final HashMap<MapPlayer, num> _candidateHues;
-
-  final PluralityElection _pluralityElection;
-  final PluralityView _pluralityView;
-  final DistanceView _distanceView;
-  final CondorcetView _condorcetView;
+  final MapElection _mapElection;
 
   bool _frameRequested = false;
 
@@ -82,49 +76,42 @@ class VoteDemo{
 
     final stage = new Stage(canvas, voterMap);
 
-    final mapElection = new MapElection(voters, candidates);
-    var dv = new DistanceView(distanceDiv, election: mapElection);
-
-    var pluralityElection = new PluralityElection(mapElection.ballots);
-    var pv = new PluralityView(pluralityDiv, election: pluralityElection);
-
-    var condorcetElection = new CondorcetElection(mapElection.ballots);
-    var condorcetView = new CondorcetView(condorcetDiv, condorcetElection);
-
-    return new VoteDemo._internal(canvas, stage, voterMap, pv, dv, pluralityElection, condorcetView,
-      voters, candidates);
-  }
-
-  VoteDemo._internal(this._canvas,
-    this._stage,
-    this._voterMap,
-    this._pluralityView,
-    this._distanceView,
-    this._pluralityElection,
-    this._condorcetView,
-    voters,
-    candidates) :
-    this._voters = new HashSet<MapPlayer>.from(voters),
-    this._candidates = new HashSet<MapPlayer>.from(candidates),
-    this._candidateHues = new HashMap<MapPlayer, num>() {
-    _canvas.on.mouseMove.add(_canvas_mouseMove);
-    _canvas.on.mouseOut.add(_canvas_mouseOut);
+    final HashMap<MapPlayer, num> candidateHues = new HashMap<MapPlayer, num>();
 
     var index = 0;
-    _candidates.forEach((c) {
-      final spot = 360 * index / _candidates.length;
-      _candidateHues[c] = spot;
+    candidates.forEach((c) {
+      final spot = 360 * index / candidates.length;
+      candidateHues[c] = spot;
       index++;
     });
 
-    core.Func1<MapPlayer, num> mapper = (c) => _candidateHues[c];
-    _pluralityView.setCandidateColorMap(mapper);
-    _distanceView.setCandidateColorMap(mapper);
-    _condorcetView.setCandidateColorMap(mapper);
+    core.Func1<MapPlayer, num> mapper = (c) => candidateHues[c];
+
+    final mapElection = new MapElection(voters, candidates);
+    var distanceView = new DistanceView(distanceDiv, mapElection, mapper);
+
+    var pluralityElection = new PluralityElection(mapElection.ballots);
+    var pluralityView = new PluralityView(pluralityDiv, pluralityElection, mapper);
+
+    var condorcetElection = new CondorcetElection(mapElection.ballots);
+    var condorcetView = new CondorcetView(condorcetDiv, condorcetElection, mapper);
+
+    return new VoteDemo._internal(canvas, stage, voterMap,
+      mapElection, candidateHues);
+  }
+
+  VoteDemo._internal(
+    this._canvas,
+    this._stage,
+    this._voterMap,
+    this._mapElection,
+    this._candidateHues) {
+    _canvas.on.mouseMove.add(_canvas_mouseMove);
+    _canvas.on.mouseOut.add(_canvas_mouseOut);
 
     var allPlayers = new List<MapPlayer>();
-    allPlayers.addAll(_voters);
-    allPlayers.addAll(_candidates);
+    allPlayers.addAll(core.$(_mapElection.ballots).select((b) => b.voter).toList());
+    allPlayers.addAll(_mapElection.candidates);
 
     _voterMap.players = allPlayers;
     _voterMap.drawer = _drawVoter;
@@ -157,7 +144,7 @@ class VoteDemo{
     String fillStyle;
     String text = null;
 
-    if(_candidates.contains(player)) {
+    if(_candidateHues.containsKey(player)) {
       final hue = _candidateHues[player];
       final rgb = (new core.HslColor(hue, 1, 0.75)).toRgb();
       fillStyle = rgb.toHex();

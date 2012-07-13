@@ -3,14 +3,12 @@ class DistanceView {
   core.Func1<MapPlayer, num> _mapper;
   MapElection<MapPlayer, MapPlayer> _election;
 
-  DistanceView(this._node,
-    [core.Func1<MapPlayer, num> mapper, MapElection<MapPlayer, MapPlayer> election = null]) {
-    _mapper = mapper;
-    _election = election;
+  DistanceView(this._node, this._election, this._mapper) {
     _updateElement();
   }
 
   void setCandidateColorMap(core.Func1<MapPlayer, num> value) {
+    assert(value != null);
     _mapper = value;
     _updateElement();
   }
@@ -63,13 +61,11 @@ class DistanceView {
 
           cell = row.insertCell(-1);
           cell.classes.add('candidate-cell');
-          if(_mapper != null) {
-            final hue = _mapper(candidate);
-            if(hue != null) {
-              final hsl = new core.HslColor(hue, 1, 0.75);
-              final rgb = hsl.toRgb();
-              cell.style.background = rgb.toHex();
-            }
+          final hue = _mapper(candidate);
+          if(hue != null) {
+            final hsl = new core.HslColor(hue, 1, 0.75);
+            final rgb = hsl.toRgb();
+            cell.style.background = rgb.toHex();
           }
           cell.innerHTML = candidate.toString();
 

@@ -3,8 +3,7 @@ class CondorcetView {
   CondorcetElection _election;
   core.Func1<MapPlayer, num> _mapper;
 
-  CondorcetView(this._node, [CondorcetElection election = null]) {
-    _election = election;
+  CondorcetView(this._node, this._election, this._mapper) {
     _updateElement();
   }
 
@@ -16,6 +15,7 @@ class CondorcetView {
   }
 
   void setCandidateColorMap(core.Func1<MapPlayer, num> value) {
+    assert(value != null);
     _mapper = value;
     _updateElement();
   }
@@ -42,19 +42,19 @@ class CondorcetView {
       // add columns for opponents
       var opps = _election.places.selectMany((p) => p).toReadOnlyCollection();
 
+      final colors = opps.toHashMap((c) {
+        final hue = _mapper(c);
+        final hsl = new core.HslColor(hue, 1, 0.75);
+        return hsl.toRgb().toHex();
+      });
+
       for(final opp in opps) {
         cell = new Element.tag('th');
         row.elements.add(cell);
         cell.innerHTML = opp.name;
 
-        if(_mapper != null) {
-          final hue = _mapper(opp);
-          if(hue != null) {
-            final hsl = new core.HslColor(hue, 1, 0.75);
-            final rgb = hsl.toRgb();
-            cell.style.background = rgb.toHex();
-          }
-        }
+        cell.style.background = colors[opp];
+        cell.colSpan = 3;
       }
 
       for(final place in _election.places) {
@@ -92,22 +92,43 @@ class CondorcetView {
           cell.innerHTML = candidate.toString();
 
           for(final opp in opps) {
-            cell = row.insertCell(-1);
             if(opp == candidate) {
+              cell = row.insertCell(-1);
               cell.style.background = '#999999';
+              cell.colSpan = 3;
             } else {
+              String bg;
+              String fg = 'black';
               var pair = _election.getPair(candidate, opp);
               assert(pair != null);
-              cell.innerHTML = "${pair.firstOverSecond} | ${pair.secondOverFirst}";
               if(candidate == pair.winner) {
-                cell.style.background = 'white';
+                bg = 'white';
               } else if(opp == pair.winner) {
-                cell.style.background = 'black';
-                cell.style.color = 'white';
+                bg = 'black';
+                fg = 'white';
               } else {
                 assert(pair.isTie);
-                cell.style.background = '#cccccc';
+                bg = '#cccccc';
               }
+
+              cell = row.insertCell(-1);
+              cell.innerHTML = pair.firstOverSecond.toString();
+              cell.style.background = bg;
+              cell.style.color = fg;
+              cell.style.paddingRight = '0';
+              cell.classes.add('vote-count');
+
+              cell = row.insertCell(-1);
+              cell.innerHTML = '|';
+              cell.style.background = bg;
+              cell.style.color = fg;
+
+              cell = row.insertCell(-1);
+              cell.innerHTML = pair.secondOverFirst.toString();
+              cell.style.background = bg;
+              cell.style.color = fg;
+              cell.style.paddingLeft = '0';
+              cell.classes.add('vote-count');
             }
           }
 
