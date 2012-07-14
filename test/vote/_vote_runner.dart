@@ -8,6 +8,7 @@
 #source('test_ranked_ballot.dart');
 #source('test_condorcet.dart');
 #source('test_condorcet_pair.dart');
+#source('test_irv.dart');
 
 void runVoteTests() {
   group('vote', (){
@@ -15,5 +16,6 @@ void runVoteTests() {
     TestRankedBallot.run();
     TestCondorcetElection.run();
     TestCondorcetPair.run();
+    TestIrv.run();
   });
 }
