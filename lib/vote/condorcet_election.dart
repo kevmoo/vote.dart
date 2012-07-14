@@ -12,10 +12,10 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
   factory CondorcetElection(
     Collection<RankedBallot<TVoter, TCandidate>> ballots) {
 
-    var bals = new ReadOnlyCollection<RankedBallot<TVoter, TCandidate>>(ballots);
+    final roBallots = $(ballots).toReadOnlyCollection();
 
     // Check voter uniqueness
-    List<Player> voterList = new List.from(ballots.map((pb) => pb.voter));
+    final voterList = roBallots.select((b) => b.voter).toReadOnlyCollection();
     requireArgument(CollectionUtil.allUnique(voterList),
       "Only one ballot per voter is allowed");
 
@@ -91,7 +91,7 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
     }
 
     return new CondorcetElection._internal(
-      hashSet, candidateProfiles, bals,
+      hashSet, candidateProfiles, roBallots,
       new ReadOnlyCollection<ElectionPlace<TCandidate>>(places));
   }
 
