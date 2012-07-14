@@ -7,4 +7,8 @@ class PluralityElectionPlace<TCandidate extends Player>
     super(place, candidates) {
       assert(voteCount >= 0);
     }
+
+    String toString() {
+      return "Votes: $voteCount; ${super.toString()}";
+    }
 }

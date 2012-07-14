@@ -7,4 +7,6 @@ class ElectionPlace<TCandidate extends Player>
     assert(place > 0);
     assert(length > 0);
   }
+
+  String toString() => "Place: $place; ${super.toString()}";
 }
