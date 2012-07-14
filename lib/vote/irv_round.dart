@@ -5,23 +5,32 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
     Enumerable<TCandidate> eliminatedCandidates) {
 
     final cleanedBallots = ballots.select((b) {
-      return new Tuple(b, $(b.rank).exclude(eliminatedCandidates)
-          .toReadOnlyCollection());
+      final pruned = $(b.rank).exclude(eliminatedCandidates)
+          .toReadOnlyCollection();
+      final winner = pruned.length == 0 ?
+          null : pruned[0];
+      return new Tuple3(b, pruned, winner);
     });
 
-    final candidateAllocations = cleanedBallots.group((tuple) {
-      if(tuple.Item2.length == 0) {
-        throw 'uh...um...figure out eliminted folks';
-      } else {
-        return tuple.Item2[0];
-      }
+    final candidateAllocations = cleanedBallots.group((tuple) => tuple.Item3);
+
+    final voteGroups = $(candidateAllocations.getKeys()).group((c) {
+      return candidateAllocations[c].length;
     });
 
+    final placeVotes = $(voteGroups.getKeys()).toList();
+    // reverse sorting -> most votes first
+    placeVotes.sort((a,b) => b.compareTo(a));
+    print(placeVotes);
+
+    int totalVotes = 0;
     candidateAllocations.forEach((k,v) {
-      print(k);
-      print(v.length);
+      assert(v != null);
+      assert(v.length > 0);
+      totalVotes += v.length;
     });
 
+    print(totalVotes);
   }
 
 }
