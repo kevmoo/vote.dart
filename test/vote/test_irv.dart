@@ -5,6 +5,7 @@ class TestIrv {
       test('two candidates', _testTwoCandidatesObvious);
       test('two candidates, tied', _testTwoCandidatesTied);
       test('three candidates, tied', _threeWayTieForFirst);
+      test('Ice Cream', _testIceCream);
     });
   }
 
@@ -31,6 +32,49 @@ class TestIrv {
 
   static void _testTwoCandidatesTied() {
 
+  }
+
+  static void _testIceCream() {
+    var canC = "Chocolate";
+    var canCC = "Chocolate Chunk";
+    var canVan = "Vanilla";
+
+    var voter = 1;
+
+    var ballots = new List<RankedBallot>();
+
+    // 29 cc, c, v
+    for(var i=0;i<29;i++) {
+      ballots.add(new RankedBallot("Voter ${voter++}", [canCC, canC, canVan]));
+    }
+
+    // 31 c, cc, v
+    for(var i=0;i<31;i++) {
+      ballots.add(new RankedBallot("Voter ${voter++}", [canC, canCC, canVan]));
+    }
+
+    // 40 v, c, cc
+    for(var i=0;i<40;i++) {
+      ballots.add(new RankedBallot("Voter ${voter++}", [canVan, canC, canCC]));
+    }
+
+    var ce = new IrvElection(ballots);
+
+    expect(ce, isNotNull);
+    expect(ce.singleWinner, equals(canC));
+    expect(ce.candidates, unorderedEquals([canC, canCC, canVan]));
+    expect(ce.ballots, unorderedEquals(ballots));
+
+    expect(ce.places.length, equals(3));
+
+    expect(ce.places[0].place, equals(1));
+    expect(ce.places[0], unorderedEquals([canC]));
+
+    expect(ce.places[1].place, equals(2));
+    expect(ce.places[1], unorderedEquals([canCC]));
+
+    expect(ce.places[2].place, equals(3));
+    expect(ce.places[2], unorderedEquals([canVan]));
   }
 
   static void _threeWayTieForFirst() {
