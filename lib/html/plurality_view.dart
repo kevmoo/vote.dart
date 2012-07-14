@@ -1,23 +1,20 @@
-class PluralityView {
-  final DivElement _node;
+class PluralityView extends ElectionView {
   PluralityElection _election;
   core.Func1<MapPlayer, num> _mapper;
 
-  PluralityView(this._node, this._election, this._mapper) {
-    _updateElement();
-  }
+  PluralityView(DivElement node, this._election, this._mapper) : super(node);
 
   PluralityElection get election() => _election;
 
   void set election(PluralityElection election) {
     _election = election;
-    _updateElement();
+    markDirty();
   }
 
   void setCandidateColorMap(core.Func1<MapPlayer, num> value) {
     assert(value != null);
     _mapper = value;
-    _updateElement();
+    markDirty();
   }
 
   void _updateElement() {

@@ -1,23 +1,20 @@
-class CondorcetView {
-  final DivElement _node;
+class CondorcetView extends ElectionView {
   CondorcetElection _election;
   core.Func1<MapPlayer, num> _mapper;
 
-  CondorcetView(this._node, this._election, this._mapper) {
-    _updateElement();
-  }
+  CondorcetView(DivElement node, this._election, this._mapper) : super(node);
 
   CondorcetElection get election() => _election;
 
   void set election(CondorcetElection election) {
     _election = election;
-    _updateElement();
+    markDirty();
   }
 
   void setCandidateColorMap(core.Func1<MapPlayer, num> value) {
     assert(value != null);
     _mapper = value;
-    _updateElement();
+    markDirty();
   }
 
   void _updateElement() {
@@ -145,6 +142,5 @@ class CondorcetView {
     }
 
     _node.elements.add(table);
-
   }
 }

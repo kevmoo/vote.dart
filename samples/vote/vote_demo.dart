@@ -21,6 +21,9 @@ class VoteDemo{
   final VoterMap _voterMap;
   final HashMap<MapPlayer, num> _candidateHues;
   final DistanceElection _mapElection;
+  final CondorcetView _condorcetView;
+  final DistanceView _distanceView;
+  final PluralityView _pluralityView;
 
   bool _frameRequested = false;
 
@@ -98,7 +101,7 @@ class VoteDemo{
     var condorcetView = new CondorcetView(condorcetDiv, condorcetElection, mapper);
 
     return new VoteDemo._internal(canvas, stage, voterMap,
-      mapElection, candidateHues);
+      mapElection, candidateHues, condorcetView, pluralityView, distanceView);
   }
 
   VoteDemo._internal(
@@ -106,7 +109,10 @@ class VoteDemo{
     this._stage,
     this._voterMap,
     this._mapElection,
-    this._candidateHues) {
+    this._candidateHues,
+    this._condorcetView,
+    this._pluralityView,
+    this._distanceView) {
     _canvas.on.mouseMove.add(_canvas_mouseMove);
     _canvas.on.mouseOut.add(_canvas_mouseOut);
 
@@ -126,7 +132,10 @@ class VoteDemo{
   }
 
   bool _onFrame(num highResTime){
+    _condorcetView.draw();
     _stage.draw();
+    _pluralityView.draw();
+    _distanceView.draw();
     _frameRequested = false;
   }
 
