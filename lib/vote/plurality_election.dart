@@ -1,29 +1,24 @@
 class PluralityElection<TVoter extends Player, TCandidate extends Player>
   extends Election<TVoter, TCandidate> {
-  final Grouping<TCandidate, PluralityBallot<TVoter, TCandidate>> _ballots;
+  final ReadOnlyCollection<Ballot<TVoter, TCandidate>> ballots;
+  final Grouping<TCandidate, PluralityBallot<TVoter, TCandidate>> _ballotGroup;
   final ReadOnlyCollection<PluralityElectionPlace<TCandidate>> places;
 
-  PluralityElection._internal(
-    this._ballots,
+  PluralityElection._internal(this.ballots, this._ballotGroup,
     Iterable<PluralityElectionPlace<TCandidate>> sourcePlaces) :
       places = new ReadOnlyCollection(sourcePlaces);
 
   factory PluralityElection(
     Collection<PluralityBallot<TVoter, TCandidate>> ballots) {
 
+    final roBallots = $(ballots).toReadOnlyCollection();
+
     // Check voter uniqueness
-    List<Player> voterList = new List.from(ballots.map((pb) => pb.voter));
+    final voterList = roBallots.select((pb) => pb.voter).toReadOnlyCollection();
     requireArgument(CollectionUtil.allUnique(voterList),
       "Only one ballot per voter is allowed");
 
-    var map = new HashSet<PluralityBallot<TVoter, TCandidate>>();
-    map.addAll(ballots);
-
-    Func1<PluralityBallot<TVoter, TCandidate>, TCandidate> getKeyFunc =
-        (pb) => pb.choice;
-
-    var group = new Grouping<TCandidate,
-        PluralityBallot<TVoter, TCandidate>>(ballots, getKeyFunc);
+    final group = roBallots.group((pb) => pb.choice);
 
     //
     // create a hashmap of candidates keyed on their vote count
@@ -53,10 +48,8 @@ class PluralityElection<TVoter extends Player, TCandidate extends Player>
       place += p.length;
     }
 
-    return new PluralityElection._internal(group, places);
+    return new PluralityElection._internal(roBallots, group, places);
   }
 
-  Collection<TCandidate> get candidates() => _ballots.getKeys();
-
-  Iterable<Ballot<TVoter, TCandidate>> get ballots() => _ballots.getValues();
+  Collection<TCandidate> get candidates() => _ballotGroup.getKeys();
 }
