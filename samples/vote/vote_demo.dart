@@ -116,12 +116,9 @@ class VoteDemo{
     _canvas.on.mouseMove.add(_canvas_mouseMove);
     _canvas.on.mouseOut.add(_canvas_mouseOut);
 
-    var allPlayers = new List<MapPlayer>();
-    allPlayers.addAll(core.$(_mapElection.ballots).select((b) => b.voter).toList());
-    allPlayers.addAll(_mapElection.candidates);
-
-    _voterMap.players = allPlayers;
-    _voterMap.drawer = _drawVoter;
+    _voterMap.voters = core.$(_mapElection.ballots).select((b) => b.voter).toList();
+    _voterMap.candidates = _mapElection.candidates;
+    _voterMap.candidateColorMapper = _getHue;
   }
 
   void requestFrame(){
@@ -132,8 +129,11 @@ class VoteDemo{
   }
 
   bool _onFrame(num highResTime){
-    _condorcetView.draw();
     _stage.draw();
+    if(_voterMap.mouse  != null){
+      RetainedDebug.borderHitTest(_stage, _voterMap.mouse );
+    }
+    _condorcetView.draw();
     _pluralityView.draw();
     _distanceView.draw();
     _frameRequested = false;
@@ -149,53 +149,16 @@ class VoteDemo{
     requestFrame();
   }
 
-  void _drawVoter(CanvasRenderingContext2D ctx, MapPlayer player,
-                         num radius) {
-    String fillStyle;
-    String text = null;
-    bool shadow = false;
-
+  num _getHue(MapPlayer player) {
     MapPlayer candidate;
-    num sat;
-
     if(_candidateHues.containsKey(player)) {
       candidate = player;
-      sat = 1;
-      radius = radius * 2;
-      text = player.name;
-      shadow = true;
     }
     else {
       final ballot = _mapElection.ballots
-          .where((b) => b.voter == player)
-          .toList()[0];
-      sat = 0.5;
+          .first((b) => b.voter == player);
       candidate = ballot.rank[0];
-      fillStyle = '#cccccc';
     }
-    final hue = _candidateHues[candidate];
-    final rgb = (new core.HslColor(hue, sat, 0.75)).toRgb();
-    fillStyle = rgb.toHex();
-
-    ctx.fillStyle = fillStyle;
-    final x = player.location.x;
-    final y = player.location.y;
-    CanvasUtil.centeredCircle(ctx, x, y, radius);
-    if(shadow) {
-      ctx.shadowColor = 'black';
-      ctx.shadowBlur = 6;
-      ctx.shadowOffsetX = 2;
-      ctx.shadowOffsetY = 2;
-    }
-    ctx.fill();
-    ctx.shadowColor = 'transparent';
-
-    if(text != null) {
-      ctx.font = '1px Helvetica';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'top';
-      ctx.fillStyle = 'black';
-      ctx.fillText(text, x, y - radius);
-    }
+    return _candidateHues[candidate];
   }
 }
