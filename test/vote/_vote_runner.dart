@@ -16,6 +16,6 @@ void runVoteTests() {
     TestRankedBallot.run();
     TestCondorcetElection.run();
     TestCondorcetPair.run();
-    TestIrv.run();
+    //TestIrv.run();
   });
 }
