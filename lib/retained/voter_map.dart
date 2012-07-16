@@ -123,7 +123,11 @@ class VoterMap extends PElement implements IElementParent {
       ctx.fillStyle = 'yellow';
       var mouseCoord = new core.Coordinate(mouse.x, mouse.y);
       mouseCoord = _tx.createInverse().transformCoordinate(mouseCoord);
-      CanvasUtil.star(ctx, mouseCoord.x, mouseCoord.y, _radius, 6);
+      CanvasUtil.star(ctx, mouseCoord.x, mouseCoord.y, _radius * 3, 5);
+      ctx.shadowColor = 'black';
+      ctx.shadowBlur = 6;
+      ctx.shadowOffsetX = 2;
+      ctx.shadowOffsetY = 2;
       ctx.fill();
       ctx.restore();
     }
