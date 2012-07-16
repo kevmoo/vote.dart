@@ -10,3 +10,4 @@
 #source('retained/voter_map.dart');
 #source('retained/player_map.dart');
 #source('retained/candidate_map.dart');
+#source('retained/candidate_element.dart');
