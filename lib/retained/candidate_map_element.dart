@@ -1,13 +1,15 @@
-class CandidateMap extends PlayerMap implements ElementParent {
+class CandidateMap extends ElementParentImpl {
+  final List<MapPlayer> _players;
+  final core.AffineTransform _tx;
+
+  num _radius;
+  core.Func1<MapPlayer, num> _mapper;
   List<CandidateElement> _elements;
 
   CandidateMap(int w, int h) :
+    _tx = new core.AffineTransform(),
+    _players = new List<MapPlayer>(),
     super(w, h);
-
-  void childInvalidated(PElement child){
-    assert(hasVisualChild(child));
-    invalidateDraw();
-  }
 
   int get visualChildCount() => _players.length;
 
@@ -16,21 +18,20 @@ class CandidateMap extends PlayerMap implements ElementParent {
     return _elements[index];
   }
 
-  void update(){
-    var length = visualChildCount;
-    for(var i=0;i<length;i++){
-      final element = getVisualChild(i);
-      element.update();
-    }
-    super.update();
+  void setTransform(core.AffineTransform value) {
+    core.requireArgumentNotNull(value, 'value');
+    _tx.setFromTransfrom(value);
+    invalidateDraw();
   }
 
-  void drawOverride(CanvasRenderingContext2D ctx){
-    var length = visualChildCount;
-    for(var i=0;i<length;i++){
-      var element = getVisualChild(i);
-      element.drawInternal(ctx);
-    }
+  Iterable<MapPlayer> get players() => _players;
+
+  void set players(Collection<MapPlayer> value) {
+    core.requireArgumentNotNull(value, "value");
+    _players.clear();
+    _players.addAll(value);
+    _elements = null;
+    invalidateDraw();
   }
 
   void _ensureElements() {

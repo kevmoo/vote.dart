@@ -1,4 +1,4 @@
-class VoterMap extends PElement implements ElementParent {
+class VoterMap extends ElementParentImpl {
   PlayerMap _voterMap;
   CandidateMap _candidateMap;
   final core.AffineTransform _tx;
@@ -36,11 +36,6 @@ class VoterMap extends PElement implements ElementParent {
       default:
         throw 'bad index, foo!';
     }
-  }
-
-  void childInvalidated(PElement child) {
-    assert(hasVisualChild(child));
-    invalidateDraw();
   }
 
   void update(){
@@ -81,7 +76,6 @@ class VoterMap extends PElement implements ElementParent {
     [_voterMap, _candidateMap].forEach((m) {
       m._radius = _radius;
       m.setTransform(_tx);
-      m.update();
     });
 
     super.update();
@@ -108,14 +102,6 @@ class VoterMap extends PElement implements ElementParent {
   void set candidates(Collection<MapPlayer> value) {
     core.requireArgumentNotNull(value, "value");
     _candidateMap.players = value;
-  }
-
-  void drawOverride(CanvasRenderingContext2D ctx){
-    assert(core.isValidNumber(_radius));
-
-    [_voterMap, _candidateMap].forEach((m) {
-      m.draw(ctx);
-    });
   }
 
   // For each player
