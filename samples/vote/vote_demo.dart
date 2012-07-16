@@ -131,10 +131,10 @@ class VoteDemo{
   }
 
   bool _onFrame(num highResTime){
+    Mouse.markMouseOver(_stage, _voterMap.mouse);
+
     _stage.draw();
-    if(_voterMap.mouse  != null){
-      RetainedDebug.borderHitTest(_stage, _voterMap.mouse );
-    }
+
     _condorcetView.draw();
     _pluralityView.draw();
     _distanceView.draw();

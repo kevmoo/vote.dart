@@ -60,10 +60,14 @@ class CandidateElement extends PElement {
   void drawOverride(CanvasRenderingContext2D ctx){
     ctx.fillStyle = _color;
     CanvasUtil.ellipse(ctx, 0, 0, this.width, this.height);
+
+    final num shadowDistance = Mouse.isMouseDirectlyOver(this) ?
+        4 : 2;
+
     ctx.shadowColor = 'black';
     ctx.shadowBlur = 6;
-    ctx.shadowOffsetX = 2;
-    ctx.shadowOffsetY = 2;
+    ctx.shadowOffsetX = shadowDistance;
+    ctx.shadowOffsetY = shadowDistance;
     ctx.fill();
 
     ctx.shadowColor = 'transparent';
