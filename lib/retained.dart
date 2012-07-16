@@ -7,7 +7,7 @@
 #import('vote.dart');
 #import('map.dart');
 
-#source('retained/voter_map.dart');
-#source('retained/player_map.dart');
-#source('retained/candidate_map.dart');
+#source('retained/map_element.dart');
+#source('retained/player_map_element.dart');
+#source('retained/candidate_map_element.dart');
 #source('retained/candidate_element.dart');
