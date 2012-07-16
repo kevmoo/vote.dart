@@ -1,4 +1,4 @@
-class CandidateMap extends PlayerMap implements IElementParent {
+class CandidateMap extends PlayerMap implements ElementParent {
   List<CandidateElement> _elements;
 
   CandidateMap(int w, int h) :
@@ -41,7 +41,7 @@ class CandidateMap extends PlayerMap implements IElementParent {
         final rgb = (new core.HslColor(hue, 0.5, 0.6)).toRgb();
         final ce = new CandidateElement(_radius * 4, _radius * 4,
           rgb.toHex(), p.name);
-        ce.claim(this);
+        ce.registerParent(this);
         final tempTx = ce.addTransform();
         tempTx.concatenate(_tx);
         tempTx.translate(p.location.x - 2 * _radius, p.location.y - 2 * _radius);

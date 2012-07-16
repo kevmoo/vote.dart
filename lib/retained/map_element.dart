@@ -1,4 +1,4 @@
-class VoterMap extends PElement implements IElementParent {
+class VoterMap extends PElement implements ElementParent {
   PlayerMap _voterMap;
   CandidateMap _candidateMap;
   final core.AffineTransform _tx;
@@ -13,9 +13,9 @@ class VoterMap extends PElement implements IElementParent {
     _tx = new core.AffineTransform(),
     super(w, h) {
     _voterMap = new PlayerMap(w, h);
-    _voterMap.claim(this);
+    _voterMap.registerParent(this);
     _candidateMap = new CandidateMap(w, h);
-    _candidateMap.claim(this);
+    _candidateMap.registerParent(this);
   }
 
   core.Coordinate get mouse() => _mouse;
