@@ -20,6 +20,7 @@ class VoteDemo{
   final Stage _stage;
   final VoterMap _voterMap;
   final HashMap<MapPlayer, num> _candidateHues;
+  final HashMap<MapPlayer, num> _playerHues;
   final DistanceElection _mapElection;
   final CondorcetView _condorcetView;
   final DistanceView _distanceView;
@@ -112,7 +113,8 @@ class VoteDemo{
     this._candidateHues,
     this._condorcetView,
     this._pluralityView,
-    this._distanceView) {
+    this._distanceView) :
+      _playerHues = new HashMap<MapPlayer, num>() {
     _canvas.on.mouseMove.add(_canvas_mouseMove);
     _canvas.on.mouseOut.add(_canvas_mouseOut);
 
@@ -150,15 +152,15 @@ class VoteDemo{
   }
 
   num _getHue(MapPlayer player) {
-    MapPlayer candidate;
-    if(_candidateHues.containsKey(player)) {
-      candidate = player;
-    }
-    else {
-      final ballot = _mapElection.ballots
-          .first((b) => b.voter == player);
-      candidate = ballot.rank[0];
-    }
-    return _candidateHues[candidate];
+    return _playerHues.putIfAbsent(player, (){
+      var color = _candidateHues[player];
+      if(color == null) {
+        final ballot = _mapElection.ballots
+            .first((b) => b.voter == player);
+        return _candidateHues[ballot.rank[0]];
+      } else {
+        return color;
+      }
+    });
   }
 }
