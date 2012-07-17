@@ -1,6 +1,6 @@
-class VoterMap extends ElementParentImpl {
-  PlayerMap _voterMap;
-  CandidateMap _candidateMap;
+class RootMapElement extends ElementParentImpl {
+  PlayerMapElement _voterMap;
+  CandidateMapElement _candidateMap;
   final core.AffineTransform _tx;
 
   num _averageCloseness;
@@ -9,12 +9,12 @@ class VoterMap extends ElementParentImpl {
 
   core.Coordinate _mouse;
 
-  VoterMap(int w, int h) :
+  RootMapElement(int w, int h) :
     _tx = new core.AffineTransform(),
     super(w, h) {
-    _voterMap = new PlayerMap(w, h);
+    _voterMap = new PlayerMapElement(w, h);
     _voterMap.registerParent(this);
-    _candidateMap = new CandidateMap(w, h);
+    _candidateMap = new CandidateMapElement(w, h);
     _candidateMap.registerParent(this);
   }
 

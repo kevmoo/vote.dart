@@ -18,7 +18,7 @@ main(){
 class VoteDemo{
   final CanvasElement _canvas;
   final Stage _stage;
-  final VoterMap _voterMap;
+  final RootMapElement _voterMap;
   final HashMap<MapPlayer, num> _candidateHues;
   final HashMap<MapPlayer, num> _playerHues;
   final DistanceElection _mapElection;
@@ -30,7 +30,7 @@ class VoteDemo{
 
   factory VoteDemo(CanvasElement canvas, DivElement pluralityDiv,
     DivElement distanceDiv, DivElement condorcetDiv) {
-    var voterMap = new VoterMap(canvas.width, canvas.height);
+    var voterMap = new RootMapElement(canvas.width, canvas.height);
 
     final span = 20;
     final spanTweak = span / (span - 1);

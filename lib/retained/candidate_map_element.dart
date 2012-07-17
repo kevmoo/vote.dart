@@ -1,4 +1,4 @@
-class CandidateMap extends ElementParentImpl {
+class CandidateMapElement extends ElementParentImpl {
   final List<MapPlayer> _players;
   final core.AffineTransform _tx;
 
@@ -6,7 +6,7 @@ class CandidateMap extends ElementParentImpl {
   core.Func1<MapPlayer, num> _mapper;
   List<CandidateElement> _elements;
 
-  CandidateMap(int w, int h) :
+  CandidateMapElement(int w, int h) :
     _tx = new core.AffineTransform(),
     _players = new List<MapPlayer>(),
     super(w, h);

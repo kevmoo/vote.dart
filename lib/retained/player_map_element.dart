@@ -1,11 +1,11 @@
-class PlayerMap extends PElement {
+class PlayerMapElement extends PElement {
   final List<MapPlayer> _players;
   final core.AffineTransform _tx;
 
   num _radius;
   core.Func1<MapPlayer, num> _mapper;
 
-  PlayerMap(int w, int h) :
+  PlayerMapElement(int w, int h) :
     _tx = new core.AffineTransform(),
     _players = new List<MapPlayer>(),
     super(w, h, true) {
