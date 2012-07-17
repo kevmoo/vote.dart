@@ -132,8 +132,6 @@ class VoteDemo{
   }
 
   bool _onFrame(num highResTime){
-    Mouse.markMouseOver(_stage, _mouse);
-
     _stage.draw();
 
     _condorcetView.draw();
@@ -143,12 +141,17 @@ class VoteDemo{
   }
 
   void _canvas_mouseMove(MouseEvent e){
-    _mouse = new core.Coordinate(e.offsetX, e.offsetY);
-    requestFrame();
+    _setMouse(new core.Coordinate(e.offsetX, e.offsetY));
   }
 
   void _canvas_mouseOut(MouseEvent e){
-    _mouse = null;
+    _setMouse(null);
+  }
+  
+  void _setMouse(core.Coordinate value) {
+    _mouse = value;
+    final hits = Mouse.markMouseOver(_stage, _mouse);
+    print(hits);
     requestFrame();
   }
 
