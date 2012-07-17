@@ -1,7 +1,15 @@
 class CandidateElement extends PElement {
   final String _color;
   final String _text;
-  CandidateElement(num w, num h, this._color, this._text) : super(w, h);
+  core.AffineTransform _tx;
+
+  CandidateElement(num w, num h, this._color, this._text) : super(w, h) {
+    _tx = addTransform();
+  }
+
+  void requestDrag(core.Vector delta) {
+    _tx.translate(delta.x, delta.y);
+  }
 
   void drawOverride(CanvasRenderingContext2D ctx){
     ctx.fillStyle = _color;

@@ -1,6 +1,7 @@
 #import('dart:html');
 #import('../../../dartlib/lib/core.dart', prefix:'core');
 #import('../../../dartlib/lib/retained.dart');
+#import('../../../dartlib/lib/html.dart');
 #import('../../lib/vote.dart');
 #import('../../lib/map.dart');
 #import('../../lib/retained.dart');
@@ -18,6 +19,8 @@ main(){
 class VoteDemo{
   final CanvasElement _canvas;
   final Stage _stage;
+  final Dragger _dragger;
+
   final RootMapElement _voterMap;
   final HashMap<MapPlayer, num> _candidateHues;
   final HashMap<MapPlayer, num> _playerHues;
@@ -26,7 +29,8 @@ class VoteDemo{
   final DistanceView _distanceView;
   final PluralityView _pluralityView;
 
-  core.Coordinate _mouse;
+  core.Coordinate _mouseLocation;
+  CandidateElement _overCandidate, _dragCandidate;
   bool _frameRequested = false;
 
   factory VoteDemo(CanvasElement canvas, DivElement pluralityDiv,
@@ -102,13 +106,16 @@ class VoteDemo{
     var condorcetElection = new CondorcetElection(mapElection.ballots);
     var condorcetView = new CondorcetView(condorcetDiv, condorcetElection, mapper);
 
-    return new VoteDemo._internal(canvas, stage, voterMap,
+    var dragger = new Dragger(canvas);
+
+    return new VoteDemo._internal(canvas, stage, dragger, voterMap,
       mapElection, candidateHues, condorcetView, pluralityView, distanceView);
   }
 
   VoteDemo._internal(
     this._canvas,
     this._stage,
+    this._dragger,
     this._voterMap,
     this._mapElection,
     this._candidateHues,
@@ -116,6 +123,10 @@ class VoteDemo{
     this._pluralityView,
     this._distanceView) :
       _playerHues = new HashMap<MapPlayer, num>() {
+
+    _dragger.dragDelta.add(_onDrag);
+    _dragger.dragStart.add(_onDragStart);
+
     _canvas.on.mouseMove.add(_canvas_mouseMove);
     _canvas.on.mouseOut.add(_canvas_mouseOut);
 
@@ -128,6 +139,20 @@ class VoteDemo{
     if(!_frameRequested) {
       _frameRequested = true;
       window.webkitRequestAnimationFrame(_onFrame);
+    }
+  }
+
+  void _onDrag(core.Vector delta) {
+    assert(_dragCandidate != null);
+    _dragCandidate.requestDrag(delta);
+    _requestFrame();
+  }
+
+  void _onDragStart(core.CancelableEventArgs e) {
+    if(_overCandidate == null) {
+      e.cancel();
+    } else {
+      _dragCandidate = _overCandidate;
     }
   }
 
@@ -147,11 +172,17 @@ class VoteDemo{
   void _canvas_mouseOut(MouseEvent e){
     _setMouse(null);
   }
-  
+
   void _setMouse(core.Coordinate value) {
-    _mouse = value;
-    final hits = Mouse.markMouseOver(_stage, _mouse);
-    print(hits);
+    _mouseLocation = value;
+    final hits = Mouse.markMouseOver(_stage, _mouseLocation);
+    if(hits != null && hits.length > 0 && hits[0] is CandidateElement) {
+      _canvas.style.cursor = 'pointer';
+      _overCandidate = hits[0];
+    } else {
+      _canvas.style.cursor = 'auto';
+      _overCandidate = null;
+    }
     _requestFrame();
   }
 
