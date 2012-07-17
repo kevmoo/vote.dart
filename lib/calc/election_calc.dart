@@ -1,7 +1,3 @@
-#library('vote_calc');
-
-#import("dart:isolate");
-
 class ElectionCalc {
   SendPort _sendPort;
 
