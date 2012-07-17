@@ -12,7 +12,7 @@ main(){
   DivElement distanceDiv = document.query('#distanceView');
   DivElement condorcetDiv = document.query('#condorcetView');
   var demo = new VoteDemo(canvas, pluralityDiv, distanceDiv, condorcetDiv);
-  demo.requestFrame();
+  demo._requestFrame();
 }
 
 class VoteDemo{
@@ -124,7 +124,7 @@ class VoteDemo{
     _voterMap.candidateColorMapper = _getHue;
   }
 
-  void requestFrame(){
+  void _requestFrame(){
     if(!_frameRequested) {
       _frameRequested = true;
       window.webkitRequestAnimationFrame(_onFrame);
@@ -152,7 +152,7 @@ class VoteDemo{
     _mouse = value;
     final hits = Mouse.markMouseOver(_stage, _mouse);
     print(hits);
-    requestFrame();
+    _requestFrame();
   }
 
   num _getHue(MapPlayer player) {
