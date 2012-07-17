@@ -26,6 +26,7 @@ class VoteDemo{
   final DistanceView _distanceView;
   final PluralityView _pluralityView;
 
+  core.Coordinate _mouse;
   bool _frameRequested = false;
 
   factory VoteDemo(CanvasElement canvas, DivElement pluralityDiv,
@@ -131,7 +132,7 @@ class VoteDemo{
   }
 
   bool _onFrame(num highResTime){
-    Mouse.markMouseOver(_stage, _voterMap.mouse);
+    Mouse.markMouseOver(_stage, _mouse);
 
     _stage.draw();
 
@@ -142,12 +143,12 @@ class VoteDemo{
   }
 
   void _canvas_mouseMove(MouseEvent e){
-    _voterMap.mouse = new core.Coordinate(e.offsetX, e.offsetY);
+    _mouse = new core.Coordinate(e.offsetX, e.offsetY);
     requestFrame();
   }
 
   void _canvas_mouseOut(MouseEvent e){
-    _voterMap.mouse = null;
+    _mouse = null;
     requestFrame();
   }
 

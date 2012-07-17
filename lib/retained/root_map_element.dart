@@ -7,8 +7,6 @@ class RootMapElement extends ElementParentImpl {
   core.Rect _bounds;
   num _radius;
 
-  core.Coordinate _mouse;
-
   RootMapElement(int w, int h) :
     _tx = new core.AffineTransform(),
     super(w, h) {
@@ -16,13 +14,6 @@ class RootMapElement extends ElementParentImpl {
     _voterMap.registerParent(this);
     _candidateMap = new CandidateMapElement(w, h);
     _candidateMap.registerParent(this);
-  }
-
-  core.Coordinate get mouse() => _mouse;
-
-  void set mouse(core.Coordinate value) {
-    _mouse = value;
-    invalidateDraw();
   }
 
   int get visualChildCount() => 2;
