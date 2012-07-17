@@ -6,6 +6,7 @@
 #import('../../lib/map.dart');
 #import('../../lib/retained.dart');
 #import('../../lib/html.dart');
+#import('../../lib/calc/election_calc.dart');
 
 main(){
   CanvasElement canvas = document.query("#content");
@@ -20,6 +21,8 @@ class VoteDemo{
   final CanvasElement _canvas;
   final Stage _stage;
   final Dragger _dragger;
+
+  final ElectionCalc _calcEngine;
 
   final RootMapElement _voterMap;
   final HashMap<MapPlayer, num> _candidateHues;
@@ -122,7 +125,8 @@ class VoteDemo{
     this._condorcetView,
     this._pluralityView,
     this._distanceView) :
-      _playerHues = new HashMap<MapPlayer, num>() {
+      _playerHues = new HashMap<MapPlayer, num>(),
+      _calcEngine = new ElectionCalc() {
 
     _dragger.dragDelta.add(_onDrag);
     _dragger.dragStart.add(_onDragStart);
@@ -145,6 +149,15 @@ class VoteDemo{
   void _onDrag(core.Vector delta) {
     assert(_dragCandidate != null);
     _dragCandidate.requestDrag(delta);
+
+    print('sending');
+    final future = _calcEngine.doCalc(delta);
+    future.then((m) {
+      print('replied!');
+      print(m);
+    });
+    print('done sending');
+
     _requestFrame();
   }
 
