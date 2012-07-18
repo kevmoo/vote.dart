@@ -68,6 +68,7 @@ class VoteDemo{
     _canvas.on.mouseMove.add(_canvas_mouseMove);
     _canvas.on.mouseOut.add(_canvas_mouseOut);
 
+    _calcEngine.locationDataChanged.add(_locationDataUpdated);
     _calcEngine.distanceElectionChanged.add(_distanceElectionUpdated);
     _calcEngine.pluralityElectionChanged.add(_pluralityElectionUpdated);
     _calcEngine.condorcetElectionChanged.add(_condorcetElectionUpdated);
@@ -76,7 +77,11 @@ class VoteDemo{
     final initialData = new LocationData.random();
 
     _calcEngine.locationData = initialData;
-    _rootMapElement.locationData = initialData;
+  }
+
+  void _locationDataUpdated(Dynamic args) {
+    assert(_calcEngine.locationData != null);
+    _rootMapElement.locationData = _calcEngine.locationData;
 
     _distanceView.setCandidateColorMap(_calcEngine.locationData.getHue);
     _pluralityView.setCandidateColorMap(_calcEngine.locationData.getHue);

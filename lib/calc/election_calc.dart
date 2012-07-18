@@ -39,6 +39,9 @@ class ElectionCalc {
   //
   // Events
   //
+  EventRoot<EventArgs> get locationDataChanged() =>
+      _distanceElectionMapper.inputChanged;
+
   EventRoot<EventArgs> get distanceElectionChanged() =>
       _distanceElectionMapper.outputChanged;
 
