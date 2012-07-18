@@ -18,3 +18,17 @@
 
 #source('vote/irv_election.dart');
 #source('vote/irv_round.dart');
+
+Date _last;
+
+void log(String message) {
+  final now = new Date.now();
+  if(_last != null) {
+    final delta = now.difference(_last);
+    print([delta, message]);
+  }
+  else {
+    print(message);
+  }
+  _last = now;
+}
