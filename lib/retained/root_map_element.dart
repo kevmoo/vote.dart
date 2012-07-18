@@ -2,6 +2,7 @@ class RootMapElement extends ElementParentImpl {
   final PlayerMapElement _voterMap;
   final CandidateMapElement _candidateMap;
   final core.AffineTransform _tx;
+  final core.EventHandle<LocationData> _requestLocationUpdateHandle;
 
   num _averageCloseness;
   core.Rect _bounds;
@@ -11,10 +12,14 @@ class RootMapElement extends ElementParentImpl {
     _tx = new core.AffineTransform(),
     _voterMap = new PlayerMapElement(w, h),
     _candidateMap = new CandidateMapElement(w, h),
+    _requestLocationUpdateHandle = new core.EventHandle<LocationData>(),
     super(w, h) {
     _voterMap.registerParent(this);
     _candidateMap.registerParent(this);
   }
+
+  core.EventRoot<LocationData> get locationUpdateRequest() =>
+      _requestLocationUpdateHandle;
 
   int get visualChildCount() => 2;
 
@@ -63,9 +68,26 @@ class RootMapElement extends ElementParentImpl {
     _candidateMap.players = value;
   }
 
-  void dragCandidate(_dragCandidate, delta) {
-    print(_dragCandidate);
-    print(delta);
+  void dragCandidate(MapPlayer candidate, core.Vector delta) {
+    final candidateLocPixels = _tx.transformCoordinate(candidate.location);
+    final newCanLocPix = candidateLocPixels + delta;
+
+    final newLocation = _tx.createInverse().transformCoordinate(newCanLocPix);
+
+    final roVoters = new core.ReadOnlyCollection(_voterMap.players);
+    final candidates = new List<MapPlayer>.from(_candidateMap.players);
+
+    final index = candidates.indexOf(candidate);
+
+    candidate.location = newLocation;
+
+    candidates[index] = candidate;
+
+    final roCandidates = new core.ReadOnlyCollection.wrap(candidates);
+
+    final randomData = new LocationData(roVoters, roCandidates);
+
+    _requestLocationUpdateHandle.fireEvent(randomData);
   }
 
   void update(){

@@ -74,6 +74,10 @@ class VoteDemo{
     _calcEngine.condorcetElectionChanged.add(_condorcetElectionUpdated);
     _calcEngine.voterHueMapperChanged.add(_voterHueMapperUpdated);
 
+    _rootMapElement.locationUpdateRequest.add((data) {
+      _calcEngine.locationData = data;
+    });
+
     final initialData = new LocationData.random();
 
     _calcEngine.locationData = initialData;
