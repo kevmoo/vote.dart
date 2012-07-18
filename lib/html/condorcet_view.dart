@@ -2,7 +2,7 @@ class CondorcetView extends ElectionView {
   CondorcetElection _election;
   core.Func1<MapPlayer, num> _mapper;
 
-  CondorcetView(DivElement node, this._election, this._mapper) : super(node);
+  CondorcetView(DivElement node) : super(node);
 
   CondorcetElection get election() => _election;
 

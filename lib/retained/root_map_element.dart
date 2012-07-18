@@ -1,6 +1,6 @@
 class RootMapElement extends ElementParentImpl {
-  PlayerMapElement _voterMap;
-  CandidateMapElement _candidateMap;
+  final PlayerMapElement _voterMap;
+  final CandidateMapElement _candidateMap;
   final core.AffineTransform _tx;
 
   num _averageCloseness;
@@ -9,10 +9,10 @@ class RootMapElement extends ElementParentImpl {
 
   RootMapElement(int w, int h) :
     _tx = new core.AffineTransform(),
+    _voterMap = new PlayerMapElement(w, h),
+    _candidateMap = new CandidateMapElement(w, h),
     super(w, h) {
-    _voterMap = new PlayerMapElement(w, h);
     _voterMap.registerParent(this);
-    _candidateMap = new CandidateMapElement(w, h);
     _candidateMap.registerParent(this);
   }
 
@@ -29,9 +29,43 @@ class RootMapElement extends ElementParentImpl {
     }
   }
 
+  void set locationData(LocationData data) {
+    voters = data.voters;
+    candidates = data.candidates;
+    candidateColorMapper = data.getHue;
+    invalidateDraw();
+  }
+
+  Iterable<MapPlayer> get voters() => _voterMap.players;
+
+  void set candidateColorMapper(core.Func1<MapPlayer, num> value) {
+    _voterMap._mapper = _candidateMap._mapper = value;
+  }
+
+  void set voterHueMapper(core.Func1<MapPlayer, num> value) {
+    _voterMap._mapper = value;
+  }
+
+  void set voters(Collection<MapPlayer> value) {
+    core.requireArgumentNotNull(value, "value");
+    final vals = _getAverageCloseness(value);
+    _averageCloseness = vals.Item1;
+    assert(core.isValidNumber(_averageCloseness));
+    _bounds = vals.Item2;
+    assert(_bounds.isValid);
+
+    _radius = null;
+    _voterMap.players = value;
+  }
+
+  void set candidates(Collection<MapPlayer> value) {
+    core.requireArgumentNotNull(value, "value");
+    _candidateMap.players = value;
+  }
+
   void update(){
     // calculate important bits if we need to
-    if(_radius == null) {
+    if(_bounds != null && _radius == null) {
 
       // dimensions of the points factoring in the radius
       final dataScale = new core.Size(_bounds.width + _averageCloseness,
@@ -70,29 +104,6 @@ class RootMapElement extends ElementParentImpl {
     });
 
     super.update();
-  }
-
-  Iterable<MapPlayer> get voters() => _voterMap.players;
-
-  void set candidateColorMapper(core.Func1<MapPlayer, num> value) {
-    _voterMap._mapper = _candidateMap._mapper = value;
-  }
-
-  void set voters(Collection<MapPlayer> value) {
-    core.requireArgumentNotNull(value, "value");
-    final vals = _getAverageCloseness(value);
-    _averageCloseness = vals.Item1;
-    assert(core.isValidNumber(_averageCloseness));
-    _bounds = vals.Item2;
-    assert(_bounds.isValid);
-
-    _radius = null;
-    _voterMap.players = value;
-  }
-
-  void set candidates(Collection<MapPlayer> value) {
-    core.requireArgumentNotNull(value, "value");
-    _candidateMap.players = value;
   }
 
   // For each player

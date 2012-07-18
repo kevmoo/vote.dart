@@ -2,11 +2,12 @@
 #import('../../../dartlib/lib/core.dart', prefix:'core');
 #import('../../../dartlib/lib/retained.dart');
 #import('../../../dartlib/lib/html.dart');
+
 #import('../../lib/vote.dart');
 #import('../../lib/map.dart');
 #import('../../lib/retained.dart');
 #import('../../lib/html.dart');
-#import('../../lib/calc/election_calc.dart');
+#import('../../lib/calc.dart');
 
 main(){
   CanvasElement canvas = document.query("#content");
@@ -22,13 +23,15 @@ class VoteDemo{
   final Stage _stage;
   final Dragger _dragger;
 
-  final RootMapElement _voterMap;
-  final HashMap<MapPlayer, num> _candidateHues;
+  final ElectionCalc _calcEngine;
+
+  final RootMapElement _rootMapElement;
   final HashMap<MapPlayer, num> _playerHues;
-  final DistanceElection _mapElection;
   final CondorcetView _condorcetView;
   final DistanceView _distanceView;
   final PluralityView _pluralityView;
+
+  HashMap<MapPlayer, num> _candidateHues;
 
   core.Coordinate _mouseLocation;
   CandidateElement _overCandidate, _dragCandidate;
@@ -38,102 +41,70 @@ class VoteDemo{
     DivElement distanceDiv, DivElement condorcetDiv) {
     var voterMap = new RootMapElement(canvas.width, canvas.height);
 
-    final span = 20;
-    final spanTweak = span / (span - 1);
-
-    // 100 voters from 1,1 to 10,10
-    final voters = new List<MapPlayer>();
-    for(var i = 0; i < span; i++) {
-      for(var j = 0; j < span; j++) {
-        voters.add(new MapPlayer(new core.Coordinate(i * spanTweak, j * spanTweak)));
-      }
-    }
-
-    // silly spinning wheels to get a semi-random value out of Math.random
-    final blah = Clock.now() % 1000;
-    for(int i = 0; i < blah; i++) {
-      Math.random();
-    }
-
-    final coords = new List<core.Vector>();
-    final middle = new core.Vector(0.5, 0.5);
-    coords.add(middle);
-
-    final bool mirror = false;
-
-    for(var i = 0; i < 4; i++) {
-      var coord = new core.Vector(Math.random(), Math.random());
-      coords.add(coord);
-      if(mirror) {
-        final delta = middle - coord;
-        coords.add(middle + delta);
-        i++;
-      }
-    }
-
-    final candidates = new List<MapPlayer>();
-    core.$(coords)
-      .select((c) => c.scale(span))
-      .forEachWithIndex((c,i) {
-        final candidate = new MapPlayer(c);
-        candidate.name = new String.fromCharCodes([i+65]);
-        candidates.add(candidate);
-      });
-
-
     //
     // Create the stage, etc
     //
 
     final stage = new Stage(canvas, voterMap);
 
-    final HashMap<MapPlayer, num> candidateHues = new HashMap<MapPlayer, num>();
+    var distanceView = new DistanceView(distanceDiv);
 
-    var index = 0;
-    candidates.forEach((c) {
-      final spot = 360 * index / candidates.length;
-      candidateHues[c] = spot;
-      index++;
-    });
+    var pluralityView = new PluralityView(pluralityDiv);
 
-    core.Func1<MapPlayer, num> mapper = (c) => candidateHues[c];
-
-    final mapElection = new DistanceElection(voters, candidates);
-    var distanceView = new DistanceView(distanceDiv, mapElection, mapper);
-
-    var pluralityElection = new PluralityElection(mapElection.ballots);
-    var pluralityView = new PluralityView(pluralityDiv, pluralityElection, mapper);
-
-    var condorcetElection = new CondorcetElection(mapElection.ballots);
-    var condorcetView = new CondorcetView(condorcetDiv, condorcetElection, mapper);
+    var condorcetView = new CondorcetView(condorcetDiv);
 
     var dragger = new Dragger(canvas);
 
-    return new VoteDemo._internal(canvas, stage, dragger, voterMap,
-      mapElection, candidateHues, condorcetView, pluralityView, distanceView);
+    return new VoteDemo._internal(canvas, stage, dragger, voterMap, condorcetView, pluralityView, distanceView);
   }
 
-  VoteDemo._internal(
-    this._canvas,
-    this._stage,
-    this._dragger,
-    this._voterMap,
-    this._mapElection,
-    this._candidateHues,
-    this._condorcetView,
-    this._pluralityView,
-    this._distanceView) :
-      _playerHues = new HashMap<MapPlayer, num>() {
-
+  VoteDemo._internal(this._canvas, this._stage, this._dragger, this._rootMapElement,
+    this._condorcetView, this._pluralityView, this._distanceView)
+  : _playerHues = new HashMap<MapPlayer, num>(),
+    _calcEngine = new ElectionCalc() {
     _dragger.dragDelta.add(_onDrag);
     _dragger.dragStart.add(_onDragStart);
 
     _canvas.on.mouseMove.add(_canvas_mouseMove);
     _canvas.on.mouseOut.add(_canvas_mouseOut);
 
-    _voterMap.voters = core.$(_mapElection.ballots).select((b) => b.voter).toList();
-    _voterMap.candidates = _mapElection.candidates;
-    _voterMap.candidateColorMapper = _getHue;
+    _calcEngine.distanceElectionChanged.add(_distanceElectionUpdated);
+    _calcEngine.pluralityElectionChanged.add(_pluralityElectionUpdated);
+    _calcEngine.condorcetElectionChanged.add(_condorcetElectionUpdated);
+    _calcEngine.voterHueMapperChanged.add(_voterHueMapperUpdated);
+
+    final initialData = new LocationData.random();
+
+    _calcEngine.locationData = initialData;
+    _rootMapElement.locationData = initialData;
+
+    _distanceView.setCandidateColorMap(_calcEngine.locationData.getHue);
+    _pluralityView.setCandidateColorMap(_calcEngine.locationData.getHue);
+    _condorcetView.setCandidateColorMap(_calcEngine.locationData.getHue);
+  }
+
+  void _distanceElectionUpdated(Dynamic args) {
+    assert(_calcEngine.distanceElection != null);
+    _distanceView.election = _calcEngine.distanceElection;
+    _requestFrame();
+  }
+
+  void _pluralityElectionUpdated(Dynamic args) {
+    assert(_calcEngine.pluralityElection != null);
+    _pluralityView.election = _calcEngine.pluralityElection;
+    _requestFrame();
+  }
+
+  void _condorcetElectionUpdated(Dynamic args) {
+    assert(_calcEngine.condorcetElection != null);
+    _condorcetView.election = _calcEngine.condorcetElection;
+    _requestFrame();
+  }
+
+  void _voterHueMapperUpdated(Dynamic args) {
+    assert(_calcEngine.voterHueMapper != null);
+    _rootMapElement.voterHueMapper = _calcEngine.voterHueMapper;
+    _requestFrame();
   }
 
   void _requestFrame(){
@@ -185,18 +156,5 @@ class VoteDemo{
       _overCandidate = null;
     }
     _requestFrame();
-  }
-
-  num _getHue(MapPlayer player) {
-    return _playerHues.putIfAbsent(player, (){
-      var color = _candidateHues[player];
-      if(color == null) {
-        final ballot = _mapElection.ballots
-            .first((b) => b.voter == player);
-        return _candidateHues[ballot.rank[0]];
-      } else {
-        return color;
-      }
-    });
   }
 }

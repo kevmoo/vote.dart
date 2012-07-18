@@ -2,7 +2,7 @@ class PluralityView extends ElectionView {
   PluralityElection _election;
   core.Func1<MapPlayer, num> _mapper;
 
-  PluralityView(DivElement node, this._election, this._mapper) : super(node);
+  PluralityView(DivElement node) : super(node);
 
   PluralityElection get election() => _election;
 

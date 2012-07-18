@@ -2,7 +2,9 @@ class DistanceView extends ElectionView {
   core.Func1<MapPlayer, num> _mapper;
   DistanceElection<MapPlayer, MapPlayer> _election;
 
-  DistanceView(DivElement node, this._election, this._mapper) : super(node);
+  DistanceView(DivElement node) : super(node) {
+    _mapper = (c) => 0;
+  }
 
   void setCandidateColorMap(core.Func1<MapPlayer, num> value) {
     assert(value != null);
@@ -10,7 +12,7 @@ class DistanceView extends ElectionView {
     markDirty();
   }
 
-  void setElection(DistanceElection<MapPlayer, MapPlayer> value) {
+  void set election(DistanceElection<MapPlayer, MapPlayer> value) {
     _election = value;
     markDirty();
   }
