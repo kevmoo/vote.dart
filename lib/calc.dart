@@ -6,4 +6,3 @@
 #import('map.dart');
 
 #source('calc/election_calc.dart');
-#source('calc/location_data.dart');
