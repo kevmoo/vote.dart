@@ -37,7 +37,9 @@ class PlayerMapElement extends PElement {
   void _drawPlayer(CanvasRenderingContext2D ctx, MapPlayer player) {
 
     final hue = _mapper(player);
-    final rgb = (new core.HslColor(hue, 0.5, 0.75)).toRgb();
+    final rgb = hue == null ?
+        new core.RgbColor(204,204,204) :
+        (new core.HslColor(hue, 0.5, 0.75)).toRgb();
 
     ctx.fillStyle = rgb.toHex();
     final txLoc = _tx.transformCoordinate(player.location);

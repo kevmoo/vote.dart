@@ -62,12 +62,5 @@ class LocationData {
 
   }
 
-  num getHue(MapPlayer candidate) {
-    final value = _candidateHues[candidate];
-    if(value == null) {
-      return 0;
-    } else {
-      return value;
-    }
-  }
+  num getHue(MapPlayer candidate) => _candidateHues[candidate];
 }
