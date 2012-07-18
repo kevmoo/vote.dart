@@ -27,14 +27,7 @@ class ElectionCalc {
 
   CondorcetElection get condorcetElection() => _condorcetElectionMapper.output;
 
-  num voterHueMapper(MapPlayer player) {
-    final candidate = _voterHueMapper.output[player];
-    if(candidate == null) {
-      return null;
-    } else {
-      return locationData.getHue(candidate);
-    }
-  }
+  HashMap<MapPlayer, num> get voterHueMap() => _voterHueMapper.output;
 
   //
   // Events
@@ -61,7 +54,7 @@ class ElectionCalc {
   void _distanceElectionChanged() {
     _pluralityElectionMapper.input = distanceElection.ballots;
     _condorcetElectionMapper.input = distanceElection.ballots;
-    _voterHueMapper.input = distanceElection.ballots;
+    _voterHueMapper.input = new Tuple(distanceElection, locationData);
   }
 }
 
@@ -116,20 +109,20 @@ void _condorcetElectionIsolate() {
 }
 
 class _VoterHueMapper
-  extends SlowMapper<Collection<PluralityBallot<MapPlayer, MapPlayer>>, HashMap<MapPlayer, MapPlayer>> {
+  extends SlowMapper<Tuple<DistanceElection, LocationData>, HashMap<MapPlayer, num>> {
 
   final SendPort _port;
   _VoterHueMapper() : _port = spawnFunction(_voterHueMapperIsolate);
 
-  Future<HashMap<MapPlayer, MapPlayer>> getFuture(value) => _port.call(value);
+  Future<HashMap<MapPlayer, num>> getFuture(value) => _port.call(value);
 }
 
 void _voterHueMapperIsolate() {
-  port.receive((Collection<PluralityBallot<MapPlayer, MapPlayer>> ballots,
-      SendPort reply) {
-    final map = new HashMap<MapPlayer, MapPlayer>();
-    for(final b in ballots) {
-      map[b.voter] = b.choice;
+  port.receive((Tuple<DistanceElection, LocationData> tuple, SendPort reply) {
+    final map = new HashMap<MapPlayer, num>();
+    for(final b in tuple.Item1.ballots) {
+      final candidate = b.choice;
+      map[b.voter] = tuple.Item2.getHue(candidate);
     }
     reply.send(map);
   });

@@ -3,14 +3,14 @@ class PlayerMapElement extends PElement {
   final core.AffineTransform _tx;
 
   num _radius;
-  core.Func1<MapPlayer, num> _mapper;
+  HashMap<MapPlayer, num> _map;
 
   PlayerMapElement(int w, int h) :
     _tx = new core.AffineTransform(),
     _players = new List<MapPlayer>(),
     super(w, h, true) {
     _radius = 0.3;
-    _mapper = (mp) => new core.RgbColor(128,128,128);
+    _map = new HashMap<MapPlayer, num>();
   }
 
   void setTransform(core.AffineTransform value) {
@@ -28,6 +28,12 @@ class PlayerMapElement extends PElement {
     invalidateDraw();
   }
 
+  void set playerHueMap(HashMap<MapPlayer, num> value) {
+    assert(value != null);
+    _map = value;
+    invalidateDraw();
+  }
+
   void drawOverride(CanvasRenderingContext2D ctx){
     for(final player in _players) {
       _drawPlayer(ctx, player);
@@ -36,7 +42,7 @@ class PlayerMapElement extends PElement {
 
   void _drawPlayer(CanvasRenderingContext2D ctx, MapPlayer player) {
 
-    final hue = _mapper(player);
+    final hue = _map[player];
     final rgb = hue == null ?
         new core.RgbColor(204,204,204) :
         (new core.HslColor(hue, 0.5, 0.75)).toRgb();

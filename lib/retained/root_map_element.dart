@@ -44,11 +44,11 @@ class RootMapElement extends ElementParentImpl {
   Iterable<MapPlayer> get voters() => _voterMap.players;
 
   void set candidateColorMapper(core.Func1<MapPlayer, num> value) {
-    _voterMap._mapper = _candidateMap._mapper = value;
+    _candidateMap._mapper = value;
   }
 
-  void set voterHueMapper(core.Func1<MapPlayer, num> value) {
-    _voterMap._mapper = value;
+  void set voterHueMap(HashMap<MapPlayer, num> value) {
+    _voterMap.playerHueMap = value;
   }
 
   void set voters(Collection<MapPlayer> value) {
