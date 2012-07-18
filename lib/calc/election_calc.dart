@@ -61,10 +61,10 @@ class ElectionCalc {
 class _DistanceElectionMapper
   extends SlowMapper<LocationData, DistanceElection> {
 
-  Future<DistanceElection> getFuture(value) {
-    final sendPort = spawnFunction(_distanceElectionIsolate);
-    return sendPort.call(value);
-  }
+  final SendPort _port;
+  _DistanceElectionMapper() : _port = spawnFunction(_distanceElectionIsolate);
+
+  Future<DistanceElection> getFuture(value) => _port.call(value);
 }
 
 void _distanceElectionIsolate() {
@@ -77,10 +77,10 @@ void _distanceElectionIsolate() {
 class _PluralityElectionMapper
   extends SlowMapper<Collection<PluralityBallot<MapPlayer, MapPlayer>>, PluralityElection> {
 
-  Future<PluralityElection> getFuture(value) {
-    final sendPort = spawnFunction(_pluralityElectionIsolate);
-    return sendPort.call(value);
-  }
+  final SendPort _port;
+  _PluralityElectionMapper() : _port = spawnFunction(_pluralityElectionIsolate);
+
+  Future<PluralityElection> getFuture(value) => _port.call(value);
 }
 
 void _pluralityElectionIsolate() {
@@ -94,10 +94,10 @@ void _pluralityElectionIsolate() {
 class _CondorcetElectionMapper
   extends SlowMapper<Collection<RankedBallot<MapPlayer, MapPlayer>>, CondorcetElection> {
 
-  Future<CondorcetElection> getFuture(value) {
-    final sendPort = spawnFunction(_condorcetElectionIsolate);
-    return sendPort.call(value);
-  }
+  final SendPort _port;
+  _CondorcetElectionMapper() : _port = spawnFunction(_condorcetElectionIsolate);
+
+  Future<CondorcetElection> getFuture(value) => _port.call(value);
 }
 
 void _condorcetElectionIsolate() {
@@ -111,10 +111,10 @@ void _condorcetElectionIsolate() {
 class _VoterHueMapper
   extends SlowMapper<Collection<PluralityBallot<MapPlayer, MapPlayer>>, HashMap<MapPlayer, MapPlayer>> {
 
-  Future<HashMap<MapPlayer, MapPlayer>> getFuture(value) {
-    final sendPort = spawnFunction(_voterHueMapperIsolate);
-    return sendPort.call(value);
-  }
+  final SendPort _port;
+  _VoterHueMapper() : _port = spawnFunction(_voterHueMapperIsolate);
+
+  Future<HashMap<MapPlayer, MapPlayer>> getFuture(value) => _port.call(value);
 }
 
 void _voterHueMapperIsolate() {
