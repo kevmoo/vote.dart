@@ -53,7 +53,10 @@ class RootMapElement extends ElementParentImpl {
 
   void set voters(Collection<MapPlayer> value) {
     core.requireArgumentNotNull(value, "value");
-    final vals = _getAverageCloseness(value);
+    // TODO: would be great to use this calculation, but need to make it async
+    //final vals = _getAverageCloseness(value);
+    final vals = new core.Tuple<num, core.Rect>(1, new core.Rect(0,0,20,20));
+
     _averageCloseness = vals.Item1;
     assert(core.isValidNumber(_averageCloseness));
     _bounds = vals.Item2;
