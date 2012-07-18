@@ -19,6 +19,8 @@ class MapPlayer implements Player {
 
   int hashCode() => _id.hashCode();
 
+  bool operator ==(MapPlayer other) => other !== null && other._id == _id;
+
   String toString() {
     if(name == null) {
       return "MapPlayer at [${_location.x.toStringAsFixed(1)}, ${_location.y.toStringAsFixed(1)}]";
