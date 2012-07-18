@@ -41,14 +41,22 @@ class CondorcetView extends ElectionView {
 
       final colors = opps.toHashMap((c) {
         final hue = _mapper(c);
-        final hsl = new core.HslColor(hue, 1, 0.75);
-        return hsl.toRgb().toHex();
+        if(hue == null) {
+          return "#999999";
+        } else {
+          final hsl = new core.HslColor(hue, 1, 0.75);
+          return hsl.toRgb().toHex();
+        }
       });
 
       final darkColors = opps.toHashMap((c) {
         final hue = _mapper(c);
-        final hsl = new core.HslColor(hue, 1, 0.3);
-        return hsl.toRgb().toHex();
+        if(hue == null) {
+          return "#999999";
+        } else {
+          final hsl = new core.HslColor(hue, 1, 0.3);
+          return hsl.toRgb().toHex();
+        }
       });
 
       for(final opp in opps) {
