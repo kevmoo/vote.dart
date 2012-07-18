@@ -150,7 +150,8 @@ class VoteDemo{
     final hits = Mouse.markMouseOver(_stage, _mouseLocation);
     if(hits != null && hits.length > 0 && hits[0] is CandidateElement) {
       _canvas.style.cursor = 'pointer';
-      _overCandidate = hits[0].player;
+      final CandidateElement ce = hits[0];
+      _overCandidate = ce.player;
     } else {
       _canvas.style.cursor = 'auto';
       _overCandidate = null;
