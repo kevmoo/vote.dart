@@ -1,100 +1,69 @@
 class ElectionCalc {
-  final EventHandle<EventArgs> _distanceElectionChangedHandle;
-  final EventHandle<EventArgs> _pluralityElectionChangedHandle;
-  final EventHandle<EventArgs> _condorcetElectionChangedHandle;
-  final EventHandle<EventArgs> _voterHueMapperChangedHandle;
-
-  final SendPort _distanceElectionSendPort;
-  final SendPort _pluralityElectionSendPort;
-  final SendPort _condorcetElectionSendPort;
-  final SendPort _voterHueMapperSendPort;
-
-  LocationData _locationData;
-  DistanceElection _distanceElection;
-  PluralityElection _pluralityElection;
-  CondorcetElection _condorcetElection;
-  Func1<MapPlayer, num> _voterHueMapper;
+  final _DistanceElectionMapper _distanceElectionMapper;
+  final _PluralityElectionMapper _pluralityElectionMapper;
+  final _CondorcetElectionMapper _condorcetElectionMapper;
+  final _VoterHueMapper _voterHueMapper;
 
   ElectionCalc() :
-    _distanceElectionSendPort = spawnFunction(_distanceElectionIsolate),
-    _pluralityElectionSendPort = spawnFunction(_pluralityElectionIsolate),
-    _condorcetElectionSendPort = spawnFunction(_condorcetElectionIsolate),
-    _voterHueMapperSendPort = spawnFunction(_voterHueMapperIsolate),
-    _distanceElectionChangedHandle = new EventHandle<EventArgs>(),
-    _pluralityElectionChangedHandle = new EventHandle<EventArgs>(),
-    _condorcetElectionChangedHandle = new EventHandle<EventArgs>(),
-    _voterHueMapperChangedHandle = new EventHandle<EventArgs>();
+    _distanceElectionMapper = new _DistanceElectionMapper(),
+    _pluralityElectionMapper = new _PluralityElectionMapper(),
+    _condorcetElectionMapper = new _CondorcetElectionMapper(),
+    _voterHueMapper = new _VoterHueMapper() {
+    _distanceElectionMapper.outputChanged.add((args) {
+      _distanceElectionChanged();
+    });
+  }
 
-  LocationData get locationData() => _locationData;
-
-  DistanceElection get distanceElection() => _distanceElection;
-
-  PluralityElection get pluralityElection() => _pluralityElection;
-
-  CondorcetElection get condorcetElection() => _condorcetElection;
-
-  Func1<MapPlayer, num> get voterHueMapper() => _voterHueMapper;
+  LocationData get locationData() => _distanceElectionMapper.input;
 
   void set locationData(LocationData data) {
     assert(data != null);
-    _locationData = data;
-    final future = _distanceElectionSendPort.call(data);
-    future.then(_setDistanceElection);
+    _distanceElectionMapper.input = data;
+  }
+
+  DistanceElection get distanceElection() => _distanceElectionMapper.output;
+
+  PluralityElection get pluralityElection() => _pluralityElectionMapper.output;
+
+  CondorcetElection get condorcetElection() => _condorcetElectionMapper.output;
+
+  num voterHueMapper(MapPlayer player) {
+    final candidate = _voterHueMapper.output[player];
+    return locationData.getHue(candidate);
   }
 
   //
   // Events
   //
   EventRoot<EventArgs> get distanceElectionChanged() =>
-      _distanceElectionChangedHandle;
+      _distanceElectionMapper.outputChanged;
 
   EventRoot<EventArgs> get pluralityElectionChanged() =>
-      _pluralityElectionChangedHandle;
+      _pluralityElectionMapper.outputChanged;
 
   EventRoot<EventArgs> get condorcetElectionChanged() =>
-      _condorcetElectionChangedHandle;
+      _condorcetElectionMapper.outputChanged;
 
   EventRoot<EventArgs> get voterHueMapperChanged() =>
-      _voterHueMapperChangedHandle;
+      _voterHueMapper.outputChanged;
 
   //
   // Privates
   //
 
-  void _setDistanceElection(DistanceElection value) {
-    assert(value != null);
-    _distanceElection = value;
-    _distanceElectionChangedHandle.fireEvent(EventArgs.empty);
-
-    final pFuture = _pluralityElectionSendPort.call(_distanceElection.ballots);
-    pFuture.then(_setPluralityElection);
-
-    final cFuture = _condorcetElectionSendPort.call(_distanceElection.ballots);
-    cFuture.then(_setCondorcetElection);
-
-    final mFuture = _voterHueMapperSendPort.call(_distanceElection.ballots);
-    mFuture.then(_setVoterHueMapper);
+  void _distanceElectionChanged() {
+    _pluralityElectionMapper.input = distanceElection.ballots;
+    _condorcetElectionMapper.input = distanceElection.ballots;
+    _voterHueMapper.input = distanceElection.ballots;
   }
+}
 
-  void _setPluralityElection(PluralityElection value) {
-    assert(value != null);
-    _pluralityElection = value;
-    _pluralityElectionChangedHandle.fireEvent(EventArgs.empty);
-  }
+class _DistanceElectionMapper
+  extends SlowMapper<LocationData, DistanceElection> {
 
-  void _setCondorcetElection(CondorcetElection value) {
-    assert(value != null);
-    _condorcetElection = value;
-    _condorcetElectionChangedHandle.fireEvent(EventArgs.empty);
-  }
-
-  void _setVoterHueMapper(HashMap value) {
-    assert(value != null);
-    _voterHueMapper = (mp) {
-      final candidate = value[mp];
-      return _locationData.getHue(candidate);
-    };
-    _voterHueMapperChangedHandle.fireEvent(EventArgs.empty);
+  Future<DistanceElection> getFuture(value) {
+    final sendPort = spawnFunction(_distanceElectionIsolate);
+    return sendPort.call(value);
   }
 }
 
@@ -105,6 +74,15 @@ void _distanceElectionIsolate() {
   });
 }
 
+class _PluralityElectionMapper
+  extends SlowMapper<Collection<PluralityBallot<MapPlayer, MapPlayer>>, PluralityElection> {
+
+  Future<PluralityElection> getFuture(value) {
+    final sendPort = spawnFunction(_pluralityElectionIsolate);
+    return sendPort.call(value);
+  }
+}
+
 void _pluralityElectionIsolate() {
   port.receive((Collection<PluralityBallot<MapPlayer, MapPlayer>> ballots,
       SendPort reply) {
@@ -113,12 +91,30 @@ void _pluralityElectionIsolate() {
   });
 }
 
+class _CondorcetElectionMapper
+  extends SlowMapper<Collection<RankedBallot<MapPlayer, MapPlayer>>, CondorcetElection> {
+
+  Future<CondorcetElection> getFuture(value) {
+    final sendPort = spawnFunction(_condorcetElectionIsolate);
+    return sendPort.call(value);
+  }
+}
+
 void _condorcetElectionIsolate() {
   port.receive((Collection<RankedBallot<MapPlayer, MapPlayer>> ballots,
       SendPort reply) {
     final election = new CondorcetElection(ballots);
     reply.send(election);
   });
+}
+
+class _VoterHueMapper
+  extends SlowMapper<Collection<PluralityBallot<MapPlayer, MapPlayer>>, HashMap<MapPlayer, MapPlayer>> {
+
+  Future<HashMap<MapPlayer, MapPlayer>> getFuture(value) {
+    final sendPort = spawnFunction(_voterHueMapperIsolate);
+    return sendPort.call(value);
+  }
 }
 
 void _voterHueMapperIsolate() {
