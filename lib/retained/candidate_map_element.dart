@@ -2,7 +2,7 @@ class CandidateMapElement extends ElementParentImpl {
   final List<MapPlayer> _players;
   final core.AffineTransform _tx;
 
-  num _radius;
+  num _radius = 0;
   core.Func1<MapPlayer, num> _mapper;
   List<CandidateElement> _elements;
 
