@@ -29,7 +29,11 @@ class ElectionCalc {
 
   num voterHueMapper(MapPlayer player) {
     final candidate = _voterHueMapper.output[player];
-    return locationData.getHue(candidate);
+    if(candidate == null) {
+      return null;
+    } else {
+      return locationData.getHue(candidate);
+    }
   }
 
   //
