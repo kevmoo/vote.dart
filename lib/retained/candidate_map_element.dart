@@ -41,7 +41,7 @@ class CandidateMapElement extends ElementParentImpl {
         final hue = _mapper(p);
         final rgb = (new core.HslColor(hue, 0.5, 0.6)).toRgb();
         final ce = new CandidateElement(_radius * 4, _radius * 4,
-          rgb.toHex(), p.name);
+          rgb.toHex(), p);
         ce.registerParent(this);
         final tempTx = ce.addTransform();
         tempTx.concatenate(_tx);

@@ -1,14 +1,12 @@
 class CandidateElement extends PElement {
   final String _color;
+  final MapPlayer player;
   final String _text;
   core.AffineTransform _tx;
 
-  CandidateElement(num w, num h, this._color, this._text) : super(w, h) {
+  CandidateElement(num w, num h, this._color, MapPlayer p) :
+    player = p, _text = p.name, super(w, h) {
     _tx = addTransform();
-  }
-
-  void requestDrag(core.Vector delta) {
-    _tx.translate(delta.x, delta.y);
   }
 
   void drawOverride(CanvasRenderingContext2D ctx){

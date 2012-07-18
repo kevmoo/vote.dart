@@ -34,7 +34,7 @@ class VoteDemo{
   HashMap<MapPlayer, num> _candidateHues;
 
   core.Coordinate _mouseLocation;
-  CandidateElement _overCandidate, _dragCandidate;
+  MapPlayer _overCandidate, _dragCandidate;
   bool _frameRequested = false;
 
   factory VoteDemo(CanvasElement canvas, DivElement pluralityDiv,
@@ -116,7 +116,7 @@ class VoteDemo{
 
   void _onDrag(core.Vector delta) {
     assert(_dragCandidate != null);
-    _dragCandidate.requestDrag(delta);
+    _rootMapElement.dragCandidate(_dragCandidate, delta);
     _requestFrame();
   }
 
@@ -150,7 +150,7 @@ class VoteDemo{
     final hits = Mouse.markMouseOver(_stage, _mouseLocation);
     if(hits != null && hits.length > 0 && hits[0] is CandidateElement) {
       _canvas.style.cursor = 'pointer';
-      _overCandidate = hits[0];
+      _overCandidate = hits[0].player;
     } else {
       _canvas.style.cursor = 'auto';
       _overCandidate = null;

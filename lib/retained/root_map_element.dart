@@ -63,6 +63,11 @@ class RootMapElement extends ElementParentImpl {
     _candidateMap.players = value;
   }
 
+  void dragCandidate(_dragCandidate, delta) {
+    print(_dragCandidate);
+    print(delta);
+  }
+
   void update(){
     // calculate important bits if we need to
     if(_bounds != null && _radius == null) {
