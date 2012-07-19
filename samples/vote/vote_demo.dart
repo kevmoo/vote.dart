@@ -162,8 +162,13 @@ class VoteDemo{
       final CandidateElement ce = hits[0];
       _overCandidate = ce.player;
     } else {
-      _canvas.style.cursor = 'auto';
       _overCandidate = null;
     }
+    
+    if(_overCandidate != null || _dragCandidate != null) {
+      _canvas.style.cursor = 'pointer';
+    } else {
+      _canvas.style.cursor = 'auto';
+    }  
   }
 }
