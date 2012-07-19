@@ -1,5 +1,6 @@
 class LocationData {
   static final int _ACharCode = 65;
+  static final num _span = 20;
   final ReadOnlyCollection<MapPlayer> candidates;
   final ReadOnlyCollection<MapPlayer> voters;
   final HashMap<MapPlayer, num> _candidateHues;
@@ -16,13 +17,12 @@ class LocationData {
   }
 
   factory LocationData.random() {
-    final span = 20;
-    final spanTweak = span / (span - 1);
+    final spanTweak = _span / (_span - 1);
 
     // 100 voters from 1,1 to 10,10
     final voters = new List<MapPlayer>();
-    for(var i = 0; i < span; i++) {
-      for(var j = 0; j < span; j++) {
+    for(var i = 0; i < _span; i++) {
+      for(var j = 0; j < _span; j++) {
         voters.add(new MapPlayer(new Coordinate(i * spanTweak, j * spanTweak)));
       }
     }
@@ -51,7 +51,7 @@ class LocationData {
 
     final candidates = new List<MapPlayer>();
     $(coords)
-      .select((c) => c.scale(span))
+      .select((c) => c.scale(_span))
       .forEachWithIndex((c,i) {
         final candidate = new MapPlayer(c);
         candidate.name = getCandidateName(i);
@@ -65,6 +65,43 @@ class LocationData {
   }
 
   num getHue(MapPlayer candidate) => _candidateHues[candidate];
+
+  LocationData cloneAndRemove(MapPlayer mp) {
+    requireArgumentNotNull(mp, 'mp');
+
+    var newCans = candidates.where((e) => e != mp).toReadOnlyCollection();
+
+    return new LocationData(voters, newCans);
+  }
+
+  LocationData cloneAndAddCandidate() {
+    assert(candidates.length < 26);
+    var newCans = candidates.toList();
+
+    int i;
+    for(i = 0; i < newCans.length; i++) {
+      final mp = newCans[i];
+      assert(mp.name.length == 1);
+      final mpCC = mp.name.charCodeAt(0);
+      final letterIndex = mpCC - _ACharCode;
+      assert(letterIndex >= i);
+
+      if(letterIndex > i) {
+        break;
+      }
+    }
+
+    final newName = getCandidateName(i);
+
+    var coord = new Vector(Math.random(), Math.random());
+    final loc = coord.scale(_span);
+    final mp = new MapPlayer(loc);
+    mp.name = newName;
+
+    newCans.insertRange(i, 1, mp);
+
+    return new LocationData(voters, new ReadOnlyCollection(newCans));
+  }
 
   static String getCandidateName(int i) {
     requireArgument(i >= 0);
