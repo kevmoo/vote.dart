@@ -2,13 +2,13 @@ class ElectionCalc {
   final _DistanceElectionMapper _distanceElectionMapper;
   final _PluralityElectionMapper _pluralityElectionMapper;
   final _CondorcetElectionMapper _condorcetElectionMapper;
-  final _VoterHueMapper _voterHueMapper;
+  final _VoterHexMapper _voterHexMapper;
 
   ElectionCalc() :
     _distanceElectionMapper = new _DistanceElectionMapper(),
     _pluralityElectionMapper = new _PluralityElectionMapper(),
     _condorcetElectionMapper = new _CondorcetElectionMapper(),
-    _voterHueMapper = new _VoterHueMapper() {
+    _voterHexMapper = new _VoterHexMapper() {
     _distanceElectionMapper.outputChanged.add((args) {
       _distanceElectionChanged();
     });
@@ -27,7 +27,7 @@ class ElectionCalc {
 
   CondorcetElection get condorcetElection() => _condorcetElectionMapper.output;
 
-  HashMap<MapPlayer, num> get voterHueMap() => _voterHueMapper.output;
+  HashMap<MapPlayer, String> get voterHexMap() => _voterHexMapper.output;
 
   //
   // Events
@@ -45,7 +45,7 @@ class ElectionCalc {
       _condorcetElectionMapper.outputChanged;
 
   EventRoot<EventArgs> get voterHueMapperChanged() =>
-      _voterHueMapper.outputChanged;
+      _voterHexMapper.outputChanged;
 
   //
   // Privates
@@ -54,7 +54,7 @@ class ElectionCalc {
   void _distanceElectionChanged() {
     _pluralityElectionMapper.input = distanceElection.ballots;
     _condorcetElectionMapper.input = distanceElection.ballots;
-    _voterHueMapper.input = new Tuple(distanceElection, locationData);
+    _voterHexMapper.input = new Tuple(distanceElection, locationData);
   }
 }
 
@@ -108,21 +108,22 @@ void _condorcetElectionIsolate() {
   });
 }
 
-class _VoterHueMapper
-  extends SlowMapper<Tuple<DistanceElection, LocationData>, HashMap<MapPlayer, num>> {
+class _VoterHexMapper
+  extends SlowMapper<Tuple<DistanceElection, LocationData>, HashMap<MapPlayer, String>> {
 
   final SendPort _port;
-  _VoterHueMapper() : _port = spawnFunction(_voterHueMapperIsolate);
+  _VoterHexMapper() : _port = spawnFunction(_voterHexMapperIsolate);
 
-  Future<HashMap<MapPlayer, num>> getFuture(value) => _port.call(value);
+  Future<HashMap<MapPlayer, String>> getFuture(value) => _port.call(value);
 }
 
-void _voterHueMapperIsolate() {
+void _voterHexMapperIsolate() {
   port.receive((Tuple<DistanceElection, LocationData> tuple, SendPort reply) {
-    final map = new HashMap<MapPlayer, num>();
+    final map = new HashMap<MapPlayer, String>();
     for(final b in tuple.Item1.ballots) {
       final candidate = b.choice;
-      map[b.voter] = tuple.Item2.getHue(candidate);
+      final hue = tuple.Item2.getHue(candidate);
+      map[b.voter] = (new HslColor(hue, 0.5, 0.75)).toRgb().toHex();
     }
     reply.send(map);
   });

@@ -3,14 +3,14 @@ class PlayerMapElement extends PElement {
   final core.AffineTransform _tx;
 
   num _radius;
-  HashMap<MapPlayer, num> _map;
+  HashMap<MapPlayer, String> _map;
 
   PlayerMapElement(int w, int h) :
     _tx = new core.AffineTransform(),
     _players = new List<MapPlayer>(),
     super(w, h, true) {
     _radius = 0.3;
-    _map = new HashMap<MapPlayer, num>();
+    _map = new HashMap<MapPlayer, String>();
   }
 
   void setTransform(core.AffineTransform value) {
@@ -28,7 +28,7 @@ class PlayerMapElement extends PElement {
     invalidateDraw();
   }
 
-  void set playerHueMap(HashMap<MapPlayer, num> value) {
+  void set playerHexMap(HashMap<MapPlayer, String> value) {
     assert(value != null);
     _map = value;
     invalidateDraw();
@@ -41,13 +41,11 @@ class PlayerMapElement extends PElement {
   }
 
   void _drawPlayer(CanvasRenderingContext2D ctx, MapPlayer player) {
+    String hex = _map[player];
 
-    final hue = _map[player];
-    final rgb = hue == null ?
-        new core.RgbColor(204,204,204) :
-        (new core.HslColor(hue, 0.5, 0.75)).toRgb();
+    hex = hex == null ? '#999999' : hex;
 
-    ctx.fillStyle = rgb.toHex();
+    ctx.fillStyle = hex;
     final txLoc = _tx.transformCoordinate(player.location);
 
     CanvasUtil.centeredCircle(ctx, txLoc.x, txLoc.y, _radius * _tx.scaleX);

@@ -47,8 +47,8 @@ class RootMapElement extends ElementParentImpl {
     _candidateMap._mapper = value;
   }
 
-  void set voterHueMap(HashMap<MapPlayer, num> value) {
-    _voterMap.playerHueMap = value;
+  void set voterHexMap(HashMap<MapPlayer, String> value) {
+    _voterMap.playerHexMap = value;
   }
 
   void set voters(Collection<MapPlayer> value) {

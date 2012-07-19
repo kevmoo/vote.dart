@@ -111,8 +111,8 @@ class VoteDemo{
   }
 
   void _voterHueMapperUpdated(Dynamic args) {
-    assert(_calcEngine.voterHueMap != null);
-    _rootMapElement.voterHueMap = _calcEngine.voterHueMap;
+    assert(_calcEngine.voterHexMap != null);
+    _rootMapElement.voterHexMap = _calcEngine.voterHexMap;
     _requestFrame();
   }
 
