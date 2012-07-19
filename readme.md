@@ -4,6 +4,10 @@
 ### Authors
  * [Kevin Moore](https://github.com/kevmoo) ([@kevmoo](http://twitter.com/kevmoo))
 
+### Notes
+ * `vote.dart` assumes the contents of [dartlib](https://github.com/kevmoo/dartlib) are in an adjacent directory named `dartlib`.
+     * _Once [pub](http://www.dartlang.org/docs/pub-package-manager/) is stable, dartlib will be a registered dependency._
+
 ### [The BSD 2-Clause License](http://www.opensource.org/licenses/bsd-license.php)
 
     Copyright (c) 2012, dartlib project authors
