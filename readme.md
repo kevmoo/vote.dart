@@ -1,6 +1,8 @@
 # vote.dart
 ## Code to simulate, run, and calculate elections with different election methods
 
+<img src="https://github.com/kevmoo/vote.dart/raw/master/vote_dart_preview.png" width='750'>
+
 ### Authors
  * [Kevin Moore](https://github.com/kevmoo) ([@kevmoo](http://twitter.com/kevmoo))
 
