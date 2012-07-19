@@ -79,10 +79,13 @@ class CandidateManagerView extends HtmlView {
     final ButtonElement source = args.toElement;
     final candidateId = Math.parseInt(source.dataAttributes[_candidateIdAttribute]);
     _removeCandidateWithId(candidateId);
+    source.disabled = true;
   }
 
-  void _requestNewCandidate(args) {
+  void _requestNewCandidate(MouseEvent args) {
+    final ButtonElement source = args.toElement;
     _requestNewCandidateHandle.fireEvent(core.EventArgs.empty);
+    source.disabled = true;
   }
 
   void _removeCandidateWithId(int id) {
