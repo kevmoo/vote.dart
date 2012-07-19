@@ -165,6 +165,5 @@ class VoteDemo{
       _canvas.style.cursor = 'auto';
       _overCandidate = null;
     }
-    _requestFrame();
   }
 }
