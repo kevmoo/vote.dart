@@ -74,8 +74,8 @@ class VoteDemo{
     _calcEngine.condorcetElectionChanged.add(_condorcetElectionUpdated);
     _calcEngine.voterHueMapperChanged.add(_voterHueMapperUpdated);
 
-    _rootMapElement.locationUpdateRequest.add((data) {
-      _calcEngine.locationData = data;
+    _rootMapElement.candidateUpdateRequest.add((data) {
+      _calcEngine.candidateData = data;
     });
 
     final initialData = new LocationData.random();
@@ -85,11 +85,13 @@ class VoteDemo{
 
   void _locationDataUpdated(Dynamic args) {
     assert(_calcEngine.locationData != null);
-    _rootMapElement.locationData = _calcEngine.locationData;
+    final locData = _calcEngine.locationData;
+    _rootMapElement.locationData = locData;
 
-    _distanceView.setCandidateColorMap(_calcEngine.locationData.getHue);
-    _pluralityView.setCandidateColorMap(_calcEngine.locationData.getHue);
-    _condorcetView.setCandidateColorMap(_calcEngine.locationData.getHue);
+
+    _distanceView.setCandidateColorMap(locData.getHue);
+    _pluralityView.setCandidateColorMap(locData.getHue);
+    _condorcetView.setCandidateColorMap(locData.getHue);
   }
 
   void _distanceElectionUpdated(Dynamic args) {
@@ -164,11 +166,11 @@ class VoteDemo{
     } else {
       _overCandidate = null;
     }
-    
+
     if(_overCandidate != null || _dragCandidate != null) {
       _canvas.style.cursor = 'pointer';
     } else {
       _canvas.style.cursor = 'auto';
-    }  
+    }
   }
 }

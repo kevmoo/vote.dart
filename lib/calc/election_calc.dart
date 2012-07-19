@@ -21,6 +21,21 @@ class ElectionCalc {
     _distanceElectionMapper.input = data;
   }
 
+  void set candidateData(Iterable<MapPlayer> value) {
+    assert(value != null);
+    assert(_distanceElectionMapper.input != null);
+
+    final roCandidates = new ReadOnlyCollection<MapPlayer>(value);
+
+    if(roCandidates.length > 0) {
+      final newData = new LocationData(_distanceElectionMapper.input.voters, roCandidates);
+
+      locationData = newData;
+    } else {
+      print('TODO: we blow up at the moment w/ zero candidates. Probably okay.');
+    }
+  }
+
   DistanceElection get distanceElection() => _distanceElectionMapper.output;
 
   PluralityElection get pluralityElection() => _pluralityElectionMapper.output;
