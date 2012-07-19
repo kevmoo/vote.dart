@@ -1,11 +1,13 @@
 class CandidateManagerView extends HtmlView {
   static final String _candidateIdAttribute = 'candidate-id';
   final core.EventHandle<Iterable<MapPlayer>> _requestCandidateUpdateHandle;
+  final core.EventHandle<core.EventArgs> _requestNewCandidateHandle;
   core.ReadOnlyCollection<MapPlayer> _candidates;
   core.Func1<MapPlayer, num> _mapper;
 
   CandidateManagerView(DivElement node) :
     _requestCandidateUpdateHandle = new core.EventHandle<Iterable<MapPlayer>>(),
+    _requestNewCandidateHandle = new core.EventHandle<core.EventArgs>(),
     _candidates = new core.ReadOnlyCollection<MapPlayer>.empty(),
     _mapper = ((c) => null),
     super(node);
@@ -25,14 +27,27 @@ class CandidateManagerView extends HtmlView {
   core.EventRoot<Iterable<MapPlayer>> get candidateUpdateRequest() =>
       _requestCandidateUpdateHandle;
 
+  core.EventRoot<core.EventArgs> get newCandidateRequest() =>
+      _requestNewCandidateHandle;
+
   void updateElement() {
     _node.elements.clear();
 
     var table = new TableElement();
 
+    TableRowElement row = table.insertRow(-1);
+    TableCellElement cell = row.insertCell(-1);
+    cell.colSpan = 2;
+
+    final addButton = new ButtonElement();
+    addButton.text = "Add Candidate";
+    addButton.on.click.add(_requestNewCandidate);
+
+    cell.elements.add(addButton);
+
     if(_candidates != null) {
       for(final candidate in _candidates) {
-        TableRowElement row = table.insertRow(-1);
+        row = table.insertRow(-1);
 
         final hue = _mapper(candidate);
         if(hue != null) {
@@ -41,7 +56,7 @@ class CandidateManagerView extends HtmlView {
           row.style.background = rgb.toHex();
         }
 
-        TableCellElement cell = row.insertCell(-1);
+        cell = row.insertCell(-1);
         cell.classes.add('candidate-cell');
         cell.innerHTML = candidate.toString();
 
@@ -64,6 +79,10 @@ class CandidateManagerView extends HtmlView {
     final ButtonElement source = args.toElement;
     final candidateId = Math.parseInt(source.dataAttributes[_candidateIdAttribute]);
     _removeCandidateWithId(candidateId);
+  }
+
+  void _requestNewCandidate(args) {
+    _requestNewCandidateHandle.fireEvent(core.EventArgs.empty);
   }
 
   void _removeCandidateWithId(int id) {

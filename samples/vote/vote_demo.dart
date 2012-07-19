@@ -87,6 +87,10 @@ class VoteDemo{
       _calcEngine.candidateData = data;
     });
 
+    _canManView.newCandidateRequest.add((args) {
+      _calcEngine.addCandidate();
+    });
+
     final initialData = new LocationData.random();
 
     _calcEngine.locationData = initialData;

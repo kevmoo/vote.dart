@@ -23,7 +23,7 @@ class ElectionCalc {
 
   void set candidateData(Iterable<MapPlayer> value) {
     assert(value != null);
-    assert(_distanceElectionMapper.input != null);
+    assert(locationData != null);
 
     final roCandidates = new ReadOnlyCollection<MapPlayer>(value);
 
@@ -43,6 +43,12 @@ class ElectionCalc {
   CondorcetElection get condorcetElection() => _condorcetElectionMapper.output;
 
   HashMap<MapPlayer, String> get voterHexMap() => _voterHexMapper.output;
+
+  void addCandidate() {
+    assert(locationData != null);
+    final newData = locationData.cloneAndAddCandidate();
+    _distanceElectionMapper.input = newData;
+  }
 
   //
   // Events
