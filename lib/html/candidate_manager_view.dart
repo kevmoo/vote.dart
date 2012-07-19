@@ -49,7 +49,11 @@ class CandidateManagerView extends HtmlView {
         final deleteButton = new ButtonElement();
         deleteButton.text = 'Delete';
         deleteButton.dataAttributes[_candidateIdAttribute] = candidate.id.toString();
-        deleteButton.on.click.add(_deleteClick);
+        if(_candidates.length > 1) {
+          deleteButton.on.click.add(_deleteClick);
+        } else {
+          deleteButton.disabled = true;
+        }
         cell.elements.add(deleteButton);
       }
     }
