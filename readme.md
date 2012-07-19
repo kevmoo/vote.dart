@@ -25,7 +25,7 @@
 
 ## [The BSD 2-Clause License](http://www.opensource.org/licenses/bsd-license.php)
 
-    Copyright (c) 2012, dartlib project authors
+    Copyright (c) 2012, vote.dart project authors
     All rights reserved.
 
     Redistribution and use in source and binary forms, with or without
