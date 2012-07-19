@@ -15,6 +15,8 @@ class MapPlayer implements Player {
     _location = value;
   }
 
+  int get id() => _id.id;
+
   int compareTo(MapPlayer other) => _id.compareTo(other._id);
 
   int hashCode() => _id.hashCode();
