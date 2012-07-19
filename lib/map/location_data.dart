@@ -3,8 +3,9 @@ class LocationData {
   final ReadOnlyCollection<MapPlayer> voters;
   final HashMap<MapPlayer, num> _candidateHues;
 
-  LocationData(this.voters, this.candidates) :
-    _candidateHues = new HashMap<MapPlayer, num>() {
+  LocationData(this.voters, this.candidates)
+  : _candidateHues = new HashMap<MapPlayer, num>() {
+    assert(this.candidates.length > 0);
     var index = 0;
     candidates.forEach((c) {
       final spot = 360 * index / candidates.length;
