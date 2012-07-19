@@ -10,11 +10,12 @@
 #import('../../lib/calc.dart');
 
 main(){
-  var demo = new VoteDemo(canvas, pluralityDiv, distanceDiv, condorcetDiv);
   CanvasElement canvas = query("#content");
   DivElement pluralityDiv = query('#pluralityView');
   DivElement distanceDiv = query('#distanceView');
   DivElement condorcetDiv = query('#condorcetView');
+  DivElement canManDiv = query('#canManView');
+  var demo = new VoteDemo(canvas, pluralityDiv, distanceDiv, condorcetDiv, canManDiv);
   demo._requestFrame();
 }
 
@@ -30,6 +31,7 @@ class VoteDemo{
   final CondorcetView _condorcetView;
   final DistanceView _distanceView;
   final PluralityView _pluralityView;
+  final CandidateManagerView _canManView;
 
   HashMap<MapPlayer, num> _candidateHues;
 
@@ -38,7 +40,7 @@ class VoteDemo{
   bool _frameRequested = false;
 
   factory VoteDemo(CanvasElement canvas, DivElement pluralityDiv,
-    DivElement distanceDiv, DivElement condorcetDiv) {
+    DivElement distanceDiv, DivElement condorcetDiv, DivElement canManDiv) {
     var voterMap = new RootMapElement(canvas.width, canvas.height);
 
     //
@@ -53,13 +55,16 @@ class VoteDemo{
 
     var condorcetView = new CondorcetView(condorcetDiv);
 
+    final canManView = new CandidateManagerView(canManDiv);
+
     var dragger = new Dragger(canvas);
 
-    return new VoteDemo._internal(canvas, stage, dragger, voterMap, condorcetView, pluralityView, distanceView);
+    return new VoteDemo._internal(canvas, stage, dragger, voterMap,
+      condorcetView, pluralityView, distanceView, canManView);
   }
 
   VoteDemo._internal(this._canvas, this._stage, this._dragger, this._rootMapElement,
-    this._condorcetView, this._pluralityView, this._distanceView)
+    this._condorcetView, this._pluralityView, this._distanceView, this._canManView)
   : _playerHues = new HashMap<MapPlayer, num>(),
     _calcEngine = new ElectionCalc() {
     _dragger.dragDelta.add(_onDrag);
@@ -78,6 +83,10 @@ class VoteDemo{
       _calcEngine.candidateData = data;
     });
 
+    _canManView.candidateUpdateRequest.add((data) {
+      _calcEngine.candidateData = data;
+    });
+
     final initialData = new LocationData.random();
 
     _calcEngine.locationData = initialData;
@@ -87,7 +96,9 @@ class VoteDemo{
     assert(_calcEngine.locationData != null);
     final locData = _calcEngine.locationData;
     _rootMapElement.locationData = locData;
+    _canManView.candidates = locData.candidates;
 
+    _canManView.candidateColorMap = locData.getHue;
 
     _distanceView.setCandidateColorMap(locData.getHue);
     _pluralityView.setCandidateColorMap(locData.getHue);
@@ -145,6 +156,7 @@ class VoteDemo{
     _condorcetView.draw();
     _pluralityView.draw();
     _distanceView.draw();
+    _canManView.draw();
     _frameRequested = false;
   }
 
