@@ -10,11 +10,11 @@
 #import('../../lib/calc.dart');
 
 main(){
-  CanvasElement canvas = document.query("#content");
-  DivElement pluralityDiv = document.query('#pluralityView');
-  DivElement distanceDiv = document.query('#distanceView');
-  DivElement condorcetDiv = document.query('#condorcetView');
   var demo = new VoteDemo(canvas, pluralityDiv, distanceDiv, condorcetDiv);
+  CanvasElement canvas = query("#content");
+  DivElement pluralityDiv = query('#pluralityView');
+  DivElement distanceDiv = query('#distanceView');
+  DivElement condorcetDiv = query('#condorcetView');
   demo._requestFrame();
 }
 
