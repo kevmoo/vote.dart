@@ -88,9 +88,9 @@ class RootMapElement extends ElementParentImpl {
 
     final roCandidates = new core.ReadOnlyCollection.wrap(candidates);
 
-    final randomData = new LocationData(roVoters, roCandidates);
+    final newData = new LocationData(roVoters, roCandidates);
 
-    _requestLocationUpdateHandle.fireEvent(randomData);
+    _requestLocationUpdateHandle.fireEvent(newData);
   }
 
   void update(){

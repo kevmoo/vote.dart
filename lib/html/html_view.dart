@@ -1,8 +1,9 @@
-class ElectionView {
+class HtmlView {
   final DivElement _node;
   bool _dirty;
 
-  ElectionView(this._node) {
+  HtmlView(this._node) {
+    core.requireArgumentNotNull(this._node, 'node');
     _dirty = true;
   }
 
@@ -14,10 +15,10 @@ class ElectionView {
 
   void draw() {
     if(_dirty) {
-      _updateElement();
+      updateElement();
       _dirty = false;
     }
   }
 
-  abstract void _updateElement();
+  abstract void updateElement();
 }

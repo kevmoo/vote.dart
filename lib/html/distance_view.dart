@@ -1,4 +1,4 @@
-class DistanceView extends ElectionView {
+class DistanceView extends HtmlView {
   core.Func1<MapPlayer, num> _mapper;
   DistanceElection<MapPlayer, MapPlayer> _election;
 
@@ -17,7 +17,7 @@ class DistanceView extends ElectionView {
     markDirty();
   }
 
-  void _updateElement() {
+  void updateElement() {
     _node.elements.clear();
 
     var table = new TableElement();

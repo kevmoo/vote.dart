@@ -1,4 +1,4 @@
-class PluralityView extends ElectionView {
+class PluralityView extends HtmlView {
   PluralityElection _election;
   core.Func1<MapPlayer, num> _mapper;
 
@@ -17,7 +17,7 @@ class PluralityView extends ElectionView {
     markDirty();
   }
 
-  void _updateElement() {
+  void updateElement() {
     _node.elements.clear();
 
     var table = new TableElement();

@@ -1,4 +1,4 @@
-class CondorcetView extends ElectionView {
+class CondorcetView extends HtmlView {
   CondorcetElection _election;
   core.Func1<MapPlayer, num> _mapper;
 
@@ -17,7 +17,7 @@ class CondorcetView extends ElectionView {
     markDirty();
   }
 
-  void _updateElement() {
+  void updateElement() {
     _node.elements.clear();
 
     var table = new TableElement();
