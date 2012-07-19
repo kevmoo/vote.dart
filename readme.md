@@ -3,7 +3,7 @@
 
 <img src="https://github.com/kevmoo/vote.dart/raw/master/vote_dart_preview.png" width='750'>
 
-### The Simulation
+## The Simulation
 
 > Imagine a city with population of 400 voters (small circles) evenly distributed into blocks--20 by 20.
 
@@ -13,17 +13,17 @@
 
 > __Plurality:__ The most obvious democratic method to choose a location is to let voters **vote**. Each voter will make the obvious choice and vote for the candidate location that is closest. The color of each voter reflects the closest candidate.
 
-### Authors
+## Authors
  * [Kevin Moore](https://github.com/kevmoo) ([@kevmoo](http://twitter.com/kevmoo))
 
-### Dependencies
- * `vote.dart` assumes the contents of [dartlib](https://github.com/kevmoo/dartlib) are in an adjacent directory named `dartlib`.
-     * _Once [pub](http://www.dartlang.org/docs/pub-package-manager/) is stable, dartlib will be a registered dependency._
+## Dependencies
+ * __vote.dart__ assumes the contents of [dartlib](https://github.com/kevmoo/dartlib) are in an adjacent directory named `dartlib`.
+     * _Once [pub](http://www.dartlang.org/docs/pub-package-manager/) is stable, __dartlib__ will be a registered dependency._
 
-### More Info
+## More Info
  * [Condorcet Method](http://en.wikipedia.org/wiki/Condorcet_method) - Wikipedia
 
-### [The BSD 2-Clause License](http://www.opensource.org/licenses/bsd-license.php)
+## [The BSD 2-Clause License](http://www.opensource.org/licenses/bsd-license.php)
 
     Copyright (c) 2012, dartlib project authors
     All rights reserved.
