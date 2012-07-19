@@ -1,4 +1,5 @@
 class LocationData {
+  static final int _ACharCode = 65;
   final ReadOnlyCollection<MapPlayer> candidates;
   final ReadOnlyCollection<MapPlayer> voters;
   final HashMap<MapPlayer, num> _candidateHues;
@@ -53,7 +54,7 @@ class LocationData {
       .select((c) => c.scale(span))
       .forEachWithIndex((c,i) {
         final candidate = new MapPlayer(c);
-        candidate.name = new String.fromCharCodes([i+65]);
+        candidate.name = getCandidateName(i);
         candidates.add(candidate);
       });
 
@@ -64,4 +65,10 @@ class LocationData {
   }
 
   num getHue(MapPlayer candidate) => _candidateHues[candidate];
+
+  static String getCandidateName(int i) {
+    requireArgument(i >= 0);
+    requireArgument(i < 26);
+    return new String.fromCharCodes([i + _ACharCode]);
+  }
 }
