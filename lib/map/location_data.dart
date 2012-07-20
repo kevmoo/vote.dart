@@ -5,7 +5,7 @@ class LocationData {
   final ReadOnlyCollection<MapPlayer> candidates;
   final ReadOnlyCollection<MapPlayer> voters;
 
-  static HashMap<int, num> _candidateHues;
+  static List<num> _candidateHues;
 
   LocationData(this.voters, this.candidates) {
     assert(this.candidates.length > 0);
@@ -96,28 +96,47 @@ class LocationData {
 
   static num getHue(MapPlayer candidate) {
     if(_candidateHues == null) {
-      _candidateHues = _createHueMap();
+      _candidateHues = _slice(maxCandidateCount, 360, 3);
     }
     final letter = candidate.name;
     assert(letter != null && letter.length == 1);
     final letterCode = (letter.charCodeAt(0) - _ACharCode);
-    assert(letterCode >= 0 && letterCode < 26);
+    assert(letterCode >= 0 && letterCode < maxCandidateCount);
 
     return _candidateHues[letterCode];
   }
 
-  static HashMap<int, num> _createHueMap() {
-    final halfLetterCount = maxCandidateCount ~/ 2;
-    final map = new HashMap<int, num>();
-    for(int i = 0; i < maxCandidateCount; i++) {
-      int j = i;
-      if(i % 2 == 1) {
-        j = (i + halfLetterCount) % maxCandidateCount;
+  static List<num> _slice(int itemCount, num maxValue, int sliceCount) {
+    assert(itemCount > 0);
+    assert(isValidNumber(maxValue));
+    assert(maxValue > 0);
+    assert(sliceCount > 1);
+
+    final values = new List<num>(itemCount);
+    int index = 0;
+
+    num sliceSize = maxValue / sliceCount;
+
+    for(int i = 0; i < sliceCount; i++) {
+      if(index == itemCount) {
+        return values;
+      } else {
+        values[index++] = i * sliceSize;
       }
-      final spot = 360 * j / maxCandidateCount;
-      map[i] = spot;
     }
-    return map;
+
+    while(true) {
+      final startCount = index;
+      sliceSize = maxValue / (startCount * 2);
+
+      for(int i = 0; i < startCount; i++) {
+        if(index == itemCount) {
+          return values;
+        } else {
+          values[index++] = values[i] + sliceSize;
+        }
+      }
+    }
   }
 
   static String getCandidateName(int i) {
