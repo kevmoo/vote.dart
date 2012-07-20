@@ -148,7 +148,7 @@ void _voterHexMapperIsolate() {
     final map = new HashMap<MapPlayer, String>();
     for(final b in tuple.Item1.ballots) {
       final candidate = b.choice;
-      final hue = tuple.Item2.getHue(candidate);
+      final hue = LocationData.getHue(candidate);
       map[b.voter] = (new HslColor(hue, 0.5, 0.75)).toRgb().toHex();
     }
     reply.send(map);

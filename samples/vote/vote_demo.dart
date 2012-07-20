@@ -101,12 +101,6 @@ class VoteDemo{
     final locData = _calcEngine.locationData;
     _rootMapElement.locationData = locData;
     _canManView.candidates = locData.candidates;
-
-    _canManView.candidateColorMap = locData.getHue;
-
-    _distanceView.setCandidateColorMap(locData.getHue);
-    _pluralityView.setCandidateColorMap(locData.getHue);
-    _condorcetView.setCandidateColorMap(locData.getHue);
   }
 
   void _distanceElectionUpdated(Dynamic args) {

@@ -37,15 +37,10 @@ class RootMapElement extends ElementParentImpl {
   void set locationData(LocationData data) {
     voters = data.voters;
     candidates = data.candidates;
-    candidateColorMapper = data.getHue;
     invalidateDraw();
   }
 
   Iterable<MapPlayer> get voters() => _voterMap.players;
-
-  void set candidateColorMapper(core.Func1<MapPlayer, num> value) {
-    _candidateMap._mapper = value;
-  }
 
   void set voterHexMap(HashMap<MapPlayer, String> value) {
     _voterMap.playerHexMap = value;

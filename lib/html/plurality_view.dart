@@ -1,6 +1,5 @@
 class PluralityView extends HtmlView {
   PluralityElection _election;
-  core.Func1<MapPlayer, num> _mapper;
 
   PluralityView(DivElement node) : super(node);
 
@@ -8,12 +7,6 @@ class PluralityView extends HtmlView {
 
   void set election(PluralityElection election) {
     _election = election;
-    markDirty();
-  }
-
-  void setCandidateColorMap(core.Func1<MapPlayer, num> value) {
-    assert(value != null);
-    _mapper = value;
     markDirty();
   }
 
@@ -57,7 +50,7 @@ class PluralityView extends HtmlView {
 
           cell = row.insertCell(-1);
           cell.classes.add('candidate-cell');
-          final hue = _mapper(candidate);
+          final hue = LocationData.getHue(candidate);
           if(hue != null) {
             final hsl = new core.HslColor(hue, 1, 0.75);
             final rgb = hsl.toRgb();

@@ -3,7 +3,6 @@ class CandidateMapElement extends ElementParentImpl {
   final core.AffineTransform _tx;
 
   num _radius = 0;
-  core.Func1<MapPlayer, num> _mapper;
   List<CandidateElement> _elements;
 
   CandidateMapElement(int w, int h) :
@@ -38,7 +37,7 @@ class CandidateMapElement extends ElementParentImpl {
     if(_elements == null) {
       _elements = new List<CandidateElement>();
       for(final p in _players) {
-        final hue = _mapper(p);
+        final hue = LocationData.getHue(p);
         final rgb = (new core.HslColor(hue, 0.5, 0.6)).toRgb();
         final ce = new CandidateElement(_radius * 4, _radius * 4,
           rgb.toHex(), p);

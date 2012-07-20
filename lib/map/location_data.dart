@@ -94,11 +94,7 @@ class LocationData {
     return new LocationData(voters, new ReadOnlyCollection(newCans));
   }
 
-  num getHue(MapPlayer candidate) {
-    return _getHue(candidate);
-  }
-
-  static num _getHue(MapPlayer candidate) {
+  static num getHue(MapPlayer candidate) {
     if(_candidateHues == null) {
       final halfLetterCount = maxCandidateCount ~/ 2;
       _candidateHues = new HashMap<int, num>();

@@ -3,24 +3,16 @@ class CandidateManagerView extends HtmlView {
   final core.EventHandle<MapPlayer> _requestRemoveCandidateHandle;
   final core.EventHandle<core.EventArgs> _requestNewCandidateHandle;
   core.ReadOnlyCollection<MapPlayer> _candidates;
-  core.Func1<MapPlayer, num> _mapper;
 
   CandidateManagerView(DivElement node) :
     _requestRemoveCandidateHandle = new core.EventHandle<MapPlayer>(),
     _requestNewCandidateHandle = new core.EventHandle<core.EventArgs>(),
     _candidates = new core.ReadOnlyCollection<MapPlayer>.empty(),
-    _mapper = ((c) => null),
     super(node);
 
   void set candidates(core.ReadOnlyCollection<MapPlayer> value) {
     assert(value != null);
     _candidates = value;
-    markDirty();
-  }
-
-  void set candidateColorMap(core.Func1<MapPlayer, num> value) {
-    assert(value != null);
-    _mapper = value;
     markDirty();
   }
 
@@ -49,7 +41,7 @@ class CandidateManagerView extends HtmlView {
       for(final candidate in _candidates) {
         row = table.insertRow(-1);
 
-        final hue = _mapper(candidate);
+        final hue = LocationData.getHue(candidate);
         if(hue != null) {
           final hsl = new core.HslColor(hue, 1, 0.75);
           final rgb = hsl.toRgb();

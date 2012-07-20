@@ -1,16 +1,7 @@
 class DistanceView extends HtmlView {
-  core.Func1<MapPlayer, num> _mapper;
   DistanceElection<MapPlayer, MapPlayer> _election;
 
-  DistanceView(DivElement node) : super(node) {
-    _mapper = (c) => 0;
-  }
-
-  void setCandidateColorMap(core.Func1<MapPlayer, num> value) {
-    assert(value != null);
-    _mapper = value;
-    markDirty();
-  }
+  DistanceView(DivElement node) : super(node);
 
   void set election(DistanceElection<MapPlayer, MapPlayer> value) {
     _election = value;
@@ -60,7 +51,7 @@ class DistanceView extends HtmlView {
 
           cell = row.insertCell(-1);
           cell.classes.add('candidate-cell');
-          final hue = _mapper(candidate);
+          final hue = LocationData.getHue(candidate);
           if(hue != null) {
             final hsl = new core.HslColor(hue, 1, 0.75);
             final rgb = hsl.toRgb();

@@ -1,6 +1,5 @@
 class CondorcetView extends HtmlView {
   CondorcetElection _election;
-  core.Func1<MapPlayer, num> _mapper;
 
   CondorcetView(DivElement node) : super(node);
 
@@ -8,12 +7,6 @@ class CondorcetView extends HtmlView {
 
   void set election(CondorcetElection election) {
     _election = election;
-    markDirty();
-  }
-
-  void setCandidateColorMap(core.Func1<MapPlayer, num> value) {
-    assert(value != null);
-    _mapper = value;
     markDirty();
   }
 
@@ -40,7 +33,7 @@ class CondorcetView extends HtmlView {
       var opps = _election.places.selectMany((p) => p).toReadOnlyCollection();
 
       final colors = opps.toHashMap((c) {
-        final hue = _mapper(c);
+        final hue = LocationData.getHue(c);
         if(hue == null) {
           return "#999999";
         } else {
@@ -50,7 +43,7 @@ class CondorcetView extends HtmlView {
       });
 
       final darkColors = opps.toHashMap((c) {
-        final hue = _mapper(c);
+        final hue = LocationData.getHue(c);
         if(hue == null) {
           return "#999999";
         } else {
