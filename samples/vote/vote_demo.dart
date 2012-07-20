@@ -83,8 +83,8 @@ class VoteDemo{
       _calcEngine.candidateData = data;
     });
 
-    _canManView.candidateUpdateRequest.add((data) {
-      _calcEngine.candidateData = data;
+    _canManView.candidateRemoveRequest.add((data) {
+      _calcEngine.removeCandidate(data);
     });
 
     _canManView.newCandidateRequest.add((args) {

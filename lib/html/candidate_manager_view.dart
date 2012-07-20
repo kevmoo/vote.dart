@@ -1,12 +1,12 @@
 class CandidateManagerView extends HtmlView {
   static final String _candidateIdAttribute = 'candidate-id';
-  final core.EventHandle<Iterable<MapPlayer>> _requestCandidateUpdateHandle;
+  final core.EventHandle<MapPlayer> _requestRemoveCandidateHandle;
   final core.EventHandle<core.EventArgs> _requestNewCandidateHandle;
   core.ReadOnlyCollection<MapPlayer> _candidates;
   core.Func1<MapPlayer, num> _mapper;
 
   CandidateManagerView(DivElement node) :
-    _requestCandidateUpdateHandle = new core.EventHandle<Iterable<MapPlayer>>(),
+    _requestRemoveCandidateHandle = new core.EventHandle<MapPlayer>(),
     _requestNewCandidateHandle = new core.EventHandle<core.EventArgs>(),
     _candidates = new core.ReadOnlyCollection<MapPlayer>.empty(),
     _mapper = ((c) => null),
@@ -24,8 +24,8 @@ class CandidateManagerView extends HtmlView {
     markDirty();
   }
 
-  core.EventRoot<Iterable<MapPlayer>> get candidateUpdateRequest() =>
-      _requestCandidateUpdateHandle;
+  core.EventRoot<MapPlayer> get candidateRemoveRequest() =>
+      _requestRemoveCandidateHandle;
 
   core.EventRoot<core.EventArgs> get newCandidateRequest() =>
       _requestNewCandidateHandle;
@@ -75,6 +75,12 @@ class CandidateManagerView extends HtmlView {
     _node.elements.add(table);
   }
 
+  void _requestNewCandidate(MouseEvent args) {
+    final ButtonElement source = args.toElement;
+    _requestNewCandidateHandle.fireEvent(core.EventArgs.empty);
+    source.disabled = true;
+  }
+
   void _deleteClick(MouseEvent args) {
     final ButtonElement source = args.toElement;
     final candidateId = Math.parseInt(source.dataAttributes[_candidateIdAttribute]);
@@ -82,17 +88,9 @@ class CandidateManagerView extends HtmlView {
     source.disabled = true;
   }
 
-  void _requestNewCandidate(MouseEvent args) {
-    final ButtonElement source = args.toElement;
-    _requestNewCandidateHandle.fireEvent(core.EventArgs.empty);
-    source.disabled = true;
-  }
-
   void _removeCandidateWithId(int id) {
-    final newCandidates = core.$(_candidates)
-        .where((mp) => mp.id != id)
-        .toReadOnlyCollection();
+    final candidate = _candidates.single((mp) => mp.id == id);
 
-    _requestCandidateUpdateHandle.fireEvent(newCandidates);
+    _requestRemoveCandidateHandle.fireEvent(candidate);
   }
 }

@@ -50,6 +50,11 @@ class ElectionCalc {
     _distanceElectionMapper.input = newData;
   }
 
+  void removeCandidate(MapPlayer candidate) {
+    final newData = locationData.cloneAndRemove(candidate);
+    _distanceElectionMapper.input = newData;
+  }
+
   //
   // Events
   //
