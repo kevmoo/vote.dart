@@ -1,19 +1,14 @@
 class LocationData {
+  static final int maxCandidateCount = 26;
   static final int _ACharCode = 65;
   static final num _span = 20;
   final ReadOnlyCollection<MapPlayer> candidates;
   final ReadOnlyCollection<MapPlayer> voters;
-  final HashMap<MapPlayer, num> _candidateHues;
 
-  LocationData(this.voters, this.candidates)
-  : _candidateHues = new HashMap<MapPlayer, num>() {
+  static HashMap<int, num> _candidateHues;
+
+  LocationData(this.voters, this.candidates) {
     assert(this.candidates.length > 0);
-    var index = 0;
-    candidates.forEach((c) {
-      final spot = 360 * index / candidates.length;
-      _candidateHues[c] = spot;
-      index++;
-    });
   }
 
   factory LocationData.random() {
@@ -63,8 +58,6 @@ class LocationData {
 
   }
 
-  num getHue(MapPlayer candidate) => _candidateHues[candidate];
-
   LocationData cloneAndRemove(MapPlayer mp) {
     requireArgumentNotNull(mp, 'mp');
 
@@ -101,9 +94,34 @@ class LocationData {
     return new LocationData(voters, new ReadOnlyCollection(newCans));
   }
 
+  num getHue(MapPlayer candidate) {
+    return _getHue(candidate);
+  }
+
+  static num _getHue(MapPlayer candidate) {
+    if(_candidateHues == null) {
+      final halfLetterCount = maxCandidateCount ~/ 2;
+      _candidateHues = new HashMap<int, num>();
+      for(int i = 0; i < maxCandidateCount; i++) {
+        int j = i;
+        if(i % 2 == 1) {
+          j = (i + halfLetterCount) % maxCandidateCount;
+        }
+        final spot = 360 * j / maxCandidateCount;
+        _candidateHues[i] = spot;
+      }
+    }
+    final letter = candidate.name;
+    assert(letter != null && letter.length == 1);
+    final letterCode = (letter.charCodeAt(0) - _ACharCode);
+    assert(letterCode >= 0 && letterCode < 26);
+
+    return _candidateHues[letterCode];
+  }
+
   static String getCandidateName(int i) {
     requireArgument(i >= 0);
-    requireArgument(i < 26);
+    requireArgument(i < maxCandidateCount);
     return new String.fromCharCodes([i + _ACharCode]);
   }
 }
