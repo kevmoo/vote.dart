@@ -96,16 +96,7 @@ class LocationData {
 
   static num getHue(MapPlayer candidate) {
     if(_candidateHues == null) {
-      final halfLetterCount = maxCandidateCount ~/ 2;
-      _candidateHues = new HashMap<int, num>();
-      for(int i = 0; i < maxCandidateCount; i++) {
-        int j = i;
-        if(i % 2 == 1) {
-          j = (i + halfLetterCount) % maxCandidateCount;
-        }
-        final spot = 360 * j / maxCandidateCount;
-        _candidateHues[i] = spot;
-      }
+      _candidateHues = _createHueMap();
     }
     final letter = candidate.name;
     assert(letter != null && letter.length == 1);
@@ -113,6 +104,20 @@ class LocationData {
     assert(letterCode >= 0 && letterCode < 26);
 
     return _candidateHues[letterCode];
+  }
+
+  static HashMap<int, num> _createHueMap() {
+    final halfLetterCount = maxCandidateCount ~/ 2;
+    final map = new HashMap<int, num>();
+    for(int i = 0; i < maxCandidateCount; i++) {
+      int j = i;
+      if(i % 2 == 1) {
+        j = (i + halfLetterCount) % maxCandidateCount;
+      }
+      final spot = 360 * j / maxCandidateCount;
+      map[i] = spot;
+    }
+    return map;
   }
 
   static String getCandidateName(int i) {
