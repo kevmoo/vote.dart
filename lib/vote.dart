@@ -1,4 +1,4 @@
-#library('dartlib_vote');
+#library('vote');
 
 #import('../../dartlib/lib/core.dart');
 

@@ -1,4 +1,4 @@
-#library('dartlib_test_vote');
+#library('vote_test');
 
 #import('../../../dartlib/vendor/unittest/unittest.dart');
 #import('../../lib/vote.dart');

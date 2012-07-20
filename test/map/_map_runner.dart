@@ -1,4 +1,4 @@
-#library('dartlib_test_map');
+#library('vote_test_map');
 
 #import('../../../dartlib/vendor/unittest/unittest.dart');
 #import('../../../dartlib/lib/core.dart');
