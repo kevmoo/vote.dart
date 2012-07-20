@@ -53,8 +53,7 @@ class LocationData {
     $(coords)
       .select((c) => c.scale(_span))
       .forEachWithIndex((c,i) {
-        final candidate = new MapPlayer(c);
-        candidate.name = getCandidateName(i);
+        final candidate = new MapPlayer(c, getCandidateName(i));
         candidates.add(candidate);
       });
 
@@ -95,8 +94,7 @@ class LocationData {
 
     var coord = new Vector(Math.random(), Math.random());
     final loc = coord.scale(_span);
-    final mp = new MapPlayer(loc);
-    mp.name = newName;
+    final mp = new MapPlayer(loc, newName);
 
     newCans.insertRange(i, 1, mp);
 

@@ -1,12 +1,10 @@
 class MapPlayer implements Player {
   final GlobalId _id;
+  final String name;
   Coordinate _location;
-  String name;
 
-  MapPlayer(Coordinate value) :
-    _id = new GlobalId() {
-    location = value;
-  }
+  MapPlayer(this._location, [this.name = null]) :
+    _id = new GlobalId();
 
   Coordinate get location() => _location;
 
