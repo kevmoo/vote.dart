@@ -33,7 +33,11 @@ class CandidateManagerView extends HtmlView {
 
     final addButton = new ButtonElement();
     addButton.text = "Add Candidate";
-    addButton.on.click.add(_requestNewCandidate);
+    if(_candidates.length < LocationData.maxCandidateCount) {
+      addButton.on.click.add(_requestNewCandidate);
+    } else {
+      addButton.disabled = true;
+    }
 
     cell.elements.add(addButton);
 
