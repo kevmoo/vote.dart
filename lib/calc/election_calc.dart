@@ -21,6 +21,11 @@ class ElectionCalc {
     _distanceElectionMapper.input = data;
   }
 
+  void candidatesMoved() {
+    // just force _distanceElection to reprocess existing data
+    this.locationData = locationData;
+  }
+
   void set candidateData(Iterable<MapPlayer> value) {
     assert(value != null);
     assert(locationData != null);
