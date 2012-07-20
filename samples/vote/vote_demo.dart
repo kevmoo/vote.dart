@@ -79,8 +79,8 @@ class VoteDemo{
     _calcEngine.condorcetElectionChanged.add(_condorcetElectionUpdated);
     _calcEngine.voterHueMapperChanged.add(_voterHueMapperUpdated);
 
-    _rootMapElement.candidateUpdateRequest.add((data) {
-      _calcEngine.candidateData = data;
+    _rootMapElement.candidatesMoved.add((data) {
+      _calcEngine.candidatesMoved();
     });
 
     _canManView.candidateRemoveRequest.add((data) {

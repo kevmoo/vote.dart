@@ -2,7 +2,7 @@ class RootMapElement extends ElementParentImpl {
   final PlayerMapElement _voterMap;
   final CandidateMapElement _candidateMap;
   final core.AffineTransform _tx;
-  final core.EventHandle<Iterable<MapPlayer>> _requestCandidateUpdateHandle;
+  final core.EventHandle<core.EventArgs> _candidatesMovedHandle;
 
   num _averageCloseness;
   core.Rect _bounds;
@@ -12,14 +12,14 @@ class RootMapElement extends ElementParentImpl {
     _tx = new core.AffineTransform(),
     _voterMap = new PlayerMapElement(w, h),
     _candidateMap = new CandidateMapElement(w, h),
-    _requestCandidateUpdateHandle = new core.EventHandle<Iterable<MapPlayer>>(),
+    _candidatesMovedHandle = new core.EventHandle<core.EventArgs>(),
     super(w, h) {
     _voterMap.registerParent(this);
     _candidateMap.registerParent(this);
   }
 
-  core.EventRoot<Iterable<MapPlayer>> get candidateUpdateRequest() =>
-      _requestCandidateUpdateHandle;
+  core.EventRoot<core.EventArgs> get candidatesMoved() =>
+     _candidatesMovedHandle;
 
   int get visualChildCount() => 2;
 
@@ -67,20 +67,16 @@ class RootMapElement extends ElementParentImpl {
   }
 
   void dragCandidate(MapPlayer candidate, core.Vector delta) {
+    final can = core.$(_candidateMap.players).single((mp) => mp == candidate);
+
     final candidateLocPixels = _tx.transformCoordinate(candidate.location);
     final newCanLocPix = candidateLocPixels + delta;
+    var newLocation = _tx.createInverse().transformCoordinate(newCanLocPix);
+    newLocation = LocationData.bounds.constrain(newLocation);
 
-    final newLocation = _tx.createInverse().transformCoordinate(newCanLocPix);
+    can.location = newLocation;
 
-    final candidates = new List<MapPlayer>.from(_candidateMap.players);
-
-    final index = candidates.indexOf(candidate);
-
-    candidate.location = newLocation;
-
-    candidates[index] = candidate;
-
-    _requestCandidateUpdateHandle.fireEvent(candidates);
+    _candidatesMovedHandle.fireEvent(core.EventArgs.empty);
   }
 
   void update(){
