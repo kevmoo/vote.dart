@@ -90,12 +90,9 @@ class ElectionCalc {
 }
 
 class _DistanceElectionMapper
-  extends SlowMapper<LocationData, DistanceElection> {
+  extends SendPortValue<LocationData, DistanceElection> {
 
-  final SendPort _port;
-  _DistanceElectionMapper() : _port = spawnFunction(_distanceElectionIsolate);
-
-  Future<DistanceElection> getFuture(value) => _port.call(value);
+  _DistanceElectionMapper() : super(spawnFunction(_distanceElectionIsolate));
 }
 
 void _distanceElectionIsolate() {
@@ -106,12 +103,9 @@ void _distanceElectionIsolate() {
 }
 
 class _PluralityElectionMapper
-  extends SlowMapper<Collection<PluralityBallot<MapPlayer, MapPlayer>>, PluralityElection> {
+  extends SendPortValue<Collection<PluralityBallot<MapPlayer, MapPlayer>>, PluralityElection> {
 
-  final SendPort _port;
-  _PluralityElectionMapper() : _port = spawnFunction(_pluralityElectionIsolate);
-
-  Future<PluralityElection> getFuture(value) => _port.call(value);
+  _PluralityElectionMapper() : super(spawnFunction(_pluralityElectionIsolate));
 }
 
 void _pluralityElectionIsolate() {
@@ -123,12 +117,9 @@ void _pluralityElectionIsolate() {
 }
 
 class _CondorcetElectionMapper
-  extends SlowMapper<Collection<RankedBallot<MapPlayer, MapPlayer>>, CondorcetElection> {
+  extends SendPortValue<Collection<RankedBallot<MapPlayer, MapPlayer>>, CondorcetElection> {
 
-  final SendPort _port;
-  _CondorcetElectionMapper() : _port = spawnFunction(_condorcetElectionIsolate);
-
-  Future<CondorcetElection> getFuture(value) => _port.call(value);
+  _CondorcetElectionMapper() : super(spawnFunction(_condorcetElectionIsolate));
 }
 
 void _condorcetElectionIsolate() {
@@ -140,12 +131,9 @@ void _condorcetElectionIsolate() {
 }
 
 class _VoterHexMapper
-  extends SlowMapper<Tuple<DistanceElection, LocationData>, HashMap<MapPlayer, String>> {
+  extends SendPortValue<Tuple<DistanceElection, LocationData>, HashMap<MapPlayer, String>> {
 
-  final SendPort _port;
-  _VoterHexMapper() : _port = spawnFunction(_voterHexMapperIsolate);
-
-  Future<HashMap<MapPlayer, String>> getFuture(value) => _port.call(value);
+  _VoterHexMapper() : super(spawnFunction(_voterHexMapperIsolate));
 }
 
 void _voterHexMapperIsolate() {
