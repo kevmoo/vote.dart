@@ -1,5 +1,5 @@
 #import('dart:html');
-#import('../../../dartlib/lib/core.dart', prefix:'core');
+#import('../../../dartlib/lib/dartlib.dart', prefix:'core');
 #import('../../../dartlib/lib/retained.dart');
 #import('../../../dartlib/lib/html.dart');
 
