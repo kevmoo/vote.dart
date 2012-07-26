@@ -19,7 +19,7 @@ class DistanceBallot<TVoter extends MapPlayer, TCandidate extends MapPlayer>
       var d = distances[a].compareTo(distances[b]);
       if(d == 0) {
         // ensure ranking of tied candidates is random-ish
-        d = (Math.random() < 0.5) ? -1 : 1;
+        d = rnd.nextBool() ? -1 : 1;
       }
       return d;
     });

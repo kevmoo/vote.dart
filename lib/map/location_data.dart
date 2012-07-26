@@ -23,12 +23,6 @@ class LocationData {
       }
     }
 
-    // silly spinning wheels to get a semi-random value out of Math.random
-    final blah = Clock.now() % 1000;
-    for(int i = 0; i < blah; i++) {
-      Math.random();
-    }
-
     final coords = new List<Vector>();
     final middle = new Vector(0.5, 0.5);
     coords.add(middle);
@@ -36,7 +30,7 @@ class LocationData {
     final bool mirror = false;
 
     for(var i = 0; i < 4; i++) {
-      var coord = new Vector(Math.random(), Math.random());
+      var coord = new Vector(rnd.nextDouble(), rnd.nextDouble());
       coords.add(coord);
       if(mirror) {
         final delta = middle - coord;
@@ -86,7 +80,7 @@ class LocationData {
 
     final newName = getCandidateName(i);
 
-    var coord = new Vector(Math.random(), Math.random());
+    var coord = new Vector(rnd.nextDouble(), rnd.nextDouble());
     final loc = coord.scale(_span);
     final mp = new MapPlayer(loc, newName);
 
