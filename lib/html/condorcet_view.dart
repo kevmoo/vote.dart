@@ -1,4 +1,6 @@
 class CondorcetView extends HtmlView {
+  static final String _grayHex = '#999999';
+
   CondorcetElection _election;
 
   CondorcetView(DivElement node) : super(node);
@@ -35,7 +37,7 @@ class CondorcetView extends HtmlView {
       final colors = opps.toHashMap((c) {
         final hue = LocationData.getHue(c);
         if(hue == null) {
-          return "#999999";
+          return _grayHex;
         } else {
           final hsl = new core.HslColor(hue, 1, 0.75);
           return hsl.toRgb().toHex();
@@ -45,7 +47,7 @@ class CondorcetView extends HtmlView {
       final darkColors = opps.toHashMap((c) {
         final hue = LocationData.getHue(c);
         if(hue == null) {
-          return "#999999";
+          return _grayHex;
         } else {
           final hsl = new core.HslColor(hue, 1, 0.3);
           return hsl.toRgb().toHex();
@@ -86,7 +88,7 @@ class CondorcetView extends HtmlView {
           for(final opp in opps) {
             if(opp == candidate) {
               cell = row.insertCell(-1);
-              cell.style.background = '#999999';
+              cell.style.background = _grayHex;
               cell.colSpan = 3;
             } else {
               String middleText;
