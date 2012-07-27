@@ -16,7 +16,7 @@ class CondorcetView extends HtmlView {
   }
 
   void updateElement() {
-    _node.elements.clear();
+    node.elements.clear();
 
     var table = new TableElement();
 
@@ -160,7 +160,7 @@ class CondorcetView extends HtmlView {
     table.on.mouseMove.add(_onMouseOver);
     table.on.mouseOut.add(_onMouseOut);
 
-    _node.elements.add(table);
+    node.elements.add(table);
   }
 
   void _onMouseOver(MouseEvent e) {

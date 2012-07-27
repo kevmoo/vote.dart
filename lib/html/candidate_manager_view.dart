@@ -23,7 +23,7 @@ class CandidateManagerView extends HtmlView {
       _requestNewCandidateHandle;
 
   void updateElement() {
-    _node.elements.clear();
+    node.elements.clear();
 
     var table = new TableElement();
 
@@ -68,7 +68,7 @@ class CandidateManagerView extends HtmlView {
         cell.elements.add(deleteButton);
       }
     }
-    _node.elements.add(table);
+    node.elements.add(table);
   }
 
   void _requestNewCandidate(MouseEvent args) {

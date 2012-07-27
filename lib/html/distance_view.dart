@@ -9,7 +9,7 @@ class DistanceView extends HtmlView {
   }
 
   void updateElement() {
-    _node.elements.clear();
+    node.elements.clear();
 
     var table = new TableElement();
     TableRowElement row = table.insertRow(-1);
@@ -81,6 +81,6 @@ class DistanceView extends HtmlView {
 
     }
 
-    _node.elements.add(table);
+    node.elements.add(table);
   }
 }
