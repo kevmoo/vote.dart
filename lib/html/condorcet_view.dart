@@ -1,7 +1,9 @@
 class CondorcetView extends HtmlView {
   static final String _grayHex = '#999999';
+  static final String _pairIdsKey = 'pair-ids';
 
   CondorcetElection _election;
+  core.ReadOnlyCollection<Player> _candidates;
 
   CondorcetView(DivElement node) : super(node);
 
@@ -9,6 +11,7 @@ class CondorcetView extends HtmlView {
 
   void set election(CondorcetElection election) {
     _election = election;
+    _candidates = null;
     markDirty();
   }
 
@@ -32,9 +35,9 @@ class CondorcetView extends HtmlView {
       var evenCandidateRow = true;
 
       // add columns for opponents
-      var opps = _election.places.selectMany((p) => p).toReadOnlyCollection();
+      _candidates = _election.places.selectMany((p) => p).toReadOnlyCollection();
 
-      final colors = opps.toHashMap((c) {
+      final colors = _candidates.toHashMap((c) {
         final hue = LocationData.getHue(c);
         if(hue == null) {
           return _grayHex;
@@ -44,7 +47,7 @@ class CondorcetView extends HtmlView {
         }
       });
 
-      final darkColors = opps.toHashMap((c) {
+      final darkColors = _candidates.toHashMap((c) {
         final hue = LocationData.getHue(c);
         if(hue == null) {
           return _grayHex;
@@ -54,10 +57,10 @@ class CondorcetView extends HtmlView {
         }
       });
 
-      for(final opp in opps) {
+      for(final opp in _candidates) {
         cell = new Element.tag('th');
         row.elements.add(cell);
-        cell.innerHTML = opp.name;
+        cell.innerHTML = opp.toString();
 
         cell.style.background = colors[opp];
         cell.colSpan = 3;
@@ -85,7 +88,7 @@ class CondorcetView extends HtmlView {
           cell.style.background = colors[candidate];
           cell.innerHTML = candidate.toString();
 
-          for(final opp in opps) {
+          for(final opp in _candidates) {
             if(opp == candidate) {
               cell = row.insertCell(-1);
               cell.style.background = _grayHex;
@@ -116,17 +119,26 @@ class CondorcetView extends HtmlView {
                 middleText = '=';
               }
 
+              final cIndex = _candidates.indexOf(candidate);
+              assert(cIndex >= 0);
+              final oIndex = _candidates.indexOf(opp);
+              assert(oIndex >= 0);
+
+              final cellData = "${cIndex}_${oIndex}";
+
               cell = row.insertCell(-1);
               cell.innerHTML = pair.firstOverSecond.toString();
               cell.style.background = bg;
               cell.style.color = leftColor;
               cell.style.paddingRight = '0';
               cell.classes.add('vote-count');
+              cell.dataAttributes[_pairIdsKey] = cellData;
 
               cell = row.insertCell(-1);
               cell.innerHTML = middleText;
               cell.style.background = bg;
               cell.style.color = fg;
+              cell.dataAttributes[_pairIdsKey] = cellData;
 
               cell = row.insertCell(-1);
               cell.innerHTML = pair.secondOverFirst.toString();
@@ -134,6 +146,7 @@ class CondorcetView extends HtmlView {
               cell.style.color = rightColor;
               cell.style.paddingLeft = '0';
               cell.classes.add('vote-count');
+              cell.dataAttributes[_pairIdsKey] = cellData;
             }
           }
 
@@ -144,6 +157,38 @@ class CondorcetView extends HtmlView {
 
     }
 
+    table.on.mouseMove.add(_onMouseOver);
+    table.on.mouseOut.add(_onMouseOut);
+
     _node.elements.add(table);
+  }
+
+  void _onMouseOver(MouseEvent e) {
+    assert(_candidates != null);
+    if(e.toElement is Element) {
+      final Element elem = e.toElement;
+      final String pairIdStr = elem.dataAttributes[_pairIdsKey];
+      if(pairIdStr != null) {
+        final idStrs = pairIdStr.split('_');
+        assert(idStrs.length == 2);
+        final ids = core.$(idStrs).select((s) => Math.parseInt(s)).toList();
+        _hoverPair(ids[0], ids[1]);
+        return;
+      }
+    }
+    _hoverOff();
+  }
+
+  void _onMouseOut(args) {
+    assert(_candidates != null);
+    _hoverOff();
+  }
+
+  void _hoverPair(int index1, int index2) {
+    // print(['hover', index1, index2]);
+  }
+
+  void _hoverOff() {
+    // print('hover off');
   }
 }
