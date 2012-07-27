@@ -35,3 +35,34 @@ tr.row-odd {
 td.candidate-cell {
   text-align: center;
 }
+
+//
+// Condorcet View
+//
+
+#condorcetView .none_right_value {
+  padding: 0;
+}
+
+#condorcetView .right_value {
+  padding-left: 0;
+}
+
+#condorcetView .left_value {
+  padding-right: 0;
+}
+
+td.pair-cell.winner {
+  color: black;
+  background: white;
+}
+
+td.pair-cell.loser {
+  color: white;
+  background: black;
+}
+
+td.hover_pair.pair-cell.vote-count {
+  text-decoration: underline;
+  font-weight: bold;
+}

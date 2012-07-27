@@ -4,6 +4,7 @@ class CondorcetView extends HtmlView {
 
   CondorcetElection _election;
   core.ReadOnlyCollection<Player> _candidates;
+  core.Tuple _hoveringPair;
 
   CondorcetView(DivElement node) : super(node);
 
@@ -95,57 +96,55 @@ class CondorcetView extends HtmlView {
               cell.colSpan = 3;
             } else {
               String middleText;
-              String bg;
-              String fg = 'black';
+              String cellClass;
               String leftColor, rightColor;
               var pair = _election.getPair(candidate, opp);
               assert(pair != null);
               if(candidate == pair.winner) {
-                bg = 'white';
+                cellClass = 'winner';
                 leftColor = darkColors[candidate];
                 rightColor = darkColors[opp];
                 middleText = '&gt;';
               } else if(opp == pair.winner) {
-                bg = 'black';
-                fg = 'white';
+                cellClass = 'loser';
                 leftColor = colors[candidate];
                 rightColor = colors[opp];
                 middleText = '&lt;';
               } else {
                 assert(pair.isTie);
-                bg = '#cccccc';
+                cellClass = 'tie';
                 leftColor = darkColors[candidate];
                 rightColor = darkColors[opp];
                 middleText = '=';
               }
 
-              final cIndex = _candidates.indexOf(candidate);
-              assert(cIndex >= 0);
-              final oIndex = _candidates.indexOf(opp);
-              assert(oIndex >= 0);
-
-              final cellData = "${cIndex}_${oIndex}";
+              final cellData = _getPairElementName(candidate, opp);
 
               cell = row.insertCell(-1);
               cell.innerHTML = pair.firstOverSecond.toString();
-              cell.style.background = bg;
               cell.style.color = leftColor;
-              cell.style.paddingRight = '0';
               cell.classes.add('vote-count');
+              cell.classes.add('pair-cell');
+              cell.classes.add(cellData);
+              cell.classes.add(cellClass);
+              cell.classes.add('left_value');
               cell.dataAttributes[_pairIdsKey] = cellData;
 
               cell = row.insertCell(-1);
               cell.innerHTML = middleText;
-              cell.style.background = bg;
-              cell.style.color = fg;
+              cell.classes.add('pair-cell');
+              cell.classes.add(cellClass);
+              cell.classes.add(cellData);
               cell.dataAttributes[_pairIdsKey] = cellData;
 
               cell = row.insertCell(-1);
               cell.innerHTML = pair.secondOverFirst.toString();
-              cell.style.background = bg;
               cell.style.color = rightColor;
-              cell.style.paddingLeft = '0';
               cell.classes.add('vote-count');
+              cell.classes.add('right_value');
+              cell.classes.add(cellClass);
+              cell.classes.add('pair-cell');
+              cell.classes.add(cellData);
               cell.dataAttributes[_pairIdsKey] = cellData;
             }
           }
@@ -163,32 +162,70 @@ class CondorcetView extends HtmlView {
     node.elements.add(table);
   }
 
+  void set _thePair(core.Tuple pair) {
+    assert(_candidates != null);
+    if(pair != _hoveringPair) {
+      _hoveringPair = pair;
+      _updateCellHoverStyle();
+    }
+  }
+
+  void _updateCellHoverStyle() {
+    final String hoverPairClass = 'hover_pair';
+
+    final List<Element> cells = node.queryAll('td.pair-cell.$hoverPairClass');
+    cells.forEach((e){
+      e.classes.remove(hoverPairClass);
+    });
+
+    if(_hoveringPair != null) {
+      final matchClass =
+          _getPairElementName(_hoveringPair.Item1, _hoveringPair.Item2);
+      final List<Element> thePairs = node.queryAll('td.pair-cell.$matchClass');
+      thePairs.forEach((e){
+        e.classes.add(hoverPairClass);
+      });
+    }
+  }
+
   void _onMouseOver(MouseEvent e) {
     assert(_candidates != null);
     if(e.toElement is Element) {
       final Element elem = e.toElement;
-      final String pairIdStr = elem.dataAttributes[_pairIdsKey];
-      if(pairIdStr != null) {
-        final idStrs = pairIdStr.split('_');
-        assert(idStrs.length == 2);
-        final ids = core.$(idStrs).select((s) => Math.parseInt(s)).toList();
-        _hoverPair(ids[0], ids[1]);
+      final pair = _getPair(elem);
+      if(pair != null) {
+        _thePair = new core.Tuple(_candidates[pair.Item1], _candidates[pair.Item2]);
         return;
       }
     }
-    _hoverOff();
+    _thePair = null;
   }
 
   void _onMouseOut(args) {
     assert(_candidates != null);
-    _hoverOff();
+    _thePair = null;
   }
 
-  void _hoverPair(int index1, int index2) {
-    // print(['hover', index1, index2]);
+  String _getPairElementName(can1, can2) {
+    final cIndex = _candidates.indexOf(can1);
+    assert(cIndex >= 0);
+    final oIndex = _candidates.indexOf(can2);
+    assert(oIndex >= 0);
+
+    return "pair${Math.min(cIndex, oIndex)}_${Math.max(cIndex, oIndex)}";
   }
 
-  void _hoverOff() {
-    // print('hover off');
+  static core.Tuple<int, int> _getPair(Element elem) {
+    String pairIdStr = elem.dataAttributes[_pairIdsKey];
+    if(pairIdStr != null) {
+      assert(pairIdStr.startsWith('pair'));
+      pairIdStr = pairIdStr.substring(4);
+
+      final idStrs = pairIdStr.split('_');
+      assert(idStrs.length == 2);
+      final ids = core.$(idStrs).select((s) => Math.parseInt(s)).toList();
+      return new core.Tuple<int, int>(ids[0], ids[1]);
+    }
+    return null;
   }
 }
