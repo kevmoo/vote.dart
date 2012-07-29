@@ -2,11 +2,14 @@ class CondorcetView extends HtmlView {
   static final String _grayHex = '#999999';
   static final String _pairIdsKey = 'pair-ids';
 
+  final core.EventHandle<core.EventArgs> _hoverChangedHandle;
   CondorcetElection _election;
   core.ReadOnlyCollection<Player> _candidates;
   core.Tuple _hoveringPair;
 
-  CondorcetView(DivElement node) : super(node);
+  CondorcetView(DivElement node) :
+    _hoverChangedHandle = new core.EventHandle<core.EventArgs>(),
+    super(node);
 
   CondorcetElection get election() => _election;
 
@@ -15,6 +18,8 @@ class CondorcetView extends HtmlView {
     _candidates = null;
     markDirty();
   }
+
+  core.EventRoot<core.EventArgs> get hoverChanged => _hoverChangedHandle;
 
   void updateElement() {
     node.elements.clear();
@@ -167,6 +172,7 @@ class CondorcetView extends HtmlView {
     if(pair != _hoveringPair) {
       _hoveringPair = pair;
       _updateCellHoverStyle();
+      _hoverChangedHandle.fireEvent(core.EventArgs.empty);
     }
   }
 
