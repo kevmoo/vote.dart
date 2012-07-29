@@ -40,15 +40,11 @@ td.candidate-cell {
 // Condorcet View
 //
 
-#condorcetView .none_right_value {
-  padding: 0;
-}
-
-#condorcetView .right_value {
+td.pair-cell.right-value {
   padding-left: 0;
 }
 
-#condorcetView .left_value {
+td.pair-cell.left-value {
   padding-right: 0;
 }
 
@@ -62,7 +58,11 @@ td.pair-cell.loser {
   background: black;
 }
 
-td.hover_pair.pair-cell.vote-count {
+td.hover-pair.pair-cell.vote-count {
   text-decoration: underline;
   font-weight: bold;
+}
+
+td.pair-cell {
+  cursor: pointer;
 }

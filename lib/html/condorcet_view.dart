@@ -171,7 +171,7 @@ class CondorcetView extends HtmlView {
   }
 
   void _updateCellHoverStyle() {
-    final String hoverPairClass = 'hover_pair';
+    final String hoverPairClass = 'hover-pair';
 
     final List<Element> cells = node.queryAll('td.pair-cell.$hoverPairClass');
     cells.forEach((e){
