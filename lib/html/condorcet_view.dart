@@ -19,7 +19,7 @@ class CondorcetView extends HtmlView {
     markDirty();
   }
 
-  core.EventRoot<core.EventArgs> get hoverChanged => _hoverChangedHandle;
+  core.EventRoot<core.EventArgs> get hoverChanged() => _hoverChangedHandle;
 
   void updateElement() {
     node.elements.clear();
