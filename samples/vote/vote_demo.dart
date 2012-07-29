@@ -83,12 +83,25 @@ class VoteDemo{
       _calcEngine.candidatesMoved();
     });
 
+    _stage.invalidated.add((args) {
+      _requestFrame();
+    });
+
     _canManView.candidateRemoveRequest.add((data) {
       _calcEngine.removeCandidate(data);
     });
 
     _canManView.newCandidateRequest.add((args) {
       _calcEngine.addCandidate();
+    });
+
+    _condorcetView.hoverChanged.add((args) {
+      List<MapPlayer> hoverElements = null;
+      if(_condorcetView.hoveringPair != null) {
+        hoverElements = [_condorcetView.hoveringPair.Item1,
+                         _condorcetView.hoveringPair.Item2];
+      }
+      _rootMapElement.showOnlyPlayers = hoverElements;
     });
 
     final initialData = new LocationData.random();

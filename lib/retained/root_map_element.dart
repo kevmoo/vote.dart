@@ -66,6 +66,12 @@ class RootMapElement extends ElementParentImpl {
     _candidateMap.players = value;
   }
 
+  Collection<MapPlayer> get showOnlyPlayers() => _candidateMap.showOnlyPlayers;
+
+  void set showOnlyPlayers(Iterable<MapPlayer> value) {
+    _candidateMap.showOnlyPlayers = value;
+  }
+
   void dragCandidate(MapPlayer candidate, core.Vector delta) {
     final can = core.$(_candidateMap.players).single((mp) => mp == candidate);
 
