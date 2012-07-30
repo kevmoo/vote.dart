@@ -77,7 +77,7 @@ class VoteDemo{
     _calcEngine.distanceElectionChanged.add(_distanceElectionUpdated);
     _calcEngine.pluralityElectionChanged.add(_pluralityElectionUpdated);
     _calcEngine.condorcetElectionChanged.add(_condorcetElectionUpdated);
-    _calcEngine.voterHueMapperChanged.add(_voterHueMapperUpdated);
+    _calcEngine.voterHueMapperChanged.add(_voterHexMapperUpdated);
 
     _rootMapElement.candidatesMoved.add((data) {
       _calcEngine.candidatesMoved();
@@ -134,7 +134,7 @@ class VoteDemo{
     _requestFrame();
   }
 
-  void _voterHueMapperUpdated(Dynamic args) {
+  void _voterHexMapperUpdated(Dynamic args) {
     assert(_calcEngine.voterHexMap != null);
     _rootMapElement.voterHexMap = _calcEngine.voterHexMap;
     _requestFrame();
