@@ -23,6 +23,7 @@ class CandidateElement extends PElement {
   void drawOverride(CanvasRenderingContext2D ctx){
     if(hidden) {
       ctx.globalAlpha = 0.3;
+      ctx.fillStyle = '#999999';
     } else {
 
       final num shadowDistance = (Mouse.isMouseDirectlyOver(this))?
@@ -32,9 +33,9 @@ class CandidateElement extends PElement {
       ctx.shadowBlur = 6;
       ctx.shadowOffsetX = shadowDistance;
       ctx.shadowOffsetY = shadowDistance;
+      ctx.fillStyle = _color;
     }
 
-    ctx.fillStyle = _color;
     CanvasUtil.ellipse(ctx, 0, 0, this.width, this.height);
     ctx.fill();
 
