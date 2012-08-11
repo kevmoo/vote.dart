@@ -8,6 +8,6 @@
 #import('map.dart');
 
 #source('retained/root_map_element.dart');
-#source('retained/player_map_element.dart');
+#source('retained/voter_map_element.dart');
 #source('retained/candidate_map_element.dart');
 #source('retained/candidate_element.dart');

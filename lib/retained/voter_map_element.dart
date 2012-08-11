@@ -1,11 +1,11 @@
-class PlayerMapElement extends PElement {
+class VoterMapElement extends PElement {
   final List<MapPlayer> _players;
   final core.AffineTransform _tx;
 
   num _radius;
   HashMap<MapPlayer, String> _map;
 
-  PlayerMapElement(int w, int h) :
+  VoterMapElement(int w, int h) :
     _tx = new core.AffineTransform(),
     _players = new List<MapPlayer>(),
     super(w, h, true) {

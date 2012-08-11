@@ -1,5 +1,5 @@
 class RootMapElement extends ElementParentImpl {
-  final PlayerMapElement _voterMap;
+  final VoterMapElement _voterMap;
   final CandidateMapElement _candidateMap;
   final core.AffineTransform _tx;
   final core.EventHandle<core.EventArgs> _candidatesMovedHandle;
@@ -10,7 +10,7 @@ class RootMapElement extends ElementParentImpl {
 
   RootMapElement(int w, int h) :
     _tx = new core.AffineTransform(),
-    _voterMap = new PlayerMapElement(w, h),
+    _voterMap = new VoterMapElement(w, h),
     _candidateMap = new CandidateMapElement(w, h),
     _candidatesMovedHandle = new core.EventHandle<core.EventArgs>(),
     super(w, h) {
