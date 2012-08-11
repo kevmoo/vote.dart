@@ -96,6 +96,7 @@ class VoteDemo{
     });
 
     _condorcetView.hoverChanged.add((args) {
+      _calcEngine.hoverPair = _condorcetView.hoveringPair;
       List<MapPlayer> hoverElements = null;
       if(_condorcetView.hoveringPair != null) {
         hoverElements = [_condorcetView.hoveringPair.Item1,

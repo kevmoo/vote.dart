@@ -4,6 +4,8 @@ class ElectionCalc {
   final _CondorcetElectionMapper _condorcetElectionMapper;
   final _VoterHexMapper _voterHexMapper;
 
+  Tuple<MapPlayer, MapPlayer> _hoverPair;
+
   ElectionCalc() :
     _distanceElectionMapper = new _DistanceElectionMapper(),
     _pluralityElectionMapper = new _PluralityElectionMapper(),
@@ -39,6 +41,11 @@ class ElectionCalc {
     } else {
       print('TODO: we blow up at the moment w/ zero candidates. Probably okay.');
     }
+  }
+
+  void set hoverPair(Tuple<MapPlayer, MapPlayer> pair) {
+    _hoverPair = pair;
+    _updateVoterHexMapper();
   }
 
   DistanceElection get distanceElection() => _distanceElectionMapper.output;
@@ -85,7 +92,12 @@ class ElectionCalc {
   void _distanceElectionChanged() {
     _pluralityElectionMapper.input = distanceElection.ballots;
     _condorcetElectionMapper.input = distanceElection.ballots;
-    _voterHexMapper.input = new Tuple(distanceElection, locationData);
+    _updateVoterHexMapper();
+  }
+
+  void _updateVoterHexMapper() {
+    final val = new Tuple3(distanceElection, locationData, _hoverPair);
+    _voterHexMapper.input = val;
   }
 }
 
@@ -131,18 +143,27 @@ void _condorcetElectionIsolate() {
 }
 
 class _VoterHexMapper
-  extends SendPortValue<Tuple<DistanceElection, LocationData>, HashMap<MapPlayer, String>> {
+  extends SendPortValue<Tuple3<DistanceElection, LocationData, Tuple<MapPlayer, MapPlayer>>, HashMap<MapPlayer, String>> {
 
   _VoterHexMapper() : super(spawnFunction(_voterHexMapperIsolate));
 }
 
 void _voterHexMapperIsolate() {
-  port.receive((Tuple<DistanceElection, LocationData> tuple, SendPort reply) {
+  port.receive((Tuple3<DistanceElection, LocationData, Tuple<MapPlayer, MapPlayer>> tuple, SendPort reply) {
     final map = new HashMap<MapPlayer, String>();
     for(final b in tuple.Item1.ballots) {
-      final candidate = b.choice;
-      final hue = LocationData.getHue(candidate);
-      map[b.voter] = (new HslColor(hue, 0.5, 0.75)).toRgb().toHex();
+      MapPlayer candidate;
+      if(tuple.Item3 == null) {
+        candidate = b.choice;
+      } else {
+        // TODO: this will blow up wonderfully if the item is not found
+        // need to implement firstOrDefault
+        candidate = b.rank.where((c) => c == tuple.Item3.Item1 || c == tuple.Item3.Item2).first();
+      }
+      if(candidate != null) {
+        final hue = LocationData.getHue(candidate);
+        map[b.voter] = (new HslColor(hue, 0.5, 0.75)).toRgb().toHex();
+      }
     }
     reply.send(map);
   });
