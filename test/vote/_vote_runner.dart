@@ -1,6 +1,6 @@
 #library('vote_test');
 
-#import('../../../dartlib/vendor/unittest/unittest.dart');
+#import('package:unittest/unittest.dart');
 #import('../../lib/vote.dart');
 #import('../../../dartlib/lib/test.dart');
 
