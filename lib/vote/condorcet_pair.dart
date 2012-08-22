@@ -54,7 +54,7 @@ class CondorcetPair<TVoter extends Player, TCandidate extends Player>
 
   }
 
-  TCandidate get winner() {
+  TCandidate get winner {
     if(firstOverSecond > secondOverFirst) {
       return Item1;
     }
@@ -67,7 +67,7 @@ class CondorcetPair<TVoter extends Player, TCandidate extends Player>
     }
   }
 
-  bool get isTie() => firstOverSecond == secondOverFirst;
+  bool get isTie => firstOverSecond == secondOverFirst;
 
   int hashCode() => Util.getHashCode([Item1, Item2]);
 

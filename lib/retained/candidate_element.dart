@@ -10,7 +10,7 @@ class CandidateElement extends PElement {
     _tx = addTransform();
   }
 
-  bool get hidden() => _hidden;
+  bool get hidden => _hidden;
 
   void set hidden(bool value) {
     assert(value != null);

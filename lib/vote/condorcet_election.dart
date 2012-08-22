@@ -95,7 +95,7 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
       new ReadOnlyCollection<ElectionPlace<TCandidate>>(places));
   }
 
-  Collection<TCandidate> get candidates() => _profiles.getKeys();
+  Collection<TCandidate> get candidates => _profiles.getKeys();
 
   CondorcetPair<TVoter, TCandidate> getPair(TCandidate c1, TCandidate c2) {
     var filter = _pairs.filter((p) => p.matches(c1, c2));

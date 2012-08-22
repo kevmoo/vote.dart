@@ -6,14 +6,14 @@ class MapPlayer implements Player {
   MapPlayer(this._location, [this.name = null]) :
     _id = new GlobalId();
 
-  Coordinate get location() => _location;
+  Coordinate get location => _location;
 
   void set location(Coordinate value) {
     requireArgumentNotNull(value, 'value');
     _location = value;
   }
 
-  int get id() => _id.id;
+  int get id => _id.id;
 
   int compareTo(MapPlayer other) => _id.compareTo(other._id);
 

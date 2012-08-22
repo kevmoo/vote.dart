@@ -18,10 +18,10 @@ class RootMapElement extends ElementParentImpl {
     _candidateMap.registerParent(this);
   }
 
-  core.EventRoot<core.EventArgs> get candidatesMoved() =>
+  core.EventRoot<core.EventArgs> get candidatesMoved =>
      _candidatesMovedHandle;
 
-  int get visualChildCount() => 2;
+  int get visualChildCount => 2;
 
   PElement getVisualChild(int index){
     switch(index) {
@@ -40,7 +40,7 @@ class RootMapElement extends ElementParentImpl {
     invalidateDraw();
   }
 
-  Iterable<MapPlayer> get voters() => _voterMap.players;
+  Iterable<MapPlayer> get voters => _voterMap.players;
 
   void set voterHexMap(HashMap<MapPlayer, String> value) {
     _voterMap.playerHexMap = value;
@@ -66,7 +66,7 @@ class RootMapElement extends ElementParentImpl {
     _candidateMap.players = value;
   }
 
-  Collection<MapPlayer> get showOnlyPlayers() => _candidateMap.showOnlyPlayers;
+  Collection<MapPlayer> get showOnlyPlayers => _candidateMap.showOnlyPlayers;
 
   void set showOnlyPlayers(Iterable<MapPlayer> value) {
     _candidateMap.showOnlyPlayers = value;

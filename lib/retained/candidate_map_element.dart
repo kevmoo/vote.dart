@@ -13,7 +13,7 @@ class CandidateMapElement extends ElementParentImpl {
     showOnlyPlayers = null;
   }
 
-  int get visualChildCount() {
+  int get visualChildCount {
     _ensureElements();
     return _elements.length;
   }
@@ -29,7 +29,7 @@ class CandidateMapElement extends ElementParentImpl {
     invalidateDraw();
   }
 
-  Iterable<MapPlayer> get players() => _players;
+  Iterable<MapPlayer> get players => _players;
 
   void set players(Collection<MapPlayer> value) {
     core.requireArgumentNotNull(value, "value");
@@ -39,7 +39,7 @@ class CandidateMapElement extends ElementParentImpl {
     invalidateDraw();
   }
 
-  Collection<MapPlayer> get showOnlyPlayers() => _showOnlyPlayers;
+  Collection<MapPlayer> get showOnlyPlayers => _showOnlyPlayers;
 
   void set showOnlyPlayers(Iterable<MapPlayer> value) {
     if(value == null) {

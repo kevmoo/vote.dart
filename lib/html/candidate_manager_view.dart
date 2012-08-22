@@ -16,10 +16,10 @@ class CandidateManagerView extends HtmlView {
     markDirty();
   }
 
-  core.EventRoot<MapPlayer> get candidateRemoveRequest() =>
+  core.EventRoot<MapPlayer> get candidateRemoveRequest =>
       _requestRemoveCandidateHandle;
 
-  core.EventRoot<core.EventArgs> get newCandidateRequest() =>
+  core.EventRoot<core.EventArgs> get newCandidateRequest =>
       _requestNewCandidateHandle;
 
   void updateElement() {

@@ -11,7 +11,7 @@ class CondorcetView extends HtmlView {
     _hoverChangedHandle = new core.EventHandle<core.EventArgs>(),
     super(node);
 
-  CondorcetElection get election() => _election;
+  CondorcetElection get election => _election;
 
   void set election(CondorcetElection election) {
     _election = election;
@@ -19,9 +19,9 @@ class CondorcetView extends HtmlView {
     markDirty();
   }
 
-  core.EventRoot<core.EventArgs> get hoverChanged() => _hoverChangedHandle;
+  core.EventRoot<core.EventArgs> get hoverChanged => _hoverChangedHandle;
 
-  core.Tuple<Player, Player> get hoveringPair() => _hoveringPair;
+  core.Tuple<Player, Player> get hoveringPair => _hoveringPair;
 
   void updateElement() {
     node.elements.clear();

@@ -3,7 +3,7 @@ class PluralityView extends HtmlView {
 
   PluralityView(DivElement node) : super(node);
 
-  PluralityElection get election() => _election;
+  PluralityElection get election => _election;
 
   void set election(PluralityElection election) {
     _election = election;

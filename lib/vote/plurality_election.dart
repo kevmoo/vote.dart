@@ -51,5 +51,5 @@ class PluralityElection<TVoter extends Player, TCandidate extends Player>
     return new PluralityElection._internal(roBallots, group, places);
   }
 
-  Collection<TCandidate> get candidates() => _ballotGroup.getKeys();
+  Collection<TCandidate> get candidates => _ballotGroup.getKeys();
 }

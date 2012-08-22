@@ -19,7 +19,7 @@ class VoterMapElement extends PElement {
     invalidateDraw();
   }
 
-  Iterable<MapPlayer> get players() => _players;
+  Iterable<MapPlayer> get players => _players;
 
   void set players(Collection<MapPlayer> value) {
     core.requireArgumentNotNull(value, "value");

@@ -16,7 +16,7 @@ class ElectionCalc {
     });
   }
 
-  LocationData get locationData() => _distanceElectionMapper.input;
+  LocationData get locationData => _distanceElectionMapper.input;
 
   void set locationData(LocationData data) {
     assert(data != null);
@@ -48,13 +48,13 @@ class ElectionCalc {
     _updateVoterHexMapper();
   }
 
-  DistanceElection get distanceElection() => _distanceElectionMapper.output;
+  DistanceElection get distanceElection => _distanceElectionMapper.output;
 
-  PluralityElection get pluralityElection() => _pluralityElectionMapper.output;
+  PluralityElection get pluralityElection => _pluralityElectionMapper.output;
 
-  CondorcetElection get condorcetElection() => _condorcetElectionMapper.output;
+  CondorcetElection get condorcetElection => _condorcetElectionMapper.output;
 
-  HashMap<MapPlayer, String> get voterHexMap() => _voterHexMapper.output;
+  HashMap<MapPlayer, String> get voterHexMap => _voterHexMapper.output;
 
   void addCandidate() {
     assert(locationData != null);
@@ -70,19 +70,19 @@ class ElectionCalc {
   //
   // Events
   //
-  EventRoot<EventArgs> get locationDataChanged() =>
+  EventRoot<EventArgs> get locationDataChanged =>
       _distanceElectionMapper.inputChanged;
 
-  EventRoot<EventArgs> get distanceElectionChanged() =>
+  EventRoot<EventArgs> get distanceElectionChanged =>
       _distanceElectionMapper.outputChanged;
 
-  EventRoot<EventArgs> get pluralityElectionChanged() =>
+  EventRoot<EventArgs> get pluralityElectionChanged =>
       _pluralityElectionMapper.outputChanged;
 
-  EventRoot<EventArgs> get condorcetElectionChanged() =>
+  EventRoot<EventArgs> get condorcetElectionChanged =>
       _condorcetElectionMapper.outputChanged;
 
-  EventRoot<EventArgs> get voterHueMapperChanged() =>
+  EventRoot<EventArgs> get voterHueMapperChanged =>
       _voterHexMapper.outputChanged;
 
   //
