@@ -220,7 +220,7 @@ class CondorcetView extends HtmlView {
     final oIndex = _candidates.indexOf(can2);
     assert(oIndex >= 0);
 
-    return "pair${Math.min(cIndex, oIndex)}_${Math.max(cIndex, oIndex)}";
+    return "pair${math.min(cIndex, oIndex)}_${math.max(cIndex, oIndex)}";
   }
 
   static core.Tuple<int, int> _getPair(Element elem) {
@@ -231,7 +231,7 @@ class CondorcetView extends HtmlView {
 
       final idStrs = pairIdStr.split('_');
       assert(idStrs.length == 2);
-      final ids = core.$(idStrs).select((s) => Math.parseInt(s)).toList();
+      final ids = core.$(idStrs).select((s) => math.parseInt(s)).toList();
       return new core.Tuple<int, int>(ids[0], ids[1]);
     }
     return null;

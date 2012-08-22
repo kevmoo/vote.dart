@@ -1,6 +1,7 @@
 #library('vote_html');
 
 #import('dart:html');
+#import('dart:math', prefix:'math');
 
 #import('../../dartlib/lib/dartlib.dart', prefix:'core');
 #import('../../dartlib/lib/html.dart');

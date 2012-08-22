@@ -142,10 +142,10 @@ class RootMapElement extends ElementParentImpl {
     for(final playerA in players) {
       num closestDistance = null;
 
-      left = Math.min(playerA.location.x, left);
-      top = Math.min(playerA.location.y, top);
-      right = Math.max(playerA.location.x, right);
-      bottom = Math.max(playerA.location.y, bottom);
+      left = math.min(playerA.location.x, left);
+      top = math.min(playerA.location.y, top);
+      right = math.max(playerA.location.x, right);
+      bottom = math.max(playerA.location.y, bottom);
 
       for (final playerB in players) {
         if(playerA != playerB) {

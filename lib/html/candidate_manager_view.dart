@@ -79,7 +79,7 @@ class CandidateManagerView extends HtmlView {
 
   void _deleteClick(MouseEvent args) {
     final ButtonElement source = args.toElement;
-    final candidateId = Math.parseInt(source.dataAttributes[_candidateIdAttribute]);
+    final candidateId = math.parseInt(source.dataAttributes[_candidateIdAttribute]);
     _removeCandidateWithId(candidateId);
     source.disabled = true;
   }
