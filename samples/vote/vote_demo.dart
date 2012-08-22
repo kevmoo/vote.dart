@@ -144,7 +144,7 @@ class VoteDemo{
   void _requestFrame(){
     if(!_frameRequested) {
       _frameRequested = true;
-      window.webkitRequestAnimationFrame(_onFrame);
+      window.requestAnimationFrame(_onFrame);
     }
   }
 
@@ -173,7 +173,7 @@ class VoteDemo{
   }
 
   void _canvas_mouseMove(MouseEvent e){
-    _setMouse(new core.Coordinate(e.offsetX, e.offsetY));
+    _setMouse(getMouseEventCoordinate(e));
   }
 
   void _canvas_mouseOut(MouseEvent e){
