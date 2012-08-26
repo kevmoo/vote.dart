@@ -1,3 +1,4 @@
+name: vote.dart
 dependencies:
   unittest:
     sdk: unittest
