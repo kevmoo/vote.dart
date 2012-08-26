@@ -9,6 +9,7 @@
 #import('map.dart');
 
 #source('retained/root_map_element.dart');
+#source('retained/map_element_base.dart');
 #source('retained/voter_map_element.dart');
 #source('retained/candidate_map_element.dart');
 #source('retained/candidate_element.dart');

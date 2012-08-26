@@ -1,4 +1,4 @@
-class CandidateMapElement extends ElementParentImpl {
+class CandidateMapElement extends ElementParentImpl implements MapElementBase {
   final List<MapPlayer> _players;
   final core.AffineTransform _tx;
 

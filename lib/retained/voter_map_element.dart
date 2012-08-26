@@ -1,4 +1,4 @@
-class VoterMapElement extends PElement {
+class VoterMapElement extends PElement implements MapElementBase {
   final List<MapPlayer> _players;
   final core.AffineTransform _tx;
 
