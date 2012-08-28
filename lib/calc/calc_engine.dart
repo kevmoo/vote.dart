@@ -19,7 +19,7 @@ class CalcEngine {
   LocationData get locationData => _distanceElectionMapper.input;
 
   void set locationData(LocationData data) {
-    assert(data != null);
+    requireArgumentNotNull(data, 'data');
     _distanceElectionMapper.input = data;
   }
 
