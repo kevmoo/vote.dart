@@ -1,4 +1,4 @@
-class ElectionCalc {
+class CalcEngine {
   final _DistanceElectionMapper _distanceElectionMapper;
   final _PluralityElectionMapper _pluralityElectionMapper;
   final _CondorcetElectionMapper _condorcetElectionMapper;
@@ -6,7 +6,7 @@ class ElectionCalc {
 
   Tuple<MapPlayer, MapPlayer> _hoverPair;
 
-  ElectionCalc() :
+  CalcEngine() :
     _distanceElectionMapper = new _DistanceElectionMapper(),
     _pluralityElectionMapper = new _PluralityElectionMapper(),
     _condorcetElectionMapper = new _CondorcetElectionMapper(),

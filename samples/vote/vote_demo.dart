@@ -24,7 +24,7 @@ class VoteDemo{
   final Stage _stage;
   final Dragger _dragger;
 
-  final ElectionCalc _calcEngine;
+  final CalcEngine _calcEngine;
 
   final RootMapElement _rootMapElement;
   final HashMap<MapPlayer, num> _playerHues;
@@ -66,7 +66,7 @@ class VoteDemo{
   VoteDemo._internal(this._canvas, this._stage, this._dragger, this._rootMapElement,
     this._condorcetView, this._pluralityView, this._distanceView, this._canManView)
   : _playerHues = new HashMap<MapPlayer, num>(),
-    _calcEngine = new ElectionCalc() {
+    _calcEngine = new CalcEngine() {
     _dragger.dragDelta.add(_onDrag);
     _dragger.dragStart.add(_onDragStart);
 
