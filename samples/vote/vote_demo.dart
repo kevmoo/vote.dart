@@ -1,7 +1,7 @@
 #import('dart:html');
-#import('../../../dartlib/lib/dartlib.dart', prefix:'core');
-#import('../../../dartlib/lib/retained.dart');
-#import('../../../dartlib/lib/html.dart');
+#import('package:dartlib/lib/dartlib.dart', prefix: 'core');
+#import('package:dartlib/lib/retained.dart');
+#import('package:dartlib/lib/html.dart');
 
 #import('../../lib/vote.dart');
 #import('../../lib/map.dart');

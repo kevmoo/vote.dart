@@ -1,8 +1,10 @@
 #library('vote_calc');
 
 #import('dart:isolate');
-#import('../../dartlib/lib/dartlib.dart');
-#import('../../dartlib/lib/async.dart');
+
+#import('package:dartlib/lib/dartlib.dart');
+#import('package:dartlib/lib/async.dart');
+
 #import('vote.dart');
 #import('map.dart');
 

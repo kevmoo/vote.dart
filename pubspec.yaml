@@ -2,3 +2,5 @@ name: vote.dart
 dependencies:
   unittest:
     sdk: unittest
+  dartlib:
+    git: git://github.com/kevmoo/dartlib.git

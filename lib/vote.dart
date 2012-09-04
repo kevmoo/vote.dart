@@ -1,6 +1,6 @@
 #library('vote');
 
-#import('../../dartlib/lib/dartlib.dart');
+#import('package:dartlib/lib/dartlib.dart');
 
 #source('vote/election_place.dart');
 #source('vote/player.dart');

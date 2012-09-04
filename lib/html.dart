@@ -2,9 +2,9 @@
 
 #import('dart:html');
 #import('dart:math', prefix:'math');
+#import('package:dartlib/lib/dartlib.dart', prefix: 'core');
+#import('package:dartlib/lib/html.dart');
 
-#import('../../dartlib/lib/dartlib.dart', prefix:'core');
-#import('../../dartlib/lib/html.dart');
 #import('vote.dart');
 #import('map.dart');
 
