@@ -1,7 +1,6 @@
 #!/bin/bash
 PACK_DIR=`pwd`/packages/
-echo $DART_SDK
-dart2js='lib/dart2js/lib/compiler/implementation/dart2js.dart'
+dart2js='lib/compiler/implementation/dart2js.dart'
 core_cmd="dart
 --heap_growth_rate=32
 $DART_SDK/$dart2js
@@ -34,6 +33,8 @@ do
   echo $file
   build_and_log $file
 done
+
+build_and_log 'test/browser_test_harness.dart'
 
 echo "Success:"
 echo ${good[@]}
