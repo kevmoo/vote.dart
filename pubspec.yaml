@@ -3,4 +3,6 @@ dependencies:
   unittest:
     sdk: unittest
   dartlib:
-    git: git://github.com/kevmoo/dartlib.git
+    git: 
+      url: git://github.com/kevmoo/dartlib.git
+      ref: master

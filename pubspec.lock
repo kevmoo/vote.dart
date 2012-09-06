@@ -1,1 +1,1 @@
-{"packages":{"unittest":{"version":"0.0.0-r.11797","source":"sdk","description":"unittest"},"dartlib":{"version":"0.0.0","source":"git","description":{"url":"git://github.com/kevmoo/dartlib.git","ref":null,"resolved-ref":"98442d5fd1a6803998e5eea963dc16577470dd49"}}}}
+{"packages":{"unittest":{"version":"0.0.0-r.11991","source":"sdk","description":"unittest"},"dartlib":{"version":"0.0.0","source":"git","description":{"url":"git://github.com/kevmoo/dartlib.git","ref":"master","resolved-ref":"e68cbab008a2d93b26ea82c359ae5d199fdaa724"}}}}
