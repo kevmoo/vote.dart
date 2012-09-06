@@ -2990,6 +2990,8 @@ $._ReceivePortFactory_ReceivePort = function(){return $._ReceivePortImpl$();};
 
 $.$$ = function(source){if(typeof source==='object'&&source!==null&&!!source.is$Enumerable)return source;else return $.Enumerable_Enumerable(source);};
 
+$._Device_isIE = function(){return $._Device_isOpera()!==true&&$.contains$2($._Device_userAgent(),'MSIE',0)===true;};
+
 $.EventHandle$ = function(T){var t1=new $.EventHandle(null,false);$.setRuntimeTypeInfo(t1,{ 'T': T });return t1;};
 
 $.sort = function(receiver,compare){if(!$.isJsArray(receiver))return receiver.sort$1(compare);$.checkMutable(receiver,'sort');$.DualPivotQuicksort_sort(receiver,compare);};
@@ -3268,7 +3270,7 @@ $.ListImplementation_List = function(length$,E){return $.Primitives_newList(leng
 
 $.mul = function(a,b){return typeof a==='number'&&typeof b==='number'?a * b:$.mul$slow(a,b);};
 
-$._browserPrefix = function(){if($._cachedBrowserPrefix==null)if($._Device_isFirefox()===true)$._cachedBrowserPrefix='-moz-';else $._cachedBrowserPrefix='-webkit-';return $._cachedBrowserPrefix;};
+$._browserPrefix = function(){if($._cachedBrowserPrefix==null)if($._Device_isFirefox()===true)$._cachedBrowserPrefix='-moz-';else if($._Device_isIE()===true)$._cachedBrowserPrefix='-ms-';else if($._Device_isOpera()===true)$._cachedBrowserPrefix='-o-';else $._cachedBrowserPrefix='-webkit-';return $._cachedBrowserPrefix;};
 
 $._BodyElementEventsImpl$ = function(_ptr){return new $._BodyElementEventsImpl(_ptr);};
 
@@ -3462,6 +3464,8 @@ $.Arrays_indexOf = function(a,element,startIndex,endIndex){if(typeof a!=='string
 $._Lists_indexOf = function(a,element,startIndex,endIndex){if(typeof a!=='string'&&(typeof a!=='object'||a===null||a.constructor!==Array&&!a.is$JavaScriptIndexingBehavior()))return $._Lists_indexOf$bailout(1,a,element,startIndex,endIndex);if(typeof endIndex!=='number')return $._Lists_indexOf$bailout(1,a,element,startIndex,endIndex);if(startIndex>=a.length)return -1;if(startIndex<0)startIndex=0;for(var i=startIndex;i<endIndex;++i){if(i<0||i>=a.length)throw $.ioore(i);if($.eqB(a[i],element))return i;}return -1;};
 
 $._WhereIterator$ = function(_source,_func,T){var t1=new $._WhereIterator(_source,_func,null,null);$.setRuntimeTypeInfo(t1,{ 'T': T });return t1;};
+
+$._Device_isOpera = function(){return $.contains$2($._Device_userAgent(),'Opera',0);};
 
 $.FutureValueResult_FutureValueResult$fromMap = function(value,TOutput){$.requireArgumentNotNull(value,'value');$.requireArgument($.FutureValueResult_isMyMap(value),'value',null);var ex=$.index(value,'exception');if(!(ex==null))return $.FutureValueResult$fromException(ex);else return $.FutureValueResult$($.index(value,'value'));};
 
