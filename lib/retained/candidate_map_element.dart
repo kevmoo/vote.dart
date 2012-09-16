@@ -1,13 +1,13 @@
 class CandidateMapElement extends ElementParentImpl implements MapElementBase {
   final List<MapPlayer> _players;
-  final core.AffineTransform _tx;
+  final AffineTransform _tx;
 
   num _radius = 0;
   List<CandidateElement> _elements;
-  core.ReadOnlyCollection<MapPlayer> _showOnlyPlayers;
+  ReadOnlyCollection<MapPlayer> _showOnlyPlayers;
 
   CandidateMapElement(int w, int h) :
-    _tx = new core.AffineTransform(),
+    _tx = new AffineTransform(),
     _players = new List<MapPlayer>(),
     super(w, h) {
     showOnlyPlayers = null;
@@ -23,8 +23,8 @@ class CandidateMapElement extends ElementParentImpl implements MapElementBase {
     return _elements[index];
   }
 
-  void setTransform(core.AffineTransform value) {
-    core.requireArgumentNotNull(value, 'value');
+  void setTransform(AffineTransform value) {
+    requireArgumentNotNull(value, 'value');
     _tx.setFromTransfrom(value);
     invalidateDraw();
   }
@@ -32,7 +32,7 @@ class CandidateMapElement extends ElementParentImpl implements MapElementBase {
   Iterable<MapPlayer> get players => _players;
 
   void set players(Collection<MapPlayer> value) {
-    core.requireArgumentNotNull(value, "value");
+    requireArgumentNotNull(value, "value");
     _players.clear();
     _players.addAll(value);
     _elements = null;
@@ -45,7 +45,7 @@ class CandidateMapElement extends ElementParentImpl implements MapElementBase {
     if(value == null) {
       _showOnlyPlayers = null;
     } else {
-      var newVal = core.$(value).toReadOnlyCollection();
+      var newVal = $(value).toReadOnlyCollection();
       assert(newVal.distinct().count() == newVal.length);
       assert(newVal.every((e) => _players.indexOf(e) >= 0));
       _showOnlyPlayers = newVal;
@@ -63,7 +63,7 @@ class CandidateMapElement extends ElementParentImpl implements MapElementBase {
       _elements = new List<CandidateElement>();
       for(final p in _players) {
         final hue = LocationData.getHue(p);
-        final rgb = (new core.HslColor(hue, 0.5, 0.6)).toRgb();
+        final rgb = (new HslColor(hue, 0.5, 0.6)).toRgb();
         final ce = new CandidateElement(_radius * 4, _radius * 4,
           rgb.toHex(), p);
         ce.registerParent(this);

@@ -53,7 +53,7 @@ class DistanceView extends HtmlView {
           cell.classes.add('candidate-cell');
           final hue = LocationData.getHue(candidate);
           if(hue != null) {
-            final hsl = new core.HslColor(hue, 1, 0.75);
+            final hsl = new HslColor(hue, 1, 0.75);
             final rgb = hsl.toRgb();
             cell.style.background = rgb.toHex();
           }

@@ -1,7 +1,7 @@
 #import('dart:html');
-#import('package:dartlib/lib/dartlib.dart', prefix: 'core');
-#import('package:dartlib/lib/retained.dart');
-#import('package:dartlib/lib/html.dart');
+#import('package:dartlib/dartlib.dart');
+#import('package:dartlib/retained.dart');
+#import('package:dartlib/html.dart');
 
 #import('../../lib/vote.dart');
 #import('../../lib/map.dart');
@@ -35,7 +35,7 @@ class VoteDemo{
 
   HashMap<MapPlayer, num> _candidateHues;
 
-  core.Coordinate _mouseLocation;
+  Coordinate _mouseLocation;
   MapPlayer _overCandidate, _dragCandidate;
   bool _frameRequested = false;
 
@@ -148,13 +148,13 @@ class VoteDemo{
     }
   }
 
-  void _onDrag(core.Vector delta) {
+  void _onDrag(Vector delta) {
     assert(_dragCandidate != null);
     _rootMapElement.dragCandidate(_dragCandidate, delta);
     _requestFrame();
   }
 
-  void _onDragStart(core.CancelableEventArgs e) {
+  void _onDragStart(CancelableEventArgs e) {
     if(_overCandidate == null) {
       e.cancel();
     } else {
@@ -180,7 +180,7 @@ class VoteDemo{
     _setMouse(null);
   }
 
-  void _setMouse(core.Coordinate value) {
+  void _setMouse(Coordinate value) {
     _mouseLocation = value;
     final hits = Mouse.markMouseOver(_stage, _mouseLocation);
     if(hits != null && hits.length > 0 && hits[0] is CandidateElement) {

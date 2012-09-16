@@ -1,8 +1,8 @@
 class LocationData {
   static final int maxCandidateCount = 26;
-  static final Rect bounds = const Rect(0,0, _span, _span);
+  static final Box bounds = const Box(0,0, _span, _span);
   static final int _ACharCode = 65;
-  static final num _span = 20;
+  static const num _span = 20;
   final ReadOnlyCollection<MapPlayer> candidates;
   final ReadOnlyCollection<MapPlayer> voters;
 

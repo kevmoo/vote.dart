@@ -2,13 +2,13 @@ class CondorcetView extends HtmlView {
   static final String _grayHex = '#999999';
   static final String _pairIdsKey = 'pair-ids';
 
-  final core.EventHandle<core.EventArgs> _hoverChangedHandle;
+  final EventHandle<EventArgs> _hoverChangedHandle;
   CondorcetElection _election;
-  core.ReadOnlyCollection<Player> _candidates;
-  core.Tuple<Player, Player> _hoveringPair;
+  ReadOnlyCollection<Player> _candidates;
+  Tuple<Player, Player> _hoveringPair;
 
   CondorcetView(DivElement node) :
-    _hoverChangedHandle = new core.EventHandle<core.EventArgs>(),
+    _hoverChangedHandle = new EventHandle<EventArgs>(),
     super(node);
 
   CondorcetElection get election => _election;
@@ -19,9 +19,9 @@ class CondorcetView extends HtmlView {
     markDirty();
   }
 
-  core.EventRoot<core.EventArgs> get hoverChanged => _hoverChangedHandle;
+  EventRoot<EventArgs> get hoverChanged => _hoverChangedHandle;
 
-  core.Tuple<Player, Player> get hoveringPair => _hoveringPair;
+  Tuple<Player, Player> get hoveringPair => _hoveringPair;
 
   void updateElement() {
     node.elements.clear();
@@ -50,7 +50,7 @@ class CondorcetView extends HtmlView {
         if(hue == null) {
           return _grayHex;
         } else {
-          final hsl = new core.HslColor(hue, 1, 0.75);
+          final hsl = new HslColor(hue, 1, 0.75);
           return hsl.toRgb().toHex();
         }
       });
@@ -60,7 +60,7 @@ class CondorcetView extends HtmlView {
         if(hue == null) {
           return _grayHex;
         } else {
-          final hsl = new core.HslColor(hue, 1, 0.3);
+          final hsl = new HslColor(hue, 1, 0.3);
           return hsl.toRgb().toHex();
         }
       });
@@ -169,12 +169,12 @@ class CondorcetView extends HtmlView {
     node.elements.add(table);
   }
 
-  void set _thePair(core.Tuple pair) {
+  void set _thePair(Tuple pair) {
     assert(_candidates != null);
     if(pair != _hoveringPair) {
       _hoveringPair = pair;
       _updateCellHoverStyle();
-      _hoverChangedHandle.fireEvent(core.EventArgs.empty);
+      _hoverChangedHandle.fireEvent(EventArgs.empty);
     }
   }
 
@@ -202,7 +202,7 @@ class CondorcetView extends HtmlView {
       final Element elem = e.toElement;
       final pair = _getPair(elem);
       if(pair != null) {
-        _thePair = new core.Tuple(_candidates[pair.Item1], _candidates[pair.Item2]);
+        _thePair = new Tuple(_candidates[pair.Item1], _candidates[pair.Item2]);
         return;
       }
     }
@@ -223,7 +223,7 @@ class CondorcetView extends HtmlView {
     return "pair${math.min(cIndex, oIndex)}_${math.max(cIndex, oIndex)}";
   }
 
-  static core.Tuple<int, int> _getPair(Element elem) {
+  static Tuple<int, int> _getPair(Element elem) {
     String pairIdStr = elem.dataAttributes[_pairIdsKey];
     if(pairIdStr != null) {
       assert(pairIdStr.startsWith('pair'));
@@ -231,8 +231,8 @@ class CondorcetView extends HtmlView {
 
       final idStrs = pairIdStr.split('_');
       assert(idStrs.length == 2);
-      final ids = core.$(idStrs).select((s) => math.parseInt(s)).toList();
-      return new core.Tuple<int, int>(ids[0], ids[1]);
+      final ids = $(idStrs).select((s) => math.parseInt(s)).toList();
+      return new Tuple<int, int>(ids[0], ids[1]);
     }
     return null;
   }

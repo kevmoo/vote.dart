@@ -2,7 +2,7 @@ class CandidateElement extends PElement {
   final String _color;
   final MapPlayer player;
   final String _text;
-  core.AffineTransform _tx;
+  AffineTransform _tx;
   bool _hidden = false;
 
   CandidateElement(num w, num h, this._color, MapPlayer p) :

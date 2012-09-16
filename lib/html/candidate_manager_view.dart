@@ -1,25 +1,25 @@
 class CandidateManagerView extends HtmlView {
   static final String _candidateIdAttribute = 'candidate-id';
-  final core.EventHandle<MapPlayer> _requestRemoveCandidateHandle;
-  final core.EventHandle<core.EventArgs> _requestNewCandidateHandle;
-  core.ReadOnlyCollection<MapPlayer> _candidates;
+  final EventHandle<MapPlayer> _requestRemoveCandidateHandle;
+  final EventHandle<EventArgs> _requestNewCandidateHandle;
+  ReadOnlyCollection<MapPlayer> _candidates;
 
   CandidateManagerView(DivElement node) :
-    _requestRemoveCandidateHandle = new core.EventHandle<MapPlayer>(),
-    _requestNewCandidateHandle = new core.EventHandle<core.EventArgs>(),
-    _candidates = new core.ReadOnlyCollection<MapPlayer>.empty(),
+    _requestRemoveCandidateHandle = new EventHandle<MapPlayer>(),
+    _requestNewCandidateHandle = new EventHandle<EventArgs>(),
+    _candidates = new ReadOnlyCollection<MapPlayer>.empty(),
     super(node);
 
-  void set candidates(core.ReadOnlyCollection<MapPlayer> value) {
+  void set candidates(ReadOnlyCollection<MapPlayer> value) {
     assert(value != null);
     _candidates = value;
     markDirty();
   }
 
-  core.EventRoot<MapPlayer> get candidateRemoveRequest =>
+  EventRoot<MapPlayer> get candidateRemoveRequest =>
       _requestRemoveCandidateHandle;
 
-  core.EventRoot<core.EventArgs> get newCandidateRequest =>
+  EventRoot<EventArgs> get newCandidateRequest =>
       _requestNewCandidateHandle;
 
   void updateElement() {
@@ -47,7 +47,7 @@ class CandidateManagerView extends HtmlView {
 
         final hue = LocationData.getHue(candidate);
         if(hue != null) {
-          final hsl = new core.HslColor(hue, 1, 0.75);
+          final hsl = new HslColor(hue, 1, 0.75);
           final rgb = hsl.toRgb();
           row.style.background = rgb.toHex();
         }
@@ -73,7 +73,7 @@ class CandidateManagerView extends HtmlView {
 
   void _requestNewCandidate(MouseEvent args) {
     final ButtonElement source = args.toElement;
-    _requestNewCandidateHandle.fireEvent(core.EventArgs.empty);
+    _requestNewCandidateHandle.fireEvent(EventArgs.empty);
     source.disabled = true;
   }
 

@@ -1,7 +1,7 @@
 #library('vote_test_map');
 
 #import('package:unittest/unittest.dart');
-#import('package:dartlib/lib/dartlib.dart');
+#import('package:dartlib/dartlib.dart');
 #import('../../lib/vote.dart');
 #import('../../lib/map.dart');
 

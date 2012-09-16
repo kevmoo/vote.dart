@@ -3,8 +3,8 @@
 #import('dart:html');
 #import('dart:math', prefix:'math');
 
-#import('package:dartlib/lib/dartlib.dart', prefix: 'core');
-#import('package:dartlib/lib/retained.dart');
+#import('package:dartlib/dartlib.dart');
+#import('package:dartlib/retained.dart');
 
 #import('vote.dart');
 #import('map.dart');

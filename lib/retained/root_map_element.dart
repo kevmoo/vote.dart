@@ -1,24 +1,24 @@
 class RootMapElement extends ElementParentImpl {
   final VoterMapElement _voterMap;
   final CandidateMapElement _candidateMap;
-  final core.AffineTransform _tx;
-  final core.EventHandle<core.EventArgs> _candidatesMovedHandle;
+  final AffineTransform _tx;
+  final EventHandle<EventArgs> _candidatesMovedHandle;
 
   num _averageCloseness;
-  core.Rect _bounds;
+  Box _bounds;
   num _radius;
 
   RootMapElement(int w, int h) :
-    _tx = new core.AffineTransform(),
+    _tx = new AffineTransform(),
     _voterMap = new VoterMapElement(w, h),
     _candidateMap = new CandidateMapElement(w, h),
-    _candidatesMovedHandle = new core.EventHandle<core.EventArgs>(),
+    _candidatesMovedHandle = new EventHandle<EventArgs>(),
     super(w, h) {
     _voterMap.registerParent(this);
     _candidateMap.registerParent(this);
   }
 
-  core.EventRoot<core.EventArgs> get candidatesMoved =>
+  EventRoot<EventArgs> get candidatesMoved =>
      _candidatesMovedHandle;
 
   int get visualChildCount => 2;
@@ -47,13 +47,13 @@ class RootMapElement extends ElementParentImpl {
   }
 
   void set voters(Collection<MapPlayer> value) {
-    core.requireArgumentNotNull(value, "value");
+    requireArgumentNotNull(value, "value");
     // TODO: would be great to use this calculation, but need to make it async
     //final vals = _getAverageCloseness(value);
-    final vals = new core.Tuple<num, core.Rect>(1, new core.Rect(0,0,20,20));
+    final vals = new Tuple<num, Box>(1, new Box(0,0,20,20));
 
     _averageCloseness = vals.Item1;
-    assert(core.isValidNumber(_averageCloseness));
+    assert(isValidNumber(_averageCloseness));
     _bounds = vals.Item2;
     assert(_bounds.isValid);
 
@@ -62,7 +62,7 @@ class RootMapElement extends ElementParentImpl {
   }
 
   void set candidates(Collection<MapPlayer> value) {
-    core.requireArgumentNotNull(value, "value");
+    requireArgumentNotNull(value, "value");
     _candidateMap.players = value;
   }
 
@@ -72,8 +72,8 @@ class RootMapElement extends ElementParentImpl {
     _candidateMap.showOnlyPlayers = value;
   }
 
-  void dragCandidate(MapPlayer candidate, core.Vector delta) {
-    final can = core.$(_candidateMap.players).single((mp) => mp == candidate);
+  void dragCandidate(MapPlayer candidate, Vector delta) {
+    final can = $(_candidateMap.players).single((mp) => mp == candidate);
 
     final candidateLocPixels = _tx.transformCoordinate(candidate.location);
     final newCanLocPix = candidateLocPixels + delta;
@@ -82,7 +82,7 @@ class RootMapElement extends ElementParentImpl {
 
     can.location = newLocation;
 
-    _candidatesMovedHandle.fireEvent(core.EventArgs.empty);
+    _candidatesMovedHandle.fireEvent(EventArgs.empty);
   }
 
   void update(){
@@ -90,7 +90,7 @@ class RootMapElement extends ElementParentImpl {
     if(_bounds != null && _radius == null) {
 
       // dimensions of the points factoring in the radius
-      final dataScale = new core.Size(_bounds.width + _averageCloseness,
+      final dataScale = new Size(_bounds.width + _averageCloseness,
         _bounds.height + _averageCloseness);
 
       num scale, offsetX = 0, offsetY = 0;
@@ -131,7 +131,7 @@ class RootMapElement extends ElementParentImpl {
   // For each player
   // 1) find the closest guy [>= 0.5 away to avoid overlapping]
   // 2) find the average of the closest guys
-  static core.Tuple<num, core.Rect> _getAverageCloseness(Iterable<MapPlayer> players) {
+  static Tuple<num, Box> _getAverageCloseness(Iterable<MapPlayer> players) {
     num top = double.INFINITY;
     num left = double.INFINITY;
     num bottom = double.NEGATIVE_INFINITY;
@@ -164,7 +164,7 @@ class RootMapElement extends ElementParentImpl {
 
     final avgDist = count == null ? null : sum / count;
 
-    return new core.Tuple<num, core.Rect>(avgDist,
-        new core.Rect(left, top, right, bottom));
+    return new Tuple<num, Box>(avgDist,
+        new Box(left, top, right, bottom));
   }
 }

@@ -2,8 +2,8 @@
 
 #import('dart:isolate');
 
-#import('package:dartlib/lib/dartlib.dart');
-#import('package:dartlib/lib/async.dart');
+#import('package:dartlib/dartlib.dart');
+#import('package:dartlib/async.dart');
 
 #import('vote.dart');
 #import('map.dart');

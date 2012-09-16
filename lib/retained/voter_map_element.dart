@@ -1,20 +1,20 @@
 class VoterMapElement extends PElement implements MapElementBase {
   final List<MapPlayer> _players;
-  final core.AffineTransform _tx;
+  final AffineTransform _tx;
 
   num _radius;
   HashMap<MapPlayer, String> _map;
 
   VoterMapElement(int w, int h) :
-    _tx = new core.AffineTransform(),
+    _tx = new AffineTransform(),
     _players = new List<MapPlayer>(),
     super(w, h, true) {
     _radius = 0.3;
     _map = new HashMap<MapPlayer, String>();
   }
 
-  void setTransform(core.AffineTransform value) {
-    core.requireArgumentNotNull(value, 'value');
+  void setTransform(AffineTransform value) {
+    requireArgumentNotNull(value, 'value');
     _tx.setFromTransfrom(value);
     invalidateDraw();
   }
@@ -22,7 +22,7 @@ class VoterMapElement extends PElement implements MapElementBase {
   Iterable<MapPlayer> get players => _players;
 
   void set players(Collection<MapPlayer> value) {
-    core.requireArgumentNotNull(value, "value");
+    requireArgumentNotNull(value, "value");
     _players.clear();
     _players.addAll(value);
     invalidateDraw();
