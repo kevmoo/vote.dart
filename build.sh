@@ -4,8 +4,8 @@ dart2js='pkg/compiler/implementation/dart2js.dart'
 core_cmd="dart
 --heap_growth_rate=32
 $DART_SDK/$dart2js
---colors
 --package-root=$PACK_DIR
+--throw-on-error
 --minify
 -v"
 
@@ -35,6 +35,7 @@ do
   build_and_log $file
 done
 
+build_and_log 'samples/vote/vote_demo.dart'
 build_and_log 'test/browser_test_harness.dart'
 
 echo "Success:"
