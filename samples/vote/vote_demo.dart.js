@@ -55,8 +55,8 @@ $$.HashMapImplementation = {"":
  _probeForLookup$1: function(key){var hash=$.and($.hashCode(key),$.sub($.get$length(this._keys),1));if(hash!==(hash|0))return this._probeForLookup$1$bailout(1,key,hash);for(var numberOfProbes=1;true;){var existingKey=$.index(this._keys,hash);if(existingKey==null)return -1;if($.eqB(existingKey,key))return hash;var numberOfProbes0=numberOfProbes+1;hash=$.HashMapImplementation__nextProbe(hash,numberOfProbes,$.get$length(this._keys));numberOfProbes=numberOfProbes0;}},
  _probeForLookup$1$bailout: function(state,key,hash){for(var numberOfProbes=1;true;){var existingKey=$.index(this._keys,hash);if(existingKey==null)return -1;if($.eqB(existingKey,key))return hash;var numberOfProbes0=numberOfProbes+1;hash=$.HashMapImplementation__nextProbe(hash,numberOfProbes,$.get$length(this._keys));numberOfProbes=numberOfProbes0;}},
  _ensureCapacity$0: function(){var newNumberOfEntries=$.add(this._numberOfEntries,1);if($.geB(newNumberOfEntries,this._loadLimit)){this._grow$1($.mul($.get$length(this._keys),2));return;}var numberOfFree=$.sub($.sub($.get$length(this._keys),newNumberOfEntries),this._numberOfDeleted);if($.gtB(this._numberOfDeleted,numberOfFree))this._grow$1($.get$length(this._keys));},
- _grow$1: function(newCapacity){var capacity=$.get$length(this._keys);if(typeof capacity!=='number')return this._grow$1$bailout(1,newCapacity,capacity,0,0);this._loadLimit=$.tdiv($.mul(newCapacity,3),4);var oldKeys=this._keys;if(typeof oldKeys!=='string'&&(typeof oldKeys!=='object'||oldKeys===null||oldKeys.constructor!==Array&&!oldKeys.is$JavaScriptIndexingBehavior()))return this._grow$1$bailout(2,newCapacity,oldKeys,capacity,0);var oldValues=this._values;if(typeof oldValues!=='string'&&(typeof oldValues!=='object'||oldValues===null||oldValues.constructor!==Array&&!oldValues.is$JavaScriptIndexingBehavior()))return this._grow$1$bailout(3,newCapacity,oldKeys,oldValues,capacity);this._keys=$.ListImplementation_List(newCapacity);var t4=$.ListImplementation_List(newCapacity,$.getRuntimeTypeInfo(this).V);$.setRuntimeTypeInfo(t4,{ 'E': $.getRuntimeTypeInfo(this).V });this._values=t4;for(var i=0;i<capacity;++i){if(i<0||i>=oldKeys.length)throw $.ioore(i);var key=oldKeys[i];if(key==null||key===$.CTC13)continue;if(i<0||i>=oldValues.length)throw $.ioore(i);var value=oldValues[i];var newIndex=this._probeForAdding$1(key);$.indexSet(this._keys,newIndex,key);$.indexSet(this._values,newIndex,value);}this._numberOfDeleted=0;},
- _grow$1$bailout: function(state,env0,env1,env2,env3){switch(state){case 1:var newCapacity=env0;capacity=env1;break;case 2:newCapacity=env0;oldKeys=env1;capacity=env2;break;case 3:newCapacity=env0;oldKeys=env1;oldValues=env2;capacity=env3;break;}switch(state){case 0:var capacity=$.get$length(this._keys);case 1:state=0;this._loadLimit=$.tdiv($.mul(newCapacity,3),4);var oldKeys=this._keys;case 2:state=0;var oldValues=this._values;case 3:state=0;this._keys=$.ListImplementation_List(newCapacity);var t4=$.ListImplementation_List(newCapacity,$.getRuntimeTypeInfo(this).V);$.setRuntimeTypeInfo(t4,{ 'E': $.getRuntimeTypeInfo(this).V });this._values=t4;for(var i=0;$.ltB(i,capacity);++i){var key=$.index(oldKeys,i);if(key==null||key===$.CTC13)continue;var value=$.index(oldValues,i);var newIndex=this._probeForAdding$1(key);$.indexSet(this._keys,newIndex,key);$.indexSet(this._values,newIndex,value);}this._numberOfDeleted=0;}},
+ _grow$1: function(newCapacity){var capacity=$.get$length(this._keys);if(typeof capacity!=='number')return this._grow$1$bailout(1,newCapacity,capacity,0,0);this._loadLimit=$.tdiv($.mul(newCapacity,3),4);var oldKeys=this._keys;if(typeof oldKeys!=='string'&&(typeof oldKeys!=='object'||oldKeys===null||oldKeys.constructor!==Array&&!oldKeys.is$JavaScriptIndexingBehavior()))return this._grow$1$bailout(2,newCapacity,oldKeys,capacity,0);var oldValues=this._values;if(typeof oldValues!=='string'&&(typeof oldValues!=='object'||oldValues===null||oldValues.constructor!==Array&&!oldValues.is$JavaScriptIndexingBehavior()))return this._grow$1$bailout(3,newCapacity,oldKeys,oldValues,capacity);this._keys=$.ListImplementation_List(newCapacity);this._values=$.ListImplementation_List(newCapacity);for(var i=0;i<capacity;++i){if(i<0||i>=oldKeys.length)throw $.ioore(i);var key=oldKeys[i];if(key==null||key===$.CTC13)continue;if(i<0||i>=oldValues.length)throw $.ioore(i);var value=oldValues[i];var newIndex=this._probeForAdding$1(key);$.indexSet(this._keys,newIndex,key);$.indexSet(this._values,newIndex,value);}this._numberOfDeleted=0;},
+ _grow$1$bailout: function(state,env0,env1,env2,env3){switch(state){case 1:var newCapacity=env0;capacity=env1;break;case 2:newCapacity=env0;oldKeys=env1;capacity=env2;break;case 3:newCapacity=env0;oldKeys=env1;oldValues=env2;capacity=env3;break;}switch(state){case 0:var capacity=$.get$length(this._keys);case 1:state=0;this._loadLimit=$.tdiv($.mul(newCapacity,3),4);var oldKeys=this._keys;case 2:state=0;var oldValues=this._values;case 3:state=0;this._keys=$.ListImplementation_List(newCapacity);this._values=$.ListImplementation_List(newCapacity);for(var i=0;$.ltB(i,capacity);++i){var key=$.index(oldKeys,i);if(key==null||key===$.CTC13)continue;var value=$.index(oldValues,i);var newIndex=this._probeForAdding$1(key);$.indexSet(this._keys,newIndex,key);$.indexSet(this._values,newIndex,value);}this._numberOfDeleted=0;}},
  clear$0: function(){this._numberOfEntries=0;this._numberOfDeleted=0;var length$=$.get$length(this._keys);if(typeof length$!=='number')return this.clear$0$bailout(1,length$);for(var i=0;i<length$;++i){$.indexSet(this._keys,i,null);$.indexSet(this._values,i,null);}},
  clear$0$bailout: function(state,length$){for(var i=0;$.ltB(i,length$);++i){$.indexSet(this._keys,i,null);$.indexSet(this._values,i,null);}},
  operator$indexSet$2: function(key,value){this._ensureCapacity$0();var index=this._probeForAdding$1(key);var t1=this._keys;if(typeof t1!=='string'&&(typeof t1!=='object'||t1===null||t1.constructor!==Array&&!t1.is$JavaScriptIndexingBehavior()))return this.operator$indexSet$2$bailout(1,key,value,index,t1);if(index!==(index|0))throw $.iae(index);if(index<0||index>=t1.length)throw $.ioore(index);if(!(t1[index]==null)){if(index<0||index>=t1.length)throw $.ioore(index);var t2=t1[index]===$.CTC13;t1=t2;}else t1=true;if(t1){t1=this._numberOfEntries;if(typeof t1!=='number')return this.operator$indexSet$2$bailout(3,key,value,t1,index);this._numberOfEntries=t1+1;}t1=this._keys;if(typeof t1!=='object'||t1===null||(t1.constructor!==Array||!!t1.immutable$list)&&!t1.is$JavaScriptIndexingBehavior())return this.operator$indexSet$2$bailout(4,key,value,t1,index);if(index<0||index>=t1.length)throw $.ioore(index);t1[index]=key;t1=this._values;if(typeof t1!=='object'||t1===null||(t1.constructor!==Array||!!t1.immutable$list)&&!t1.is$JavaScriptIndexingBehavior())return this.operator$indexSet$2$bailout(5,value,t1,index,0);if(index<0||index>=t1.length)throw $.ioore(index);t1[index]=value;},
@@ -69,11 +69,11 @@ $$.HashMapImplementation = {"":
  get$length: function(){return this._numberOfEntries;},
  forEach$1: function(f){var length$=$.get$length(this._keys);if(typeof length$!=='number')return this.forEach$1$bailout(1,f,length$);for(var i=0;i<length$;++i){var key=$.index(this._keys,i);if(!(key==null)&&!(key===$.CTC13))f.call$2(key,$.index(this._values,i));}},
  forEach$1$bailout: function(state,f,length$){for(var i=0;$.ltB(i,length$);++i){var key=$.index(this._keys,i);if(!(key==null)&&!(key===$.CTC13))f.call$2(key,$.index(this._values,i));}},
- getKeys$0: function(){var t1={};var list=$.ListImplementation_List($.get$length(this),$.getRuntimeTypeInfo(this).K);$.setRuntimeTypeInfo(list,{ 'E': $.getRuntimeTypeInfo(this).K });t1.i_10=0;this.forEach$1(new $.HashMapImplementation_getKeys__(list,t1));return list;},
- getValues$0: function(){var t1={};var list=$.ListImplementation_List($.get$length(this),$.getRuntimeTypeInfo(this).V);$.setRuntimeTypeInfo(list,{ 'E': $.getRuntimeTypeInfo(this).V });t1.i_1=0;this.forEach$1(new $.HashMapImplementation_getValues__(list,t1));return list;},
+ getKeys$0: function(){var t1={};var list=$.ListImplementation_List($.get$length(this));t1.i_10=0;this.forEach$1(new $.HashMapImplementation_getKeys__(list,t1));return list;},
+ getValues$0: function(){var t1={};var list=$.ListImplementation_List($.get$length(this));t1.i_1=0;this.forEach$1(new $.HashMapImplementation_getValues__(list,t1));return list;},
  containsKey$1: function(key){return !$.eqB(this._probeForLookup$1(key),-1);},
  toString$0: function(){return $.Maps_mapToString(this);},
- HashMapImplementation$0: function(){this._numberOfEntries=0;this._numberOfDeleted=0;this._loadLimit=$.HashMapImplementation__computeLoadLimit(8);this._keys=$.ListImplementation_List(8);var t1=$.ListImplementation_List(8,$.getRuntimeTypeInfo(this).V);$.setRuntimeTypeInfo(t1,{ 'E': $.getRuntimeTypeInfo(this).V });this._values=t1;},
+ HashMapImplementation$0: function(){this._numberOfEntries=0;this._numberOfDeleted=0;this._loadLimit=$.HashMapImplementation__computeLoadLimit(8);this._keys=$.ListImplementation_List(8);this._values=$.ListImplementation_List(8);},
  is$Map: function() { return true; }
 };
 
@@ -86,12 +86,12 @@ $$.HashSetImplementation = {"":
  remove$1: function(value){var t1=this._backingMap;if(t1.containsKey$1(value)!==true)return false;t1.remove$1(value);return true;},
  addAll$1: function(collection){$.forEach(collection,new $.HashSetImplementation_addAll__(this));},
  forEach$1: function(f){$.forEach(this._backingMap,new $.HashSetImplementation_forEach__(f));},
- filter$1: function(f){var result=$.HashSetImplementation$($.getRuntimeTypeInfo(this).E);$.forEach(this._backingMap,new $.HashSetImplementation_filter__(f,result));return result;},
+ filter$1: function(f){var result=$.HashSetImplementation$();$.forEach(this._backingMap,new $.HashSetImplementation_filter__(f,result));return result;},
  isEmpty$0: function(){return $.isEmpty(this._backingMap);},
  get$length: function(){return $.get$length(this._backingMap);},
- iterator$0: function(){return $.HashSetIterator$(this,$.getRuntimeTypeInfo(this).E);},
+ iterator$0: function(){return $.HashSetIterator$(this);},
  toString$0: function(){return $.Collections_collectionToString(this);},
- HashSetImplementation$0: function(){this._backingMap=$.HashMapImplementation$($.getRuntimeTypeInfo(this).E,$.getRuntimeTypeInfo(this).E);},
+ HashSetImplementation$0: function(){this._backingMap=$.HashMapImplementation$();},
  is$Collection: function() { return true; }
 };
 
@@ -120,20 +120,20 @@ $$.KeyValuePair = {"":
 $$.LinkedHashMapImplementation = {"":
  ["_list", "_map"],
  "super": "Object",
- operator$indexSet$2: function(key,value){var t1=this._map;if(typeof t1!=='object'||t1===null||(t1.constructor!==Array||!!t1.immutable$list)&&!t1.is$JavaScriptIndexingBehavior())return this.operator$indexSet$2$bailout(1,key,value,t1);if(t1.containsKey$1(key)===true){if(key!==(key|0))throw $.iae(key);if(key<0||key>=t1.length)throw $.ioore(key);t1[key].get$element().set$value(value);}else{var t2=this._list;$.addLast(t2,$.KeyValuePair$(key,value,$.getRuntimeTypeInfo(this).K,$.getRuntimeTypeInfo(this).V));t2=t2.lastEntry$0();if(key!==(key|0))throw $.iae(key);if(key<0||key>=t1.length)throw $.ioore(key);t1[key]=t2;}},
- operator$indexSet$2$bailout: function(state,key,value,t1){if(t1.containsKey$1(key)===true)$.index(t1,key).get$element().set$value(value);else{var t2=this._list;$.addLast(t2,$.KeyValuePair$(key,value,$.getRuntimeTypeInfo(this).K,$.getRuntimeTypeInfo(this).V));$.indexSet(t1,key,t2.lastEntry$0());}},
+ operator$indexSet$2: function(key,value){var t1=this._map;if(typeof t1!=='object'||t1===null||(t1.constructor!==Array||!!t1.immutable$list)&&!t1.is$JavaScriptIndexingBehavior())return this.operator$indexSet$2$bailout(1,key,value,t1);if(t1.containsKey$1(key)===true){if(key!==(key|0))throw $.iae(key);if(key<0||key>=t1.length)throw $.ioore(key);t1[key].get$element().set$value(value);}else{var t2=this._list;$.addLast(t2,$.KeyValuePair$(key,value));t2=t2.lastEntry$0();if(key!==(key|0))throw $.iae(key);if(key<0||key>=t1.length)throw $.ioore(key);t1[key]=t2;}},
+ operator$indexSet$2$bailout: function(state,key,value,t1){if(t1.containsKey$1(key)===true)$.index(t1,key).get$element().set$value(value);else{var t2=this._list;$.addLast(t2,$.KeyValuePair$(key,value));$.indexSet(t1,key,t2.lastEntry$0());}},
  operator$index$1: function(key){var entry=$.index(this._map,key);if(entry==null)return;return entry.get$element().get$value();},
  remove$1: function(key){var entry=this._map.remove$1(key);if(entry==null)return;entry.remove$0();return entry.get$element().get$value();},
  putIfAbsent$2: function(key,ifAbsent){var value=this.operator$index$1(key);if(this.operator$index$1(key)==null&&this.containsKey$1(key)!==true){value=ifAbsent.call$0();this.operator$indexSet$2(key,value);}return value;},
- getKeys$0: function(){var t1={};var list=$.ListImplementation_List($.get$length(this),$.getRuntimeTypeInfo(this).K);$.setRuntimeTypeInfo(list,{ 'E': $.getRuntimeTypeInfo(this).K });t1.index_10=0;$.forEach(this._list,new $.LinkedHashMapImplementation_getKeys__(list,t1));return list;},
- getValues$0: function(){var t1={};var list=$.ListImplementation_List($.get$length(this),$.getRuntimeTypeInfo(this).V);$.setRuntimeTypeInfo(list,{ 'E': $.getRuntimeTypeInfo(this).V });t1.index_1=0;$.forEach(this._list,new $.LinkedHashMapImplementation_getValues__(list,t1));return list;},
+ getKeys$0: function(){var t1={};var list=$.ListImplementation_List($.get$length(this));t1.index_10=0;$.forEach(this._list,new $.LinkedHashMapImplementation_getKeys__(list,t1));return list;},
+ getValues$0: function(){var t1={};var list=$.ListImplementation_List($.get$length(this));t1.index_1=0;$.forEach(this._list,new $.LinkedHashMapImplementation_getValues__(list,t1));return list;},
  forEach$1: function(f){$.forEach(this._list,new $.LinkedHashMapImplementation_forEach__(f));},
  containsKey$1: function(key){return this._map.containsKey$1(key);},
  get$length: function(){return $.get$length(this._map);},
  isEmpty$0: function(){return $.eq($.get$length(this),0);},
  clear$0: function(){$.clear(this._map);$.clear(this._list);},
  toString$0: function(){return $.Maps_mapToString(this);},
- LinkedHashMapImplementation$0: function(){this._map=$.HashMapImplementation$($.getRuntimeTypeInfo(this).K,'DoubleLinkedQueueEntry<KeyValuePair<K, V>>');this._list=$.DoubleLinkedQueue$('KeyValuePair<K, V>');},
+ LinkedHashMapImplementation$0: function(){this._map=$.HashMapImplementation$();this._list=$.DoubleLinkedQueue$();},
  is$Map: function() { return true; }
 };
 
@@ -141,7 +141,7 @@ $$.DoubleLinkedQueueEntry = {"":
  ["_previous=", "_next=", "_lib0_element?"],
  "super": "Object",
  _link$2: function(p,n){this._next=n;this._previous=p;p.set$_next(this);n.set$_previous(this);},
- prepend$1: function(e){$.DoubleLinkedQueueEntry$(e,$.getRuntimeTypeInfo(this).E)._link$2(this._previous,this);},
+ prepend$1: function(e){$.DoubleLinkedQueueEntry$(e)._link$2(this._previous,this);},
  remove$0: function(){var t1=this._next;this._previous.set$_next(t1);t1=this._previous;this._next.set$_previous(t1);this._next=null;this._previous=null;return this._lib0_element;},
  _asNonSentinelEntry$0: function(){return this;},
  previousEntry$0: function(){return this._previous._asNonSentinelEntry$0();},
@@ -174,10 +174,10 @@ $$.DoubleLinkedQueue = {"":
  isEmpty$0: function(){var t1=this._sentinel;var t2=t1.get$_next();return t2==null?t1==null:t2===t1;},
  clear$0: function(){var t1=this._sentinel;t1.set$_next(t1);t1.set$_previous(t1);},
  forEach$1: function(f){var t1=this._sentinel;var entry=t1.get$_next();for(;!(entry==null?t1==null:entry===t1);){var nextEntry=entry.get$_next();f.call$1(entry.get$_lib0_element());entry=nextEntry;}},
- filter$1: function(f){var other=$.DoubleLinkedQueue$($.getRuntimeTypeInfo(this).E);var t1=this._sentinel;var entry=t1.get$_next();for(;!(entry==null?t1==null:entry===t1);){var nextEntry=entry.get$_next();if(f.call$1(entry.get$_lib0_element())===true)other.addLast$1(entry.get$_lib0_element());entry=nextEntry;}return other;},
- iterator$0: function(){return $._DoubleLinkedQueueIterator$(this._sentinel,$.getRuntimeTypeInfo(this).E);},
+ filter$1: function(f){var other=$.DoubleLinkedQueue$();var t1=this._sentinel;var entry=t1.get$_next();for(;!(entry==null?t1==null:entry===t1);){var nextEntry=entry.get$_next();if(f.call$1(entry.get$_lib0_element())===true)other.addLast$1(entry.get$_lib0_element());entry=nextEntry;}return other;},
+ iterator$0: function(){return $._DoubleLinkedQueueIterator$(this._sentinel);},
  toString$0: function(){return $.Collections_collectionToString(this);},
- DoubleLinkedQueue$0: function(){this._sentinel=$._DoubleLinkedQueueEntrySentinel$($.getRuntimeTypeInfo(this).E);},
+ DoubleLinkedQueue$0: function(){this._sentinel=$._DoubleLinkedQueueEntrySentinel$();},
  is$Collection: function() { return true; }
 };
 
@@ -197,7 +197,6 @@ $$.JSSyntaxRegExp = {"":
  get$pattern: function(){return this._lib0_pattern;},
  get$multiLine: function(){return this._multiLine;},
  get$ignoreCase: function(){return this._ignoreCase;},
- is$JSSyntaxRegExp: true,
  is$RegExp: true
 };
 
@@ -209,7 +208,7 @@ $$.StringBufferImpl = {"":
  add$1: function(obj){var str=$.toString(obj);if(str==null||$.isEmpty(str)===true)return this;$.add$1(this._buffer,str);var t1=this._length;if(typeof t1!=='number')return this.add$1$bailout(1,str,t1);var t3=$.get$length(str);if(typeof t3!=='number')return this.add$1$bailout(2,t1,t3);this._length=t1+t3;return this;},
  add$1$bailout: function(state,env0,env1){switch(state){case 1:str=env0;t1=env1;break;case 2:t1=env0;t3=env1;break;}switch(state){case 0:var str=$.toString(obj);if(str==null||$.isEmpty(str)===true)return this;$.add$1(this._buffer,str);var t1=this._length;case 1:state=0;var t3=$.get$length(str);case 2:state=0;this._length=$.add(t1,t3);return this;}},
  addAll$1: function(objects){for(var t1=$.iterator(objects);t1.hasNext$0()===true;)this.add$1(t1.next$0());return this;},
- clear$0: function(){var t1=$.ListImplementation_List(null,'String');$.setRuntimeTypeInfo(t1,{ 'E': 'String' });this._buffer=t1;this._length=0;return this;},
+ clear$0: function(){this._buffer=$.ListImplementation_List(null);this._length=0;return this;},
  toString$0: function(){if($.get$length(this._buffer)===0)return '';if($.get$length(this._buffer)===1)return $.index(this._buffer,0);var result=$.stringJoinUnchecked($.StringImplementation__toJsStringArray(this._buffer),'');$.clear(this._buffer);$.add$1(this._buffer,result);return result;},
  StringBufferImpl$1: function(content$){this.clear$0();this.add$1(content$);}
 };
@@ -312,6 +311,13 @@ $$.IllegalJSRegExpException = {"":
  is$Exception: true
 };
 
+$$.RuntimeError = {"":
+ ["message?"],
+ "super": "Object",
+ toString$0: function(){return 'RuntimeError: '+this.message;},
+ is$Exception: true
+};
+
 $$.FutureNotCompleteException = {"":
  [],
  "super": "Object",
@@ -333,13 +339,6 @@ $$.Object = {"":
  toString$0: function(){return $.Primitives_objectToString(this);}
 };
 
-$$._Random = {"":
- [],
- "super": "Object",
- nextDouble$0: function(){return Math.random();},
- nextBool$0: function(){return Math.random() < 0.5;}
-};
-
 $$.ListIterator = {"":
  ["i", "list"],
  "super": "Object",
@@ -358,8 +357,7 @@ $$.StackTrace = {"":
 $$.Closure = {"":
  [],
  "super": "Object",
- toString$0: function(){return 'Closure';},
- is$Function: true
+ toString$0: function(){return 'Closure';}
 };
 
 $$.ConstantMap = {"":
@@ -372,7 +370,7 @@ $$.ConstantMap = {"":
  getValues$0: function(){var result=[];$.forEach(this._lib5_keys,new $.ConstantMap_getValues_anon(this,result));return result;},
  isEmpty$0: function(){return $.eq($.get$length(this),0);},
  toString$0: function(){return $.Maps_mapToString(this);},
- _throwImmutable$0: function(){throw $.$$throw($.CTC34);},
+ _throwImmutable$0: function(){throw $.$$throw($.CTC32);},
  operator$indexSet$2: function(key,val){return this._throwImmutable$0();},
  putIfAbsent$2: function(key,ifAbsent){return this._throwImmutable$0();},
  remove$1: function(key){return this._throwImmutable$0();},
@@ -474,14 +472,14 @@ $$.FilteredElementList = {"":
  first$0: function() { return this.get$first().call$0(); },
  forEach$1: function(f){$.forEach(this.get$_filtered(),f);},
  operator$indexSet$2: function(index,value){this.operator$index$1(index).replaceWith$1(value);},
- set$length: function(newLength){var len=$.get$length(this);if($.geB(newLength,len))return;else if($.ltB(newLength,0))throw $.$$throw($.CTC39);this.removeRange$2($.sub(newLength,1),$.sub(len,newLength));},
+ set$length: function(newLength){var len=$.get$length(this);if($.geB(newLength,len))return;else if($.ltB(newLength,0))throw $.$$throw($.CTC37);this.removeRange$2($.sub(newLength,1),$.sub(len,newLength));},
  add$1: function(value){$.add$1(this._childNodes,value);},
  get$add: function() { return new $.BoundClosure0(this, 'add$1'); },
  addAll$1: function(collection){$.forEach(collection,this.get$add());},
  addLast$1: function(value){this.add$1(value);},
- sort$1: function(compare){throw $.$$throw($.CTC37);},
+ sort$1: function(compare){throw $.$$throw($.CTC35);},
  removeRange$2: function(start,rangeLength){$.forEach($.getRange(this.get$_filtered(),start,rangeLength),new $.FilteredElementList_removeRange_anon());},
- insertRange$3: function(start,rangeLength,initialValue){throw $.$$throw($.CTC38);},
+ insertRange$3: function(start,rangeLength,initialValue){throw $.$$throw($.CTC36);},
  clear$0: function(){$.clear(this._childNodes);},
  removeLast$0: function(){var result=this.last$0();if(!(result==null))result.remove$0();return result;},
  filter$1: function(f){return $.filter(this.get$_filtered(),f);},
@@ -511,8 +509,8 @@ $$.EmptyElementRect = {"":
 $$._FrozenCSSClassSet = {"":
  ["_lib_element"],
  "super": "_CssClassSet",
- _write$1: function(s){throw $.$$throw($.CTC35);},
- _read$0: function(){return $.HashSetImplementation$('String');}
+ _write$1: function(s){throw $.$$throw($.CTC33);},
+ _read$0: function(){return $.HashSetImplementation$();}
 };
 
 $$._ChildrenElementList = {"":
@@ -528,14 +526,14 @@ $$._ChildrenElementList = {"":
  get$length: function(){return $.get$length(this._childElements);},
  operator$index$1: function(index){return $.index(this._childElements,index);},
  operator$indexSet$2: function(index,value){this._lib_element.$dom_replaceChild$2(value,$.index(this._childElements,index));},
- set$length: function(newLength){throw $.$$throw($.CTC36);},
+ set$length: function(newLength){throw $.$$throw($.CTC34);},
  add$1: function(value){this._lib_element.$dom_appendChild$1(value);return value;},
  addLast$1: function(value){return this.add$1(value);},
  iterator$0: function(){return $.iterator(this._toList$0());},
  addAll$1: function(collection){for(var t1=$.iterator(collection),t2=this._lib_element;t1.hasNext$0()===true;)t2.$dom_appendChild$1(t1.next$0());},
- sort$1: function(compare){throw $.$$throw($.CTC37);},
- removeRange$2: function(start,rangeLength){throw $.$$throw($.CTC38);},
- insertRange$3: function(start,rangeLength,initialValue){throw $.$$throw($.CTC38);},
+ sort$1: function(compare){throw $.$$throw($.CTC35);},
+ removeRange$2: function(start,rangeLength){throw $.$$throw($.CTC36);},
+ insertRange$3: function(start,rangeLength,initialValue){throw $.$$throw($.CTC36);},
  getRange$2: function(start,rangeLength){return $._FrozenElementList$_wrap($._Lists_getRange(this,start,rangeLength,[]));},
  indexOf$2: function(element,start){return $._Lists_indexOf(this,element,start,$.get$length(this));},
  indexOf$1: function(element) {
@@ -563,15 +561,15 @@ $$._FrozenElementList = {"":
  isEmpty$0: function(){return $.isEmpty(this._nodeList);},
  get$length: function(){return $.get$length(this._nodeList);},
  operator$index$1: function(index){return $.index(this._nodeList,index);},
- operator$indexSet$2: function(index,value){throw $.$$throw($.CTC36);},
+ operator$indexSet$2: function(index,value){throw $.$$throw($.CTC34);},
  set$length: function(newLength){$.set$length(this._nodeList,newLength);},
- add$1: function(value){throw $.$$throw($.CTC36);},
- addLast$1: function(value){throw $.$$throw($.CTC36);},
+ add$1: function(value){throw $.$$throw($.CTC34);},
+ addLast$1: function(value){throw $.$$throw($.CTC34);},
  iterator$0: function(){return $._FrozenElementListIterator$(this);},
- addAll$1: function(collection){throw $.$$throw($.CTC36);},
- sort$1: function(compare){throw $.$$throw($.CTC36);},
- removeRange$2: function(start,rangeLength){throw $.$$throw($.CTC36);},
- insertRange$3: function(start,rangeLength,initialValue){throw $.$$throw($.CTC36);},
+ addAll$1: function(collection){throw $.$$throw($.CTC34);},
+ sort$1: function(compare){throw $.$$throw($.CTC34);},
+ removeRange$2: function(start,rangeLength){throw $.$$throw($.CTC34);},
+ insertRange$3: function(start,rangeLength,initialValue){throw $.$$throw($.CTC34);},
  getRange$2: function(start,rangeLength){return $._FrozenElementList$_wrap($.getRange(this._nodeList,start,rangeLength));},
  indexOf$2: function(element,start){return $.indexOf$2(this._nodeList,element,start);},
  indexOf$1: function(element) {
@@ -581,8 +579,8 @@ $$._FrozenElementList = {"":
  lastIndexOf$1: function(element) {
   return this.lastIndexOf$2(element,null)
 },
- clear$0: function(){throw $.$$throw($.CTC36);},
- removeLast$0: function(){throw $.$$throw($.CTC36);},
+ clear$0: function(){throw $.$$throw($.CTC34);},
+ removeLast$0: function(){throw $.$$throw($.CTC34);},
  last$0: function(){return $.last(this._nodeList);},
  is$List: function() { return true; },
  is$Collection: function() { return true; }
@@ -618,10 +616,10 @@ $$._ElementAttributeMap = {"":
  clear$0$bailout: function(state,attributes){for(var i=$.sub($.get$length(attributes),1);$.geB(i,0);i=$.sub(i,1))this.remove$1($.index(attributes,i).get$name());},
  forEach$1: function(f){var attributes=this._lib_element.get$$$dom_attributes();if(typeof attributes!=='string'&&(typeof attributes!=='object'||attributes===null||attributes.constructor!==Array&&!attributes.is$JavaScriptIndexingBehavior()))return this.forEach$1$bailout(1,f,attributes);for(var len=attributes.length,i=0;i<len;++i){if(i<0||i>=attributes.length)throw $.ioore(i);var item=attributes[i];f.call$2(item.get$name(),item.get$value());}},
  forEach$1$bailout: function(state,f,attributes){for(var len=$.get$length(attributes),i=0;$.ltB(i,len);++i){var item=$.index(attributes,i);f.call$2(item.get$name(),item.get$value());}},
- getKeys$0: function(){var attributes=this._lib_element.get$$$dom_attributes();if(typeof attributes!=='string'&&(typeof attributes!=='object'||attributes===null||attributes.constructor!==Array&&!attributes.is$JavaScriptIndexingBehavior()))return this.getKeys$0$bailout(1,attributes);var keys=$.ListImplementation_List(attributes.length,'String');$.setRuntimeTypeInfo(keys,{ 'E': 'String' });for(var len=attributes.length,i=0;i<len;++i){if(i<0||i>=attributes.length)throw $.ioore(i);var t1=attributes[i].get$name();if(i<0||i>=keys.length)throw $.ioore(i);keys[i]=t1;}return keys;},
- getKeys$0$bailout: function(state,attributes){var keys=$.ListImplementation_List($.get$length(attributes),'String');$.setRuntimeTypeInfo(keys,{ 'E': 'String' });for(var len=$.get$length(attributes),i=0;$.ltB(i,len);++i){var t1=$.index(attributes,i).get$name();if(i<0||i>=keys.length)throw $.ioore(i);keys[i]=t1;}return keys;},
- getValues$0: function(){var attributes=this._lib_element.get$$$dom_attributes();if(typeof attributes!=='string'&&(typeof attributes!=='object'||attributes===null||attributes.constructor!==Array&&!attributes.is$JavaScriptIndexingBehavior()))return this.getValues$0$bailout(1,attributes);var values=$.ListImplementation_List(attributes.length,'String');$.setRuntimeTypeInfo(values,{ 'E': 'String' });for(var len=attributes.length,i=0;i<len;++i){if(i<0||i>=attributes.length)throw $.ioore(i);var t1=attributes[i].get$value();if(i<0||i>=values.length)throw $.ioore(i);values[i]=t1;}return values;},
- getValues$0$bailout: function(state,attributes){var values=$.ListImplementation_List($.get$length(attributes),'String');$.setRuntimeTypeInfo(values,{ 'E': 'String' });for(var len=$.get$length(attributes),i=0;$.ltB(i,len);++i){var t1=$.index(attributes,i).get$value();if(i<0||i>=values.length)throw $.ioore(i);values[i]=t1;}return values;},
+ getKeys$0: function(){var attributes=this._lib_element.get$$$dom_attributes();if(typeof attributes!=='string'&&(typeof attributes!=='object'||attributes===null||attributes.constructor!==Array&&!attributes.is$JavaScriptIndexingBehavior()))return this.getKeys$0$bailout(1,attributes);var keys=$.ListImplementation_List(attributes.length);for(var len=attributes.length,i=0;i<len;++i){if(i<0||i>=attributes.length)throw $.ioore(i);var t1=attributes[i].get$name();if(i<0||i>=keys.length)throw $.ioore(i);keys[i]=t1;}return keys;},
+ getKeys$0$bailout: function(state,attributes){var keys=$.ListImplementation_List($.get$length(attributes));for(var len=$.get$length(attributes),i=0;$.ltB(i,len);++i){var t1=$.index(attributes,i).get$name();if(i<0||i>=keys.length)throw $.ioore(i);keys[i]=t1;}return keys;},
+ getValues$0: function(){var attributes=this._lib_element.get$$$dom_attributes();if(typeof attributes!=='string'&&(typeof attributes!=='object'||attributes===null||attributes.constructor!==Array&&!attributes.is$JavaScriptIndexingBehavior()))return this.getValues$0$bailout(1,attributes);var values=$.ListImplementation_List(attributes.length);for(var len=attributes.length,i=0;i<len;++i){if(i<0||i>=attributes.length)throw $.ioore(i);var t1=attributes[i].get$value();if(i<0||i>=values.length)throw $.ioore(i);values[i]=t1;}return values;},
+ getValues$0$bailout: function(state,attributes){var values=$.ListImplementation_List($.get$length(attributes));for(var len=$.get$length(attributes),i=0;$.ltB(i,len);++i){var t1=$.index(attributes,i).get$value();if(i<0||i>=values.length)throw $.ioore(i);values[i]=t1;}return values;},
  get$length: function(){return $.get$length(this._lib_element.get$$$dom_attributes());},
  isEmpty$0: function(){return $.eq($.get$length(this),0);},
  is$Map: function() { return true; }
@@ -637,8 +635,8 @@ $$._DataAttributeMap = {"":
  remove$1: function(key){return this.$$dom_attributes.remove$1(this._attr$1(key));},
  clear$0: function(){for(var t1=$.iterator(this.getKeys$0());t1.hasNext$0()===true;)this.remove$1(t1.next$0());},
  forEach$1: function(f){$.forEach(this.$$dom_attributes,new $._DataAttributeMap_forEach_anon(this,f));},
- getKeys$0: function(){var keys=$.ListImplementation_List(null,'String');$.setRuntimeTypeInfo(keys,{ 'E': 'String' });$.forEach(this.$$dom_attributes,new $._DataAttributeMap_getKeys_anon(this,keys));return keys;},
- getValues$0: function(){var values=$.ListImplementation_List(null,'String');$.setRuntimeTypeInfo(values,{ 'E': 'String' });$.forEach(this.$$dom_attributes,new $._DataAttributeMap_getValues_anon(this,values));return values;},
+ getKeys$0: function(){var keys=$.ListImplementation_List(null);$.forEach(this.$$dom_attributes,new $._DataAttributeMap_getKeys_anon(this,keys));return keys;},
+ getValues$0: function(){var values=$.ListImplementation_List(null);$.forEach(this.$$dom_attributes,new $._DataAttributeMap_getValues_anon(this,values));return values;},
  get$length: function(){return $.get$length(this.getKeys$0());},
  isEmpty$0: function(){return $.eq($.get$length(this),0);},
  _attr$1: function(key){return 'data-'+$.S(key);},
@@ -661,7 +659,7 @@ $$._CssClassSet = {"":
  addAll$1: function(collection){this._modify$1(new $._CssClassSet_addAll_anon(collection));},
  clear$0: function(){this._modify$1(new $._CssClassSet_clear_anon());},
  _modify$1: function(f){var s=this._read$0();f.call$1(s);this._write$1(s);},
- _read$0: function(){var s=$.HashSetImplementation$('String');for(var t1=$.iterator($.split(this._classname$0(),' '));t1.hasNext$0()===true;){var trimmed=$.trim(t1.next$0());if($.isEmpty(trimmed)!==true)s.add$1(trimmed);}return s;},
+ _read$0: function(){var s=$.HashSetImplementation$();for(var t1=$.iterator($.split(this._classname$0(),' '));t1.hasNext$0()===true;){var trimmed=$.trim(t1.next$0());if($.isEmpty(trimmed)!==true)s.add$1(trimmed);}return s;},
  _classname$0: function(){return this._lib_element.get$$$dom_className();},
  _write$1: function(s){var t1=this._formatSet$1(s);this._lib_element.set$$$dom_className(t1);},
  _formatSet$1: function(s){return $.Strings_join($.ListImplementation_List$from(s),' ');},
@@ -1055,7 +1053,7 @@ $$._Manager = {"":
     }
   },
  maybeCloseWorker$0: function(){if($.isEmpty(this.isolates)===true)this.mainManager.postMessage$1($._serializeMessage($.makeLiteralMap(['command','close'])));},
- _Manager$0: function(){this._nativeDetectEnvironment$0();this.topEventLoop=$._EventLoop$();this.isolates=$.HashMapImplementation$('int','_IsolateContext');this.managers=$.HashMapImplementation$('int','_ManagerStub');if(this.isWorker===true){this.mainManager=$._MainManagerStub$();this._nativeInitWorkerMessageHandler$0();}}
+ _Manager$0: function(){this._nativeDetectEnvironment$0();this.topEventLoop=$._EventLoop$();this.isolates=$.HashMapImplementation$();this.managers=$.HashMapImplementation$();if(this.isWorker===true){this.mainManager=$._MainManagerStub$();this._nativeInitWorkerMessageHandler$0();}}
 };
 
 $$._IsolateContext = {"":
@@ -1067,7 +1065,7 @@ $$._IsolateContext = {"":
  lookup$1: function(portId){return $.index(this.ports,portId);},
  register$2: function(portId,port){var t1=this.ports;if(t1.containsKey$1(portId)===true)throw $.$$throw($.ExceptionImplementation$('Registry: ports must be registered only once.'));$.indexSet(t1,portId,port);$.indexSet($._globalState().get$isolates(),this.id,this);},
  unregister$1: function(portId){var t1=this.ports;t1.remove$1(portId);if($.isEmpty(t1)===true)$._globalState().get$isolates().remove$1(this.id);},
- _IsolateContext$0: function(){var t1=$._globalState();var t2=t1.get$nextIsolateId();t1.set$nextIsolateId($.add(t2,1));this.id=t2;this.ports=$.HashMapImplementation$('int','ReceivePort');this.initGlobals$0();}
+ _IsolateContext$0: function(){var t1=$._globalState();var t2=t1.get$nextIsolateId();t1.set$nextIsolateId($.add(t2,1));this.id=t2;this.ports=$.HashMapImplementation$();this.initGlobals$0();}
 };
 
 $$._EventLoop = {"":
@@ -1269,6 +1267,13 @@ $$.Uri = {"":
  toString$0: function(){var sb=$.StringBufferImpl$('');var t1=this.scheme;$.Uri__addIfNonEmpty(sb,t1,t1,':');if(this.hasAuthority$0()===true||$.eqB(t1,'file')){sb.add$1('//');t1=this.userInfo;$.Uri__addIfNonEmpty(sb,t1,t1,'@');t1=this.domain;sb.add$1(t1==null?'null':t1);t1=this.port;if(!$.eqB(t1,0)){sb.add$1(':');sb.add$1($.toString(t1));}}t1=this.path;sb.add$1(t1==null?'null':t1);t1=this.query;$.Uri__addIfNonEmpty(sb,t1,'?',t1);t1=this.fragment;$.Uri__addIfNonEmpty(sb,t1,'#',t1);return sb.toString$0();}
 };
 
+$$._Random = {"":
+ [],
+ "super": "Object",
+ nextDouble$0: function(){return Math.random();},
+ nextBool$0: function(){return Math.random() < 0.5;}
+};
+
 $$.DisposableImpl = {"":
  [],
  "super": "Object"
@@ -1321,20 +1326,20 @@ $$.Enumerable = {"":
  join$0: function() {
   return this.join$1(', ')
 },
- select$1: function(f){$.requireArgumentNotNull(f,'f');return $._FuncEnumerable$(this,new $.Enumerable_select_anon(this,f));},
- where$1: function(f){$.requireArgumentNotNull(f,'f');return $._FuncEnumerable$(this,new $.Enumerable_where_anon(this,f));},
+ select$1: function(f){$.requireArgumentNotNull(f,'f');return $._FuncEnumerable$(this,new $.Enumerable_select_anon(f));},
+ where$1: function(f){$.requireArgumentNotNull(f,'f');return $._FuncEnumerable$(this,new $.Enumerable_where_anon(f));},
  selectMany$1: function(f){$.requireArgumentNotNull(f,'f');return $._FuncEnumerable$(this,new $.Enumerable_selectMany_anon(f));},
- first$1: function(f){if(f==null)f=new $.Enumerable_first_anon();var iter=$._WhereIterator$(this.iterator$0(),f,$.getRuntimeTypeInfo(this).T);if(iter.hasNext$0()!==true)throw $.$$throw($.CTC21);return iter.next$0();},
+ first$1: function(f){if(f==null)f=new $.Enumerable_first_anon();var iter=$._WhereIterator$(this.iterator$0(),f);if(iter.hasNext$0()!==true)throw $.$$throw($.CTC21);return iter.next$0();},
  first$0: function() {
   return this.first$1(null)
 },
  get$first: function() { return new $.BoundClosure1(this, 'first$1'); },
- single$1: function(f){if(f==null)f=new $.Enumerable_single_anon();var iter=$._WhereIterator$(this.iterator$0(),f,$.getRuntimeTypeInfo(this).T);if(iter.hasNext$0()!==true)throw $.$$throw($.CTC21);var value=iter.next$0();if(iter.hasNext$0()===true)throw $.$$throw($.CTC31);return value;},
+ single$1: function(f){if(f==null)f=new $.Enumerable_single_anon();var iter=$._WhereIterator$(this.iterator$0(),f);if(iter.hasNext$0()!==true)throw $.$$throw($.CTC21);var value=iter.next$0();if(iter.hasNext$0()===true)throw $.$$throw($.CTC29);return value;},
  group$1: function(keyFunc){return $.Grouping_Grouping(this,keyFunc);},
- toReadOnlyCollection$0: function(){return $.ReadOnlyCollection$(this,$.getRuntimeTypeInfo(this).T);},
+ toReadOnlyCollection$0: function(){return $.ReadOnlyCollection$(this);},
  forEach$1: function(f){for(var t1=$.iterator(this);t1.hasNext$0()===true;)f.call$1(t1.next$0());},
  forEachWithIndex$1: function(f){for(var t1=$.iterator(this),i=0;t1.hasNext$0()===true;){var t2=t1.next$0();var i0=i+1;f.call$2(t2,i);i=i0;}},
- toList$0: function(){var t1=$.ListImplementation_List$from(this,$.getRuntimeTypeInfo(this).T);$.setRuntimeTypeInfo(t1,{ 'E': $.getRuntimeTypeInfo(this).T });return t1;},
+ toList$0: function(){return $.ListImplementation_List$from(this);},
  toHashMap$2: function(valueFunc,keyFunc){var t1={};if(keyFunc==null)keyFunc=new $.Enumerable_toHashMap_anon();t1.duplicate_1=null;var populate=new $.Enumerable_toHashMap_anon0(t1,valueFunc,null);var map=$.HashMapImplementation$();for(var t2=$.iterator(this),e=null;t2.hasNext$0()===true;){e=t2.next$0();var k=keyFunc.call$1(e);t1.duplicate_1=true;map.putIfAbsent$2(k,populate);if(t1.duplicate_1===true)throw $.$$throw($.UnsupportedOperationException$('The key \''+$.S(k)+'\' is duplicated'));}return map;},
  toHashMap$1: function(valueFunc) {
   return this.toHashMap$2(valueFunc,null)
@@ -1394,9 +1399,9 @@ $$.IndexIterator = {"":
 $$.ListBase = {"":
  [],
  "super": "Enumerable",
- iterator$0: function(){return $.IndexIterator$($.get$length(this),new $.ListBase_iterator_anon(this),$.getRuntimeTypeInfo(this).T);},
+ iterator$0: function(){return $.IndexIterator$($.get$length(this),new $.ListBase_iterator_anon(this));},
  forEach$1: function(f){for(var i=0;$.ltB(i,$.get$length(this));++i)f.call$1(this.operator$index$1(i));},
- filter$1: function(f){var list=$.ListImplementation_List(null,$.getRuntimeTypeInfo(this).T);$.setRuntimeTypeInfo(list,{ 'E': $.getRuntimeTypeInfo(this).T });for(var i=0;$.ltB(i,$.get$length(this));++i){var e=this.operator$index$1(i);if(f.call$1(e)===true)list.push(e);}return list;},
+ filter$1: function(f){var list=$.ListImplementation_List(null);for(var i=0;$.ltB(i,$.get$length(this));++i){var e=this.operator$index$1(i);if(f.call$1(e)===true)list.push(e);}return list;},
  isEmpty$0: function(){return $.eq($.get$length(this),0);},
  get$length: function(){throw $.$$throw($.CTC19);},
  operator$index$1: function(index){throw $.$$throw($.CTC19);},
@@ -1410,8 +1415,8 @@ $$.ListBase = {"":
   return this.lastIndexOf$2(element,0)
 },
  last$0: function(){return this.operator$index$1($.sub($.get$length(this),1));},
- getRange$2: function(start,itemCount){if(typeof start!=='number')return this.getRange$2$bailout(1,start,itemCount);$.requireArgument($.ge(itemCount,0),'count',null);if(typeof itemCount!=='number')throw $.iae(itemCount);var lastIndex=start+itemCount-1;if(itemCount>0)if(start<0)throw $.$$throw($.IndexOutOfRangeException$(start));else if($.geB(lastIndex,$.get$length(this)))throw $.$$throw($.IndexOutOfRangeException$(lastIndex));var list=$.ListImplementation_List(null,$.getRuntimeTypeInfo(this).T);$.setRuntimeTypeInfo(list,{ 'E': $.getRuntimeTypeInfo(this).T });for(var i=start;i<=lastIndex;++i)list.push(this.operator$index$1(i));return list;},
- getRange$2$bailout: function(state,start,itemCount){$.requireArgument($.ge(itemCount,0),'count',null);var lastIndex=$.sub($.add(start,itemCount),1);if($.gtB(itemCount,0))if($.ltB(start,0))throw $.$$throw($.IndexOutOfRangeException$(start));else if($.geB(lastIndex,$.get$length(this)))throw $.$$throw($.IndexOutOfRangeException$(lastIndex));var list=$.ListImplementation_List(null,$.getRuntimeTypeInfo(this).T);$.setRuntimeTypeInfo(list,{ 'E': $.getRuntimeTypeInfo(this).T });for(var i=start;$.leB(i,lastIndex);i=$.add(i,1))list.push(this.operator$index$1(i));return list;},
+ getRange$2: function(start,itemCount){if(typeof start!=='number')return this.getRange$2$bailout(1,start,itemCount);$.requireArgument($.ge(itemCount,0),'count',null);if(typeof itemCount!=='number')throw $.iae(itemCount);var lastIndex=start+itemCount-1;if(itemCount>0)if(start<0)throw $.$$throw($.IndexOutOfRangeException$(start));else if($.geB(lastIndex,$.get$length(this)))throw $.$$throw($.IndexOutOfRangeException$(lastIndex));var list=$.ListImplementation_List(null);for(var i=start;i<=lastIndex;++i)list.push(this.operator$index$1(i));return list;},
+ getRange$2$bailout: function(state,start,itemCount){$.requireArgument($.ge(itemCount,0),'count',null);var lastIndex=$.sub($.add(start,itemCount),1);if($.gtB(itemCount,0))if($.ltB(start,0))throw $.$$throw($.IndexOutOfRangeException$(start));else if($.geB(lastIndex,$.get$length(this)))throw $.$$throw($.IndexOutOfRangeException$(lastIndex));var list=$.ListImplementation_List(null);for(var i=start;$.leB(i,lastIndex);i=$.add(i,1))list.push(this.operator$index$1(i));return list;},
  operator$indexSet$2: function(index,value){throw $.$$throw($.CTC18);},
  add$1: function(value){throw $.$$throw($.CTC18);},
  addLast$1: function(value){throw $.$$throw($.CTC18);},
@@ -1455,7 +1460,7 @@ $$.NoneHashMap = {"":
  forEach$1: function(f){for(var t1=$.iterator(this._lib1_values);t1.hasNext$0()===true;){var t2=t1.next$0();f.call$2(t2.get$Item1(),t2.get$Item2());}},
  containsKey$1: function(key){for(var t1=$.iterator(this._lib1_values);t1.hasNext$0()===true;)if($.eqB(t1.next$0().get$Item1(),key))return true;return false;},
  operator$index$1: function(key){for(var t1=$.iterator(this._lib1_values);t1.hasNext$0()===true;){var t2=t1.next$0();if($.eqB(t2.get$Item1(),key))return t2.get$Item2();}return;},
- operator$indexSet$2: function(key,value){var newT=$.Tuple$(key,value,$.getRuntimeTypeInfo(this).K,$.getRuntimeTypeInfo(this).V);for(var t1=this._lib1_values,i=0;i<t1.length;++i){if(i<0||i>=t1.length)throw $.ioore(i);if($.eqB(t1[i].get$Item1(),key)){if(i<0||i>=t1.length)throw $.ioore(i);t1[i]=newT;return;}}t1.push(newT);},
+ operator$indexSet$2: function(key,value){var newT=$.Tuple$(key,value);for(var t1=this._lib1_values,i=0;i<t1.length;++i){if(i<0||i>=t1.length)throw $.ioore(i);if($.eqB(t1[i].get$Item1(),key)){if(i<0||i>=t1.length)throw $.ioore(i);t1[i]=newT;return;}}t1.push(newT);},
  remove$1: function(key){for(var t1=this._lib1_values,i=0;i<t1.length;++i){if(i<0||i>=t1.length)throw $.ioore(i);if($.eqB(t1[i].get$Item1(),key)){if(i<0||i>=t1.length)throw $.ioore(i);var t=t1[i];$.removeRange(t1,i,1);return t.get$Item2();}}return;},
  clear$0: function(){throw $.$$throw('not impled');},
  isEmpty$0: function(){throw $.$$throw('not impled');},
@@ -1467,7 +1472,7 @@ $$.EventHandle = {"":
  ["_handlers", "_disposed"],
  "super": "DisposableImpl",
  fireEvent$1: function(args){var t1=this._handlers;if(!(t1==null))$.forEach(t1,new $.EventHandle_fireEvent_anon(args));},
- add$1: function(handler){var id=$.GlobalId_GlobalId();if(this._handlers==null)this._handlers=$.HashMapImplementation$('GlobalId','Action1<T>');$.indexSet(this._handlers,id,handler);return id;},
+ add$1: function(handler){var id=$.GlobalId_GlobalId();if(this._handlers==null)this._handlers=$.HashMapImplementation$();$.indexSet(this._handlers,id,handler);return id;},
  remove$1: function(id){var t1=this._handlers;if(!(t1==null))return !(t1.remove$1(id)==null);else return false;}
 };
 
@@ -1577,9 +1582,9 @@ $$.HslColor = {"":
 $$.TarjanCycleDetect = {"":
  ["_index", "_stack", "_scc", "_lib1_list"],
  "super": "Object",
- _executeTarjan$0: function(){var nodeList=$.ListImplementation_List$from(this._lib1_list.getSourceNodeSet$0(),'_TarjanNode');$.setRuntimeTypeInfo(nodeList,{ 'E': '_TarjanNode' });for(var t1=$.iterator(nodeList);t1.hasNext$0()===true;){var t2=t1.next$0();if($.eqB(t2.get$index(),-1))this._tarjan$1(t2);}return this._scc;},
- _tarjan$1: function(v){v.set$index(this._index);v.set$lowlink(this._index);var t1=this._index;if(typeof t1!=='number')return this._tarjan$1$bailout(1,v,t1,0,0,0);this._index=t1+1;var t3=this._stack;$.insertRange$3(t3,0,1,v);for(t1=$.iterator(this._lib1_list.getAdjacent$1(v));t1.hasNext$0()===true;){var t2=t1.next$0();var t4=t2.get$index();if(typeof t4!=='number')return this._tarjan$1$bailout(2,v,t4,t3,t1,t2);if(t4===-1){this._tarjan$1(t2);v.set$lowlink($.min(v.get$lowlink(),t2.get$lowlink()));}else{t4=$.indexOf$1(t3,t2);if(typeof t4!=='number')return this._tarjan$1$bailout(3,v,t4,t3,t1,t2);if(t4>=0)v.set$lowlink($.min(v.get$lowlink(),t2.get$index()));}}if($.eqB(v.get$lowlink(),v.get$index())){var component=$.ListImplementation_List(null,$.getRuntimeTypeInfo(this).TNode);$.setRuntimeTypeInfo(component,{ 'E': $.getRuntimeTypeInfo(this).TNode });var n=null;do{if(0>=t3.length)throw $.ioore(0);n=t3[0];$.removeRange(t3,0,1);component.push(n.get$value());}while(!$.eqB(n,v));this._scc.push(component);}},
- _tarjan$1$bailout: function(state,env0,env1,env2,env3,env4){switch(state){case 1:var v=env0;t1=env1;break;case 2:v=env0;t4=env1;t3=env2;t1=env3;t2=env4;break;case 3:v=env0;t4=env1;t3=env2;t1=env3;t2=env4;break;}switch(state){case 0:v.set$index(this._index);v.set$lowlink(this._index);var t1=this._index;case 1:state=0;this._index=$.add(t1,1);var t3=this._stack;$.insertRange$3(t3,0,1,v);t1=$.iterator(this._lib1_list.getAdjacent$1(v));default:L0:while(true)switch(state){case 0:if(!(t1.hasNext$0()===true))break L0;var t2=t1.next$0();var t4=t2.get$index();case 2:state=0;case 3:if(state===0&&$.eqB(t4,-1)){this._tarjan$1(t2);v.set$lowlink($.min(v.get$lowlink(),t2.get$lowlink()));}else switch(state){case 0:t4=$.indexOf$1(t3,t2);case 3:state=0;if($.geB(t4,0))v.set$lowlink($.min(v.get$lowlink(),t2.get$index()));}}if($.eqB(v.get$lowlink(),v.get$index())){var component=$.ListImplementation_List(null,$.getRuntimeTypeInfo(this).TNode);$.setRuntimeTypeInfo(component,{ 'E': $.getRuntimeTypeInfo(this).TNode });var n=null;do{if(0<0||0>=t3.length)throw $.ioore(0);n=t3[0];$.removeRange(t3,0,1);component.push(n.get$value());}while(!$.eqB(n,v));this._scc.push(component);}}}
+ _executeTarjan$0: function(){for(var t1=$.iterator($.ListImplementation_List$from(this._lib1_list.getSourceNodeSet$0()));t1.hasNext$0()===true;){var t2=t1.next$0();if($.eqB(t2.get$index(),-1))this._tarjan$1(t2);}return this._scc;},
+ _tarjan$1: function(v){v.set$index(this._index);v.set$lowlink(this._index);var t1=this._index;if(typeof t1!=='number')return this._tarjan$1$bailout(1,v,t1,0,0,0);this._index=t1+1;var t3=this._stack;$.insertRange$3(t3,0,1,v);for(t1=$.iterator(this._lib1_list.getAdjacent$1(v));t1.hasNext$0()===true;){var t2=t1.next$0();var t4=t2.get$index();if(typeof t4!=='number')return this._tarjan$1$bailout(2,v,t4,t3,t1,t2);if(t4===-1){this._tarjan$1(t2);v.set$lowlink($.min(v.get$lowlink(),t2.get$lowlink()));}else{t4=$.indexOf$1(t3,t2);if(typeof t4!=='number')return this._tarjan$1$bailout(3,v,t4,t3,t1,t2);if(t4>=0)v.set$lowlink($.min(v.get$lowlink(),t2.get$index()));}}if($.eqB(v.get$lowlink(),v.get$index())){var component=$.ListImplementation_List(null);var n=null;do{if(0>=t3.length)throw $.ioore(0);n=t3[0];$.removeRange(t3,0,1);component.push(n.get$value());}while(!$.eqB(n,v));this._scc.push(component);}},
+ _tarjan$1$bailout: function(state,env0,env1,env2,env3,env4){switch(state){case 1:var v=env0;t1=env1;break;case 2:v=env0;t4=env1;t3=env2;t1=env3;t2=env4;break;case 3:v=env0;t4=env1;t3=env2;t1=env3;t2=env4;break;}switch(state){case 0:v.set$index(this._index);v.set$lowlink(this._index);var t1=this._index;case 1:state=0;this._index=$.add(t1,1);var t3=this._stack;$.insertRange$3(t3,0,1,v);t1=$.iterator(this._lib1_list.getAdjacent$1(v));default:L0:while(true)switch(state){case 0:if(!(t1.hasNext$0()===true))break L0;var t2=t1.next$0();var t4=t2.get$index();case 2:state=0;case 3:if(state===0&&$.eqB(t4,-1)){this._tarjan$1(t2);v.set$lowlink($.min(v.get$lowlink(),t2.get$lowlink()));}else switch(state){case 0:t4=$.indexOf$1(t3,t2);case 3:state=0;if($.geB(t4,0))v.set$lowlink($.min(v.get$lowlink(),t2.get$index()));}}if($.eqB(v.get$lowlink(),v.get$index())){var component=$.ListImplementation_List(null);var n=null;do{if(0<0||0>=t3.length)throw $.ioore(0);n=t3[0];$.removeRange(t3,0,1);component.push(n.get$value());}while(!$.eqB(n,v));this._scc.push(component);}}}
 };
 
 $$._TarjanNode = {"":
@@ -1597,36 +1602,33 @@ $$._TarjanList = {"":
 };
 
 $$.Attachable = {"":
- ["name?"],
- "super": "Object"
+ ["name?", "_lib1_id?"],
+ "super": "Object",
+ hashCode$0: function(){return $.hashCode(this._lib1_id);}
 };
 
-$$.AttachableObjectImpl = {"":
- ["propertyValues?"],
- "super": "DisposableImpl"
-};
-
-$$.PropertyValues = {"":
- ["_propertyValues", "_changeHandle", "_disposed"],
+$$.AttachableObject = {"":
+ [],
  "super": "DisposableImpl",
- _set$2: function(key,value){$.indexSet(this._propertyValues,key,value);this._changeHandle.fireEvent$1(key);},
+ _set$2: function(key,value){$.indexSet(this._propertyValues,key,value);this._fireChange$1(key);},
  get$_set: function() { return new $.BoundClosure2(this, '_set$2'); },
  _isSet$1: function(key){return this._propertyValues.containsKey$1(key);},
- _lib1_remove$1: function(key){if(this._isSet$1(key)===true){this._propertyValues.remove$1(key);this._changeHandle.fireEvent$1(key);}},
- _getValueOrUndefined$3: function(key,obj,ifAbsent){if(this._isSet$1(key)===true)return $.index(this._propertyValues,key);else if(!(ifAbsent==null)){var value=ifAbsent.call$1(obj);this._set$2(key,value);return value;}else return $.CTC27;}
+ _lib1_remove$1: function(key){if(this._isSet$1(key)===true){this._propertyValues.remove$1(key);this._fireChange$1(key);}},
+ _getValueOrUndefined$3: function(key,obj,ifAbsent){if(this._isSet$1(key)===true)return $.index(this._propertyValues,key);else if(!(ifAbsent==null)){var value=ifAbsent.call$1(obj);this._set$2(key,value);return value;}else return $.CTC25;},
+ _fireChange$1: function(key){var handle=$.index(this._eventHandlers,key);if(!(handle==null))handle.fireEvent$1(key);}
 };
 
 $$.Property = {"":
- ["defaultValue", "name"],
+ ["defaultValue", "name", "_lib1_id"],
  "super": "Attachable",
- get$2: function(obj,ifAbsent){var coreValue=this.getCore$2(obj,ifAbsent);if(!(coreValue===$.CTC27))return coreValue;else return this.defaultValue;},
+ get$2: function(obj,ifAbsent){var coreValue=this.getCore$2(obj,ifAbsent);if(!(coreValue===$.CTC25))return coreValue;else return this.defaultValue;},
  get$1: function(obj) {
   return this.get$2(obj,null)
 },
- getCore$2: function(obj,ifAbsent){return obj.get$propertyValues()._getValueOrUndefined$3(this,obj,ifAbsent);},
- set$2: function(obj,value){obj.get$propertyValues()._set$2(this,value);},
- clear$1: function(obj){obj.get$propertyValues()._lib1_remove$1(this);},
- toString$0: function(){return 'Property \''+$.S(this.name)+'\'';}
+ getCore$2: function(obj,ifAbsent){return obj._getValueOrUndefined$3(this,obj,ifAbsent);},
+ set$2: function(obj,value){obj._set$2(this,value);},
+ clear$1: function(obj){obj._lib1_remove$1(this);},
+ toString$0: function(){return 'Property \''+this.name+'\'';}
 };
 
 $$._UndefinedValue = {"":
@@ -1636,7 +1638,7 @@ $$._UndefinedValue = {"":
 
 $$.PElement = {"":
  [],
- "super": "AttachableObjectImpl",
+ "super": "AttachableObject",
  clip$0: function() { return this.clip.call$0(); },
  get$width: function(){return this._width;},
  set$width: function(value){this._width=value;this.invalidateDraw$0();},
@@ -1671,8 +1673,8 @@ $$.ElementParentImpl = {"":
 };
 
 $$.Stage = {"":
- ["_lib3_canvas", "_lib3_element?", "_invalidatedEventHandle", "_ctx", "propertyValues", "_disposed"],
- "super": "AttachableObjectImpl",
+ ["_invalidatedEventHandle", "_lib3_canvas", "_lib3_element?", "_ctx", "_propertyValues", "_eventHandlers", "_disposed"],
+ "super": "AttachableObject",
  get$invalidated: function(){return this._invalidatedEventHandle;},
  get$rootElement: function(){return this._lib3_element;},
  draw$0: function(){var t1=this._ctx;var t2=t1==null;var t3=this._lib3_canvas;if(t2)this._ctx=t3.get$context2d();else t1.clearRect$4(0,0,t3.get$width(),t3.get$height());return this._lib3_element.draw$1(this._ctx);},
@@ -1810,7 +1812,7 @@ $$.LocationData = {"":
 };
 
 $$.RootMapElement = {"":
- ["_voterMap", "_candidateMap", "_tx?", "_candidatesMovedHandle", "_averageCloseness", "_bounds", "_radius=", "_transforms", "cacheEnabled", "_updatedEventHandle", "_invalidatedEventHandle", "_cacheCanvas", "_width", "_height", "_alpha", "_lastDrawSize", "clip", "_lib3_parent", "propertyValues", "_disposed"],
+ ["_voterMap", "_candidateMap", "_tx?", "_candidatesMovedHandle", "_averageCloseness", "_bounds", "_radius=", "_transforms", "cacheEnabled", "_updatedEventHandle", "_invalidatedEventHandle", "_cacheCanvas", "_width", "_height", "_alpha", "_lastDrawSize", "clip", "_lib3_parent", "_propertyValues", "_eventHandlers", "_disposed"],
  "super": "ElementParentImpl",
  get$candidatesMoved: function(){return this._candidatesMovedHandle;},
  candidatesMoved$0: function() { return this.get$candidatesMoved().call$0(); },
@@ -1819,16 +1821,16 @@ $$.RootMapElement = {"":
  set$locationData: function(data){this.set$voters(data.get$voters());this.set$candidates(data.get$candidates());this.invalidateDraw$0();},
  get$voters: function(){return this._voterMap.get$players();},
  set$voterHexMap: function(value){this._voterMap.set$playerHexMap(value);},
- set$voters: function(value){$.requireArgumentNotNull(value,'value');var vals=$.Tuple$(1,$.Box$(0,0,20,20),'num','Box');this._averageCloseness=vals.Item1;this._bounds=vals.Item2;this._radius=null;this._voterMap.set$players(value);},
+ set$voters: function(value){$.requireArgumentNotNull(value,'value');var vals=$.Tuple$(1,$.Box$(0,0,20,20));this._averageCloseness=vals.Item1;this._bounds=vals.Item2;this._radius=null;this._voterMap.set$players(value);},
  set$candidates: function(value){$.requireArgumentNotNull(value,'value');this._candidateMap.set$players(value);},
  set$showOnlyPlayers: function(value){this._candidateMap.set$showOnlyPlayers(value);},
- dragCandidate$2: function(candidate,delta){var can=$.$$(this._candidateMap.get$players()).single$1(new $.RootMapElement_dragCandidate_anon(candidate));var t1=this._tx;var newCanLocPix=$.add(t1.transformCoordinate$1(candidate.get$location()),delta);can.set$location($.CTC30.constrain$1(t1.createInverse$0().transformCoordinate$1(newCanLocPix)));this._candidatesMovedHandle.fireEvent$1($.CTC24);},
+ dragCandidate$2: function(candidate,delta){var can=$.$$(this._candidateMap.get$players()).single$1(new $.RootMapElement_dragCandidate_anon(candidate));var t1=this._tx;var newCanLocPix=$.add(t1.transformCoordinate$1(candidate.get$location()),delta);can.set$location($.CTC28.constrain$1(t1.createInverse$0().transformCoordinate$1(newCanLocPix)));this._candidatesMovedHandle.fireEvent$1($.CTC24);},
  update$0: function(){var t1=this._bounds;if(!(t1==null)&&this._radius==null){var dataScale=$.Size$($.add(t1.get$width(),this._averageCloseness),$.add(this._bounds.get$height(),this._averageCloseness));t1=$.gtB(dataScale.get$aspectRatio(),this.get$size().get$aspectRatio());var t2=dataScale.width;var t3=dataScale.height;if(t1){var scale=$.div(this.get$width(),t2);var offsetY=$.div($.sub($.div(this.get$height(),scale),t3),2);var offsetX=0;}else{scale=$.div(this.get$height(),t3);offsetX=$.div($.sub($.div(this.get$width(),scale),t2),2);offsetY=0;}t1=this._tx;t1.setToScale$2(scale,scale);t1.translate$2($.add($.add(this._bounds.get$left(),$.div(this._averageCloseness,2)),offsetX),$.add($.add(this._bounds.get$top(),$.div(this._averageCloseness,2)),offsetY));this._radius=$.mul(this._averageCloseness,0.3);}$.forEach([this._voterMap,this._candidateMap],new $.RootMapElement_update_anon(this));$.ElementParentImpl.prototype.update$0.call(this);},
  RootMapElement$2: function(w,h){this._voterMap.registerParent$1(this);this._candidateMap.registerParent$1(this);}
 };
 
 $$.VoterMapElement = {"":
- ["_players", "_tx?", "_radius=", "_lib6_map", "_transforms", "cacheEnabled", "_updatedEventHandle", "_invalidatedEventHandle", "_cacheCanvas", "_width", "_height", "_alpha", "_lastDrawSize", "clip", "_lib3_parent", "propertyValues", "_disposed"],
+ ["_players", "_tx?", "_radius=", "_lib6_map", "_transforms", "cacheEnabled", "_updatedEventHandle", "_invalidatedEventHandle", "_cacheCanvas", "_width", "_height", "_alpha", "_lastDrawSize", "clip", "_lib3_parent", "_propertyValues", "_eventHandlers", "_disposed"],
  "super": "PElement",
  setTransform$1: function(value){$.requireArgumentNotNull(value,'value');this._tx.setFromTransfrom$1(value);this.invalidateDraw$0();},
  get$players: function(){return this._players;},
@@ -1837,11 +1839,11 @@ $$.VoterMapElement = {"":
  drawOverride$1: function(ctx){for(var t1=$.iterator(this._players);t1.hasNext$0()===true;)this._drawPlayer$2(ctx,t1.next$0());},
  _drawPlayer$2: function(ctx,player){var t1=this._lib6_map;if(typeof t1!=='string'&&(typeof t1!=='object'||t1===null||t1.constructor!==Array&&!t1.is$JavaScriptIndexingBehavior()))return this._drawPlayer$2$bailout(1,ctx,player,t1,0,0);if(player!==(player|0))throw $.iae(player);if(player<0||player>=t1.length)throw $.ioore(player);var hex=t1[player];if(typeof hex!=='string')return this._drawPlayer$2$bailout(2,ctx,player,hex,0,0);ctx.set$fillStyle(hex);t1=this._tx;var txLoc=t1.transformCoordinate$1(player.get$location());var t2=txLoc.get$x();var t3=txLoc.get$y();var t4=this._radius;if(typeof t4!=='number')return this._drawPlayer$2$bailout(3,ctx,t1,t4,t2,t3);t1=t1.get$scaleX();if(typeof t1!=='number')return this._drawPlayer$2$bailout(4,ctx,t1,t4,t2,t3);$.CanvasUtil_centeredCircle(ctx,t2,t3,t4*t1);ctx.fill$0();},
  _drawPlayer$2$bailout: function(state,env0,env1,env2,env3,env4){switch(state){case 1:var ctx=env0;var player=env1;t1=env2;break;case 2:ctx=env0;player=env1;hex=env2;break;case 3:ctx=env0;t1=env1;t4=env2;t2=env3;t3=env4;break;case 4:ctx=env0;t1=env1;t4=env2;t2=env3;t3=env4;break;}switch(state){case 0:var t1=this._lib6_map;case 1:state=0;var hex=$.index(t1,player);case 2:state=0;ctx.set$fillStyle(hex==null?'#999999':hex);t1=this._tx;var txLoc=t1.transformCoordinate$1(player.get$location());var t2=txLoc.get$x();var t3=txLoc.get$y();var t4=this._radius;case 3:state=0;t1=t1.get$scaleX();case 4:state=0;$.CanvasUtil_centeredCircle(ctx,t2,t3,$.mul(t4,t1));ctx.fill$0();}},
- VoterMapElement$2: function(w,h){this._radius=0.3;this._lib6_map=$.HashMapImplementation$('MapPlayer','String');}
+ VoterMapElement$2: function(w,h){this._radius=0.3;this._lib6_map=$.HashMapImplementation$();}
 };
 
 $$.CandidateMapElement = {"":
- ["_players", "_tx?", "_radius=", "_lib6_elements", "_showOnlyPlayers", "_transforms", "cacheEnabled", "_updatedEventHandle", "_invalidatedEventHandle", "_cacheCanvas", "_width", "_height", "_alpha", "_lastDrawSize", "clip", "_lib3_parent", "propertyValues", "_disposed"],
+ ["_players", "_tx?", "_radius=", "_lib6_elements", "_showOnlyPlayers", "_transforms", "cacheEnabled", "_updatedEventHandle", "_invalidatedEventHandle", "_cacheCanvas", "_width", "_height", "_alpha", "_lastDrawSize", "clip", "_lib3_parent", "_propertyValues", "_eventHandlers", "_disposed"],
  "super": "ElementParentImpl",
  get$visualChildCount: function(){this._ensureElements$0();return $.get$length(this._lib6_elements);},
  getVisualChild$1: function(index){this._ensureElements$0();var t1=this._lib6_elements;if(typeof t1!=='string'&&(typeof t1!=='object'||t1===null||t1.constructor!==Array&&!t1.is$JavaScriptIndexingBehavior()))return this.getVisualChild$1$bailout(1,index,t1);if(index!==(index|0))throw $.iae(index);if(index<0||index>=t1.length)throw $.ioore(index);return t1[index];},
@@ -1850,13 +1852,13 @@ $$.CandidateMapElement = {"":
  get$players: function(){return this._players;},
  set$players: function(value){$.requireArgumentNotNull(value,'value');var t1=this._players;$.clear(t1);$.addAll(t1,value);this._lib6_elements=null;this.invalidateDraw$0();},
  set$showOnlyPlayers: function(value){if(value==null)this._showOnlyPlayers=null;else this._showOnlyPlayers=$.$$(value).toReadOnlyCollection$0();if(this._lib6_elements==null)this.invalidateDraw$0();else this._updateCandidateElements$0();},
- _ensureElements$0: function(){if(this._lib6_elements==null){var t1=$.ListImplementation_List(null,'CandidateElement');$.setRuntimeTypeInfo(t1,{ 'E': 'CandidateElement' });this._lib6_elements=t1;for(var t1=$.iterator(this._players),t2=this._tx;t1.hasNext$0()===true;){var t3=t1.next$0();var rgb=$.HslColor_HslColor($.LocationData_getHue(t3),0.5,0.6).toRgb$0();var ce=$.CandidateElement$($.mul(this._radius,4),$.mul(this._radius,4),rgb.toHex$0(),t3);ce.registerParent$1(this);var tempTx=ce.addTransform$0();tempTx.concatenate$1(t2);var t4=t3.get$location().get$x();var t5=this._radius;if(typeof t5!=='number')throw $.iae(t5);t4=$.sub(t4,2*t5);var t6=t3.get$location().get$y();var t7=this._radius;if(typeof t7!=='number')throw $.iae(t7);tempTx.translate$2(t4,$.sub(t6,2*t7));$.add$1(this._lib6_elements,ce);}this._updateCandidateElements$0();}},
+ _ensureElements$0: function(){if(this._lib6_elements==null){this._lib6_elements=$.ListImplementation_List(null);for(var t1=$.iterator(this._players),t2=this._tx;t1.hasNext$0()===true;){var t3=t1.next$0();var rgb=$.HslColor_HslColor($.LocationData_getHue(t3),0.5,0.6).toRgb$0();var ce=$.CandidateElement$($.mul(this._radius,4),$.mul(this._radius,4),rgb.toHex$0(),t3);ce.registerParent$1(this);var tempTx=ce.addTransform$0();tempTx.concatenate$1(t2);var t4=t3.get$location().get$x();var t5=this._radius;if(typeof t5!=='number')throw $.iae(t5);t4=$.sub(t4,2*t5);var t6=t3.get$location().get$y();var t7=this._radius;if(typeof t7!=='number')throw $.iae(t7);tempTx.translate$2(t4,$.sub(t6,2*t7));$.add$1(this._lib6_elements,ce);}this._updateCandidateElements$0();}},
  _updateCandidateElements$0: function(){for(var t1=$.iterator(this._lib6_elements);t1.hasNext$0()===true;){var t2=t1.next$0();var t3=this._showOnlyPlayers;t2.set$hidden(!(t3==null)&&$.ltB($.indexOf$1(t3,t2.get$player()),0));}},
  CandidateMapElement$2: function(w,h){this.set$showOnlyPlayers(null);}
 };
 
 $$.CandidateElement = {"":
- ["_color", "player?", "_text", "_tx?", "_hidden", "_transforms", "cacheEnabled", "_updatedEventHandle", "_invalidatedEventHandle", "_cacheCanvas", "_width", "_height", "_alpha", "_lastDrawSize", "clip", "_lib3_parent", "propertyValues", "_disposed"],
+ ["_color", "player?", "_text", "_tx?", "_hidden", "_transforms", "cacheEnabled", "_updatedEventHandle", "_invalidatedEventHandle", "_cacheCanvas", "_width", "_height", "_alpha", "_lastDrawSize", "clip", "_lib3_parent", "_propertyValues", "_eventHandlers", "_disposed"],
  "super": "PElement",
  get$hidden: function(){return this._hidden;},
  set$hidden: function(value){if(!$.eqB(value,this._hidden)){this._hidden=value;this.invalidateDraw$0();}},
@@ -1981,7 +1983,7 @@ $$.FutureValueResult = {"":
 $$.SendPortValue = {"":
  [],
  "super": "FutureValue",
- getFuture$1: function(value){this._completer=$.CompleterImpl$($.getRuntimeTypeInfo(this).TOutput);this._innerFuture=this._sendPort.call$1(value);this._innerFuture.then$1(this.get$__futureCompleted());return this._completer.get$future();},
+ getFuture$1: function(value){this._completer=$.CompleterImpl$();this._innerFuture=this._sendPort.call$1(value);this._innerFuture.then$1(this.get$__futureCompleted());return this._completer.get$future();},
  __futureCompleted$1: function(value){this._innerFuture=null;if(typeof value==='object'&&value!==null&&value.is$Map()&&$.FutureValueResult_isMyMap(value))this._sendValueResultCompleted$1($.FutureValueResult_FutureValueResult$fromMap(value));else this._lib2_complete$1(value);},
  get$__futureCompleted: function() { return new $.BoundClosure0(this, '__futureCompleted$1'); },
  _sendValueResultCompleted$1: function(value){if(value.get$isException()===true)this._completeException$1(value.get$exception());else this._lib2_complete$1(value.get$value());},
@@ -2095,7 +2097,7 @@ $$.anon0 = {"":
 $$._voterHexMapperIsolate_anon = {"":
  [],
  "super": "Closure",
- call$2: function(tuple,reply){var map=$.HashMapImplementation$('MapPlayer','String');for(var t1=$.iterator(tuple.get$Item1().get$ballots());t1.hasNext$0()===true;){var t2=t1.next$0();var candidate=tuple.get$Item3()==null?t2.get$choice():t2.get$rank().where$1(new $._voterHexMapperIsolate_anon0(tuple)).first$0();if(!(candidate==null)){var hue=$.LocationData_getHue(candidate);map.operator$indexSet$2(t2.get$voter(),$.HslColor_HslColor(hue,0.5,0.75).toRgb$0().toHex$0());}}reply.send$1(map);}
+ call$2: function(tuple,reply){var map=$.HashMapImplementation$();for(var t1=$.iterator(tuple.get$Item1().get$ballots());t1.hasNext$0()===true;){var t2=t1.next$0();var candidate=tuple.get$Item3()==null?t2.get$choice():t2.get$rank().where$1(new $._voterHexMapperIsolate_anon0(tuple)).first$0();if(!(candidate==null)){var hue=$.LocationData_getHue(candidate);map.operator$indexSet$2(t2.get$voter(),$.HslColor_HslColor(hue,0.5,0.75).toRgb$0().toHex$0());}}reply.send$1(map);}
 };
 
 $$._voterHexMapperIsolate_anon0 = {"":
@@ -2293,45 +2295,45 @@ $$.CondorcetElection_CondorcetElection_anon = {"":
 };
 
 $$.CondorcetElection_CondorcetElection_anon0 = {"":
- ["TVoter_1", "TCandidate_0"],
+ [],
  "super": "Closure",
- call$0: function(){var t1=$.ListImplementation_List(null,'RankedBallot<TVoter, TCandidate>');$.setRuntimeTypeInfo(t1,{ 'E': 'RankedBallot<TVoter, TCandidate>' });return t1;}
+ call$0: function(){return $.ListImplementation_List(null);}
 };
 
 $$.CondorcetElection_CondorcetElection_anon1 = {"":
- ["hashSet_2"],
+ ["hashSet_0"],
  "super": "Closure",
- call$2: function(k,v){var c=$.CondorcetPair_CondorcetPair(k.get$Item1(),k.get$Item2(),v);$.add$1(this.hashSet_2,c);}
+ call$2: function(k,v){var c=$.CondorcetPair_CondorcetPair(k.get$Item1(),k.get$Item2(),v);$.add$1(this.hashSet_0,c);}
 };
 
 $$._TarjanList__TarjanList_anon = {"":
- ["TNode_2", "nodes_1", "map_0"],
+ ["nodes_1", "map_0"],
  "super": "Closure",
- call$2: function(k,v){var t1=this.map_0;var tKey=t1.putIfAbsent$2(k,new $._TarjanList__TarjanList_anon0(k));var t2=this.nodes_1;var edges=$.HashSetImplementation$('_TarjanNode<TNode>');$.indexSet(t2,tKey,edges);if(!(v==null))for(t2=$.iterator(v);t2.hasNext$0()===true;){var t3=t2.next$0();edges.add$1(t1.putIfAbsent$2(t3,new $._TarjanList__TarjanList_anon1(t3)));}}
+ call$2: function(k,v){var t1=this.map_0;var tKey=t1.putIfAbsent$2(k,new $._TarjanList__TarjanList_anon0(k));var t2=this.nodes_1;var edges=$.HashSetImplementation$();$.indexSet(t2,tKey,edges);if(!(v==null))for(t2=$.iterator(v);t2.hasNext$0()===true;){var t3=t2.next$0();edges.add$1(t1.putIfAbsent$2(t3,new $._TarjanList__TarjanList_anon1(t3)));}}
 };
 
 $$._TarjanList__TarjanList_anon0 = {"":
- ["k_3"],
+ ["k_2"],
  "super": "Closure",
- call$0: function(){return $._TarjanNode$(this.k_3);}
+ call$0: function(){return $._TarjanNode$(this.k_2);}
 };
 
 $$._TarjanList__TarjanList_anon1 = {"":
- ["edge_4"],
+ ["edge_3"],
  "super": "Closure",
- call$0: function(){return $._TarjanNode$(this.edge_4);}
+ call$0: function(){return $._TarjanNode$(this.edge_3);}
 };
 
 $$.Enumerable_select_anon = {"":
- ["this_1", "f_0"],
+ ["f_0"],
  "super": "Closure",
- call$1: function(s){return $._SelectIterator$(s,this.f_0,$.getRuntimeTypeInfo(this.this_1).T,'Object');}
+ call$1: function(s){return $._SelectIterator$(s,this.f_0);}
 };
 
 $$.Enumerable_where_anon = {"":
- ["this_1", "f_0"],
+ ["f_0"],
  "super": "Closure",
- call$1: function(s){return $._WhereIterator$(s,this.f_0,$.getRuntimeTypeInfo(this.this_1).T);}
+ call$1: function(s){return $._WhereIterator$(s,this.f_0);}
 };
 
 $$.Enumerable_first_anon = {"":
@@ -2377,15 +2379,15 @@ $$.PluralityElection_PluralityElection_anon0 = {"":
 };
 
 $$.PluralityElection_PluralityElection_anon1 = {"":
- ["TCandidate_1", "voteCounts_0"],
+ ["voteCounts_0"],
  "super": "Closure",
- call$2: function(c,b){var count=$.get$length(b);$.add$1(this.voteCounts_0.putIfAbsent$2(count,new $.PluralityElection_PluralityElection_anon3(this.TCandidate_1)),c);}
+ call$2: function(c,b){var count=$.get$length(b);$.add$1(this.voteCounts_0.putIfAbsent$2(count,new $.PluralityElection_PluralityElection_anon3()),c);}
 };
 
 $$.PluralityElection_PluralityElection_anon3 = {"":
- ["TCandidate_2"],
+ [],
  "super": "Closure",
- call$0: function(){var t1=this.TCandidate_2;var t2=$.ListImplementation_List(null,t1);$.setRuntimeTypeInfo(t2,{ 'E': t1 });return t2;}
+ call$0: function(){return $.ListImplementation_List(null);}
 };
 
 $$.PluralityElection_PluralityElection_anon2 = {"":
@@ -2401,9 +2403,9 @@ $$.Grouping_Grouping_anon = {"":
 };
 
 $$.Grouping_Grouping_anon0 = {"":
- ["V_0"],
+ [],
  "super": "Closure",
- call$0: function(){var t1=this.V_0;var t2=$.ListImplementation_List(null,t1);$.setRuntimeTypeInfo(t2,{ 'E': t1 });return t2;}
+ call$0: function(){return $.ListImplementation_List(null);}
 };
 
 $$.NoneHashMap_getKeys_anon = {"":
@@ -2427,13 +2429,13 @@ $$._distanceElectionIsolate_anon = {"":
 $$.DistanceElection_DistanceElection_anon = {"":
  ["cans_2"],
  "super": "Closure",
- call$1: function(voter){return $.DistanceBallot_DistanceBallot(voter,this.cans_2,'MapPlayer','MapPlayer');}
+ call$1: function(voter){return $.DistanceBallot_DistanceBallot(voter,this.cans_2);}
 };
 
 $$.DistanceElection_DistanceElection_anon0 = {"":
  ["ballots_3"],
  "super": "Closure",
- call$1: function(candidate){for(var t1=$.iterator(this.ballots_3),sumOfSquaredDistance=0,count=0,sumOfDistance=0;t1.hasNext$0()===true;){var distance=t1.next$0().getDistance$1(candidate);if(typeof distance!=='number')throw $.iae(distance);sumOfDistance+=distance;sumOfSquaredDistance+=distance*distance;++count;}return $.Tuple$(sumOfDistance/count,sumOfSquaredDistance/count,'num','num');}
+ call$1: function(candidate){for(var t1=$.iterator(this.ballots_3),sumOfSquaredDistance=0,count=0,sumOfDistance=0;t1.hasNext$0()===true;){var distance=t1.next$0().getDistance$1(candidate);if(typeof distance!=='number')throw $.iae(distance);sumOfDistance+=distance;sumOfSquaredDistance+=distance*distance;++count;}return $.Tuple$(sumOfDistance/count,sumOfSquaredDistance/count);}
 };
 
 $$.DistanceElection_DistanceElection_anon1 = {"":
@@ -2487,13 +2489,13 @@ $$.LocationData_LocationData$random_anon0 = {"":
 $$.Mouse_markMouseOver_anon = {"":
  [],
  "super": "Closure",
- call$1: function(e){$.CTC28.clear$1(e);$.CTC26.clear$1(e);}
+ call$1: function(e){$.get$Mouse_isMouseOverProperty().clear$1(e);$.get$Mouse_isMouseDirectlyOverProperty().clear$1(e);}
 };
 
 $$.Mouse_markMouseOver_anon0 = {"":
  [],
  "super": "Closure",
- call$1: function(e){$.CTC28.set$2(e,true);}
+ call$1: function(e){$.get$Mouse_isMouseOverProperty().set$2(e,true);}
 };
 
 $$.AffineTransform_toString_anon = {"":
@@ -2541,7 +2543,7 @@ $$._maybeScheduleMeasurementFrame_anon = {"":
 $$._DocumentFragmentImpl_rect_anon = {"":
  [],
  "super": "Closure",
- call$0: function(){return $.CTC32;}
+ call$0: function(){return $.CTC30;}
 };
 
 $$.ConstantMap_forEach_anon = {"":
@@ -2763,7 +2765,7 @@ $._fillStatics = function(context){  $globals = context.isolateStatics;
   $static_init();
 };
 
-$.ListIterator$ = function(list,T){var t1=new $.ListIterator(0,list);$.setRuntimeTypeInfo(t1,{ 'T': T });return t1;};
+$.ListIterator$ = function(list){return new $.ListIterator(0,list);};
 
 $._JavaScriptAudioNodeEventsImpl$ = function(_ptr){return new $._JavaScriptAudioNodeEventsImpl(_ptr);};
 
@@ -2773,17 +2775,17 @@ $._IDBTransactionEventsImpl$ = function(_ptr){return new $._IDBTransactionEvents
 
 $.DualPivotQuicksort__dualPivotQuicksort = function(a,left,right,compare){if(typeof a!=='object'||a===null||(a.constructor!==Array||!!a.immutable$list)&&!a.is$JavaScriptIndexingBehavior())return $.DualPivotQuicksort__dualPivotQuicksort$bailout(1,a,left,right,compare,0,0,0,0,0,0,0,0,0,0);var sixth=$.tdiv($.add($.sub(right,left),1),6);if(typeof sixth!=='number')throw $.iae(sixth);var index1=left+sixth;var index5=$.sub(right,sixth);if(typeof right!=='number')throw $.iae(right);var index3=$.tdiv(left+right,2);var index2=index3-sixth;var index4=index3+sixth;if(index1!==(index1|0))throw $.iae(index1);var t1=a.length;if(index1<0||index1>=t1)throw $.ioore(index1);var el1=a[index1];if(index2!==(index2|0))throw $.iae(index2);if(index2<0||index2>=t1)throw $.ioore(index2);var el2=a[index2];if(index3!==(index3|0))throw $.iae(index3);if(index3<0||index3>=t1)throw $.ioore(index3);var el3=a[index3];if(index4!==(index4|0))throw $.iae(index4);if(index4<0||index4>=t1)throw $.ioore(index4);var el4=a[index4];if(index5!==(index5|0))throw $.iae(index5);if(index5<0||index5>=t1)throw $.ioore(index5);var el5=a[index5];if($.gtB(compare.call$2(el1,el2),0)){var t0=el1;el1=el2;el2=t0;}if($.gtB(compare.call$2(el4,el5),0)){t0=el5;el5=el4;el4=t0;}if($.gtB(compare.call$2(el1,el3),0)){t0=el3;el3=el1;el1=t0;}if($.gtB(compare.call$2(el2,el3),0)){t0=el3;el3=el2;el2=t0;}if($.gtB(compare.call$2(el1,el4),0)){t0=el1;el1=el4;el4=t0;}if($.gtB(compare.call$2(el3,el4),0)){t0=el3;el3=el4;el4=t0;}if($.gtB(compare.call$2(el2,el5),0)){t0=el5;el5=el2;el2=t0;}if($.gtB(compare.call$2(el2,el3),0)){t0=el3;el3=el2;el2=t0;}if($.gtB(compare.call$2(el4,el5),0)){t0=el5;el5=el4;el4=t0;}if(index1<0||index1>=a.length)throw $.ioore(index1);a[index1]=el1;if(index3<0||index3>=a.length)throw $.ioore(index3);a[index3]=el3;if(index5<0||index5>=a.length)throw $.ioore(index5);a[index5]=el5;if(left!==(left|0))throw $.iae(left);t1=a.length;if(left<0||left>=t1)throw $.ioore(left);var t2=a[left];if(index2<0||index2>=t1)throw $.ioore(index2);a[index2]=t2;if(right!==(right|0))throw $.iae(right);t2=a.length;if(right<0||right>=t2)throw $.ioore(right);var t3=a[right];if(index4<0||index4>=t2)throw $.ioore(index4);a[index4]=t3;var less=left+1;var great=right-1;var pivots_are_equal=$.eqB(compare.call$2(el2,el4),0);if(pivots_are_equal)for(var k=less;k<=great;++k){if(k!==(k|0))throw $.iae(k);if(k<0||k>=a.length)throw $.ioore(k);var ak=a[k];var comp=compare.call$2(ak,el2);if(typeof comp!=='number')return $.DualPivotQuicksort__dualPivotQuicksort$bailout(2,a,left,compare,less,k,index1,index5,el2,pivots_are_equal,right,ak,comp,el4,great);if(comp===0)continue;if(comp<0){if(!(k===less)){if(less!==(less|0))throw $.iae(less);t1=a.length;if(less<0||less>=t1)throw $.ioore(less);t2=a[less];if(k<0||k>=t1)throw $.ioore(k);a[k]=t2;if(less<0||less>=a.length)throw $.ioore(less);a[less]=ak;}++less;}else for(var less0=less+1;true;){if(great!==(great|0))throw $.iae(great);if(great<0||great>=a.length)throw $.ioore(great);comp=compare.call$2(a[great],el2);if($.gtB(comp,0)){--great;continue;}else{t1=$.ltB(comp,0);var great0=great-1;t2=a.length;if(t1){if(less!==(less|0))throw $.iae(less);if(less<0||less>=t2)throw $.ioore(less);t1=a[less];if(k<0||k>=t2)throw $.ioore(k);a[k]=t1;t1=a.length;if(great<0||great>=t1)throw $.ioore(great);t3=a[great];if(less<0||less>=t1)throw $.ioore(less);a[less]=t3;if(great<0||great>=a.length)throw $.ioore(great);a[great]=ak;great=great0;less=less0;break;}else{if(great<0||great>=t2)throw $.ioore(great);t1=a[great];if(k<0||k>=t2)throw $.ioore(k);a[k]=t1;if(great<0||great>=a.length)throw $.ioore(great);a[great]=ak;great=great0;break;}}}}else for(k=less;k<=great;++k){if(k!==(k|0))throw $.iae(k);if(k<0||k>=a.length)throw $.ioore(k);ak=a[k];if($.ltB(compare.call$2(ak,el2),0)){if(!(k===less)){if(less!==(less|0))throw $.iae(less);t1=a.length;if(less<0||less>=t1)throw $.ioore(less);t2=a[less];if(k<0||k>=t1)throw $.ioore(k);a[k]=t2;if(less<0||less>=a.length)throw $.ioore(less);a[less]=ak;}++less;}else if($.gtB(compare.call$2(ak,el4),0))for(less0=less+1;true;){if(great!==(great|0))throw $.iae(great);if(great<0||great>=a.length)throw $.ioore(great);if($.gtB(compare.call$2(a[great],el4),0)){--great;if(great<k)break;continue;}else{if(great<0||great>=a.length)throw $.ioore(great);t1=$.ltB(compare.call$2(a[great],el2),0);great0=great-1;t2=a.length;if(t1){if(less!==(less|0))throw $.iae(less);if(less<0||less>=t2)throw $.ioore(less);t1=a[less];if(k<0||k>=t2)throw $.ioore(k);a[k]=t1;t1=a.length;if(great<0||great>=t1)throw $.ioore(great);t3=a[great];if(less<0||less>=t1)throw $.ioore(less);a[less]=t3;if(great<0||great>=a.length)throw $.ioore(great);a[great]=ak;great=great0;less=less0;}else{if(great<0||great>=t2)throw $.ioore(great);t1=a[great];if(k<0||k>=t2)throw $.ioore(k);a[k]=t1;if(great<0||great>=a.length)throw $.ioore(great);a[great]=ak;great=great0;}break;}}}t1=less-1;if(t1!==(t1|0))throw $.iae(t1);t2=a.length;if(t1<0||t1>=t2)throw $.ioore(t1);t3=a[t1];if(left<0||left>=t2)throw $.ioore(left);a[left]=t3;if(t1<0||t1>=a.length)throw $.ioore(t1);a[t1]=el2;t1=great+1;if(t1!==(t1|0))throw $.iae(t1);t3=a.length;if(t1<0||t1>=t3)throw $.ioore(t1);var t4=a[t1];if(right<0||right>=t3)throw $.ioore(right);a[right]=t4;if(t1<0||t1>=a.length)throw $.ioore(t1);a[t1]=el4;$.DualPivotQuicksort__doSort(a,left,less-2,compare);$.DualPivotQuicksort__doSort(a,great+2,right,compare);if(pivots_are_equal)return;if(less<index1&&great>index5){while(true){if(less!==(less|0))throw $.iae(less);if(less<0||less>=a.length)throw $.ioore(less);if(!$.eqB(compare.call$2(a[less],el2),0))break;++less;}while(true){if(great!==(great|0))throw $.iae(great);if(great<0||great>=a.length)throw $.ioore(great);if(!$.eqB(compare.call$2(a[great],el4),0))break;--great;}for(k=less;k<=great;++k){if(k!==(k|0))throw $.iae(k);if(k<0||k>=a.length)throw $.ioore(k);ak=a[k];if($.eqB(compare.call$2(ak,el2),0)){if(!(k===less)){if(less!==(less|0))throw $.iae(less);t1=a.length;if(less<0||less>=t1)throw $.ioore(less);t2=a[less];if(k<0||k>=t1)throw $.ioore(k);a[k]=t2;if(less<0||less>=a.length)throw $.ioore(less);a[less]=ak;}++less;}else if($.eqB(compare.call$2(ak,el4),0))for(less0=less+1;true;){if(great!==(great|0))throw $.iae(great);if(great<0||great>=a.length)throw $.ioore(great);if($.eqB(compare.call$2(a[great],el4),0)){--great;if(great<k)break;continue;}else{if(great<0||great>=a.length)throw $.ioore(great);t1=$.ltB(compare.call$2(a[great],el2),0);great0=great-1;t2=a.length;if(t1){if(less!==(less|0))throw $.iae(less);if(less<0||less>=t2)throw $.ioore(less);t1=a[less];if(k<0||k>=t2)throw $.ioore(k);a[k]=t1;t1=a.length;if(great<0||great>=t1)throw $.ioore(great);t3=a[great];if(less<0||less>=t1)throw $.ioore(less);a[less]=t3;if(great<0||great>=a.length)throw $.ioore(great);a[great]=ak;great=great0;less=less0;}else{if(great<0||great>=t2)throw $.ioore(great);t1=a[great];if(k<0||k>=t2)throw $.ioore(k);a[k]=t1;if(great<0||great>=a.length)throw $.ioore(great);a[great]=ak;great=great0;}break;}}}$.DualPivotQuicksort__doSort(a,less,great,compare);}else $.DualPivotQuicksort__doSort(a,less,great,compare);};
 
-$.DistanceBallot$_internal = function(voter,items,_distances,TVoter,TCandidate){var t1=new $.DistanceBallot(_distances,items,items.operator$index$1(0),voter);$.setRuntimeTypeInfo(t1,{ 'TVoter': TVoter, 'TCandidate': TCandidate });return t1;};
+$.DistanceBallot$_internal = function(voter,items,_distances){return new $.DistanceBallot(_distances,items,items.operator$index$1(0),voter);};
 
-$.dynamicFunction = function(name$){var f=Object.prototype[name$];if(!(f==null)&&!!f.methods)return f.methods;var methods={};var dartMethod=Object.getPrototypeOf($.CTC42)[name$];if(!(dartMethod==null))$.propertySet(methods,'Object',dartMethod);var bind=function() {return $.dynamicBind.call$4(this, name$, methods, Array.prototype.slice.call(arguments));};bind.methods = methods;$.defineProperty(Object.prototype,name$,bind);return methods;};
+$.dynamicFunction = function(name$){var f=Object.prototype[name$];if(!(f==null)&&!!f.methods)return f.methods;var methods={};var dartMethod=Object.getPrototypeOf($.CTC40)[name$];if(!(dartMethod==null))$.propertySet(methods,'Object',dartMethod);var bind=function() {return $.dynamicBind.call$4(this, name$, methods, Array.prototype.slice.call(arguments));};bind.methods = methods;$.defineProperty(Object.prototype,name$,bind);return methods;};
 
 $.buildDynamicMetadata = function(inputTable){var result=[];for(var i=0;i<inputTable.length;++i){var tag=inputTable[i][0];var array=inputTable[i];var tags=array[1];var set={};var tagNames=tags.split('|');for(var j=0,index=1;j<tagNames.length;++j){$.propertySet(set,tagNames[j],true);index=j;array=tagNames;}result.push($.MetaInfo$(tag,tags,set));}return result;};
 
-$.ListImplementation_List$from = function(other,E){var result=$.ListImplementation_List(null);for(var t1=$.iterator(other);t1.hasNext$0()===true;)result.push(t1.next$0());return result;};
+$.ListImplementation_List$from = function(other){var result=$.ListImplementation_List(null);for(var t1=$.iterator(other);t1.hasNext$0()===true;)result.push(t1.next$0());return result;};
 
 $._Timer$repeating = function(milliSeconds,callback){var t1=new $._Timer(false,null);t1._Timer$repeating$2(milliSeconds,callback);return t1;};
 
-$.DistanceElection_DistanceElection$fromData = function(data,TVoter,TCandidate){return $.DistanceElection_DistanceElection(data.get$voters(),data.get$candidates());};
+$.DistanceElection_DistanceElection$fromData = function(data){return $.DistanceElection_DistanceElection(data.get$voters(),data.get$candidates());};
 
 $._EventSourceEventsImpl$ = function(_ptr){return new $._EventSourceEventsImpl(_ptr);};
 
@@ -2805,15 +2807,13 @@ $._deserializeMessage = function(message){if($._globalState().get$needSerializat
 
 $.and = function(a,b){if($.checkNumbers(a,b))return (a & b) >>> 0;return a.operator$and$1(b);};
 
-$.Tuple3$ = function(param1,param2,Item3,T1,T2,T3){var t1=new $.Tuple3(Item3,param1,param2);$.setRuntimeTypeInfo(t1,{ 'T1': T1, 'T2': T2, 'T3': T3 });return t1;};
+$.Tuple3$ = function(param1,param2,Item3){return new $.Tuple3(Item3,param1,param2);};
 
 $._MediaStreamEventsImpl$ = function(_ptr){return new $._MediaStreamEventsImpl(_ptr);};
 
-$.setRuntimeTypeInfo = function(target,typeInfo){if(!(target==null))target.builtin$typeInfo = typeInfo;};
-
 $.hashCode = function(receiver){if(typeof receiver==='number')return receiver & 0x1FFFFFFF;if(!(typeof receiver==='string'))return receiver.hashCode$0();var length$=receiver.length;for(var hash=0,i=0;i<length$;++i){var hash0=536870911&hash+receiver.charCodeAt(i);var hash1=536870911&hash0+524287&hash0 << 10;hash1=(hash1^$.shr(hash1,6))>>>0;hash=hash1;}hash0=536870911&hash+67108863&hash << 3;hash0=(hash0^$.shr(hash0,11))>>>0;return 536870911&hash0+16383&hash0 << 15;};
 
-$.FutureImpl_FutureImpl$immediate = function(value,T){var res=$.FutureImpl$();res._setValue$1(value);return res;};
+$.FutureImpl_FutureImpl$immediate = function(value){var res=$.FutureImpl$();res._setValue$1(value);return res;};
 
 $.mul$slow = function(a,b){if($.checkNumbers(a,b))return a * b;return a.operator$mul$1(b);};
 
@@ -2821,7 +2821,7 @@ $._waitForPendingPorts = function(message,callback){var finder=$._PendingSendPor
 
 $.CalcEngine$ = function(){var t1=new $.CalcEngine($._DistanceElectionMapper$(),$._PluralityElectionMapper$(),$._CondorcetElectionMapper$(),$._VoterHexMapper$(),null);t1.CalcEngine$0();return t1;};
 
-$._SimpleEnumerable$ = function(_source,T){var t1=new $._SimpleEnumerable(_source);$.setRuntimeTypeInfo(t1,{ 'T': T });return t1;};
+$._SimpleEnumerable$ = function(_source){return new $._SimpleEnumerable(_source);};
 
 $._condorcetElectionIsolate = function(){$.port().receive$1(new $._condorcetElectionIsolate_anon());};
 
@@ -2843,7 +2843,7 @@ $.neg = function(a){if(typeof a === "number")return -a;return a.negate$0();};
 
 $.NoSuchMethodError$ = function(_receiver,_functionName,_arguments,existingArgumentNames){return new $.NoSuchMethodError(_receiver,_functionName,_arguments,existingArgumentNames);};
 
-$.HashSetImplementation$ = function(E){var t1=new $.HashSetImplementation(null);$.setRuntimeTypeInfo(t1,{ 'E': E });t1.HashSetImplementation$0();return t1;};
+$.HashSetImplementation$ = function(){var t1=new $.HashSetImplementation(null);t1.HashSetImplementation$0();return t1;};
 
 $.Strings_join = function(strings,separator){return $.StringImplementation_join(strings,separator);};
 
@@ -2853,17 +2853,19 @@ $.add$1 = function(receiver,value){if($.isJsArray(receiver)){$.checkGrowable(rec
 
 $.get$length = function(receiver){if(typeof receiver==='string'||$.isJsArray(receiver))return receiver.length;else return receiver.get$length();};
 
-$.Uri__parseIntOrZero = function(val){if(!(val==null)&&!$.eqB(val,''))return $.parseInt(val);else return 0;};
+$.Uri__parseIntOrZero = function(val){if(!(val==null)&&!$.eqB(val,''))return $.int_parse(val);else return 0;};
 
 $.dynamicBind = function(obj,name$,methods,arguments$){var tag=$.getTypeNameOf(obj);var method=methods[tag];if(method==null&&!($._dynamicMetadata0()==null))for(var i=0;i<$._dynamicMetadata0().length;++i){var entry=$._dynamicMetadata0()[i];if(entry.get$_lib5_set()[tag]){method=methods[entry.get$_tag()];if(!(method==null))break;}}if(method==null)method=methods['Object'];var proto=Object.getPrototypeOf(obj);if(method==null)method=function () {if (Object.getPrototypeOf(this) === proto) {throw new TypeError(name$ + " is not a function");} else {return Object.prototype[name$].apply(this, arguments);}};if(!proto.hasOwnProperty(name$))$.defineProperty(proto,name$,method);return method.apply(obj, arguments$);};
+
+$.int_parse = function(string){return $.Primitives_parseInt(string);};
 
 $.regExpMakeNative = function(regExp,global){var pattern=regExp.get$pattern();var multiLine=regExp.get$multiLine();var ignoreCase=regExp.get$ignoreCase();$.checkString(pattern);var sb=$.StringBufferImpl$('');if(multiLine===true)$.add$1(sb,'m');if(ignoreCase===true)$.add$1(sb,'i');if(global)$.add$1(sb,'g');try{return new RegExp(pattern, $.toString(sb));}catch(exception){var t1=$.unwrapException(exception);var e=t1;throw $.$$throw($.IllegalJSRegExpException$(pattern,String(e)));}};
 
 $.main = function(){$.VoteDemo_VoteDemo($.query('#content'),$.query('#pluralityView'),$.query('#distanceView'),$.query('#condorcetView'),$.query('#canManView'))._requestFrame$0();};
 
-$.CondorcetPair_CondorcetPair = function(can1,can2,bals,TVoter,TCandidate){var t1={};t1.can1_1=can1;t1.can2_2=can2;$.requireArgumentNotNull(t1.can1_1,'can1');$.requireArgumentNotNull(t1.can2_2,'can2');$.requireArgument(!$.eqB(t1.can1_1,t1.can2_2),'can1 and can2 must be different',null);if($.gtB($.compareTo(t1.can1_1,t1.can2_2),0)){var temp=t1.can2_2;t1.can2_2=t1.can1_1;t1.can1_1=temp;}if(bals==null)return $.CondorcetPair$_internal(t1.can1_1,t1.can2_2,null,0,0);else{var roBallots=$.ReadOnlyCollection$(bals,'RankedBallot<TVoter, TCandidate>');$.requireArgument($.CollectionUtil_allUnique(roBallots),'Only one ballot per voter is allowed',null);t1.fos_3=0;t1.sof_4=0;roBallots.forEach$1(new $.CondorcetPair_CondorcetPair_anon(t1));return $.CondorcetPair$_internal(t1.can1_1,t1.can2_2,roBallots,t1.fos_3,t1.sof_4);}};
+$.CondorcetPair_CondorcetPair = function(can1,can2,bals){var t1={};t1.can1_1=can1;t1.can2_2=can2;$.requireArgumentNotNull(t1.can1_1,'can1');$.requireArgumentNotNull(t1.can2_2,'can2');$.requireArgument(!$.eqB(t1.can1_1,t1.can2_2),'can1 and can2 must be different',null);if($.gtB($.compareTo(t1.can1_1,t1.can2_2),0)){var temp=t1.can2_2;t1.can2_2=t1.can1_1;t1.can1_1=temp;}if(bals==null)return $.CondorcetPair$_internal(t1.can1_1,t1.can2_2,null,0,0);else{var roBallots=$.ReadOnlyCollection$(bals);$.requireArgument($.CollectionUtil_allUnique(roBallots),'Only one ballot per voter is allowed',null);t1.fos_3=0;t1.sof_4=0;roBallots.forEach$1(new $.CondorcetPair_CondorcetPair_anon(t1));return $.CondorcetPair$_internal(t1.can1_1,t1.can2_2,roBallots,t1.fos_3,t1.sof_4);}};
 
-$.FutureValueResult$fromException = function(exception,TOutput){var t1=new $.FutureValueResult(null,exception);$.setRuntimeTypeInfo(t1,{ 'TOutput': TOutput });t1.FutureValueResult$fromException$1(exception);return t1;};
+$.FutureValueResult$fromException = function(exception){var t1=new $.FutureValueResult(null,exception);t1.FutureValueResult$fromException$1(exception);return t1;};
 
 $.ceil = function(receiver){return Math.ceil(receiver);};
 
@@ -2903,7 +2905,7 @@ $._IDBRequestEventsImpl$ = function(_ptr){return new $._IDBRequestEventsImpl(_pt
 
 $._DOMWindowCrossFrameImpl$ = function(_window){return new $._DOMWindowCrossFrameImpl(_window);};
 
-$.CandidateMapElement$ = function(w,h){var t1=$.AffineTransform$(1,0,0,1,0,0);var t2=$.ListImplementation_List(null,'MapPlayer');$.setRuntimeTypeInfo(t2,{ 'E': 'MapPlayer' });var t3=$.ListImplementation_List(null,'AffineTransform');$.setRuntimeTypeInfo(t3,{ 'E': 'AffineTransform' });t3=new $.CandidateMapElement(t2,t1,0,null,null,t3,false,$.EventHandle$('EventArgs'),$.EventHandle$('EventArgs'),null,w,h,null,null,false,null,$.PropertyValues$(),false);t3.CandidateMapElement$2(w,h);return t3;};
+$.CandidateMapElement$ = function(w,h){var t1=$.AffineTransform$(1,0,0,1,0,0);t1=new $.CandidateMapElement($.ListImplementation_List(null),t1,0,null,null,$.ListImplementation_List(null),false,$.EventHandle$(),$.EventHandle$(),null,w,h,null,null,false,null,$.HashMapImplementation$(),$.HashMapImplementation$(),false);t1.CandidateMapElement$2(w,h);return t1;};
 
 $.RetainedUtil_transformPointGlobalToLocal = function(element,point){return element.getTransform$0().createInverse$0().transformCoordinate$1(point);};
 
@@ -2923,21 +2925,19 @@ $.trim = function(receiver){if(!(typeof receiver==='string'))return receiver.tri
 
 $._TextTrackEventsImpl$ = function(_ptr){return new $._TextTrackEventsImpl(_ptr);};
 
-$.DoubleLinkedQueue$ = function(E){var t1=new $.DoubleLinkedQueue(null);$.setRuntimeTypeInfo(t1,{ 'E': E });t1.DoubleLinkedQueue$0();return t1;};
+$.DoubleLinkedQueue$ = function(){var t1=new $.DoubleLinkedQueue(null);t1.DoubleLinkedQueue$0();return t1;};
 
 $._distanceElectionIsolate = function(){$.port().receive$1(new $._distanceElectionIsolate_anon());};
 
 $.StringBufferImpl$ = function(content$){var t1=new $.StringBufferImpl(null,null);t1.StringBufferImpl$1(content$);return t1;};
 
-$.getRuntimeTypeInfo = function(target){if(target==null)return;var res=target.builtin$typeInfo;return res==null?{}:res;};
-
 $._SVGElementInstanceEventsImpl$ = function(_ptr){return new $._SVGElementInstanceEventsImpl(_ptr);};
 
 $._MainManagerStub$ = function(){return new $._MainManagerStub();};
 
-$.Grouping$_internal = function(_values,K,V){var t1=new $.Grouping(_values);$.setRuntimeTypeInfo(t1,{ 'K': K, 'V': V });return t1;};
+$.Grouping$_internal = function(_values){return new $.Grouping(_values);};
 
-$._TarjanList$_internal = function(_nodes,TNode){var t1=new $._TarjanList(_nodes);$.setRuntimeTypeInfo(t1,{ 'TNode': TNode });return t1;};
+$._TarjanList$_internal = function(_nodes){return new $._TarjanList(_nodes);};
 
 $.regExpTest = function(regExp,str){return $.regExpGetNative(regExp).test(str);};
 
@@ -2947,7 +2947,7 @@ $.makeLiteralMap = function(keyValuePairs){var iterator=$.iterator(keyValuePairs
 
 $._createMeasurementFuture = function(computeValue,completer){if($._pendingRequests==null){$._pendingRequests=[];$._maybeScheduleMeasurementFrame();}$.add$1($._pendingRequests,$._MeasurementRequest$(computeValue,completer));return completer.get$future();};
 
-$.Tuple$ = function(Item1,Item2,T1,T2){var t1=new $.Tuple(Item1,Item2);$.setRuntimeTypeInfo(t1,{ 'T1': T1, 'T2': T2 });return t1;};
+$.Tuple$ = function(Item1,Item2){return new $.Tuple(Item1,Item2);};
 
 $.Uri__addIfNonEmpty = function(sb,test,first,second){if(!(''===test)){sb.add$1(first==null?'null':first);sb.add$1(second==null?'null':second);}};
 
@@ -2973,7 +2973,7 @@ $._FrameSetElementEventsImpl$ = function(_ptr){return new $._FrameSetElementEven
 
 $._Elements_TableElement = function(){return $._document().$dom_createElement$1('table');};
 
-$._SelectManyIterator$_internal = function(_sourceIterator,_func,TSource,TOutput){var t1=new $._SelectManyIterator(_sourceIterator,_func,null);$.setRuntimeTypeInfo(t1,{ 'TSource': TSource, 'TOutput': TOutput });return t1;};
+$._SelectManyIterator$_internal = function(_sourceIterator,_func){return new $._SelectManyIterator(_sourceIterator,_func,null);};
 
 $.listInsertRange = function(receiver,start,length$,initialValue){if(typeof receiver!=='object'||receiver===null||(receiver.constructor!==Array||!!receiver.immutable$list)&&!receiver.is$JavaScriptIndexingBehavior())return $.listInsertRange$bailout(1,receiver,start,length$,initialValue);if(length$===0)return;$.checkNull(start);$.checkNull(length$);if(length$<0)throw $.$$throw($.IllegalArgumentException$(length$));var receiverLength=receiver.length;if(start<0||start>receiverLength)throw $.$$throw($.IndexOutOfRangeException$(start));var t1=receiverLength+length$;$.set$length(receiver,t1);var t2=start+length$;$.Arrays_copy(receiver,start,receiver,t2,receiverLength-start);if(!(initialValue==null))for(var i=start;i<t2;++i){if(i<0||i>=receiver.length)throw $.ioore(i);receiver[i]=initialValue;}$.set$length(receiver,t1);};
 
@@ -2991,11 +2991,11 @@ $._MediaStreamTrackListEventsImpl$ = function(_ptr){return new $._MediaStreamTra
 
 $.S = function(value){var res=$.toString(value);if(!(typeof res==='string'))throw $.$$throw($.IllegalArgumentException$(value));return res;};
 
-$._DoubleLinkedQueueIterator$ = function(_sentinel,E){var t1=new $._DoubleLinkedQueueIterator(_sentinel,null);$.setRuntimeTypeInfo(t1,{ 'E': E });t1._DoubleLinkedQueueIterator$1(_sentinel);return t1;};
+$._DoubleLinkedQueueIterator$ = function(_sentinel){var t1=new $._DoubleLinkedQueueIterator(_sentinel,null);t1._DoubleLinkedQueueIterator$1(_sentinel);return t1;};
 
-$.Grouping_Grouping = function(source,keyFunc,K,V){if(keyFunc==null)keyFunc=new $.Grouping_Grouping_anon();var map=$.NoneHashMap$(K,'List<V>');for(var t1=$.iterator(source);t1.hasNext$0()===true;){var t2=t1.next$0();$.add$1(map.putIfAbsent$2(keyFunc.call$1(t2),new $.Grouping_Grouping_anon0(V)),t2);}return $.Grouping$_internal(map);};
+$.Grouping_Grouping = function(source,keyFunc){if(keyFunc==null)keyFunc=new $.Grouping_Grouping_anon();var map=$.NoneHashMap$();for(var t1=$.iterator(source);t1.hasNext$0()===true;){var t2=t1.next$0();$.add$1(map.putIfAbsent$2(keyFunc.call$1(t2),new $.Grouping_Grouping_anon0()),t2);}return $.Grouping$_internal(map);};
 
-$._VoterHexMapper$ = function(){return new $._VoterHexMapper($.spawnFunction($._voterHexMapperIsolate),null,null,null,null,null,false,$.EventHandle$('EventArgs'),$.EventHandle$('EventArgs'),$.EventHandle$('Object'));};
+$._VoterHexMapper$ = function(){return new $._VoterHexMapper($.spawnFunction($._voterHexMapperIsolate),null,null,null,null,null,false,$.EventHandle$(),$.EventHandle$(),$.EventHandle$());};
 
 $._ReceivePortFactory_ReceivePort = function(){return $._ReceivePortImpl$();};
 
@@ -3003,7 +3003,7 @@ $.$$ = function(source){if(typeof source==='object'&&source!==null&&!!source.is$
 
 $._Device_isIE = function(){return $._Device_isOpera()!==true&&$.contains$2($._Device_userAgent(),'MSIE',0)===true;};
 
-$.EventHandle$ = function(T){var t1=new $.EventHandle(null,false);$.setRuntimeTypeInfo(t1,{ 'T': T });return t1;};
+$.EventHandle$ = function(){return new $.EventHandle(null,false);};
 
 $.sort = function(receiver,compare){if(!$.isJsArray(receiver))return receiver.sort$1(compare);$.checkMutable(receiver,'sort');$.DualPivotQuicksort_sort(receiver,compare);};
 
@@ -3021,7 +3021,7 @@ $.Collections__emitObject = function(o,result,visiting){if(typeof o==='object'&&
 
 $._DedicatedWorkerContextEventsImpl$ = function(_ptr){return new $._DedicatedWorkerContextEventsImpl(_ptr);};
 
-$.NoneHashMap$ = function(K,V){var t1=$.ListImplementation_List(null,'Tuple<K, V>');$.setRuntimeTypeInfo(t1,{ 'E': 'Tuple<K, V>' });t1=new $.NoneHashMap(t1);$.setRuntimeTypeInfo(t1,{ 'K': K, 'V': V });return t1;};
+$.NoneHashMap$ = function(){return new $.NoneHashMap($.ListImplementation_List(null));};
 
 $._IsolateNatives__startNonWorker = function(functionName,uri,replyPort){if(!(uri==null))throw $.$$throw($.UnsupportedOperationException$('Currently spawnUri is not supported without web workers.'));$._globalState().get$topEventLoop().enqueue$3($._IsolateContext$(),new $._IsolateNatives__startNonWorker_function(functionName,replyPort),'nonworker start');};
 
@@ -3033,7 +3033,7 @@ $.truncate = function(receiver){return receiver<0?$.ceil(receiver):$.floor(recei
 
 $.StringImplementation_String$fromCharCodes = function(charCodes){return $.StringImplementation__fromCharCodes(charCodes);};
 
-$._EventLoop$ = function(){return new $._EventLoop($.DoubleLinkedQueue$('_IsolateEvent'));};
+$._EventLoop$ = function(){return new $._EventLoop($.DoubleLinkedQueue$());};
 
 $.substringUnchecked = function(receiver,startIndex,endIndex){return receiver.substring(startIndex, endIndex);};
 
@@ -3067,11 +3067,13 @@ $.add$slow = function(a,b){if($.checkNumbers(a,b))return a + b;return a.operator
 
 $.jsHasOwnProperty = function(jsObject,property){return jsObject.hasOwnProperty(property);};
 
-$.CondorcetView__getPair = function(elem){var pairIdStr=$.index(elem.get$dataAttributes(),'pair-ids');if(!(pairIdStr==null)){var ids=$.$$($.split($.substring$1(pairIdStr,4),'_')).select$1(new $.CondorcetView__getPair_anon()).toList$0();return $.Tuple$($.index(ids,0),$.index(ids,1),'int','int');}return;};
+$.CondorcetView__getPair = function(elem){var pairIdStr=$.index(elem.get$dataAttributes(),'pair-ids');if(!(pairIdStr==null)){var ids=$.$$($.split($.substring$1(pairIdStr,4),'_')).select$1(new $.CondorcetView__getPair_anon()).toList$0();return $.Tuple$($.index(ids,0),$.index(ids,1));}return;};
 
-$.Enumerable_Enumerable$fromIterable = function(source,T){$.requireArgumentNotNull(source,'source');return $._SimpleEnumerable$(source,T);};
+$.Enumerable_Enumerable$fromIterable = function(source){$.requireArgumentNotNull(source,'source');return $._SimpleEnumerable$(source);};
 
-$._IsolateNatives__spawn = function(functionName,uri,isLight){var completer=$.CompleterImpl$('SendPort');var port=$._ReceivePortFactory_ReceivePort();port.receive$1(new $._IsolateNatives__spawn_anon(port,completer));var signalReply=port.toSendPort$0();if($._globalState().get$useWorkers()===true&&!isLight)$._IsolateNatives__startWorker(functionName,uri,signalReply);else $._IsolateNatives__startNonWorker(functionName,uri,signalReply);return $._BufferingSendPort$($._globalState().get$currentContext().get$id(),completer.get$future());};
+$._IsolateNatives__spawn = function(functionName,uri,isLight){var completer=$.CompleterImpl$();var port=$._ReceivePortFactory_ReceivePort();port.receive$1(new $._IsolateNatives__spawn_anon(port,completer));var signalReply=port.toSendPort$0();if($._globalState().get$useWorkers()===true&&!isLight)$._IsolateNatives__startWorker(functionName,uri,signalReply);else $._IsolateNatives__startNonWorker(functionName,uri,signalReply);return $._BufferingSendPort$($._globalState().get$currentContext().get$id(),completer.get$future());};
+
+$.RuntimeError$ = function(message){return new $.RuntimeError(message);};
 
 $.LocationData_getCandidateName = function(i){$.requireArgument($.ge(i,0),'',null);$.requireArgument($.lt(i,26),'',null);return $.StringImplementation_String$fromCharCodes([$.add(i,65)]);};
 
@@ -3081,7 +3083,7 @@ $._WindowImpl__isDartLocation = function(thing){try{var t1=thing;return typeof t
 
 $._PendingSendPortFinder$ = function(){var t1=$._MessageTraverserVisitedMap$();t1=new $._PendingSendPortFinder([],t1);t1._PendingSendPortFinder$0();return t1;};
 
-$.Futures_wait = function(futures){var t1={};if(typeof futures!=='string'&&(typeof futures!=='object'||futures===null||futures.constructor!==Array&&!futures.is$JavaScriptIndexingBehavior()))return $.Futures_wait$bailout(1,futures,t1);if($.isEmpty(futures)===true)return $.FutureImpl_FutureImpl$immediate($.CTC10,'List');var completer=$.CompleterImpl$('List');var result=completer.get$future();t1.remaining_1=futures.length;var values=$.ListImplementation_List(futures.length);for(var i=0;t2=futures.length,i<t2;++i){if(i<0||i>=t2)throw $.ioore(i);var future=futures[i];future.then$1(new $.Futures_wait_anon(completer,i,t1,result,values));future.handleException$1(new $.Futures_wait_anon0(future,completer,result));}return result;var t2;};
+$.Futures_wait = function(futures){var t1={};if(typeof futures!=='string'&&(typeof futures!=='object'||futures===null||futures.constructor!==Array&&!futures.is$JavaScriptIndexingBehavior()))return $.Futures_wait$bailout(1,futures,t1);if($.isEmpty(futures)===true)return $.FutureImpl_FutureImpl$immediate($.CTC10);var completer=$.CompleterImpl$();var result=completer.get$future();t1.remaining_1=futures.length;var values=$.ListImplementation_List(futures.length);for(var i=0;t2=futures.length,i<t2;++i){if(i<0||i>=t2)throw $.ioore(i);var future=futures[i];future.then$1(new $.Futures_wait_anon(completer,i,t1,result,values));future.handleException$1(new $.Futures_wait_anon0(future,completer,result));}return result;var t2;};
 
 $._MatchImplementation$ = function(pattern,str,_start,_end,_groups){return new $._MatchImplementation(pattern,str,_start,_end,_groups);};
 
@@ -3099,7 +3101,7 @@ $.index$slow = function(a,index){if(typeof a==='string'||$.isJsArray(a)){if(!(ty
 
 $.div = function(a,b){return typeof a==='number'&&typeof b==='number'?a / b:$.div$slow(a,b);};
 
-$.DistanceBallot_DistanceBallot = function(voter,candidates,TVoter,TCandidate){var distances=$.$$(candidates).toHashMap$1(new $.DistanceBallot_DistanceBallot_anon(voter));var rank=$.ListImplementation_List$from(candidates,'MapPlayer');$.setRuntimeTypeInfo(rank,{ 'E': 'MapPlayer' });$.requireArgument(rank.length>0,'candidates',null);$.requireArgument($.CollectionUtil_allUnique(rank),'candidates',null);$.sort(rank,new $.DistanceBallot_DistanceBallot_anon0(distances));return $.DistanceBallot$_internal(voter,$.ReadOnlyCollection$(rank),distances);};
+$.DistanceBallot_DistanceBallot = function(voter,candidates){var distances=$.$$(candidates).toHashMap$1(new $.DistanceBallot_DistanceBallot_anon(voter));var rank=$.ListImplementation_List$from(candidates);$.requireArgument(rank.length>0,'candidates',null);$.requireArgument($.CollectionUtil_allUnique(rank),'candidates',null);$.sort(rank,new $.DistanceBallot_DistanceBallot_anon0(distances));return $.DistanceBallot$_internal(voter,$.ReadOnlyCollection$(rank),distances);};
 
 $._Elements_CanvasElement = function(width,height){var _e=$._document().$dom_createElement$1('canvas');if(!(width==null))_e.set$width(width);if(!(height==null))_e.set$height(height);return _e;};
 
@@ -3111,9 +3113,9 @@ $._MessagePortEventsImpl$ = function(_ptr){return new $._MessagePortEventsImpl(_
 
 $._IsolateEvent$ = function(isolate,fn,message){return new $._IsolateEvent(isolate,fn,message);};
 
-$.ElectionPlace$ = function(place,candidates,TCandidate){var t1=$.ListImplementation_List$from(candidates,$.getRuntimeTypeInfo(this).T);$.setRuntimeTypeInfo(t1,{ 'E': $.getRuntimeTypeInfo(this).T });t1=new $.ElectionPlace(place,t1);$.setRuntimeTypeInfo(t1,{ 'TCandidate': TCandidate });t1.ElectionPlace$2(place,candidates);return t1;};
+$.ElectionPlace$ = function(place,candidates){var t1=new $.ElectionPlace(place,$.ListImplementation_List$from(candidates));t1.ElectionPlace$2(place,candidates);return t1;};
 
-$.ReadOnlyCollection$ = function(source,T){var t1=$.ListImplementation_List$from(source,$.getRuntimeTypeInfo(this).T);$.setRuntimeTypeInfo(t1,{ 'E': $.getRuntimeTypeInfo(this).T });t1=new $.ReadOnlyCollection(t1);$.setRuntimeTypeInfo(t1,{ 'T': T });return t1;};
+$.ReadOnlyCollection$ = function(source){return new $.ReadOnlyCollection($.ListImplementation_List$from(source));};
 
 $._Device_isFirefox = function(){return $.contains$2($._Device_userAgent(),'Firefox',0);};
 
@@ -3125,7 +3127,7 @@ $._LocationWrapper__toString = function(p){return p.toString();};
 
 $.checkMutable = function(list,reason){if(!!(list.immutable$list))throw $.$$throw($.UnsupportedOperationException$(reason));};
 
-$.CondorcetElection_CondorcetElection = function(ballots,TVoter,TCandidate){var roBallots=$.$$(ballots).toReadOnlyCollection$0();$.requireArgument($.CollectionUtil_allUnique(roBallots.select$1(new $.CondorcetElection_CondorcetElection_anon()).toReadOnlyCollection$0()),'Only one ballot per voter is allowed',null);var hashMap=$.HashMapImplementation$('CondorcetPair<TVoter, TCandidate>','List<RankedBallot<TVoter, TCandidate>>');var candidateHashSet=$.HashSetImplementation$(TCandidate);for(var t1=$.iterator(ballots);t1.hasNext$0()===true;){var t2=t1.next$0();for(var i=0;$.ltB(i,$.get$length(t2.get$rank()));++i){var candidateI=$.index(t2.get$rank(),i);candidateHashSet.add$1(candidateI);for(var j=i+1;$.ltB(j,$.get$length(t2.get$rank()));++j)$.add$1(hashMap.putIfAbsent$2($.CondorcetPair_CondorcetPair(candidateI,$.index(t2.get$rank(),j),null),new $.CondorcetElection_CondorcetElection_anon0(TVoter,TCandidate)),t2);}}var hashSet=$.HashSetImplementation$('CondorcetPair<TVoter, TCandidate>');hashMap.forEach$1(new $.CondorcetElection_CondorcetElection_anon1(hashSet));var candidateProfiles=$.HashMapImplementation$(TCandidate,'CondorcetCandidateProfile<TCandidate>');var tarjanMap=$.HashMapImplementation$(TCandidate,'HashSet<TCandidate>');for(t1=$.iterator(candidateHashSet);t1.hasNext$0()===true;){t2=t1.next$0();var lostTo=$.ListImplementation_List(null,TCandidate);$.setRuntimeTypeInfo(lostTo,{ 'E': TCandidate });var beat=$.ListImplementation_List(null,TCandidate);$.setRuntimeTypeInfo(beat,{ 'E': TCandidate });var tied=$.ListImplementation_List(null,TCandidate);$.setRuntimeTypeInfo(tied,{ 'E': TCandidate });var tarjanLostTiedSet=$.HashSetImplementation$(TCandidate);for(var t3=$.iterator(hashSet);t3.hasNext$0()===true;){var t4=t3.next$0();if($.eqB(t4.get$Item1(),t2)||$.eqB(t4.get$Item2(),t2)){var other=$.eqB(t4.get$Item1(),t2)?t4.get$Item2():t4.get$Item1();if(t4.get$isTie()===true){tied.push(other);tarjanLostTiedSet.add$1(other);}else if($.eqB(t4.get$winner(),t2))beat.push(other);else{lostTo.push(other);tarjanLostTiedSet.add$1(other);}}}candidateProfiles.operator$indexSet$2(t2,$.CondorcetCandidateProfile$_internal(t2,$.ReadOnlyCollection$(lostTo),$.ReadOnlyCollection$(beat),$.ReadOnlyCollection$(tied)));tarjanMap.operator$indexSet$2(t2,tarjanLostTiedSet);}var components=$.TarjanCycleDetect_getStronglyConnectedComponents(tarjanMap);var places=$.ListImplementation_List(null,'ElectionPlace<TCandidate>');$.setRuntimeTypeInfo(places,{ 'E': 'ElectionPlace<TCandidate>' });for(var t1=$.iterator(components),placeNumber=1;t1.hasNext$0()===true;){t2=t1.next$0();places.push($.ElectionPlace$(placeNumber,t2));t2=$.get$length(t2);if(typeof t2!=='number')throw $.iae(t2);placeNumber+=t2;}return $.CondorcetElection$_internal(hashSet,candidateProfiles,roBallots,$.ReadOnlyCollection$(places,'ElectionPlace<TCandidate>'));};
+$.CondorcetElection_CondorcetElection = function(ballots){var roBallots=$.$$(ballots).toReadOnlyCollection$0();$.requireArgument($.CollectionUtil_allUnique(roBallots.select$1(new $.CondorcetElection_CondorcetElection_anon()).toReadOnlyCollection$0()),'Only one ballot per voter is allowed',null);var hashMap=$.HashMapImplementation$();var candidateHashSet=$.HashSetImplementation$();for(var t1=$.iterator(ballots);t1.hasNext$0()===true;){var t2=t1.next$0();for(var i=0;$.ltB(i,$.get$length(t2.get$rank()));++i){var candidateI=$.index(t2.get$rank(),i);candidateHashSet.add$1(candidateI);for(var j=i+1;$.ltB(j,$.get$length(t2.get$rank()));++j)$.add$1(hashMap.putIfAbsent$2($.CondorcetPair_CondorcetPair(candidateI,$.index(t2.get$rank(),j),null),new $.CondorcetElection_CondorcetElection_anon0()),t2);}}var hashSet=$.HashSetImplementation$();hashMap.forEach$1(new $.CondorcetElection_CondorcetElection_anon1(hashSet));var candidateProfiles=$.HashMapImplementation$();var tarjanMap=$.HashMapImplementation$();for(t1=$.iterator(candidateHashSet);t1.hasNext$0()===true;){t2=t1.next$0();var lostTo=$.ListImplementation_List(null);var beat=$.ListImplementation_List(null);var tied=$.ListImplementation_List(null);var tarjanLostTiedSet=$.HashSetImplementation$();for(var t3=$.iterator(hashSet);t3.hasNext$0()===true;){var t4=t3.next$0();if($.eqB(t4.get$Item1(),t2)||$.eqB(t4.get$Item2(),t2)){var other=$.eqB(t4.get$Item1(),t2)?t4.get$Item2():t4.get$Item1();if(t4.get$isTie()===true){tied.push(other);tarjanLostTiedSet.add$1(other);}else if($.eqB(t4.get$winner(),t2))beat.push(other);else{lostTo.push(other);tarjanLostTiedSet.add$1(other);}}}candidateProfiles.operator$indexSet$2(t2,$.CondorcetCandidateProfile$_internal(t2,$.ReadOnlyCollection$(lostTo),$.ReadOnlyCollection$(beat),$.ReadOnlyCollection$(tied)));tarjanMap.operator$indexSet$2(t2,tarjanLostTiedSet);}var components=$.TarjanCycleDetect_getStronglyConnectedComponents(tarjanMap);var places=$.ListImplementation_List(null);for(var t1=$.iterator(components),placeNumber=1;t1.hasNext$0()===true;){t2=t1.next$0();places.push($.ElectionPlace$(placeNumber,t2));t2=$.get$length(t2);if(typeof t2!=='number')throw $.iae(t2);placeNumber+=t2;}return $.CondorcetElection$_internal(hashSet,candidateProfiles,roBallots,$.ReadOnlyCollection$(places));};
 
 $.FutureValueResult_isMyMap = function(value){return !(value==null)&&$.eqB($.get$length(value),2)&&value.containsKey$1('value')===true&&value.containsKey$1('exception')===true;};
 
@@ -3133,7 +3135,7 @@ $.index = function(a,index){if(typeof a == "string" || a.constructor === Array){
 
 $.le$slow = function(a,b){if($.checkNumbers(a,b))return a <= b;return a.operator$le$1(b);};
 
-$.RetainedUtil__hitTest = function(element,point){point=$.RetainedUtil_transformPointGlobalToLocal(element,point);var bounds=$.Box$(0,0,element.get$width(),element.get$height());var hits=$.ListImplementation_List(null,'PElement');$.setRuntimeTypeInfo(hits,{ 'E': 'PElement' });if(bounds.contains$1(point)===true){var length$=element.get$visualChildCount();if(typeof length$!=='number')return $.RetainedUtil__hitTest$bailout(1,element,point,hits,length$);for(var t1=length$-1,i=0;i<length$;++i){hits=$.RetainedUtil__hitTest(element.getVisualChild$1(t1-i),point);if(hits.length>0)break;}hits.push(element);return hits;}else return [];};
+$.RetainedUtil__hitTest = function(element,point){point=$.RetainedUtil_transformPointGlobalToLocal(element,point);var bounds=$.Box$(0,0,element.get$width(),element.get$height());var hits=$.ListImplementation_List(null);if(bounds.contains$1(point)===true){var length$=element.get$visualChildCount();if(typeof length$!=='number')return $.RetainedUtil__hitTest$bailout(1,element,length$,point,hits);for(var t1=length$-1,i=0;i<length$;++i){hits=$.RetainedUtil__hitTest(element.getVisualChild$1(t1-i),point);if(hits.length>0)break;}hits.push(element);return hits;}else return [];};
 
 $.typeNameInOpera = function(obj){var name$=$.constructorNameFallback(obj);if(name$==='Window')return 'DOMWindow';if(name$==='FormData')return 'DOMFormData';return name$;};
 
@@ -3155,7 +3157,7 @@ $.eq = function(a,b){if(a == null)return b == null;if(b == null)return false;if(
 
 $.NullPointerException$ = function(functionName,arguments$){return new $.NullPointerException(functionName,arguments$);};
 
-$._DoubleLinkedQueueEntrySentinel$ = function(E){var t1=new $._DoubleLinkedQueueEntrySentinel(null,null,null);$.setRuntimeTypeInfo(t1,{ 'E': E });t1.DoubleLinkedQueueEntry$1(null);t1._DoubleLinkedQueueEntrySentinel$0();return t1;};
+$._DoubleLinkedQueueEntrySentinel$ = function(){var t1=new $._DoubleLinkedQueueEntrySentinel(null,null,null);t1.DoubleLinkedQueueEntry$1(null);t1._DoubleLinkedQueueEntrySentinel$0();return t1;};
 
 $.toStringWrapper = function(){return $.toString(this.dartException);};
 
@@ -3186,11 +3188,11 @@ $._NotificationEventsImpl$ = function(_ptr){return new $._NotificationEventsImpl
 
 $.toStringAsFixed = function(receiver,fractionDigits){if(!(typeof receiver==='number'))return receiver.toStringAsFixed$1(fractionDigits);$.checkNum(fractionDigits);var result=receiver.toFixed(fractionDigits);if(receiver===0&&$.isNegative(receiver)===true)return '-'+result;return result;};
 
-$._TarjanNode$ = function(value,TNode){var t1=new $._TarjanNode(value,-1,null);$.setRuntimeTypeInfo(t1,{ 'TNode': TNode });return t1;};
+$._TarjanNode$ = function(value){return new $._TarjanNode(value,-1,null);};
 
 $.Coordinate_difference = function(a,b){return $.Vector$($.sub(a.x,b.get$x()),$.sub(a.y,b.get$y()));};
 
-$.DoubleLinkedQueueEntry$ = function(e,E){var t1=new $.DoubleLinkedQueueEntry(null,null,null);$.setRuntimeTypeInfo(t1,{ 'E': E });t1.DoubleLinkedQueueEntry$1(e);return t1;};
+$.DoubleLinkedQueueEntry$ = function(e){var t1=new $.DoubleLinkedQueueEntry(null,null,null);t1.DoubleLinkedQueueEntry$1(e);return t1;};
 
 $.getMouseEventCoordinate = function(event$){return $.Coordinate$(event$.get$offsetX(),event$.get$offsetY());};
 
@@ -3211,9 +3213,9 @@ $.convertDartClosureToJS = function(closure,arity){if(closure==null)return;var f
     return $.invokeClosure.call$5(closure, $._currentIsolate(), arity, arguments[0], arguments[1]);
   };closure.$identity = function$;return function$;};
 
-$.TarjanCycleDetect$_internal = function(_list,TNode){var t1=$.ListImplementation_List(null,'_TarjanNode<TNode>');$.setRuntimeTypeInfo(t1,{ 'E': '_TarjanNode<TNode>' });var t2=$.ListImplementation_List(null,'List<TNode>');$.setRuntimeTypeInfo(t2,{ 'E': 'List<TNode>' });t2=new $.TarjanCycleDetect(0,t1,t2,_list);$.setRuntimeTypeInfo(t2,{ 'TNode': TNode });return t2;};
+$.TarjanCycleDetect$_internal = function(_list){return new $.TarjanCycleDetect(0,$.ListImplementation_List(null),$.ListImplementation_List(null),_list);};
 
-$.CondorcetPair$_internal = function(can1,can2,ballots,firstOverSecond,secondOverFirst,TVoter,TCandidate){var t1=new $.CondorcetPair(ballots,firstOverSecond,secondOverFirst,can1,can2);$.setRuntimeTypeInfo(t1,{ 'TVoter': TVoter, 'TCandidate': TCandidate });return t1;};
+$.CondorcetPair$_internal = function(can1,can2,ballots,firstOverSecond,secondOverFirst){return new $.CondorcetPair(ballots,firstOverSecond,secondOverFirst,can1,can2);};
 
 $.ObjectNotClosureException$ = function(){return new $.ObjectNotClosureException();};
 
@@ -3221,9 +3223,9 @@ $.clear = function(receiver){if(!$.isJsArray(receiver))return receiver.clear$0()
 
 $.Primitives_objectTypeName = function(object){var name$=$.constructorNameFallback(object);if($.eqB(name$,'Object')){var decompiled=String(object.constructor).match(/^\s*function\s*(\S*)\s*\(/)[1];if(typeof decompiled==='string')name$=decompiled;}return $.charCodeAt(name$,0)===36?$.substring$1(name$,1):name$;};
 
-$.IndexIterator$ = function(length$,indexer,T){var t1=new $.IndexIterator(indexer,length$,0);$.setRuntimeTypeInfo(t1,{ 'T': T });t1.IndexIterator$2(length$,indexer);return t1;};
+$.IndexIterator$ = function(length$,indexer){var t1=new $.IndexIterator(indexer,length$,0);t1.IndexIterator$2(length$,indexer);return t1;};
 
-$.HashSetIterator$ = function(set_,E){var t1=new $.HashSetIterator(set_._backingMap.get$_keys(),-1);$.setRuntimeTypeInfo(t1,{ 'E': E });t1.HashSetIterator$1(set_);return t1;};
+$.HashSetIterator$ = function(set_){var t1=new $.HashSetIterator(set_._backingMap.get$_keys(),-1);t1.HashSetIterator$1(set_);return t1;};
 
 $.round = function(receiver){if(!(typeof receiver==='number'))return receiver.round$0();if(receiver < 0)return -Math.round(-receiver);else return Math.round(receiver);};
 
@@ -3251,11 +3253,13 @@ $._Collections_forEach = function(iterable,f){for(var t1=$.iterator(iterable);t1
 
 $._FrozenCSSClassSet$ = function(){return new $._FrozenCSSClassSet(null);};
 
-$.CondorcetElection$_internal = function(_pairs,_profiles,ballots,places,TVoter,TCandidate){var t1=new $.CondorcetElection(_pairs,_profiles,ballots,places);$.setRuntimeTypeInfo(t1,{ 'TVoter': TVoter, 'TCandidate': TCandidate });return t1;};
+$.CondorcetElection$_internal = function(_pairs,_profiles,ballots,places){return new $.CondorcetElection(_pairs,_profiles,ballots,places);};
 
 $.DualPivotQuicksort_insertionSort_ = function(a,left,right,compare){if(typeof a!=='object'||a===null||(a.constructor!==Array||!!a.immutable$list)&&!a.is$JavaScriptIndexingBehavior())return $.DualPivotQuicksort_insertionSort_$bailout(1,a,left,right,compare);if(typeof right!=='number')return $.DualPivotQuicksort_insertionSort_$bailout(1,a,left,right,compare);for(var i=left+1;i<=right;++i){if(i!==(i|0))throw $.iae(i);if(i<0||i>=a.length)throw $.ioore(i);var el=a[i];var j=i;while(true){if(j>left){var t1=j-1;if(t1!==(t1|0))throw $.iae(t1);if(t1<0||t1>=a.length)throw $.ioore(t1);var t2=$.gtB(compare.call$2(a[t1],el),0);t1=t2;}else t1=false;if(!t1)break;var j0=j-1;if(j0!==(j0|0))throw $.iae(j0);t1=a.length;if(j0<0||j0>=t1)throw $.ioore(j0);t2=a[j0];if(j!==(j|0))throw $.iae(j);if(j<0||j>=t1)throw $.ioore(j);a[j]=t2;j=j0;}if(j!==(j|0))throw $.iae(j);if(j<0||j>=a.length)throw $.ioore(j);a[j]=el;}};
 
 $.ge$slow = function(a,b){if($.checkNumbers(a,b))return a >= b;return a.operator$ge$1(b);};
+
+$.Property$ = function(name$,defaultValue){return new $.Property(defaultValue,name$,$.GlobalId_GlobalId());};
 
 $.getFunctionForTypeNameOf = function(){if(!(typeof(navigator)==='object'))return $.typeNameInChrome;var userAgent=navigator.userAgent;if($.contains(userAgent,'Chrome')||$.contains(userAgent,'DumpRenderTree'))return $.typeNameInChrome;else if($.contains(userAgent,'Firefox'))return $.typeNameInFirefox;else if($.contains(userAgent,'MSIE'))return $.typeNameInIE;else if($.contains(userAgent,'Opera'))return $.typeNameInOpera;else if($.contains(userAgent,'Safari'))return $.typeNameInSafari;else return $.constructorNameFallback;};
 
@@ -3269,13 +3273,13 @@ $._IsolateContext$ = function(){var t1=new $._IsolateContext(null,null,null);t1.
 
 $.charCodeAt = function(receiver,index){if(typeof receiver==='string'){if(index<0)throw $.$$throw($.IndexOutOfRangeException$(index));if(index>=receiver.length)throw $.$$throw($.IndexOutOfRangeException$(index));return receiver.charCodeAt(index);}else return receiver.charCodeAt$1(index);};
 
-$.Dragger$ = function(_element){var t1=new $.Dragger(_element,$.EventHandle$('Vector'),$.EventHandle$('CancelableEventArgs'),null);t1.Dragger$1(_element);return t1;};
+$.Dragger$ = function(_element){var t1=new $.Dragger(_element,$.EventHandle$(),$.EventHandle$(),null);t1.Dragger$1(_element);return t1;};
 
 $.StringImplementation__fromCharCodes = function(charCodes){$.checkNull(charCodes);if(!$.isJsArray(charCodes))charCodes=$.ListImplementation_List$from(charCodes);return $.Primitives_stringFromCharCodes(charCodes);};
 
 $.removeRange = function(receiver,start,length$){if(!$.isJsArray(receiver))return receiver.removeRange$2(start,length$);$.checkGrowable(receiver,'removeRange');if(length$===0)return;$.checkNull(start);$.checkNull(length$);if(length$<0)throw $.$$throw($.IllegalArgumentException$(length$));var receiverLength=receiver.length;if(start<0||start>=receiverLength)throw $.$$throw($.IndexOutOfRangeException$(start));var t1=start+length$;if(t1>receiverLength)throw $.$$throw($.IndexOutOfRangeException$(t1));var t2=receiverLength-length$;$.Arrays_copy(receiver,t1,receiver,start,t2-start);$.set$length(receiver,t2);};
 
-$.ListImplementation_List = function(length$,E){return $.Primitives_newList(length$);};
+$.ListImplementation_List = function(length$){return $.Primitives_newList(length$);};
 
 $.mul = function(a,b){return typeof a==='number'&&typeof b==='number'?a * b:$.mul$slow(a,b);};
 
@@ -3285,9 +3289,11 @@ $._BodyElementEventsImpl$ = function(_ptr){return new $._BodyElementEventsImpl(_
 
 $._IsolateNatives__log = function(msg){if($._globalState().get$isWorker()===true)$._globalState().get$mainManager().postMessage$1($._serializeMessage($.makeLiteralMap(['command','log','msg',msg])));else try{$._IsolateNatives__consoleLog(msg);}catch(exception){$.unwrapException(exception);var trace=$.getTraceFromException(exception);throw $.$$throw($.ExceptionImplementation$(trace));}};
 
-$.DistanceElection_DistanceElection = function(voters,candidates,TVoter,TCandidate){var t1={};var cans=$.ReadOnlyCollection$(candidates,TCandidate);var ballots=$.$$(voters).select$1(new $.DistanceElection_DistanceElection_anon(cans)).toReadOnlyCollection$0();var distanceGroups=$.$$(cans).group$1(new $.DistanceElection_DistanceElection_anon0(ballots));var distances=$.ListImplementation_List$from(distanceGroups.getKeys$0(),'Tuple<num, num>');$.setRuntimeTypeInfo(distances,{ 'E': 'Tuple<num, num>' });$.sort(distances,new $.DistanceElection_DistanceElection_anon1());t1.placeNumber_1=1;return $.DistanceElection$_internal(cans,ballots,$.$$(distances).select$1(new $.DistanceElection_DistanceElection_anon2(t1,distanceGroups)).toReadOnlyCollection$0());};
+$.DistanceElection_DistanceElection = function(voters,candidates){var t1={};var cans=$.ReadOnlyCollection$(candidates);var ballots=$.$$(voters).select$1(new $.DistanceElection_DistanceElection_anon(cans)).toReadOnlyCollection$0();var distanceGroups=$.$$(cans).group$1(new $.DistanceElection_DistanceElection_anon0(ballots));var distances=$.ListImplementation_List$from(distanceGroups.getKeys$0());$.sort(distances,new $.DistanceElection_DistanceElection_anon1());t1.placeNumber_1=1;return $.DistanceElection$_internal(cans,ballots,$.$$(distances).select$1(new $.DistanceElection_DistanceElection_anon2(t1,distanceGroups)).toReadOnlyCollection$0());};
 
-$.parseInt = function(str){$.checkString(str);if(!/^\s*[+-]?(?:0[xX][abcdefABCDEF0-9]+|\d+)\s*$/.test(str))throw $.$$throw($.FormatException$(str));var trimmed=$.trim(str);if($.gtB($.get$length(trimmed),2))var t1=$.eqB($.index(trimmed,1),'x')||$.eqB($.index(trimmed,1),'X');else t1=false;if(!t1)if($.gtB($.get$length(trimmed),3))t1=$.eqB($.index(trimmed,2),'x')||$.eqB($.index(trimmed,2),'X');else t1=false;else t1=true;var base=t1?16:10;var ret=parseInt(trimmed, base);if($.isNaN(ret)===true)throw $.$$throw($.FormatException$(str));return ret;};
+$.Primitives_parseInt = function(string){$.checkString(string);var match=/^\s*[+-]?(?:0(x)[a-f0-9]+|\d+)\s*$/i.exec(string);if(match==null)throw $.$$throw($.FormatException$(string));var base=!($.index(match,1)==null)?16:10;var result=parseInt(string, base);if($.isNaN(result)===true)throw $.$$throw($.FormatException$(string));return result;};
+
+$.parseInt = function(string){return $.int_parse(string);};
 
 $._Timer$ = function(milliSeconds,callback){var t1=new $._Timer(true,null);t1._Timer$2(milliSeconds,callback);return t1;};
 
@@ -3297,21 +3303,19 @@ $.iterator = function(receiver){if($.isJsArray(receiver))return $.ListIterator$(
 
 $.port = function(){if($._lazyPort==null)$._lazyPort=$._ReceivePortFactory_ReceivePort();return $._lazyPort;};
 
-$.CandidateElement$ = function(w,h,_color,p){var t1=p.get$name();var t2=$.ListImplementation_List(null,'AffineTransform');$.setRuntimeTypeInfo(t2,{ 'E': 'AffineTransform' });t2=new $.CandidateElement(_color,p,t1,null,false,t2,false,$.EventHandle$('EventArgs'),$.EventHandle$('EventArgs'),null,w,h,null,null,false,null,$.PropertyValues$(),false);t2.CandidateElement$4(w,h,_color,p);return t2;};
+$.CandidateElement$ = function(w,h,_color,p){var t1=new $.CandidateElement(_color,p,p.get$name(),null,false,$.ListImplementation_List(null),false,$.EventHandle$(),$.EventHandle$(),null,w,h,null,null,false,null,$.HashMapImplementation$(),$.HashMapImplementation$(),false);t1.CandidateElement$4(w,h,_color,p);return t1;};
 
 $.toInt = function(receiver){if(!(typeof receiver==='number'))return receiver.toInt$0();if($.isNaN(receiver)===true)throw $.$$throw($.FormatException$('NaN'));if($.isInfinite(receiver)===true)throw $.$$throw($.FormatException$('Infinity'));var truncated=$.truncate(receiver);return truncated == -0.0?0:truncated;};
 
 $.lastIndexOf$1 = function(receiver,element){if($.isJsArray(receiver))return $.Arrays_lastIndexOf(receiver,element,receiver.length);else if(typeof receiver==='string'){$.checkNull(element);return receiver.lastIndexOf(element);}return receiver.lastIndexOf$1(element);};
 
-$._PluralityElectionMapper$ = function(){return new $._PluralityElectionMapper($.spawnFunction($._pluralityElectionIsolate),null,null,null,null,null,false,$.EventHandle$('EventArgs'),$.EventHandle$('EventArgs'),$.EventHandle$('Object'));};
+$._PluralityElectionMapper$ = function(){return new $._PluralityElectionMapper($.spawnFunction($._pluralityElectionIsolate),null,null,null,null,null,false,$.EventHandle$(),$.EventHandle$(),$.EventHandle$());};
 
-$.VoterMapElement$ = function(w,h){var t1=$.AffineTransform$(1,0,0,1,0,0);var t2=$.ListImplementation_List(null,'MapPlayer');$.setRuntimeTypeInfo(t2,{ 'E': 'MapPlayer' });var t3=$.ListImplementation_List(null,'AffineTransform');$.setRuntimeTypeInfo(t3,{ 'E': 'AffineTransform' });t3=new $.VoterMapElement(t2,t1,null,null,t3,true,$.EventHandle$('EventArgs'),$.EventHandle$('EventArgs'),null,w,h,null,null,false,null,$.PropertyValues$(),false);t3.VoterMapElement$2(w,h);return t3;};
+$.VoterMapElement$ = function(w,h){var t1=$.AffineTransform$(1,0,0,1,0,0);t1=new $.VoterMapElement($.ListImplementation_List(null),t1,null,null,$.ListImplementation_List(null),true,$.EventHandle$(),$.EventHandle$(),null,w,h,null,null,false,null,$.HashMapImplementation$(),$.HashMapImplementation$(),false);t1.VoterMapElement$2(w,h);return t1;};
 
-$.PropertyValues$ = function(){return new $.PropertyValues($.NoneHashMap$('Property','Object'),$.EventHandle$('Property'),false);};
+$.PluralityElection$_internal = function(ballots,_ballotGroup,sourcePlaces){return new $.PluralityElection(ballots,_ballotGroup,$.ReadOnlyCollection$(sourcePlaces));};
 
-$.PluralityElection$_internal = function(ballots,_ballotGroup,sourcePlaces,TVoter,TCandidate){var t1=new $.PluralityElection(ballots,_ballotGroup,$.ReadOnlyCollection$(sourcePlaces));$.setRuntimeTypeInfo(t1,{ 'TVoter': TVoter, 'TCandidate': TCandidate });return t1;};
-
-$.LocationData__slice = function(itemCount,maxValue,sliceCount){var values=$.ListImplementation_List(itemCount,'num');$.setRuntimeTypeInfo(values,{ 'E': 'num' });var sliceSize=maxValue/sliceCount;for(var index=0,i=0;i<sliceCount;++i){if(index===itemCount)return values;else{var index0=index+1;var t1=i*sliceSize;if(index<0||index>=values.length)throw $.ioore(index);values[index]=t1;}index=index0;}for(;true;){sliceSize=maxValue/(index*2);for(index0=index,i=0;i<index;++i){if(index0===itemCount)return values;else{var index1=index0+1;if(i<0||i>=values.length)throw $.ioore(i);t1=$.add(values[i],sliceSize);if(index0<0||index0>=values.length)throw $.ioore(index0);values[index0]=t1;}index0=index1;}index=index0;}};
+$.LocationData__slice = function(itemCount,maxValue,sliceCount){var values=$.ListImplementation_List(itemCount);var sliceSize=maxValue/sliceCount;for(var index=0,i=0;i<sliceCount;++i){if(index===itemCount)return values;else{var index0=index+1;var t1=i*sliceSize;if(index<0||index>=values.length)throw $.ioore(index);values[index]=t1;}index=index0;}for(;true;){sliceSize=maxValue/(index*2);for(index0=index,i=0;i<index;++i){if(index0===itemCount)return values;else{var index1=index0+1;if(i<0||i>=values.length)throw $.ioore(i);t1=$.add(values[i],sliceSize);if(index0<0||index0>=values.length)throw $.ioore(index0);values[index0]=t1;}index0=index1;}index=index0;}};
 
 $.GlobalId$_internal = function(value){return new $.GlobalId(value,$.Util_getHashCode([value]));};
 
@@ -3334,13 +3338,13 @@ $._IsolateNatives__getJSFunctionFromName = function(functionName){    return $gl
 
 $._JsDeserializer$ = function(){return new $._JsDeserializer(null);};
 
-$._SelectIterator$ = function(_source,_func,TSource,TOutput){var t1=new $._SelectIterator(_source,_func);$.setRuntimeTypeInfo(t1,{ 'TSource': TSource, 'TOutput': TOutput });return t1;};
+$._SelectIterator$ = function(_source,_func){return new $._SelectIterator(_source,_func);};
 
 $.Primitives_printString = function(string){if(typeof dartPrint == "function"){dartPrint(string);return;}if(typeof console == "object"){console.log(string);return;}if(typeof write == "function"){write(string);write("\n");}};
 
 $.dynamicSetMetadata = function(inputTable){var t1=$.buildDynamicMetadata(inputTable);$._dynamicMetadata(t1);};
 
-$.PluralityElection_PluralityElection = function(ballots,TVoter,TCandidate){var roBallots=$.$$(ballots).toReadOnlyCollection$0();$.requireArgument($.CollectionUtil_allUnique(roBallots.select$1(new $.PluralityElection_PluralityElection_anon()).toReadOnlyCollection$0()),'Only one ballot per voter is allowed',null);var group=roBallots.group$1(new $.PluralityElection_PluralityElection_anon0());var voteCounts=$.HashMapImplementation$('int','List<TCandidate>');$.forEach(group,new $.PluralityElection_PluralityElection_anon1(TCandidate,voteCounts));var ballotCounts=$.ListImplementation_List$from(voteCounts.getKeys$0(),'int');$.setRuntimeTypeInfo(ballotCounts,{ 'E': 'int' });$.sort(ballotCounts,new $.PluralityElection_PluralityElection_anon2());var places=$.ListImplementation_List(null,'PluralityElectionPlace<TCandidate>');$.setRuntimeTypeInfo(places,{ 'E': 'PluralityElectionPlace<TCandidate>' });for(var t1=$.iterator(ballotCounts),place=1;t1.hasNext$0()===true;){var t2=t1.next$0();var p=$.PluralityElectionPlace$(place,voteCounts.operator$index$1(t2),t2);places.push(p);t2=$.get$length(p);if(typeof t2!=='number')throw $.iae(t2);place+=t2;}return $.PluralityElection$_internal(roBallots,group,places);};
+$.PluralityElection_PluralityElection = function(ballots){var roBallots=$.$$(ballots).toReadOnlyCollection$0();$.requireArgument($.CollectionUtil_allUnique(roBallots.select$1(new $.PluralityElection_PluralityElection_anon()).toReadOnlyCollection$0()),'Only one ballot per voter is allowed',null);var group=roBallots.group$1(new $.PluralityElection_PluralityElection_anon0());var voteCounts=$.HashMapImplementation$();$.forEach(group,new $.PluralityElection_PluralityElection_anon1(voteCounts));var ballotCounts=$.ListImplementation_List$from(voteCounts.getKeys$0());$.sort(ballotCounts,new $.PluralityElection_PluralityElection_anon2());var places=$.ListImplementation_List(null);for(var t1=$.iterator(ballotCounts),place=1;t1.hasNext$0()===true;){var t2=t1.next$0();var p=$.PluralityElectionPlace$(place,voteCounts.operator$index$1(t2),t2);places.push(p);t2=$.get$length(p);if(typeof t2!=='number')throw $.iae(t2);place+=t2;}return $.PluralityElection$_internal(roBallots,group,places);};
 
 $._Elements_ButtonElement = function(){return $._document().$dom_createElement$1('button');};
 
@@ -3358,7 +3362,7 @@ $.AffineTransform$ = function(scaleX,shearY,shearX,scaleY,translateX,translateY)
 
 $.typeNameInIE = function(obj){var name$=$.constructorNameFallback(obj);if(name$==='Window')return 'DOMWindow';if(name$==='Document'){if(!!obj.xmlVersion)return 'Document';return 'HTMLDocument';}if(name$==='CanvasPixelArray')return 'Uint8ClampedArray';if(name$==='DataTransfer')return 'Clipboard';if(name$==='DragEvent')return 'MouseEvent';if(name$==='HTMLDDElement')return 'HTMLElement';if(name$==='HTMLDTElement')return 'HTMLElement';if(name$==='HTMLTableDataCellElement')return 'HTMLTableCellElement';if(name$==='HTMLTableHeaderCellElement')return 'HTMLTableCellElement';if(name$==='HTMLPhraseElement')return 'HTMLElement';if(name$==='MSStyleCSSProperties')return 'CSSStyleDeclaration';if(name$==='MouseWheelEvent')return 'WheelEvent';if(name$==='FormData')return 'DOMFormData';return name$;};
 
-$.CondorcetCandidateProfile$_internal = function(candidate,lostTo,beat,tied,TCandidate){var t1=new $.CondorcetCandidateProfile(candidate,lostTo,beat,tied);$.setRuntimeTypeInfo(t1,{ 'TCandidate': TCandidate });return t1;};
+$.CondorcetCandidateProfile$_internal = function(candidate,lostTo,beat,tied){return new $.CondorcetCandidateProfile(candidate,lostTo,beat,tied);};
 
 $.Primitives_newList = function(length$){if(length$==null)return new Array();if(!(typeof length$==='number'&&Math.floor(length$) === length$)||length$<0)throw $.$$throw($.IllegalArgumentException$(length$));var result=new Array(length$);result.fixed$length = true;return result;};
 
@@ -3374,15 +3378,15 @@ $.window = function(){return window;};
 
 $.spawnFunction = function(topLevelFunction){var name$=$._IsolateNatives__getJSFunctionName(topLevelFunction);if(name$==null)throw $.$$throw($.UnsupportedOperationException$('only top-level functions can be spawned.'));return $._IsolateNatives__spawn(name$,null,false);};
 
-$.HashMapImplementation$ = function(K,V){var t1=new $.HashMapImplementation(null,null,null,null,null);$.setRuntimeTypeInfo(t1,{ 'K': K, 'V': V });t1.HashMapImplementation$0();return t1;};
+$.HashMapImplementation$ = function(){var t1=new $.HashMapImplementation(null,null,null,null,null);t1.HashMapImplementation$0();return t1;};
 
-$._FixedSizeListIterator$ = function(array,T){var t1=new $._FixedSizeListIterator($.get$length(array),array,0);$.setRuntimeTypeInfo(t1,{ 'T': T });return t1;};
+$._FixedSizeListIterator$ = function(array){return new $._FixedSizeListIterator($.get$length(array),array,0);};
 
 $._FileReaderEventsImpl$ = function(_ptr){return new $._FileReaderEventsImpl(_ptr);};
 
 $.DetailedIllegalArgumentException$ = function(arg,message){return new $.DetailedIllegalArgumentException(arg,message,'');};
 
-$.PluralityElectionPlace$ = function(place,candidates,voteCount,TCandidate){var t1=$.ListImplementation_List$from(candidates,$.getRuntimeTypeInfo(this).T);$.setRuntimeTypeInfo(t1,{ 'E': $.getRuntimeTypeInfo(this).T });t1=new $.PluralityElectionPlace(voteCount,place,t1);$.setRuntimeTypeInfo(t1,{ 'TCandidate': TCandidate });t1.ElectionPlace$2(place,candidates);t1.PluralityElectionPlace$3(place,candidates,voteCount);return t1;};
+$.PluralityElectionPlace$ = function(place,candidates,voteCount){var t1=new $.PluralityElectionPlace(voteCount,place,$.ListImplementation_List$from(candidates));t1.ElectionPlace$2(place,candidates);t1.PluralityElectionPlace$3(place,candidates,voteCount);return t1;};
 
 $.HashMapImplementation__nextProbe = function(currentProbe,numberOfProbes,length$){return $.and($.add(currentProbe,numberOfProbes),$.sub(length$,1));};
 
@@ -3392,7 +3396,7 @@ $._IsolateNatives__thisScript = function(){return $thisScriptUrl};
 
 $.isInfinite = function(receiver){if(!(typeof receiver==='number'))return receiver.isInfinite$0();return receiver == Infinity||receiver == -Infinity;};
 
-$.CompleterImpl$ = function(T){var t1=new $.CompleterImpl($.FutureImpl$());$.setRuntimeTypeInfo(t1,{ 'T': T });return t1;};
+$.CompleterImpl$ = function(){return new $.CompleterImpl($.FutureImpl$());};
 
 $.HashMapImplementation__computeLoadLimit = function(capacity){return $.tdiv(capacity*3,4);};
 
@@ -3418,17 +3422,17 @@ $._IsolateNatives__startIsolate = function(topLevel,replyTo){$._fillStatics($._g
 
 $.split = function(receiver,pattern){if(!(typeof receiver==='string'))return receiver.split$1(pattern);$.checkNull(pattern);return $.stringSplitUnchecked(receiver,pattern);};
 
-$._TarjanList__TarjanList = function(source,TNode){var map=$.HashMapImplementation$(TNode,'_TarjanNode<TNode>');var nodes=$.HashMapImplementation$('_TarjanNode<TNode>','HashSet<_TarjanNode<TNode>>');source.forEach$1(new $._TarjanList__TarjanList_anon(TNode,nodes,map));return $._TarjanList$_internal(nodes);};
+$._TarjanList__TarjanList = function(source){var map=$.HashMapImplementation$();var nodes=$.HashMapImplementation$();source.forEach$1(new $._TarjanList__TarjanList_anon(nodes,map));return $._TarjanList$_internal(nodes);};
 
 $._timerFactory = function(millis,callback,repeating){return repeating===true?$._Timer$repeating(millis,callback):$._Timer$(millis,callback);};
 
 $._DOMWindowCrossFrameImpl__top = function(win){return win.top;};
 
-$.RootMapElement$ = function(w,h){var t1=$.AffineTransform$(1,0,0,1,0,0);var t2=$.VoterMapElement$(w,h);var t3=$.CandidateMapElement$(w,h);var t4=$.EventHandle$('EventArgs');var t5=$.ListImplementation_List(null,'AffineTransform');$.setRuntimeTypeInfo(t5,{ 'E': 'AffineTransform' });t5=new $.RootMapElement(t2,t3,t1,t4,null,null,null,t5,false,$.EventHandle$('EventArgs'),$.EventHandle$('EventArgs'),null,w,h,null,null,false,null,$.PropertyValues$(),false);t5.RootMapElement$2(w,h);return t5;};
+$.RootMapElement$ = function(w,h){var t1=$.AffineTransform$(1,0,0,1,0,0);t1=new $.RootMapElement($.VoterMapElement$(w,h),$.CandidateMapElement$(w,h),t1,$.EventHandle$(),null,null,null,$.ListImplementation_List(null),false,$.EventHandle$(),$.EventHandle$(),null,w,h,null,null,false,null,$.HashMapImplementation$(),$.HashMapImplementation$(),false);t1.RootMapElement$2(w,h);return t1;};
 
 $.query = function(selector){return $._document().query$1(selector);};
 
-$.VoteDemo$_internal = function(_canvas,_stage,_dragger,_rootMapElement,_condorcetView,_pluralityView,_distanceView,_canManView){var t1=$.HashMapImplementation$('MapPlayer','num');t1=new $.VoteDemo(_canvas,_stage,_dragger,$.CalcEngine$(),_rootMapElement,t1,_condorcetView,_distanceView,_pluralityView,_canManView,null,null,null,null,false);t1.VoteDemo$_internal$8(_canvas,_stage,_dragger,_rootMapElement,_condorcetView,_pluralityView,_distanceView,_canManView);return t1;};
+$.VoteDemo$_internal = function(_canvas,_stage,_dragger,_rootMapElement,_condorcetView,_pluralityView,_distanceView,_canManView){var t1=$.HashMapImplementation$();t1=new $.VoteDemo(_canvas,_stage,_dragger,$.CalcEngine$(),_rootMapElement,t1,_condorcetView,_distanceView,_pluralityView,_canManView,null,null,null,null,false);t1.VoteDemo$_internal$8(_canvas,_stage,_dragger,_rootMapElement,_condorcetView,_pluralityView,_distanceView,_canManView);return t1;};
 
 $.constructorNameFallback = function(obj){var constructor$=obj.constructor;if(typeof(constructor$)==='function'){var name$=constructor$.name;if(typeof name$==='string')var t1=!(name$==='')&&!(name$==='Object')&&!(name$==='Function.prototype');else t1=false;if(t1)return name$;}var string=Object.prototype.toString.call(obj);return string.substring(8, string.length - 1);};
 
@@ -3436,13 +3440,15 @@ $.FormatException$ = function(message){return new $.FormatException(message);};
 
 $.RgbColor__prependZeroIfNecessaryHelper = function(hex){return $.eqB($.get$length(hex),1)?$.concat('0',hex):hex;};
 
+$.throwCyclicInit = function(staticName){throw $.$$throw($.RuntimeError$('Cyclic initialization for static '+$.S(staticName)));};
+
 $.indexOf$1 = function(receiver,element){if($.isJsArray(receiver))return $.Arrays_indexOf(receiver,element,0,receiver.length);else if(typeof receiver==='string'){$.checkNull(element);if(!(typeof element==='string'))throw $.$$throw($.IllegalArgumentException$(element));return receiver.indexOf(element);}return receiver.indexOf$1(element);};
 
 $.filter = function(receiver,predicate){if(!$.isJsArray(receiver))return receiver.filter$1(predicate);else return $.Collections_filter(receiver,[],predicate);};
 
 $.Collections_filter = function(source,destination,f){for(var t1=$.iterator(source);t1.hasNext$0()===true;){var t2=t1.next$0();if(f.call$1(t2)===true)destination.push(t2);}return destination;};
 
-$.FutureValueResult$ = function(value,TOutput){var t1=new $.FutureValueResult(value,null);$.setRuntimeTypeInfo(t1,{ 'TOutput': TOutput });return t1;};
+$.FutureValueResult$ = function(value){return new $.FutureValueResult(value,null);};
 
 $._ChildrenElementList$_wrap = function(element){return new $._ChildrenElementList(element,element.get$$$dom_children());};
 
@@ -3474,27 +3480,27 @@ $.Arrays_indexOf = function(a,element,startIndex,endIndex){if(typeof a!=='string
 
 $._Lists_indexOf = function(a,element,startIndex,endIndex){if(typeof a!=='string'&&(typeof a!=='object'||a===null||a.constructor!==Array&&!a.is$JavaScriptIndexingBehavior()))return $._Lists_indexOf$bailout(1,a,element,startIndex,endIndex);if(typeof endIndex!=='number')return $._Lists_indexOf$bailout(1,a,element,startIndex,endIndex);if(startIndex>=a.length)return -1;if(startIndex<0)startIndex=0;for(var i=startIndex;i<endIndex;++i){if(i<0||i>=a.length)throw $.ioore(i);if($.eqB(a[i],element))return i;}return -1;};
 
-$._WhereIterator$ = function(_source,_func,T){var t1=new $._WhereIterator(_source,_func,null,null);$.setRuntimeTypeInfo(t1,{ 'T': T });return t1;};
+$._WhereIterator$ = function(_source,_func){return new $._WhereIterator(_source,_func,null,null);};
 
 $._Device_isOpera = function(){return $.contains$2($._Device_userAgent(),'Opera',0);};
 
-$.FutureValueResult_FutureValueResult$fromMap = function(value,TOutput){$.requireArgumentNotNull(value,'value');$.requireArgument($.FutureValueResult_isMyMap(value),'value',null);var ex=$.index(value,'exception');if(!(ex==null))return $.FutureValueResult$fromException(ex);else return $.FutureValueResult$($.index(value,'value'));};
+$.FutureValueResult_FutureValueResult$fromMap = function(value){$.requireArgumentNotNull(value,'value');$.requireArgument($.FutureValueResult_isMyMap(value),'value',null);var ex=$.index(value,'exception');if(!(ex==null))return $.FutureValueResult$fromException(ex);else return $.FutureValueResult$($.index(value,'value'));};
 
 $._ElementFactoryProvider_Element$tag = function(tag){return document.createElement(tag)};
 
 $._SimpleClientRect$ = function(left,top$,width,height){return new $._SimpleClientRect(left,top$,width,height);};
 
-$._DistanceElectionMapper$ = function(){return new $._DistanceElectionMapper($.spawnFunction($._distanceElectionIsolate),null,null,null,null,null,false,$.EventHandle$('EventArgs'),$.EventHandle$('EventArgs'),$.EventHandle$('Object'));};
+$._DistanceElectionMapper$ = function(){return new $._DistanceElectionMapper($.spawnFunction($._distanceElectionIsolate),null,null,null,null,null,false,$.EventHandle$(),$.EventHandle$(),$.EventHandle$());};
 
-$.ReadOnlyCollection$empty = function(T){var t1=new $.ReadOnlyCollection($.CTC10);$.setRuntimeTypeInfo(t1,{ 'T': T });return t1;};
+$.ReadOnlyCollection$empty = function(){return new $.ReadOnlyCollection($.CTC10);};
 
 $.requireArgumentNotNull = function(argument,argName){if(argument==null)throw $.$$throw($.NullArgumentException$(argName));};
 
 $._LocationWrapper$ = function(_ptr){return new $._LocationWrapper(_ptr);};
 
-$._FuncEnumerable$ = function(_source,_func,TSource,TOutput){var t1=new $._FuncEnumerable(_source,_func);$.setRuntimeTypeInfo(t1,{ 'TSource': TSource, 'TOutput': TOutput });return t1;};
+$._FuncEnumerable$ = function(_source,_func){return new $._FuncEnumerable(_source,_func);};
 
-$.Stage$ = function(_canvas,_element){var t1=new $.Stage(_canvas,_element,$.EventHandle$('EventArgs'),null,$.PropertyValues$(),false);t1.Stage$2(_canvas,_element);return t1;};
+$.Stage$ = function(_canvas,_element){var t1=new $.Stage($.EventHandle$(),_canvas,_element,null,$.HashMapImplementation$(),$.HashMapImplementation$(),false);t1.Stage$2(_canvas,_element);return t1;};
 
 $.contains = function(userAgent,name$){return !(userAgent.indexOf(name$)===-1);};
 
@@ -3508,7 +3514,7 @@ $.regExpExec = function(regExp,str){var result=$.regExpGetNative(regExp).exec(st
 
 $.endsWith = function(receiver,other){$.checkString(other);var receiverLength=receiver.length;var otherLength=other.length;if(otherLength>receiverLength)return false;return other===$.substring$1(receiver,receiverLength-otherLength);};
 
-$.ReadOnlyCollection$wrap = function(source,T){var t1=new $.ReadOnlyCollection(source);$.setRuntimeTypeInfo(t1,{ 'T': T });return t1;};
+$.ReadOnlyCollection$wrap = function(source){return new $.ReadOnlyCollection(source);};
 
 $._SpeechRecognitionEventsImpl$ = function(_ptr){return new $._SpeechRecognitionEventsImpl(_ptr);};
 
@@ -3522,11 +3528,11 @@ $.MapPlayer$ = function(_location,name$){return new $.MapPlayer($.GlobalId_Globa
 
 $.stringLastIndexOfUnchecked = function(receiver,element,start){return receiver.lastIndexOf(element, start);};
 
-$._CondorcetElectionMapper$ = function(){return new $._CondorcetElectionMapper($.spawnFunction($._condorcetElectionIsolate),null,null,null,null,null,false,$.EventHandle$('EventArgs'),$.EventHandle$('EventArgs'),$.EventHandle$('Object'));};
+$._CondorcetElectionMapper$ = function(){return new $._CondorcetElectionMapper($.spawnFunction($._condorcetElectionIsolate),null,null,null,null,null,false,$.EventHandle$(),$.EventHandle$(),$.EventHandle$());};
 
 $._HttpRequestUploadEventsImpl$ = function(_ptr){return new $._HttpRequestUploadEventsImpl(_ptr);};
 
-$.Mouse_markMouseOver = function(stage,coordinate){$.requireArgumentNotNull(stage,'stage');var t1=!(coordinate==null);$.requireArgument(coordinate==null||coordinate.get$isValid()===true,'coordinate',null);var items=$.CTC25.get$1(stage);if(!(items==null)){$.forEach(items,new $.Mouse_markMouseOver_anon());$.CTC25.clear$1(stage);}if(t1){var hits=$.RetainedUtil_hitTest(stage,coordinate);$.CTC25.set$2(stage,hits);$.forEach(hits,new $.Mouse_markMouseOver_anon0());if($.gtB($.get$length(hits),0))$.CTC26.set$2($.index(hits,0),true);return hits;}return;};
+$.Mouse_markMouseOver = function(stage,coordinate){$.requireArgumentNotNull(stage,'stage');var t1=!(coordinate==null);$.requireArgument(coordinate==null||coordinate.get$isValid()===true,'coordinate',null);var items=$.get$Mouse__stageMouseCacheProperty().get$1(stage);if(!(items==null)){$.forEach(items,new $.Mouse_markMouseOver_anon());$.get$Mouse__stageMouseCacheProperty().clear$1(stage);}if(t1){var hits=$.RetainedUtil_hitTest(stage,coordinate);$.get$Mouse__stageMouseCacheProperty().set$2(stage,hits);$.forEach(hits,new $.Mouse_markMouseOver_anon0());if($.gtB($.get$length(hits),0))$.get$Mouse_isMouseDirectlyOverProperty().set$2($.index(hits,0),true);return hits;}return;};
 
 $.DualPivotQuicksort__doSort = function(a,left,right,compare){if($.leB($.sub(right,left),32))$.DualPivotQuicksort_insertionSort_(a,left,right,compare);else $.DualPivotQuicksort__dualPivotQuicksort(a,left,right,compare);};
 
@@ -3534,13 +3540,13 @@ $.PluralityView$ = function(node){var t1=new $.PluralityView(null,node,null);t1.
 
 $.checkNull = function(object){if(object==null)throw $.$$throw($.NullPointerException$(null,$.CTC10));return object;};
 
-$.DistanceElectionPlace$ = function(place,candidates,avgDistance,avgDistanceSquared,TCandidate){var t1=$.ListImplementation_List$from(candidates,$.getRuntimeTypeInfo(this).T);$.setRuntimeTypeInfo(t1,{ 'E': $.getRuntimeTypeInfo(this).T });t1=new $.DistanceElectionPlace(avgDistance,avgDistanceSquared,place,t1);$.setRuntimeTypeInfo(t1,{ 'TCandidate': TCandidate });t1.ElectionPlace$2(place,candidates);return t1;};
+$.DistanceElectionPlace$ = function(place,candidates,avgDistance,avgDistanceSquared){var t1=new $.DistanceElectionPlace(avgDistance,avgDistanceSquared,place,$.ListImplementation_List$from(candidates));t1.ElectionPlace$2(place,candidates);return t1;};
 
-$.CondorcetView$ = function(node){var t1=new $.CondorcetView($.EventHandle$('EventArgs'),null,null,null,node,null);t1.HtmlView$1(node);return t1;};
+$.CondorcetView$ = function(node){var t1=new $.CondorcetView($.EventHandle$(),null,null,null,node,null);t1.HtmlView$1(node);return t1;};
 
-$.DistanceElection$_internal = function(candidates,ballots,places,TVoter,TCandidate){var t1=new $.DistanceElection(candidates,ballots,places);$.setRuntimeTypeInfo(t1,{ 'TVoter': TVoter, 'TCandidate': TCandidate });return t1;};
+$.DistanceElection$_internal = function(candidates,ballots,places){return new $.DistanceElection(candidates,ballots,places);};
 
-$._MeasurementRequest$ = function(computeValue,completer,T){var t1=new $._MeasurementRequest(computeValue,completer,null,false);$.setRuntimeTypeInfo(t1,{ 'T': T });return t1;};
+$._MeasurementRequest$ = function(computeValue,completer){return new $._MeasurementRequest(computeValue,completer,null,false);};
 
 $.Collections__containsRef = function(c,ref){for(var t1=$.iterator(c);t1.hasNext$0()===true;){var t2=t1.next$0();if(t2==null?ref==null:t2===ref)return true;}return false;};
 
@@ -3568,9 +3574,9 @@ $._IDBOpenDBRequestEventsImpl$ = function(_ptr){return new $._IDBOpenDBRequestEv
 
 $.sqrt = function(value){return Math.sqrt($.checkNum(value));};
 
-$.checkGrowable = function(list,reason){if(!!(list.fixed$length))throw $.$$throw($.UnsupportedOperationException$(reason));};
+$.LocationData_LocationData$random = function(){var voters=$.ListImplementation_List(null);for(var i=0;i<20;++i)for(var t1=i*1.0526315789473684,j=0;j<20;++j)voters.push($.MapPlayer$($.Coordinate$(t1,j*1.0526315789473684),null));var coords=$.ListImplementation_List(null);var middle=$.Vector$(0.5,0.5);coords.push(middle);for(i=0;i<4;++i){var coord=$.Vector$($.rnd().nextDouble$0(),$.rnd().nextDouble$0());coords.push(coord);}var candidates=$.ListImplementation_List(null);$.$$(coords).select$1(new $.LocationData_LocationData$random_anon()).forEachWithIndex$1(new $.LocationData_LocationData$random_anon0(candidates));return $.LocationData$($.ReadOnlyCollection$wrap(voters),$.ReadOnlyCollection$wrap(candidates));};
 
-$.LocationData_LocationData$random = function(){var voters=$.ListImplementation_List(null,'MapPlayer');$.setRuntimeTypeInfo(voters,{ 'E': 'MapPlayer' });for(var i=0;i<20;++i)for(var t1=i*1.0526315789473684,j=0;j<20;++j)voters.push($.MapPlayer$($.Coordinate$(t1,j*1.0526315789473684),null));var coords=$.ListImplementation_List(null,'Vector');$.setRuntimeTypeInfo(coords,{ 'E': 'Vector' });var middle=$.Vector$(0.5,0.5);coords.push(middle);for(i=0;i<4;++i){var coord=$.Vector$($.rnd().nextDouble$0(),$.rnd().nextDouble$0());coords.push(coord);}var candidates=$.ListImplementation_List(null,'MapPlayer');$.setRuntimeTypeInfo(candidates,{ 'E': 'MapPlayer' });$.$$(coords).select$1(new $.LocationData_LocationData$random_anon()).forEachWithIndex$1(new $.LocationData_LocationData$random_anon0(candidates));return $.LocationData$($.ReadOnlyCollection$wrap(voters,'MapPlayer'),$.ReadOnlyCollection$wrap(candidates,'MapPlayer'));};
+$.checkGrowable = function(list,reason){if(!!(list.fixed$length))throw $.$$throw($.UnsupportedOperationException$(reason));};
 
 $._serializeMessage = function(message){if($._globalState().get$needSerialization()===true)return $._JsSerializer$().traverse$1(message);else return $._JsCopier$().traverse$1(message);};
 
@@ -3578,13 +3584,13 @@ $._IsolateNatives__consoleLog = function(msg){$globalThis.console.log(msg);};
 
 $.IndexOutOfRangeException$ = function(_value){return new $.IndexOutOfRangeException(_value);};
 
-$.KeyValuePair$ = function(key,value,K,V){var t1=new $.KeyValuePair(key,value);$.setRuntimeTypeInfo(t1,{ 'K': K, 'V': V });return t1;};
+$.KeyValuePair$ = function(key,value){return new $.KeyValuePair(key,value);};
 
 $._DocumentEventsImpl$ = function(_ptr){return new $._DocumentEventsImpl(_ptr);};
 
-$.CandidateManagerView$ = function(node){var t1=new $.CandidateManagerView($.EventHandle$('MapPlayer'),$.EventHandle$('EventArgs'),$.ReadOnlyCollection$empty('MapPlayer'),node,null);t1.HtmlView$1(node);return t1;};
+$.CandidateManagerView$ = function(node){var t1=new $.CandidateManagerView($.EventHandle$(),$.EventHandle$(),$.ReadOnlyCollection$empty(),node,null);t1.HtmlView$1(node);return t1;};
 
-$.Mouse_isMouseDirectlyOver = function(element){return $.CTC26.get$1(element);};
+$.Mouse_isMouseDirectlyOver = function(element){return $.get$Mouse_isMouseDirectlyOverProperty().get$1(element);};
 
 $._IDBVersionChangeRequestEventsImpl$ = function(_ptr){return new $._IDBVersionChangeRequestEventsImpl(_ptr);};
 
@@ -3598,15 +3604,15 @@ $._JsSerializer$ = function(){var t1=new $._JsSerializer(0,$._MessageTraverserVi
 
 $.CancelableEventArgs$ = function(){return new $.CancelableEventArgs(false);};
 
-$.LinkedHashMapImplementation$ = function(K,V){var t1=new $.LinkedHashMapImplementation(null,null);$.setRuntimeTypeInfo(t1,{ 'K': K, 'V': V });t1.LinkedHashMapImplementation$0();return t1;};
+$.LinkedHashMapImplementation$ = function(){var t1=new $.LinkedHashMapImplementation(null,null);t1.LinkedHashMapImplementation$0();return t1;};
 
-$.FutureImpl$ = function(T){var t1=new $.FutureImpl(false,null,null,null,false,[],[],[]);$.setRuntimeTypeInfo(t1,{ 'T': T });return t1;};
-
-$.toString = function(value){if(typeof value == "object" && value !== null)if($.isJsArray(value))return $.Collections_collectionToString(value);else return value.toString$0();if(value === 0 && (1 / value) < 0)return '-0.0';if(value==null)return 'null';if(typeof value == "function")return 'Closure';return String(value);};
+$.FutureImpl$ = function(){return new $.FutureImpl(false,null,null,null,false,[],[],[]);};
 
 $._DOMWindowCrossFrameImpl__createSafe = function(w){var t1=$.window();if(w==null?t1==null:w===t1)return w;else return $._DOMWindowCrossFrameImpl$(w);};
 
 $.HslColor_HslColor = function(h,s,l){$.requireArgument(!(h==null)&&$.isInfinite(h)!==true&&$.isNaN(h)!==true,'h',null);h=$.mod(h,360);$.requireArgument($.isInfinite(s)!==true&&$.isNaN(s)!==true,'s','must be a valid number');var t1=s>=0&&s<=1;$.requireArgument(t1,'s','must be >= 0 && <= 1 but was '+$.S(s));$.requireArgument($.isInfinite(l)!==true&&$.isNaN(l)!==true,'l','must be a valid number');t1=l>=0&&l<=1;$.requireArgument(t1,'l','must be >= 0 && <=1 but was '+$.S(l));return $.HslColor$_internal(h,s,l);};
+
+$.toString = function(value){if(typeof value == "object" && value !== null)if($.isJsArray(value))return $.Collections_collectionToString(value);else return value.toString$0();if(value === 0 && (1 / value) < 0)return '-0.0';if(value==null)return 'null';if(typeof value == "function")return 'Closure';return String(value);};
 
 $.defineProperty = function(obj,property,value){Object.defineProperty(obj, property,
       {value: value, enumerable: false, writable: true, configurable: true});};
@@ -3633,9 +3639,9 @@ $._Lists_getRange$bailout = function(state,a,start,length$,accumulator){if($.ltB
 
 $.DualPivotQuicksort__dualPivotQuicksort$bailout = function(state,env0,env1,env2,env3,env4,env5,env6,env7,env8,env9,env10,env11,env12,env13){switch(state){case 1:var a=env0;var left=env1;var right=env2;var compare=env3;break;case 2:a=env0;left=env1;compare=env2;less=env3;k=env4;index1=env5;index5=env6;el2=env7;pivots_are_equal=env8;right=env9;ak=env10;comp=env11;el4=env12;great=env13;break;}switch(state){case 0:case 1:state=0;var sixth=$.tdiv($.add($.sub(right,left),1),6);if(typeof sixth!=='number')throw $.iae(sixth);var index1=left+sixth;var index5=$.sub(right,sixth);if(typeof right!=='number')throw $.iae(right);var index3=$.tdiv(left+right,2);var index2=index3-sixth;var index4=index3+sixth;var el1=$.index(a,index1);var el2=$.index(a,index2);var el3=$.index(a,index3);var el4=$.index(a,index4);var el5=$.index(a,index5);if($.gtB(compare.call$2(el1,el2),0)){var t0=el1;el1=el2;el2=t0;}if($.gtB(compare.call$2(el4,el5),0)){t0=el5;el5=el4;el4=t0;}if($.gtB(compare.call$2(el1,el3),0)){t0=el3;el3=el1;el1=t0;}if($.gtB(compare.call$2(el2,el3),0)){t0=el3;el3=el2;el2=t0;}if($.gtB(compare.call$2(el1,el4),0)){t0=el1;el1=el4;el4=t0;}if($.gtB(compare.call$2(el3,el4),0)){t0=el3;el3=el4;el4=t0;}if($.gtB(compare.call$2(el2,el5),0)){t0=el5;el5=el2;el2=t0;}if($.gtB(compare.call$2(el2,el3),0)){t0=el3;el3=el2;el2=t0;}if($.gtB(compare.call$2(el4,el5),0)){t0=el5;el5=el4;el4=t0;}$.indexSet(a,index1,el1);$.indexSet(a,index3,el3);$.indexSet(a,index5,el5);$.indexSet(a,index2,$.index(a,left));$.indexSet(a,index4,$.index(a,right));var less=left+1;var great=right-1;var pivots_are_equal=$.eqB(compare.call$2(el2,el4),0);case 2:if(state===2||state===0&&pivots_are_equal)switch(state){case 0:var k=less;case 2:L0:while(true)switch(state){case 0:if(!(k<=great))break L0;case 2:c$0:{switch(state){case 0:var ak=$.index(a,k);var comp=compare.call$2(ak,el2);case 2:state=0;if($.eqB(comp,0))break c$0;if($.ltB(comp,0)){if(!(k===less)){$.indexSet(a,k,$.index(a,less));$.indexSet(a,less,ak);}++less;}else for(var less0=less+1;true;){comp=compare.call$2($.index(a,great),el2);if($.gtB(comp,0)){--great;continue;}else if($.ltB(comp,0)){$.indexSet(a,k,$.index(a,less));$.indexSet(a,less,$.index(a,great));var great0=great-1;$.indexSet(a,great,ak);great=great0;less=less0;break;}else{$.indexSet(a,k,$.index(a,great));great0=great-1;$.indexSet(a,great,ak);great=great0;break;}}}}++k;}}else for(k=less;k<=great;++k){ak=$.index(a,k);if($.ltB(compare.call$2(ak,el2),0)){if(!(k===less)){$.indexSet(a,k,$.index(a,less));$.indexSet(a,less,ak);}++less;}else if($.gtB(compare.call$2(ak,el4),0))for(less0=less+1;true;)if($.gtB(compare.call$2($.index(a,great),el4),0)){--great;if(great<k)break;continue;}else{if($.ltB(compare.call$2($.index(a,great),el2),0)){$.indexSet(a,k,$.index(a,less));$.indexSet(a,less,$.index(a,great));great0=great-1;$.indexSet(a,great,ak);great=great0;less=less0;}else{$.indexSet(a,k,$.index(a,great));great0=great-1;$.indexSet(a,great,ak);great=great0;}break;}}var t1=less-1;$.indexSet(a,left,$.index(a,t1));$.indexSet(a,t1,el2);$.indexSet(a,right,$.index(a,great+1));$.indexSet(a,great+1,el4);$.DualPivotQuicksort__doSort(a,left,less-2,compare);$.DualPivotQuicksort__doSort(a,great+2,right,compare);if(pivots_are_equal)return;if(less<index1&&$.gtB(great,index5)){for(;$.eqB(compare.call$2($.index(a,less),el2),0);)++less;for(;$.eqB(compare.call$2($.index(a,great),el4),0);)--great;for(k=less;k<=great;++k){ak=$.index(a,k);if($.eqB(compare.call$2(ak,el2),0)){if(!(k===less)){$.indexSet(a,k,$.index(a,less));$.indexSet(a,less,ak);}++less;}else if($.eqB(compare.call$2(ak,el4),0))for(less0=less+1;true;)if($.eqB(compare.call$2($.index(a,great),el4),0)){--great;if(great<k)break;continue;}else{if($.ltB(compare.call$2($.index(a,great),el2),0)){$.indexSet(a,k,$.index(a,less));$.indexSet(a,less,$.index(a,great));great0=great-1;$.indexSet(a,great,ak);great=great0;less=less0;}else{$.indexSet(a,k,$.index(a,great));great0=great-1;$.indexSet(a,great,ak);great=great0;}break;}}$.DualPivotQuicksort__doSort(a,less,great,compare);}else $.DualPivotQuicksort__doSort(a,less,great,compare);}};
 
-$.RetainedUtil__hitTest$bailout = function(state,env0,env1,env2,env3){switch(state){case 1:var element=env0;point=env1;hits=env2;length$=env3;break;}switch(state){case 0:var point=$.RetainedUtil_transformPointGlobalToLocal(element,point);var bounds=$.Box$(0,0,element.get$width(),element.get$height());var hits=$.ListImplementation_List(null,'PElement');$.setRuntimeTypeInfo(hits,{ 'E': 'PElement' });case 1:if(state===1||state===0&&bounds.contains$1(point)===true)switch(state){case 0:var length$=element.get$visualChildCount();case 1:state=0;for(var i=0;$.ltB(i,length$);++i){hits=$.RetainedUtil__hitTest(element.getVisualChild$1($.sub($.sub(length$,1),i)),point);if(hits.length>0)break;}hits.push(element);return hits;}else return [];}};
+$.RetainedUtil__hitTest$bailout = function(state,env0,env1,env2,env3){switch(state){case 1:var element=env0;length$=env1;point=env2;hits=env3;break;}switch(state){case 0:var point=$.RetainedUtil_transformPointGlobalToLocal(element,point);var bounds=$.Box$(0,0,element.get$width(),element.get$height());var hits=$.ListImplementation_List(null);case 1:if(state===1||state===0&&bounds.contains$1(point)===true)switch(state){case 0:var length$=element.get$visualChildCount();case 1:state=0;for(var i=0;$.ltB(i,length$);++i){hits=$.RetainedUtil__hitTest(element.getVisualChild$1($.sub($.sub(length$,1),i)),point);if(hits.length>0)break;}hits.push(element);return hits;}else return [];}};
 
-$.Futures_wait$bailout = function(state,futures,t1){if($.isEmpty(futures)===true)return $.FutureImpl_FutureImpl$immediate($.CTC10,'List');var completer=$.CompleterImpl$('List');var result=completer.get$future();t1.remaining_1=$.get$length(futures);var values=$.ListImplementation_List($.get$length(futures));for(var i=0;$.ltB(i,$.get$length(futures));++i){var future=$.index(futures,i);future.then$1(new $.Futures_wait_anon(completer,i,t1,result,values));future.handleException$1(new $.Futures_wait_anon0(future,completer,result));}return result;};
+$.Futures_wait$bailout = function(state,futures,t1){if($.isEmpty(futures)===true)return $.FutureImpl_FutureImpl$immediate($.CTC10);var completer=$.CompleterImpl$();var result=completer.get$future();t1.remaining_1=$.get$length(futures);var values=$.ListImplementation_List($.get$length(futures));for(var i=0;$.ltB(i,$.get$length(futures));++i){var future=$.index(futures,i);future.then$1(new $.Futures_wait_anon(completer,i,t1,result,values));future.handleException$1(new $.Futures_wait_anon0(future,completer,result));}return result;};
 
 $.Arrays_copy$bailout = function(state,src,srcStart,dst,dstStart,count){if(srcStart<dstStart)for(var i=srcStart+count-1,j=dstStart+count-1;i>=srcStart;--i,--j)$.indexSet(dst,j,$.index(src,i));else for(var t1=srcStart+count,i=srcStart,j=dstStart;i<t1;++i,++j)$.indexSet(dst,j,$.index(src,i));};
 
@@ -3684,85 +3690,82 @@ Isolate.makeConstantList = function(list) {
 };
 $.CTC10 = Isolate.makeConstantList([]);
 $.CTC11 = new Isolate.$isolateProperties.NoMoreElementsException();
-$.CTC43 = 'structured clone of ArrayBufferView';
+$.CTC41 = 'structured clone of ArrayBufferView';
 $.CTC8 = new Isolate.$isolateProperties.NotImplementedException('structured clone of ArrayBufferView');
-$.CTC44 = false;
-$.CTC45 = 'IsMouseDirectlyOver';
-$.CTC26 = new Isolate.$isolateProperties.Property(false, 'IsMouseDirectlyOver');
-$.CTC46 = null;
-$.CTC38 = new Isolate.$isolateProperties.NotImplementedException(null);
-$.CTC47 = '^#[_a-zA-Z]\\w*$';
+$.CTC31 = new Isolate.$isolateProperties.ConstantMap(0, {}, Isolate.$isolateProperties.CTC10);
+$.CTC42 = 'The input sequence contains more than one element.';
+$.CTC29 = new Isolate.$isolateProperties.InvalidOperationException('The input sequence contains more than one element.');
+$.CTC43 = false;
+$.CTC44 = '^#[_a-zA-Z]\\w*$';
 $.CTC = new Isolate.$isolateProperties.JSSyntaxRegExp(false, false, '^#[_a-zA-Z]\\w*$');
-$.CTC48 = 'The input sequence contains more than one element.';
-$.CTC31 = new Isolate.$isolateProperties.InvalidOperationException('The input sequence contains more than one element.');
-$.CTC49 = 'structured clone of ArrayBuffer';
+$.CTC45 = 'structured clone of ArrayBuffer';
 $.CTC7 = new Isolate.$isolateProperties.NotImplementedException('structured clone of ArrayBuffer');
-$.CTC50 = 'must be implemented by subclass';
+$.CTC46 = 'must be implemented by subclass';
 $.CTC19 = new Isolate.$isolateProperties.NotImplementedException('must be implemented by subclass');
 $.CTC13 = new Isolate.$isolateProperties._DeletedKeySentinel();
-$.CTC51 = 'Cannot sort immutable List.';
+$.CTC47 = 'Cannot sort immutable List.';
 $.CTC22 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot sort immutable List.');
-$.CTC52 = 'frozen class set cannot be modified';
-$.CTC35 = new Isolate.$isolateProperties.UnsupportedOperationException('frozen class set cannot be modified');
-$.CTC33 = new Isolate.$isolateProperties.ConstantMap(0, {}, Isolate.$isolateProperties.CTC10);
-$.CTC53 = 'structured clone of Date';
+$.CTC48 = null;
+$.CTC36 = new Isolate.$isolateProperties.NotImplementedException(null);
+$.CTC49 = 'frozen class set cannot be modified';
+$.CTC33 = new Isolate.$isolateProperties.UnsupportedOperationException('frozen class set cannot be modified');
+$.CTC50 = 'structured clone of Date';
 $.CTC2 = new Isolate.$isolateProperties.NotImplementedException('structured clone of Date');
-$.CTC54 = 'TODO(jacobr): should we impl?';
-$.CTC37 = new Isolate.$isolateProperties.UnsupportedOperationException('TODO(jacobr): should we impl?');
-$.CTC42 = new Isolate.$isolateProperties.Object();
-$.CTC55 = 'Cannot add to immutable List.';
+$.CTC51 = 'TODO(jacobr): should we impl?';
+$.CTC35 = new Isolate.$isolateProperties.UnsupportedOperationException('TODO(jacobr): should we impl?');
+$.CTC40 = new Isolate.$isolateProperties.Object();
+$.CTC52 = 'Cannot add to immutable List.';
 $.CTC1 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot add to immutable List.');
-$.CTC56 = 'IDBKey containing Date';
+$.CTC53 = 'IDBKey containing Date';
 $.CTC15 = new Isolate.$isolateProperties.NotImplementedException('IDBKey containing Date');
-$.CTC57 = 'IsMouseOver';
-$.CTC28 = new Isolate.$isolateProperties.Property(false, 'IsMouseOver');
-$.CTC58 = 'Cannot insertRange on immutable List.';
+$.CTC54 = '';
+$.CTC34 = new Isolate.$isolateProperties.UnsupportedOperationException('');
+$.CTC55 = 'Cannot insertRange on immutable List.';
 $.CTC20 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot insertRange on immutable List.');
-$.CTC24 = new Isolate.$isolateProperties.EventArgs();
-$.CTC59 = 'Cannot removeRange on immutable List.';
+$.CTC56 = 'Incorrect number or type of arguments';
+$.CTC26 = new Isolate.$isolateProperties.ExceptionImplementation('Incorrect number or type of arguments');
+$.CTC57 = 'Cannot removeRange on immutable List.';
 $.CTC17 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot removeRange on immutable List.');
-$.CTC60 = 'structured clone of Blob';
+$.CTC58 = 'structured clone of Blob';
 $.CTC5 = new Isolate.$isolateProperties.NotImplementedException('structured clone of Blob');
-$.CTC61 = 0;
-$.CTC62 = new Isolate.$isolateProperties.Coordinate(0, 0);
-$.CTC63 = 'offsetX is only supported on elements';
-$.CTC29 = new Isolate.$isolateProperties.UnsupportedOperationException('offsetX is only supported on elements');
-$.CTC64 = 20;
-$.CTC30 = new Isolate.$isolateProperties.Box(0, 0, 20, 20);
-$.CTC65 = 'structured clone of RegExp';
+$.CTC59 = 'Invalid list length';
+$.CTC37 = new Isolate.$isolateProperties.IllegalArgumentException('Invalid list length');
+$.CTC24 = new Isolate.$isolateProperties.EventArgs();
+$.CTC60 = 0;
+$.CTC61 = new Isolate.$isolateProperties.Coordinate(0, 0);
+$.CTC62 = 'structured clone of RegExp';
 $.CTC3 = new Isolate.$isolateProperties.NotImplementedException('structured clone of RegExp');
-$.CTC23 = new Isolate.$isolateProperties._Random();
-$.CTC66 = 'The input sequence is empty.';
-$.CTC21 = new Isolate.$isolateProperties.InvalidOperationException('The input sequence is empty.');
-$.CTC67 = 'structured clone of FileList';
+$.CTC63 = 'offsetX is only supported on elements';
+$.CTC27 = new Isolate.$isolateProperties.UnsupportedOperationException('offsetX is only supported on elements');
+$.CTC64 = 'structured clone of FileList';
 $.CTC6 = new Isolate.$isolateProperties.NotImplementedException('structured clone of FileList');
-$.CTC68 = '';
-$.CTC36 = new Isolate.$isolateProperties.UnsupportedOperationException('');
-$.CTC69 = new Isolate.$isolateProperties._SimpleClientRect(0, 0, 0, 0);
-$.CTC32 = new Isolate.$isolateProperties.EmptyElementRect(Isolate.$isolateProperties.CTC69, Isolate.$isolateProperties.CTC69, Isolate.$isolateProperties.CTC69, Isolate.$isolateProperties.CTC69, Isolate.$isolateProperties.CTC10);
-$.CTC70 = '^\\[name=["\'][^\'"]+[\'"]\\]$';
-$.CTC40 = new Isolate.$isolateProperties.JSSyntaxRegExp(false, false, '^\\[name=["\'][^\'"]+[\'"]\\]$');
-$.CTC27 = new Isolate.$isolateProperties._UndefinedValue();
-$.CTC34 = new Isolate.$isolateProperties.IllegalAccessException();
-$.CTC71 = '_stageMouseCacheProperty';
-$.CTC25 = new Isolate.$isolateProperties.Property(null, '_stageMouseCacheProperty');
-$.CTC72 = 'Invalid list length';
-$.CTC39 = new Isolate.$isolateProperties.IllegalArgumentException('Invalid list length');
-$.CTC73 = '^[*a-zA-Z0-9]+$';
-$.CTC41 = new Isolate.$isolateProperties.JSSyntaxRegExp(false, false, '^[*a-zA-Z0-9]+$');
-$.CTC74 = 'structured clone of File';
+$.CTC65 = 'The input sequence is empty.';
+$.CTC21 = new Isolate.$isolateProperties.InvalidOperationException('The input sequence is empty.');
+$.CTC66 = 20;
+$.CTC28 = new Isolate.$isolateProperties.Box(0, 0, 20, 20);
+$.CTC23 = new Isolate.$isolateProperties._Random();
+$.CTC67 = new Isolate.$isolateProperties._SimpleClientRect(0, 0, 0, 0);
+$.CTC30 = new Isolate.$isolateProperties.EmptyElementRect(Isolate.$isolateProperties.CTC67, Isolate.$isolateProperties.CTC67, Isolate.$isolateProperties.CTC67, Isolate.$isolateProperties.CTC67, Isolate.$isolateProperties.CTC10);
+$.CTC68 = '^\\[name=["\'][^\'"]+[\'"]\\]$';
+$.CTC38 = new Isolate.$isolateProperties.JSSyntaxRegExp(false, false, '^\\[name=["\'][^\'"]+[\'"]\\]$');
+$.CTC25 = new Isolate.$isolateProperties._UndefinedValue();
+$.CTC32 = new Isolate.$isolateProperties.IllegalAccessException();
+$.CTC69 = '^[*a-zA-Z0-9]+$';
+$.CTC39 = new Isolate.$isolateProperties.JSSyntaxRegExp(false, false, '^[*a-zA-Z0-9]+$');
+$.CTC70 = 'structured clone of File';
 $.CTC4 = new Isolate.$isolateProperties.NotImplementedException('structured clone of File');
-$.CTC75 = 'structured clone of other type';
+$.CTC71 = 'structured clone of other type';
 $.CTC9 = new Isolate.$isolateProperties.NotImplementedException('structured clone of other type');
-$.CTC76 = '^(?:([^:/?#.]+):)?(?://(?:([^/?#]*)@)?([\\w\\d\\-\\u0100-\\uffff.%]*)(?::([0-9]+))?)?([^?#]+)?(?:\\?([^#]*))?(?:#(.*))?$';
+$.CTC72 = '^(?:([^:/?#.]+):)?(?://(?:([^/?#]*)@)?([\\w\\d\\-\\u0100-\\uffff.%]*)(?::([0-9]+))?)?([^?#]+)?(?:\\?([^#]*))?(?:#(.*))?$';
 $.CTC16 = new Isolate.$isolateProperties.JSSyntaxRegExp(false, false, '^(?:([^:/?#.]+):)?(?://(?:([^/?#]*)@)?([\\w\\d\\-\\u0100-\\uffff.%]*)(?::([0-9]+))?)?([^?#]+)?(?:\\?([^#]*))?(?:#(.*))?$');
-$.CTC77 = 'Mutation operations are not supported';
+$.CTC73 = 'Mutation operations are not supported';
 $.CTC18 = new Isolate.$isolateProperties.UnsupportedOperationException('Mutation operations are not supported');
 $.CTC14 = new Isolate.$isolateProperties.EmptyQueueException();
 $.CTC0 = new Isolate.$isolateProperties.NullPointerException(null, Isolate.$isolateProperties.CTC10);
-$.CTC78 = 'Cannot removeLast on immutable List.';
+$.CTC74 = 'Cannot removeLast on immutable List.';
 $.CTC12 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot removeLast on immutable List.');
 $.Uri__COMPONENT_PATH = 5;
+$.Property_Undefined = Isolate.$isolateProperties.CTC25;
 $.HashMapImplementation__DELETED_KEY = Isolate.$isolateProperties.CTC13;
 $._BufferingSendPort__idCount = 0;
 $.Uri__COMPONENT_PORT = 4;
@@ -3790,6 +3793,9 @@ $._cachedBrowserPrefix = null;
 $.Primitives_DOLLAR_CHAR_VALUE = 36;
 $.LocationData__span = 20;
 $._firstMeasurementRequest = true;
+Isolate.$lazy($, 'isMouseDirectlyOverProperty', 'Mouse_isMouseDirectlyOverProperty', 'get$Mouse_isMouseDirectlyOverProperty', function(){return $.Property$('IsMouseDirectlyOver',false);});
+Isolate.$lazy($, 'isMouseOverProperty', 'Mouse_isMouseOverProperty', 'get$Mouse_isMouseOverProperty', function(){return $.Property$('IsMouseOver',false);});
+Isolate.$lazy($, '_stageMouseCacheProperty', 'Mouse__stageMouseCacheProperty', 'get$Mouse__stageMouseCacheProperty', function(){return $.Property$('_stageMouseCacheProperty',null);});
 var $ = null;
 Isolate.$finishClasses($$);
 $$ = {};
@@ -3827,16 +3833,16 @@ $.$defineNativeClass = function(cls, fields, methods) {
 })({
  is$JavaScriptIndexingBehavior: function() { return false; },
  is$ArrayBufferView: function() { return false; },
- is$_BlobImpl: function() { return false; },
  is$_FileListImpl: function() { return false; },
  is$_ImageDataImpl: function() { return false; },
  is$_FileImpl: function() { return false; },
  is$_ArrayBufferViewImpl: function() { return false; },
- toString$0: function() { return $.toStringForNativeObject(this); },
  is$IDBKeyRange: function() { return false; },
- is$Blob: function() { return false; },
- is$File: function() { return false; },
+ toString$0: function() { return $.toStringForNativeObject(this); },
+ is$_BlobImpl: function() { return false; },
  is$ArrayBuffer: function() { return false; },
+ is$File: function() { return false; },
+ is$Blob: function() { return false; },
  is$Element: function() { return false; },
  is$List: function() { return false; },
  is$Map: function() { return false; },
@@ -3905,6 +3911,7 @@ $.$defineNativeClass('AudioParam', ["name?", "value="], {
 
 $.$defineNativeClass('HTMLBRElement', [], {
  clear$0: function() { return this.clear.call$0(); },
+ clear$1: function(arg0) { return this.clear.call$1(arg0); },
  is$Element: function() { return true; }
 });
 
@@ -3957,10 +3964,16 @@ $.$defineNativeClass('CSSRuleList', ["length?"], {
 
 $.$defineNativeClass('CSSStyleDeclaration', ["length?"], {
  getPropertyValue$1: function(propertyName){return this.getPropertyValue(propertyName);},
- setProperty$3: function(propertyName,value,priority){return this.setProperty(propertyName,value,priority);},
+ setProperty$3: function(propertyName,value,priority){    this.setProperty(propertyName, value, priority);
+    // Bug #2772, IE9 requires a poke to actually apply the value.
+    if (this.setAttribute) {
+      this.setAttribute(propertyName, value);
+    }
+  },
  set$background: function(value){this.setProperty$3('background',value,'');},
  get$clear: function(){return this.getPropertyValue$1('clear');},
  clear$0: function() { return this.get$clear().call$0(); },
+ clear$1: function(arg0) { return this.get$clear().call$1(arg0); },
  get$clip: function(){return this.getPropertyValue$1('clip');},
  clip$0: function() { return this.get$clip().call$0(); },
  set$color: function(value){this.setProperty$3('color',value,'');},
@@ -4073,7 +4086,7 @@ $.$defineNativeClass('DOMSettableTokenList', ["value="], {
 $.$defineNativeClass('DOMStringList', ["length?"], {
  operator$index$1: function(index){return this[index];},
  operator$indexSet$2: function(index,value){throw $.$$throw($.UnsupportedOperationException$('Cannot assign element of immutable List.'));},
- iterator$0: function(){return $._FixedSizeListIterator$(this,'String');},
+ iterator$0: function(){return $._FixedSizeListIterator$(this);},
  add$1: function(value){throw $.$$throw($.CTC1);},
  addLast$1: function(value){throw $.$$throw($.CTC1);},
  addAll$1: function(collection){throw $.$$throw($.CTC1);},
@@ -4150,8 +4163,8 @@ $.$defineNativeClass('HTMLDocument', [], {
  $dom_querySelector$1: function(selectors){return this.querySelector(selectors);},
  $dom_querySelectorAll$1: function(selectors){return this.querySelectorAll(selectors);},
  query$1: function(selectors){if($.CTC.hasMatch$1(selectors)===true)return this.$dom_getElementById$1($.substring$1(selectors,1));return this.$dom_querySelector$1(selectors);},
- queryAll$1: function(selectors){if($.CTC40.hasMatch$1(selectors)===true){var mutableMatches=this.$dom_getElementsByName$1($.substring$2(selectors,7,selectors.length-2));if(typeof mutableMatches!=='string'&&(typeof mutableMatches!=='object'||mutableMatches===null||mutableMatches.constructor!==Array&&!mutableMatches.is$JavaScriptIndexingBehavior()))return this.queryAll$1$bailout(1,mutableMatches);var len=mutableMatches.length;var copyOfMatches=$.ListImplementation_List(len,'Element');$.setRuntimeTypeInfo(copyOfMatches,{ 'E': 'Element' });for(var i=0;i<len;++i){if(i<0||i>=mutableMatches.length)throw $.ioore(i);var t1=mutableMatches[i];if(i<0||i>=copyOfMatches.length)throw $.ioore(i);copyOfMatches[i]=t1;}return $._FrozenElementList$_wrap(copyOfMatches);}else if($.CTC41.hasMatch$1(selectors)===true){mutableMatches=this.$dom_getElementsByTagName$1(selectors);if(typeof mutableMatches!=='string'&&(typeof mutableMatches!=='object'||mutableMatches===null||mutableMatches.constructor!==Array&&!mutableMatches.is$JavaScriptIndexingBehavior()))return this.queryAll$1$bailout(2,mutableMatches);len=mutableMatches.length;copyOfMatches=$.ListImplementation_List(len,'Element');$.setRuntimeTypeInfo(copyOfMatches,{ 'E': 'Element' });for(i=0;i<len;++i){if(i<0||i>=mutableMatches.length)throw $.ioore(i);t1=mutableMatches[i];if(i<0||i>=copyOfMatches.length)throw $.ioore(i);copyOfMatches[i]=t1;}return $._FrozenElementList$_wrap(copyOfMatches);}else return $._FrozenElementList$_wrap(this.$dom_querySelectorAll$1(selectors));},
- queryAll$1$bailout: function(state,env0){switch(state){case 1:mutableMatches=env0;break;case 2:mutableMatches=env0;break;}switch(state){case 0:default:if(state===1||state===0&&$.CTC40.hasMatch$1(selectors)===true)switch(state){case 0:var mutableMatches=this.$dom_getElementsByName$1($.substring$2(selectors,7,selectors.length-2));case 1:state=0;var len=$.get$length(mutableMatches);var copyOfMatches=$.ListImplementation_List(len,'Element');$.setRuntimeTypeInfo(copyOfMatches,{ 'E': 'Element' });for(var i=0;$.ltB(i,len);++i){var t1=$.index(mutableMatches,i);if(i<0||i>=copyOfMatches.length)throw $.ioore(i);copyOfMatches[i]=t1;}return $._FrozenElementList$_wrap(copyOfMatches);}else switch(state){case 0:case 2:if(state===2||state===0&&$.CTC41.hasMatch$1(selectors)===true)switch(state){case 0:mutableMatches=this.$dom_getElementsByTagName$1(selectors);case 2:state=0;len=$.get$length(mutableMatches);copyOfMatches=$.ListImplementation_List(len,'Element');$.setRuntimeTypeInfo(copyOfMatches,{ 'E': 'Element' });for(i=0;$.ltB(i,len);++i){t1=$.index(mutableMatches,i);if(i<0||i>=copyOfMatches.length)throw $.ioore(i);copyOfMatches[i]=t1;}return $._FrozenElementList$_wrap(copyOfMatches);}else return $._FrozenElementList$_wrap(this.$dom_querySelectorAll$1(selectors));}}},
+ queryAll$1: function(selectors){if($.CTC38.hasMatch$1(selectors)===true){var mutableMatches=this.$dom_getElementsByName$1($.substring$2(selectors,7,selectors.length-2));if(typeof mutableMatches!=='string'&&(typeof mutableMatches!=='object'||mutableMatches===null||mutableMatches.constructor!==Array&&!mutableMatches.is$JavaScriptIndexingBehavior()))return this.queryAll$1$bailout(1,mutableMatches);var len=mutableMatches.length;var copyOfMatches=$.ListImplementation_List(len);for(var i=0;i<len;++i){if(i<0||i>=mutableMatches.length)throw $.ioore(i);var t1=mutableMatches[i];if(i<0||i>=copyOfMatches.length)throw $.ioore(i);copyOfMatches[i]=t1;}return $._FrozenElementList$_wrap(copyOfMatches);}else if($.CTC39.hasMatch$1(selectors)===true){mutableMatches=this.$dom_getElementsByTagName$1(selectors);if(typeof mutableMatches!=='string'&&(typeof mutableMatches!=='object'||mutableMatches===null||mutableMatches.constructor!==Array&&!mutableMatches.is$JavaScriptIndexingBehavior()))return this.queryAll$1$bailout(2,mutableMatches);len=mutableMatches.length;copyOfMatches=$.ListImplementation_List(len);for(i=0;i<len;++i){if(i<0||i>=mutableMatches.length)throw $.ioore(i);t1=mutableMatches[i];if(i<0||i>=copyOfMatches.length)throw $.ioore(i);copyOfMatches[i]=t1;}return $._FrozenElementList$_wrap(copyOfMatches);}else return $._FrozenElementList$_wrap(this.$dom_querySelectorAll$1(selectors));},
+ queryAll$1$bailout: function(state,env0){switch(state){case 1:mutableMatches=env0;break;case 2:mutableMatches=env0;break;}switch(state){case 0:default:if(state===1||state===0&&$.CTC38.hasMatch$1(selectors)===true)switch(state){case 0:var mutableMatches=this.$dom_getElementsByName$1($.substring$2(selectors,7,selectors.length-2));case 1:state=0;var len=$.get$length(mutableMatches);var copyOfMatches=$.ListImplementation_List(len);for(var i=0;$.ltB(i,len);++i){var t1=$.index(mutableMatches,i);if(i<0||i>=copyOfMatches.length)throw $.ioore(i);copyOfMatches[i]=t1;}return $._FrozenElementList$_wrap(copyOfMatches);}else switch(state){case 0:case 2:if(state===2||state===0&&$.CTC39.hasMatch$1(selectors)===true)switch(state){case 0:mutableMatches=this.$dom_getElementsByTagName$1(selectors);case 2:state=0;len=$.get$length(mutableMatches);copyOfMatches=$.ListImplementation_List(len);for(i=0;$.ltB(i,len);++i){t1=$.index(mutableMatches,i);if(i<0||i>=copyOfMatches.length)throw $.ioore(i);copyOfMatches[i]=t1;}return $._FrozenElementList$_wrap(copyOfMatches);}else return $._FrozenElementList$_wrap(this.$dom_querySelectorAll$1(selectors));}}},
  is$Element: function() { return true; }
 });
 
@@ -4164,15 +4177,15 @@ $.$defineNativeClass('DocumentFragment', [], {
     return Object.prototype.set$innerHTML.call(this, value);
   }
 },
- get$rect: function(){return $._createMeasurementFuture(new $._DocumentFragmentImpl_rect_anon(),$.CompleterImpl$('ElementRect'));},
+ get$rect: function(){return $._createMeasurementFuture(new $._DocumentFragmentImpl_rect_anon(),$.CompleterImpl$());},
  rect$4: function(arg0, arg1, arg2, arg3) { return this.get$rect().call$4(arg0, arg1, arg2, arg3); },
  get$translate: function(){return false;},
  translate$2: function(arg0, arg1) { return this.get$translate().call$2(arg0, arg1); },
  get$id: function(){return '';},
  get$parent: function(){return;},
- get$attributes: function(){return $.CTC33;},
+ get$attributes: function(){return $.CTC31;},
  get$classes: function(){return $._FrozenCSSClassSet$();},
- get$dataAttributes: function(){return $.CTC33;},
+ get$dataAttributes: function(){return $.CTC31;},
  get$style: function(){return $._ElementFactoryProvider_Element$tag('div').get$style();},
  blur$0: function(){},
  get$blur: function() { return new $.BoundClosure(this, 'blur$0'); },
@@ -4209,7 +4222,7 @@ $.$defineNativeClass('Element', ["hidden!", "id=", "innerHTML!", "style?"], {
   }
 },
  get$dataAttributes: function(){return $._DataAttributeMap$(this.get$attributes());},
- get$rect: function(){return $._createMeasurementFuture(new $._ElementImpl_rect_anon(this),$.CompleterImpl$('ElementRect'));},
+ get$rect: function(){return $._createMeasurementFuture(new $._ElementImpl_rect_anon(this),$.CompleterImpl$());},
  rect$4: function(arg0, arg1, arg2, arg3) { return this.get$rect().call$4(arg0, arg1, arg2, arg3); },
  get$on: function(){  if (Object.getPrototypeOf(this).hasOwnProperty('get$on')) {
   {return $._ElementEventsImpl$(this);}  } else {
@@ -4329,7 +4342,7 @@ $.$defineNativeClass('FileException', ["message?", "name?"], {
 $.$defineNativeClass('FileList', ["length?"], {
  operator$index$1: function(index){return this[index];},
  operator$indexSet$2: function(index,value){throw $.$$throw($.UnsupportedOperationException$('Cannot assign element of immutable List.'));},
- iterator$0: function(){return $._FixedSizeListIterator$(this,'File');},
+ iterator$0: function(){return $._FixedSizeListIterator$(this);},
  add$1: function(value){throw $.$$throw($.CTC1);},
  addLast$1: function(value){throw $.$$throw($.CTC1);},
  addAll$1: function(collection){throw $.$$throw($.CTC1);},
@@ -4375,7 +4388,7 @@ $.$defineNativeClass('FileWriterSync', ["length?"], {
 $.$defineNativeClass('Float32Array', ["length?"], {
  operator$index$1: function(index){return this[index];},
  operator$indexSet$2: function(index,value){this[index] = value},
- iterator$0: function(){return $._FixedSizeListIterator$(this,'num');},
+ iterator$0: function(){return $._FixedSizeListIterator$(this);},
  add$1: function(value){throw $.$$throw($.CTC1);},
  addLast$1: function(value){throw $.$$throw($.CTC1);},
  addAll$1: function(collection){throw $.$$throw($.CTC1);},
@@ -4405,7 +4418,7 @@ $.$defineNativeClass('Float32Array', ["length?"], {
 $.$defineNativeClass('Float64Array', ["length?"], {
  operator$index$1: function(index){return this[index];},
  operator$indexSet$2: function(index,value){this[index] = value},
- iterator$0: function(){return $._FixedSizeListIterator$(this,'num');},
+ iterator$0: function(){return $._FixedSizeListIterator$(this);},
  add$1: function(value){throw $.$$throw($.CTC1);},
  addLast$1: function(value){throw $.$$throw($.CTC1);},
  addAll$1: function(collection){throw $.$$throw($.CTC1);},
@@ -4466,7 +4479,7 @@ $.$defineNativeClass('HTMLAllCollection', ["length?"], {
 $.$defineNativeClass('HTMLCollection', ["length?"], {
  operator$index$1: function(index){return this[index];},
  operator$indexSet$2: function(index,value){throw $.$$throw($.UnsupportedOperationException$('Cannot assign element of immutable List.'));},
- iterator$0: function(){return $._FixedSizeListIterator$(this,'Node');},
+ iterator$0: function(){return $._FixedSizeListIterator$(this);},
  add$1: function(value){throw $.$$throw($.CTC1);},
  addLast$1: function(value){throw $.$$throw($.CTC1);},
  addAll$1: function(collection){throw $.$$throw($.CTC1);},
@@ -4554,6 +4567,9 @@ $.$defineNativeClass('IDBDatabaseException', ["message?", "name?"], {
 });
 
 $.$defineNativeClass('IDBIndex', ["name?"], {
+ get$1: function(key){var t1=$===key;if(t1)key=null;t1=!t1;if(typeof key==='object'&&key!==null&&key.is$IDBKeyRange()||key==null)return this._get_1$1(key);if(t1)return this._get_2$1(key);throw $.$$throw($.CTC26);},
+ _get_1$1: function(key){return this.get(key);},
+ _get_2$1: function(key){return this.get(key);}
 });
 
 $.$defineNativeClass('IDBKeyRange', [], {
@@ -4630,7 +4646,7 @@ $.$defineNativeClass('HTMLInputElement', ["disabled!", "height=", "name?", "valu
 $.$defineNativeClass('Int16Array', ["length?"], {
  operator$index$1: function(index){return this[index];},
  operator$indexSet$2: function(index,value){this[index] = value},
- iterator$0: function(){return $._FixedSizeListIterator$(this,'int');},
+ iterator$0: function(){return $._FixedSizeListIterator$(this);},
  add$1: function(value){throw $.$$throw($.CTC1);},
  addLast$1: function(value){throw $.$$throw($.CTC1);},
  addAll$1: function(collection){throw $.$$throw($.CTC1);},
@@ -4660,7 +4676,7 @@ $.$defineNativeClass('Int16Array', ["length?"], {
 $.$defineNativeClass('Int32Array', ["length?"], {
  operator$index$1: function(index){return this[index];},
  operator$indexSet$2: function(index,value){this[index] = value},
- iterator$0: function(){return $._FixedSizeListIterator$(this,'int');},
+ iterator$0: function(){return $._FixedSizeListIterator$(this);},
  add$1: function(value){throw $.$$throw($.CTC1);},
  addLast$1: function(value){throw $.$$throw($.CTC1);},
  addAll$1: function(collection){throw $.$$throw($.CTC1);},
@@ -4690,7 +4706,7 @@ $.$defineNativeClass('Int32Array', ["length?"], {
 $.$defineNativeClass('Int8Array', ["length?"], {
  operator$index$1: function(index){return this[index];},
  operator$indexSet$2: function(index,value){this[index] = value},
- iterator$0: function(){return $._FixedSizeListIterator$(this,'int');},
+ iterator$0: function(){return $._FixedSizeListIterator$(this);},
  add$1: function(value){throw $.$$throw($.CTC1);},
  addLast$1: function(value){throw $.$$throw($.CTC1);},
  addAll$1: function(collection){throw $.$$throw($.CTC1);},
@@ -4777,7 +4793,7 @@ $.$defineNativeClass('MediaKeyEvent', ["message?"], {
 $.$defineNativeClass('MediaList', ["length?"], {
  operator$index$1: function(index){return this[index];},
  operator$indexSet$2: function(index,value){throw $.$$throw($.UnsupportedOperationException$('Cannot assign element of immutable List.'));},
- iterator$0: function(){return $._FixedSizeListIterator$(this,'String');},
+ iterator$0: function(){return $._FixedSizeListIterator$(this);},
  add$1: function(value){throw $.$$throw($.CTC1);},
  addLast$1: function(value){throw $.$$throw($.CTC1);},
  addAll$1: function(collection){throw $.$$throw($.CTC1);},
@@ -4874,8 +4890,8 @@ $.$defineNativeClass('HTMLModElement', [], {
 });
 
 $.$defineNativeClass('MouseEvent', ["clientX?", "clientY?", "toElement?", "x?", "y?"], {
- get$offsetX: function(){if(!!this.offsetX)return this.get$_offsetX();else{var target=this.target;if(!(typeof target==='object'&&target!==null&&target.is$Element()))throw $.$$throw($.CTC29);return $.sub(this.clientX,target.$dom_getBoundingClientRect$0().get$left());}},
- get$offsetY: function(){if(!!this.offsetY)return this.get$_offsetY();else{var target=this.target;if(!(typeof target==='object'&&target!==null&&target.is$Element()))throw $.$$throw($.CTC29);return $.sub(this.clientY,target.$dom_getBoundingClientRect$0().get$top());}},
+ get$offsetX: function(){if(!!this.offsetX)return this.get$_offsetX();else{var target=this.target;if(!(typeof target==='object'&&target!==null&&target.is$Element()))throw $.$$throw($.CTC27);return $.sub(this.clientX,target.$dom_getBoundingClientRect$0().get$left());}},
+ get$offsetY: function(){if(!!this.offsetY)return this.get$_offsetY();else{var target=this.target;if(!(typeof target==='object'&&target!==null&&target.is$Element()))throw $.$$throw($.CTC27);return $.sub(this.clientY,target.$dom_getBoundingClientRect$0().get$top());}},
  get$_offsetX: function(){return this.offsetX},
  get$_offsetY: function(){return this.offsetY}
 });
@@ -4883,7 +4899,7 @@ $.$defineNativeClass('MouseEvent', ["clientX?", "clientY?", "toElement?", "x?", 
 $.$defineNativeClass('NamedNodeMap', ["length?"], {
  operator$index$1: function(index){return this[index];},
  operator$indexSet$2: function(index,value){throw $.$$throw($.UnsupportedOperationException$('Cannot assign element of immutable List.'));},
- iterator$0: function(){return $._FixedSizeListIterator$(this,'Node');},
+ iterator$0: function(){return $._FixedSizeListIterator$(this);},
  add$1: function(value){throw $.$$throw($.CTC1);},
  addLast$1: function(value){throw $.$$throw($.CTC1);},
  addAll$1: function(collection){throw $.$$throw($.CTC1);},
@@ -4936,7 +4952,7 @@ $.$defineNativeClass('NodeIterator', [], {
 });
 
 $.$defineNativeClass('NodeList', ["length?"], {
- iterator$0: function(){return $._FixedSizeListIterator$(this,'Node');},
+ iterator$0: function(){return $._FixedSizeListIterator$(this);},
  add$1: function(value){this._parent.$dom_appendChild$1(value);},
  addLast$1: function(value){this._parent.$dom_appendChild$1(value);},
  addAll$1: function(collection){for(var t1=$.iterator(collection),t2=this._parent;t1.hasNext$0()===true;)t2.$dom_appendChild$1(t1.next$0());},
@@ -5635,7 +5651,7 @@ $.$defineNativeClass('StyleSheet', ["disabled!"], {
 $.$defineNativeClass('StyleSheetList', ["length?"], {
  operator$index$1: function(index){return this[index];},
  operator$indexSet$2: function(index,value){throw $.$$throw($.UnsupportedOperationException$('Cannot assign element of immutable List.'));},
- iterator$0: function(){return $._FixedSizeListIterator$(this,'StyleSheet');},
+ iterator$0: function(){return $._FixedSizeListIterator$(this);},
  add$1: function(value){throw $.$$throw($.CTC1);},
  addLast$1: function(value){throw $.$$throw($.CTC1);},
  addAll$1: function(collection){throw $.$$throw($.CTC1);},
@@ -5729,7 +5745,7 @@ $.$defineNativeClass('Touch', ["clientX?", "clientY?"], {
 $.$defineNativeClass('TouchList', ["length?"], {
  operator$index$1: function(index){return this[index];},
  operator$indexSet$2: function(index,value){throw $.$$throw($.UnsupportedOperationException$('Cannot assign element of immutable List.'));},
- iterator$0: function(){return $._FixedSizeListIterator$(this,'Touch');},
+ iterator$0: function(){return $._FixedSizeListIterator$(this);},
  add$1: function(value){throw $.$$throw($.CTC1);},
  addLast$1: function(value){throw $.$$throw($.CTC1);},
  addAll$1: function(collection){throw $.$$throw($.CTC1);},
@@ -5770,7 +5786,7 @@ $.$defineNativeClass('HTMLUListElement', [], {
 $.$defineNativeClass('Uint16Array', ["length?"], {
  operator$index$1: function(index){return this[index];},
  operator$indexSet$2: function(index,value){this[index] = value},
- iterator$0: function(){return $._FixedSizeListIterator$(this,'int');},
+ iterator$0: function(){return $._FixedSizeListIterator$(this);},
  add$1: function(value){throw $.$$throw($.CTC1);},
  addLast$1: function(value){throw $.$$throw($.CTC1);},
  addAll$1: function(collection){throw $.$$throw($.CTC1);},
@@ -5800,7 +5816,7 @@ $.$defineNativeClass('Uint16Array', ["length?"], {
 $.$defineNativeClass('Uint32Array', ["length?"], {
  operator$index$1: function(index){return this[index];},
  operator$indexSet$2: function(index,value){this[index] = value},
- iterator$0: function(){return $._FixedSizeListIterator$(this,'int');},
+ iterator$0: function(){return $._FixedSizeListIterator$(this);},
  add$1: function(value){throw $.$$throw($.CTC1);},
  addLast$1: function(value){throw $.$$throw($.CTC1);},
  addAll$1: function(collection){throw $.$$throw($.CTC1);},
@@ -5830,7 +5846,7 @@ $.$defineNativeClass('Uint32Array', ["length?"], {
 $.$defineNativeClass('Uint8Array', ["length?"], {
  operator$index$1: function(index){return this[index];},
  operator$indexSet$2: function(index,value){this[index] = value},
- iterator$0: function(){return $._FixedSizeListIterator$(this,'int');},
+ iterator$0: function(){return $._FixedSizeListIterator$(this);},
  add$1: function(value){throw $.$$throw($.CTC1);},
  addLast$1: function(value){throw $.$$throw($.CTC1);},
  addAll$1: function(collection){throw $.$$throw($.CTC1);},
@@ -5872,6 +5888,10 @@ $.$defineNativeClass('HTMLVideoElement', ["height=", "width="], {
 });
 
 $.$defineNativeClass('WebGLActiveInfo', ["name?"], {
+});
+
+$.$defineNativeClass('WebGLRenderingContext', [], {
+ clear$1: function(mask){return this.clear(mask);}
 });
 
 $.$defineNativeClass('WebKitNamedFlow', ["name?"], {
@@ -5985,8 +6005,8 @@ $.$defineNativeClass('DOMWindow', [], {
  clearInterval$1: function(handle){return this.clearInterval(handle);}
 });
 
-// 345 dynamic classes.
-// 395 classes
+// 346 dynamic classes.
+// 396 classes
 // 34 !leaf
 (function(){
   var v0/*class(_SVGTextPositioningElementImpl)*/ = 'SVGTextPositioningElement|SVGTextElement|SVGTSpanElement|SVGTRefElement|SVGAltGlyphElement|SVGTextElement|SVGTSpanElement|SVGTRefElement|SVGAltGlyphElement';
@@ -6169,6 +6189,33 @@ Isolate.$finishClasses = function(collectedClasses) {
     }
   }
   for (var cls in pendingClasses) finishClass(cls);
+};
+Isolate.$lazy = function(prototype, staticName, fieldName, getterName, lazyValue) {
+  var sentinelUndefined = {};
+  var sentinelInProgress = {};
+  prototype[fieldName] = sentinelUndefined;
+  var getter = new Function("{ return $." + fieldName + ";}");
+  prototype[getterName] = function() {
+    var result = $[fieldName];
+    try {
+      if (result === sentinelUndefined) {
+        $[fieldName] = sentinelInProgress;
+        try {
+          result = $[fieldName] = lazyValue();
+        } catch (e) {
+          if ($[fieldName] === sentinelInProgress) {
+            $[fieldName] = null;
+          }
+          throw e;
+        }
+      } else if (result === sentinelInProgress) {
+        $.throwCyclicInit(staticName);
+      }
+      return result;
+    } finally {
+      $[getterName] = getter;
+    }
+  };
 };
 Isolate.$finishIsolateConstructor = function(oldIsolate) {
   var isolateProperties = oldIsolate.$isolateProperties;
