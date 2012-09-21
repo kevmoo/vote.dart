@@ -3,11 +3,11 @@
 #import('package:dartlib/retained.dart');
 #import('package:dartlib/html.dart');
 
-#import('../../lib/vote.dart');
-#import('../../lib/map.dart');
-#import('../../lib/retained.dart');
-#import('../../lib/html.dart');
-#import('../../lib/calc.dart');
+#import('package:vote.dart/vote.dart');
+#import('package:vote.dart/map.dart');
+#import('package:vote.dart/retained.dart');
+#import('package:vote.dart/html.dart');
+#import('package:vote.dart/calc.dart');
 
 main(){
   CanvasElement canvas = query("#content");
