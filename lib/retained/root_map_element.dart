@@ -10,6 +10,8 @@ class RootMapElement extends ElementParentImpl {
 
   RootMapElement(int w, int h) :
     _tx = new AffineTransform(),
+    // DARTBUG: tracking Editor/Analyzer warnings with
+    //          http://code.google.com/p/dart/issues/detail?id=5351
     _voterMap = new VoterMapElement(w, h),
     _candidateMap = new CandidateMapElement(w, h),
     _candidatesMovedHandle = new EventHandle<EventArgs>(),
