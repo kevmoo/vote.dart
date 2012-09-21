@@ -10,7 +10,7 @@ class TestLocationData {
     LocationData data = new LocationData.random();
 
     expect(data.candidates, hasLength(5));
-    expect($(data.candidates).select((mp) => mp.name),
+    expect($(data.candidates).map((mp) => mp.name),
       orderedEquals(['A', 'B', 'C', 'D', 'E']));
 
     final canC = data.candidates[2];
@@ -18,17 +18,17 @@ class TestLocationData {
 
     data = data.cloneAndRemove(canC);
     expect(data.candidates, hasLength(4));
-    expect($(data.candidates).select((mp) => mp.name),
+    expect($(data.candidates).map((mp) => mp.name),
       orderedEquals(['A', 'B', 'D', 'E']));
 
     data = data.cloneAndAddCandidate();
     expect(data.candidates, hasLength(5));
-    expect($(data.candidates).select((mp) => mp.name),
+    expect($(data.candidates).map((mp) => mp.name),
       orderedEquals(['A', 'B', 'C', 'D', 'E']));
 
     data = data.cloneAndAddCandidate();
     expect(data.candidates, hasLength(6));
-    expect($(data.candidates).select((mp) => mp.name),
+    expect($(data.candidates).map((mp) => mp.name),
       orderedEquals(['A', 'B', 'C', 'D', 'E', 'F']));
 
   }

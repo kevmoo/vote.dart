@@ -41,7 +41,7 @@ class LocationData {
 
     final candidates = new List<MapPlayer>();
     $(coords)
-      .select((c) => c.scale(_span))
+      .map((c) => c.scale(_span))
       .forEachWithIndex((c,i) {
         final candidate = new MapPlayer(c, getCandidateName(i));
         candidates.add(candidate);
@@ -56,7 +56,7 @@ class LocationData {
   LocationData cloneAndRemove(MapPlayer mp) {
     requireArgumentNotNull(mp, 'mp');
 
-    var newCans = candidates.where((e) => e != mp).toReadOnlyCollection();
+    var newCans = candidates.filter((e) => e != mp).toReadOnlyCollection();
 
     return new LocationData(voters, newCans);
   }

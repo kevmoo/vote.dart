@@ -14,7 +14,7 @@ class PluralityElection<TVoter extends Player, TCandidate extends Player>
     final roBallots = $(ballots).toReadOnlyCollection();
 
     // Check voter uniqueness
-    final voterList = roBallots.select((pb) => pb.voter).toReadOnlyCollection();
+    final voterList = roBallots.map((pb) => pb.voter).toReadOnlyCollection();
     requireArgument(CollectionUtil.allUnique(voterList),
       "Only one ballot per voter is allowed");
 

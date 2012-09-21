@@ -158,7 +158,7 @@ void _voterHexMapperIsolate() {
       } else {
         // TODO: this will blow up wonderfully if the item is not found
         // need to implement firstOrDefault
-        candidate = b.rank.where((c) => c == tuple.Item3.Item1 || c == tuple.Item3.Item2).first();
+        candidate = b.rank.filter((c) => c == tuple.Item3.Item1 || c == tuple.Item3.Item2).first();
       }
       if(candidate != null) {
         final hue = LocationData.getHue(candidate);

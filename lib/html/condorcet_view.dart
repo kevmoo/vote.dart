@@ -231,7 +231,7 @@ class CondorcetView extends HtmlView {
 
       final idStrs = pairIdStr.split('_');
       assert(idStrs.length == 2);
-      final ids = $(idStrs).select((s) => math.parseInt(s)).toList();
+      final ids = $(idStrs).map((s) => math.parseInt(s)).toList();
       return new Tuple<int, int>(ids[0], ids[1]);
     }
     return null;

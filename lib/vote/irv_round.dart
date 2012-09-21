@@ -4,7 +4,7 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
   factory IrvRound(ReadOnlyCollection<RankedBallot<TVoter, TCandidate>> ballots,
     Enumerable<TCandidate> eliminatedCandidates) {
 
-    final cleanedBallots = ballots.select((b) {
+    final cleanedBallots = ballots.map((b) {
       final pruned = $(b.rank).exclude(eliminatedCandidates)
           .toReadOnlyCollection();
       final winner = pruned.length == 0 ?
@@ -24,7 +24,7 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
 
     int placeNumber = 1;
     int totalVotes = 0;
-    final places = $(placeVotes).select((pv) {
+    final places = $(placeVotes).map((pv) {
       final vg = voteGroups[pv];
       final currentPlaceNumber = placeNumber;
       totalVotes += vg.length * pv;

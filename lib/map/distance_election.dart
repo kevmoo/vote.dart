@@ -16,7 +16,7 @@ class DistanceElection<TVoter extends MapPlayer, TCandidate extends MapPlayer>
     final cans = new ReadOnlyCollection<TCandidate>(candidates);
 
     final ballots = $(voters)
-        .select((voter) => new DistanceBallot<MapPlayer, MapPlayer>(voter, cans))
+        .map((voter) => new DistanceBallot<MapPlayer, MapPlayer>(voter, cans))
         .toReadOnlyCollection();
 
     //
@@ -40,7 +40,7 @@ class DistanceElection<TVoter extends MapPlayer, TCandidate extends MapPlayer>
     distances.sort((a,b) => a.Item1.compareTo(b.Item1));
 
     int placeNumber = 1;
-    final places = $(distances).select((d) {
+    final places = $(distances).map((d) {
       var placeCans = distanceGroups[d];
       final place = new DistanceElectionPlace(placeNumber, placeCans,
         d.Item1, d.Item2);
