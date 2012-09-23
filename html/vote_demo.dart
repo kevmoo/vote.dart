@@ -99,8 +99,8 @@ class VoteDemo{
       _calcEngine.hoverPair = _condorcetView.hoveringPair;
       List<MapPlayer> hoverElements = null;
       if(_condorcetView.hoveringPair != null) {
-        hoverElements = [_condorcetView.hoveringPair.Item1,
-                         _condorcetView.hoveringPair.Item2];
+        hoverElements = [_condorcetView.hoveringPair.item1,
+                         _condorcetView.hoveringPair.item2];
       }
       _rootMapElement.showOnlyPlayers = hoverElements;
     });

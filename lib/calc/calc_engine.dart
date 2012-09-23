@@ -151,14 +151,14 @@ class _VoterHexMapper
 void _voterHexMapperIsolate() {
   port.receive((Tuple3<DistanceElection, LocationData, Tuple<MapPlayer, MapPlayer>> tuple, SendPort reply) {
     final map = new HashMap<MapPlayer, String>();
-    for(final b in tuple.Item1.ballots) {
+    for(final b in tuple.item1.ballots) {
       MapPlayer candidate;
-      if(tuple.Item3 == null) {
+      if(tuple.item3 == null) {
         candidate = b.choice;
       } else {
         // TODO: this will blow up wonderfully if the item is not found
         // need to implement firstOrDefault
-        candidate = b.rank.filter((c) => c == tuple.Item3.Item1 || c == tuple.Item3.Item2).first();
+        candidate = b.rank.filter((c) => c == tuple.item3.item1 || c == tuple.item3.item2).first();
       }
       if(candidate != null) {
         final hue = LocationData.getHue(candidate);

@@ -37,13 +37,13 @@ class DistanceElection<TVoter extends MapPlayer, TCandidate extends MapPlayer>
     });
 
     final distances = new List<Tuple<num,num>>.from(distanceGroups.getKeys());
-    distances.sort((a,b) => a.Item1.compareTo(b.Item1));
+    distances.sort((a,b) => a.item1.compareTo(b.item1));
 
     int placeNumber = 1;
     final places = $(distances).map((d) {
       var placeCans = distanceGroups[d];
       final place = new DistanceElectionPlace(placeNumber, placeCans,
-        d.Item1, d.Item2);
+        d.item1, d.item2);
       placeNumber += placeCans.length;
       return place;
     }).toReadOnlyCollection();

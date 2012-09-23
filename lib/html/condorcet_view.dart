@@ -188,7 +188,7 @@ class CondorcetView extends HtmlView {
 
     if(_hoveringPair != null) {
       final matchClass =
-          _getPairElementName(_hoveringPair.Item1, _hoveringPair.Item2);
+          _getPairElementName(_hoveringPair.item1, _hoveringPair.item2);
       final List<Element> thePairs = node.queryAll('td.pair-cell.$matchClass');
       thePairs.forEach((e){
         e.classes.add(hoverPairClass);
@@ -202,7 +202,7 @@ class CondorcetView extends HtmlView {
       final Element elem = e.toElement;
       final pair = _getPair(elem);
       if(pair != null) {
-        _thePair = new Tuple(_candidates[pair.Item1], _candidates[pair.Item2]);
+        _thePair = new Tuple(_candidates[pair.item1], _candidates[pair.item2]);
         return;
       }
     }

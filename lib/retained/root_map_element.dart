@@ -54,9 +54,9 @@ class RootMapElement extends ElementParentImpl {
     //final vals = _getAverageCloseness(value);
     final vals = new Tuple<num, Box>(1, new Box(0,0,20,20));
 
-    _averageCloseness = vals.Item1;
+    _averageCloseness = vals.item1;
     assert(isValidNumber(_averageCloseness));
-    _bounds = vals.Item2;
+    _bounds = vals.item2;
     assert(_bounds.isValid);
 
     _radius = null;

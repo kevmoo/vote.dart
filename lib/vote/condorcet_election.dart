@@ -38,7 +38,7 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
 
     var hashSet = new HashSet<CondorcetPair<TVoter, TCandidate>>();
     hashMap.forEach((k,v) {
-      var c = new CondorcetPair(k.Item1, k.Item2, v);
+      var c = new CondorcetPair(k.item1, k.item2, v);
       hashSet.add(c);
     });
 
@@ -53,8 +53,8 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
       final tarjanLostTiedSet = new HashSet<TCandidate>();
 
       for(final pair in hashSet) {
-        if(pair.Item1 == candidate || pair.Item2 == candidate) {
-          final other = (pair.Item1 == candidate) ? pair.Item2 : pair.Item1;
+        if(pair.item1 == candidate || pair.item2 == candidate) {
+          final other = (pair.item1 == candidate) ? pair.item2 : pair.item1;
 
           if(pair.isTie) {
             tied.add(other);

@@ -56,10 +56,10 @@ class CondorcetPair<TVoter extends Player, TCandidate extends Player>
 
   TCandidate get winner {
     if(firstOverSecond > secondOverFirst) {
-      return Item1;
+      return item1;
     }
     else if(secondOverFirst > firstOverSecond) {
-      return Item2;
+      return item2;
     }
     else {
       assert(isTie);
@@ -68,8 +68,6 @@ class CondorcetPair<TVoter extends Player, TCandidate extends Player>
   }
 
   bool get isTie => firstOverSecond == secondOverFirst;
-
-  int hashCode() => Util.getHashCode([Item1, Item2]);
 
   bool matches(TCandidate can1, TCandidate can2) {
     requireArgumentNotNull(can1, 'can1');
@@ -82,12 +80,12 @@ class CondorcetPair<TVoter extends Player, TCandidate extends Player>
       can1 = temp;
     }
 
-    return (Item1 == can1) && (Item2 == can2);
+    return (item1 == can1) && (item2 == can2);
   }
 
   // sometimes it's nice to deal w/ a properly aligned pair
   CondorcetPair<TVoter, TCandidate> flip(TCandidate can1, TCandidate can2) {
-    if(Item1.compareTo(Item2) > 0) {
+    if(item1.compareTo(item2) > 0) {
       throw 'already flipped!';
     }
     requireArgumentNotNull(can1, 'can1');
@@ -102,8 +100,8 @@ class CondorcetPair<TVoter extends Player, TCandidate extends Player>
       flipped = true;
     }
 
-    requireArgument(can1 == Item1, 'can1');
-    requireArgument(can2 == Item2, 'can1');
+    requireArgument(can1 == item1, 'can1');
+    requireArgument(can2 == item2, 'can1');
 
     if(flipped) {
       return new CondorcetPair._internal(can2, can1, ballots,
