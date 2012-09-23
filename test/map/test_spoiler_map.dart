@@ -5,7 +5,7 @@ class TestSpoilerMap {
   TestSpoilerMap() :
     this.canCenter = new MapPlayer(const Coordinate(5, 0)),
     this.canLeft = new MapPlayer(const Coordinate(4, 0)),
-    this.canSpoiler = new MapPlayer(const Coordinate(6.9, 0)) {
+    this.canSpoiler = new MapPlayer(const Coordinate(7, 0)) {
     // 11 voters from 0,0 to 10,0
     var voters = new List<MapPlayer>();
     for(var i = 0; i <= 10; i++) {
