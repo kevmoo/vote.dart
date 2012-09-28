@@ -1,4 +1,4 @@
-class MapElementBase {
-  abstract void setTransform(AffineTransform value);
-  abstract void set _radius(num value);
+abstract class MapElementBase {
+  void setTransform(AffineTransform value);
+  void set _radius(num value);
 }
