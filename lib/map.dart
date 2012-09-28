@@ -1,6 +1,6 @@
 #library('vote_map');
 
-#import('package:dartlib/dartlib.dart');
+#import('package:bot/bot.dart');
 #import('vote.dart');
 
 #source('map/map_player.dart');

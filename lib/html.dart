@@ -2,8 +2,8 @@
 
 #import('dart:html');
 #import('dart:math', prefix:'math');
-#import('package:dartlib/dartlib.dart');
-#import('package:dartlib/html.dart');
+#import('package:bot/bot.dart');
+#import('package:bot/html.dart');
 
 #import('vote.dart');
 #import('map.dart');

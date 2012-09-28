@@ -1,7 +1,7 @@
 #import('dart:html');
-#import('package:dartlib/dartlib.dart');
-#import('package:dartlib/retained.dart');
-#import('package:dartlib/html.dart');
+#import('package:bot/bot.dart');
+#import('package:bot/retained.dart');
+#import('package:bot/html.dart');
 
 #import('package:vote.dart/vote.dart');
 #import('package:vote.dart/map.dart');

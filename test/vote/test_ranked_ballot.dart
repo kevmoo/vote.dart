@@ -8,25 +8,25 @@ class TestRankedBallot {
       test('no null voters', () {
         expect(() {
           new RankedBallot(null, [c1]);
-        }, throwsIllegalArgumentException);
+        }, throwsArgumentError);
       });
 
       test('no null candidates', () {
         expect(() {
           new RankedBallot(v2, null);
-        }, throwsIllegalArgumentException);
+        }, throwsArgumentError);
       });
 
       test('no empty candidates', () {
         expect(() {
           new RankedBallot(v2, []);
-        }, throwsIllegalArgumentException);
+        }, throwsArgumentError);
       });
 
       test('no dupe candidates', () {
         expect(() {
           new RankedBallot(v2, [c1, c1]);
-        }, throwsIllegalArgumentException);
+        }, throwsArgumentError);
       });
 
       test('1 candidate is cool', () {
