@@ -32,3 +32,8 @@ void log(String message) {
   }
   _last = now;
 }
+
+int majorityThreshold(int votes) {
+  assert(votes > 0);
+  return votes ~/ 2 + 1;
+}
