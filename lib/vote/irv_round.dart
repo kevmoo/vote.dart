@@ -1,4 +1,5 @@
 class IrvRound<TVoter extends Player, TCandidate extends Player> {
+  final ReadOnlyCollection<PluralityElectionPlace<TCandidate>> places;
   // final HashMap<TCandidate, HashMap<TCandidate, num>> _eliminations;
 
   factory IrvRound(ReadOnlyCollection<RankedBallot<TVoter, TCandidate>> ballots,
@@ -12,7 +13,9 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
       return new Tuple3(b, pruned, winner);
     });
 
-    final candidateAllocations = cleanedBallots.group((tuple) => tuple.Item3);
+    final activeBallotCount = cleanedBallots.count((t) => t.item3 != null);
+
+    final candidateAllocations = cleanedBallots.group((tuple) => tuple.item3);
 
     final voteGroups = $(candidateAllocations.getKeys()).group((c) {
       return candidateAllocations[c].length;
@@ -30,9 +33,20 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
       totalVotes += vg.length * pv;
       placeNumber += vg.length;
       return new PluralityElectionPlace<TCandidate>(currentPlaceNumber, vg, pv);
-    }).toList();
+    }).toReadOnlyCollection();
+
+    //
+    // eliminations
+    //
+    // 2 or more 'places'
+    // unless
+    // a) first place is single candiadate
+    // b) first place votes > (0.5 * total + 1)
+
+    return new IrvRound._internal(places);
   }
 
+  IrvRound._internal(this.places);
 }
 
 /*

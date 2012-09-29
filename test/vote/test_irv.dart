@@ -61,10 +61,17 @@ class TestIrv {
     var ce = new IrvElection(ballots);
 
     expect(ce, isNotNull);
-    expect(ce.singleWinner, equals(canC));
+    //expect(ce.singleWinner, equals(canC));
     expect(ce.candidates, unorderedEquals([canC, canCC, canVan]));
     expect(ce.ballots, unorderedEquals(ballots));
 
+    final firstRound = ce.rounds[0];
+    expect(firstRound.places.length, 3);
+
+    // expect(firstRound.eliminated.length, 1);
+
+
+    /*
     expect(ce.places.length, equals(3));
 
     expect(ce.places[0].place, equals(1));
@@ -75,6 +82,7 @@ class TestIrv {
 
     expect(ce.places[2].place, equals(3));
     expect(ce.places[2], unorderedEquals([canVan]));
+    */
   }
 
   static void _threeWayTieForFirst() {
