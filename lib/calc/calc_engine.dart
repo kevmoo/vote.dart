@@ -1,16 +1,12 @@
 class CalcEngine {
-  final _DistanceElectionMapper _distanceElectionMapper;
-  final _PluralityElectionMapper _pluralityElectionMapper;
-  final _CondorcetElectionMapper _condorcetElectionMapper;
-  final _VoterHexMapper _voterHexMapper;
+  final _DistanceElectionMapper _distanceElectionMapper = new _DistanceElectionMapper();
+  final _PluralityElectionMapper _pluralityElectionMapper = new _PluralityElectionMapper();
+  final _CondorcetElectionMapper _condorcetElectionMapper = new _CondorcetElectionMapper();
+  final _VoterHexMapper _voterHexMapper = new _VoterHexMapper();
 
   Tuple<MapPlayer, MapPlayer> _hoverPair;
 
-  CalcEngine() :
-    _distanceElectionMapper = new _DistanceElectionMapper(),
-    _pluralityElectionMapper = new _PluralityElectionMapper(),
-    _condorcetElectionMapper = new _CondorcetElectionMapper(),
-    _voterHexMapper = new _VoterHexMapper() {
+  CalcEngine() {
     _distanceElectionMapper.outputChanged.add((args) {
       _distanceElectionChanged();
     });

@@ -24,10 +24,10 @@ class VoteDemo{
   final Stage _stage;
   final Dragger _dragger;
 
-  final CalcEngine _calcEngine;
+  final CalcEngine _calcEngine = new CalcEngine();
 
   final RootMapElement _rootMapElement;
-  final HashMap<MapPlayer, num> _playerHues;
+  final HashMap<MapPlayer, num> _playerHues = new HashMap<MapPlayer, num>();
   final CondorcetView _condorcetView;
   final DistanceView _distanceView;
   final PluralityView _pluralityView;
@@ -63,10 +63,9 @@ class VoteDemo{
       condorcetView, pluralityView, distanceView, canManView);
   }
 
-  VoteDemo._internal(this._canvas, this._stage, this._dragger, this._rootMapElement,
-    this._condorcetView, this._pluralityView, this._distanceView, this._canManView)
-  : _playerHues = new HashMap<MapPlayer, num>(),
-    _calcEngine = new CalcEngine() {
+  VoteDemo._internal(this._canvas, this._stage, this._dragger,
+      this._rootMapElement, this._condorcetView, this._pluralityView,
+      this._distanceView, this._canManView) {
     _dragger.dragDelta.add(_onDrag);
     _dragger.dragStart.add(_onDragStart);
 

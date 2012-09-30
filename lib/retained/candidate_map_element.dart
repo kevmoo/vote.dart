@@ -1,17 +1,12 @@
 class CandidateMapElement extends ElementParentImpl implements MapElementBase {
-  final List<MapPlayer> _players;
-  final AffineTransform _tx;
+  final List<MapPlayer> _players = new List<MapPlayer>();
+  final AffineTransform _tx = new AffineTransform();
 
   num _radius = 0;
   List<CandidateElement> _elements;
-  ReadOnlyCollection<MapPlayer> _showOnlyPlayers;
+  ReadOnlyCollection<MapPlayer> _showOnlyPlayers = null;
 
-  CandidateMapElement(int w, int h) :
-    _tx = new AffineTransform(),
-    _players = new List<MapPlayer>(),
-    super(w, h) {
-    showOnlyPlayers = null;
-  }
+  CandidateMapElement(int w, int h) : super(w, h);
 
   int get visualChildCount {
     _ensureElements();

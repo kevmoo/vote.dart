@@ -5,8 +5,7 @@ class DistanceElection<TVoter extends MapPlayer, TCandidate extends MapPlayer>
   final ReadOnlyCollection<DistanceBallot<TVoter, TCandidate>> ballots;
   final ReadOnlyCollection<DistanceElectionPlace<TCandidate>> places;
 
-  DistanceElection._internal(this.candidates, this.ballots,
-    this.places);
+  DistanceElection._internal(this.candidates, this.ballots, this.places);
 
   factory DistanceElection.fromData(LocationData data) {
     return new DistanceElection(data.voters, data.candidates);

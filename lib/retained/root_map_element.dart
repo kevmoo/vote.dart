@@ -1,20 +1,17 @@
 class RootMapElement extends ElementParentImpl {
   final VoterMapElement _voterMap;
   final CandidateMapElement _candidateMap;
-  final AffineTransform _tx;
-  final EventHandle<EventArgs> _candidatesMovedHandle;
+  final AffineTransform _tx = new AffineTransform();
+  final EventHandle<EventArgs> _candidatesMovedHandle =
+      new EventHandle<EventArgs>();
 
   num _averageCloseness;
   Box _bounds;
   num _radius;
 
   RootMapElement(int w, int h) :
-    _tx = new AffineTransform(),
-    // DARTBUG: tracking Editor/Analyzer warnings with
-    //          http://code.google.com/p/dart/issues/detail?id=5351
     _voterMap = new VoterMapElement(w, h),
     _candidateMap = new CandidateMapElement(w, h),
-    _candidatesMovedHandle = new EventHandle<EventArgs>(),
     super(w, h) {
     _voterMap.registerParent(this);
     _candidateMap.registerParent(this);
@@ -52,7 +49,7 @@ class RootMapElement extends ElementParentImpl {
     requireArgumentNotNull(value, "value");
     // TODO: would be great to use this calculation, but need to make it async
     //final vals = _getAverageCloseness(value);
-    final vals = new Tuple<num, Box>(1, new Box(0,0,20,20));
+    final vals = new Tuple<num, Box>(1, new Box(0,0,LocationData.span,LocationData.span));
 
     _averageCloseness = vals.item1;
     assert(isValidNumber(_averageCloseness));

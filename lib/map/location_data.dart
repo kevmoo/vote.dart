@@ -1,8 +1,8 @@
 class LocationData {
-  static final int maxCandidateCount = 26;
-  static final Box bounds = const Box(0,0, _span, _span);
-  static final int _ACharCode = 65;
-  static const num _span = 20;
+  static const int maxCandidateCount = 26;
+  static const Box bounds = const Box(0,0, span, span);
+  static const int _ACharCode = 65;
+  static const num span = 10;
   final ReadOnlyCollection<MapPlayer> candidates;
   final ReadOnlyCollection<MapPlayer> voters;
 
@@ -13,12 +13,12 @@ class LocationData {
   }
 
   factory LocationData.random() {
-    final spanTweak = _span / (_span - 1);
+    final spanTweak = span / (span - 1);
 
     // 100 voters from 1,1 to 10,10
     final voters = new List<MapPlayer>();
-    for(var i = 0; i < _span; i++) {
-      for(var j = 0; j < _span; j++) {
+    for(var i = 0; i < span; i++) {
+      for(var j = 0; j < span; j++) {
         voters.add(new MapPlayer(new Coordinate(i * spanTweak, j * spanTweak)));
       }
     }
@@ -41,7 +41,7 @@ class LocationData {
 
     final candidates = new List<MapPlayer>();
     $(coords)
-      .map((c) => c.scale(_span))
+      .map((c) => c.scale(span))
       .forEachWithIndex((c,i) {
         final candidate = new MapPlayer(c, getCandidateName(i));
         candidates.add(candidate);
@@ -81,7 +81,7 @@ class LocationData {
     final newName = getCandidateName(i);
 
     var coord = new Vector(rnd.nextDouble(), rnd.nextDouble());
-    final loc = coord.scale(_span);
+    final loc = coord.scale(span);
     final mp = new MapPlayer(loc, newName);
 
     newCans.insertRange(i, 1, mp);

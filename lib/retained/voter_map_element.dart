@@ -1,16 +1,12 @@
 class VoterMapElement extends PElement implements MapElementBase {
-  final List<MapPlayer> _players;
-  final AffineTransform _tx;
+  final List<MapPlayer> _players = new List<MapPlayer>();
+  final AffineTransform _tx = new AffineTransform();
 
   num _radius;
-  HashMap<MapPlayer, String> _map;
+  HashMap<MapPlayer, String> _map = new HashMap<MapPlayer, String>();
 
-  VoterMapElement(int w, int h) :
-    _tx = new AffineTransform(),
-    _players = new List<MapPlayer>(),
-    super(w, h, true) {
+  VoterMapElement(int w, int h) : super(w, h, true) {
     _radius = 0.3;
-    _map = new HashMap<MapPlayer, String>();
   }
 
   void setTransform(AffineTransform value) {
