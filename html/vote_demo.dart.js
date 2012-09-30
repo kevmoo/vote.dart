@@ -2959,7 +2959,32 @@ $$._MessageTraverser = {"":
  [],
  "super": "Object",
  traverse$1: function(x) {
-  return x;
+  if ($._MessageTraverser_isPrimitive(x))
+    return this.visitPrimitive$1(x);
+  this._visited.reset$0();
+  var result = null;
+  try {
+    result = this._dispatch$1(x);
+  } finally {
+    this._visited.cleanup$0();
+  }
+  return result;
+},
+ _dispatch$1: function(x) {
+  if ($._MessageTraverser_isPrimitive(x))
+    return this.visitPrimitive$1(x);
+  if (typeof x === 'object' && x !== null && (x.constructor === Array || x.is$List()))
+    return this.visitList$1(x);
+  if (typeof x === 'object' && x !== null && x.is$Map())
+    return this.visitMap$1(x);
+  if (typeof x === 'object' && x !== null && !!x.is$SendPort)
+    return this.visitSendPort$1(x);
+  if (typeof x === 'object' && x !== null && !!x.is$SendPortSync)
+    return this.visitSendPortSync$1(x);
+  return this.visitObject$1(x);
+},
+ visitObject$1: function(x) {
+  throw $.$$throw('Message serialization: Illegal value ' + $.S(x) + ' passed');
 }
 };
 
@@ -4705,7 +4730,7 @@ $$.LocationData = {"":
     if ($.gtB($.sub($.charCodeAt(newCans[i].get$name(), 0), 65), i))
       break;
   var newName = $.LocationData_getCandidateName(i);
-  $.insertRange$3(newCans, i, 1, $.MapPlayer$($.Vector$($.rnd().nextDouble$0(), $.rnd().nextDouble$0()).scale$1(20), newName));
+  $.insertRange$3(newCans, i, 1, $.MapPlayer$($.Vector$($.rnd().nextDouble$0(), $.rnd().nextDouble$0()).scale$1(10), newName));
   return $.LocationData$(this.voters, $.ReadOnlyCollection$(newCans));
 },
  cloneAndAddCandidate$0$bailout: function(state, newCans) {
@@ -4713,7 +4738,7 @@ $$.LocationData = {"":
     if ($.gtB($.sub($.charCodeAt($.index(newCans, i).get$name(), 0), 65), i))
       break;
   var newName = $.LocationData_getCandidateName(i);
-  $.insertRange$3(newCans, i, 1, $.MapPlayer$($.Vector$($.rnd().nextDouble$0(), $.rnd().nextDouble$0()).scale$1(20), newName));
+  $.insertRange$3(newCans, i, 1, $.MapPlayer$($.Vector$($.rnd().nextDouble$0(), $.rnd().nextDouble$0()).scale$1(10), newName));
   return $.LocationData$(this.voters, $.ReadOnlyCollection$(newCans));
 },
  LocationData$2: function(voters, candidates) {
@@ -4753,7 +4778,7 @@ $$.RootMapElement = {"":
 },
  set$voters: function(value) {
   $.requireArgumentNotNull(value, 'value');
-  var vals = $.Tuple$(1, $.Box$(0, 0, 20, 20));
+  var vals = $.Tuple$(1, $.Box$(0, 0, 10, 10));
   this._averageCloseness = vals.item1;
   this._bounds = vals.item2;
   this._radius = null;
@@ -4906,7 +4931,6 @@ $$.VoterMapElement = {"":
 },
  VoterMapElement$2: function(w, h) {
   this._radius = 0.3;
-  this._lib6_map = $.HashMapImplementation$();
 }
 };
 
@@ -4988,9 +5012,6 @@ $$.CandidateMapElement = {"":
     var t3 = this._showOnlyPlayers;
     t2.set$hidden(!(t3 == null) && $.ltB($.indexOf$1(t3, t2.get$player()), 0));
   }
-},
- CandidateMapElement$2: function(w, h) {
-  this.set$showOnlyPlayers(null);
 }
 };
 
@@ -6968,7 +6989,7 @@ $$.LocationData_LocationData$random_anon = {"":
  [],
  "super": "Closure",
  call$1: function(c) {
-  return c.scale$1(20);
+  return c.scale$1(10);
 }
 };
 
@@ -8364,10 +8385,7 @@ $._DOMWindowCrossFrameImpl$ = function(_window) {
 };
 
 $.CandidateMapElement$ = function(w, h) {
-  var t1 = $.AffineTransform$(1, 0, 0, 1, 0, 0);
-  t1 = new $.CandidateMapElement($.ListImplementation_List(null), t1, 0, null, null, $.ListImplementation_List(null), false, $.EventHandle$(), $.EventHandle$(), null, w, h, null, null, false, null, $.HashMapImplementation$(), $.HashMapImplementation$(), false);
-  t1.CandidateMapElement$2(w, h);
-  return t1;
+  return new $.CandidateMapElement($.ListImplementation_List(null), $.AffineTransform$(1, 0, 0, 1, 0, 0), 0, null, null, $.ListImplementation_List(null), false, $.EventHandle$(), $.EventHandle$(), null, w, h, null, null, false, null, $.HashMapImplementation$(), $.HashMapImplementation$(), false);
 };
 
 $.RetainedUtil_transformPointGlobalToLocal = function(element, point) {
@@ -10046,8 +10064,7 @@ $.iterator = function(receiver) {
 };
 
 $.VoterMapElement$ = function(w, h) {
-  var t1 = $.AffineTransform$(1, 0, 0, 1, 0, 0);
-  t1 = new $.VoterMapElement($.ListImplementation_List(null), t1, null, null, $.ListImplementation_List(null), true, $.EventHandle$(), $.EventHandle$(), null, w, h, null, null, false, null, $.HashMapImplementation$(), $.HashMapImplementation$(), false);
+  var t1 = new $.VoterMapElement($.ListImplementation_List(null), $.AffineTransform$(1, 0, 0, 1, 0, 0), null, $.HashMapImplementation$(), $.ListImplementation_List(null), true, $.EventHandle$(), $.EventHandle$(), null, w, h, null, null, false, null, $.HashMapImplementation$(), $.HashMapImplementation$(), false);
   t1.VoterMapElement$2(w, h);
   return t1;
 };
@@ -10514,9 +10531,10 @@ $.Set_Set = function() {
 
 $.RootMapElement$ = function(w, h) {
   var t1 = $.AffineTransform$(1, 0, 0, 1, 0, 0);
-  t1 = new $.RootMapElement($.VoterMapElement$(w, h), $.CandidateMapElement$(w, h), t1, $.EventHandle$(), null, null, null, $.ListImplementation_List(null), false, $.EventHandle$(), $.EventHandle$(), null, w, h, null, null, false, null, $.HashMapImplementation$(), $.HashMapImplementation$(), false);
-  t1.RootMapElement$2(w, h);
-  return t1;
+  var t2 = $.EventHandle$();
+  t2 = new $.RootMapElement($.VoterMapElement$(w, h), $.CandidateMapElement$(w, h), t1, t2, null, null, null, $.ListImplementation_List(null), false, $.EventHandle$(), $.EventHandle$(), null, w, h, null, null, false, null, $.HashMapImplementation$(), $.HashMapImplementation$(), false);
+  t2.RootMapElement$2(w, h);
+  return t2;
 };
 
 $.query = function(selector) {
@@ -10524,8 +10542,7 @@ $.query = function(selector) {
 };
 
 $.VoteDemo$_internal = function(_canvas, _stage, _dragger, _rootMapElement, _condorcetView, _pluralityView, _distanceView, _canManView) {
-  var t1 = $.HashMapImplementation$();
-  t1 = new $.VoteDemo(_canvas, _stage, _dragger, $.CalcEngine$(), _rootMapElement, t1, _condorcetView, _distanceView, _pluralityView, _canManView, null, null, null, null, false);
+  var t1 = new $.VoteDemo(_canvas, _stage, _dragger, $.CalcEngine$(), _rootMapElement, $.HashMapImplementation$(), _condorcetView, _distanceView, _pluralityView, _canManView, null, null, null, null, false);
   t1.VoteDemo$_internal$8(_canvas, _stage, _dragger, _rootMapElement, _condorcetView, _pluralityView, _distanceView, _canManView);
   return t1;
 };
@@ -11014,9 +11031,9 @@ $.checkGrowable = function(list, reason) {
 
 $.LocationData_LocationData$random = function() {
   var voters = $.ListImplementation_List(null);
-  for (var i = 0; i < 20; ++i)
-    for (var t1 = i * 1.0526315789473684, j = 0; j < 20; ++j)
-      voters.push($.MapPlayer$($.Coordinate$(t1, j * 1.0526315789473684), null));
+  for (var i = 0; i < 10; ++i)
+    for (var t1 = i * 1.1111111111111112, j = 0; j < 10; ++j)
+      voters.push($.MapPlayer$($.Coordinate$(t1, j * 1.1111111111111112), null));
   var coords = $.ListImplementation_List(null);
   var middle = $.Vector$(0.5, 0.5);
   coords.push(middle);
@@ -11679,8 +11696,8 @@ $.CTC66 = 0;
 $.CTC67 = new Isolate.$isolateProperties.Coordinate(0, 0);
 $.CTC68 = 'Incorrect number or type of arguments';
 $.CTC26 = new Isolate.$isolateProperties.ExceptionImplementation('Incorrect number or type of arguments');
-$.CTC69 = 20;
-$.CTC28 = new Isolate.$isolateProperties.Box(0, 0, 20, 20);
+$.CTC69 = 10;
+$.CTC28 = new Isolate.$isolateProperties.Box(0, 0, 10, 10);
 $.CTC70 = 'Cannot removeRange on immutable List.';
 $.CTC18 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot removeRange on immutable List.');
 $.CTC71 = 'structured clone of Blob';
@@ -11724,14 +11741,17 @@ $._lazyPort = null;
 $.Uri__COMPONENT_SCHEME = 1;
 $._botHelperRandom = null;
 $.LocationData__candidateHues = null;
+$.LocationData__ACharCode = 65;
 $.GlobalId__globalId = 0;
 $.Uri__splitRe = Isolate.$isolateProperties.CTC17;
 $.Uri__COMPONENT_FRAGMENT = 7;
 $._ReceivePortImpl__nextFreeId = 1;
+$.LocationData_maxCandidateCount = 26;
 $.Uri__COMPONENT_DOMAIN = 3;
 $.Uri__COMPONENT_QUERY_DATA = 6;
 $._getTypeNameOf = null;
 $._SPAWNED_SIGNAL = 'spawned';
+$.LocationData_bounds = Isolate.$isolateProperties.CTC28;
 $._pendingMeasurementFrameCallbacks = null;
 $.DualPivotQuicksort__INSERTION_SORT_THRESHOLD = 32;
 $.Primitives_hashCodeSeed = 0;
@@ -11742,7 +11762,7 @@ $.Uri__COMPONENT_USER_INFO = 2;
 $._TimerFactory__factory = null;
 $._cachedBrowserPrefix = null;
 $.Primitives_DOLLAR_CHAR_VALUE = 36;
-$.LocationData__span = 20;
+$.LocationData_span = 10;
 Isolate.$lazy($, 'isMouseDirectlyOverProperty', 'Mouse_isMouseDirectlyOverProperty', 'get$Mouse_isMouseDirectlyOverProperty', function() {
   return $.Property$('IsMouseDirectlyOver', false);
 });

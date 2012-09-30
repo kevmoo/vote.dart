@@ -4827,7 +4827,7 @@ $$.LocationData = {"":
     if ($.gtB($.sub($.charCodeAt(newCans[i].get$name(), 0), 65), i))
       break;
   var newName = $.LocationData_getCandidateName(i);
-  $.insertRange$3(newCans, i, 1, $.MapPlayer$($.Vector$($.rnd().nextDouble$0(), $.rnd().nextDouble$0()).scale$1(20), newName));
+  $.insertRange$3(newCans, i, 1, $.MapPlayer$($.Vector$($.rnd().nextDouble$0(), $.rnd().nextDouble$0()).scale$1(10), newName));
   return $.LocationData$(this.voters, $.ReadOnlyCollection$(newCans));
 },
  cloneAndAddCandidate$0$bailout: function(state, newCans) {
@@ -4835,7 +4835,7 @@ $$.LocationData = {"":
     if ($.gtB($.sub($.charCodeAt($.index(newCans, i).get$name(), 0), 65), i))
       break;
   var newName = $.LocationData_getCandidateName(i);
-  $.insertRange$3(newCans, i, 1, $.MapPlayer$($.Vector$($.rnd().nextDouble$0(), $.rnd().nextDouble$0()).scale$1(20), newName));
+  $.insertRange$3(newCans, i, 1, $.MapPlayer$($.Vector$($.rnd().nextDouble$0(), $.rnd().nextDouble$0()).scale$1(10), newName));
   return $.LocationData$(this.voters, $.ReadOnlyCollection$(newCans));
 },
  LocationData$2: function(voters, candidates) {
@@ -6919,7 +6919,7 @@ $$.LocationData_LocationData$random_anon = {"":
  [],
  "super": "Closure",
  call$1: function(c) {
-  return c.scale$1(20);
+  return c.scale$1(10);
 }
 };
 
@@ -11094,9 +11094,9 @@ $.le = function(a, b) {
 
 $.LocationData_LocationData$random = function() {
   var voters = $.ListImplementation_List(null);
-  for (var i = 0; i < 20; ++i)
-    for (var t1 = i * 1.0526315789473684, j = 0; j < 20; ++j)
-      voters.push($.MapPlayer$($.Coordinate$(t1, j * 1.0526315789473684), null));
+  for (var i = 0; i < 10; ++i)
+    for (var t1 = i * 1.1111111111111112, j = 0; j < 10; ++j)
+      voters.push($.MapPlayer$($.Coordinate$(t1, j * 1.1111111111111112), null));
   var coords = $.ListImplementation_List(null);
   var middle = $.Vector$(0.5, 0.5);
   coords.push(middle);
@@ -11817,12 +11817,14 @@ $.Duration_MINUTES_PER_HOUR = 60;
 $.isNull = Isolate.$isolateProperties.CTC16;
 $._botHelperRandom = null;
 $.LocationData__candidateHues = null;
+$.LocationData__ACharCode = 65;
 $.ERROR = 'error';
 $._currentGroup = '';
 $.GlobalId__globalId = 0;
 $.Uri__splitRe = Isolate.$isolateProperties.CTC50;
 $.Uri__COMPONENT_FRAGMENT = 7;
 $._ReceivePortImpl__nextFreeId = 1;
+$.LocationData_maxCandidateCount = 26;
 $.$throws = Isolate.$isolateProperties.CTC17;
 $.Uri__COMPONENT_DOMAIN = 3;
 $._testRunner = null;
@@ -11851,7 +11853,7 @@ $._cachedBrowserPrefix = null;
 $.Primitives_DOLLAR_CHAR_VALUE = 36;
 $.Duration_MILLISECONDS_PER_MINUTE = 60000;
 $._soloTest = null;
-$.LocationData__span = 20;
+$.LocationData__span = 10;
 $.Duration_MILLISECONDS_PER_SECOND = 1000;
 $.Duration_MILLISECONDS_PER_HOUR = 3600000;
 $.isNotNull = Isolate.$isolateProperties.CTC36;
