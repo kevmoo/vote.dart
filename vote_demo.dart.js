@@ -5019,9 +5019,9 @@ $$.CandidateElement = {"":
   ctx.set$shadowColor('transparent');
   ctx.set$font('1px Helvetica');
   ctx.set$textAlign('center');
-  ctx.set$textBaseline('top');
+  ctx.set$textBaseline('baseline');
   ctx.set$fillStyle('black');
-  ctx.fillText$3(this._text, $.div(this.get$width(), 2), 0);
+  ctx.fillText$3(this._text, $.mul(this.get$width(), 0.5), $.mul(this.get$height(), 0.8));
 },
  CandidateElement$4: function(w, h, _color, p) {
   this._tx = this.addTransform$0();
