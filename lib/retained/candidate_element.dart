@@ -43,8 +43,8 @@ class CandidateElement extends PElement {
 
     ctx.font = '1px Helvetica';
     ctx.textAlign = 'center';
-    ctx.textBaseline = 'top';
+    ctx.textBaseline = 'baseline';
     ctx.fillStyle = 'black';
-    ctx.fillText(_text, width / 2, 0);
+    ctx.fillText(_text, width * 0.5, height * 0.8);
   }
 }
