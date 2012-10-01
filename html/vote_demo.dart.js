@@ -2959,7 +2959,32 @@ $$._MessageTraverser = {"":
  [],
  "super": "Object",
  traverse$1: function(x) {
-  return x;
+  if ($._MessageTraverser_isPrimitive(x))
+    return this.visitPrimitive$1(x);
+  this._visited.reset$0();
+  var result = null;
+  try {
+    result = this._dispatch$1(x);
+  } finally {
+    this._visited.cleanup$0();
+  }
+  return result;
+},
+ _dispatch$1: function(x) {
+  if ($._MessageTraverser_isPrimitive(x))
+    return this.visitPrimitive$1(x);
+  if (typeof x === 'object' && x !== null && (x.constructor === Array || x.is$List()))
+    return this.visitList$1(x);
+  if (typeof x === 'object' && x !== null && x.is$Map())
+    return this.visitMap$1(x);
+  if (typeof x === 'object' && x !== null && !!x.is$SendPort)
+    return this.visitSendPort$1(x);
+  if (typeof x === 'object' && x !== null && !!x.is$SendPortSync)
+    return this.visitSendPortSync$1(x);
+  return this.visitObject$1(x);
+},
+ visitObject$1: function(x) {
+  throw $.$$throw('Message serialization: Illegal value ' + $.S(x) + ' passed');
 }
 };
 
@@ -5019,9 +5044,9 @@ $$.CandidateElement = {"":
   ctx.set$shadowColor('transparent');
   ctx.set$font('1px Helvetica');
   ctx.set$textAlign('center');
-  ctx.set$textBaseline('top');
+  ctx.set$textBaseline('baseline');
   ctx.set$fillStyle('black');
-  ctx.fillText$3(this._text, $.div(this.get$width(), 2), 0);
+  ctx.fillText$3(this._text, $.mul(this.get$width(), 0.5), $.mul(this.get$height(), 0.8));
 },
  CandidateElement$4: function(w, h, _color, p) {
   this._tx = this.addTransform$0();
