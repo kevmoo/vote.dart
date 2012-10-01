@@ -1,0 +1,68 @@
+body {
+  font-family: Helvetica;
+}
+
+.content-block {
+  float: left;
+  margin: 15px;
+}
+
+.content-block h1 {
+  margin-top: 0px;
+  margin-bottom: 2px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td, th {
+  padding: 5px;
+}
+
+td.vote-count, td.average-distance {
+  text-align: right;
+}
+
+tr.row-even {
+  background: #ccc;
+} 
+
+tr.row-odd {
+  background: #ddd;
+} 
+
+td.candidate-cell {
+  text-align: center;
+}
+
+//
+// Condorcet View
+//
+
+td.pair-cell.right-value {
+  padding-left: 0;
+}
+
+td.pair-cell.left-value {
+  padding-right: 0;
+}
+
+td.pair-cell.winner {
+  color: black;
+  background: white;
+}
+
+td.pair-cell.loser {
+  color: white;
+  background: black;
+}
+
+td.hover-pair.pair-cell.vote-count {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+td.pair-cell {
+  cursor: pointer;
+}
