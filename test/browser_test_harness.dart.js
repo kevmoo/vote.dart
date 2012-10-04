@@ -803,7 +803,6 @@ $$.DoubleLinkedQueue = {"":
  first$0: function() {
   return this._sentinel._next.get$element();
 },
- get$first: function() { return new $.BoundClosure(this, 'first$0'); },
  last$0: function() {
   return this._sentinel._previous.get$element();
 },
@@ -1273,7 +1272,7 @@ $$.ConstantMap = {"":
   return $.Maps_mapToString(this);
 },
  _throwImmutable$0: function() {
-  throw $.$$throw($.CTC23);
+  throw $.$$throw($.CTC22);
 },
  operator$indexSet$2: function(key, val) {
   return this._throwImmutable$0();
@@ -2856,21 +2855,12 @@ $$._DedicatedWorkerContextEventsImpl = {"":
 }
 };
 
-$$.FilteredElementList = {"":
+$$._FilteredElementList = {"":
  ["_node", "_childNodes"],
  "super": "Object",
  get$_filtered: function() {
-  return $.ListImplementation_List$from($.filter(this._childNodes, new $.FilteredElementList__filtered_anon()));
+  return $.ListImplementation_List$from($.filter(this._childNodes, new $._FilteredElementList__filtered_anon()));
 },
- get$first: function() {
-  for (var t1 = $.iterator(this._childNodes); t1.hasNext$0() === true;) {
-    var t2 = t1.next$0();
-    if (typeof t2 === 'object' && t2 !== null && t2.is$Element())
-      return t2;
-  }
-  return;
-},
- first$0: function() { return this.get$first().call$0(); },
  forEach$1: function(f) {
   $.forEach(this.get$_filtered(), f);
 },
@@ -2882,7 +2872,7 @@ $$.FilteredElementList = {"":
   if ($.geB(newLength, len))
     return;
   else if ($.ltB(newLength, 0))
-    throw $.$$throw($.CTC26);
+    throw $.$$throw($.CTC25);
   this.removeRange$2($.sub(newLength, 1), $.sub(len, newLength));
 },
  add$1: function(value) {
@@ -2896,13 +2886,13 @@ $$.FilteredElementList = {"":
   this.add$1(value);
 },
  sort$1: function(compare) {
-  throw $.$$throw($.CTC25);
+  throw $.$$throw($.CTC24);
 },
  removeRange$2: function(start, rangeLength) {
-  $.forEach($.getRange(this.get$_filtered(), start, rangeLength), new $.FilteredElementList_removeRange_anon());
+  $.forEach($.getRange(this.get$_filtered(), start, rangeLength), new $._FilteredElementList_removeRange_anon());
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC34);
+  throw $.$$throw($.CTC33);
 },
  clear$0: function() {
   $.clear(this._childNodes);
@@ -3004,10 +2994,6 @@ $$._ChildrenElementList = {"":
   }
   return output;
 },
- get$first: function() {
-  return this._lib_element.get$$$dom_firstElementChild();
-},
- first$0: function() { return this.get$first().call$0(); },
  forEach$1: function(f) {
   for (var t1 = $.iterator(this._childElements); t1.hasNext$0() === true;)
     f.call$1(t1.next$0());
@@ -3036,7 +3022,7 @@ $$._ChildrenElementList = {"":
   this._lib_element.$dom_replaceChild$2(value, $.index(this._childElements, index));
 },
  set$length: function(newLength) {
-  throw $.$$throw($.CTC24);
+  throw $.$$throw($.CTC23);
 },
  add$1: function(value) {
   this._lib_element.$dom_appendChild$1(value);
@@ -3053,13 +3039,13 @@ $$._ChildrenElementList = {"":
     t2.$dom_appendChild$1(t1.next$0());
 },
  sort$1: function(compare) {
-  throw $.$$throw($.CTC25);
+  throw $.$$throw($.CTC24);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC34);
+  throw $.$$throw($.CTC33);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC34);
+  throw $.$$throw($.CTC33);
 },
  getRange$2: function(start, rangeLength) {
   return $._FrozenElementList$_wrap($._Lists_getRange(this, start, rangeLength, []));
@@ -3099,7 +3085,15 @@ $$._FrozenElementList = {"":
  ["_nodeList"],
  "super": "Object",
  get$first: function() {
-  return $.index(this._nodeList, 0);
+  var t1 = this._nodeList;
+  if (typeof t1 !== 'string' && (typeof t1 !== 'object' || t1 === null || t1.constructor !== Array && !t1.is$JavaScriptIndexingBehavior()))
+    return this.get$first$bailout(1, t1);
+  if (0 >= t1.length)
+    throw $.ioore(0);
+  return t1[0];
+},
+ get$first$bailout: function(state, t1) {
+  return $.index(t1, 0);
 },
  first$0: function() { return this.get$first().call$0(); },
  forEach$1: function(f) {
@@ -3113,11 +3107,11 @@ $$._FrozenElementList = {"":
   return out;
 },
  filter$1: function(f) {
-  var out = $._ElementList$([]);
+  var out = [];
   for (var t1 = $.iterator(this); t1.hasNext$0() === true;) {
     var t2 = t1.next$0();
     if (f.call$1(t2) === true)
-      out.add$1(t2);
+      out.push(t2);
   }
   return out;
 },
@@ -3131,31 +3125,31 @@ $$._FrozenElementList = {"":
   return $.index(this._nodeList, index);
 },
  operator$indexSet$2: function(index, value) {
-  throw $.$$throw($.CTC24);
+  throw $.$$throw($.CTC23);
 },
  set$length: function(newLength) {
   $.set$length(this._nodeList, newLength);
 },
  add$1: function(value) {
-  throw $.$$throw($.CTC24);
+  throw $.$$throw($.CTC23);
 },
  addLast$1: function(value) {
-  throw $.$$throw($.CTC24);
+  throw $.$$throw($.CTC23);
 },
  iterator$0: function() {
   return $._FrozenElementListIterator$(this);
 },
  addAll$1: function(collection) {
-  throw $.$$throw($.CTC24);
+  throw $.$$throw($.CTC23);
 },
  sort$1: function(compare) {
-  throw $.$$throw($.CTC24);
+  throw $.$$throw($.CTC23);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC24);
+  throw $.$$throw($.CTC23);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC24);
+  throw $.$$throw($.CTC23);
 },
  getRange$2: function(start, rangeLength) {
   return $._FrozenElementList$_wrap($.getRange(this._nodeList, start, rangeLength));
@@ -3173,10 +3167,10 @@ $$._FrozenElementList = {"":
   return this.lastIndexOf$2(element,null)
 },
  clear$0: function() {
-  throw $.$$throw($.CTC24);
+  throw $.$$throw($.CTC23);
 },
  removeLast$0: function() {
-  throw $.$$throw($.CTC24);
+  throw $.$$throw($.CTC23);
 },
  last$0: function() {
   return $.last(this._nodeList);
@@ -3207,20 +3201,6 @@ $$._FrozenElementListIterator = {"":
  hasNext$0$bailout: function(state, t1, t2) {
   return $.lt(t1, t2);
 }
-};
-
-$$._ElementList = {"":
- ["_lib_list"],
- "super": "_ListWrapper",
- filter$1: function(f) {
-  return $._ElementList$($._ListWrapper.prototype.filter$1.call(this, f));
-},
- getRange$2: function(start, rangeLength) {
-  return $._ElementList$($._ListWrapper.prototype.getRange$2.call(this, start, rangeLength));
-},
- is$List: function() { return true; },
- is$Collection: function() { return true; },
- is$Iterable: function() { return true; }
 };
 
 $$._ElementAttributeMap = {"":
@@ -3684,7 +3664,15 @@ $$._ListWrapper = {"":
   return $.insertRange$3(this._lib_list, start, rangeLength, initialValue);
 },
  get$first: function() {
-  return $.index(this._lib_list, 0);
+  var t1 = this._lib_list;
+  if (typeof t1 !== 'string' && (typeof t1 !== 'object' || t1 === null || t1.constructor !== Array && !t1.is$JavaScriptIndexingBehavior()))
+    return this.get$first$bailout(1, t1);
+  if (0 >= t1.length)
+    throw $.ioore(0);
+  return t1[0];
+},
+ get$first$bailout: function(state, t1) {
+  return $.index(t1, 0);
 },
  first$0: function() { return this.get$first().call$0(); },
  is$List: function() { return true; },
@@ -4036,13 +4024,12 @@ $$.Enumerable = {"":
     f = new $.Enumerable_first_anon();
   var iter = $._WhereIterator$(this.iterator$0(), f);
   if (iter.hasNext$0() !== true)
-    throw $.$$throw($.CTC20);
+    throw $.$$throw($.CTC49);
   return iter.next$0();
 },
  first$0: function() {
   return this.first$1(null)
 },
- get$first: function() { return new $.BoundClosure3(this, 'first$1'); },
  group$1: function(keyFunc) {
   return $.Grouping$(this, keyFunc);
 },
@@ -5084,7 +5071,7 @@ $$.TestCondorcetPair_run_anon0 = {"":
  ["c1_0"],
  "super": "Closure",
  call$0: function() {
-  $.expect(new $.TestCondorcetPair_run_anon9(this.c1_0), $.CTC32, null, null, false);
+  $.expect(new $.TestCondorcetPair_run_anon9(this.c1_0), $.CTC31, null, null, false);
 }
 };
 
@@ -5105,7 +5092,7 @@ $$.TestCondorcetPair_run_anon1 = {"":
   var t2 = this.c1_4;
   var t3 = this.c2_3;
   var b1 = $.RankedBallot_RankedBallot(t1, [t2, t3]);
-  $.expect(new $.TestCondorcetPair_run_anon8(t2, t3, $.RankedBallot_RankedBallot(t1, [t2, t3]), b1), $.CTC32, null, null, false);
+  $.expect(new $.TestCondorcetPair_run_anon8(t2, t3, $.RankedBallot_RankedBallot(t1, [t2, t3]), b1), $.CTC31, null, null, false);
 }
 };
 
@@ -5126,8 +5113,8 @@ $$.TestCondorcetPair_run_anon2 = {"":
   var b1 = $.RankedBallot_RankedBallot(t1, [t2]);
   var t3 = this.c2_10;
   var b2 = $.RankedBallot_RankedBallot(t1, [t3]);
-  $.expect(new $.TestCondorcetPair_run_anon6(t2, t3, b1), $.CTC32, null, null, false);
-  $.expect(new $.TestCondorcetPair_run_anon7(t2, t3, b2), $.CTC32, null, null, false);
+  $.expect(new $.TestCondorcetPair_run_anon6(t2, t3, b1), $.CTC31, null, null, false);
+  $.expect(new $.TestCondorcetPair_run_anon7(t2, t3, b2), $.CTC31, null, null, false);
 }
 };
 
@@ -5213,7 +5200,7 @@ $$.TestRankedBallot_run_anon0 = {"":
  ["c1_0"],
  "super": "Closure",
  call$0: function() {
-  $.expect(new $.TestRankedBallot_run_anon9(this.c1_0), $.CTC32, null, null, false);
+  $.expect(new $.TestRankedBallot_run_anon9(this.c1_0), $.CTC31, null, null, false);
 }
 };
 
@@ -5229,7 +5216,7 @@ $$.TestRankedBallot_run_anon1 = {"":
  ["v2_2"],
  "super": "Closure",
  call$0: function() {
-  $.expect(new $.TestRankedBallot_run_anon8(this.v2_2), $.CTC32, null, null, false);
+  $.expect(new $.TestRankedBallot_run_anon8(this.v2_2), $.CTC31, null, null, false);
 }
 };
 
@@ -5245,7 +5232,7 @@ $$.TestRankedBallot_run_anon2 = {"":
  ["v2_4"],
  "super": "Closure",
  call$0: function() {
-  $.expect(new $.TestRankedBallot_run_anon7(this.v2_4), $.CTC32, null, null, false);
+  $.expect(new $.TestRankedBallot_run_anon7(this.v2_4), $.CTC31, null, null, false);
 }
 };
 
@@ -5261,7 +5248,7 @@ $$.TestRankedBallot_run_anon3 = {"":
  ["c1_7", "v2_6"],
  "super": "Closure",
  call$0: function() {
-  $.expect(new $.TestRankedBallot_run_anon6(this.c1_7, this.v2_6), $.CTC32, null, null, false);
+  $.expect(new $.TestRankedBallot_run_anon6(this.c1_7, this.v2_6), $.CTC31, null, null, false);
 }
 };
 
@@ -5803,7 +5790,7 @@ $$.Throws_matches_anon = {"":
  "super": "Closure",
  call$1: function(future) {
   if (future.get$hasValue() === true)
-    $.expect(false, $.CTC31, 'Expected future to fail, but succeeded with \'' + $.S(future.get$value()) + '\'.', null, false);
+    $.expect(false, $.CTC30, 'Expected future to fail, but succeeded with \'' + $.S(future.get$value()) + '\'.', null, false);
   else {
     var t1 = this.this_0;
     if (!(t1.get$_matcher() == null)) {
@@ -6364,14 +6351,6 @@ $$.Enumerable_filter_anon = {"":
 }
 };
 
-$$.Enumerable_first_anon = {"":
- [],
- "super": "Closure",
- call$1: function(e) {
-  return true;
-}
-};
-
 $$.ConstantMap_forEach_anon = {"":
  ["this_1", "f_0"],
  "super": "Closure",
@@ -6397,7 +6376,7 @@ $$._ChildrenElementList_filter_anon = {"":
 }
 };
 
-$$.FilteredElementList__filtered_anon = {"":
+$$._FilteredElementList__filtered_anon = {"":
  [],
  "super": "Closure",
  call$1: function(n) {
@@ -6405,7 +6384,7 @@ $$.FilteredElementList__filtered_anon = {"":
 }
 };
 
-$$.FilteredElementList_removeRange_anon = {"":
+$$._FilteredElementList_removeRange_anon = {"":
  [],
  "super": "Closure",
  call$1: function(el) {
@@ -6827,7 +6806,7 @@ $$.TestDistanceElection__testSimpleElection_anon0 = {"":
  "super": "Closure",
  call$0: function() {
   var t1 = this.ballots_4;
-  $.expect(t1, $.CTC36, null, null, false);
+  $.expect(t1, $.CTC35, null, null, false);
   $.expect($.get$length(t1), $.equals(5, 100), null, null, false);
   for (var t2 = $.iterator($.getRange(t1, 0, 4)), t3 = this.c0_5, t4 = this.c1_6; t2.hasNext$0() === true;) {
     var t5 = t2.next$0();
@@ -7030,6 +7009,14 @@ $$.RgbColor_toHex_anon = {"":
 }
 };
 
+$$.Enumerable_first_anon = {"":
+ [],
+ "super": "Closure",
+ call$1: function(e) {
+  return true;
+}
+};
+
 $$._IsolateNatives__spawn_anon = {"":
  ["port_1", "completer_0"],
  "super": "Closure",
@@ -7172,14 +7159,6 @@ $$.BoundClosure2 = {'':
  ['self', 'target'],
  'super': 'Closure',
 call$2: function(p0, p1) { return this.self[this.target](p0, p1); }
-};
-$$.BoundClosure3 = {'':
- ['self', 'target'],
- 'super': 'Closure',
-call$1: function(p0) { return this.self[this.target](p0); },
- call$0: function() {
-  return this.call$1(null)
-}
 };
 $.div$slow = function(a, b) {
   if ($.checkNumbers(a, b))
@@ -7768,8 +7747,8 @@ $.TestDistanceElection__testTie = function() {
   for (var i = -2; i <= 2; ++i)
     for (var j = -2; j <= 2; ++j)
       voters.push($.MapPlayer$($.Coordinate$(i, j), null));
-  var c0 = $.MapPlayer$($.CTC37, null);
-  var c1 = $.MapPlayer$($.CTC38, null);
+  var c0 = $.MapPlayer$($.CTC36, null);
+  var c1 = $.MapPlayer$($.CTC37, null);
   var mapElection = $.DistanceElection_DistanceElection(voters, [c0, c1]);
   $.expect(mapElection.get$singleWinner(), $.CTC16, null, null, false);
   $.expect($.get$length(mapElection.get$places()), $.equals(1, 100), null, null, false);
@@ -7788,13 +7767,13 @@ $.Element_Element$html = function(html) {
 };
 
 $.TestDistanceElection__testSimpleElection = function() {
-  var v1 = $.MapPlayer$($.CTC40, null);
-  var v2 = $.MapPlayer$($.CTC41, null);
-  var v3 = $.MapPlayer$($.CTC42, null);
-  var v4 = $.MapPlayer$($.CTC43, null);
-  var v5 = $.MapPlayer$($.CTC44, null);
-  var c0 = $.MapPlayer$($.CTC45, null);
-  var c1 = $.MapPlayer$($.CTC46, null);
+  var v1 = $.MapPlayer$($.CTC39, null);
+  var v2 = $.MapPlayer$($.CTC40, null);
+  var v3 = $.MapPlayer$($.CTC41, null);
+  var v4 = $.MapPlayer$($.CTC42, null);
+  var v5 = $.MapPlayer$($.CTC43, null);
+  var c0 = $.MapPlayer$($.CTC44, null);
+  var c1 = $.MapPlayer$($.CTC45, null);
   var mapElection = $.DistanceElection_DistanceElection([v1, v2, v3, v4, v5], [c0, c1]);
   $.group('simple, obvious map', new $.TestDistanceElection__testSimpleElection_anon(mapElection, c1, c0, mapElection.get$ballots()));
 };
@@ -8207,7 +8186,7 @@ $._isJavaScriptSimpleObject = function(value) {
 };
 
 $.TestSpoilerMap$ = function() {
-  var t1 = new $.TestSpoilerMap($.MapPlayer$($.CTC47, null), $.MapPlayer$($.CTC48, null), $.MapPlayer$($.CTC49, null), null);
+  var t1 = new $.TestSpoilerMap($.MapPlayer$($.CTC46, null), $.MapPlayer$($.CTC47, null), $.MapPlayer$($.CTC48, null), null);
   t1.TestSpoilerMap$0();
   return t1;
 };
@@ -8234,7 +8213,7 @@ $.TestCondorcetElection__sample2 = function() {
     voter = voter0;
   }
   var ce = $.CondorcetElection_CondorcetElection(ballots);
-  $.expect(ce, $.CTC36, null, null, false);
+  $.expect(ce, $.CTC35, null, null, false);
   $.expect(ce.get$singleWinner(), $.equals('Chocolate', 100), null, null, false);
   $.expect(ce.get$candidates(), $.unorderedEquals(['Chocolate', 'Chocolate Chunk', 'Vanilla']), null, null, false);
   $.expect(ce.get$ballots(), $.unorderedEquals(ballots), null, null, false);
@@ -8274,7 +8253,7 @@ $.TestLocationData__testGetCandidateName = function() {
   $.expect($.LocationData_getCandidateName(0), $.equals('A', 100), null, null, false);
   $.expect($.LocationData_getCandidateName(1), $.equals('B', 100), null, null, false);
   $.expect($.LocationData_getCandidateName(25), $.equals('Z', 100), null, null, false);
-  $.expect(new $.TestLocationData__testGetCandidateName_anon(), $.CTC32, null, null, false);
+  $.expect(new $.TestLocationData__testGetCandidateName_anon(), $.CTC31, null, null, false);
 };
 
 $.DateImplementation$fromMillisecondsSinceEpoch = function(millisecondsSinceEpoch, isUtc) {
@@ -8488,6 +8467,10 @@ $.CollectionUtil_allUnique = function(items) {
   var t1;
 };
 
+$._FilteredElementList$ = function(node) {
+  return new $._FilteredElementList(node, node.get$nodes());
+};
+
 $.NoMoreElementsException$ = function() {
   return new $.NoMoreElementsException();
 };
@@ -8515,10 +8498,6 @@ $.Collections__emitCollection = function(c, result, visiting) {
   }
   $.add$1(result, isList ? ']' : '}');
   $.removeLast(visiting);
-};
-
-$.FilteredElementList$ = function(node) {
-  return new $.FilteredElementList(node, node.get$nodes());
 };
 
 $.typeNameInChrome = function(obj) {
@@ -9061,7 +9040,7 @@ $.TestPlurality_testSingleVoteSingleWinner = function() {
 $.TestCondorcetElection__sample1 = function() {
   var b = $.RankedBallot_RankedBallot('Voter 1', ['Candidate 1']);
   var ce = $.CondorcetElection_CondorcetElection([b]);
-  $.expect(ce, $.CTC36, null, null, false);
+  $.expect(ce, $.CTC35, null, null, false);
   $.expect(ce.get$singleWinner(), $.equals('Candidate 1', 100), null, null, false);
   $.expect(ce.get$candidates(), $.unorderedEquals(['Candidate 1']), null, null, false);
   $.expect(ce.get$ballots(), $.unorderedEquals([b]), null, null, false);
@@ -9371,10 +9350,6 @@ $._DoubleLinkedQueueEntrySentinel$ = function() {
 
 $.toStringWrapper = function() {
   return $.toString(this.dartException);
-};
-
-$._ElementList$ = function(list) {
-  return new $._ElementList(list);
 };
 
 $.gtB = function(a, b) {
@@ -9705,27 +9680,6 @@ $.ge$slow = function(a, b) {
   return a.operator$ge$1(b);
 };
 
-$.Arrays_lastIndexOf = function(a, element, startIndex) {
-  if (typeof a !== 'string' && (typeof a !== 'object' || a === null || a.constructor !== Array && !a.is$JavaScriptIndexingBehavior()))
-    return $.Arrays_lastIndexOf$bailout(1, a, element, startIndex);
-  if (typeof startIndex !== 'number')
-    return $.Arrays_lastIndexOf$bailout(1, a, element, startIndex);
-  if (startIndex < 0)
-    return -1;
-  var t1 = a.length;
-  if (startIndex >= t1)
-    startIndex = t1 - 1;
-  for (var i = startIndex; i >= 0; --i) {
-    if (i !== (i | 0))
-      throw $.iae(i);
-    if (i < 0 || i >= a.length)
-      throw $.ioore(i);
-    if ($.eqB(a[i], element))
-      return i;
-  }
-  return -1;
-};
-
 $.indexSet$slow = function(a, index, value) {
   if ($.isJsArray(a)) {
     if (!(typeof index === 'number' && Math.floor(index) === index))
@@ -9755,7 +9709,7 @@ $.getFunctionForTypeNameOf = function() {
     return $.typeNameInIE;
   else if ($.contains(userAgent, 'Opera'))
     return $.typeNameInOpera;
-  else if ($.contains(userAgent, 'Safari'))
+  else if ($.contains(userAgent, 'AppleWebKit'))
     return $.typeNameInSafari;
   else
     return $.constructorNameFallback;
@@ -10015,6 +9969,27 @@ $.LocationData__slice = function(itemCount, maxValue, sliceCount) {
   }
 };
 
+$.Arrays_lastIndexOf = function(a, element, startIndex) {
+  if (typeof a !== 'string' && (typeof a !== 'object' || a === null || a.constructor !== Array && !a.is$JavaScriptIndexingBehavior()))
+    return $.Arrays_lastIndexOf$bailout(1, a, element, startIndex);
+  if (typeof startIndex !== 'number')
+    return $.Arrays_lastIndexOf$bailout(1, a, element, startIndex);
+  if (startIndex < 0)
+    return -1;
+  var t1 = a.length;
+  if (startIndex >= t1)
+    startIndex = t1 - 1;
+  for (var i = startIndex; i >= 0; --i) {
+    if (i !== (i | 0))
+      throw $.iae(i);
+    if (i < 0 || i >= a.length)
+      throw $.ioore(i);
+    if ($.eqB(a[i], element))
+      return i;
+  }
+  return -1;
+};
+
 $.GlobalId$_internal = function(value) {
   return new $.GlobalId(value, $.Util_getHashCode([value]));
 };
@@ -10076,10 +10051,11 @@ $.Primitives_printString = function(string) {
     console.log(string);
     return;
   }
-  if (typeof write == "function") {
-    write(string);
-    write("\n");
+  if (typeof print == "function") {
+    print(string);
+    return;
   }
+  throw $.$$throw('Unable to print message: ' + $.S($.NoSuchMethodError_safeToString(string)));
 };
 
 $.Primitives_getMilliseconds = function(receiver) {
@@ -10297,15 +10273,15 @@ $.HashMapImplementation__nextProbe = function(currentProbe, numberOfProbes, leng
   return $.and($.add(currentProbe, numberOfProbes), $.sub(length$, 1));
 };
 
+$._voterHexMapperIsolate = function() {
+  $.port().receive$1(new $._voterHexMapperIsolate_anon());
+};
+
 $.TestPlurality_randomVoteTest = function() {
   var voters = $.ListImplementation_List(null);
   for (var i = 0; i < 10; ++i)
     voters.push('Voter ' + $.S(i));
   $.PluralityElection_PluralityElection($.map(voters, new $.TestPlurality_randomVoteTest_anon('candidate 1')));
-};
-
-$._voterHexMapperIsolate = function() {
-  $.port().receive$1(new $._voterHexMapperIsolate_anon());
 };
 
 $.Completer_Completer = function() {
@@ -10375,10 +10351,10 @@ $._WindowEventsImpl$ = function(_ptr) {
 };
 
 $._ElementFactoryProvider_createElement_html = function(html) {
-  var match = $.CTC21.firstMatch$1(html);
+  var match = $.CTC20.firstMatch$1(html);
   if (!(match == null)) {
     var tag = $.toLowerCase(match.group$1(1));
-    var parentTag = $.CTC22.containsKey$1(tag) === true ? $.CTC22.operator$index$1(tag) : 'div';
+    var parentTag = $.CTC21.containsKey$1(tag) === true ? $.CTC21.operator$index$1(tag) : 'div';
   } else {
     parentTag = 'div';
     tag = null;
@@ -10386,7 +10362,7 @@ $._ElementFactoryProvider_createElement_html = function(html) {
   var temp = $.Element_Element$tag(parentTag);
   temp.set$innerHTML(html);
   if ($.eqB($.get$length(temp.get$elements()), 1))
-    var element = temp.get$elements().get$first();
+    var element = $.index(temp.get$elements(), 0);
   else if ($.eqB(parentTag, 'html') && $.eqB($.get$length(temp.get$elements()), 2)) {
     var t1 = temp.get$elements();
     element = $.index(t1, $.eqB(tag, 'head') ? 0 : 1);
@@ -10797,7 +10773,7 @@ $._TextTrackCueEventsImpl$ = function(_ptr) {
 };
 
 $.Random_Random = function(seed) {
-  return $.CTC39;
+  return $.CTC38;
 };
 
 $.regExpExec = function(regExp, str) {
@@ -11697,49 +11673,49 @@ Isolate.makeConstantList = function(list) {
   return list;
 };
 $.CTC0 = Isolate.makeConstantList([]);
-$.CTC31 = new Isolate.$isolateProperties._IsTrue();
+$.CTC30 = new Isolate.$isolateProperties._IsTrue();
 $.CTC53 = 'structured clone of ArrayBufferView';
 $.CTC8 = new Isolate.$isolateProperties.NotImplementedException('structured clone of ArrayBufferView');
-$.CTC30 = new Isolate.$isolateProperties.ConstantMap(0, {}, Isolate.$isolateProperties.CTC0);
+$.CTC29 = new Isolate.$isolateProperties.ConstantMap(0, {}, Isolate.$isolateProperties.CTC0);
 $.CTC54 = null;
 $.CTC17 = new Isolate.$isolateProperties.Throws(null);
 $.CTC13 = new Isolate.$isolateProperties._DeletedKeySentinel();
-$.CTC36 = new Isolate.$isolateProperties._IsNotNull();
+$.CTC35 = new Isolate.$isolateProperties._IsNotNull();
 $.CTC55 = 'TODO(jacobr): should we impl?';
-$.CTC25 = new Isolate.$isolateProperties.UnsupportedOperationException('TODO(jacobr): should we impl?');
+$.CTC24 = new Isolate.$isolateProperties.UnsupportedOperationException('TODO(jacobr): should we impl?');
 $.CTC56 = 'Cannot add to immutable List.';
 $.CTC1 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot add to immutable List.');
-$.CTC57 = -1;
-$.CTC58 = 0;
-$.CTC37 = new Isolate.$isolateProperties.Coordinate(-1, 0);
+$.CTC57 = 1;
+$.CTC58 = -1;
+$.CTC42 = new Isolate.$isolateProperties.Coordinate(1, -1);
 $.CTC59 = false;
 $.CTC60 = '[-[\\]{}()*+?.,\\\\^$|#\\s]';
 $.CTC12 = new Isolate.$isolateProperties.JSSyntaxRegExp(false, false, '[-[\\]{}()*+?.,\\\\^$|#\\s]');
 $.CTC61 = 'ArgumentError';
 $.CTC62 = new Isolate.$isolateProperties._ArgumentError('ArgumentError');
-$.CTC63 = 1;
-$.CTC41 = new Isolate.$isolateProperties.Coordinate(-1, 1);
-$.CTC32 = new Isolate.$isolateProperties.Throws(Isolate.$isolateProperties.CTC62);
-$.CTC43 = new Isolate.$isolateProperties.Coordinate(1, -1);
-$.CTC23 = new Isolate.$isolateProperties.IllegalAccessException();
+$.CTC40 = new Isolate.$isolateProperties.Coordinate(-1, 1);
+$.CTC63 = 0;
+$.CTC36 = new Isolate.$isolateProperties.Coordinate(-1, 0);
+$.CTC31 = new Isolate.$isolateProperties.Throws(Isolate.$isolateProperties.CTC62);
+$.CTC22 = new Isolate.$isolateProperties.IllegalAccessException();
 $.CTC64 = '^[*a-zA-Z0-9]+$';
-$.CTC29 = new Isolate.$isolateProperties.JSSyntaxRegExp(false, false, '^[*a-zA-Z0-9]+$');
+$.CTC28 = new Isolate.$isolateProperties.JSSyntaxRegExp(false, false, '^[*a-zA-Z0-9]+$');
 $.CTC65 = 'structured clone of File';
 $.CTC4 = new Isolate.$isolateProperties.NotImplementedException('structured clone of File');
 $.CTC66 = 'structured clone of ImageData';
 $.CTC6 = new Isolate.$isolateProperties.NotImplementedException('structured clone of ImageData');
 $.CTC = new Isolate.$isolateProperties.NullPointerException(null, Isolate.$isolateProperties.CTC0);
-$.CTC67 = '';
-$.CTC24 = new Isolate.$isolateProperties.UnsupportedOperationException('');
-$.CTC68 = '<(\\w+)';
-$.CTC21 = new Isolate.$isolateProperties.JSSyntaxRegExp(false, false, '<(\\w+)');
-$.CTC69 = 'Cannot removeLast on immutable List.';
-$.CTC11 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot removeLast on immutable List.');
-$.CTC34 = new Isolate.$isolateProperties.NotImplementedException(null);
-$.CTC10 = new Isolate.$isolateProperties.NoMoreElementsException();
 $.CTC18 = new Isolate.$isolateProperties.EmptyQueueException();
+$.CTC67 = '';
+$.CTC23 = new Isolate.$isolateProperties.UnsupportedOperationException('');
+$.CTC68 = 'Cannot removeLast on immutable List.';
+$.CTC11 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot removeLast on immutable List.');
+$.CTC33 = new Isolate.$isolateProperties.NotImplementedException(null);
+$.CTC69 = '<(\\w+)';
+$.CTC20 = new Isolate.$isolateProperties.JSSyntaxRegExp(false, false, '<(\\w+)');
+$.CTC10 = new Isolate.$isolateProperties.NoMoreElementsException();
 $.CTC70 = '^#[_a-zA-Z]\\w*$';
-$.CTC27 = new Isolate.$isolateProperties.JSSyntaxRegExp(false, false, '^#[_a-zA-Z]\\w*$');
+$.CTC26 = new Isolate.$isolateProperties.JSSyntaxRegExp(false, false, '^#[_a-zA-Z]\\w*$');
 $.CTC71 = 'structured clone of ArrayBuffer';
 $.CTC7 = new Isolate.$isolateProperties.NotImplementedException('structured clone of ArrayBuffer');
 $.CTC72 = 'Cannot sort immutable List.';
@@ -11762,39 +11738,39 @@ $.CTC52 = new Isolate.$isolateProperties.Object();
 $.CTC86 = 'IDBKey containing Date';
 $.CTC19 = new Isolate.$isolateProperties.NotImplementedException('IDBKey containing Date');
 $.CTC87 = 'Cannot insertRange on immutable List.';
-$.CTC35 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot insertRange on immutable List.');
+$.CTC34 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot insertRange on immutable List.');
 $.CTC88 = 'html';
 $.CTC89 = 'table';
 $.CTC90 = 'audio';
-$.CTC22 = new Isolate.$isolateProperties.ConstantMap(11, {'body': 'html', 'head': 'html', 'caption': 'table', 'td': 'tr', 'colgroup': 'table', 'col': 'colgroup', 'tr': 'tbody', 'tbody': 'table', 'tfoot': 'table', 'thead': 'table', 'track': 'audio'}, Isolate.$isolateProperties.CTC85);
+$.CTC21 = new Isolate.$isolateProperties.ConstantMap(11, {'body': 'html', 'head': 'html', 'caption': 'table', 'td': 'tr', 'colgroup': 'table', 'col': 'colgroup', 'tr': 'tbody', 'tbody': 'table', 'tfoot': 'table', 'thead': 'table', 'track': 'audio'}, Isolate.$isolateProperties.CTC85);
 $.CTC91 = 'Cannot removeRange on immutable List.';
-$.CTC33 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot removeRange on immutable List.');
+$.CTC32 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot removeRange on immutable List.');
 $.CTC92 = 'structured clone of Blob';
 $.CTC5 = new Isolate.$isolateProperties.NotImplementedException('structured clone of Blob');
-$.CTC39 = new Isolate.$isolateProperties._Random();
+$.CTC38 = new Isolate.$isolateProperties._Random();
 $.CTC93 = 7.1;
-$.CTC49 = new Isolate.$isolateProperties.Coordinate(7.1, 0);
-$.CTC94 = 5;
-$.CTC47 = new Isolate.$isolateProperties.Coordinate(5, 0);
+$.CTC48 = new Isolate.$isolateProperties.Coordinate(7.1, 0);
+$.CTC94 = 4;
+$.CTC47 = new Isolate.$isolateProperties.Coordinate(4, 0);
 $.CTC95 = 'structured clone of RegExp';
 $.CTC3 = new Isolate.$isolateProperties.NotImplementedException('structured clone of RegExp');
-$.CTC96 = 4;
-$.CTC48 = new Isolate.$isolateProperties.Coordinate(4, 0);
+$.CTC96 = 5;
+$.CTC46 = new Isolate.$isolateProperties.Coordinate(5, 0);
 $.CTC97 = 'Invalid list length';
-$.CTC26 = new Isolate.$isolateProperties.ArgumentError('Invalid list length');
-$.CTC38 = new Isolate.$isolateProperties.Coordinate(1, 0);
-$.CTC40 = new Isolate.$isolateProperties.Coordinate(1, 1);
-$.CTC42 = new Isolate.$isolateProperties.Coordinate(-1, -1);
+$.CTC25 = new Isolate.$isolateProperties.ArgumentError('Invalid list length');
+$.CTC39 = new Isolate.$isolateProperties.Coordinate(1, 1);
+$.CTC37 = new Isolate.$isolateProperties.Coordinate(1, 0);
+$.CTC41 = new Isolate.$isolateProperties.Coordinate(-1, -1);
 $.CTC98 = 9;
-$.CTC44 = new Isolate.$isolateProperties.Coordinate(9, 9);
-$.CTC99 = 'The input sequence is empty.';
-$.CTC20 = new Isolate.$isolateProperties.InvalidOperationException('The input sequence is empty.');
-$.CTC100 = '^\\[name=["\'][^\'"]+[\'"]\\]$';
-$.CTC28 = new Isolate.$isolateProperties.JSSyntaxRegExp(false, false, '^\\[name=["\'][^\'"]+[\'"]\\]$');
+$.CTC43 = new Isolate.$isolateProperties.Coordinate(9, 9);
+$.CTC99 = '^\\[name=["\'][^\'"]+[\'"]\\]$';
+$.CTC27 = new Isolate.$isolateProperties.JSSyntaxRegExp(false, false, '^\\[name=["\'][^\'"]+[\'"]\\]$');
+$.CTC100 = 'The input sequence is empty.';
+$.CTC49 = new Isolate.$isolateProperties.InvalidOperationException('The input sequence is empty.');
+$.CTC44 = new Isolate.$isolateProperties.Coordinate(0, 0);
 $.CTC51 = new Isolate.$isolateProperties.EventArgs();
-$.CTC45 = new Isolate.$isolateProperties.Coordinate(0, 0);
 $.CTC101 = 10;
-$.CTC46 = new Isolate.$isolateProperties.Coordinate(10, 10);
+$.CTC45 = new Isolate.$isolateProperties.Coordinate(10, 10);
 $.CTC102 = 'structured clone of other type';
 $.CTC9 = new Isolate.$isolateProperties.NotImplementedException('structured clone of other type');
 $.CTC103 = '^(?:([^:/?#.]+):)?(?://(?:([^/?#]*)@)?([\\w\\d\\-\\u0100-\\uffff.%]*)(?::([0-9]+))?)?([^?#]+)?(?:\\?([^#]*))?(?:#(.*))?$';
@@ -11839,7 +11815,7 @@ $.DualPivotQuicksort__INSERTION_SORT_THRESHOLD = 32;
 $.Primitives_hashCodeSeed = 0;
 $.groupSep = ' ';
 $.isArgumentError = Isolate.$isolateProperties.CTC62;
-$.throwsArgumentError = Isolate.$isolateProperties.CTC32;
+$.throwsArgumentError = Isolate.$isolateProperties.CTC31;
 $.HashMapImplementation__INITIAL_CAPACITY = 8;
 $.Duration_SECONDS_PER_MINUTE = 60;
 $._tests = null;
@@ -11847,7 +11823,7 @@ $._testTeardown = null;
 $._assertErrorFormatter = null;
 $._initialized = false;
 $.Uri__COMPONENT_USER_INFO = 2;
-$.isTrue = Isolate.$isolateProperties.CTC31;
+$.isTrue = Isolate.$isolateProperties.CTC30;
 $._TimerFactory__factory = null;
 $._cachedBrowserPrefix = null;
 $.Primitives_DOLLAR_CHAR_VALUE = 36;
@@ -11856,7 +11832,7 @@ $._soloTest = null;
 $.LocationData_span = 10;
 $.Duration_MILLISECONDS_PER_SECOND = 1000;
 $.Duration_MILLISECONDS_PER_HOUR = 3600000;
-$.isNotNull = Isolate.$isolateProperties.CTC36;
+$.isNotNull = Isolate.$isolateProperties.CTC35;
 $.FAIL = 'fail';
 var $ = null;
 Isolate.$finishClasses($$);
@@ -11894,8 +11870,8 @@ $.$defineNativeClass = function(cls, fields, methods) {
   }
 })({
  is$JavaScriptIndexingBehavior: function() { return false; },
- is$Iterable: function() { return false; },
  is$ArrayBufferView: function() { return false; },
+ is$Iterable: function() { return false; },
  is$ArrayBuffer: function() { return false; },
  is$_ImageDataImpl: function() { return false; },
  is$_ArrayBufferViewImpl: function() { return false; },
@@ -11907,9 +11883,9 @@ $.$defineNativeClass = function(cls, fields, methods) {
  is$_BlobImpl: function() { return false; },
  is$Element: function() { return false; },
  is$Map: function() { return false; },
- is$List: function() { return false; },
- is$_ArrayBufferImpl: function() { return false; },
  is$ImageData: function() { return false; },
+ is$_ArrayBufferImpl: function() { return false; },
+ is$List: function() { return false; },
  is$Location: function() { return false; },
  is$Collection: function() { return false; },
  hashCode$0: function() { return $.hashCodeForNativeObject(this); }
@@ -12113,10 +12089,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -12202,10 +12178,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -12281,10 +12257,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -12396,10 +12372,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -12468,10 +12444,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -12549,10 +12525,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -12628,7 +12604,7 @@ $.$defineNativeClass('HTMLDivElement', [], {
 $.$defineNativeClass('DocumentFragment', [], {
  get$elements: function() {
   if (this._elements == null)
-    this._elements = $.FilteredElementList$(this);
+    this._elements = $._FilteredElementList$(this);
   return this._elements;
 },
  query$1: function(selectors) {
@@ -12658,7 +12634,7 @@ $.$defineNativeClass('DocumentFragment', [], {
   return;
 },
  get$attributes: function() {
-  return $.CTC30;
+  return $.CTC29;
 },
  click$0: function() {
 },
@@ -12701,12 +12677,12 @@ return this.defaultView;
   return this.querySelectorAll(selectors);
 },
  query$1: function(selectors) {
-  if ($.CTC27.hasMatch$1(selectors) === true)
+  if ($.CTC26.hasMatch$1(selectors) === true)
     return this.$dom_getElementById$1($.substring$1(selectors, 1));
   return this.$dom_querySelector$1(selectors);
 },
  queryAll$1: function(selectors) {
-  if ($.CTC28.hasMatch$1(selectors) === true) {
+  if ($.CTC27.hasMatch$1(selectors) === true) {
     var mutableMatches = this.$dom_getElementsByName$1($.substring$2(selectors, 7, selectors.length - 2));
     if (typeof mutableMatches !== 'string' && (typeof mutableMatches !== 'object' || mutableMatches === null || mutableMatches.constructor !== Array && !mutableMatches.is$JavaScriptIndexingBehavior()))
       return this.queryAll$1$bailout(1, mutableMatches);
@@ -12718,7 +12694,7 @@ return this.defaultView;
       copyOfMatches[i] = mutableMatches[i];
     }
     return $._FrozenElementList$_wrap(copyOfMatches);
-  } else if ($.CTC29.hasMatch$1(selectors) === true) {
+  } else if ($.CTC28.hasMatch$1(selectors) === true) {
     mutableMatches = this.$dom_getElementsByTagName$1(selectors);
     if (typeof mutableMatches !== 'string' && (typeof mutableMatches !== 'object' || mutableMatches === null || mutableMatches.constructor !== Array && !mutableMatches.is$JavaScriptIndexingBehavior()))
       return this.queryAll$1$bailout(2, mutableMatches);
@@ -12745,7 +12721,7 @@ return this.defaultView;
   switch (state) {
     case 0:
     default:
-      if (state === 1 || state === 0 && $.CTC28.hasMatch$1(selectors) === true)
+      if (state === 1 || state === 0 && $.CTC27.hasMatch$1(selectors) === true)
         switch (state) {
           case 0:
             var mutableMatches = this.$dom_getElementsByName$1($.substring$2(selectors, 7, selectors.length - 2));
@@ -12765,7 +12741,7 @@ return this.defaultView;
         switch (state) {
           case 0:
           case 2:
-            if (state === 2 || state === 0 && $.CTC29.hasMatch$1(selectors) === true)
+            if (state === 2 || state === 0 && $.CTC28.hasMatch$1(selectors) === true)
               switch (state) {
                 case 0:
                   mutableMatches = this.$dom_getElementsByTagName$1(selectors);
@@ -12930,10 +12906,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -12999,10 +12975,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -13157,10 +13133,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -13256,10 +13232,10 @@ this[index] = value
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -13326,10 +13302,10 @@ this[index] = value
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -13421,10 +13397,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -13494,10 +13470,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -13563,10 +13539,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -13862,10 +13838,10 @@ this[index] = value
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -13932,10 +13908,10 @@ this[index] = value
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -14002,10 +13978,10 @@ this[index] = value
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -14190,10 +14166,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -14332,10 +14308,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -14773,10 +14749,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -14898,10 +14874,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -14967,10 +14943,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -15036,10 +15012,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -15084,7 +15060,7 @@ $.$defineNativeClass('SVGDocument', [], {
 
 $.$defineNativeClass('SVGElement', [], {
  get$elements: function() {
-  return $.FilteredElementList$(this);
+  return $._FilteredElementList$(this);
 },
  set$elements: function(value) {
   var elements = this.get$elements();
@@ -15094,7 +15070,7 @@ $.$defineNativeClass('SVGElement', [], {
  set$innerHTML: function(svg) {
   var container = $.Element_Element$tag('div');
   container.set$innerHTML('<svg version="1.1">' + $.S(svg) + '</svg>');
-  this.set$elements(container.get$elements().get$first().get$elements());
+  this.set$elements($.index(container.get$elements(), 0).get$elements());
 },
  get$id: function() {
 return this.id;
@@ -15166,10 +15142,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -15405,10 +15381,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -15514,10 +15490,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -15638,10 +15614,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -15764,10 +15740,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -15876,10 +15852,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -15985,10 +15961,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -16068,10 +16044,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -16137,10 +16113,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -16227,10 +16203,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -16371,10 +16347,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -16483,10 +16459,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -16567,10 +16543,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -16649,10 +16625,10 @@ return this[index];
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -16730,10 +16706,10 @@ this[index] = value
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -16800,10 +16776,10 @@ this[index] = value
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -16870,10 +16846,10 @@ this[index] = value
   throw $.$$throw($.CTC11);
 },
  removeRange$2: function(start, rangeLength) {
-  throw $.$$throw($.CTC33);
+  throw $.$$throw($.CTC32);
 },
  insertRange$3: function(start, rangeLength, initialValue) {
-  throw $.$$throw($.CTC35);
+  throw $.$$throw($.CTC34);
 },
  getRange$2: function(start, rangeLength) {
   return $._Lists_getRange(this, start, rangeLength, []);
@@ -17067,7 +17043,6 @@ $.$defineNativeClass('XSLTProcessor', [], {
   var v16/*class(_Uint8ArrayImpl)*/ = 'Uint8Array|Uint8ClampedArray|Uint8ClampedArray';
   var table = [
     // [dynamic-dispatch-tag, tags of classes implementing dynamic-dispatch-tag]
-    ['EntrySync', 'EntrySync|FileEntrySync|DirectoryEntrySync|FileEntrySync|DirectoryEntrySync'],
     ['SVGGradientElement', v2/*class(_SVGGradientElementImpl)*/],
     ['WorkerContext', v11/*class(_WorkerContextImpl)*/],
     ['SVGTextPositioningElement', v0/*class(_SVGTextPositioningElementImpl)*/],
@@ -17095,7 +17070,8 @@ $.$defineNativeClass('XSLTProcessor', [], {
     ['Blob', 'Blob|File|File'],
     ['CSSValueList', 'CSSValueList|WebKitCSSFilterValue|WebKitCSSTransformValue|WebKitCSSFilterValue|WebKitCSSTransformValue'],
     ['DOMTokenList', 'DOMTokenList|DOMSettableTokenList|DOMSettableTokenList'],
-    ['Entry', 'Entry|FileEntry|DirectoryEntry|FileEntry|DirectoryEntry']];
+    ['Entry', 'Entry|FileEntry|DirectoryEntry|FileEntry|DirectoryEntry'],
+    ['EntrySync', 'EntrySync|FileEntrySync|DirectoryEntrySync|FileEntrySync|DirectoryEntrySync']];
 $.dynamicSetMetadata(table);
 })();
 

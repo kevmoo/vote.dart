@@ -655,7 +655,6 @@ $$.DoubleLinkedQueue = {"":
  first$0: function() {
   return this._sentinel._next.get$element();
 },
- get$first: function() { return new $.BoundClosure(this, 'first$0'); },
  last$0: function() {
   return this._sentinel._previous.get$element();
 },
@@ -1108,31 +1107,31 @@ $$.VoteDemo = {"":
   var t1 = locData.get$candidates();
   this._canManView.set$candidates(t1);
 },
- get$_locationDataUpdated: function() { return new $.BoundClosure0(this, '_locationDataUpdated$1'); },
+ get$_locationDataUpdated: function() { return new $.BoundClosure(this, '_locationDataUpdated$1'); },
  _distanceElectionUpdated$1: function(args) {
   var t1 = this._calcEngine.get$distanceElection();
   this._distanceView.set$election(t1);
   this._requestFrame$0();
 },
- get$_distanceElectionUpdated: function() { return new $.BoundClosure0(this, '_distanceElectionUpdated$1'); },
+ get$_distanceElectionUpdated: function() { return new $.BoundClosure(this, '_distanceElectionUpdated$1'); },
  _pluralityElectionUpdated$1: function(args) {
   var t1 = this._calcEngine.get$pluralityElection();
   this._pluralityView.set$election(t1);
   this._requestFrame$0();
 },
- get$_pluralityElectionUpdated: function() { return new $.BoundClosure0(this, '_pluralityElectionUpdated$1'); },
+ get$_pluralityElectionUpdated: function() { return new $.BoundClosure(this, '_pluralityElectionUpdated$1'); },
  _condorcetElectionUpdated$1: function(args) {
   var t1 = this._calcEngine.get$condorcetElection();
   this._condorcetView.set$election(t1);
   this._requestFrame$0();
 },
- get$_condorcetElectionUpdated: function() { return new $.BoundClosure0(this, '_condorcetElectionUpdated$1'); },
+ get$_condorcetElectionUpdated: function() { return new $.BoundClosure(this, '_condorcetElectionUpdated$1'); },
  _voterHexMapperUpdated$1: function(args) {
   var t1 = this._calcEngine.get$voterHexMap();
   this._rootMapElement.set$voterHexMap(t1);
   this._requestFrame$0();
 },
- get$_voterHexMapperUpdated: function() { return new $.BoundClosure0(this, '_voterHexMapperUpdated$1'); },
+ get$_voterHexMapperUpdated: function() { return new $.BoundClosure(this, '_voterHexMapperUpdated$1'); },
  _requestFrame$0: function() {
   if (!this._frameRequested) {
     this._frameRequested = true;
@@ -1143,7 +1142,7 @@ $$.VoteDemo = {"":
   this._rootMapElement.dragCandidate$2(this._dragCandidate, delta);
   this._requestFrame$0();
 },
- get$_onDrag: function() { return new $.BoundClosure0(this, '_onDrag$1'); },
+ get$_onDrag: function() { return new $.BoundClosure(this, '_onDrag$1'); },
  _onDragStart$1: function(e) {
   var t1 = this._overCandidate;
   if (t1 == null)
@@ -1151,7 +1150,7 @@ $$.VoteDemo = {"":
   else
     this._dragCandidate = t1;
 },
- get$_onDragStart: function() { return new $.BoundClosure0(this, '_onDragStart$1'); },
+ get$_onDragStart: function() { return new $.BoundClosure(this, '_onDragStart$1'); },
  _onFrame$1: function(highResTime) {
   this._stage.draw$0();
   this._condorcetView.draw$0();
@@ -1160,15 +1159,15 @@ $$.VoteDemo = {"":
   this._canManView.draw$0();
   this._frameRequested = false;
 },
- get$_onFrame: function() { return new $.BoundClosure0(this, '_onFrame$1'); },
+ get$_onFrame: function() { return new $.BoundClosure(this, '_onFrame$1'); },
  _canvas_mouseMove$1: function(e) {
   this._setMouse$1($.getMouseEventCoordinate(e));
 },
- get$_canvas_mouseMove: function() { return new $.BoundClosure0(this, '_canvas_mouseMove$1'); },
+ get$_canvas_mouseMove: function() { return new $.BoundClosure(this, '_canvas_mouseMove$1'); },
  _canvas_mouseOut$1: function(e) {
   this._setMouse$1(null);
 },
- get$_canvas_mouseOut: function() { return new $.BoundClosure0(this, '_canvas_mouseOut$1'); },
+ get$_canvas_mouseOut: function() { return new $.BoundClosure(this, '_canvas_mouseOut$1'); },
  _setMouse$1: function(value) {
   this._mouseLocation = value;
   var hits = $.Mouse_markMouseOver(this._stage, this._mouseLocation);
@@ -1258,21 +1257,12 @@ $$._DedicatedWorkerContextEventsImpl = {"":
 }
 };
 
-$$.FilteredElementList = {"":
+$$._FilteredElementList = {"":
  ["_lib_node", "_childNodes"],
  "super": "Object",
  get$_filtered: function() {
-  return $.ListImplementation_List$from($.filter(this._childNodes, new $.FilteredElementList__filtered_anon()));
+  return $.ListImplementation_List$from($.filter(this._childNodes, new $._FilteredElementList__filtered_anon()));
 },
- get$first: function() {
-  for (var t1 = $.iterator(this._childNodes); t1.hasNext$0() === true;) {
-    var t2 = t1.next$0();
-    if (typeof t2 === 'object' && t2 !== null && t2.is$Element())
-      return t2;
-  }
-  return;
-},
- first$0: function() { return this.get$first().call$0(); },
  forEach$1: function(f) {
   $.forEach(this.get$_filtered(), f);
 },
@@ -1290,7 +1280,7 @@ $$.FilteredElementList = {"":
  add$1: function(value) {
   $.add$1(this._childNodes, value);
 },
- get$add: function() { return new $.BoundClosure0(this, 'add$1'); },
+ get$add: function() { return new $.BoundClosure(this, 'add$1'); },
  addAll$1: function(collection) {
   $.forEach(collection, this.get$add());
 },
@@ -1301,7 +1291,7 @@ $$.FilteredElementList = {"":
   throw $.$$throw($.CTC34);
 },
  removeRange$2: function(start, rangeLength) {
-  $.forEach($.getRange(this.get$_filtered(), start, rangeLength), new $.FilteredElementList_removeRange_anon());
+  $.forEach($.getRange(this.get$_filtered(), start, rangeLength), new $._FilteredElementList_removeRange_anon());
 },
  insertRange$3: function(start, rangeLength, initialValue) {
   throw $.$$throw($.CTC35);
@@ -1429,10 +1419,6 @@ $$._ChildrenElementList = {"":
   }
   return output;
 },
- get$first: function() {
-  return this._lib_element.get$$$dom_firstElementChild();
-},
- first$0: function() { return this.get$first().call$0(); },
  forEach$1: function(f) {
   for (var t1 = $.iterator(this._childElements); t1.hasNext$0() === true;)
     f.call$1(t1.next$0());
@@ -1545,11 +1531,11 @@ $$._FrozenElementList = {"":
   return out;
 },
  filter$1: function(f) {
-  var out = $._ElementList$([]);
+  var out = [];
   for (var t1 = $.iterator(this); t1.hasNext$0() === true;) {
     var t2 = t1.next$0();
     if (f.call$1(t2) === true)
-      out.add$1(t2);
+      out.push(t2);
   }
   return out;
 },
@@ -1638,19 +1624,6 @@ $$._FrozenElementListIterator = {"":
  hasNext$0$bailout: function(state, t1, t2) {
   return $.lt(t1, t2);
 }
-};
-
-$$._ElementList = {"":
- ["_list"],
- "super": "_ListWrapper",
- filter$1: function(f) {
-  return $._ElementList$($._ListWrapper.prototype.filter$1.call(this, f));
-},
- getRange$2: function(start, rangeLength) {
-  return $._ElementList$($._ListWrapper.prototype.getRange$2.call(this, start, rangeLength));
-},
- is$List: function() { return true; },
- is$Collection: function() { return true; }
 };
 
 $$._ElementAttributeMap = {"":
@@ -2279,7 +2252,7 @@ $$._AttributeClassSet = {"":
  $dom_className$0: function() {
   return $.index(this._lib_element.get$attributes(), 'class');
 },
- get$$$dom_className: function() { return new $.BoundClosure(this, '$dom_className$0'); },
+ get$$$dom_className: function() { return new $.BoundClosure0(this, '$dom_className$0'); },
  _write$1: function(s) {
   $.indexSet(this._lib_element.get$attributes(), 'class', this._formatSet$1(s));
 }
@@ -2428,7 +2401,7 @@ $$._PostMessageScheduler = {"":
  _handleMessage$1: function(e) {
   this._onCallback$0();
 },
- get$_handleMessage: function() { return new $.BoundClosure0(this, '_handleMessage$1'); },
+ get$_handleMessage: function() { return new $.BoundClosure(this, '_handleMessage$1'); },
  _PostMessageScheduler$1: function(callback) {
   $.add$1($.window().get$on().get$message(), this.get$_handleMessage());
 }
@@ -2461,7 +2434,7 @@ $$._DOMWindowCrossFrameImpl = {"":
  blur$0: function() {
   return $._DOMWindowCrossFrameImpl__blur(this._window);
 },
- get$blur: function() { return new $.BoundClosure(this, 'blur$0'); },
+ get$blur: function() { return new $.BoundClosure0(this, 'blur$0'); },
  close$0: function() {
   return $._DOMWindowCrossFrameImpl__close(this._window);
 },
@@ -2959,7 +2932,32 @@ $$._MessageTraverser = {"":
  [],
  "super": "Object",
  traverse$1: function(x) {
-  return x;
+  if ($._MessageTraverser_isPrimitive(x))
+    return this.visitPrimitive$1(x);
+  this._visited.reset$0();
+  var result = null;
+  try {
+    result = this._dispatch$1(x);
+  } finally {
+    this._visited.cleanup$0();
+  }
+  return result;
+},
+ _dispatch$1: function(x) {
+  if ($._MessageTraverser_isPrimitive(x))
+    return this.visitPrimitive$1(x);
+  if (typeof x === 'object' && x !== null && (x.constructor === Array || x.is$List()))
+    return this.visitList$1(x);
+  if (typeof x === 'object' && x !== null && x.is$Map())
+    return this.visitMap$1(x);
+  if (typeof x === 'object' && x !== null && !!x.is$SendPort)
+    return this.visitSendPort$1(x);
+  if (typeof x === 'object' && x !== null && !!x.is$SendPortSync)
+    return this.visitSendPortSync$1(x);
+  return this.visitObject$1(x);
+},
+ visitObject$1: function(x) {
+  throw $.$$throw('Message serialization: Illegal value ' + $.S(x) + ' passed');
 }
 };
 
@@ -3376,7 +3374,6 @@ $$.Enumerable = {"":
  first$0: function() {
   return this.first$1(null)
 },
- get$first: function() { return new $.BoundClosure2(this, 'first$1'); },
  single$1: function(f) {
   if (f == null)
     f = new $.Enumerable_single_anon();
@@ -3930,7 +3927,7 @@ $$.AffineTransform = {"":
   this._m12 = $.add(this._m12, $.add($.mul(tx.get$_m02(), m00), $.mul(tx.get$_m12(), m10)));
   return this;
 },
- get$concatenate: function() { return new $.BoundClosure0(this, 'concatenate$1'); },
+ get$concatenate: function() { return new $.BoundClosure(this, 'concatenate$1'); },
  translate$2: function(dx, dy) {
   this._m02 = $.add(this._m02, $.add($.mul(dx, this._m00), $.mul(dy, this._m01)));
   this._m12 = $.add(this._m12, $.add($.mul(dx, this._m10), $.mul(dy, this._m11)));
@@ -4446,7 +4443,7 @@ $$.Dragger = {"":
     this._clientLoc = $.Coordinate$(event$.get$clientX(), event$.get$clientY());
   }
 },
- get$_onMouseDown: function() { return new $.BoundClosure0(this, '_onMouseDown$1'); },
+ get$_onMouseDown: function() { return new $.BoundClosure(this, '_onMouseDown$1'); },
  _handleMove$1: function(event$) {
   if (this.get$isDragging() === true) {
     var newLoc = $.Coordinate$(event$.get$clientX(), event$.get$clientY());
@@ -4455,12 +4452,12 @@ $$.Dragger = {"":
     this._clientLoc = newLoc;
   }
 },
- get$_handleMove: function() { return new $.BoundClosure0(this, '_handleMove$1'); },
+ get$_handleMove: function() { return new $.BoundClosure(this, '_handleMove$1'); },
  _endDrag$1: function(event$) {
   if (this.get$isDragging() === true)
     this._clientLoc = null;
 },
- get$_endDrag: function() { return new $.BoundClosure0(this, '_endDrag$1'); },
+ get$_endDrag: function() { return new $.BoundClosure(this, '_endDrag$1'); },
  Dragger$1: function(_element) {
   $.add$1(this._element.get$on().get$mouseDown(), this.get$_onMouseDown());
   $.add$1($.window().get$on().get$mouseMove(), this.get$_handleMove());
@@ -5085,13 +5082,13 @@ $$.CandidateManagerView = {"":
   this._requestNewCandidateHandle.fireEvent$1($.CTC24);
   source.set$disabled(true);
 },
- get$_requestNewCandidate: function() { return new $.BoundClosure0(this, '_requestNewCandidate$1'); },
+ get$_requestNewCandidate: function() { return new $.BoundClosure(this, '_requestNewCandidate$1'); },
  _deleteClick$1: function(args) {
   var source = args.get$toElement();
   this._removeCandidateWithId$1($.parseInt($.index(source.get$dataAttributes(), 'candidate-id')));
   source.set$disabled(true);
 },
- get$_deleteClick: function() { return new $.BoundClosure0(this, '_deleteClick$1'); },
+ get$_deleteClick: function() { return new $.BoundClosure(this, '_deleteClick$1'); },
  _removeCandidateWithId$1: function(id) {
   var candidate = this._candidates.single$1(new $.CandidateManagerView__removeCandidateWithId_anon(id));
   this._requestRemoveCandidateHandle.fireEvent$1(candidate);
@@ -5536,11 +5533,11 @@ $$.CondorcetView = {"":
   }
   this.set$_thePair(null);
 },
- get$_onMouseOver: function() { return new $.BoundClosure0(this, '_onMouseOver$1'); },
+ get$_onMouseOver: function() { return new $.BoundClosure(this, '_onMouseOver$1'); },
  _onMouseOut$1: function(args) {
   this.set$_thePair(null);
 },
- get$_onMouseOut: function() { return new $.BoundClosure0(this, '_onMouseOut$1'); },
+ get$_onMouseOut: function() { return new $.BoundClosure(this, '_onMouseOut$1'); },
  _getPairElementName$2: function(can1, can2) {
   var cIndex = $.indexOf$1(this._candidates, can1);
   var oIndex = $.indexOf$1(this._candidates, can2);
@@ -5670,14 +5667,14 @@ $$.FutureValue = {"":
   this._cleanup$0();
   return true;
 },
- get$_futureException: function() { return new $.BoundClosure0(this, '_futureException$1'); },
+ get$_futureException: function() { return new $.BoundClosure(this, '_futureException$1'); },
  _futureCompleted$1: function(value) {
   this._future = null;
   this._output = value;
   this._outputChangedHandle.fireEvent$1($.CTC24);
   this._cleanup$0();
 },
- get$_futureCompleted: function() { return new $.BoundClosure0(this, '_futureCompleted$1'); },
+ get$_futureCompleted: function() { return new $.BoundClosure(this, '_futureCompleted$1'); },
  _cleanup$0: function() {
   if (this._pending) {
     this._pending = false;
@@ -5723,7 +5720,7 @@ $$.SendPortValue = {"":
   else
     this._lib2_complete$1(value);
 },
- get$__futureCompleted: function() { return new $.BoundClosure0(this, '__futureCompleted$1'); },
+ get$__futureCompleted: function() { return new $.BoundClosure(this, '__futureCompleted$1'); },
  _sendValueResultCompleted$1: function(value) {
   if (value.get$isException() === true)
     this._completeException$1(value.get$exception());
@@ -7083,7 +7080,7 @@ $$._ChildrenElementList_filter_anon = {"":
 }
 };
 
-$$.FilteredElementList__filtered_anon = {"":
+$$._FilteredElementList__filtered_anon = {"":
  [],
  "super": "Closure",
  call$1: function(n) {
@@ -7091,7 +7088,7 @@ $$.FilteredElementList__filtered_anon = {"":
 }
 };
 
-$$.FilteredElementList_removeRange_anon = {"":
+$$._FilteredElementList_removeRange_anon = {"":
  [],
  "super": "Closure",
  call$1: function(el) {
@@ -7310,25 +7307,17 @@ $$.anon9 = {"":
 $$.BoundClosure = {'':
  ['self', 'target'],
  'super': 'Closure',
-call$0: function() { return this.self[this.target](); }
+call$1: function(p0) { return this.self[this.target](p0); }
 };
 $$.BoundClosure0 = {'':
  ['self', 'target'],
  'super': 'Closure',
-call$1: function(p0) { return this.self[this.target](p0); }
+call$0: function() { return this.self[this.target](); }
 };
 $$.BoundClosure1 = {'':
  ['self', 'target'],
  'super': 'Closure',
 call$2: function(p0, p1) { return this.self[this.target](p0, p1); }
-};
-$$.BoundClosure2 = {'':
- ['self', 'target'],
- 'super': 'Closure',
-call$1: function(p0) { return this.self[this.target](p0); },
- call$0: function() {
-  return this.call$1(null)
-}
 };
 $.div$slow = function(a, b) {
   if ($.checkNumbers(a, b))
@@ -8485,6 +8474,10 @@ $.Uri__addIfNonEmpty = function(sb, test, first, second) {
   }
 };
 
+$._FilteredElementList$ = function(node) {
+  return new $._FilteredElementList(node, node.get$nodes());
+};
+
 $.CollectionUtil_allUnique = function(items) {
   if (typeof items !== 'string' && (typeof items !== 'object' || items === null || items.constructor !== Array && !items.is$JavaScriptIndexingBehavior()))
     return $.CollectionUtil_allUnique$bailout(1, items);
@@ -8537,14 +8530,6 @@ $.Collections__emitCollection = function(c, result, visiting) {
   $.removeLast(visiting);
 };
 
-$.FilteredElementList$ = function(node) {
-  return new $.FilteredElementList(node, node.get$nodes());
-};
-
-$._document = function() {
-return document;
-};
-
 $._MutationObserverFactoryProvider_createMutationObserver = function(callback) {
   callback = $.convertDartClosureToJS(callback, 2);
     var constructor =
@@ -8552,6 +8537,10 @@ $._MutationObserverFactoryProvider_createMutationObserver = function(callback) {
         window.MozMutationObserver;
     return new constructor(callback);
   
+};
+
+$._document = function() {
+return document;
 };
 
 $.typeNameInChrome = function(obj) {
@@ -9366,10 +9355,6 @@ $.toStringWrapper = function() {
   return $.toString(this.dartException);
 };
 
-$._ElementList$ = function(list) {
-  return new $._ElementList(list);
-};
-
 $.gtB = function(a, b) {
   return typeof a === 'number' && typeof b === 'number' ? a > b : $.gt$slow(a, b) === true;
 };
@@ -9818,7 +9803,7 @@ $.getFunctionForTypeNameOf = function() {
     return $.typeNameInIE;
   else if ($.contains(userAgent, 'Opera'))
     return $.typeNameInOpera;
-  else if ($.contains(userAgent, 'Safari'))
+  else if ($.contains(userAgent, 'AppleWebKit'))
     return $.typeNameInSafari;
   else
     return $.constructorNameFallback;
@@ -10149,10 +10134,11 @@ $.Primitives_printString = function(string) {
     console.log(string);
     return;
   }
-  if (typeof write == "function") {
-    write(string);
-    write("\n");
+  if (typeof print == "function") {
+    print(string);
+    return;
   }
+  throw $.$$throw('Unable to print message: ' + $.S($.NoSuchMethodError_safeToString(string)));
 };
 
 $.dynamicSetMetadata = function(inputTable) {
@@ -11627,68 +11613,68 @@ $.CTC42 = 'Cannot removeLast on immutable List.';
 $.CTC12 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot removeLast on immutable List.');
 $.CTC43 = 'structured clone of ArrayBufferView';
 $.CTC9 = new Isolate.$isolateProperties.NotImplementedException('structured clone of ArrayBufferView');
-$.CTC44 = 'The input sequence contains more than one element.';
-$.CTC29 = new Isolate.$isolateProperties.InvalidOperationException('The input sequence contains more than one element.');
-$.CTC45 = null;
-$.CTC35 = new Isolate.$isolateProperties.NotImplementedException(null);
 $.CTC31 = new Isolate.$isolateProperties.ConstantMap(0, {}, Isolate.$isolateProperties.CTC1);
+$.CTC44 = null;
+$.CTC35 = new Isolate.$isolateProperties.NotImplementedException(null);
+$.CTC45 = 'The input sequence contains more than one element.';
+$.CTC29 = new Isolate.$isolateProperties.InvalidOperationException('The input sequence contains more than one element.');
 $.CTC46 = false;
 $.CTC47 = '^#[_a-zA-Z]\\w*$';
 $.CTC = new Isolate.$isolateProperties.JSSyntaxRegExp(false, false, '^#[_a-zA-Z]\\w*$');
-$.CTC48 = 'structured clone of ArrayBuffer';
+$.CTC48 = 0;
+$.CTC49 = new Isolate.$isolateProperties._SimpleClientRect(0, 0, 0, 0);
+$.CTC50 = 'structured clone of ArrayBuffer';
 $.CTC8 = new Isolate.$isolateProperties.NotImplementedException('structured clone of ArrayBuffer');
 $.CTC14 = new Isolate.$isolateProperties._DeletedKeySentinel();
-$.CTC49 = '';
+$.CTC51 = '';
 $.CTC33 = new Isolate.$isolateProperties.UnsupportedOperationException('');
-$.CTC50 = 'Cannot sort immutable List.';
+$.CTC52 = 'Cannot sort immutable List.';
 $.CTC22 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot sort immutable List.');
-$.CTC51 = 'frozen class set cannot be modified';
+$.CTC53 = 'frozen class set cannot be modified';
 $.CTC30 = new Isolate.$isolateProperties.UnsupportedOperationException('frozen class set cannot be modified');
-$.CTC52 = 'childList';
-$.CTC53 = 'attributes';
-$.CTC54 = 'characterData';
-$.CTC55 = 'subtree';
-$.CTC56 = 'attributeOldValue';
-$.CTC57 = 'characterDataOldValue';
-$.CTC58 = Isolate.makeConstantList(['childList', 'attributes', 'characterData', 'subtree', 'attributeOldValue', 'characterDataOldValue']);
-$.CTC59 = true;
-$.CTC39 = new Isolate.$isolateProperties.ConstantMap(6, {'childList': true, 'attributes': true, 'characterData': true, 'subtree': true, 'attributeOldValue': true, 'characterDataOldValue': true}, Isolate.$isolateProperties.CTC58);
-$.CTC60 = 'structured clone of Date';
+$.CTC54 = 'childList';
+$.CTC55 = 'attributes';
+$.CTC56 = 'characterData';
+$.CTC57 = 'subtree';
+$.CTC58 = 'attributeOldValue';
+$.CTC59 = 'characterDataOldValue';
+$.CTC60 = Isolate.makeConstantList(['childList', 'attributes', 'characterData', 'subtree', 'attributeOldValue', 'characterDataOldValue']);
+$.CTC61 = true;
+$.CTC39 = new Isolate.$isolateProperties.ConstantMap(6, {'childList': true, 'attributes': true, 'characterData': true, 'subtree': true, 'attributeOldValue': true, 'characterDataOldValue': true}, Isolate.$isolateProperties.CTC60);
+$.CTC62 = 'structured clone of Date';
 $.CTC3 = new Isolate.$isolateProperties.NotImplementedException('structured clone of Date');
-$.CTC61 = 'TODO(jacobr): should we impl?';
+$.CTC63 = 'TODO(jacobr): should we impl?';
 $.CTC34 = new Isolate.$isolateProperties.UnsupportedOperationException('TODO(jacobr): should we impl?');
 $.CTC41 = new Isolate.$isolateProperties.Object();
-$.CTC62 = 'Cannot add to immutable List.';
+$.CTC64 = 'Cannot add to immutable List.';
 $.CTC2 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot add to immutable List.');
-$.CTC63 = 'IDBKey containing Date';
+$.CTC65 = 'IDBKey containing Date';
 $.CTC16 = new Isolate.$isolateProperties.NotImplementedException('IDBKey containing Date');
-$.CTC24 = new Isolate.$isolateProperties.EventArgs();
-$.CTC64 = '[-[\\]{}()*+?.,\\\\^$|#\\s]';
+$.CTC66 = '[-[\\]{}()*+?.,\\\\^$|#\\s]';
 $.CTC13 = new Isolate.$isolateProperties.JSSyntaxRegExp(false, false, '[-[\\]{}()*+?.,\\\\^$|#\\s]');
-$.CTC65 = 'Cannot insertRange on immutable List.';
+$.CTC67 = 'Cannot insertRange on immutable List.';
 $.CTC20 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot insertRange on immutable List.');
-$.CTC66 = 0;
-$.CTC67 = new Isolate.$isolateProperties.Coordinate(0, 0);
 $.CTC68 = 'Incorrect number or type of arguments';
 $.CTC26 = new Isolate.$isolateProperties.ExceptionImplementation('Incorrect number or type of arguments');
-$.CTC69 = 10;
-$.CTC28 = new Isolate.$isolateProperties.Box(0, 0, 10, 10);
-$.CTC70 = 'Cannot removeRange on immutable List.';
+$.CTC24 = new Isolate.$isolateProperties.EventArgs();
+$.CTC40 = new Isolate.$isolateProperties.EmptyElementRect(Isolate.$isolateProperties.CTC49, Isolate.$isolateProperties.CTC49, Isolate.$isolateProperties.CTC49, Isolate.$isolateProperties.CTC49, Isolate.$isolateProperties.CTC1);
+$.CTC69 = 'Cannot removeRange on immutable List.';
 $.CTC18 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot removeRange on immutable List.');
+$.CTC70 = 'The input sequence is empty.';
+$.CTC21 = new Isolate.$isolateProperties.InvalidOperationException('The input sequence is empty.');
 $.CTC71 = 'structured clone of Blob';
 $.CTC6 = new Isolate.$isolateProperties.NotImplementedException('structured clone of Blob');
-$.CTC72 = 'The input sequence is empty.';
-$.CTC21 = new Isolate.$isolateProperties.InvalidOperationException('The input sequence is empty.');
-$.CTC73 = 'offsetX is only supported on elements';
+$.CTC72 = 'offsetX is only supported on elements';
 $.CTC27 = new Isolate.$isolateProperties.UnsupportedOperationException('offsetX is only supported on elements');
-$.CTC74 = 'structured clone of RegExp';
+$.CTC73 = 'structured clone of RegExp';
 $.CTC4 = new Isolate.$isolateProperties.NotImplementedException('structured clone of RegExp');
 $.CTC23 = new Isolate.$isolateProperties._Random();
+$.CTC74 = 10;
+$.CTC28 = new Isolate.$isolateProperties.Box(0, 0, 10, 10);
 $.CTC75 = 'Invalid list length';
 $.CTC36 = new Isolate.$isolateProperties.ArgumentError('Invalid list length');
-$.CTC76 = new Isolate.$isolateProperties._SimpleClientRect(0, 0, 0, 0);
-$.CTC40 = new Isolate.$isolateProperties.EmptyElementRect(Isolate.$isolateProperties.CTC76, Isolate.$isolateProperties.CTC76, Isolate.$isolateProperties.CTC76, Isolate.$isolateProperties.CTC76, Isolate.$isolateProperties.CTC1);
 $.CTC25 = new Isolate.$isolateProperties._UndefinedValue();
+$.CTC76 = new Isolate.$isolateProperties.Coordinate(0, 0);
 $.CTC77 = '^\\[name=["\'][^\'"]+[\'"]\\]$';
 $.CTC37 = new Isolate.$isolateProperties.JSSyntaxRegExp(false, false, '^\\[name=["\'][^\'"]+[\'"]\\]$');
 $.CTC32 = new Isolate.$isolateProperties.IllegalAccessException();
@@ -12596,7 +12582,7 @@ $.$defineNativeClass('HTMLDivElement', [], {
 $.$defineNativeClass('DocumentFragment', [], {
  get$elements: function() {
   if (this._elements == null)
-    this._elements = $.FilteredElementList$(this);
+    this._elements = $._FilteredElementList$(this);
   return this._elements;
 },
  query$1: function(selectors) {
@@ -12650,10 +12636,10 @@ $.$defineNativeClass('DocumentFragment', [], {
 },
  blur$0: function() {
 },
- get$blur: function() { return new $.BoundClosure(this, 'blur$0'); },
+ get$blur: function() { return new $.BoundClosure0(this, 'blur$0'); },
  click$0: function() {
 },
- get$click: function() { return new $.BoundClosure(this, 'click$0'); },
+ get$click: function() { return new $.BoundClosure0(this, 'click$0'); },
  set$hidden: function(value) {
   throw $.$$throw($.UnsupportedOperationException$('Hidden can\'t be set for document fragments.'));
 },
@@ -12855,7 +12841,7 @@ return this.children;
  click$0: function() {
   return this.click();
 },
- get$click: function() { return new $.BoundClosure(this, 'click$0'); },
+ get$click: function() { return new $.BoundClosure0(this, 'click$0'); },
  get$$$dom_className: function() {
 return this.className;
 },
@@ -12907,7 +12893,7 @@ return this.scrollWidth;
  blur$0: function() {
   return this.blur();
 },
- get$blur: function() { return new $.BoundClosure(this, 'blur$0'); },
+ get$blur: function() { return new $.BoundClosure0(this, 'blur$0'); },
  $dom_getAttribute$1: function(name) {
   return this.getAttribute(name);
 },
@@ -13795,7 +13781,7 @@ $.$defineNativeClass('IDBObjectStore', ["name?"], {
  index$1: function(name) {
   return this.index(name);
 },
- get$index: function() { return new $.BoundClosure0(this, 'index$1'); }
+ get$index: function() { return new $.BoundClosure(this, 'index$1'); }
 });
 
 $.$defineNativeClass('IDBOpenDBRequest', [], {
@@ -15212,7 +15198,7 @@ $.$defineNativeClass('SVGElement', [], {
   return this.get$_cssClassSet();
 },
  get$elements: function() {
-  return $.FilteredElementList$(this);
+  return $._FilteredElementList$(this);
 },
  set$elements: function(value) {
   var elements = this.get$elements();
@@ -15222,7 +15208,7 @@ $.$defineNativeClass('SVGElement', [], {
  set$innerHTML: function(svg) {
   var container = $.Element_Element$tag('div');
   container.set$innerHTML('<svg version="1.1">' + $.S(svg) + '</svg>');
-  this.set$elements(container.get$elements().get$first().get$elements());
+  this.set$elements($.index(container.get$elements(), 0).get$elements());
 },
  get$id: function() {
 return this.id;
@@ -17150,7 +17136,7 @@ this.location = value
  blur$0: function() {
   return this.blur();
 },
- get$blur: function() { return new $.BoundClosure(this, 'blur$0'); },
+ get$blur: function() { return new $.BoundClosure0(this, 'blur$0'); },
  clearInterval$1: function(handle) {
   return this.clearInterval(handle);
 },
