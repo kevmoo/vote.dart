@@ -76,6 +76,7 @@ class VoteDemo{
     _calcEngine.distanceElectionChanged.add(_distanceElectionUpdated);
     _calcEngine.pluralityElectionChanged.add(_pluralityElectionUpdated);
     _calcEngine.condorcetElectionChanged.add(_condorcetElectionUpdated);
+    _calcEngine.irvElectionChanged.add(_irvElectionUpdated);
     _calcEngine.voterHueMapperChanged.add(_voterHexMapperUpdated);
 
     _rootMapElement.candidatesMoved.add((data) {
@@ -132,6 +133,10 @@ class VoteDemo{
     assert(_calcEngine.condorcetElection != null);
     _condorcetView.election = _calcEngine.condorcetElection;
     _requestFrame();
+  }
+
+  void _irvElectionUpdated(args) {
+    assert(_calcEngine.irvElection != null);
   }
 
   void _voterHexMapperUpdated(Dynamic args) {

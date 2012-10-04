@@ -18,6 +18,7 @@
 
 #source('vote/irv_election.dart');
 #source('vote/irv_round.dart');
+#source('vote/irv_elimination.dart');
 
 Date _last;
 

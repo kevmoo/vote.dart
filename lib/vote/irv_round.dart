@@ -1,9 +1,9 @@
 class IrvRound<TVoter extends Player, TCandidate extends Player> {
   final ReadOnlyCollection<PluralityElectionPlace<TCandidate>> places;
-  // final HashMap<TCandidate, HashMap<TCandidate, num>> _eliminations;
+  final ReadOnlyCollection<IrvElimination<TVoter, TCandidate>> eliminations;
 
   factory IrvRound(ReadOnlyCollection<RankedBallot<TVoter, TCandidate>> ballots,
-    Enumerable<TCandidate> eliminatedCandidates) {
+    List<TCandidate> eliminatedCandidates) {
 
     final cleanedBallots = ballots.map((b) {
       final pruned = $(b.rank).exclude(eliminatedCandidates)
@@ -26,14 +26,65 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
     placeVotes.sort((a,b) => b.compareTo(a));
 
     int placeNumber = 1;
-    int totalVotes = 0;
     final places = $(placeVotes).map((pv) {
       final vg = voteGroups[pv];
       final currentPlaceNumber = placeNumber;
-      totalVotes += vg.length * pv;
       placeNumber += vg.length;
       return new PluralityElectionPlace<TCandidate>(currentPlaceNumber, vg, pv);
     }).toReadOnlyCollection();
+
+    final newlyEliminatedCandidates = _getEliminatedCandidates(places);
+
+    final eliminations = $(newlyEliminatedCandidates).map((c) {
+      final xfers = new Map<TCandidate, List<RankedBallot<TVoter, TCandidate>>>();
+
+      final exhausted = new List<RankedBallot<TVoter, TCandidate>>();
+
+      for(final b in cleanedBallots.filter((t) => t.item3 == c)) {
+        final rb = b.item1;
+        final pruned = b.item2;
+        assert(pruned.first() == c);
+        if(pruned.length == 1) {
+          // we're exhausted
+          exhausted.add(rb);
+        } else {
+          // #2 gets the transfer
+          final runnerUp = pruned[1];
+          xfers.putIfAbsent(runnerUp, () => new List()).add(rb);
+        }
+      }
+
+      return new IrvElimination<TVoter, TCandidate>(c, xfers, $(exhausted).toReadOnlyCollection());
+    }).toReadOnlyCollection();
+
+    return new IrvRound._internal(places, eliminations);
+  }
+
+  IrvRound._internal(this.places, this.eliminations);
+
+  bool get isFinal => eliminations.length == 0;
+
+  Enumerable<TCandidate> get eliminatedCandidates => eliminations
+      .map((ie) => ie.candidate);
+
+  static List<Player> _getEliminatedCandidates(
+      ReadOnlyCollection<PluralityElectionPlace> places) {
+    assert(places != null);
+    assert(places.length > 0);
+
+    if(places.length == 1) {
+      // it's a tie for first
+      return [];
+    }
+
+    // duh, I know. Being paranoid.
+    assert(places.length >= 2);
+
+    final int totalVotes = places.selectNumbers((p) {
+      return p.voteCount * p.length;
+    }).sum();
+
+    final majorityCount = majorityThreshold(totalVotes);
 
     //
     // eliminations
@@ -42,11 +93,12 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
     // unless
     // a) first place is single candiadate
     // b) first place votes > (0.5 * total + 1)
+    if(places[0].length == 1 && places[0].voteCount >= majorityCount){
+      return [];
+    }
 
-    return new IrvRound._internal(places);
+    return places.last().map((p) => p).toList();
   }
-
-  IrvRound._internal(this.places);
 }
 
 /*

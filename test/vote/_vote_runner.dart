@@ -16,7 +16,7 @@ void runVoteTests() {
     TestRankedBallot.run();
     TestCondorcetElection.run();
     TestCondorcetPair.run();
-    //TestIrv.run();
+    TestIrv.run();
     test('majority threshold', (){
       expect(majorityThreshold(5), 3);
       expect(majorityThreshold(4), 3);

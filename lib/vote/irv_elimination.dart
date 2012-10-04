@@ -1,0 +1,15 @@
+class IrvElimination<TVoter extends Player, TCandidate extends Player> {
+  final TCandidate candidate;
+  final Map<TCandidate, List<RankedBallot<TVoter, TCandidate>>> _transfers;
+  final ReadOnlyCollection<RankedBallot<TVoter, TCandidate>> exhausted;
+
+  IrvElimination(this.candidate, this._transfers, this.exhausted) {
+    assert(candidate != null);
+    assert(_transfers != null);
+    assert(exhausted != null);
+  }
+
+  Collection<TCandidate> get transferedCandidates => _transfers.getKeys();
+
+  int getTransferCount(TCandidate key) => _transfers[key].length;
+}

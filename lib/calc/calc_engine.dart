@@ -2,6 +2,7 @@ class CalcEngine {
   final _DistanceElectionMapper _distanceElectionMapper = new _DistanceElectionMapper();
   final _PluralityElectionMapper _pluralityElectionMapper = new _PluralityElectionMapper();
   final _CondorcetElectionMapper _condorcetElectionMapper = new _CondorcetElectionMapper();
+  final _IrvElectionMapper _irvElectionMapper = new _IrvElectionMapper();
   final _VoterHexMapper _voterHexMapper = new _VoterHexMapper();
 
   Tuple<MapPlayer, MapPlayer> _hoverPair;
@@ -50,6 +51,8 @@ class CalcEngine {
 
   CondorcetElection get condorcetElection => _condorcetElectionMapper.output;
 
+  IrvElection get irvElection => _irvElectionMapper.output;
+
   HashMap<MapPlayer, String> get voterHexMap => _voterHexMapper.output;
 
   void addCandidate() {
@@ -78,6 +81,9 @@ class CalcEngine {
   EventRoot<EventArgs> get condorcetElectionChanged =>
       _condorcetElectionMapper.outputChanged;
 
+  EventRoot<EventArgs> get irvElectionChanged =>
+      _irvElectionMapper.outputChanged;
+
   EventRoot<EventArgs> get voterHueMapperChanged =>
       _voterHexMapper.outputChanged;
 
@@ -88,6 +94,7 @@ class CalcEngine {
   void _distanceElectionChanged() {
     _pluralityElectionMapper.input = distanceElection.ballots;
     _condorcetElectionMapper.input = distanceElection.ballots;
+    _irvElectionMapper.input = distanceElection.ballots;
     _updateVoterHexMapper();
   }
 
@@ -134,6 +141,20 @@ void _condorcetElectionIsolate() {
   port.receive((Collection<RankedBallot<MapPlayer, MapPlayer>> ballots,
       SendPort reply) {
     final election = new CondorcetElection(ballots);
+    reply.send(election);
+  });
+}
+
+class _IrvElectionMapper
+  extends SendPortValue<Collection<RankedBallot<MapPlayer, MapPlayer>>, IrvElection> {
+
+  _IrvElectionMapper() : super(spawnFunction(_irvElectionIsolate));
+}
+
+void _irvElectionIsolate() {
+  port.receive((Collection<RankedBallot<MapPlayer, MapPlayer>> ballots,
+      SendPort reply) {
+    final election = new IrvElection(ballots);
     reply.send(election);
   });
 }

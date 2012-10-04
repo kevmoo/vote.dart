@@ -17,13 +17,13 @@ class TestIrv {
     var ce = new IrvElection([b]);
 
     expect(ce, isNotNull);
-    expect(ce.singleWinner, equals(c));
-    expect(ce.candidates, unorderedEquals([c]));
-    expect(ce.ballots, unorderedEquals([b]));
-    expect(ce.places.length, equals(1));
+    //expect(ce.singleWinner, equals(c));
+    //expect(ce.candidates, unorderedEquals([c]));
+    expect(ce.rounds.length, 1);
+    //expect(ce.places.length, equals(1));
 
-    var first = ce.places[0];
-    expect(first, unorderedEquals([c]));
+    //var first = ce.places[0];
+    //expect(first, unorderedEquals([c]));
   }
 
   static void _testTwoCandidatesObvious() {
@@ -68,8 +68,10 @@ class TestIrv {
     final firstRound = ce.rounds[0];
     expect(firstRound.places.length, 3);
 
-    // expect(firstRound.eliminated.length, 1);
-
+    final firstElimination = firstRound.eliminations.single();
+    expect(firstElimination.candidate, canCC);
+    expect(firstElimination.transferedCandidates, unorderedEquals([canC]));
+    expect(firstElimination.getTransferCount(canC), 29);
 
     /*
     expect(ce.places.length, equals(3));

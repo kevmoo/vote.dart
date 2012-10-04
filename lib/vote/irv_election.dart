@@ -3,10 +3,9 @@ class IrvElection<TVoter extends Player, TCandidate extends Player>
 
   final ReadOnlyCollection<TCandidate> candidates;
   final ReadOnlyCollection<Ballot<TVoter, TCandidate>> ballots;
-  final ReadOnlyCollection<ElectionPlace<TCandidate>> places;
   final ReadOnlyCollection<IrvRound<TVoter, TCandidate>> rounds;
 
-  IrvElection._internal(this.candidates, this.ballots, this.places, this.rounds);
+  IrvElection._internal(this.candidates, this.ballots, this.rounds);
 
   factory IrvElection(Collection<RankedBallot<TVoter, TCandidate>> ballots) {
     final roBallots = $(ballots).toReadOnlyCollection();
@@ -18,13 +17,19 @@ class IrvElection<TVoter extends Player, TCandidate extends Player>
 
     final rounds = new List<IrvRound<TVoter, TCandidate>>();
 
-    var round = new IrvRound<TVoter, TCandidate>(roBallots, $([]));
+    IrvRound<TVoter, TCandidate> round;
+    List<TCandidate> eliminatedCandidates = new List<TCandidate>();
+    do {
+      round = new IrvRound<TVoter, TCandidate>(roBallots, eliminatedCandidates);
+      rounds.add(round);
+
+      eliminatedCandidates.addAll(round.eliminatedCandidates);
+    } while(!round.isFinal);
 
     return new IrvElection._internal(
       roCandidates,
       roBallots,
-      $([]).toReadOnlyCollection(),
-      $([round]).toReadOnlyCollection());
+      $(rounds).toReadOnlyCollection());
   }
 
 }
