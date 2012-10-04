@@ -1,3 +1,3 @@
-interface Player extends Hashable, Comparable {
+abstract class Player implements Hashable, Comparable {
 
 }
