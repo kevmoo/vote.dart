@@ -2,8 +2,6 @@ class TestIrv {
   static void run() {
     group('IrvElection', () {
       test('one candidate', _testOneCandidate);
-      test('two candidates', _testTwoCandidatesObvious);
-      test('two candidates, tied', _testTwoCandidatesTied);
       test('three candidates, tied', _threeWayTieForFirst);
       test('Ice Cream', _testIceCream);
     });
@@ -24,14 +22,6 @@ class TestIrv {
 
     //var first = ce.places[0];
     //expect(first, unorderedEquals([c]));
-  }
-
-  static void _testTwoCandidatesObvious() {
-
-  }
-
-  static void _testTwoCandidatesTied() {
-
   }
 
   static void _testIceCream() {
