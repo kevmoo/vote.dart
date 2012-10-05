@@ -11,5 +11,12 @@ class IrvElimination<TVoter extends Player, TCandidate extends Player> {
 
   Collection<TCandidate> get transferedCandidates => _transfers.getKeys();
 
-  int getTransferCount(TCandidate key) => _transfers[key].length;
+  int getTransferCount(TCandidate key) {
+    final list = _transfers[key];
+    if(list == null) {
+      return 0;
+    } else {
+      return list.length;
+    }
+  }
 }
