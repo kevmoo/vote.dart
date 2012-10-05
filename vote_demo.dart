@@ -15,7 +15,9 @@ main(){
   DivElement distanceDiv = query('#distanceView');
   DivElement condorcetDiv = query('#condorcetView');
   DivElement canManDiv = query('#canManView');
-  var demo = new VoteDemo(canvas, pluralityDiv, distanceDiv, condorcetDiv, canManDiv);
+  DivElement irvDiv = query('#irvView');
+  var demo = new VoteDemo(canvas, pluralityDiv, distanceDiv, condorcetDiv,
+      canManDiv, irvDiv);
   demo._requestFrame();
 }
 
@@ -29,6 +31,7 @@ class VoteDemo{
   final RootMapElement _rootMapElement;
   final HashMap<MapPlayer, num> _playerHues = new HashMap<MapPlayer, num>();
   final CondorcetView _condorcetView;
+  final IrvView _irvView;
   final DistanceView _distanceView;
   final PluralityView _pluralityView;
   final CandidateManagerView _canManView;
@@ -40,7 +43,8 @@ class VoteDemo{
   bool _frameRequested = false;
 
   factory VoteDemo(CanvasElement canvas, DivElement pluralityDiv,
-    DivElement distanceDiv, DivElement condorcetDiv, DivElement canManDiv) {
+    DivElement distanceDiv, DivElement condorcetDiv, DivElement canManDiv,
+    DivElement irvDiv) {
     var voterMap = new RootMapElement(canvas.width, canvas.height);
 
     //
@@ -54,18 +58,19 @@ class VoteDemo{
     var pluralityView = new PluralityView(pluralityDiv);
 
     var condorcetView = new CondorcetView(condorcetDiv);
+    final irvView = new IrvView(irvDiv);
 
     final canManView = new CandidateManagerView(canManDiv);
 
     var dragger = new Dragger(canvas);
 
     return new VoteDemo._internal(canvas, stage, dragger, voterMap,
-      condorcetView, pluralityView, distanceView, canManView);
+      condorcetView, pluralityView, distanceView, canManView, irvView);
   }
 
   VoteDemo._internal(this._canvas, this._stage, this._dragger,
       this._rootMapElement, this._condorcetView, this._pluralityView,
-      this._distanceView, this._canManView) {
+      this._distanceView, this._canManView, this._irvView) {
     _dragger.dragDelta.add(_onDrag);
     _dragger.dragStart.add(_onDragStart);
 
@@ -76,6 +81,7 @@ class VoteDemo{
     _calcEngine.distanceElectionChanged.add(_distanceElectionUpdated);
     _calcEngine.pluralityElectionChanged.add(_pluralityElectionUpdated);
     _calcEngine.condorcetElectionChanged.add(_condorcetElectionUpdated);
+    _calcEngine.irvElectionChanged.add(_irvElectionUpdated);
     _calcEngine.voterHueMapperChanged.add(_voterHexMapperUpdated);
 
     _rootMapElement.candidatesMoved.add((data) {
@@ -134,6 +140,12 @@ class VoteDemo{
     _requestFrame();
   }
 
+  void _irvElectionUpdated(args) {
+    assert(_calcEngine.irvElection != null);
+    _irvView.election = _calcEngine.irvElection;
+    _requestFrame();
+  }
+
   void _voterHexMapperUpdated(Dynamic args) {
     assert(_calcEngine.voterHexMap != null);
     _rootMapElement.voterHexMap = _calcEngine.voterHexMap;
@@ -161,10 +173,11 @@ class VoteDemo{
     }
   }
 
-  bool _onFrame(num highResTime){
+  void _onFrame(int highResTime){
     _stage.draw();
 
     _condorcetView.draw();
+    _irvView.draw();
     _pluralityView.draw();
     _distanceView.draw();
     _canManView.draw();
