@@ -17,8 +17,7 @@
  * [Kevin Moore](https://github.com/kevmoo) ([@kevmoo](http://twitter.com/kevmoo))
 
 ## Dependencies
- * __vote.dart__ assumes the contents of [dartlib](https://github.com/kevmoo/dartlib) are in an adjacent directory named `dartlib`.
-     * _Once [pub](http://www.dartlang.org/docs/pub-package-manager/) is stable, **dartlib** will be a registered dependency._
+ * __vote.dart__ uses [bot.dart](https://github.com/kevmoo/bot.dart) via [pub](http://www.dartlang.org/docs/pub-package-manager/).
 
 ## More Info
  * [Condorcet Method](http://en.wikipedia.org/wiki/Condorcet_method) - Wikipedia
