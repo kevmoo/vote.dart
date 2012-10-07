@@ -3037,7 +3037,32 @@ $$._MessageTraverser = {"":
  [],
  "super": "Object",
  traverse$1: function(x) {
-  return x;
+  if ($._MessageTraverser_isPrimitive(x))
+    return this.visitPrimitive$1(x);
+  this._visited.reset$0();
+  var result = null;
+  try {
+    result = this._dispatch$1(x);
+  } finally {
+    this._visited.cleanup$0();
+  }
+  return result;
+},
+ _dispatch$1: function(x) {
+  if ($._MessageTraverser_isPrimitive(x))
+    return this.visitPrimitive$1(x);
+  if (typeof x === 'object' && x !== null && (x.constructor === Array || x.is$List()))
+    return this.visitList$1(x);
+  if (typeof x === 'object' && x !== null && x.is$Map())
+    return this.visitMap$1(x);
+  if (typeof x === 'object' && x !== null && !!x.is$SendPort)
+    return this.visitSendPort$1(x);
+  if (typeof x === 'object' && x !== null && !!x.is$SendPortSync)
+    return this.visitSendPortSync$1(x);
+  return this.visitObject$1(x);
+},
+ visitObject$1: function(x) {
+  throw $.$$throw('Message serialization: Illegal value ' + $.S(x) + ' passed');
 }
 };
 
@@ -7207,12 +7232,20 @@ $$.IrvRound_IrvRound_anon0 = {"":
 $$.IrvRound_IrvRound_anon1 = {"":
  [],
  "super": "Closure",
+ call$1: function(t) {
+  return !(t.get$item3() == null);
+}
+};
+
+$$.IrvRound_IrvRound_anon2 = {"":
+ [],
+ "super": "Closure",
  call$1: function(tuple) {
   return tuple.get$item3();
 }
 };
 
-$$.IrvRound_IrvRound_anon2 = {"":
+$$.IrvRound_IrvRound_anon3 = {"":
  ["candidateAllocations_3"],
  "super": "Closure",
  call$1: function(c) {
@@ -7220,7 +7253,7 @@ $$.IrvRound_IrvRound_anon2 = {"":
 }
 };
 
-$$.IrvRound_IrvRound_anon3 = {"":
+$$.IrvRound_IrvRound_anon4 = {"":
  [],
  "super": "Closure",
  call$2: function(a, b) {
@@ -7228,7 +7261,7 @@ $$.IrvRound_IrvRound_anon3 = {"":
 }
 };
 
-$$.IrvRound_IrvRound_anon4 = {"":
+$$.IrvRound_IrvRound_anon5 = {"":
  ["box_0", "voteGroups_4"],
  "super": "Closure",
  call$1: function(pv) {
@@ -7240,38 +7273,46 @@ $$.IrvRound_IrvRound_anon4 = {"":
 }
 };
 
-$$.IrvRound_IrvRound_anon5 = {"":
- ["cleanedBallots_5"],
+$$.IrvRound_IrvRound_anon6 = {"":
+ ["newlyEliminatedCandidates_6", "cleanedBallots_5"],
  "super": "Closure",
  call$1: function(c) {
   var xfers = $.HashMapImplementation$();
   var exhausted = $.ListImplementation_List(null);
-  for (var t1 = $.iterator($.filter(this.cleanedBallots_5, new $.IrvRound_IrvRound_anon6(c))); t1.hasNext$0() === true;) {
-    var t2 = t1.next$0();
-    var rb = t2.get$item1();
-    var pruned = t2.get$item2();
-    if ($.eqB($.get$length(pruned), 1))
+  for (var t1 = $.iterator($.filter(this.cleanedBallots_5, new $.IrvRound_IrvRound_anon7(c))), t2 = this.newlyEliminatedCandidates_6; t1.hasNext$0() === true;) {
+    var t3 = t1.next$0();
+    var rb = t3.get$item1();
+    var pruned = t3.get$item2().exclude$1(t2);
+    if ($.eqB($.get$length(pruned), 0))
       exhausted.push(rb);
     else
-      $.add$1(xfers.putIfAbsent$2($.index(pruned, 1), new $.IrvRound_IrvRound_anon7()), rb);
+      $.add$1(xfers.putIfAbsent$2(pruned.first$0(), new $.IrvRound_IrvRound_anon8()), rb);
   }
   return $.IrvElimination$(c, xfers, $.$$(exhausted).toReadOnlyCollection$0());
 }
 };
 
-$$.IrvRound_IrvRound_anon6 = {"":
- ["c_6"],
+$$.IrvRound_IrvRound_anon7 = {"":
+ ["c_7"],
  "super": "Closure",
  call$1: function(t) {
-  return $.eq(t.get$item3(), this.c_6);
+  return $.eq(t.get$item3(), this.c_7);
 }
 };
 
-$$.IrvRound_IrvRound_anon7 = {"":
+$$.IrvRound_IrvRound_anon8 = {"":
  [],
  "super": "Closure",
  call$0: function() {
   return $.ListImplementation_List(null);
+}
+};
+
+$$.IrvRound_eliminatedCandidates_anon = {"":
+ [],
+ "super": "Closure",
+ call$1: function(ie) {
+  return ie.get$candidate();
 }
 };
 
@@ -7372,6 +7413,22 @@ $$.Enumerable_selectMany_anon = {"":
 }
 };
 
+$$.Enumerable_exclude_anon0 = {"":
+ ["iEnum_0"],
+ "super": "Closure",
+ call$1: function(e) {
+  return $.contains$1(this.iEnum_0, e) !== true;
+}
+};
+
+$$.Enumerable_exclude_anon = {"":
+ ["f_1"],
+ "super": "Closure",
+ call$1: function(s) {
+  return $._WhereIterator$(s, this.f_1);
+}
+};
+
 $$.Enumerable_filter_anon = {"":
  ["f_0"],
  "super": "Closure",
@@ -7393,30 +7450,6 @@ $$.Enumerable_isEmpty_anon = {"":
  "super": "Closure",
  call$1: function(e) {
   return true;
-}
-};
-
-$$.Enumerable_exclude_anon0 = {"":
- ["iEnum_0"],
- "super": "Closure",
- call$1: function(e) {
-  return $.contains$1(this.iEnum_0, e) !== true;
-}
-};
-
-$$.Enumerable_exclude_anon = {"":
- ["f_1"],
- "super": "Closure",
- call$1: function(s) {
-  return $._WhereIterator$(s, this.f_1);
-}
-};
-
-$$.IrvRound_eliminatedCandidates_anon = {"":
- [],
- "super": "Closure",
- call$1: function(ie) {
-  return ie.get$candidate();
 }
 };
 
@@ -9228,13 +9261,14 @@ $.IrvRound_IrvRound = function(ballots, eliminatedCandidates) {
   var t1 = {};
   var cleanedBallots = $.map(ballots, new $.IrvRound_IrvRound_anon(eliminatedCandidates));
   cleanedBallots.count$1(new $.IrvRound_IrvRound_anon0());
-  var candidateAllocations = cleanedBallots.group$1(new $.IrvRound_IrvRound_anon1());
-  var voteGroups = $.$$(candidateAllocations.getKeys$0()).group$1(new $.IrvRound_IrvRound_anon2(candidateAllocations));
+  var candidateAllocations = $.filter(cleanedBallots, new $.IrvRound_IrvRound_anon1()).group$1(new $.IrvRound_IrvRound_anon2());
+  var voteGroups = $.$$(candidateAllocations.getKeys$0()).group$1(new $.IrvRound_IrvRound_anon3(candidateAllocations));
   var placeVotes = $.$$(voteGroups.getKeys$0()).toList$0();
-  $.sort(placeVotes, new $.IrvRound_IrvRound_anon3());
+  $.sort(placeVotes, new $.IrvRound_IrvRound_anon4());
   t1.placeNumber_1 = 1;
-  var places = $.map($.$$(placeVotes), new $.IrvRound_IrvRound_anon4(t1, voteGroups)).toReadOnlyCollection$0();
-  return $.IrvRound$_internal(places, $.map($.$$($.IrvRound__getEliminatedCandidates(places)), new $.IrvRound_IrvRound_anon5(cleanedBallots)).toReadOnlyCollection$0());
+  var places = $.map($.$$(placeVotes), new $.IrvRound_IrvRound_anon5(t1, voteGroups)).toReadOnlyCollection$0();
+  var newlyEliminatedCandidates = $.IrvRound__getEliminatedCandidates(places);
+  return $.IrvRound$_internal(places, $.map($.$$(newlyEliminatedCandidates), new $.IrvRound_IrvRound_anon6(newlyEliminatedCandidates, cleanedBallots)).toReadOnlyCollection$0());
 };
 
 $.PluralityElection_PluralityElection = function(ballots) {

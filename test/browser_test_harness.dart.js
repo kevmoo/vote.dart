@@ -4127,6 +4127,20 @@ $$.Enumerable = {"":
  single$0: function() {
   return this.single$1(null)
 },
+ singleOrDefault$2: function(f, defaultValue) {
+  if (f == null)
+    f = new $.Enumerable_singleOrDefault_anon();
+  var iter = $._WhereIterator$(this.iterator$0(), f);
+  if (iter.hasNext$0() !== true)
+    return defaultValue;
+  var value = iter.next$0();
+  if (iter.hasNext$0() === true)
+    throw $.$$throw($.CTC37);
+  return value;
+},
+ singleOrDefault$1: function(f) {
+  return this.singleOrDefault$2(f,null)
+},
  distinct$1: function(comparer) {
   var t1 = {};
   t1.comparer_1 = comparer;
@@ -4946,6 +4960,9 @@ $$.IrvRound = {"":
 },
  get$eliminatedCandidates: function() {
   return $.map(this.eliminations, new $.IrvRound_eliminatedCandidates_anon());
+},
+ getElimination$1: function(candidate) {
+  return this.eliminations.singleOrDefault$1(new $.IrvRound_getElimination_anon(candidate));
 }
 };
 
@@ -5301,9 +5318,8 @@ $$.TestIrv_run_anon = {"":
  [],
  "super": "Closure",
  call$0: function() {
+  $.test('no transfers between eliminated', $.TestIrv__testNoTransfersBetweenEliminated);
   $.test('one candidate', $.TestIrv__testOneCandidate);
-  $.test('two candidates', $.TestIrv__testTwoCandidatesObvious);
-  $.test('two candidates, tied', $.TestIrv__testTwoCandidatesTied);
   $.test('three candidates, tied', $.TestIrv__threeWayTieForFirst);
   $.test('Ice Cream', $.TestIrv__testIceCream);
 }
@@ -6946,12 +6962,20 @@ $$.IrvRound_IrvRound_anon0 = {"":
 $$.IrvRound_IrvRound_anon1 = {"":
  [],
  "super": "Closure",
+ call$1: function(t) {
+  return !(t.get$item3() == null);
+}
+};
+
+$$.IrvRound_IrvRound_anon2 = {"":
+ [],
+ "super": "Closure",
  call$1: function(tuple) {
   return tuple.get$item3();
 }
 };
 
-$$.IrvRound_IrvRound_anon2 = {"":
+$$.IrvRound_IrvRound_anon3 = {"":
  ["candidateAllocations_3"],
  "super": "Closure",
  call$1: function(c) {
@@ -6959,7 +6983,7 @@ $$.IrvRound_IrvRound_anon2 = {"":
 }
 };
 
-$$.IrvRound_IrvRound_anon3 = {"":
+$$.IrvRound_IrvRound_anon4 = {"":
  [],
  "super": "Closure",
  call$2: function(a, b) {
@@ -6967,7 +6991,7 @@ $$.IrvRound_IrvRound_anon3 = {"":
 }
 };
 
-$$.IrvRound_IrvRound_anon4 = {"":
+$$.IrvRound_IrvRound_anon5 = {"":
  ["box_0", "voteGroups_4"],
  "super": "Closure",
  call$1: function(pv) {
@@ -6979,38 +7003,46 @@ $$.IrvRound_IrvRound_anon4 = {"":
 }
 };
 
-$$.IrvRound_IrvRound_anon5 = {"":
- ["cleanedBallots_5"],
+$$.IrvRound_IrvRound_anon6 = {"":
+ ["newlyEliminatedCandidates_6", "cleanedBallots_5"],
  "super": "Closure",
  call$1: function(c) {
   var xfers = $.HashMapImplementation$();
   var exhausted = $.ListImplementation_List(null);
-  for (var t1 = $.iterator($.filter(this.cleanedBallots_5, new $.IrvRound_IrvRound_anon6(c))); t1.hasNext$0() === true;) {
-    var t2 = t1.next$0();
-    var rb = t2.get$item1();
-    var pruned = t2.get$item2();
-    if ($.eqB($.get$length(pruned), 1))
+  for (var t1 = $.iterator($.filter(this.cleanedBallots_5, new $.IrvRound_IrvRound_anon7(c))), t2 = this.newlyEliminatedCandidates_6; t1.hasNext$0() === true;) {
+    var t3 = t1.next$0();
+    var rb = t3.get$item1();
+    var pruned = t3.get$item2().exclude$1(t2);
+    if ($.eqB($.get$length(pruned), 0))
       exhausted.push(rb);
     else
-      $.add$1(xfers.putIfAbsent$2($.index(pruned, 1), new $.IrvRound_IrvRound_anon7()), rb);
+      $.add$1(xfers.putIfAbsent$2(pruned.first$0(), new $.IrvRound_IrvRound_anon8()), rb);
   }
   return $.IrvElimination$(c, xfers, $.$$(exhausted).toReadOnlyCollection$0());
 }
 };
 
-$$.IrvRound_IrvRound_anon6 = {"":
- ["c_6"],
+$$.IrvRound_IrvRound_anon7 = {"":
+ ["c_7"],
  "super": "Closure",
  call$1: function(t) {
-  return $.eq(t.get$item3(), this.c_6);
+  return $.eq(t.get$item3(), this.c_7);
 }
 };
 
-$$.IrvRound_IrvRound_anon7 = {"":
+$$.IrvRound_IrvRound_anon8 = {"":
  [],
  "super": "Closure",
  call$0: function() {
   return $.ListImplementation_List(null);
+}
+};
+
+$$.IrvRound_eliminatedCandidates_anon = {"":
+ [],
+ "super": "Closure",
+ call$1: function(ie) {
+  return ie.get$candidate();
 }
 };
 
@@ -7027,6 +7059,14 @@ $$.IrvRound__getEliminatedCandidates_anon0 = {"":
  "super": "Closure",
  call$1: function(p) {
   return p;
+}
+};
+
+$$.Enumerable_first_anon = {"":
+ [],
+ "super": "Closure",
+ call$1: function(e) {
+  return true;
 }
 };
 
@@ -7051,14 +7091,6 @@ $$.Enumerable_selectNumbers_anon = {"":
  "super": "Closure",
  call$1: function(s) {
   return $._SelectIterator$(s, this.f_0);
-}
-};
-
-$$.IrvRound_eliminatedCandidates_anon = {"":
- [],
- "super": "Closure",
- call$1: function(ie) {
-  return ie.get$candidate();
 }
 };
 
@@ -7092,6 +7124,22 @@ $$.Enumerable_selectMany_anon = {"":
  "super": "Closure",
  call$1: function(s) {
   return $._SelectManyIterator$_internal(s, this.f_0);
+}
+};
+
+$$.IrvRound_getElimination_anon = {"":
+ ["candidate_0"],
+ "super": "Closure",
+ call$1: function(e) {
+  return $.eq(e.get$candidate(), this.candidate_0);
+}
+};
+
+$$.Enumerable_singleOrDefault_anon = {"":
+ [],
+ "super": "Closure",
+ call$1: function(e) {
+  return true;
 }
 };
 
@@ -7451,14 +7499,6 @@ $$.RgbColor_toHex_anon = {"":
  "super": "Closure",
  call$1: function(c) {
   $.add$1(this.buffer_0, $.RgbColor__prependZeroIfNecessaryHelper($.toRadixString(c, 16)));
-}
-};
-
-$$.Enumerable_first_anon = {"":
- [],
- "super": "Closure",
- call$1: function(e) {
-  return true;
 }
 };
 
@@ -9928,6 +9968,27 @@ $._TarjanNode$ = function(value) {
   return new $._TarjanNode(value, -1, null);
 };
 
+$.Arrays_lastIndexOf = function(a, element, startIndex) {
+  if (typeof a !== 'string' && (typeof a !== 'object' || a === null || a.constructor !== Array && !a.is$JavaScriptIndexingBehavior()))
+    return $.Arrays_lastIndexOf$bailout(1, a, element, startIndex);
+  if (typeof startIndex !== 'number')
+    return $.Arrays_lastIndexOf$bailout(1, a, element, startIndex);
+  if (startIndex < 0)
+    return -1;
+  var t1 = a.length;
+  if (startIndex >= t1)
+    startIndex = t1 - 1;
+  for (var i = startIndex; i >= 0; --i) {
+    if (i !== (i | 0))
+      throw $.iae(i);
+    if (i < 0 || i >= a.length)
+      throw $.ioore(i);
+    if ($.eqB(a[i], element))
+      return i;
+  }
+  return -1;
+};
+
 $.Coordinate_difference = function(a, b) {
   return $.Vector$($.sub(a.x, b.get$x()), $.sub(a.y, b.get$y()));
 };
@@ -10103,9 +10164,6 @@ $.forEach = function(receiver, f) {
     return $.Collections_forEach(receiver, f);
 };
 
-$.TestIrv__testTwoCandidatesObvious = function() {
-};
-
 $.Collections_forEach = function(iterable, f) {
   for (var t1 = $.iterator(iterable); t1.hasNext$0() === true;)
     f.call$1(t1.next$0());
@@ -10261,6 +10319,47 @@ $.Primitives_objectHashCode = function(object) {
   return hash;
 };
 
+$.TestIrv__testNoTransfersBetweenEliminated = function() {
+  var ballots = $.ListImplementation_List(null);
+  for (var voter = 1, i = 0; i < 10; ++i) {
+    var voter0 = voter + 1;
+    ballots.push($.RankedBallot_RankedBallot('Voter ' + $.S(voter), ['A']));
+    voter = voter0;
+  }
+  for (i = 0; i < 8; ++i) {
+    voter0 = voter + 1;
+    ballots.push($.RankedBallot_RankedBallot('Voter ' + $.S(voter), ['B']));
+    voter = voter0;
+  }
+  for (i = 0; i < 2; ++i) {
+    voter0 = voter + 1;
+    ballots.push($.RankedBallot_RankedBallot('Voter ' + $.S(voter), ['C', 'D']));
+    voter = voter0;
+  }
+  for (i = 0; i < 2; ++i) {
+    voter0 = voter + 1;
+    ballots.push($.RankedBallot_RankedBallot('Voter ' + $.S(voter), ['D', 'C']));
+    voter = voter0;
+  }
+  var elec = $.IrvElection_IrvElection(ballots);
+  $.expect(elec, $.CTC35, null, null, false);
+  $.expect(elec.get$candidates(), $.unorderedEquals(['A', 'B', 'C', 'D']), null, null, false);
+  $.expect(elec.get$ballots(), $.unorderedEquals(ballots), null, null, false);
+  $.expect($.get$length(elec.get$rounds()), 2, null, null, false);
+  var firstRound = elec.get$rounds().first$0();
+  $.expect(firstRound.get$eliminatedCandidates(), $.unorderedEquals(['C', 'D']), null, null, false);
+  var elimC = firstRound.getElimination$1('C');
+  $.expect(elimC.getTransferCount$1('A'), 0, null, null, false);
+  $.expect(elimC.getTransferCount$1('B'), 0, null, null, false);
+  $.expect(elimC.getTransferCount$1('C'), 0, null, null, false);
+  $.expect(elimC.getTransferCount$1('D'), 0, null, null, false);
+  var elimD = firstRound.getElimination$1('D');
+  $.expect(elimD.getTransferCount$1('A'), 0, null, null, false);
+  $.expect(elimD.getTransferCount$1('B'), 0, null, null, false);
+  $.expect(elimD.getTransferCount$1('C'), 0, null, null, false);
+  $.expect(elimD.getTransferCount$1('D'), 0, null, null, false);
+};
+
 $.gt = function(a, b) {
   return typeof a === 'number' && typeof b === 'number' ? a > b : $.gt$slow(a, b);
 };
@@ -10274,27 +10373,6 @@ $.charCodeAt = function(receiver, index) {
     return receiver.charCodeAt(index);
   } else
     return receiver.charCodeAt$1(index);
-};
-
-$.Arrays_lastIndexOf = function(a, element, startIndex) {
-  if (typeof a !== 'string' && (typeof a !== 'object' || a === null || a.constructor !== Array && !a.is$JavaScriptIndexingBehavior()))
-    return $.Arrays_lastIndexOf$bailout(1, a, element, startIndex);
-  if (typeof startIndex !== 'number')
-    return $.Arrays_lastIndexOf$bailout(1, a, element, startIndex);
-  if (startIndex < 0)
-    return -1;
-  var t1 = a.length;
-  if (startIndex >= t1)
-    startIndex = t1 - 1;
-  for (var i = startIndex; i >= 0; --i) {
-    if (i !== (i | 0))
-      throw $.iae(i);
-    if (i < 0 || i >= a.length)
-      throw $.ioore(i);
-    if ($.eqB(a[i], element))
-      return i;
-  }
-  return -1;
 };
 
 $.StringImplementation__fromCharCodes = function(charCodes) {
@@ -10582,13 +10660,14 @@ $.IrvRound_IrvRound = function(ballots, eliminatedCandidates) {
   var t1 = {};
   var cleanedBallots = $.map(ballots, new $.IrvRound_IrvRound_anon(eliminatedCandidates));
   cleanedBallots.count$1(new $.IrvRound_IrvRound_anon0());
-  var candidateAllocations = cleanedBallots.group$1(new $.IrvRound_IrvRound_anon1());
-  var voteGroups = $.$$(candidateAllocations.getKeys$0()).group$1(new $.IrvRound_IrvRound_anon2(candidateAllocations));
+  var candidateAllocations = $.filter(cleanedBallots, new $.IrvRound_IrvRound_anon1()).group$1(new $.IrvRound_IrvRound_anon2());
+  var voteGroups = $.$$(candidateAllocations.getKeys$0()).group$1(new $.IrvRound_IrvRound_anon3(candidateAllocations));
   var placeVotes = $.$$(voteGroups.getKeys$0()).toList$0();
-  $.sort(placeVotes, new $.IrvRound_IrvRound_anon3());
+  $.sort(placeVotes, new $.IrvRound_IrvRound_anon4());
   t1.placeNumber_1 = 1;
-  var places = $.map($.$$(placeVotes), new $.IrvRound_IrvRound_anon4(t1, voteGroups)).toReadOnlyCollection$0();
-  return $.IrvRound$_internal(places, $.map($.$$($.IrvRound__getEliminatedCandidates(places)), new $.IrvRound_IrvRound_anon5(cleanedBallots)).toReadOnlyCollection$0());
+  var places = $.map($.$$(placeVotes), new $.IrvRound_IrvRound_anon5(t1, voteGroups)).toReadOnlyCollection$0();
+  var newlyEliminatedCandidates = $.IrvRound__getEliminatedCandidates(places);
+  return $.IrvRound$_internal(places, $.map($.$$(newlyEliminatedCandidates), new $.IrvRound_IrvRound_anon6(newlyEliminatedCandidates, cleanedBallots)).toReadOnlyCollection$0());
 };
 
 $.Primitives_printString = function(string) {
@@ -11729,9 +11808,6 @@ $.IndexOutOfRangeException$ = function(_value) {
   return new $.IndexOutOfRangeException(_value);
 };
 
-$.TestIrv__testTwoCandidatesTied = function() {
-};
-
 $.KeyValuePair$ = function(key, value) {
   return new $.KeyValuePair(key, value);
 };
@@ -12276,12 +12352,12 @@ $.TestIrv__testOneCandidate.call$0 = $.TestIrv__testOneCandidate;
 $.TestIrv__testOneCandidate.$name = "TestIrv__testOneCandidate";
 $.constructorNameFallback.call$1 = $.constructorNameFallback;
 $.constructorNameFallback.$name = "constructorNameFallback";
+$.TestIrv__testNoTransfersBetweenEliminated.call$0 = $.TestIrv__testNoTransfersBetweenEliminated;
+$.TestIrv__testNoTransfersBetweenEliminated.$name = "TestIrv__testNoTransfersBetweenEliminated";
 $._voterHexMapperIsolate.call$0 = $._voterHexMapperIsolate;
 $._voterHexMapperIsolate.$name = "_voterHexMapperIsolate";
 $.TestPlurality_randomVoteTest.call$0 = $.TestPlurality_randomVoteTest;
 $.TestPlurality_randomVoteTest.$name = "TestPlurality_randomVoteTest";
-$.TestIrv__testTwoCandidatesTied.call$0 = $.TestIrv__testTwoCandidatesTied;
-$.TestIrv__testTwoCandidatesTied.$name = "TestIrv__testTwoCandidatesTied";
 $.TestPlurality_testPluralityElectionHatesDoubleVotes.call$0 = $.TestPlurality_testPluralityElectionHatesDoubleVotes;
 $.TestPlurality_testPluralityElectionHatesDoubleVotes.$name = "TestPlurality_testPluralityElectionHatesDoubleVotes";
 $._distanceElectionIsolate.call$0 = $._distanceElectionIsolate;
@@ -12300,14 +12376,12 @@ $.typeNameInSafari.call$1 = $.typeNameInSafari;
 $.typeNameInSafari.$name = "typeNameInSafari";
 $.typeNameInOpera.call$1 = $.typeNameInOpera;
 $.typeNameInOpera.$name = "typeNameInOpera";
-$.TestLocationData__testGetCandidateName.call$0 = $.TestLocationData__testGetCandidateName;
-$.TestLocationData__testGetCandidateName.$name = "TestLocationData__testGetCandidateName";
 $.TestCondorcetElection__sample2.call$0 = $.TestCondorcetElection__sample2;
 $.TestCondorcetElection__sample2.$name = "TestCondorcetElection__sample2";
+$.TestLocationData__testGetCandidateName.call$0 = $.TestLocationData__testGetCandidateName;
+$.TestLocationData__testGetCandidateName.$name = "TestLocationData__testGetCandidateName";
 $.invokeClosure.call$5 = $.invokeClosure;
 $.invokeClosure.$name = "invokeClosure";
-$.TestIrv__testTwoCandidatesObvious.call$0 = $.TestIrv__testTwoCandidatesObvious;
-$.TestIrv__testTwoCandidatesObvious.$name = "TestIrv__testTwoCandidatesObvious";
 $.TestPlurality_testTiedforFirst.call$0 = $.TestPlurality_testTiedforFirst;
 $.TestPlurality_testTiedforFirst.$name = "TestPlurality_testTiedforFirst";
 $._timerFactory.call$3 = $._timerFactory;
