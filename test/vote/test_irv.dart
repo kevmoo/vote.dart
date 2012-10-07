@@ -1,10 +1,61 @@
 class TestIrv {
   static void run() {
     group('IrvElection', () {
+      test('no transfers between eliminated', _testNoTransfersBetweenEliminated);
       test('one candidate', _testOneCandidate);
       test('three candidates, tied', _threeWayTieForFirst);
       test('Ice Cream', _testIceCream);
     });
+  }
+
+  static void _testNoTransfersBetweenEliminated() {
+    final canA = 'A';
+    final canB = 'B';
+    final canC = 'C';
+    final canD = 'D';
+
+    var voter = 1;
+
+    final ballots = new List<RankedBallot>();
+    for(var i=0;i<10;i++) {
+      ballots.add(new RankedBallot("Voter ${voter++}", [canA]));
+    }
+
+    for(var i=0;i<8;i++) {
+      ballots.add(new RankedBallot("Voter ${voter++}", [canB]));
+    }
+
+    for(var i=0;i<2;i++) {
+      ballots.add(new RankedBallot("Voter ${voter++}", [canC, canD]));
+    }
+
+    for(var i=0;i<2;i++) {
+      ballots.add(new RankedBallot("Voter ${voter++}", [canD, canC]));
+    }
+
+    var elec = new IrvElection(ballots);
+
+    expect(elec, isNotNull);
+    //expect(elec.singleWinner, equals(canC));
+    expect(elec.candidates, unorderedEquals([canA, canB, canC, canD]));
+    expect(elec.ballots, unorderedEquals(ballots));
+
+    expect(elec.rounds.length, 2);
+
+    final firstRound = elec.rounds.first();
+    expect(firstRound.eliminatedCandidates, unorderedEquals([canC, canD]));
+
+    final elimC = firstRound.getElimination(canC);
+    expect(elimC.getTransferCount(canA), 0);
+    expect(elimC.getTransferCount(canB), 0);
+    expect(elimC.getTransferCount(canC), 0);
+    expect(elimC.getTransferCount(canD), 0);
+
+    final elimD = firstRound.getElimination(canD);
+    expect(elimD.getTransferCount(canA), 0);
+    expect(elimD.getTransferCount(canB), 0);
+    expect(elimD.getTransferCount(canC), 0);
+    expect(elimD.getTransferCount(canD), 0);
   }
 
   static void _testOneCandidate() {

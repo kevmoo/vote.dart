@@ -15,7 +15,9 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
 
     final activeBallotCount = cleanedBallots.count((t) => t.item3 != null);
 
-    final candidateAllocations = cleanedBallots.group((tuple) => tuple.item3);
+    final candidateAllocations = cleanedBallots
+        .filter((t) => t.item3 != null)
+        .group((tuple) => tuple.item3);
 
     final voteGroups = $(candidateAllocations.getKeys()).group((c) {
       return candidateAllocations[c].length;
@@ -42,14 +44,13 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
 
       for(final b in cleanedBallots.filter((t) => t.item3 == c)) {
         final rb = b.item1;
-        final pruned = b.item2;
-        assert(pruned.first() == c);
-        if(pruned.length == 1) {
+        final pruned = b.item2.exclude(newlyEliminatedCandidates);
+        if(pruned.length == 0) {
           // we're exhausted
           exhausted.add(rb);
         } else {
           // #2 gets the transfer
-          final runnerUp = pruned[1];
+          final runnerUp = pruned.first();
           xfers.putIfAbsent(runnerUp, () => new List()).add(rb);
         }
       }
@@ -66,6 +67,10 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
 
   Enumerable<TCandidate> get eliminatedCandidates => eliminations
       .map((ie) => ie.candidate);
+
+  IrvElimination<TVoter, TCandidate> getElimination(TCandidate candidate) {
+    return eliminations.singleOrDefault((e) => e.candidate == candidate);
+  }
 
   static List<Player> _getEliminatedCandidates(
       ReadOnlyCollection<PluralityElectionPlace> places) {
