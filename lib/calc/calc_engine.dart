@@ -5,7 +5,7 @@ class CalcEngine {
   final _IrvElectionMapper _irvElectionMapper = new _IrvElectionMapper();
   final _VoterHexMapper _voterHexMapper = new _VoterHexMapper();
 
-  Tuple<MapPlayer, MapPlayer> _hoverPair;
+  List<MapPlayer> _highlightCandidates;
 
   CalcEngine() {
     _distanceElectionMapper.outputChanged.add((args) {
@@ -40,8 +40,8 @@ class CalcEngine {
     }
   }
 
-  void set hoverPair(Tuple<MapPlayer, MapPlayer> pair) {
-    _hoverPair = pair;
+  void set hoverPair(List<MapPlayer> pair) {
+    _highlightCandidates = pair;
     _updateVoterHexMapper();
   }
 
@@ -99,7 +99,7 @@ class CalcEngine {
   }
 
   void _updateVoterHexMapper() {
-    final val = new Tuple3(distanceElection, locationData, _hoverPair);
+    final val = new Tuple3(distanceElection, locationData, _highlightCandidates);
     _voterHexMapper.input = val;
   }
 }
@@ -160,13 +160,13 @@ void _irvElectionIsolate() {
 }
 
 class _VoterHexMapper
-  extends SendPortValue<Tuple3<DistanceElection, LocationData, Tuple<MapPlayer, MapPlayer>>, HashMap<MapPlayer, String>> {
+  extends SendPortValue<Tuple3<DistanceElection, LocationData, List<MapPlayer>>, HashMap<MapPlayer, String>> {
 
   _VoterHexMapper() : super(spawnFunction(_voterHexMapperIsolate));
 }
 
 void _voterHexMapperIsolate() {
-  port.receive((Tuple3<DistanceElection, LocationData, Tuple<MapPlayer, MapPlayer>> tuple, SendPort reply) {
+  port.receive((Tuple3<DistanceElection, LocationData, List<MapPlayer>> tuple, SendPort reply) {
     final map = new HashMap<MapPlayer, String>();
     for(final b in tuple.item1.ballots) {
       MapPlayer candidate;
@@ -175,7 +175,7 @@ void _voterHexMapperIsolate() {
       } else {
         // TODO: this will blow up wonderfully if the item is not found
         // need to implement firstOrDefault
-        candidate = b.rank.filter((c) => c == tuple.item3.item1 || c == tuple.item3.item2).first();
+        candidate = b.rank.filter((c) => tuple.item3.indexOf(c) >= 0).first();
       }
       if(candidate != null) {
         final hue = LocationData.getHue(candidate);

@@ -5,7 +5,7 @@ class CondorcetView extends HtmlView {
   final EventHandle<EventArgs> _hoverChangedHandle;
   CondorcetElection _election;
   ReadOnlyCollection<Player> _candidates;
-  Tuple<Player, Player> _hoveringPair;
+  List<Player> _highlightCandidates;
 
   CondorcetView(DivElement node) :
     _hoverChangedHandle = new EventHandle<EventArgs>(),
@@ -21,7 +21,7 @@ class CondorcetView extends HtmlView {
 
   EventRoot<EventArgs> get hoverChanged => _hoverChangedHandle;
 
-  Tuple<Player, Player> get hoveringPair => _hoveringPair;
+  List<Player> get highlightCandidates => _highlightCandidates;
 
   void updateElement() {
     node.elements.clear();
@@ -169,10 +169,10 @@ class CondorcetView extends HtmlView {
     node.elements.add(table);
   }
 
-  void set _thePair(Tuple pair) {
+  void set _thePair(List<Player> pair) {
     assert(_candidates != null);
-    if(pair != _hoveringPair) {
-      _hoveringPair = pair;
+    if(pair != _highlightCandidates) {
+      _highlightCandidates = pair;
       _updateCellHoverStyle();
       _hoverChangedHandle.fireEvent(EventArgs.empty);
     }
@@ -186,9 +186,9 @@ class CondorcetView extends HtmlView {
       e.classes.remove(hoverPairClass);
     });
 
-    if(_hoveringPair != null) {
+    if(_highlightCandidates != null) {
       final matchClass =
-          _getPairElementName(_hoveringPair.item1, _hoveringPair.item2);
+          _getPairElementName(_highlightCandidates[0], _highlightCandidates[1]);
       final List<Element> thePairs = node.queryAll('td.pair-cell.$matchClass');
       thePairs.forEach((e){
         e.classes.add(hoverPairClass);
@@ -202,7 +202,7 @@ class CondorcetView extends HtmlView {
       final Element elem = e.toElement;
       final pair = _getPair(elem);
       if(pair != null) {
-        _thePair = new Tuple(_candidates[pair.item1], _candidates[pair.item2]);
+        _thePair = [_candidates[pair.item1], _candidates[pair.item2]];
         return;
       }
     }

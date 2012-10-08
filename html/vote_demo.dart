@@ -101,11 +101,10 @@ class VoteDemo{
     });
 
     _condorcetView.hoverChanged.add((args) {
-      _calcEngine.hoverPair = _condorcetView.hoveringPair;
+      _calcEngine.hoverPair = _condorcetView.highlightCandidates;
       List<MapPlayer> hoverElements = null;
-      if(_condorcetView.hoveringPair != null) {
-        hoverElements = [_condorcetView.hoveringPair.item1,
-                         _condorcetView.hoveringPair.item2];
+      if(_condorcetView.highlightCandidates != null) {
+        hoverElements = _condorcetView.highlightCandidates;
       }
       _rootMapElement.showOnlyPlayers = hoverElements;
     });
