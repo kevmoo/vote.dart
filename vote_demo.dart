@@ -101,18 +101,21 @@ class VoteDemo{
     });
 
     _condorcetView.hoverChanged.add((args) {
-      _calcEngine.hoverPair = _condorcetView.hoveringPair;
-      List<MapPlayer> hoverElements = null;
-      if(_condorcetView.hoveringPair != null) {
-        hoverElements = [_condorcetView.hoveringPair.item1,
-                         _condorcetView.hoveringPair.item2];
-      }
-      _rootMapElement.showOnlyPlayers = hoverElements;
+      _updateHighlightCandidates(_condorcetView.highlightCandidates);
+    });
+
+    _irvView.hoverChanged.add((args) {
+      _updateHighlightCandidates(_irvView.highlightCandidates);
     });
 
     final initialData = new LocationData.random();
 
     _calcEngine.locationData = initialData;
+  }
+
+  void _updateHighlightCandidates(List candidates) {
+    _calcEngine.hoverPair = candidates;
+    _rootMapElement.showOnlyPlayers = candidates;
   }
 
   void _locationDataUpdated(Dynamic args) {
