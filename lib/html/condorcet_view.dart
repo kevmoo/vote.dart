@@ -2,14 +2,12 @@ class CondorcetView extends HtmlView {
   static final String _grayHex = '#999999';
   static final String _pairIdsKey = 'pair-ids';
 
-  final EventHandle<EventArgs> _hoverChangedHandle;
+  final EventHandle<EventArgs> _hoverChangedHandle = new EventHandle<EventArgs>();
   CondorcetElection _election;
   ReadOnlyCollection<Player> _candidates;
   List<Player> _highlightCandidates;
 
-  CondorcetView(DivElement node) :
-    _hoverChangedHandle = new EventHandle<EventArgs>(),
-    super(node);
+  CondorcetView(DivElement node) : super(node);
 
   CondorcetElection get election => _election;
 

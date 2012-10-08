@@ -68,6 +68,8 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
   Enumerable<TCandidate> get eliminatedCandidates => eliminations
       .map((ie) => ie.candidate);
 
+  Enumerable<TCandidate> get candidates => places.selectMany((p) => p);
+
   IrvElimination<TVoter, TCandidate> getElimination(TCandidate candidate) {
     return eliminations.singleOrDefault((e) => e.candidate == candidate);
   }
@@ -105,18 +107,3 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
     return places.last().map((p) => p).toList();
   }
 }
-
-/*
- * Factory
- * - ballots
- * - eliminated candidates
- *
- * Properties
- * - hasWinner
- * - ranked output (type?)
- * - eliminated candidates
- * - effective ballots? -> ballots after eliminated candidates
- *
- *
- *
- */

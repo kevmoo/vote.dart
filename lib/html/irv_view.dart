@@ -1,6 +1,8 @@
 class IrvView extends HtmlView {
-  static final String _grayHex = '#999999';
-  static final String _pairIdsKey = 'pair-ids';
+  static const _roundCellClass = 'irv_round';
+
+  final EventHandle<EventArgs> _hoverChangedHandle = new EventHandle<EventArgs>();
+  int _highlightRound;
 
   IrvElection _election;
 
@@ -11,6 +13,17 @@ class IrvView extends HtmlView {
   void set election(IrvElection value) {
     _election = value;
     markDirty();
+  }
+
+  EventRoot<EventArgs> get hoverChanged => _hoverChangedHandle;
+
+  List<Player> get highlightCandidates {
+    if(_highlightRound == null) {
+      return null;
+    } else {
+      final round = _election.rounds[_highlightRound];
+      return round.candidates.toList();
+    }
   }
 
   void updateElement() {
@@ -25,12 +38,8 @@ class IrvView extends HtmlView {
 
     final colors = candidates.toHashMap((c) {
       final hue = LocationData.getHue(c);
-      if(hue == null) {
-        return _grayHex;
-      } else {
-        final hsl = new HslColor(hue, 1, 0.75);
-        return hsl.toRgb().toHex();
-      }
+      final hsl = new HslColor(hue, 1, 0.75);
+      return hsl.toRgb().toHex();
     });
 
     var table = new TableElement();
@@ -57,7 +66,6 @@ class IrvView extends HtmlView {
           if(currentPlace.length != previousPlace.length) {
             drawPlaces = true;
           } else {
-            // TODO: I *think* we can assume we match here.
             for(var j = 0; j < currentPlace.length; j++) {
               if(currentPlace[j] != previousPlace[j]) {
                 drawPlaces = true;
@@ -118,6 +126,8 @@ class IrvView extends HtmlView {
       // blank cell on the left
       cell = new Element.tag('th');
       cell.innerHTML = 'Round ${i+1}';
+      cell.classes.add(_roundCellClass);
+      cell.dataAttributes['roundIndex'] = i;
       row.elements.add(cell);
 
       for(final place in round.places) {
@@ -144,17 +154,15 @@ class IrvView extends HtmlView {
         cell.style.textAlign = 'right';
 
         bool foundSelf = false;
-        for(final place in round.places) {
-          for(final c in place) {
-            cell = row.insertCell(-1);
-            if(c == elimination.candidate) {
-              cell.innerHTML = '&larr;';
-              foundSelf = true;
-            } else {
-              final transferCount = elimination.getTransferCount(c);
-              if(transferCount > 0) {
-                cell.innerHTML = transferCount.toString();
-              }
+        for(final c in round.candidates) {
+          cell = row.insertCell(-1);
+          if(c == elimination.candidate) {
+            cell.innerHTML = '&larr;';
+            foundSelf = true;
+          } else {
+            final transferCount = elimination.getTransferCount(c);
+            if(transferCount > 0) {
+              cell.innerHTML = transferCount.toString();
             }
           }
         }
@@ -162,8 +170,32 @@ class IrvView extends HtmlView {
       }
     }
 
+    table.on.mouseMove.add(_onMouseOver);
+    table.on.mouseOut.add(_onMouseOut);
 
     node.elements.add(table);
+    _updateHighlightedRound(null);
   }
 
+  void _onMouseOver(MouseEvent e) {
+    if(e.toElement is Element) {
+      final Element elem = e.toElement;
+      if(elem.classes.contains(_roundCellClass)) {
+        _updateHighlightedRound(int.parse(elem.dataAttributes['roundIndex']));
+        return;
+      }
+    }
+    _updateHighlightedRound(null);
+  }
+
+  void _onMouseOut(args) {
+    _updateHighlightedRound(null);
+  }
+
+  void _updateHighlightedRound(int roundIndex) {
+    if(roundIndex != _highlightRound) {
+      _highlightRound = roundIndex;
+      _hoverChangedHandle.fireEvent(EventArgs.empty);
+    }
+  }
 }

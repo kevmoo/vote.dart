@@ -26,19 +26,23 @@ td.vote-count, td.average-distance {
 
 tr.row-even {
   background: #ccc;
-} 
+}
 
 tr.row-odd {
   background: #ddd;
-} 
+}
 
 td.candidate-cell {
   text-align: center;
 }
 
-//
-// Condorcet View
-//
+/* IRV View */
+
+th.irv_round {
+  cursor: pointer;
+}
+
+/* Condorcet View */
 
 td.pair-cell.right-value {
   padding-left: 0;
