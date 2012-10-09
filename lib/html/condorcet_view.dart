@@ -1,5 +1,4 @@
 class CondorcetView extends HtmlView {
-  static final String _grayHex = '#999999';
   static final String _pairIdsKey = 'pair-ids';
 
   final EventHandle<EventArgs> _hoverChangedHandle = new EventHandle<EventArgs>();
@@ -43,32 +42,12 @@ class CondorcetView extends HtmlView {
       // add columns for opponents
       _candidates = _election.places.selectMany((p) => p).toReadOnlyCollection();
 
-      final colors = _candidates.toHashMap((c) {
-        final hue = LocationData.getHue(c);
-        if(hue == null) {
-          return _grayHex;
-        } else {
-          final hsl = new HslColor(hue, 1, 0.75);
-          return hsl.toRgb().toHex();
-        }
-      });
-
-      final darkColors = _candidates.toHashMap((c) {
-        final hue = LocationData.getHue(c);
-        if(hue == null) {
-          return _grayHex;
-        } else {
-          final hsl = new HslColor(hue, 1, 0.3);
-          return hsl.toRgb().toHex();
-        }
-      });
-
       for(final opp in _candidates) {
         cell = new Element.tag('th');
         row.elements.add(cell);
         cell.innerHTML = opp.toString();
 
-        cell.style.background = colors[opp];
+        cell.style.background = getCandidateHexColor(opp);
         cell.colSpan = 3;
       }
 
@@ -91,7 +70,7 @@ class CondorcetView extends HtmlView {
           cell = row.insertCell(-1);
           cell.classes.add('candidate-cell');
 
-          cell.style.background = colors[candidate];
+          cell.style.background = getCandidateHexColor(candidate);
           cell.innerHTML = candidate.toString();
 
           for(final opp in _candidates) {
@@ -107,19 +86,19 @@ class CondorcetView extends HtmlView {
               assert(pair != null);
               if(candidate == pair.winner) {
                 cellClass = 'winner';
-                leftColor = darkColors[candidate];
-                rightColor = darkColors[opp];
+                leftColor = getCandidateHexColor(candidate, true);
+                rightColor = getCandidateHexColor(opp, true);
                 middleText = '&gt;';
               } else if(opp == pair.winner) {
                 cellClass = 'loser';
-                leftColor = colors[candidate];
-                rightColor = colors[opp];
+                leftColor = getCandidateHexColor(candidate);
+                rightColor = getCandidateHexColor(opp);
                 middleText = '&lt;';
               } else {
                 assert(pair.isTie);
                 cellClass = 'tie';
-                leftColor = darkColors[candidate];
-                rightColor = darkColors[opp];
+                leftColor = getCandidateHexColor(candidate, true);
+                rightColor = getCandidateHexColor(opp, true);
                 middleText = '=';
               }
 

@@ -36,12 +36,6 @@ class IrvView extends HtmlView {
     final candidates = _election.rounds.first().places
         .selectMany((p) => p).toReadOnlyCollection();
 
-    final colors = candidates.toHashMap((c) {
-      final hue = LocationData.getHue(c);
-      final hsl = new HslColor(hue, 1, 0.75);
-      return hsl.toRgb().toHex();
-    });
-
     var table = new TableElement();
 
     TableRowElement row;
@@ -113,7 +107,7 @@ class IrvView extends HtmlView {
             row.elements.add(cell);
             cell.innerHTML = c.toString();
             cell.classes.add('candidate-cell');
-            cell.style.background = colors[c];
+            cell.style.background = getCandidateHexColor(c);
           }
         }
       }
@@ -135,8 +129,8 @@ class IrvView extends HtmlView {
           cell = row.insertCell(-1);
           cell.innerHTML = place.voteCount.toString();
           cell.classes.add('candidate-cell');
-          cell.style.background = colors[c];
           cell.classes.add('vote-count');
+          cell.style.background = getCandidateHexColor(c);
         }
       }
 
