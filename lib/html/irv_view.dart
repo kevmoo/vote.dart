@@ -136,6 +136,7 @@ class IrvView extends HtmlView {
           cell.innerHTML = place.voteCount.toString();
           cell.classes.add('candidate-cell');
           cell.style.background = colors[c];
+          cell.classes.add('vote-count');
         }
       }
 
@@ -163,6 +164,7 @@ class IrvView extends HtmlView {
             final transferCount = elimination.getTransferCount(c);
             if(transferCount > 0) {
               cell.innerHTML = transferCount.toString();
+              cell.classes.add('vote-count');
             }
           }
         }
