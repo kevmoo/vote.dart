@@ -31,7 +31,6 @@ do
   build_and_log $file
 done
 
-build_and_log 'html/vote_demo.dart'
 build_and_log 'test/browser_test_harness.dart'
 
 echo "Success:"
