@@ -1,4 +1,4 @@
-class RootMapElement extends ElementParentImpl {
+class RootMapElement extends ParentElement {
   final VoterMapElement _voterMap;
   final CandidateMapElement _candidateMap;
   final AffineTransform _tx = new AffineTransform();

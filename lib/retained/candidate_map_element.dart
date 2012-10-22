@@ -1,4 +1,4 @@
-class CandidateMapElement extends ElementParentImpl implements MapElementBase {
+class CandidateMapElement extends ParentElement implements MapElementBase {
   final List<MapPlayer> _players = new List<MapPlayer>();
   final AffineTransform _tx = new AffineTransform();
 
