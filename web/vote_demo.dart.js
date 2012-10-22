@@ -3040,7 +3040,32 @@ $$._MessageTraverser = {"":
  [],
  "super": "Object",
  traverse$1: function(x) {
-  return x;
+  if ($._MessageTraverser_isPrimitive(x))
+    return this.visitPrimitive$1(x);
+  this._visited.reset$0();
+  var result = null;
+  try {
+    result = this._dispatch$1(x);
+  } finally {
+    this._visited.cleanup$0();
+  }
+  return result;
+},
+ _dispatch$1: function(x) {
+  if ($._MessageTraverser_isPrimitive(x))
+    return this.visitPrimitive$1(x);
+  if (typeof x === 'object' && x !== null && (x.constructor === Array || x.is$List()))
+    return this.visitList$1(x);
+  if (typeof x === 'object' && x !== null && x.is$Map())
+    return this.visitMap$1(x);
+  if (typeof x === 'object' && x !== null && !!x.is$SendPort)
+    return this.visitSendPort$1(x);
+  if (typeof x === 'object' && x !== null && !!x.is$SendPortSync)
+    return this.visitSendPortSync$1(x);
+  return this.visitObject$1(x);
+},
+ visitObject$1: function(x) {
+  throw $.$$throw('Message serialization: Illegal value ' + $.S(x) + ' passed');
 }
 };
 
@@ -3322,81 +3347,80 @@ $$._Random = {"":
 }
 };
 
-$$.DisposableImpl = {"":
+$$.Attachable = {"":
+ ["name?"],
+ "super": "Object"
+};
+
+$$.AttachableObject = {"":
  [],
- "super": "Object",
- validateNotDisposed$0: function() {
+ "super": "DisposableImpl",
+ _set$2: function(key, value) {
+  this.validateNotDisposed$0();
+  this._propertyValues.operator$indexSet$2(key, value);
+  this._fireChange$1(key);
+},
+ get$_set: function() { return new $.BoundClosure1(this, '_set$2'); },
+ _isSet$1: function(key) {
+  this.validateNotDisposed$0();
+  return this._propertyValues.containsKey$1(key);
+},
+ _lib1_remove$1: function(key) {
+  this.validateNotDisposed$0();
+  if (this._isSet$1(key) === true) {
+    this._propertyValues.remove$1(key);
+    this._fireChange$1(key);
+  }
+},
+ _getValueOrUndefined$3: function(key, obj, ifAbsent) {
+  this.validateNotDisposed$0();
+  if (this._isSet$1(key) === true)
+    return this._propertyValues.operator$index$1(key);
+  else if (!(ifAbsent == null)) {
+    var value = ifAbsent.call$1(obj);
+    this._set$2(key, value);
+    return value;
+  } else
+    return $.CTC26;
+},
+ _fireChange$1: function(key) {
+  this.validateNotDisposed$0();
+  var handle = this._eventHandlers.operator$index$1(key);
+  if (!(handle == null))
+    handle.fireEvent$1(key);
 }
 };
 
-$$.GlobalId = {"":
- ["id?", "_hashCode"],
- "super": "Object",
- compareTo$1: function(other) {
-  return $.compareTo(this.id, other.get$id());
-},
- hashCode$0: function() {
-  return this._hashCode;
-},
- operator$eq$1: function(other) {
-  return !(other == null) && $.eqB(other.get$id(), this.id);
-}
-};
-
-$$.Tuple = {"":
- ["item1?", "item2?"],
- "super": "Object",
- operator$eq$1: function(other) {
-  return !(other == null) && $.eqB(this.item1, other.get$item1()) && $.eqB(this.item2, other.get$item2());
-},
- toString$0: function() {
-  return '{item1: ' + $.S(this.item1) + ', item2: ' + $.S(this.item2) + '}';
-},
- hashCode$0: function() {
-  return $.Util_getHashCode([this.item1, this.item2]);
-}
-};
-
-$$.Tuple3 = {"":
- ["item3?", "item1", "item2"],
- "super": "Tuple",
- operator$eq$1: function(other) {
-  return !(other == null) && $.eqB(this.item1, other.get$item1()) && $.eqB(this.item2, other.get$item2()) && $.eqB(this.item3, other.get$item3());
-},
- toString$0: function() {
-  return '{item1: ' + $.S(this.item1) + ', item2: ' + $.S(this.item2) + ', item3: ' + $.S(this.item3) + '}';
-},
- hashCode$0: function() {
-  return $.Util_getHashCode([this.item1, this.item2, this.item3]);
-}
-};
-
-$$.NullArgumentException = {"":
- ["arg", "message"],
- "super": "ArgumentError",
- toString$0: function() {
-  return 'Null argument: ' + this.arg;
-}
-};
-
-$$.InvalidOperationException = {"":
- ["message?"],
- "super": "Object",
- is$Exception: true
-};
-
-$$.DetailedIllegalArgumentException = {"":
- ["argument", "message"],
- "super": "ArgumentError",
- toString$0: function() {
-  var t1 = this.message;
-  var t2 = t1 == null || $.eqB($.get$length(t1), 0);
-  var t3 = this.argument;
-  if (t2)
-    return 'Illegal argument: ' + t3;
+$$.Property = {"":
+ ["defaultValue", "name"],
+ "super": "Attachable",
+ get$2: function(obj, ifAbsent) {
+  var coreValue = this.getCore$2(obj, ifAbsent);
+  if (!$.identical(coreValue, $.CTC26))
+    return coreValue;
   else
-    return 'Illegal argument: ' + t3 + ' -- ' + $.S(t1);
+    return this.defaultValue;
+},
+ get$1: function(obj) {
+  return this.get$2(obj,null)
+},
+ getCore$2: function(obj, ifAbsent) {
+  return obj._getValueOrUndefined$3(this, obj, ifAbsent);
+},
+ set$2: function(obj, value) {
+  obj._set$2(this, value);
+},
+ clear$1: function(obj) {
+  return obj._lib1_remove$1(this);
+},
+ toString$0: function() {
+  return 'Property \'' + this.name + '\'';
 }
+};
+
+$$._UndefinedValue = {"":
+ [],
+ "super": "Object"
 };
 
 $$.Enumerable = {"":
@@ -3656,29 +3680,38 @@ $$._SelectManyIterator = {"":
 }
 };
 
-$$.NumberEnumerable = {"":
- [],
- "super": "Enumerable",
- sum$0: function() {
-  for (var t1 = $.iterator(this), theSum = 0; t1.hasNext$0() === true;) {
-    var t2 = t1.next$0();
-    if (typeof t2 !== 'number')
-      throw $.iae(t2);
-    theSum += t2;
-  }
-  return theSum;
-}
-};
-
-$$._FuncNumEnumerable = {"":
- ["_source", "_func"],
- "super": "NumberEnumerable",
- _func$1: function(arg0) { return this._func.call$1(arg0); },
- iterator$0: function() {
-  return this._func$1(this._source.iterator$0());
+$$.Grouping = {"":
+ ["_lib1_values"],
+ "super": "Object",
+ containsKey$1: function(key) {
+  return this._lib1_values.containsKey$1(key);
+},
+ operator$index$1: function(key) {
+  return this._lib1_values.operator$index$1(key);
+},
+ forEach$1: function(f) {
+  return this._lib1_values.forEach$1(f);
+},
+ getKeys$0: function() {
+  return this._lib1_values.getKeys$0();
 },
  get$length: function() {
-  return this.count$0();
+  return $.get$length(this._lib1_values);
+},
+ get$isEmpty: function() {
+  return this._lib1_values.isEmpty$0();
+},
+ isEmpty$0: function() { return this.get$isEmpty().call$0(); },
+ toString$0: function() {
+  return this._lib1_values.toString$0();
+},
+ Grouping$2: function(source, keyFunc) {
+  if (keyFunc == null)
+    keyFunc = new $.anon2();
+  for (var t1 = $.iterator(source), t2 = this._lib1_values; t1.hasNext$0() === true;) {
+    var t3 = t1.next$0();
+    $.add$1(t2.putIfAbsent$2(keyFunc.call$1(t3), new $.anon3()), t3);
+  }
 }
 };
 
@@ -3831,6 +3864,32 @@ $$.ListBase = {"":
  is$Collection: function() { return true; }
 };
 
+$$.NumberEnumerable = {"":
+ [],
+ "super": "Enumerable",
+ sum$0: function() {
+  for (var t1 = $.iterator(this), theSum = 0; t1.hasNext$0() === true;) {
+    var t2 = t1.next$0();
+    if (typeof t2 !== 'number')
+      throw $.iae(t2);
+    theSum += t2;
+  }
+  return theSum;
+}
+};
+
+$$._FuncNumEnumerable = {"":
+ ["_source", "_func"],
+ "super": "NumberEnumerable",
+ _func$1: function(arg0) { return this._func.call$1(arg0); },
+ iterator$0: function() {
+  return this._func$1(this._source.iterator$0());
+},
+ get$length: function() {
+  return this.count$0();
+}
+};
+
 $$.ReadOnlyCollection = {"":
  ["_items"],
  "super": "ListBase",
@@ -3849,319 +3908,6 @@ $$.ReadOnlyCollection = {"":
 },
  operator$index$1$bailout: function(state0, t1, index) {
   return $.index(t1, index);
-}
-};
-
-$$.Grouping = {"":
- ["_lib1_values"],
- "super": "Object",
- containsKey$1: function(key) {
-  return this._lib1_values.containsKey$1(key);
-},
- operator$index$1: function(key) {
-  return this._lib1_values.operator$index$1(key);
-},
- forEach$1: function(f) {
-  return this._lib1_values.forEach$1(f);
-},
- getKeys$0: function() {
-  return this._lib1_values.getKeys$0();
-},
- get$length: function() {
-  return $.get$length(this._lib1_values);
-},
- get$isEmpty: function() {
-  return this._lib1_values.isEmpty$0();
-},
- isEmpty$0: function() { return this.get$isEmpty().call$0(); },
- toString$0: function() {
-  return this._lib1_values.toString$0();
-},
- Grouping$2: function(source, keyFunc) {
-  if (keyFunc == null)
-    keyFunc = new $.anon2();
-  for (var t1 = $.iterator(source), t2 = this._lib1_values; t1.hasNext$0() === true;) {
-    var t3 = t1.next$0();
-    $.add$1(t2.putIfAbsent$2(keyFunc.call$1(t3), new $.anon3()), t3);
-  }
-}
-};
-
-$$.EventHandle = {"":
- ["_handlers", "_disposed"],
- "super": "DisposableImpl",
- fireEvent$1: function(args) {
-  var t1 = this._handlers;
-  if (!(t1 == null))
-    $.forEach(t1, new $.EventHandle_fireEvent_anon(args));
-},
- add$1: function(handler) {
-  var id = $.GlobalId_GlobalId();
-  if (this._handlers == null)
-    this._handlers = $.HashMapImplementation$();
-  $.indexSet(this._handlers, id, handler);
-  return id;
-},
- remove$1: function(id) {
-  var t1 = this._handlers;
-  if (!(t1 == null))
-    return !(t1.remove$1(id) == null);
-  else
-    return false;
-}
-};
-
-$$.EventArgs = {"":
- [],
- "super": "Object"
-};
-
-$$.CancelableEventArgs = {"":
- ["_canceled"],
- "super": "EventArgs",
- get$isCanceled: function() {
-  return this._canceled;
-},
- cancel$0: function() {
-  this._canceled = true;
-}
-};
-
-$$.Size = {"":
- ["width?", "height?"],
- "super": "Object",
- operator$eq$1: function(other) {
-  return !(other == null) && $.eqB(this.width, other.get$width()) && $.eqB(this.height, other.get$height());
-},
- get$area: function() {
-  return $.mul(this.width, this.height);
-},
- get$aspectRatio: function() {
-  return $.div(this.width, this.height);
-},
- isEmpty$0: function() {
-  return $.eq(this.get$area(), 0);
-},
- get$isValid: function() {
-  var t1 = this.width;
-  if ($.isValidNumber(t1)) {
-    var t2 = this.height;
-    t1 = $.isValidNumber(t2) && $.geB(t1, 0) && $.geB(t2, 0);
-  } else
-    t1 = false;
-  return t1;
-},
- scale$1: function(magnitude) {
-  return $.Size$($.mul(this.width, magnitude), $.mul(this.height, magnitude));
-},
- operator$mul$1: function(magnitude) {
-  return this.scale$1(magnitude);
-},
- toString$0: function() {
-  return '(' + $.S(this.width) + ' x ' + $.S(this.height) + ')';
-}
-};
-
-$$.Coordinate = {"":
- ["x?", "y?"],
- "super": "Object",
- getDistance$1: function(other) {
-  return $.get$length(this.operator$sub$1(other));
-},
- get$isValid: function() {
-  return $.isValidNumber(this.x) && $.isValidNumber(this.y);
-},
- operator$sub$1: function(other) {
-  return $.Coordinate_difference(this, other);
-},
- operator$add$1: function(other) {
-  return $.Coordinate$($.add(this.x, other.get$x()), $.add(this.y, other.get$y()));
-},
- operator$eq$1: function(other) {
-  return !(other == null) && $.eqB(this.x, other.get$x()) && $.eqB(this.y, other.get$y());
-},
- toString$0: function() {
-  return '{x:' + $.S(this.x) + ', y:' + $.S(this.y) + '}';
-}
-};
-
-$$.Vector = {"":
- ["x", "y"],
- "super": "Coordinate",
- get$length: function() {
-  var t1 = this.x;
-  t1 = $.mul(t1, t1);
-  var t2 = this.y;
-  return $.sqrt($.add(t1, $.mul(t2, t2)));
-},
- operator$add$1: function(other) {
-  return $.Vector$($.add(this.x, other.get$x()), $.add(this.y, other.get$y()));
-},
- operator$mul$1: function(magnitude) {
-  return this.scale$1(magnitude);
-},
- scale$1: function(magnitude) {
-  return $.Vector$($.mul(this.x, magnitude), $.mul(this.y, magnitude));
-}
-};
-
-$$.Box = {"":
- ["left?", "top?", "width?", "height?"],
- "super": "Object",
- get$topLeft: function() {
-  return $.Coordinate$(this.left, this.top);
-},
- get$size: function() {
-  return $.Size$(this.width, this.height);
-},
- get$isValid: function() {
-  return this.get$topLeft().get$isValid() === true && this.get$size().get$isValid() === true;
-},
- get$right: function() {
-  var t1 = this.left;
-  var t2 = this.width;
-  if (typeof t2 !== 'number')
-    throw $.iae(t2);
-  return t1 + t2;
-},
- get$bottom: function() {
-  var t1 = this.top;
-  var t2 = this.height;
-  if (typeof t2 !== 'number')
-    throw $.iae(t2);
-  return t1 + t2;
-},
- contains$1: function(point) {
-  var t1 = point.get$x();
-  var t2 = this.left;
-  if ($.geB(t1, t2)) {
-    t1 = point.get$x();
-    var t3 = this.width;
-    if (typeof t3 !== 'number')
-      throw $.iae(t3);
-    if ($.leB(t1, t2 + t3)) {
-      t1 = point.get$y();
-      t2 = this.top;
-      if ($.geB(t1, t2)) {
-        t1 = point.get$y();
-        t3 = this.height;
-        if (typeof t3 !== 'number')
-          throw $.iae(t3);
-        t1 = $.leB(t1, t2 + t3);
-      } else
-        t1 = false;
-    } else
-      t1 = false;
-  } else
-    t1 = false;
-  return t1;
-},
- constrain$1: function(value) {
-  $.requireArgumentNotNull(value, 'value');
-  $.requireArgument(value.get$isValid(), 'value', null);
-  return $.Coordinate$($.min(this.get$right(), $.max(this.left, value.get$x())), $.min(this.get$bottom(), $.max(this.top, value.get$y())));
-},
- operator$eq$1: function(other) {
-  return !(other == null) && $.eqB(other.get$left(), this.left) && $.eqB(other.get$top(), this.top) && $.eqB(other.get$width(), this.width) && $.eqB(other.get$height(), this.height);
-},
- toString$0: function() {
-  return 'Location: ' + $.S(this.get$topLeft()) + ', Size: ' + $.S(this.get$size());
-},
- hashCode$0: function() {
-  return $.Util_getHashCode([this.left, this.top, this.width, this.height]);
-}
-};
-
-$$.AffineTransform = {"":
- ["_m00?", "_m10?", "_m01?", "_m11?", "_m02?", "_m12?"],
- "super": "Object",
- get$scaleX: function() {
-  return this._m00;
-},
- get$scaleY: function() {
-  return this._m11;
-},
- get$translateX: function() {
-  return this._m02;
-},
- get$translateY: function() {
-  return this._m12;
-},
- get$shearX: function() {
-  return this._m01;
-},
- get$shearY: function() {
-  return this._m10;
-},
- get$determinant: function() {
-  return $.sub($.mul(this._m00, this._m11), $.mul(this._m01, this._m10));
-},
- concatenate$1: function(tx) {
-  var m0 = this._m00;
-  var m1 = this._m01;
-  this._m00 = $.add($.mul(tx.get$_m00(), m0), $.mul(tx.get$_m10(), m1));
-  this._m01 = $.add($.mul(tx.get$_m01(), m0), $.mul(tx.get$_m11(), m1));
-  this._m02 = $.add(this._m02, $.add($.mul(tx.get$_m02(), m0), $.mul(tx.get$_m12(), m1)));
-  var m00 = this._m10;
-  var m10 = this._m11;
-  this._m10 = $.add($.mul(tx.get$_m00(), m00), $.mul(tx.get$_m10(), m10));
-  this._m11 = $.add($.mul(tx.get$_m01(), m00), $.mul(tx.get$_m11(), m10));
-  this._m12 = $.add(this._m12, $.add($.mul(tx.get$_m02(), m00), $.mul(tx.get$_m12(), m10)));
-  return this;
-},
- get$concatenate: function() { return new $.BoundClosure(this, 'concatenate$1'); },
- translate$2: function(dx, dy) {
-  this._m02 = $.add(this._m02, $.add($.mul(dx, this._m00), $.mul(dy, this._m01)));
-  this._m12 = $.add(this._m12, $.add($.mul(dx, this._m10), $.mul(dy, this._m11)));
-  return this;
-},
- setToScale$2: function(sx, sy) {
-  return this.setTransform$6(sx, 0, 0, sy, 0, 0);
-},
- setFromTransfrom$1: function(tx) {
-  $.requireArgumentNotNull(tx, 'tx');
-  return this.setTransform$6(tx.get$_m00(), tx.get$_m10(), tx.get$_m01(), tx.get$_m11(), tx.get$_m02(), tx.get$_m12());
-},
- setTransform$6: function(m00, m10, m01, m11, m02, m12) {
-  this._m00 = m00;
-  this._m10 = m10;
-  this._m01 = m01;
-  this._m11 = m11;
-  this._m02 = m02;
-  this._m12 = m12;
-  return this;
-},
- transformCoordinate$1: function(point) {
-  return $.Coordinate$($.add($.add($.mul(point.get$x(), this._m00), $.mul(point.get$y(), this._m01)), this._m02), $.add($.add($.mul(point.get$x(), this._m10), $.mul(point.get$y(), this._m11)), this._m12));
-},
- createInverse$0: function() {
-  var det = this.get$determinant();
-  return $.AffineTransform$($.div(this._m11, det), $.div($.neg(this._m10), det), $.div($.neg(this._m01), det), $.div(this._m00, det), $.div($.sub($.mul(this._m01, this._m12), $.mul(this._m11, this._m02)), det), $.div($.sub($.mul(this._m10, this._m02), $.mul(this._m00, this._m12)), det));
-},
- operator$eq$1: function(other) {
-  return !(other == null) && $.eqB(this._m00, other.get$_m00()) && $.eqB(this._m01, other.get$_m01()) && $.eqB(this._m02, other.get$_m02()) && $.eqB(this._m10, other.get$_m10()) && $.eqB(this._m11, other.get$_m11()) && $.eqB(this._m12, other.get$_m12());
-},
- toString$0: function() {
-  return $.Strings_join($.map($.$$([this.get$translateX(), this.get$translateY(), this.get$scaleX(), this.get$scaleY(), this.get$shearX(), this.get$shearY()]), new $.AffineTransform_toString_anon()).toList$0(), ', ');
-}
-};
-
-$$.RgbColor = {"":
- ["r?", "g?", "b?"],
- "super": "Object",
- toHex$0: function() {
-  var buffer = $.StringBuffer_StringBuffer('#');
-  $.forEach([this.r, this.g, this.b], new $.RgbColor_toHex_anon(buffer));
-  return $.toString(buffer);
-},
- hashCode$0: function() {
-  return $.Util_getHashCode([this.r, this.g, this.b]);
-},
- operator$eq$1: function(other) {
-  return !(other == null) && $.eqB(other.get$r(), this.r) && $.eqB(other.get$g(), this.g) && $.eqB(other.get$b(), this.b);
-},
- toString$0: function() {
-  return '{RgbColor: ' + $.S(this.r) + ', ' + $.S(this.g) + ', ' + $.S(this.b) + '}';
 }
 };
 
@@ -4213,6 +3959,114 @@ $$.HslColor = {"":
 },
  toString$0: function() {
   return '{HslColor: ' + $.S(this.h) + ', ' + $.S(this.s) + ', ' + $.S(this.l) + '}';
+}
+};
+
+$$.RgbColor = {"":
+ ["r?", "g?", "b?"],
+ "super": "Object",
+ toHex$0: function() {
+  var buffer = $.StringBuffer_StringBuffer('#');
+  $.forEach([this.r, this.g, this.b], new $.RgbColor_toHex_anon(buffer));
+  return $.toString(buffer);
+},
+ hashCode$0: function() {
+  return $.Util_getHashCode([this.r, this.g, this.b]);
+},
+ operator$eq$1: function(other) {
+  return !(other == null) && $.eqB(other.get$r(), this.r) && $.eqB(other.get$g(), this.g) && $.eqB(other.get$b(), this.b);
+},
+ toString$0: function() {
+  return '{RgbColor: ' + $.S(this.r) + ', ' + $.S(this.g) + ', ' + $.S(this.b) + '}';
+}
+};
+
+$$.DisposableImpl = {"":
+ [],
+ "super": "Object",
+ validateNotDisposed$0: function() {
+}
+};
+
+$$.CancelableEventArgs = {"":
+ ["_canceled"],
+ "super": "EventArgs",
+ get$isCanceled: function() {
+  return this._canceled;
+},
+ cancel$0: function() {
+  this._canceled = true;
+}
+};
+
+$$.EventArgs = {"":
+ [],
+ "super": "Object"
+};
+
+$$.EventHandle = {"":
+ ["_handlers", "_disposed"],
+ "super": "DisposableImpl",
+ fireEvent$1: function(args) {
+  var t1 = this._handlers;
+  if (!(t1 == null))
+    $.forEach(t1, new $.EventHandle_fireEvent_anon(args));
+},
+ add$1: function(handler) {
+  var id = $.GlobalId_GlobalId();
+  if (this._handlers == null)
+    this._handlers = $.HashMapImplementation$();
+  $.indexSet(this._handlers, id, handler);
+  return id;
+},
+ remove$1: function(id) {
+  var t1 = this._handlers;
+  if (!(t1 == null))
+    return !(t1.remove$1(id) == null);
+  else
+    return false;
+}
+};
+
+$$.DetailedIllegalArgumentException = {"":
+ ["argument", "message"],
+ "super": "ArgumentError",
+ toString$0: function() {
+  var t1 = this.message;
+  var t2 = t1 == null || $.eqB($.get$length(t1), 0);
+  var t3 = this.argument;
+  if (t2)
+    return 'Illegal argument: ' + t3;
+  else
+    return 'Illegal argument: ' + t3 + ' -- ' + $.S(t1);
+}
+};
+
+$$.InvalidOperationException = {"":
+ ["message?"],
+ "super": "Object",
+ is$Exception: true
+};
+
+$$.NullArgumentException = {"":
+ ["arg", "message"],
+ "super": "ArgumentError",
+ toString$0: function() {
+  return 'Null argument: ' + this.arg;
+}
+};
+
+$$.GlobalId = {"":
+ ["id?", "_hashCode"],
+ "super": "Object",
+ compareTo$1: function(other) {
+  return $.compareTo(this.id, other.get$id());
+},
+ hashCode$0: function() {
+  return this._hashCode;
+},
+ operator$eq$1: function(other) {
+  return !(other == null) && $.eqB(other.get$id(), this.id);
 }
 };
 
@@ -4364,80 +4218,278 @@ $$._TarjanList = {"":
 }
 };
 
-$$.Attachable = {"":
- ["name?"],
- "super": "Object"
-};
-
-$$.AttachableObject = {"":
- [],
- "super": "DisposableImpl",
- _set$2: function(key, value) {
-  this.validateNotDisposed$0();
-  this._propertyValues.operator$indexSet$2(key, value);
-  this._fireChange$1(key);
+$$.AffineTransform = {"":
+ ["_m00?", "_m10?", "_m01?", "_m11?", "_m02?", "_m12?"],
+ "super": "Object",
+ get$scaleX: function() {
+  return this._m00;
 },
- get$_set: function() { return new $.BoundClosure1(this, '_set$2'); },
- _isSet$1: function(key) {
-  this.validateNotDisposed$0();
-  return this._propertyValues.containsKey$1(key);
+ get$scaleY: function() {
+  return this._m11;
 },
- _lib1_remove$1: function(key) {
-  this.validateNotDisposed$0();
-  if (this._isSet$1(key) === true) {
-    this._propertyValues.remove$1(key);
-    this._fireChange$1(key);
-  }
+ get$translateX: function() {
+  return this._m02;
 },
- _getValueOrUndefined$3: function(key, obj, ifAbsent) {
-  this.validateNotDisposed$0();
-  if (this._isSet$1(key) === true)
-    return this._propertyValues.operator$index$1(key);
-  else if (!(ifAbsent == null)) {
-    var value = ifAbsent.call$1(obj);
-    this._set$2(key, value);
-    return value;
-  } else
-    return $.CTC26;
+ get$translateY: function() {
+  return this._m12;
 },
- _fireChange$1: function(key) {
-  this.validateNotDisposed$0();
-  var handle = this._eventHandlers.operator$index$1(key);
-  if (!(handle == null))
-    handle.fireEvent$1(key);
-}
-};
-
-$$.Property = {"":
- ["defaultValue", "name"],
- "super": "Attachable",
- get$2: function(obj, ifAbsent) {
-  var coreValue = this.getCore$2(obj, ifAbsent);
-  if (!$.identical(coreValue, $.CTC26))
-    return coreValue;
-  else
-    return this.defaultValue;
+ get$shearX: function() {
+  return this._m01;
 },
- get$1: function(obj) {
-  return this.get$2(obj,null)
+ get$shearY: function() {
+  return this._m10;
 },
- getCore$2: function(obj, ifAbsent) {
-  return obj._getValueOrUndefined$3(this, obj, ifAbsent);
+ get$determinant: function() {
+  return $.sub($.mul(this._m00, this._m11), $.mul(this._m01, this._m10));
 },
- set$2: function(obj, value) {
-  obj._set$2(this, value);
+ concatenate$1: function(tx) {
+  var m0 = this._m00;
+  var m1 = this._m01;
+  this._m00 = $.add($.mul(tx.get$_m00(), m0), $.mul(tx.get$_m10(), m1));
+  this._m01 = $.add($.mul(tx.get$_m01(), m0), $.mul(tx.get$_m11(), m1));
+  this._m02 = $.add(this._m02, $.add($.mul(tx.get$_m02(), m0), $.mul(tx.get$_m12(), m1)));
+  var m00 = this._m10;
+  var m10 = this._m11;
+  this._m10 = $.add($.mul(tx.get$_m00(), m00), $.mul(tx.get$_m10(), m10));
+  this._m11 = $.add($.mul(tx.get$_m01(), m00), $.mul(tx.get$_m11(), m10));
+  this._m12 = $.add(this._m12, $.add($.mul(tx.get$_m02(), m00), $.mul(tx.get$_m12(), m10)));
+  return this;
 },
- clear$1: function(obj) {
-  return obj._lib1_remove$1(this);
+ get$concatenate: function() { return new $.BoundClosure(this, 'concatenate$1'); },
+ translate$2: function(dx, dy) {
+  this._m02 = $.add(this._m02, $.add($.mul(dx, this._m00), $.mul(dy, this._m01)));
+  this._m12 = $.add(this._m12, $.add($.mul(dx, this._m10), $.mul(dy, this._m11)));
+  return this;
+},
+ setToScale$2: function(sx, sy) {
+  return this.setTransform$6(sx, 0, 0, sy, 0, 0);
+},
+ setFromTransfrom$1: function(tx) {
+  $.requireArgumentNotNull(tx, 'tx');
+  return this.setTransform$6(tx.get$_m00(), tx.get$_m10(), tx.get$_m01(), tx.get$_m11(), tx.get$_m02(), tx.get$_m12());
+},
+ setTransform$6: function(m00, m10, m01, m11, m02, m12) {
+  this._m00 = m00;
+  this._m10 = m10;
+  this._m01 = m01;
+  this._m11 = m11;
+  this._m02 = m02;
+  this._m12 = m12;
+  return this;
+},
+ transformCoordinate$1: function(point) {
+  return $.Coordinate$($.add($.add($.mul(point.get$x(), this._m00), $.mul(point.get$y(), this._m01)), this._m02), $.add($.add($.mul(point.get$x(), this._m10), $.mul(point.get$y(), this._m11)), this._m12));
+},
+ createInverse$0: function() {
+  var det = this.get$determinant();
+  return $.AffineTransform$($.div(this._m11, det), $.div($.neg(this._m10), det), $.div($.neg(this._m01), det), $.div(this._m00, det), $.div($.sub($.mul(this._m01, this._m12), $.mul(this._m11, this._m02)), det), $.div($.sub($.mul(this._m10, this._m02), $.mul(this._m00, this._m12)), det));
+},
+ operator$eq$1: function(other) {
+  return !(other == null) && $.eqB(this._m00, other.get$_m00()) && $.eqB(this._m01, other.get$_m01()) && $.eqB(this._m02, other.get$_m02()) && $.eqB(this._m10, other.get$_m10()) && $.eqB(this._m11, other.get$_m11()) && $.eqB(this._m12, other.get$_m12());
 },
  toString$0: function() {
-  return 'Property \'' + this.name + '\'';
+  return $.Strings_join($.map($.$$([this.get$translateX(), this.get$translateY(), this.get$scaleX(), this.get$scaleY(), this.get$shearX(), this.get$shearY()]), new $.AffineTransform_toString_anon()).toList$0(), ', ');
 }
 };
 
-$$._UndefinedValue = {"":
+$$.Coordinate = {"":
+ ["x?", "y?"],
+ "super": "Object",
+ getDistance$1: function(other) {
+  return $.get$length(this.operator$sub$1(other));
+},
+ get$isValid: function() {
+  return $.isValidNumber(this.x) && $.isValidNumber(this.y);
+},
+ operator$sub$1: function(other) {
+  return $.Coordinate_difference(this, other);
+},
+ operator$add$1: function(other) {
+  return $.Coordinate$($.add(this.x, other.get$x()), $.add(this.y, other.get$y()));
+},
+ operator$eq$1: function(other) {
+  return !(other == null) && $.eqB(this.x, other.get$x()) && $.eqB(this.y, other.get$y());
+},
+ toString$0: function() {
+  return '{x:' + $.S(this.x) + ', y:' + $.S(this.y) + '}';
+}
+};
+
+$$.Box = {"":
+ ["left?", "top?", "width?", "height?"],
+ "super": "Object",
+ get$topLeft: function() {
+  return $.Coordinate$(this.left, this.top);
+},
+ get$size: function() {
+  return $.Size$(this.width, this.height);
+},
+ get$isValid: function() {
+  return this.get$topLeft().get$isValid() === true && this.get$size().get$isValid() === true;
+},
+ get$right: function() {
+  var t1 = this.left;
+  var t2 = this.width;
+  if (typeof t2 !== 'number')
+    throw $.iae(t2);
+  return t1 + t2;
+},
+ get$bottom: function() {
+  var t1 = this.top;
+  var t2 = this.height;
+  if (typeof t2 !== 'number')
+    throw $.iae(t2);
+  return t1 + t2;
+},
+ contains$1: function(point) {
+  var t1 = point.get$x();
+  var t2 = this.left;
+  if ($.geB(t1, t2)) {
+    t1 = point.get$x();
+    var t3 = this.width;
+    if (typeof t3 !== 'number')
+      throw $.iae(t3);
+    if ($.leB(t1, t2 + t3)) {
+      t1 = point.get$y();
+      t2 = this.top;
+      if ($.geB(t1, t2)) {
+        t1 = point.get$y();
+        t3 = this.height;
+        if (typeof t3 !== 'number')
+          throw $.iae(t3);
+        t1 = $.leB(t1, t2 + t3);
+      } else
+        t1 = false;
+    } else
+      t1 = false;
+  } else
+    t1 = false;
+  return t1;
+},
+ constrain$1: function(value) {
+  $.requireArgumentNotNull(value, 'value');
+  $.requireArgument(value.get$isValid(), 'value', null);
+  return $.Coordinate$($.min(this.get$right(), $.max(this.left, value.get$x())), $.min(this.get$bottom(), $.max(this.top, value.get$y())));
+},
+ operator$eq$1: function(other) {
+  return !(other == null) && $.eqB(other.get$left(), this.left) && $.eqB(other.get$top(), this.top) && $.eqB(other.get$width(), this.width) && $.eqB(other.get$height(), this.height);
+},
+ toString$0: function() {
+  return 'Location: ' + $.S(this.get$topLeft()) + ', Size: ' + $.S(this.get$size());
+},
+ hashCode$0: function() {
+  return $.Util_getHashCode([this.left, this.top, this.width, this.height]);
+}
+};
+
+$$.Size = {"":
+ ["width?", "height?"],
+ "super": "Object",
+ operator$eq$1: function(other) {
+  return !(other == null) && $.eqB(this.width, other.get$width()) && $.eqB(this.height, other.get$height());
+},
+ get$area: function() {
+  return $.mul(this.width, this.height);
+},
+ get$aspectRatio: function() {
+  return $.div(this.width, this.height);
+},
+ isEmpty$0: function() {
+  return $.eq(this.get$area(), 0);
+},
+ get$isValid: function() {
+  var t1 = this.width;
+  if ($.isValidNumber(t1)) {
+    var t2 = this.height;
+    t1 = $.isValidNumber(t2) && $.geB(t1, 0) && $.geB(t2, 0);
+  } else
+    t1 = false;
+  return t1;
+},
+ scale$1: function(magnitude) {
+  return $.Size$($.mul(this.width, magnitude), $.mul(this.height, magnitude));
+},
+ operator$mul$1: function(magnitude) {
+  return this.scale$1(magnitude);
+},
+ toString$0: function() {
+  return '(' + $.S(this.width) + ' x ' + $.S(this.height) + ')';
+}
+};
+
+$$.Vector = {"":
+ ["x", "y"],
+ "super": "Coordinate",
+ get$length: function() {
+  var t1 = this.x;
+  t1 = $.mul(t1, t1);
+  var t2 = this.y;
+  return $.sqrt($.add(t1, $.mul(t2, t2)));
+},
+ operator$add$1: function(other) {
+  return $.Vector$($.add(this.x, other.get$x()), $.add(this.y, other.get$y()));
+},
+ operator$mul$1: function(magnitude) {
+  return this.scale$1(magnitude);
+},
+ scale$1: function(magnitude) {
+  return $.Vector$($.mul(this.x, magnitude), $.mul(this.y, magnitude));
+}
+};
+
+$$.Tuple = {"":
+ ["item1?", "item2?"],
+ "super": "Object",
+ operator$eq$1: function(other) {
+  return !(other == null) && $.eqB(this.item1, other.get$item1()) && $.eqB(this.item2, other.get$item2());
+},
+ toString$0: function() {
+  return '{item1: ' + $.S(this.item1) + ', item2: ' + $.S(this.item2) + '}';
+},
+ hashCode$0: function() {
+  return $.Util_getHashCode([this.item1, this.item2]);
+}
+};
+
+$$.Tuple3 = {"":
+ ["item3?", "item1", "item2"],
+ "super": "Tuple",
+ operator$eq$1: function(other) {
+  return !(other == null) && $.eqB(this.item1, other.get$item1()) && $.eqB(this.item2, other.get$item2()) && $.eqB(this.item3, other.get$item3());
+},
+ toString$0: function() {
+  return '{item1: ' + $.S(this.item1) + ', item2: ' + $.S(this.item2) + ', item3: ' + $.S(this.item3) + '}';
+},
+ hashCode$0: function() {
+  return $.Util_getHashCode([this.item1, this.item2, this.item3]);
+}
+};
+
+$$.ParentElement = {"":
  [],
- "super": "Object"
+ "super": "PElement",
+ childInvalidated$1: function(child) {
+  this.invalidateDraw$0();
+},
+ update$0: function() {
+  this._forEach$1(new $.ParentElement_update_anon());
+  $.PElement.prototype.update$0.call(this);
+},
+ drawOverride$1: function(ctx) {
+  this._forEach$1(new $.ParentElement_drawOverride_anon(ctx));
+},
+ _forEach$1: function(f) {
+  var length$ = this.get$visualChildCount();
+  if (typeof length$ !== 'number')
+    return this._forEach$1$bailout(1, f, length$);
+  for (var i = 0; i < length$; ++i)
+    f.call$1(this.getVisualChild$1(i));
+},
+ _forEach$1$bailout: function(state0, f, length$) {
+  for (var i = 0; $.ltB(i, length$); ++i)
+    f.call$1(this.getVisualChild$1(i));
+},
+ is$ParentElement: true
 };
 
 $$.PElement = {"":
@@ -4461,16 +4513,12 @@ $$.PElement = {"":
  get$size: function() {
   return $.Size$(this._width, this._height);
 },
- get$visualChildCount: function() {
-  return 0;
-},
  getTransform$0: function() {
   var tx = $.AffineTransform$(1, 0, 0, 1, 0, 0);
   $.forEach(this._transforms, tx.get$concatenate());
   return tx;
 },
  update$0: function() {
-  this._updatedEventHandle.fireEvent$1($.CTC25);
 },
  drawCore$1: function(ctx) {
   if (this.cacheEnabled)
@@ -4490,9 +4538,6 @@ $$.PElement = {"":
     this._lastDrawSize = null;
     this._invalidateParent$0();
   }
-},
- getVisualChild$1: function(index) {
-  throw $.$$throw('no children for this type');
 },
  registerParent$1: function(parent$) {
   this._lib4_parent = parent$;
@@ -4547,32 +4592,6 @@ $$.PElement = {"":
  _invalidateParent$0: function() {
   this._invalidatedEventHandle.fireEvent$1($.CTC25);
   this._lib4_parent.childInvalidated$1(this);
-}
-};
-
-$$.ElementParentImpl = {"":
- [],
- "super": "PElement",
- childInvalidated$1: function(child) {
-  this.invalidateDraw$0();
-},
- update$0: function() {
-  this._forEach$1(new $.ElementParentImpl_update_anon());
-  $.PElement.prototype.update$0.call(this);
-},
- drawOverride$1: function(ctx) {
-  this._forEach$1(new $.ElementParentImpl_drawOverride_anon(ctx));
-},
- _forEach$1: function(f) {
-  var length$ = this.get$visualChildCount();
-  if (typeof length$ !== 'number')
-    return this._forEach$1$bailout(1, f, length$);
-  for (var i = 0; i < length$; ++i)
-    f.call$1(this.getVisualChild$1(i));
-},
- _forEach$1$bailout: function(state0, f, length$) {
-  for (var i = 0; $.ltB(i, length$); ++i)
-    f.call$1(this.getVisualChild$1(i));
 }
 };
 
@@ -4933,8 +4952,8 @@ $$.LocationData = {"":
 };
 
 $$.RootMapElement = {"":
- ["_voterMap", "_candidateMap", "_tx?", "_candidatesMovedHandle", "_averageCloseness", "_bounds", "_radius=", "_transforms", "cacheEnabled", "_updatedEventHandle", "_invalidatedEventHandle", "_cacheCanvas", "_width", "_height", "_alpha", "_lastDrawSize", "clip", "_lib4_parent", "_propertyValues", "_eventHandlers", "_disposed"],
- "super": "ElementParentImpl",
+ ["_voterMap", "_candidateMap", "_tx?", "_candidatesMovedHandle", "_averageCloseness", "_bounds", "_radius=", "_transforms", "cacheEnabled", "_invalidatedEventHandle", "_cacheCanvas", "_width", "_height", "_alpha", "_lastDrawSize", "clip", "_lib4_parent", "_propertyValues", "_eventHandlers", "_disposed"],
+ "super": "ParentElement",
  get$candidatesMoved: function() {
   return this._candidatesMovedHandle;
 },
@@ -5007,7 +5026,7 @@ $$.RootMapElement = {"":
     this._radius = $.mul(this._averageCloseness, 0.3);
   }
   $.forEach([this._voterMap, this._candidateMap], new $.RootMapElement_update_anon(this));
-  $.ElementParentImpl.prototype.update$0.call(this);
+  $.ParentElement.prototype.update$0.call(this);
 },
  RootMapElement$2: function(w, h) {
   this._voterMap.registerParent$1(this);
@@ -5016,7 +5035,7 @@ $$.RootMapElement = {"":
 };
 
 $$.VoterMapElement = {"":
- ["_players", "_tx?", "_radius=", "_lib7_map", "_transforms", "cacheEnabled", "_updatedEventHandle", "_invalidatedEventHandle", "_cacheCanvas", "_width", "_height", "_alpha", "_lastDrawSize", "clip", "_lib4_parent", "_propertyValues", "_eventHandlers", "_disposed"],
+ ["_players", "_tx?", "_radius=", "_lib7_map", "_transforms", "cacheEnabled", "_invalidatedEventHandle", "_cacheCanvas", "_width", "_height", "_alpha", "_lastDrawSize", "clip", "_lib4_parent", "_propertyValues", "_eventHandlers", "_disposed"],
  "super": "PElement",
  setTransform$1: function(value) {
   $.requireArgumentNotNull(value, 'value');
@@ -5122,8 +5141,8 @@ $$.VoterMapElement = {"":
 };
 
 $$.CandidateMapElement = {"":
- ["_players", "_tx?", "_radius=", "_lib7_elements", "_showOnlyPlayers", "_transforms", "cacheEnabled", "_updatedEventHandle", "_invalidatedEventHandle", "_cacheCanvas", "_width", "_height", "_alpha", "_lastDrawSize", "clip", "_lib4_parent", "_propertyValues", "_eventHandlers", "_disposed"],
- "super": "ElementParentImpl",
+ ["_players", "_tx?", "_radius=", "_lib7_elements", "_showOnlyPlayers", "_transforms", "cacheEnabled", "_invalidatedEventHandle", "_cacheCanvas", "_width", "_height", "_alpha", "_lastDrawSize", "clip", "_lib4_parent", "_propertyValues", "_eventHandlers", "_disposed"],
+ "super": "ParentElement",
  get$visualChildCount: function() {
   this._ensureElements$0();
   return $.get$length(this._lib7_elements);
@@ -5203,7 +5222,7 @@ $$.CandidateMapElement = {"":
 };
 
 $$.CandidateElement = {"":
- ["_color", "player?", "_text", "_tx?", "_hidden", "_transforms", "cacheEnabled", "_updatedEventHandle", "_invalidatedEventHandle", "_cacheCanvas", "_width", "_height", "_alpha", "_lastDrawSize", "clip", "_lib4_parent", "_propertyValues", "_eventHandlers", "_disposed"],
+ ["_color", "player?", "_text", "_tx?", "_hidden", "_transforms", "cacheEnabled", "_invalidatedEventHandle", "_cacheCanvas", "_width", "_height", "_alpha", "_lastDrawSize", "clip", "_lib4_parent", "_propertyValues", "_eventHandlers", "_disposed"],
  "super": "PElement",
  get$hidden: function() {
   return this._hidden;
@@ -7813,7 +7832,7 @@ $$.CandidateManagerView__removeCandidateWithId_anon = {"":
 }
 };
 
-$$.ElementParentImpl_drawOverride_anon = {"":
+$$.ParentElement_drawOverride_anon = {"":
  ["ctx_0"],
  "super": "Closure",
  call$1: function(e) {
@@ -7869,7 +7888,7 @@ $$.RootMapElement_update_anon = {"":
 }
 };
 
-$$.ElementParentImpl_update_anon = {"":
+$$.ParentElement_update_anon = {"":
  [],
  "super": "Closure",
  call$1: function(e) {
@@ -9034,7 +9053,7 @@ $.port = function() {
 };
 
 $.CandidateElement$ = function(w, h, _color, p) {
-  var t1 = new $.CandidateElement(_color, p, p.get$name(), null, false, $.ListImplementation_List(null), false, $.EventHandle$(), $.EventHandle$(), null, w, h, null, null, false, null, $.HashMapImplementation$(), $.HashMapImplementation$(), false);
+  var t1 = new $.CandidateElement(_color, p, p.get$name(), null, false, $.ListImplementation_List(null), false, $.EventHandle$(), null, w, h, null, null, false, null, $.HashMapImplementation$(), $.HashMapImplementation$(), false);
   t1.CandidateElement$4(w, h, _color, p);
   return t1;
 };
@@ -9325,7 +9344,7 @@ $.Set_Set = function() {
 $.RootMapElement$ = function(w, h) {
   var t1 = $.AffineTransform$(1, 0, 0, 1, 0, 0);
   var t2 = $.EventHandle$();
-  t2 = new $.RootMapElement($.VoterMapElement$(w, h), $.CandidateMapElement$(w, h), t1, t2, null, null, null, $.ListImplementation_List(null), false, $.EventHandle$(), $.EventHandle$(), null, w, h, null, null, false, null, $.HashMapImplementation$(), $.HashMapImplementation$(), false);
+  t2 = new $.RootMapElement($.VoterMapElement$(w, h), $.CandidateMapElement$(w, h), t1, t2, null, null, null, $.ListImplementation_List(null), false, $.EventHandle$(), null, w, h, null, null, false, null, $.HashMapImplementation$(), $.HashMapImplementation$(), false);
   t2.RootMapElement$2(w, h);
   return t2;
 };
@@ -9440,13 +9459,13 @@ $._TextTrackCueEventsImpl$ = function(_ptr) {
   return new $._TextTrackCueEventsImpl(_ptr);
 };
 
+$.Random_Random = function(seed) {
+  return $.CTC24;
+};
+
 $.RgbColor__validateComponent = function(c, name$) {
   $.requireArgument(!(c == null) && $.isInfinite(c) !== true && $.isNaN(c) !== true, name$, null);
   $.requireArgument($.geB(c, 0) && $.leB(c, 255), name$, null);
-};
-
-$.Random_Random = function(seed) {
-  return $.CTC24;
 };
 
 $.endsWith = function(receiver, other) {
@@ -10361,7 +10380,7 @@ $.mod = function(a, b) {
 };
 
 $.CandidateMapElement$ = function(w, h) {
-  return new $.CandidateMapElement($.ListImplementation_List(null), $.AffineTransform$(1, 0, 0, 1, 0, 0), 0, null, null, $.ListImplementation_List(null), false, $.EventHandle$(), $.EventHandle$(), null, w, h, null, null, false, null, $.HashMapImplementation$(), $.HashMapImplementation$(), false);
+  return new $.CandidateMapElement($.ListImplementation_List(null), $.AffineTransform$(1, 0, 0, 1, 0, 0), 0, null, null, $.ListImplementation_List(null), false, $.EventHandle$(), null, w, h, null, null, false, null, $.HashMapImplementation$(), $.HashMapImplementation$(), false);
 };
 
 $._DOMWindowCrossFrameImpl$ = function(_window) {
@@ -10872,18 +10891,20 @@ $.RetainedUtil__hitTest = function(element, point) {
   var bounds = $.Box$(0, 0, element.get$width(), element.get$height());
   var hits = $.ListImplementation_List(null);
   if (bounds.contains$1(point) === true) {
-    var length$ = element.get$visualChildCount();
-    if (typeof length$ !== 'number')
-      return $.RetainedUtil__hitTest$bailout(1, element, length$, point, hits);
-    for (var t1 = length$ - 1, i = 0; i < length$; ++i) {
-      hits = $.RetainedUtil__hitTest(element.getVisualChild$1(t1 - i), point);
-      if (hits.length > 0)
-        break;
+    if (typeof element === 'object' && element !== null && !!element.is$ParentElement) {
+      var length$ = element.get$visualChildCount();
+      if (typeof length$ !== 'number')
+        return $.RetainedUtil__hitTest$bailout(1, element, point, hits, length$);
+      for (var t1 = length$ - 1, i = 0; i < length$; ++i) {
+        hits = $.RetainedUtil__hitTest(element.getVisualChild$1(t1 - i), point);
+        if (hits.length > 0)
+          break;
+      }
+      element = element;
     }
     hits.push(element);
-    return hits;
-  } else
-    return [];
+  }
+  return hits;
 };
 
 $.hashCodeForNativeObject = function(object) {
@@ -11158,7 +11179,7 @@ $.Collections_forEach = function(iterable, f) {
 };
 
 $.VoterMapElement$ = function(w, h) {
-  var t1 = new $.VoterMapElement($.ListImplementation_List(null), $.AffineTransform$(1, 0, 0, 1, 0, 0), null, $.HashMapImplementation$(), $.ListImplementation_List(null), true, $.EventHandle$(), $.EventHandle$(), null, w, h, null, null, false, null, $.HashMapImplementation$(), $.HashMapImplementation$(), false);
+  var t1 = new $.VoterMapElement($.ListImplementation_List(null), $.AffineTransform$(1, 0, 0, 1, 0, 0), null, $.HashMapImplementation$(), $.ListImplementation_List(null), true, $.EventHandle$(), null, w, h, null, null, false, null, $.HashMapImplementation$(), $.HashMapImplementation$(), false);
   t1.VoterMapElement$2(w, h);
   return t1;
 };
@@ -12163,9 +12184,9 @@ $.RetainedUtil__hitTest$bailout = function(state0, env0, env1, env2, env3) {
   switch (state0) {
     case 1:
       var element = env0;
-      length$ = env1;
-      point = env2;
-      hits = env3;
+      point = env1;
+      hits = env2;
+      length$ = env3;
       break;
   }
   switch (state0) {
@@ -12177,19 +12198,23 @@ $.RetainedUtil__hitTest$bailout = function(state0, env0, env1, env2, env3) {
       if (state0 === 1 || state0 === 0 && bounds.contains$1(point) === true)
         switch (state0) {
           case 0:
-            var length$ = element.get$visualChildCount();
           case 1:
-            state0 = 0;
-            for (var i = 0; $.ltB(i, length$); ++i) {
-              hits = $.RetainedUtil__hitTest(element.getVisualChild$1($.sub($.sub(length$, 1), i)), point);
-              if (hits.length > 0)
-                break;
-            }
+            if (state0 === 1 || state0 === 0 && typeof element === 'object' && element !== null && !!element.is$ParentElement)
+              switch (state0) {
+                case 0:
+                  var length$ = element.get$visualChildCount();
+                case 1:
+                  state0 = 0;
+                  for (var i = 0; $.ltB(i, length$); ++i) {
+                    hits = $.RetainedUtil__hitTest(element.getVisualChild$1($.sub($.sub(length$, 1), i)), point);
+                    if (hits.length > 0)
+                      break;
+                  }
+                  element = element;
+              }
             hits.push(element);
-            return hits;
         }
-      else
-        return [];
+      return hits;
   }
 };
 
@@ -12332,35 +12357,36 @@ $.CTC12 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot r
 $.CTC43 = 'structured clone of ArrayBufferView';
 $.CTC9 = new Isolate.$isolateProperties.NotImplementedException('structured clone of ArrayBufferView');
 $.CTC31 = new Isolate.$isolateProperties.ConstantMap(0, {}, Isolate.$isolateProperties.CTC1);
-$.CTC44 = null;
-$.CTC33 = new Isolate.$isolateProperties.NotImplementedException(null);
-$.CTC45 = '';
-$.CTC35 = new Isolate.$isolateProperties.UnsupportedOperationException('');
-$.CTC46 = '^#[_a-zA-Z]\\w*$';
-$.CTC47 = false;
+$.CTC44 = 'The input sequence is empty.';
+$.CTC19 = new Isolate.$isolateProperties.InvalidOperationException('The input sequence is empty.');
+$.CTC26 = new Isolate.$isolateProperties._UndefinedValue();
+$.CTC45 = '^#[_a-zA-Z]\\w*$';
+$.CTC46 = false;
 $.CTC = new Isolate.$isolateProperties.JSSyntaxRegExp('^#[_a-zA-Z]\\w*$', false, false);
-$.CTC48 = 'structured clone of ArrayBuffer';
+$.CTC47 = 'structured clone of ArrayBuffer';
 $.CTC8 = new Isolate.$isolateProperties.NotImplementedException('structured clone of ArrayBuffer');
 $.CTC14 = new Isolate.$isolateProperties._DeletedKeySentinel();
+$.CTC48 = '';
+$.CTC35 = new Isolate.$isolateProperties.UnsupportedOperationException('');
 $.CTC49 = 'Cannot sort immutable List.';
 $.CTC18 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot sort immutable List.');
 $.CTC50 = 'frozen class set cannot be modified';
 $.CTC30 = new Isolate.$isolateProperties.UnsupportedOperationException('frozen class set cannot be modified');
-$.CTC51 = 'The input sequence contains more than one element.';
-$.CTC29 = new Isolate.$isolateProperties.InvalidOperationException('The input sequence contains more than one element.');
-$.CTC52 = 'structured clone of Date';
+$.CTC51 = 'childList';
+$.CTC52 = 'attributes';
+$.CTC53 = 'characterData';
+$.CTC54 = 'subtree';
+$.CTC55 = 'attributeOldValue';
+$.CTC56 = 'characterDataOldValue';
+$.CTC57 = Isolate.makeConstantList(['childList', 'attributes', 'characterData', 'subtree', 'attributeOldValue', 'characterDataOldValue']);
+$.CTC58 = true;
+$.CTC39 = new Isolate.$isolateProperties.ConstantMap(6, {'childList': true, 'attributes': true, 'characterData': true, 'subtree': true, 'attributeOldValue': true, 'characterDataOldValue': true}, Isolate.$isolateProperties.CTC57);
+$.CTC59 = 'structured clone of Date';
 $.CTC3 = new Isolate.$isolateProperties.NotImplementedException('structured clone of Date');
-$.CTC53 = 'TODO(jacobr): should we impl?';
+$.CTC60 = null;
+$.CTC33 = new Isolate.$isolateProperties.NotImplementedException(null);
+$.CTC61 = 'TODO(jacobr): should we impl?';
 $.CTC34 = new Isolate.$isolateProperties.UnsupportedOperationException('TODO(jacobr): should we impl?');
-$.CTC54 = 'childList';
-$.CTC55 = 'attributes';
-$.CTC56 = 'characterData';
-$.CTC57 = 'subtree';
-$.CTC58 = 'attributeOldValue';
-$.CTC59 = 'characterDataOldValue';
-$.CTC60 = Isolate.makeConstantList(['childList', 'attributes', 'characterData', 'subtree', 'attributeOldValue', 'characterDataOldValue']);
-$.CTC61 = true;
-$.CTC39 = new Isolate.$isolateProperties.ConstantMap(6, {'childList': true, 'attributes': true, 'characterData': true, 'subtree': true, 'attributeOldValue': true, 'characterDataOldValue': true}, Isolate.$isolateProperties.CTC60);
 $.CTC62 = 'Cannot add to immutable List.';
 $.CTC2 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot add to immutable List.');
 $.CTC63 = 'IDBKey containing Date';
@@ -12383,18 +12409,17 @@ $.CTC71 = 'offsetX is only supported on elements';
 $.CTC27 = new Isolate.$isolateProperties.UnsupportedOperationException('offsetX is only supported on elements');
 $.CTC72 = 'structured clone of RegExp';
 $.CTC4 = new Isolate.$isolateProperties.NotImplementedException('structured clone of RegExp');
-$.CTC73 = new Isolate.$isolateProperties.Coordinate(0, 0);
-$.CTC74 = 'Invalid list length';
+$.CTC73 = 'Invalid list length';
 $.CTC36 = new Isolate.$isolateProperties.ArgumentError('Invalid list length');
-$.CTC75 = 10;
-$.CTC28 = new Isolate.$isolateProperties.Box(0, 0, 10, 10);
+$.CTC74 = 'The input sequence contains more than one element.';
+$.CTC29 = new Isolate.$isolateProperties.InvalidOperationException('The input sequence contains more than one element.');
 $.CTC41 = new Isolate.$isolateProperties.Object();
-$.CTC76 = 'The input sequence is empty.';
-$.CTC19 = new Isolate.$isolateProperties.InvalidOperationException('The input sequence is empty.');
+$.CTC75 = new Isolate.$isolateProperties.Coordinate(0, 0);
+$.CTC76 = 10;
+$.CTC28 = new Isolate.$isolateProperties.Box(0, 0, 10, 10);
+$.CTC24 = new Isolate.$isolateProperties._Random();
 $.CTC77 = '^\\[name=["\'][^\'"]+[\'"]\\]$';
 $.CTC37 = new Isolate.$isolateProperties.JSSyntaxRegExp('^\\[name=["\'][^\'"]+[\'"]\\]$', false, false);
-$.CTC24 = new Isolate.$isolateProperties._Random();
-$.CTC26 = new Isolate.$isolateProperties._UndefinedValue();
 $.CTC32 = new Isolate.$isolateProperties.IllegalAccessException();
 $.CTC78 = '^[*a-zA-Z0-9]+$';
 $.CTC38 = new Isolate.$isolateProperties.JSSyntaxRegExp('^[*a-zA-Z0-9]+$', false, false);

@@ -3989,81 +3989,6 @@ $$._VariableSizeListIterator = {"":
 }
 };
 
-$$.DisposableImpl = {"":
- [],
- "super": "Object"
-};
-
-$$.GlobalId = {"":
- ["id?", "_hashCode"],
- "super": "Object",
- compareTo$1: function(other) {
-  return $.compareTo(this.id, other.get$id());
-},
- hashCode$0: function() {
-  return this._hashCode;
-},
- operator$eq$1: function(other) {
-  return !(other == null) && $.eqB(other.get$id(), this.id);
-}
-};
-
-$$.Tuple = {"":
- ["item1?", "item2?"],
- "super": "Object",
- operator$eq$1: function(other) {
-  return !(other == null) && $.eqB(this.item1, other.get$item1()) && $.eqB(this.item2, other.get$item2());
-},
- toString$0: function() {
-  return '{item1: ' + $.S(this.item1) + ', item2: ' + $.S(this.item2) + '}';
-},
- hashCode$0: function() {
-  return $.Util_getHashCode([this.item1, this.item2]);
-}
-};
-
-$$.Tuple3 = {"":
- ["item3?", "item1", "item2"],
- "super": "Tuple",
- operator$eq$1: function(other) {
-  return !(other == null) && $.eqB(this.item1, other.get$item1()) && $.eqB(this.item2, other.get$item2()) && $.eqB(this.item3, other.get$item3());
-},
- toString$0: function() {
-  return '{item1: ' + $.S(this.item1) + ', item2: ' + $.S(this.item2) + ', item3: ' + $.S(this.item3) + '}';
-},
- hashCode$0: function() {
-  return $.Util_getHashCode([this.item1, this.item2, this.item3]);
-}
-};
-
-$$.NullArgumentException = {"":
- ["arg", "message"],
- "super": "ArgumentError",
- toString$0: function() {
-  return 'Null argument: ' + this.arg;
-}
-};
-
-$$.InvalidOperationException = {"":
- ["message?"],
- "super": "Object",
- is$Exception: true
-};
-
-$$.DetailedIllegalArgumentException = {"":
- ["argument", "message"],
- "super": "ArgumentError",
- toString$0: function() {
-  var t1 = this.message;
-  var t2 = t1 == null || $.eqB($.get$length(t1), 0);
-  var t3 = this.argument;
-  if (t2)
-    return 'Illegal argument: ' + t3;
-  else
-    return 'Illegal argument: ' + t3 + ' -- ' + $.S(t1);
-}
-};
-
 $$.Enumerable = {"":
  [],
  "super": "Object",
@@ -4339,29 +4264,38 @@ $$._SelectManyIterator = {"":
 }
 };
 
-$$.NumberEnumerable = {"":
- [],
- "super": "Enumerable",
- sum$0: function() {
-  for (var t1 = $.iterator(this), theSum = 0; t1.hasNext$0() === true;) {
-    var t2 = t1.next$0();
-    if (typeof t2 !== 'number')
-      throw $.iae(t2);
-    theSum += t2;
-  }
-  return theSum;
-}
-};
-
-$$._FuncNumEnumerable = {"":
- ["_source", "_func"],
- "super": "NumberEnumerable",
- _func$1: function(arg0) { return this._func.call$1(arg0); },
- iterator$0: function() {
-  return this._func$1(this._source.iterator$0());
+$$.Grouping = {"":
+ ["_lib1_values"],
+ "super": "Object",
+ containsKey$1: function(key) {
+  return this._lib1_values.containsKey$1(key);
+},
+ operator$index$1: function(key) {
+  return this._lib1_values.operator$index$1(key);
+},
+ forEach$1: function(f) {
+  return this._lib1_values.forEach$1(f);
+},
+ getKeys$0: function() {
+  return this._lib1_values.getKeys$0();
 },
  get$length: function() {
-  return this.count$0();
+  return $.get$length(this._lib1_values);
+},
+ get$isEmpty: function() {
+  return this._lib1_values.isEmpty$0();
+},
+ isEmpty$0: function() { return this.get$isEmpty().call$0(); },
+ toString$0: function() {
+  return this._lib1_values.toString$0();
+},
+ Grouping$2: function(source, keyFunc) {
+  if (keyFunc == null)
+    keyFunc = new $.anon();
+  for (var t1 = $.iterator(source), t2 = this._lib1_values; t1.hasNext$0() === true;) {
+    var t3 = t1.next$0();
+    $.add$1(t2.putIfAbsent$2(keyFunc.call$1(t3), new $.anon0()), t3);
+  }
 }
 };
 
@@ -4515,6 +4449,32 @@ $$.ListBase = {"":
  is$Iterable: function() { return true; }
 };
 
+$$.NumberEnumerable = {"":
+ [],
+ "super": "Enumerable",
+ sum$0: function() {
+  for (var t1 = $.iterator(this), theSum = 0; t1.hasNext$0() === true;) {
+    var t2 = t1.next$0();
+    if (typeof t2 !== 'number')
+      throw $.iae(t2);
+    theSum += t2;
+  }
+  return theSum;
+}
+};
+
+$$._FuncNumEnumerable = {"":
+ ["_source", "_func"],
+ "super": "NumberEnumerable",
+ _func$1: function(arg0) { return this._func.call$1(arg0); },
+ iterator$0: function() {
+  return this._func$1(this._source.iterator$0());
+},
+ get$length: function() {
+  return this.count$0();
+}
+};
+
 $$.ReadOnlyCollection = {"":
  ["_items"],
  "super": "ListBase",
@@ -4533,129 +4493,6 @@ $$.ReadOnlyCollection = {"":
 },
  operator$index$1$bailout: function(state0, t1, index) {
   return $.index(t1, index);
-}
-};
-
-$$.Grouping = {"":
- ["_lib1_values"],
- "super": "Object",
- containsKey$1: function(key) {
-  return this._lib1_values.containsKey$1(key);
-},
- operator$index$1: function(key) {
-  return this._lib1_values.operator$index$1(key);
-},
- forEach$1: function(f) {
-  return this._lib1_values.forEach$1(f);
-},
- getKeys$0: function() {
-  return this._lib1_values.getKeys$0();
-},
- get$length: function() {
-  return $.get$length(this._lib1_values);
-},
- get$isEmpty: function() {
-  return this._lib1_values.isEmpty$0();
-},
- isEmpty$0: function() { return this.get$isEmpty().call$0(); },
- toString$0: function() {
-  return this._lib1_values.toString$0();
-},
- Grouping$2: function(source, keyFunc) {
-  if (keyFunc == null)
-    keyFunc = new $.anon();
-  for (var t1 = $.iterator(source), t2 = this._lib1_values; t1.hasNext$0() === true;) {
-    var t3 = t1.next$0();
-    $.add$1(t2.putIfAbsent$2(keyFunc.call$1(t3), new $.anon0()), t3);
-  }
-}
-};
-
-$$.EventHandle = {"":
- ["_handlers", "_disposed"],
- "super": "DisposableImpl",
- fireEvent$1: function(args) {
-  var t1 = this._handlers;
-  if (!(t1 == null))
-    $.forEach(t1, new $.EventHandle_fireEvent_anon(args));
-},
- add$1: function(handler) {
-  var id = $.GlobalId_GlobalId();
-  if (this._handlers == null)
-    this._handlers = $.HashMapImplementation$();
-  $.indexSet(this._handlers, id, handler);
-  return id;
-},
- remove$1: function(id) {
-  var t1 = this._handlers;
-  if (!(t1 == null))
-    return !(t1.remove$1(id) == null);
-  else
-    return false;
-}
-};
-
-$$.EventArgs = {"":
- [],
- "super": "Object"
-};
-
-$$.Coordinate = {"":
- ["x?", "y?"],
- "super": "Object",
- getDistance$1: function(other) {
-  return $.get$length(this.operator$sub$1(other));
-},
- operator$sub$1: function(other) {
-  return $.Coordinate_difference(this, other);
-},
- operator$add$1: function(other) {
-  return $.Coordinate$($.add(this.x, other.get$x()), $.add(this.y, other.get$y()));
-},
- operator$eq$1: function(other) {
-  return !(other == null) && $.eqB(this.x, other.get$x()) && $.eqB(this.y, other.get$y());
-},
- toString$0: function() {
-  return '{x:' + $.S(this.x) + ', y:' + $.S(this.y) + '}';
-}
-};
-
-$$.Vector = {"":
- ["x", "y"],
- "super": "Coordinate",
- get$length: function() {
-  var t1 = this.x;
-  t1 = $.mul(t1, t1);
-  var t2 = this.y;
-  return $.sqrt($.add(t1, $.mul(t2, t2)));
-},
- operator$add$1: function(other) {
-  return $.Vector$($.add(this.x, other.get$x()), $.add(this.y, other.get$y()));
-},
- operator$mul$1: function(magnitude) {
-  return this.scale$1(magnitude);
-},
- scale$1: function(magnitude) {
-  return $.Vector$($.mul(this.x, magnitude), $.mul(this.y, magnitude));
-}
-};
-
-$$.RgbColor = {"":
- ["r?", "g?", "b?"],
- "super": "Object",
- toHex$0: function() {
-  var buffer = $.StringBuffer_StringBuffer('#');
-  $.forEach([this.r, this.g, this.b], new $.RgbColor_toHex_anon(buffer));
-  return $.toString(buffer);
-},
- hashCode$0: function() {
-  return $.Util_getHashCode([this.r, this.g, this.b]);
-},
- operator$eq$1: function(other) {
-  return !(other == null) && $.eqB(other.get$r(), this.r) && $.eqB(other.get$g(), this.g) && $.eqB(other.get$b(), this.b);
-},
- toString$0: function() {
-  return '{RgbColor: ' + $.S(this.r) + ', ' + $.S(this.g) + ', ' + $.S(this.b) + '}';
 }
 };
 
@@ -4707,6 +4544,101 @@ $$.HslColor = {"":
 },
  toString$0: function() {
   return '{HslColor: ' + $.S(this.h) + ', ' + $.S(this.s) + ', ' + $.S(this.l) + '}';
+}
+};
+
+$$.RgbColor = {"":
+ ["r?", "g?", "b?"],
+ "super": "Object",
+ toHex$0: function() {
+  var buffer = $.StringBuffer_StringBuffer('#');
+  $.forEach([this.r, this.g, this.b], new $.RgbColor_toHex_anon(buffer));
+  return $.toString(buffer);
+},
+ hashCode$0: function() {
+  return $.Util_getHashCode([this.r, this.g, this.b]);
+},
+ operator$eq$1: function(other) {
+  return !(other == null) && $.eqB(other.get$r(), this.r) && $.eqB(other.get$g(), this.g) && $.eqB(other.get$b(), this.b);
+},
+ toString$0: function() {
+  return '{RgbColor: ' + $.S(this.r) + ', ' + $.S(this.g) + ', ' + $.S(this.b) + '}';
+}
+};
+
+$$.DisposableImpl = {"":
+ [],
+ "super": "Object"
+};
+
+$$.EventArgs = {"":
+ [],
+ "super": "Object"
+};
+
+$$.EventHandle = {"":
+ ["_handlers", "_disposed"],
+ "super": "DisposableImpl",
+ fireEvent$1: function(args) {
+  var t1 = this._handlers;
+  if (!(t1 == null))
+    $.forEach(t1, new $.EventHandle_fireEvent_anon(args));
+},
+ add$1: function(handler) {
+  var id = $.GlobalId_GlobalId();
+  if (this._handlers == null)
+    this._handlers = $.HashMapImplementation$();
+  $.indexSet(this._handlers, id, handler);
+  return id;
+},
+ remove$1: function(id) {
+  var t1 = this._handlers;
+  if (!(t1 == null))
+    return !(t1.remove$1(id) == null);
+  else
+    return false;
+}
+};
+
+$$.DetailedIllegalArgumentException = {"":
+ ["argument", "message"],
+ "super": "ArgumentError",
+ toString$0: function() {
+  var t1 = this.message;
+  var t2 = t1 == null || $.eqB($.get$length(t1), 0);
+  var t3 = this.argument;
+  if (t2)
+    return 'Illegal argument: ' + t3;
+  else
+    return 'Illegal argument: ' + t3 + ' -- ' + $.S(t1);
+}
+};
+
+$$.InvalidOperationException = {"":
+ ["message?"],
+ "super": "Object",
+ is$Exception: true
+};
+
+$$.NullArgumentException = {"":
+ ["arg", "message"],
+ "super": "ArgumentError",
+ toString$0: function() {
+  return 'Null argument: ' + this.arg;
+}
+};
+
+$$.GlobalId = {"":
+ ["id?", "_hashCode"],
+ "super": "Object",
+ compareTo$1: function(other) {
+  return $.compareTo(this.id, other.get$id());
+},
+ hashCode$0: function() {
+  return this._hashCode;
+},
+ operator$eq$1: function(other) {
+  return !(other == null) && $.eqB(other.get$id(), this.id);
 }
 };
 
@@ -4855,6 +4787,74 @@ $$._TarjanList = {"":
     return [];
   else
     return nodes;
+}
+};
+
+$$.Coordinate = {"":
+ ["x?", "y?"],
+ "super": "Object",
+ getDistance$1: function(other) {
+  return $.get$length(this.operator$sub$1(other));
+},
+ operator$sub$1: function(other) {
+  return $.Coordinate_difference(this, other);
+},
+ operator$add$1: function(other) {
+  return $.Coordinate$($.add(this.x, other.get$x()), $.add(this.y, other.get$y()));
+},
+ operator$eq$1: function(other) {
+  return !(other == null) && $.eqB(this.x, other.get$x()) && $.eqB(this.y, other.get$y());
+},
+ toString$0: function() {
+  return '{x:' + $.S(this.x) + ', y:' + $.S(this.y) + '}';
+}
+};
+
+$$.Vector = {"":
+ ["x", "y"],
+ "super": "Coordinate",
+ get$length: function() {
+  var t1 = this.x;
+  t1 = $.mul(t1, t1);
+  var t2 = this.y;
+  return $.sqrt($.add(t1, $.mul(t2, t2)));
+},
+ operator$add$1: function(other) {
+  return $.Vector$($.add(this.x, other.get$x()), $.add(this.y, other.get$y()));
+},
+ operator$mul$1: function(magnitude) {
+  return this.scale$1(magnitude);
+},
+ scale$1: function(magnitude) {
+  return $.Vector$($.mul(this.x, magnitude), $.mul(this.y, magnitude));
+}
+};
+
+$$.Tuple = {"":
+ ["item1?", "item2?"],
+ "super": "Object",
+ operator$eq$1: function(other) {
+  return !(other == null) && $.eqB(this.item1, other.get$item1()) && $.eqB(this.item2, other.get$item2());
+},
+ toString$0: function() {
+  return '{item1: ' + $.S(this.item1) + ', item2: ' + $.S(this.item2) + '}';
+},
+ hashCode$0: function() {
+  return $.Util_getHashCode([this.item1, this.item2]);
+}
+};
+
+$$.Tuple3 = {"":
+ ["item3?", "item1", "item2"],
+ "super": "Tuple",
+ operator$eq$1: function(other) {
+  return !(other == null) && $.eqB(this.item1, other.get$item1()) && $.eqB(this.item2, other.get$item2()) && $.eqB(this.item3, other.get$item3());
+},
+ toString$0: function() {
+  return '{item1: ' + $.S(this.item1) + ', item2: ' + $.S(this.item2) + ', item3: ' + $.S(this.item3) + '}';
+},
+ hashCode$0: function() {
+  return $.Util_getHashCode([this.item1, this.item2, this.item3]);
 }
 };
 
@@ -12477,109 +12477,109 @@ $.CTC55 = 'structured clone of ArrayBufferView';
 $.CTC8 = new Isolate.$isolateProperties.NotImplementedException('structured clone of ArrayBufferView');
 $.CTC36 = new Isolate.$isolateProperties._IsNotNull();
 $.CTC30 = new Isolate.$isolateProperties.ConstantMap(0, {}, Isolate.$isolateProperties.CTC0);
-$.CTC56 = null;
+$.CTC56 = -1;
+$.CTC57 = 0;
+$.CTC39 = new Isolate.$isolateProperties.Coordinate(-1, 0);
+$.CTC58 = 1;
+$.CTC43 = new Isolate.$isolateProperties.Coordinate(-1, 1);
+$.CTC59 = null;
 $.CTC17 = new Isolate.$isolateProperties.Throws(null);
 $.CTC13 = new Isolate.$isolateProperties._DeletedKeySentinel();
-$.CTC57 = 10;
-$.CTC48 = new Isolate.$isolateProperties.Coordinate(10, 10);
-$.CTC58 = -1;
-$.CTC59 = 0;
-$.CTC39 = new Isolate.$isolateProperties.Coordinate(-1, 0);
-$.CTC60 = 1;
-$.CTC43 = new Isolate.$isolateProperties.Coordinate(-1, 1);
 $.CTC45 = new Isolate.$isolateProperties.Coordinate(1, -1);
-$.CTC61 = 'ArgumentError';
-$.CTC62 = new Isolate.$isolateProperties._ArgumentError('ArgumentError');
-$.CTC32 = new Isolate.$isolateProperties.Throws(Isolate.$isolateProperties.CTC62);
-$.CTC63 = 'TODO(jacobr): should we impl?';
+$.CTC47 = new Isolate.$isolateProperties.Coordinate(0, 0);
+$.CTC60 = '^(?:([^:/?#.]+):)?(?://(?:([^/?#]*)@)?([\\w\\d\\-\\u0100-\\uffff.%]*)(?::([0-9]+))?)?([^?#]+)?(?:\\?([^#]*))?(?:#(.*))?$';
+$.CTC61 = false;
+$.CTC52 = new Isolate.$isolateProperties.JSSyntaxRegExp('^(?:([^:/?#.]+):)?(?://(?:([^/?#]*)@)?([\\w\\d\\-\\u0100-\\uffff.%]*)(?::([0-9]+))?)?([^?#]+)?(?:\\?([^#]*))?(?:#(.*))?$', false, false);
+$.CTC62 = 'ArgumentError';
+$.CTC63 = new Isolate.$isolateProperties._ArgumentError('ArgumentError');
+$.CTC32 = new Isolate.$isolateProperties.Throws(Isolate.$isolateProperties.CTC63);
+$.CTC64 = 'TODO(jacobr): should we impl?';
 $.CTC24 = new Isolate.$isolateProperties.UnsupportedOperationException('TODO(jacobr): should we impl?');
-$.CTC64 = 'The input sequence contains more than one element.';
-$.CTC38 = new Isolate.$isolateProperties.InvalidOperationException('The input sequence contains more than one element.');
-$.CTC65 = 'Cannot add to immutable List.';
+$.CTC65 = 10;
+$.CTC48 = new Isolate.$isolateProperties.Coordinate(10, 10);
+$.CTC66 = 'Cannot add to immutable List.';
 $.CTC1 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot add to immutable List.');
-$.CTC66 = '[-[\\]{}()*+?.,\\\\^$|#\\s]';
-$.CTC67 = false;
+$.CTC67 = '[-[\\]{}()*+?.,\\\\^$|#\\s]';
 $.CTC12 = new Isolate.$isolateProperties.JSSyntaxRegExp('[-[\\]{}()*+?.,\\\\^$|#\\s]', false, false);
+$.CTC68 = 7.1;
+$.CTC51 = new Isolate.$isolateProperties.Coordinate(7.1, 0);
+$.CTC69 = 'The input sequence contains more than one element.';
+$.CTC38 = new Isolate.$isolateProperties.InvalidOperationException('The input sequence contains more than one element.');
 $.CTC23 = new Isolate.$isolateProperties.IllegalAccessException();
-$.CTC68 = '^[*a-zA-Z0-9]+$';
+$.CTC70 = '^[*a-zA-Z0-9]+$';
 $.CTC29 = new Isolate.$isolateProperties.JSSyntaxRegExp('^[*a-zA-Z0-9]+$', false, false);
-$.CTC69 = 'structured clone of File';
+$.CTC71 = 'structured clone of File';
 $.CTC4 = new Isolate.$isolateProperties.NotImplementedException('structured clone of File');
-$.CTC70 = 'structured clone of ImageData';
+$.CTC72 = 'structured clone of ImageData';
 $.CTC6 = new Isolate.$isolateProperties.NotImplementedException('structured clone of ImageData');
 $.CTC = new Isolate.$isolateProperties.NullPointerException(null, Isolate.$isolateProperties.CTC0);
-$.CTC71 = '';
+$.CTC73 = '';
 $.CTC25 = new Isolate.$isolateProperties.UnsupportedOperationException('');
-$.CTC72 = '<(\\w+)';
+$.CTC74 = '<(\\w+)';
 $.CTC21 = new Isolate.$isolateProperties.JSSyntaxRegExp('<(\\w+)', false, false);
 $.CTC10 = new Isolate.$isolateProperties.NoMoreElementsException();
 $.CTC34 = new Isolate.$isolateProperties.NotImplementedException(null);
-$.CTC73 = 'Cannot removeLast on immutable List.';
+$.CTC75 = 'Cannot removeLast on immutable List.';
 $.CTC11 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot removeLast on immutable List.');
 $.CTC18 = new Isolate.$isolateProperties.EmptyQueueException();
-$.CTC74 = '^#[_a-zA-Z]\\w*$';
+$.CTC76 = '^#[_a-zA-Z]\\w*$';
 $.CTC27 = new Isolate.$isolateProperties.JSSyntaxRegExp('^#[_a-zA-Z]\\w*$', false, false);
-$.CTC75 = 'structured clone of ArrayBuffer';
+$.CTC77 = 'structured clone of ArrayBuffer';
 $.CTC7 = new Isolate.$isolateProperties.NotImplementedException('structured clone of ArrayBuffer');
-$.CTC76 = 'Cannot sort immutable List.';
+$.CTC78 = 'Cannot sort immutable List.';
 $.CTC15 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot sort immutable List.');
-$.CTC77 = 'structured clone of Date';
+$.CTC79 = 'The input sequence is empty.';
+$.CTC37 = new Isolate.$isolateProperties.InvalidOperationException('The input sequence is empty.');
+$.CTC80 = 'structured clone of Date';
 $.CTC2 = new Isolate.$isolateProperties.NotImplementedException('structured clone of Date');
-$.CTC78 = 'body';
-$.CTC79 = 'head';
-$.CTC80 = 'caption';
-$.CTC81 = 'td';
-$.CTC82 = 'colgroup';
-$.CTC83 = 'col';
-$.CTC84 = 'tr';
-$.CTC85 = 'tbody';
-$.CTC86 = 'tfoot';
-$.CTC87 = 'thead';
-$.CTC88 = 'track';
-$.CTC89 = Isolate.makeConstantList(['body', 'head', 'caption', 'td', 'colgroup', 'col', 'tr', 'tbody', 'tfoot', 'thead', 'track']);
+$.CTC81 = 'body';
+$.CTC82 = 'head';
+$.CTC83 = 'caption';
+$.CTC84 = 'td';
+$.CTC85 = 'colgroup';
+$.CTC86 = 'col';
+$.CTC87 = 'tr';
+$.CTC88 = 'tbody';
+$.CTC89 = 'tfoot';
+$.CTC90 = 'thead';
+$.CTC91 = 'track';
+$.CTC92 = Isolate.makeConstantList(['body', 'head', 'caption', 'td', 'colgroup', 'col', 'tr', 'tbody', 'tfoot', 'thead', 'track']);
 $.CTC54 = new Isolate.$isolateProperties.Object();
-$.CTC90 = 'IDBKey containing Date';
+$.CTC93 = 'IDBKey containing Date';
 $.CTC19 = new Isolate.$isolateProperties.NotImplementedException('IDBKey containing Date');
-$.CTC91 = 'Cannot insertRange on immutable List.';
+$.CTC94 = 'Cannot insertRange on immutable List.';
 $.CTC35 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot insertRange on immutable List.');
-$.CTC92 = 'Incorrect number or type of arguments';
+$.CTC95 = 'Incorrect number or type of arguments';
 $.CTC20 = new Isolate.$isolateProperties.ExceptionImplementation('Incorrect number or type of arguments');
-$.CTC93 = 'html';
-$.CTC94 = 'table';
-$.CTC95 = 'audio';
-$.CTC22 = new Isolate.$isolateProperties.ConstantMap(11, {'body': 'html', 'head': 'html', 'caption': 'table', 'td': 'tr', 'colgroup': 'table', 'col': 'colgroup', 'tr': 'tbody', 'tbody': 'table', 'tfoot': 'table', 'thead': 'table', 'track': 'audio'}, Isolate.$isolateProperties.CTC89);
-$.CTC96 = 'Cannot removeRange on immutable List.';
+$.CTC96 = 'html';
+$.CTC97 = 'table';
+$.CTC98 = 'audio';
+$.CTC22 = new Isolate.$isolateProperties.ConstantMap(11, {'body': 'html', 'head': 'html', 'caption': 'table', 'td': 'tr', 'colgroup': 'table', 'col': 'colgroup', 'tr': 'tbody', 'tbody': 'table', 'tfoot': 'table', 'thead': 'table', 'track': 'audio'}, Isolate.$isolateProperties.CTC92);
+$.CTC99 = 'Cannot removeRange on immutable List.';
 $.CTC33 = new Isolate.$isolateProperties.UnsupportedOperationException('Cannot removeRange on immutable List.');
-$.CTC97 = 'structured clone of Blob';
+$.CTC100 = 'structured clone of Blob';
 $.CTC5 = new Isolate.$isolateProperties.NotImplementedException('structured clone of Blob');
 $.CTC41 = new Isolate.$isolateProperties._Random();
-$.CTC98 = 'structured clone of RegExp';
+$.CTC101 = 'structured clone of RegExp';
 $.CTC3 = new Isolate.$isolateProperties.NotImplementedException('structured clone of RegExp');
-$.CTC99 = 'Invalid list length';
+$.CTC102 = 'Invalid list length';
 $.CTC26 = new Isolate.$isolateProperties.ArgumentError('Invalid list length');
-$.CTC100 = '^\\[name=["\'][^\'"]+[\'"]\\]$';
+$.CTC103 = '^\\[name=["\'][^\'"]+[\'"]\\]$';
 $.CTC28 = new Isolate.$isolateProperties.JSSyntaxRegExp('^\\[name=["\'][^\'"]+[\'"]\\]$', false, false);
 $.CTC53 = new Isolate.$isolateProperties.EventArgs();
 $.CTC40 = new Isolate.$isolateProperties.Coordinate(1, 0);
 $.CTC42 = new Isolate.$isolateProperties.Coordinate(1, 1);
-$.CTC44 = new Isolate.$isolateProperties.Coordinate(-1, -1);
-$.CTC101 = 9;
-$.CTC46 = new Isolate.$isolateProperties.Coordinate(9, 9);
-$.CTC102 = 5;
-$.CTC49 = new Isolate.$isolateProperties.Coordinate(5, 0);
-$.CTC103 = 'The input sequence is empty.';
-$.CTC37 = new Isolate.$isolateProperties.InvalidOperationException('The input sequence is empty.');
-$.CTC47 = new Isolate.$isolateProperties.Coordinate(0, 0);
-$.CTC104 = 4;
-$.CTC50 = new Isolate.$isolateProperties.Coordinate(4, 0);
-$.CTC105 = 'structured clone of other type';
+$.CTC104 = 'structured clone of other type';
 $.CTC9 = new Isolate.$isolateProperties.NotImplementedException('structured clone of other type');
-$.CTC106 = '^(?:([^:/?#.]+):)?(?://(?:([^/?#]*)@)?([\\w\\d\\-\\u0100-\\uffff.%]*)(?::([0-9]+))?)?([^?#]+)?(?:\\?([^#]*))?(?:#(.*))?$';
-$.CTC52 = new Isolate.$isolateProperties.JSSyntaxRegExp('^(?:([^:/?#.]+):)?(?://(?:([^/?#]*)@)?([\\w\\d\\-\\u0100-\\uffff.%]*)(?::([0-9]+))?)?([^?#]+)?(?:\\?([^#]*))?(?:#(.*))?$', false, false);
-$.CTC107 = 'Mutation operations are not supported';
+$.CTC105 = 'Mutation operations are not supported';
 $.CTC14 = new Isolate.$isolateProperties.UnsupportedOperationException('Mutation operations are not supported');
-$.CTC108 = 7.1;
-$.CTC51 = new Isolate.$isolateProperties.Coordinate(7.1, 0);
+$.CTC44 = new Isolate.$isolateProperties.Coordinate(-1, -1);
+$.CTC106 = 5;
+$.CTC49 = new Isolate.$isolateProperties.Coordinate(5, 0);
+$.CTC107 = 4;
+$.CTC50 = new Isolate.$isolateProperties.Coordinate(4, 0);
+$.CTC108 = 9;
+$.CTC46 = new Isolate.$isolateProperties.Coordinate(9, 9);
 $.PASS = 'pass';
 $.Uri__COMPONENT_PATH = 5;
 $.Duration_HOURS_PER_DAY = 24;
@@ -12616,7 +12616,7 @@ $.Duration_MILLISECONDS_PER_DAY = 86400000;
 $.DualPivotQuicksort__INSERTION_SORT_THRESHOLD = 32;
 $.Primitives_hashCodeSeed = 0;
 $.groupSep = ' ';
-$.isArgumentError = Isolate.$isolateProperties.CTC62;
+$.isArgumentError = Isolate.$isolateProperties.CTC63;
 $.throwsArgumentError = Isolate.$isolateProperties.CTC32;
 $.HashMapImplementation__INITIAL_CAPACITY = 8;
 $.Duration_SECONDS_PER_MINUTE = 60;
