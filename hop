@@ -1,12 +1,13 @@
 #!/bin/bash
 PACK_DIR=`pwd`/packages/
 cmd="dart
+--enable_checked_mode
+--warn_legacy_map_literal
+--warning_as_error
 --enable_type_checks
 --enable_asserts
---verbose_debug
---warning_as_error
 --error_on_malformed_type
 --package-root=$PACK_DIR
-./test/console_test_harness.dart"
+./tool/hop_runner.dart $@"
 echo $cmd
 exec $cmd
