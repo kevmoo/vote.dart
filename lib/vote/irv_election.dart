@@ -23,7 +23,7 @@ class IrvElection<TVoter extends Player, TCandidate extends Player>
       round = new IrvRound<TVoter, TCandidate>(roBallots, eliminatedCandidates);
       rounds.add(round);
 
-      eliminatedCandidates.addAll(round.eliminatedCandidates);
+      eliminatedCandidates.addAll(round.eliminatedCandidates.toList());
     } while(!round.isFinal);
 
     return new IrvElection._internal(
