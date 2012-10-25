@@ -1,3 +1,5 @@
+part of vote_map;
+
 class MapPlayer implements Player {
   final GlobalId _id;
   final String name;
@@ -19,7 +21,7 @@ class MapPlayer implements Player {
 
   int hashCode() => _id.hashCode();
 
-  bool operator ==(MapPlayer other) => other !== null && other._id == _id;
+  bool operator ==(MapPlayer other) => other != null && other._id == _id;
 
   String toString() {
     if(name == null) {

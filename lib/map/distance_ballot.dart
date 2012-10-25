@@ -1,3 +1,5 @@
+part of vote_map;
+
 class DistanceBallot<TVoter extends MapPlayer, TCandidate extends MapPlayer>
   extends RankedBallot<TVoter, TCandidate> {
   final HashMap<TCandidate, num> _distances;

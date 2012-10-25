@@ -1,3 +1,5 @@
+part of vote_html;
+
 class DistanceView extends HtmlView {
   DistanceElection<MapPlayer, MapPlayer> _election;
 

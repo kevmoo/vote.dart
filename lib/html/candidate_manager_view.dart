@@ -1,3 +1,5 @@
+part of vote_html;
+
 class CandidateManagerView extends HtmlView {
   static final String _candidateIdAttribute = 'candidate-id';
   final EventHandle<MapPlayer> _requestRemoveCandidateHandle;
@@ -79,7 +81,7 @@ class CandidateManagerView extends HtmlView {
 
   void _deleteClick(MouseEvent args) {
     final ButtonElement source = args.toElement;
-    final candidateId = math.parseInt(source.dataAttributes[_candidateIdAttribute]);
+    final candidateId = int.parse(source.dataAttributes[_candidateIdAttribute]);
     _removeCandidateWithId(candidateId);
     source.disabled = true;
   }

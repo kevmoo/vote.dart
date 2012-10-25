@@ -1,3 +1,5 @@
+part of vote;
+
 class CondorcetPair<TVoter extends Player, TCandidate extends Player>
   extends Tuple<TCandidate, TCandidate>
   implements Hashable {

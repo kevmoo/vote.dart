@@ -1,3 +1,5 @@
+part of vote;
+
 class RankedBallot<TVoter extends Player, TCandidate extends Player>
   extends PluralityBallot<TVoter, TCandidate> {
   final ReadOnlyCollection<TCandidate> rank;

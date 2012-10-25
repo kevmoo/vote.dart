@@ -1,3 +1,5 @@
+part of vote;
+
 class IrvElimination<TVoter extends Player, TCandidate extends Player> {
   final TCandidate candidate;
   final Map<TCandidate, List<RankedBallot<TVoter, TCandidate>>> _transfers;

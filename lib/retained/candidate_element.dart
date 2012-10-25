@@ -1,3 +1,5 @@
+part of vote_retanied;
+
 class CandidateElement extends PElement {
   final String _color;
   final MapPlayer player;

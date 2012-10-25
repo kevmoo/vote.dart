@@ -1,3 +1,5 @@
+part of vote_map;
+
 class LocationData {
   static const int maxCandidateCount = 26;
   static const Box bounds = const Box(0,0, span, span);

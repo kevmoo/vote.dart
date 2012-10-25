@@ -1,18 +1,18 @@
-#library('vote_html');
+library vote_html;
 
-#import('dart:html');
-#import('dart:math', prefix:'math');
-#import('package:bot/bot.dart');
-#import('package:bot/html.dart');
+import 'dart:html';
+import 'dart:math' as math;
+import 'package:bot/bot.dart';
+import 'package:bot/html.dart';
 
-#import('vote.dart');
-#import('map.dart');
+import 'vote.dart';
+import 'map.dart';
 
-#source('html/candidate_manager_view.dart');
-#source('html/plurality_view.dart');
-#source('html/distance_view.dart');
-#source('html/condorcet_view.dart');
-#source('html/irv_view.dart');
+part 'html/candidate_manager_view.dart';
+part 'html/plurality_view.dart';
+part 'html/distance_view.dart';
+part 'html/condorcet_view.dart';
+part 'html/irv_view.dart';
 
 const String _grayHex = '#999999';
 

@@ -1,10 +1,10 @@
-#library('vote_map');
+library vote_map;
 
-#import('package:bot/bot.dart');
-#import('vote.dart');
+import 'package:bot/bot.dart';
+import 'vote.dart';
 
-#source('map/map_player.dart');
-#source('map/distance_election.dart');
-#source('map/distance_election_place.dart');
-#source('map/distance_ballot.dart');
-#source('map/location_data.dart');
+part 'map/map_player.dart';
+part 'map/distance_election.dart';
+part 'map/distance_election_place.dart';
+part 'map/distance_ballot.dart';
+part 'map/location_data.dart';

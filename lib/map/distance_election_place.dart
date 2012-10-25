@@ -1,3 +1,5 @@
+part of vote_map;
+
 class DistanceElectionPlace<TCandidate extends MapPlayer>
   extends ElectionPlace<TCandidate> {
   final num avgDistance;

@@ -1,3 +1,5 @@
+part of vote;
+
 class CondorcetCandidateProfile<TCandidate extends Player>
   implements Hashable {
 

@@ -1,3 +1,5 @@
+part of vote;
+
 class IrvElection<TVoter extends Player, TCandidate extends Player>
   extends Election<TVoter, TCandidate> {
 

@@ -1,3 +1,5 @@
+part of vote;
+
 class PluralityElection<TVoter extends Player, TCandidate extends Player>
   extends Election<TVoter, TCandidate> {
   final ReadOnlyCollection<Ballot<TVoter, TCandidate>> ballots;

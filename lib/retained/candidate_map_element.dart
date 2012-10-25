@@ -1,3 +1,5 @@
+part of vote_retanied;
+
 class CandidateMapElement extends ParentElement implements MapElementBase {
   final List<MapPlayer> _players = new List<MapPlayer>();
   final AffineTransform _tx = new AffineTransform();

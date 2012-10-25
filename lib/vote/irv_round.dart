@@ -1,3 +1,5 @@
+part of vote;
+
 class IrvRound<TVoter extends Player, TCandidate extends Player> {
   final ReadOnlyCollection<PluralityElectionPlace<TCandidate>> places;
   final ReadOnlyCollection<IrvElimination<TVoter, TCandidate>> eliminations;

@@ -1,3 +1,5 @@
+part of vote;
+
 class PluralityElectionPlace<TCandidate extends Player>
   extends ElectionPlace<TCandidate> {
   final int voteCount;

@@ -1,3 +1,5 @@
+part of vote;
+
 class ElectionPlace<TCandidate extends Player>
   extends ReadOnlyCollection<TCandidate> {
   final int place;

@@ -1,3 +1,5 @@
+part of vote_retanied;
+
 class RootMapElement extends ParentElement {
   final VoterMapElement _voterMap;
   final CandidateMapElement _candidateMap;
