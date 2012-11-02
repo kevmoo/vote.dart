@@ -1,3 +1,5 @@
+part of vote_test;
+
 class TestCondorcetElection {
   static void run() {
     group('CondorcetElection', (){

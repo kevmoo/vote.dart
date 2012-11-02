@@ -1,3 +1,5 @@
+part of vote_test_map;
+
 class TestLocationData {
   static void run() {
     group('LocationData', (){

@@ -1,3 +1,5 @@
+part of vote_test;
+
 class TestRankedBallot {
   static void run() {
     group('ranked ballot', () {

@@ -1,3 +1,5 @@
+part of vote_test;
+
 class TestIrv {
   static void run() {
     group('IrvElection', () {

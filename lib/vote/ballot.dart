@@ -8,5 +8,5 @@ class Ballot<TVoter extends Player, TCandidate extends Player>
 
   bool operator ==(Ballot other) => other != null && other.voter == voter;
 
-  int hashCode() => voter.hashCode();
+  int get hashCode => voter.hashCode;
 }

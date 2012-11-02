@@ -47,7 +47,7 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
       for(final b in cleanedBallots.filter((t) => t.item3 == c)) {
         final rb = b.item1;
         final pruned = b.item2.exclude(newlyEliminatedCandidates);
-        if(pruned.isEmpty() == 0) {
+        if(pruned.isEmpty) {
           // we're exhausted
           exhausted.add(rb);
         } else {

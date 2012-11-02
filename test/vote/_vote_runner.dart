@@ -1,14 +1,14 @@
-#library('vote_test');
+library vote_test;
 
-#import('package:unittest/unittest.dart');
-#import('package:bot/test.dart');
-#import('../../lib/vote.dart');
+import 'package:unittest/unittest.dart';
+import 'package:bot/test.dart';
+import '../../lib/vote.dart';
 
-#source('test_plurality.dart');
-#source('test_ranked_ballot.dart');
-#source('test_condorcet.dart');
-#source('test_condorcet_pair.dart');
-#source('test_irv.dart');
+part 'test_plurality.dart';
+part 'test_ranked_ballot.dart';
+part 'test_condorcet.dart';
+part 'test_condorcet_pair.dart';
+part 'test_irv.dart';
 
 void runVoteTests() {
   group('vote', (){

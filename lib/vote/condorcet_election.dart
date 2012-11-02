@@ -97,12 +97,12 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
       new ReadOnlyCollection<ElectionPlace<TCandidate>>(places));
   }
 
-  Collection<TCandidate> get candidates => _profiles.getKeys();
+  Collection<TCandidate> get candidates => _profiles.keys;
 
   CondorcetPair<TVoter, TCandidate> getPair(TCandidate c1, TCandidate c2) {
     var filter = _pairs.filter((p) => p.matches(c1, c2));
     assert(filter.length <= 1);
-    if(filter.isEmpty()) {
+    if(filter.isEmpty) {
       return null;
     } else {
       assert(filter.length == 1);

@@ -1,3 +1,5 @@
+part of vote_calc;
+
 class CalcEngine {
   final _DistanceElectionMapper _distanceElectionMapper = new _DistanceElectionMapper();
   final _PluralityElectionMapper _pluralityElectionMapper = new _PluralityElectionMapper();

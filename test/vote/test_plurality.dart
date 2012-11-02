@@ -1,3 +1,5 @@
+part of vote_test;
+
 class TestPlurality {
 
   static void run() {

@@ -1,3 +1,5 @@
+part of vote_test_map;
+
 class TestDistanceElection {
   static void run() {
     group('DistanceElection', (){

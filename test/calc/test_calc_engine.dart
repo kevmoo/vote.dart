@@ -1,3 +1,5 @@
+part of vote_test_calc;
+
 class TestCalcEngine {
   static void run() {
     group('CalcEngine', () {

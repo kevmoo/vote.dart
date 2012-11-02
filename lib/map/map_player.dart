@@ -19,7 +19,7 @@ class MapPlayer implements Player {
 
   int compareTo(MapPlayer other) => _id.compareTo(other._id);
 
-  int hashCode() => _id.hashCode();
+  int get hashCode => _id.hashCode;
 
   bool operator ==(MapPlayer other) => other != null && other._id == _id;
 

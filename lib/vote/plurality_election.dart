@@ -37,7 +37,7 @@ class PluralityElection<TVoter extends Player, TCandidate extends Player>
     //
     // Now the keys of voteCounts are unique, one for each vote count
     //
-    var ballotCounts = new List<int>.from(voteCounts.getKeys());
+    var ballotCounts = new List<int>.from(voteCounts.keys);
 
     // NOTE: reverse sorting
     ballotCounts.sort((a,b) => b.compareTo(a));

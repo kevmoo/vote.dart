@@ -1,13 +1,14 @@
-#import('dart:html');
-#import('package:bot/bot.dart');
-#import('package:bot/retained.dart');
-#import('package:bot/html.dart');
+import 'dart:html';
 
-#import('package:vote.dart/vote.dart');
-#import('package:vote.dart/map.dart');
-#import('package:vote.dart/retained.dart');
-#import('package:vote.dart/html.dart');
-#import('package:vote.dart/calc.dart');
+import 'package:bot/bot.dart';
+import 'package:bot/html.dart';
+import 'package:bot/retained.dart';
+
+import 'package:vote.dart/calc.dart';
+import 'package:vote.dart/html.dart';
+import 'package:vote.dart/map.dart';
+import 'package:vote.dart/retained.dart';
+import 'package:vote.dart/vote.dart';
 
 main(){
   CanvasElement canvas = query("#content");
@@ -118,26 +119,26 @@ class VoteDemo{
     _rootMapElement.showOnlyPlayers = candidates;
   }
 
-  void _locationDataUpdated(Dynamic args) {
+  void _locationDataUpdated(dynamic args) {
     assert(_calcEngine.locationData != null);
     final locData = _calcEngine.locationData;
     _rootMapElement.locationData = locData;
     _canManView.candidates = locData.candidates;
   }
 
-  void _distanceElectionUpdated(Dynamic args) {
+  void _distanceElectionUpdated(dynamic args) {
     assert(_calcEngine.distanceElection != null);
     _distanceView.election = _calcEngine.distanceElection;
     _requestFrame();
   }
 
-  void _pluralityElectionUpdated(Dynamic args) {
+  void _pluralityElectionUpdated(dynamic args) {
     assert(_calcEngine.pluralityElection != null);
     _pluralityView.election = _calcEngine.pluralityElection;
     _requestFrame();
   }
 
-  void _condorcetElectionUpdated(Dynamic args) {
+  void _condorcetElectionUpdated(dynamic args) {
     assert(_calcEngine.condorcetElection != null);
     _condorcetView.election = _calcEngine.condorcetElection;
     _requestFrame();
@@ -149,7 +150,7 @@ class VoteDemo{
     _requestFrame();
   }
 
-  void _voterHexMapperUpdated(Dynamic args) {
+  void _voterHexMapperUpdated(dynamic args) {
     assert(_calcEngine.voterHexMap != null);
     _rootMapElement.voterHexMap = _calcEngine.voterHexMap;
     _requestFrame();
@@ -176,7 +177,7 @@ class VoteDemo{
     }
   }
 
-  void _onFrame(int highResTime){
+  void _onFrame(double highResTime){
     _stage.draw();
 
     _condorcetView.draw();

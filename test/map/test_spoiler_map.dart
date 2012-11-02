@@ -1,3 +1,5 @@
+part of vote_test_map;
+
 class TestSpoilerMap {
   final MapPlayer canCenter, canLeft, canSpoiler;
   DistanceElection mapElection;
