@@ -3,6 +3,8 @@
 
 <img src="https://github.com/kevmoo/vote.dart/raw/master/vote_dart_preview.png" width='750'>
 
+[![](https://drone.io/kevmoo/vote.dart/status.png)](https://drone.io/kevmoo/vote.dart/latest)
+
 ## The Simulation
 
 > Imagine a city with population of 400 voters (small circles) evenly distributed into blocks--20 by 20.
