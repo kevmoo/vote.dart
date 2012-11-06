@@ -3634,7 +3634,8 @@ $$._MessageTraverser = {"": [],
   return this.visitObject$1(x);
 },
  visitObject$1: function(x) {
-  throw $.$$throw('Message serialization: Illegal value ' + $.S(x) + ' passed');
+  // HACK. Just sending the object over the wire.
+  return x;
 }
 };
 
