@@ -1,7 +1,7 @@
 library vote_test;
 
-import 'package:unittest/unittest.dart';
 import 'package:bot/test.dart';
+import 'package:unittest/unittest.dart';
 import '../../lib/vote.dart';
 
 part 'test_plurality.dart';

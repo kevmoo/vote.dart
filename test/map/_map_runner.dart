@@ -1,9 +1,9 @@
 library vote_test_map;
 
-import 'package:unittest/unittest.dart';
 import 'package:bot/bot.dart';
-import '../../lib/vote.dart';
+import 'package:unittest/unittest.dart';
 import '../../lib/map.dart';
+import '../../lib/vote.dart';
 
 part 'test_distance_election.dart';
 part 'test_spoiler_map.dart';

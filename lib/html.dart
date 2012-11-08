@@ -4,9 +4,8 @@ import 'dart:html';
 import 'dart:math' as math;
 import 'package:bot/bot.dart';
 import 'package:bot/html.dart';
-
-import 'vote.dart';
 import 'map.dart';
+import 'vote.dart';
 
 part 'html/candidate_manager_view.dart';
 part 'html/plurality_view.dart';
