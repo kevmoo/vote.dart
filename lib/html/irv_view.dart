@@ -123,7 +123,7 @@ class IrvView extends HtmlView {
       cell = new Element.tag('th');
       cell.innerHTML = 'Round ${i+1}';
       cell.classes.add(_roundCellClass);
-      cell.dataAttributes['roundIndex'] = i;
+      cell.dataAttributes['roundIndex'] = i.toString();
       row.elements.add(cell);
 
       for(final place in round.places) {
