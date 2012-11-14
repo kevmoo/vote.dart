@@ -1,9 +1,7 @@
 import 'dart:html';
-
 import 'package:bot/bot.dart';
 import 'package:bot/html.dart';
 import 'package:bot/retained.dart';
-
 import 'package:vote.dart/calc.dart';
 import 'package:vote.dart/html.dart';
 import 'package:vote.dart/map.dart';
