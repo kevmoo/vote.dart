@@ -6,7 +6,3 @@ dependencies:
     git:
       url: https://github.com/kevmoo/bot.dart.git
       ref: master
-  hop:
-    git:
-      url: https://github.com/kevmoo/hop.dart.git
-      ref: master
