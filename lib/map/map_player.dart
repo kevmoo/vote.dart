@@ -1,6 +1,6 @@
 part of vote_map;
 
-class MapPlayer implements Player {
+class MapPlayer extends Player {
   final GlobalId _id;
   final String name;
   Coordinate _location;
