@@ -137,8 +137,8 @@ class LocationData {
   }
 
   static String getCandidateName(int i) {
-    requireArgument(i >= 0);
-    requireArgument(i < maxCandidateCount);
+    requireArgument(i >= 0, 'i');
+    requireArgument(i < maxCandidateCount, 'i');
     return new String.fromCharCodes([i + _ACharCode]);
   }
 }

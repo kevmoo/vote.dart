@@ -37,10 +37,10 @@ class CondorcetPair<TVoter extends Player, TCandidate extends Player>
       int sof = 0;
       roBallots.forEach((b) {
         final firstIndex = b.rank.indexOf(can1);
-        requireArgument(firstIndex >= 0);
+        requireArgument(firstIndex >= 0, 'bals');
 
         final secondIndex = b.rank.indexOf(can2);
-        requireArgument(secondIndex >= 0);
+        requireArgument(secondIndex >= 0, 'bals');
 
         assert(firstIndex != secondIndex);
         if(firstIndex < secondIndex) {
