@@ -106,6 +106,8 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
       return [];
     }
 
-    return places.last().map((p) => p).toList();
+    // DARTBUG https://code.google.com/p/dart/issues/detail?id=7085
+    // last() seems to be f'd up when compiled
+    return places[places.length-1].map((p) => p).toList();
   }
 }
