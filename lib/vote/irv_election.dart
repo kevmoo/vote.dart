@@ -34,4 +34,6 @@ class IrvElection<TVoter extends Player, TCandidate extends Player>
       $(rounds).toReadOnlyCollection());
   }
 
+  // TODO: need to add `places`
+  // ReadOnlyCollection<ElectionPlace<TCandidate>> get places;
 }
