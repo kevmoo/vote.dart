@@ -1,6 +1,6 @@
 part of vote_retanied;
 
-class RootMapElement extends ParentElement {
+class RootMapElement extends ParentThing {
   final VoterMapElement _voterMap;
   final CandidateMapElement _candidateMap;
   final AffineTransform _tx = new AffineTransform();
@@ -24,7 +24,7 @@ class RootMapElement extends ParentElement {
 
   int get visualChildCount => 2;
 
-  PElement getVisualChild(int index){
+  Thing getVisualChild(int index){
     switch(index) {
       case 0:
         return _voterMap;

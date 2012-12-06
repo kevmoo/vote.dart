@@ -1,5 +1,4 @@
 name: vote.dart
 dependencies:
-  unittest:
-    sdk: unittest
-  bot: 0.7.0
+  bot:
+    git: https://github.com/kevmoo/bot.dart.git

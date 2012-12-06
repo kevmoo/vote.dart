@@ -1,6 +1,6 @@
 part of vote_retanied;
 
-class CandidateMapElement extends ParentElement implements MapElementBase {
+class CandidateMapElement extends ParentThing implements MapElementBase {
   final List<MapPlayer> _players = new List<MapPlayer>();
   final AffineTransform _tx = new AffineTransform();
 
@@ -15,7 +15,7 @@ class CandidateMapElement extends ParentElement implements MapElementBase {
     return _elements.length;
   }
 
-  PElement getVisualChild(int index){
+  Thing getVisualChild(int index){
     _ensureElements();
     return _elements[index];
   }

@@ -1,6 +1,6 @@
 part of vote_retanied;
 
-class CandidateElement extends PElement {
+class CandidateElement extends Thing {
   final String _color;
   final MapPlayer player;
   final String _text;
