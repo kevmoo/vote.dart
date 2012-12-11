@@ -7,7 +7,8 @@ class VoterMapElement extends Thing implements MapElementBase {
   num _radius;
   HashMap<MapPlayer, String> _map = new HashMap<MapPlayer, String>();
 
-  VoterMapElement(int w, int h) : super(w, h, true) {
+  VoterMapElement(int w, int h) : super(w, h) {
+    cacheEnabled = true;
     _radius = 0.3;
   }
 
