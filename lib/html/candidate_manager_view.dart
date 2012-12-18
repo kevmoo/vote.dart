@@ -25,7 +25,7 @@ class CandidateManagerView extends HtmlView {
       _requestNewCandidateHandle;
 
   void updateElement() {
-    node.elements.clear();
+    node.children.clear();
 
     var table = new TableElement();
 
@@ -41,7 +41,7 @@ class CandidateManagerView extends HtmlView {
       addButton.disabled = true;
     }
 
-    cell.elements.add(addButton);
+    cell.children.add(addButton);
 
     if(_candidates != null) {
       for(final candidate in _candidates) {
@@ -56,7 +56,7 @@ class CandidateManagerView extends HtmlView {
 
         cell = row.insertCell(-1);
         cell.classes.add('candidate-cell');
-        cell.innerHTML = candidate.toString();
+        cell.innerHtml = candidate.toString();
 
         cell = row.insertCell(-1);
         final deleteButton = new ButtonElement();
@@ -67,10 +67,10 @@ class CandidateManagerView extends HtmlView {
         } else {
           deleteButton.disabled = true;
         }
-        cell.elements.add(deleteButton);
+        cell.children.add(deleteButton);
       }
     }
-    node.elements.add(table);
+    node.children.add(table);
   }
 
   void _requestNewCandidate(MouseEvent args) {

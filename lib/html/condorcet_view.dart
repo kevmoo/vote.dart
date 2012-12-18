@@ -23,19 +23,19 @@ class CondorcetView extends HtmlView {
   List<Player> get highlightCandidates => _highlightCandidates;
 
   void updateElement() {
-    node.elements.clear();
+    node.children.clear();
 
     var table = new TableElement();
 
     TableRowElement row = table.insertRow(-1);
     TableCellElement cell = new Element.tag('th');
-    row.elements.add(cell);
+    row.children.add(cell);
     row.classes.add('row-odd');
-    cell.innerHTML = "Place";
+    cell.innerHtml = "Place";
 
     cell = new Element.tag('th');
-    row.elements.add(cell);
-    cell.innerHTML = "Candidate";
+    row.children.add(cell);
+    cell.innerHtml = "Candidate";
 
     if(_election != null) {
       var evenPlaceRow = true;
@@ -46,8 +46,8 @@ class CondorcetView extends HtmlView {
 
       for(final opp in _candidates) {
         cell = new Element.tag('th');
-        row.elements.add(cell);
-        cell.innerHTML = opp.toString();
+        row.children.add(cell);
+        cell.innerHtml = opp.toString();
 
         cell.style.background = getCandidateHexColor(opp);
         cell.colSpan = 3;
@@ -63,17 +63,17 @@ class CondorcetView extends HtmlView {
           if(first) {
             first = false;
             cell = new Element.tag('th');
-            row.elements.add(cell);
+            row.children.add(cell);
             cell.classes.add('place-number');
             cell.rowSpan = place.length;
-            cell.innerHTML = place.place.toString();
+            cell.innerHtml = place.place.toString();
           }
 
           cell = row.insertCell(-1);
           cell.classes.add('candidate-cell');
 
           cell.style.background = getCandidateHexColor(candidate);
-          cell.innerHTML = candidate.toString();
+          cell.innerHtml = candidate.toString();
 
           for(final opp in _candidates) {
             if(opp == candidate) {
@@ -107,7 +107,7 @@ class CondorcetView extends HtmlView {
               final cellData = _getPairElementName(candidate, opp);
 
               cell = row.insertCell(-1);
-              cell.innerHTML = pair.firstOverSecond.toString();
+              cell.innerHtml = pair.firstOverSecond.toString();
               cell.style.color = leftColor;
               cell.classes.add('vote-count');
               cell.classes.add('pair-cell');
@@ -117,14 +117,14 @@ class CondorcetView extends HtmlView {
               cell.dataAttributes[_pairIdsKey] = cellData;
 
               cell = row.insertCell(-1);
-              cell.innerHTML = middleText;
+              cell.innerHtml = middleText;
               cell.classes.add('pair-cell');
               cell.classes.add(cellClass);
               cell.classes.add(cellData);
               cell.dataAttributes[_pairIdsKey] = cellData;
 
               cell = row.insertCell(-1);
-              cell.innerHTML = pair.secondOverFirst.toString();
+              cell.innerHtml = pair.secondOverFirst.toString();
               cell.style.color = rightColor;
               cell.classes.add('vote-count');
               cell.classes.add('right_value');
@@ -145,7 +145,7 @@ class CondorcetView extends HtmlView {
     table.on.mouseMove.add(_onMouseOver);
     table.on.mouseOut.add(_onMouseOut);
 
-    node.elements.add(table);
+    node.children.add(table);
   }
 
   void set _thePair(List<Player> pair) {

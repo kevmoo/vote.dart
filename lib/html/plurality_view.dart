@@ -13,23 +13,23 @@ class PluralityView extends HtmlView {
   }
 
   void updateElement() {
-    node.elements.clear();
+    node.children.clear();
 
     var table = new TableElement();
 
     TableRowElement row = table.insertRow(-1);
     TableCellElement cell = new Element.tag('th');
-    row.elements.add(cell);
-    cell.innerHTML = "Place";
+    row.children.add(cell);
+    cell.innerHtml = "Place";
 
     cell = new Element.tag('th');
-    row.elements.add(cell);
-    cell.innerHTML = "Candidate";
+    row.children.add(cell);
+    cell.innerHtml = "Candidate";
 
     cell = new Element.tag('th');
-    row.elements.add(cell);
+    row.children.add(cell);
     row.classes.add('row-odd');
-    cell.innerHTML = "Votes";
+    cell.innerHtml = "Votes";
 
     var evenPlaceRow = true;
     var evenCandidateRow = true;
@@ -44,10 +44,10 @@ class PluralityView extends HtmlView {
 
           if(first) {
             cell = new Element.tag('th');
-            row.elements.add(cell);
+            row.children.add(cell);
             cell.classes.add('place-number');
             cell.rowSpan = place.length;
-            cell.innerHTML = place.place.toString();
+            cell.innerHtml = place.place.toString();
           }
 
           cell = row.insertCell(-1);
@@ -58,13 +58,13 @@ class PluralityView extends HtmlView {
             final rgb = hsl.toRgb();
             cell.style.background = rgb.toHex();
           }
-          cell.innerHTML = candidate.toString();
+          cell.innerHtml = candidate.toString();
 
 
           if(first) {
             cell = row.insertCell(-1);
             cell.rowSpan = place.length;
-            cell.innerHTML = place.voteCount.toString();
+            cell.innerHtml = place.voteCount.toString();
             cell.classes.add('vote-count');
 
             first = false;
@@ -77,7 +77,7 @@ class PluralityView extends HtmlView {
 
     }
 
-    node.elements.add(table);
+    node.children.add(table);
 
   }
 }

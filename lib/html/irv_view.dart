@@ -29,7 +29,7 @@ class IrvView extends HtmlView {
   }
 
   void updateElement() {
-    node.elements.clear();
+    node.children.clear();
 
     if(election == null) {
       return;
@@ -85,13 +85,13 @@ class IrvView extends HtmlView {
         row = table.insertRow(-1);
 
         // blank cell on the left
-        row.insertCell(-1).innerHTML = '&nbsp;';
+        row.insertCell(-1).innerHtml = '&nbsp;';
 
         for(final place in round.places) {
           cell = new Element.tag('th');
-          row.elements.add(cell);
+          row.children.add(cell);
           cell.colSpan = place.length;
-          cell.innerHTML = place.place.toString();
+          cell.innerHtml = place.place.toString();
           cell.classes.add('candidate-cell');
         }
 
@@ -101,13 +101,13 @@ class IrvView extends HtmlView {
         row = table.insertRow(-1);
 
         // blank cell on the left
-        row.insertCell(-1).innerHTML = '&nbsp;';
+        row.insertCell(-1).innerHtml = '&nbsp;';
 
         for(final place in round.places) {
           for(final c in place) {
             cell = new Element.tag('th');
-            row.elements.add(cell);
-            cell.innerHTML = c.toString();
+            row.children.add(cell);
+            cell.innerHtml = c.toString();
             cell.classes.add('candidate-cell');
             cell.style.background = getCandidateHexColor(c);
           }
@@ -121,15 +121,15 @@ class IrvView extends HtmlView {
 
       // blank cell on the left
       cell = new Element.tag('th');
-      cell.innerHTML = 'Round ${i+1}';
+      cell.innerHtml = 'Round ${i+1}';
       cell.classes.add(_roundCellClass);
       cell.dataAttributes['roundIndex'] = i.toString();
-      row.elements.add(cell);
+      row.children.add(cell);
 
       for(final place in round.places) {
         for(final c in place) {
           cell = row.insertCell(-1);
-          cell.innerHTML = place.voteCount.toString();
+          cell.innerHtml = place.voteCount.toString();
           cell.classes.add('candidate-cell');
           cell.classes.add('vote-count');
           cell.style.background = getCandidateHexColor(c);
@@ -144,7 +144,7 @@ class IrvView extends HtmlView {
         final elimination = round.eliminations[el - ei - 1];
         row = table.insertRow(-1);
         cell = row.insertCell(-1);
-        cell.innerHTML = elimination.candidate.toString();
+        cell.innerHtml = elimination.candidate.toString();
 
         // TODO: use CSS for these
         cell.style.fontStyle = 'italic';
@@ -154,12 +154,12 @@ class IrvView extends HtmlView {
         for(final c in round.candidates) {
           cell = row.insertCell(-1);
           if(c == elimination.candidate) {
-            cell.innerHTML = '&larr;';
+            cell.innerHtml = '&larr;';
             foundSelf = true;
           } else {
             final transferCount = elimination.getTransferCount(c);
             if(transferCount > 0) {
-              cell.innerHTML = transferCount.toString();
+              cell.innerHtml = transferCount.toString();
               cell.classes.add('vote-count');
             }
           }
@@ -171,7 +171,7 @@ class IrvView extends HtmlView {
     table.on.mouseMove.add(_onMouseOver);
     table.on.mouseOut.add(_onMouseOut);
 
-    node.elements.add(table);
+    node.children.add(table);
     _updateHighlightedRound(null);
   }
 
