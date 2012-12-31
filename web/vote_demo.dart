@@ -23,7 +23,6 @@ main(){
 class VoteDemo{
   final CanvasElement _canvas;
   final Stage _stage;
-  final Dragger _dragger;
 
   final CalcEngine _calcEngine = new CalcEngine();
 
@@ -37,8 +36,6 @@ class VoteDemo{
 
   HashMap<MapPlayer, num> _candidateHues;
 
-  Coordinate _mouseLocation;
-  MapPlayer _overCandidate, _dragCandidate;
   bool _frameRequested = false;
 
   factory VoteDemo(CanvasElement canvas, DivElement pluralityDiv,
@@ -51,6 +48,7 @@ class VoteDemo{
     //
 
     final stage = new Stage(canvas, voterMap);
+    final mm = new MouseManager(stage);
 
     var distanceView = new DistanceView(distanceDiv);
 
@@ -61,20 +59,13 @@ class VoteDemo{
 
     final canManView = new CandidateManagerView(canManDiv);
 
-    var dragger = new Dragger(canvas);
-
-    return new VoteDemo._internal(canvas, stage, dragger, voterMap,
+    return new VoteDemo._internal(canvas, stage, voterMap,
       condorcetView, pluralityView, distanceView, canManView, irvView);
   }
 
-  VoteDemo._internal(this._canvas, this._stage, this._dragger,
+  VoteDemo._internal(this._canvas, this._stage,
       this._rootMapElement, this._condorcetView, this._pluralityView,
       this._distanceView, this._canManView, this._irvView) {
-    _dragger.dragDelta.add(_onDrag);
-    _dragger.dragStart.add(_onDragStart);
-
-    _canvas.on.mouseMove.add(_canvas_mouseMove);
-    _canvas.on.mouseOut.add(_canvas_mouseOut);
 
     _calcEngine.locationDataChanged.add(_locationDataUpdated);
     _calcEngine.distanceElectionChanged.add(_distanceElectionUpdated);
@@ -161,20 +152,6 @@ class VoteDemo{
     }
   }
 
-  void _onDrag(Vector delta) {
-    assert(_dragCandidate != null);
-    _rootMapElement.dragCandidate(_dragCandidate, delta);
-    _requestFrame();
-  }
-
-  void _onDragStart(CancelableEventArgs e) {
-    if(_overCandidate == null) {
-      e.cancel();
-    } else {
-      _dragCandidate = _overCandidate;
-    }
-  }
-
   void _onFrame(double highResTime){
     _stage.draw();
 
@@ -184,31 +161,5 @@ class VoteDemo{
     _distanceView.draw();
     _canManView.draw();
     _frameRequested = false;
-  }
-
-  void _canvas_mouseMove(MouseEvent e){
-    _setMouse(getMouseEventCoordinate(e));
-  }
-
-  void _canvas_mouseOut(MouseEvent e){
-    _setMouse(null);
-  }
-
-  void _setMouse(Coordinate value) {
-    _mouseLocation = value;
-    final hits = Mouse.markMouseOver(_stage, _mouseLocation);
-    if(hits != null && hits.length > 0 && hits[0] is CandidateElement) {
-      _canvas.style.cursor = 'pointer';
-      final CandidateElement ce = hits[0];
-      _overCandidate = ce.player;
-    } else {
-      _overCandidate = null;
-    }
-
-    if(_overCandidate != null || _dragCandidate != null) {
-      _canvas.style.cursor = 'pointer';
-    } else {
-      _canvas.style.cursor = 'auto';
-    }
   }
 }

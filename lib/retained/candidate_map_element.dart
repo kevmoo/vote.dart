@@ -64,6 +64,11 @@ class CandidateMapElement extends ParentThing implements MapElementBase {
         final ce = new CandidateElement(_radius * 4, _radius * 4,
           rgb.toHex(), p);
         ce.registerParent(this);
+
+        MouseManager.setCursor(ce, 'pointer');
+        MouseManager.setDraggable(ce, true);
+        MouseManager.addDragHandler(ce, _candidateDragged);
+
         final tempTx = ce.addTransform();
         tempTx.concatenate(_tx);
         tempTx.translate(p.location.x - 2 * _radius, p.location.y - 2 * _radius);
@@ -72,6 +77,14 @@ class CandidateMapElement extends ParentThing implements MapElementBase {
       }
       _updateCandidateElements();
     }
+  }
+
+  void _candidateDragged(ThingDragEventArgs e) {
+    final RootMapElement rme = parent;
+    final CandidateElement ce = e.thing;
+    final player = ce.player;
+
+    rme.dragCandidate(player, e.delta);
   }
 
   void _updateCandidateElements() {
