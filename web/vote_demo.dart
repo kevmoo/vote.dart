@@ -38,10 +38,6 @@ class VoteDemo extends StageWrapper<RootMapElement> {
     DivElement irvDiv) {
     var voterMap = new RootMapElement(canvas.width, canvas.height);
 
-    //
-    // Create the stage, etc
-    //
-
     var distanceView = new DistanceView(distanceDiv);
 
     var pluralityView = new PluralityView(pluralityDiv);
