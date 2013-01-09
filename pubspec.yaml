@@ -1,4 +1,3 @@
-name: vote.dart
+name: vote
 dependencies:
-  bot:
-    git: https://github.com/kevmoo/bot.dart.git
+  bot: 0.10.0

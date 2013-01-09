@@ -1,8 +1,8 @@
 library vote_test;
 
-import 'package:bot/test.dart';
+import 'package:bot/bot_test.dart';
 import 'package:unittest/unittest.dart';
-import '../../lib/vote.dart';
+import 'package:vote/vote.dart';
 
 part 'test_plurality.dart';
 part 'test_ranked_ballot.dart';

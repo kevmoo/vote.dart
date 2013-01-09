@@ -3,10 +3,10 @@ library vote_retanied;
 import 'dart:html';
 import 'dart:math' as math;
 import 'package:bot/bot.dart';
-import 'package:bot/html.dart';
-import 'package:bot/retained.dart';
-import 'map.dart';
-import 'vote.dart';
+import 'package:bot/bot_html.dart';
+import 'package:bot/bot_retained.dart';
+import 'package:vote/vote.dart';
+import 'package:vote/map.dart';
 
 part 'retained/root_map_element.dart';
 part 'retained/map_element_base.dart';
