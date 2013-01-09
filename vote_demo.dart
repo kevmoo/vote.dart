@@ -1,12 +1,12 @@
 import 'dart:html';
 import 'package:bot/bot.dart';
-import 'package:bot/html.dart';
-import 'package:bot/retained.dart';
-import 'package:vote.dart/calc.dart';
-import 'package:vote.dart/html.dart';
-import 'package:vote.dart/map.dart';
-import 'package:vote.dart/retained.dart';
-import 'package:vote.dart/vote.dart';
+import 'package:bot/bot_html.dart';
+import 'package:bot/bot_retained.dart';
+import 'package:vote/calc.dart';
+import 'package:vote/html.dart';
+import 'package:vote/map.dart';
+import 'package:vote/retained.dart';
+import 'package:vote/vote.dart';
 
 main(){
   CanvasElement canvas = query("#content");
