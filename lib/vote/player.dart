@@ -1,5 +1,5 @@
 part of vote;
 
-abstract class Player implements Hashable, Comparable {
+abstract class Player implements Comparable {
 
 }

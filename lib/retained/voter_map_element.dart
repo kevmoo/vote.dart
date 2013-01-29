@@ -5,7 +5,7 @@ class VoterMapElement extends Thing implements MapElementBase {
   final AffineTransform _tx = new AffineTransform();
 
   num _radius;
-  HashMap<MapPlayer, String> _map = new HashMap<MapPlayer, String>();
+  Map<MapPlayer, String> _map = new Map<MapPlayer, String>();
 
   VoterMapElement(int w, int h) : super(w, h) {
     cacheEnabled = true;
@@ -27,7 +27,7 @@ class VoterMapElement extends Thing implements MapElementBase {
     invalidateDraw();
   }
 
-  void set playerHexMap(HashMap<MapPlayer, String> value) {
+  void set playerHexMap(Map<MapPlayer, String> value) {
     assert(value != null);
     _map = value;
     invalidateDraw();

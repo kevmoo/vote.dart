@@ -7,7 +7,7 @@ import 'map/_map_runner.dart';
 import 'vote/_vote_runner.dart';
 
 main() {
-  final config = new VmConfiguration();
+  final config = new VMConfiguration();
   testCore(config);
 }
 

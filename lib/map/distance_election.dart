@@ -16,14 +16,13 @@ class DistanceElection<TVoter extends MapPlayer, TCandidate extends MapPlayer>
   factory DistanceElection(Iterable<TVoter> voters, Iterable<TCandidate> candidates) {
     final cans = new ReadOnlyCollection<TCandidate>(candidates);
 
-    final ballots = $(voters)
-        .map((voter) => new DistanceBallot<MapPlayer, MapPlayer>(voter, cans))
-        .toReadOnlyCollection();
+    final ballots = new ReadOnlyCollection(voters
+        .mappedBy((voter) => new DistanceBallot<MapPlayer, MapPlayer>(voter, cans)));
 
     //
     // Places
     //
-    final distanceGroups = $(cans).group((candidate) {
+    final distanceGroups = cans.group((candidate) {
       num sumOfDistance = 0;
       num sumOfSquaredDistance = 0;
       int count = 0;
@@ -41,13 +40,13 @@ class DistanceElection<TVoter extends MapPlayer, TCandidate extends MapPlayer>
     distances.sort((a,b) => a.item1.compareTo(b.item1));
 
     int placeNumber = 1;
-    final places = $(distances).map((d) {
+    final places = new ReadOnlyCollection(distances.mappedBy((d) {
       var placeCans = distanceGroups[d];
       final place = new DistanceElectionPlace(placeNumber, placeCans,
         d.item1, d.item2);
       placeNumber += placeCans.length;
       return place;
-    }).toReadOnlyCollection();
+    }));
 
     return new DistanceElection._internal(cans, ballots, places);
   }

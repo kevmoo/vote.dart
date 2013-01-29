@@ -43,7 +43,7 @@ class RootMapElement extends ParentThing {
 
   Iterable<MapPlayer> get voters => _voterMap.players;
 
-  void set voterHexMap(HashMap<MapPlayer, String> value) {
+  void set voterHexMap(Map<MapPlayer, String> value) {
     _voterMap.playerHexMap = value;
   }
 
@@ -74,7 +74,7 @@ class RootMapElement extends ParentThing {
   }
 
   void dragCandidate(MapPlayer candidate, Vector delta) {
-    final can = $(_candidateMap.players).single((mp) => mp == candidate);
+    final can = _candidateMap.players.singleMatching((mp) => mp == candidate);
 
     final candidateLocPixels = _tx.transformCoordinate(candidate.location);
     final newCanLocPix = candidateLocPixels + delta;

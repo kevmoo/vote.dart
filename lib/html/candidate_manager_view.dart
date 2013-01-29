@@ -36,7 +36,7 @@ class CandidateManagerView extends HtmlView {
     final addButton = new ButtonElement();
     addButton.text = "Add Candidate";
     if(_candidates.length < LocationData.maxCandidateCount) {
-      addButton.on.click.add(_requestNewCandidate);
+      addButton.onClick.listen(_requestNewCandidate);
     } else {
       addButton.disabled = true;
     }
@@ -63,7 +63,7 @@ class CandidateManagerView extends HtmlView {
         deleteButton.text = 'Delete';
         deleteButton.dataAttributes[_candidateIdAttribute] = candidate.id.toString();
         if(_candidates.length > 1) {
-          deleteButton.on.click.add(_deleteClick);
+          deleteButton.onClick.listen(_deleteClick);
         } else {
           deleteButton.disabled = true;
         }
@@ -87,7 +87,7 @@ class CandidateManagerView extends HtmlView {
   }
 
   void _removeCandidateWithId(int id) {
-    final candidate = _candidates.single((mp) => mp.id == id);
+    final candidate = _candidates.singleMatching((mp) => mp.id == id);
 
     _requestRemoveCandidateHandle.fireEvent(candidate);
   }

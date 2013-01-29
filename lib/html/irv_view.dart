@@ -35,7 +35,7 @@ class IrvView extends HtmlView {
       return;
     }
 
-    final candidates = _election.rounds.first().places
+    final candidates = _election.rounds.first.places
         .selectMany((p) => p).toReadOnlyCollection();
 
     var table = new TableElement();
@@ -168,8 +168,8 @@ class IrvView extends HtmlView {
       }
     }
 
-    table.on.mouseMove.add(_onMouseOver);
-    table.on.mouseOut.add(_onMouseOut);
+    table.onMouseMove.listen(_onMouseOver);
+    table.onMouseOut.listen(_onMouseOut);
 
     node.children.add(table);
     _updateHighlightedRound(null);

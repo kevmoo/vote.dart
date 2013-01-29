@@ -11,7 +11,7 @@ class IrvElimination<TVoter extends Player, TCandidate extends Player> {
     assert(exhausted != null);
   }
 
-  Collection<TCandidate> get transferedCandidates => _transfers.keys;
+  Iterable<TCandidate> get transferedCandidates => _transfers.keys;
 
   int getTransferCount(TCandidate key) {
     final list = _transfers[key];

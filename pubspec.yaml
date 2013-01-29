@@ -1,3 +1,5 @@
 name: vote
+author: Kevin Moore <kevin@thinkpixellab.com>
+homepage: https://github.com/kevmoo/vote.dart
 dependencies:
-  bot: 0.10.0
+  bot: '>=0.11.2'

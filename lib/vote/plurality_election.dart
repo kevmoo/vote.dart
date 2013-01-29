@@ -13,19 +13,19 @@ class PluralityElection<TVoter extends Player, TCandidate extends Player>
   factory PluralityElection(
     Collection<PluralityBallot<TVoter, TCandidate>> ballots) {
 
-    final roBallots = $(ballots).toReadOnlyCollection();
+    final roBallots = new ReadOnlyCollection(ballots);
 
     // Check voter uniqueness
-    final voterList = roBallots.map((pb) => pb.voter).toReadOnlyCollection();
+    final voterList = new ReadOnlyCollection(roBallots.mappedBy((pb) => pb.voter));
     requireArgument(CollectionUtil.allUnique(voterList),
       "Only one ballot per voter is allowed");
 
     final group = roBallots.group((pb) => pb.choice);
 
     //
-    // create a hashmap of candidates keyed on their vote count
+    // create a Map of candidates keyed on their vote count
     //
-    var voteCounts = new HashMap<int, List<TCandidate>>();
+    var voteCounts = new Map<int, List<TCandidate>>();
     Action2<TCandidate, List<PluralityBallot<TVoter, TCandidate>>> f = (c, b) {
       var count = b.length;
       List<TCandidate> candidates =

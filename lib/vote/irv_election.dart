@@ -10,7 +10,7 @@ class IrvElection<TVoter extends Player, TCandidate extends Player>
   IrvElection._internal(this.candidates, this.ballots, this.rounds);
 
   factory IrvElection(Collection<RankedBallot<TVoter, TCandidate>> ballots) {
-    final roBallots = $(ballots).toReadOnlyCollection();
+    final roBallots = new ReadOnlyCollection(ballots);
 
     final roCandidates = roBallots
         .selectMany((b) => b.rank)
@@ -31,7 +31,7 @@ class IrvElection<TVoter extends Player, TCandidate extends Player>
     return new IrvElection._internal(
       roCandidates,
       roBallots,
-      $(rounds).toReadOnlyCollection());
+      new ReadOnlyCollection.wrap(rounds));
   }
 
   // TODO: need to add `places`

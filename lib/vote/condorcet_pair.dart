@@ -1,8 +1,7 @@
 part of vote;
 
 class CondorcetPair<TVoter extends Player, TCandidate extends Player>
-  extends Tuple<TCandidate, TCandidate>
-  implements Hashable {
+  extends Tuple<TCandidate, TCandidate> {
 
   final ReadOnlyCollection<RankedBallot<TVoter, TCandidate>> ballots;
   final int firstOverSecond;

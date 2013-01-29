@@ -43,7 +43,7 @@ class LocationData {
 
     final candidates = new List<MapPlayer>();
     $(coords)
-      .map((c) => c.scale(span))
+      .mappedBy((c) => c.scale(span))
       .forEachWithIndex((c,i) {
         final candidate = new MapPlayer(c, getCandidateName(i));
         candidates.add(candidate);
@@ -58,7 +58,7 @@ class LocationData {
   LocationData cloneAndRemove(MapPlayer mp) {
     requireArgumentNotNull(mp, 'mp');
 
-    var newCans = candidates.filter((e) => e != mp).toReadOnlyCollection();
+    var newCans = new ReadOnlyCollection(candidates.where((e) => e != mp));
 
     return new LocationData(voters, newCans);
   }
@@ -109,7 +109,7 @@ class LocationData {
     assert(maxValue > 0);
     assert(sliceCount > 1);
 
-    final values = new List<num>(itemCount);
+    final values = new List<num>.fixedLength(itemCount);
     int index = 0;
 
     num sliceSize = maxValue / sliceCount;

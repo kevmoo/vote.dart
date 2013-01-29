@@ -1,7 +1,6 @@
 part of vote;
 
-class CondorcetCandidateProfile<TCandidate extends Player>
-  implements Hashable {
+class CondorcetCandidateProfile<TCandidate extends Player> {
 
   final TCandidate candidate;
   final ReadOnlyCollection<TCandidate> lostTo;

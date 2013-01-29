@@ -7,7 +7,7 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
   factory IrvRound(ReadOnlyCollection<RankedBallot<TVoter, TCandidate>> ballots,
     List<TCandidate> eliminatedCandidates) {
 
-    final cleanedBallots = ballots.map((b) {
+    final cleanedBallots = ballots.mappedBy((b) {
       final pruned = $(b.rank).exclude(eliminatedCandidates)
           .toReadOnlyCollection();
       final winner = pruned.length == 0 ?
@@ -17,34 +17,34 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
 
     final activeBallotCount = cleanedBallots.count((t) => t.item3 != null);
 
-    final candidateAllocations = cleanedBallots
-        .filter((t) => t.item3 != null)
-        .group((tuple) => tuple.item3);
+    final candidateAllocations = new Grouping(cleanedBallots
+        .where((t) => t.item3 != null),
+        (tuple) => tuple.item3);
 
-    final voteGroups = $(candidateAllocations.getKeys()).group((c) {
+    final voteGroups = new Grouping(candidateAllocations.getKeys(), (c) {
       return candidateAllocations[c].length;
     });
 
-    final placeVotes = $(voteGroups.getKeys()).toList();
+    final placeVotes = voteGroups.getKeys().toList();
     // reverse sorting -> most votes first
     placeVotes.sort((a,b) => b.compareTo(a));
 
     int placeNumber = 1;
-    final places = $(placeVotes).map((pv) {
+    final places = new ReadOnlyCollection(placeVotes.mappedBy((pv) {
       final vg = voteGroups[pv];
       final currentPlaceNumber = placeNumber;
       placeNumber += vg.length;
       return new PluralityElectionPlace<TCandidate>(currentPlaceNumber, vg, pv);
-    }).toReadOnlyCollection();
+    }));
 
     final newlyEliminatedCandidates = _getEliminatedCandidates(places);
 
-    final eliminations = $(newlyEliminatedCandidates).map((c) {
+    final eliminations = new ReadOnlyCollection(newlyEliminatedCandidates.mappedBy((c) {
       final xfers = new Map<TCandidate, List<RankedBallot<TVoter, TCandidate>>>();
 
       final exhausted = new List<RankedBallot<TVoter, TCandidate>>();
 
-      for(final b in cleanedBallots.filter((t) => t.item3 == c)) {
+      for(final b in cleanedBallots.where((t) => t.item3 == c)) {
         final rb = b.item1;
         final pruned = b.item2.exclude(newlyEliminatedCandidates);
         if(pruned.isEmpty) {
@@ -52,13 +52,13 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
           exhausted.add(rb);
         } else {
           // #2 gets the transfer
-          final runnerUp = pruned.first();
+          final runnerUp = pruned.first;
           xfers.putIfAbsent(runnerUp, () => new List()).add(rb);
         }
       }
 
-      return new IrvElimination<TVoter, TCandidate>(c, xfers, $(exhausted).toReadOnlyCollection());
-    }).toReadOnlyCollection();
+      return new IrvElimination<TVoter, TCandidate>(c, xfers, new ReadOnlyCollection.wrap(exhausted));
+    }));
 
     return new IrvRound._internal(places, eliminations);
   }
@@ -67,13 +67,13 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
 
   bool get isFinal => eliminations.length == 0;
 
-  Enumerable<TCandidate> get eliminatedCandidates => eliminations
-      .map((ie) => ie.candidate);
+  Iterable<TCandidate> get eliminatedCandidates => eliminations
+      .mappedBy((ie) => ie.candidate);
 
-  Enumerable<TCandidate> get candidates => places.selectMany((p) => p);
+  Iterable<TCandidate> get candidates => CollectionUtil.selectMany(places, (p) => p);
 
   IrvElimination<TVoter, TCandidate> getElimination(TCandidate candidate) {
-    return eliminations.singleOrDefault((e) => e.candidate == candidate);
+    return eliminations.singleMatching((e) => e.candidate == candidate);
   }
 
   static List<Player> _getEliminatedCandidates(
@@ -108,6 +108,6 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
 
     // DARTBUG https://code.google.com/p/dart/issues/detail?id=7085
     // last() seems to be f'd up when compiled
-    return places[places.length-1].map((p) => p).toList();
+    return places[places.length-1].mappedBy((p) => p).toList();
   }
 }

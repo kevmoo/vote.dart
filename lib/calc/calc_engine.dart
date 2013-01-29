@@ -55,7 +55,7 @@ class CalcEngine {
 
   IrvElection get irvElection => _irvElectionMapper.output;
 
-  HashMap<MapPlayer, String> get voterHexMap => _voterHexMapper.output;
+  Map<MapPlayer, String> get voterHexMap => _voterHexMapper.output;
 
   void addCandidate() {
     assert(locationData != null);
@@ -162,14 +162,14 @@ void _irvElectionIsolate() {
 }
 
 class _VoterHexMapper
-  extends SendPortValue<Tuple3<DistanceElection, LocationData, List<MapPlayer>>, HashMap<MapPlayer, String>> {
+  extends SendPortValue<Tuple3<DistanceElection, LocationData, List<MapPlayer>>, Map<MapPlayer, String>> {
 
   _VoterHexMapper() : super(spawnFunction(_voterHexMapperIsolate));
 }
 
 void _voterHexMapperIsolate() {
   port.receive((Tuple3<DistanceElection, LocationData, List<MapPlayer>> tuple, SendPort reply) {
-    final map = new HashMap<MapPlayer, String>();
+    final map = new Map<MapPlayer, String>();
     for(final b in tuple.item1.ballots) {
       MapPlayer candidate;
       if(tuple.item3 == null) {
@@ -177,7 +177,7 @@ void _voterHexMapperIsolate() {
       } else {
         // TODO: this will blow up wonderfully if the item is not found
         // need to implement firstOrDefault
-        candidate = b.rank.filter((c) => tuple.item3.indexOf(c) >= 0).first();
+        candidate = b.rank.where((c) => tuple.item3.indexOf(c) >= 0).first;
       }
       if(candidate != null) {
         final hue = LocationData.getHue(candidate);

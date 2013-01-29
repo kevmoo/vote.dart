@@ -2,7 +2,7 @@ part of vote_map;
 
 class DistanceBallot<TVoter extends MapPlayer, TCandidate extends MapPlayer>
   extends RankedBallot<TVoter, TCandidate> {
-  final HashMap<TCandidate, num> _distances;
+  final Map<TCandidate, num> _distances;
 
   DistanceBallot._internal(TVoter voter, ReadOnlyCollection<TCandidate> items,
     this._distances):

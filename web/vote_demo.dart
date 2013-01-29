@@ -24,14 +24,14 @@ class VoteDemo extends StageWrapper<RootMapElement> {
 
   final CalcEngine _calcEngine = new CalcEngine();
 
-  final HashMap<MapPlayer, num> _playerHues = new HashMap<MapPlayer, num>();
+  final Map<MapPlayer, num> _playerHues = new Map<MapPlayer, num>();
   final CondorcetView _condorcetView;
   final IrvView _irvView;
   final DistanceView _distanceView;
   final PluralityView _pluralityView;
   final CandidateManagerView _canManView;
 
-  HashMap<MapPlayer, num> _candidateHues;
+  Map<MapPlayer, num> _candidateHues;
 
   factory VoteDemo(CanvasElement canvas, DivElement pluralityDiv,
     DivElement distanceDiv, DivElement condorcetDiv, DivElement canManDiv,

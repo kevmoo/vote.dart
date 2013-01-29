@@ -42,8 +42,8 @@ class CandidateMapElement extends ParentThing implements MapElementBase {
     if(value == null) {
       _showOnlyPlayers = null;
     } else {
-      var newVal = $(value).toReadOnlyCollection();
-      assert(newVal.distinct().count() == newVal.length);
+      var newVal = new ReadOnlyCollection(value);
+      assert(newVal.distinct().length == newVal.length);
       assert(newVal.every((e) => _players.indexOf(e) >= 0));
       _showOnlyPlayers = newVal;
     }

@@ -3,8 +3,8 @@ part of vote;
 class CondorcetElection<TVoter extends Player, TCandidate extends Player>
   extends Election<TVoter, TCandidate> {
 
-  final HashSet<CondorcetPair<TVoter, TCandidate>> _pairs;
-  final HashMap<TCandidate, CondorcetCandidateProfile<TCandidate>> _profiles;
+  final Set<CondorcetPair<TVoter, TCandidate>> _pairs;
+  final Map<TCandidate, CondorcetCandidateProfile<TCandidate>> _profiles;
   final ReadOnlyCollection<RankedBallot<TVoter, TCandidate>> ballots;
   final ReadOnlyCollection<ElectionPlace<TCandidate>> places;
 
@@ -12,49 +12,49 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
     this.places);
 
   factory CondorcetElection(
-    Collection<RankedBallot<TVoter, TCandidate>> ballots) {
+    Iterable<RankedBallot<TVoter, TCandidate>> ballots) {
 
-    final roBallots = $(ballots).toReadOnlyCollection();
+    final roBallots = new ReadOnlyCollection(ballots);
 
     // Check voter uniqueness
-    final voterList = roBallots.map((b) => b.voter).toReadOnlyCollection();
+    final voterList = new ReadOnlyCollection(roBallots.mappedBy((b) => b.voter));
     requireArgument(CollectionUtil.allUnique(voterList),
       "Only one ballot per voter is allowed");
 
-    var hashMap = new HashMap<CondorcetPair<TVoter, TCandidate>, List<RankedBallot<TVoter, TCandidate>>>();
-    var candidateHashSet = new HashSet<TCandidate>();
+    var map = new Map<CondorcetPair<TVoter, TCandidate>, List<RankedBallot<TVoter, TCandidate>>>();
+    var candidateSet = new Set<TCandidate>();
 
     for(final ballot in ballots) {
       for (var i = 0; i < ballot.rank.length; i++) {
         final candidateI = ballot.rank[i];
-        candidateHashSet.add(candidateI);
+        candidateSet.add(candidateI);
 
         for (var j = i + 1; j < ballot.rank.length; j++) {
           final pair = new CondorcetPair(candidateI, ballot.rank[j]);
 
-          final pairBallotList = hashMap.putIfAbsent(pair, () => new List<RankedBallot<TVoter, TCandidate>>());
+          final pairBallotList = map.putIfAbsent(pair, () => new List<RankedBallot<TVoter, TCandidate>>());
           pairBallotList.add(ballot);
         }
       }
     }
 
-    var hashSet = new HashSet<CondorcetPair<TVoter, TCandidate>>();
-    hashMap.forEach((k,v) {
+    var set = new Set<CondorcetPair<TVoter, TCandidate>>();
+    map.forEach((k,v) {
       var c = new CondorcetPair(k.item1, k.item2, v);
-      hashSet.add(c);
+      set.add(c);
     });
 
-    var candidateProfiles = new HashMap<TCandidate, CondorcetCandidateProfile<TCandidate>>();
-    var tarjanMap = new HashMap<TCandidate, HashSet<TCandidate>>();
+    var candidateProfiles = new Map<TCandidate, CondorcetCandidateProfile<TCandidate>>();
+    var tarjanMap = new Map<TCandidate, Set<TCandidate>>();
 
-    for(final candidate in candidateHashSet) {
+    for(final candidate in candidateSet) {
       var lostTo = new List<TCandidate>();
       var beat = new List<TCandidate>();
       var tied = new List<TCandidate>();
 
-      final tarjanLostTiedSet = new HashSet<TCandidate>();
+      final tarjanLostTiedSet = new Set<TCandidate>();
 
-      for(final pair in hashSet) {
+      for(final pair in set) {
         if(pair.item1 == candidate || pair.item2 == candidate) {
           final other = (pair.item1 == candidate) ? pair.item2 : pair.item1;
 
@@ -93,20 +93,20 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
     }
 
     return new CondorcetElection._internal(
-      hashSet, candidateProfiles, roBallots,
+      set, candidateProfiles, roBallots,
       new ReadOnlyCollection<ElectionPlace<TCandidate>>(places));
   }
 
-  Collection<TCandidate> get candidates => _profiles.keys;
+  Iterable<TCandidate> get candidates => _profiles.keys;
 
   CondorcetPair<TVoter, TCandidate> getPair(TCandidate c1, TCandidate c2) {
-    var filter = _pairs.filter((p) => p.matches(c1, c2));
+    var filter = _pairs.where((p) => p.matches(c1, c2));
     assert(filter.length <= 1);
     if(filter.isEmpty) {
       return null;
     } else {
       assert(filter.length == 1);
-      return filter.iterator().next().flip(c1, c2);
+      return filter.first.flip(c1, c2);
     }
   }
 }

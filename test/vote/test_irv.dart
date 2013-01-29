@@ -44,7 +44,7 @@ class TestIrv {
 
     expect(elec.rounds.length, 2);
 
-    final firstRound = elec.rounds.first();
+    final firstRound = elec.rounds.first;
     expect(firstRound.eliminatedCandidates, unorderedEquals([canC, canD]));
 
     final elimC = firstRound.getElimination(canC);
@@ -111,7 +111,7 @@ class TestIrv {
     final firstRound = ce.rounds[0];
     expect(firstRound.places.length, 3);
 
-    final firstElimination = firstRound.eliminations.single();
+    final firstElimination = firstRound.eliminations.single;
     expect(firstElimination.candidate, canCC);
     expect(firstElimination.transferedCandidates, unorderedEquals([canC]));
     expect(firstElimination.getTransferCount(canC), 29);

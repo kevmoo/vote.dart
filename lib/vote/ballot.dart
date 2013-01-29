@@ -1,7 +1,6 @@
 part of vote;
 
-class Ballot<TVoter extends Player, TCandidate extends Player>
-  implements Hashable {
+class Ballot<TVoter extends Player, TCandidate extends Player> {
   final TVoter voter;
 
   Ballot(this.voter);
