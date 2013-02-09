@@ -1,4 +1,4 @@
-import 'package:unittest/html_enhanced_config.dart';
+import 'package:bot/html_enhanced_config.dart';
 import 'package:unittest/unittest.dart';
 import 'calc/_calc_runner.dart';
 import 'map/_map_runner.dart';
