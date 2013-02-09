@@ -17,7 +17,7 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
     final roBallots = new ReadOnlyCollection(ballots);
 
     // Check voter uniqueness
-    final voterList = new ReadOnlyCollection(roBallots.mappedBy((b) => b.voter));
+    final voterList = new ReadOnlyCollection(roBallots.map((b) => b.voter));
     requireArgument(CollectionUtil.allUnique(voterList),
       "Only one ballot per voter is allowed");
 

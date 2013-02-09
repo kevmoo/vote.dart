@@ -43,7 +43,7 @@ class LocationData {
 
     final candidates = new List<MapPlayer>();
     $(coords)
-      .mappedBy((c) => c.scale(span))
+      .map((c) => c.scale(span))
       .forEachWithIndex((c,i) {
         final candidate = new MapPlayer(c, getCandidateName(i));
         candidates.add(candidate);

@@ -19,7 +19,7 @@ class TestPlurality {
       voters.add("Voter ${i}");
     }
 
-    var ballots = voters.mappedBy((v) => new PluralityBallot(v, c1)).toList();
+    var ballots = voters.map((v) => new PluralityBallot(v, c1)).toList();
 
     var election = new PluralityElection(ballots);
   }
@@ -30,7 +30,7 @@ class TestPlurality {
     var voter = "Bad Voter";
     var voters = [voter];
 
-    var ballots = new List.from(voters.mappedBy((v) => new PluralityBallot(v, c1)).toList());
+    var ballots = new List.from(voters.map((v) => new PluralityBallot(v, c1)).toList());
 
     var election = new PluralityElection(ballots);
     expect(election.singleWinner, equals(c1));
@@ -52,21 +52,21 @@ class TestPlurality {
 
     var ballots = new List();
 
-    ballots.addAll(voters.mappedBy((v) => new PluralityBallot(v, c1)).toList());
+    ballots.addAll(voters.map((v) => new PluralityBallot(v, c1)).toList());
 
     voters = new List<String>();
     for(num i = 0; i < 10; i++){
       voters.add("c2 Voter ${voters.length}");
     }
 
-    ballots.addAll(voters.mappedBy((v) => new PluralityBallot(v, c2)).toList());
+    ballots.addAll(voters.map((v) => new PluralityBallot(v, c2)).toList());
 
     voters = new List<String>();
     for(num i = 0; i < 9; i++){
       voters.add("c3 Voter ${voters.length}");
     }
 
-    ballots.addAll(voters.mappedBy((v) => new PluralityBallot(v, c3)).toList());
+    ballots.addAll(voters.map((v) => new PluralityBallot(v, c3)).toList());
 
     var election = new PluralityElection(ballots);
     expect(election.singleWinner, isNull);
@@ -89,7 +89,7 @@ class TestPlurality {
     var voters = [voter, voter];
 
 
-    var ballots = new List.from(voters.mappedBy((v) => new PluralityBallot(v, c1)).toList());
+    var ballots = new List.from(voters.map((v) => new PluralityBallot(v, c1)).toList());
 
     bool exception = false;
     expect(() { new PluralityElection(ballots); }, throws);

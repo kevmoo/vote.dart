@@ -7,7 +7,7 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
   factory IrvRound(ReadOnlyCollection<RankedBallot<TVoter, TCandidate>> ballots,
     List<TCandidate> eliminatedCandidates) {
 
-    final cleanedBallots = ballots.mappedBy((b) {
+    final cleanedBallots = ballots.map((b) {
       final pruned = $(b.rank).exclude(eliminatedCandidates)
           .toReadOnlyCollection();
       final winner = pruned.length == 0 ?
@@ -30,7 +30,7 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
     placeVotes.sort((a,b) => b.compareTo(a));
 
     int placeNumber = 1;
-    final places = new ReadOnlyCollection(placeVotes.mappedBy((pv) {
+    final places = new ReadOnlyCollection(placeVotes.map((pv) {
       final vg = voteGroups[pv];
       final currentPlaceNumber = placeNumber;
       placeNumber += vg.length;
@@ -39,7 +39,7 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
 
     final newlyEliminatedCandidates = _getEliminatedCandidates(places);
 
-    final eliminations = new ReadOnlyCollection(newlyEliminatedCandidates.mappedBy((c) {
+    final eliminations = new ReadOnlyCollection(newlyEliminatedCandidates.map((c) {
       final xfers = new Map<TCandidate, List<RankedBallot<TVoter, TCandidate>>>();
 
       final exhausted = new List<RankedBallot<TVoter, TCandidate>>();
@@ -68,7 +68,7 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
   bool get isFinal => eliminations.length == 0;
 
   Iterable<TCandidate> get eliminatedCandidates => eliminations
-      .mappedBy((ie) => ie.candidate);
+      .map((ie) => ie.candidate);
 
   Iterable<TCandidate> get candidates => CollectionUtil.selectMany(places, (p) => p);
 
@@ -108,6 +108,6 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
 
     // DARTBUG https://code.google.com/p/dart/issues/detail?id=7085
     // last() seems to be f'd up when compiled
-    return places[places.length-1].mappedBy((p) => p).toList();
+    return places[places.length-1].map((p) => p).toList();
   }
 }

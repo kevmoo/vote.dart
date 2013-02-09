@@ -20,20 +20,6 @@ part 'vote/irv_election.dart';
 part 'vote/irv_round.dart';
 part 'vote/irv_elimination.dart';
 
-Date _last;
-
-void log(String message) {
-  final now = new Date.now();
-  if(_last != null) {
-    final delta = now.difference(_last);
-    print([delta, message]);
-  }
-  else {
-    print(message);
-  }
-  _last = now;
-}
-
 int majorityThreshold(int votes) {
   assert(votes > 0);
   return votes ~/ 2 + 1;

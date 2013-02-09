@@ -210,7 +210,7 @@ class CondorcetView extends HtmlView {
 
       final idStrs = pairIdStr.split('_');
       assert(idStrs.length == 2);
-      final ids = idStrs.mappedBy((s) => int.parse(s)).toList();
+      final ids = idStrs.map((s) => int.parse(s)).toList();
       return new Tuple<int, int>(ids[0], ids[1]);
     }
     return null;
