@@ -20,7 +20,7 @@ class VoterMapElement extends Thing implements MapElementBase {
 
   Iterable<MapPlayer> get players => _players;
 
-  void set players(Collection<MapPlayer> value) {
+  void set players(Iterable<MapPlayer> value) {
     requireArgumentNotNull(value, "value");
     _players.clear();
     _players.addAll(value);

@@ -17,7 +17,7 @@ class IrvView extends HtmlView {
     markDirty();
   }
 
-  EventRoot<EventArgs> get hoverChanged => _hoverChangedHandle;
+  Stream<EventArgs> get hoverChanged => _hoverChangedHandle.stream;
 
   List<Player> get highlightCandidates {
     if(_highlightRound == null) {
@@ -36,7 +36,8 @@ class IrvView extends HtmlView {
     }
 
     final candidates = _election.rounds.first.places
-        .selectMany((p) => p).toReadOnlyCollection();
+        .expand((p) => p)
+        .toReadOnlyCollection();
 
     var table = new TableElement();
 
@@ -123,7 +124,7 @@ class IrvView extends HtmlView {
       cell = new Element.tag('th');
       cell.innerHtml = 'Round ${i+1}';
       cell.classes.add(_roundCellClass);
-      cell.dataAttributes['roundIndex'] = i.toString();
+      cell.dataset['roundIndex'] = i.toString();
       row.children.add(cell);
 
       for(final place in round.places) {
@@ -179,7 +180,7 @@ class IrvView extends HtmlView {
     if(e.toElement is Element) {
       final Element elem = e.toElement;
       if(elem.classes.contains(_roundCellClass)) {
-        _updateHighlightedRound(int.parse(elem.dataAttributes['roundIndex']));
+        _updateHighlightedRound(int.parse(elem.dataset['roundIndex']));
         return;
       }
     }
@@ -193,7 +194,7 @@ class IrvView extends HtmlView {
   void _updateHighlightedRound(int roundIndex) {
     if(roundIndex != _highlightRound) {
       _highlightRound = roundIndex;
-      _hoverChangedHandle.fireEvent(EventArgs.empty);
+      _hoverChangedHandle.add(EventArgs.empty);
     }
   }
 }

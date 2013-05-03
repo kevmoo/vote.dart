@@ -18,11 +18,11 @@ class CandidateManagerView extends HtmlView {
     markDirty();
   }
 
-  EventRoot<MapPlayer> get candidateRemoveRequest =>
-      _requestRemoveCandidateHandle;
+  Stream<MapPlayer> get candidateRemoveRequest =>
+      _requestRemoveCandidateHandle.stream;
 
-  EventRoot<EventArgs> get newCandidateRequest =>
-      _requestNewCandidateHandle;
+  Stream<EventArgs> get newCandidateRequest =>
+      _requestNewCandidateHandle.stream;
 
   void updateElement() {
     node.children.clear();
@@ -61,7 +61,7 @@ class CandidateManagerView extends HtmlView {
         cell = row.insertCell(-1);
         final deleteButton = new ButtonElement();
         deleteButton.text = 'Delete';
-        deleteButton.dataAttributes[_candidateIdAttribute] = candidate.id.toString();
+        deleteButton.dataset[_candidateIdAttribute] = candidate.id.toString();
         if(_candidates.length > 1) {
           deleteButton.onClick.listen(_deleteClick);
         } else {
@@ -75,20 +75,20 @@ class CandidateManagerView extends HtmlView {
 
   void _requestNewCandidate(MouseEvent args) {
     final ButtonElement source = args.toElement;
-    _requestNewCandidateHandle.fireEvent(EventArgs.empty);
+    _requestNewCandidateHandle.add(EventArgs.empty);
     source.disabled = true;
   }
 
   void _deleteClick(MouseEvent args) {
     final ButtonElement source = args.toElement;
-    final candidateId = int.parse(source.dataAttributes[_candidateIdAttribute]);
+    final candidateId = int.parse(source.dataset[_candidateIdAttribute]);
     _removeCandidateWithId(candidateId);
     source.disabled = true;
   }
 
   void _removeCandidateWithId(int id) {
-    final candidate = _candidates.singleMatching((mp) => mp.id == id);
+    final candidate = _candidates.singleWhere((mp) => mp.id == id);
 
-    _requestRemoveCandidateHandle.fireEvent(candidate);
+    _requestRemoveCandidateHandle.add(candidate);
   }
 }

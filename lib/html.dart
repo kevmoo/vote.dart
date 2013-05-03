@@ -1,9 +1,10 @@
 library vote_html;
 
+import 'dart:async';
 import 'dart:html';
 import 'dart:math' as math;
 import 'package:bot/bot.dart';
-import 'package:bot/bot_html.dart';
+import 'package:bot_web/bot_html.dart';
 import 'map.dart';
 import 'vote.dart';
 

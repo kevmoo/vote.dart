@@ -1,7 +1,7 @@
 import 'dart:html';
 import 'package:bot/bot.dart';
-import 'package:bot/bot_html.dart';
-import 'package:bot/bot_retained.dart';
+import 'package:bot_web/bot_html.dart';
+import 'package:bot_web/bot_retained.dart';
 import 'package:vote/calc.dart';
 import 'package:vote/html.dart';
 import 'package:vote/map.dart';
@@ -58,30 +58,30 @@ class VoteDemo extends StageWrapper<RootMapElement> {
 
      final mm = new MouseManager(stage);
 
-    _calcEngine.locationDataChanged.add(_locationDataUpdated);
-    _calcEngine.distanceElectionChanged.add(_distanceElectionUpdated);
-    _calcEngine.pluralityElectionChanged.add(_pluralityElectionUpdated);
-    _calcEngine.condorcetElectionChanged.add(_condorcetElectionUpdated);
-    _calcEngine.irvElectionChanged.add(_irvElectionUpdated);
-    _calcEngine.voterHueMapperChanged.add(_voterHexMapperUpdated);
+    _calcEngine.locationDataChanged.listen(_locationDataUpdated);
+    _calcEngine.distanceElectionChanged.listen(_distanceElectionUpdated);
+    _calcEngine.pluralityElectionChanged.listen(_pluralityElectionUpdated);
+    _calcEngine.condorcetElectionChanged.listen(_condorcetElectionUpdated);
+    _calcEngine.irvElectionChanged.listen(_irvElectionUpdated);
+    _calcEngine.voterHueMapperChanged.listen(_voterHexMapperUpdated);
 
-    rootThing.candidatesMoved.add((data) {
+    rootThing.candidatesMoved.listen((data) {
       _calcEngine.candidatesMoved();
     });
 
-    _canManView.candidateRemoveRequest.add((data) {
+    _canManView.candidateRemoveRequest.listen((data) {
       _calcEngine.removeCandidate(data);
     });
 
-    _canManView.newCandidateRequest.add((args) {
+    _canManView.newCandidateRequest.listen((args) {
       _calcEngine.addCandidate();
     });
 
-    _condorcetView.hoverChanged.add((args) {
+    _condorcetView.hoverChanged.listen((args) {
       _updateHighlightCandidates(_condorcetView.highlightCandidates);
     });
 
-    _irvView.hoverChanged.add((args) {
+    _irvView.hoverChanged.listen((args) {
       _updateHighlightCandidates(_irvView.highlightCandidates);
     });
 

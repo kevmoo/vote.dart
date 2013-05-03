@@ -18,7 +18,7 @@ class CondorcetView extends HtmlView {
     markDirty();
   }
 
-  EventRoot<EventArgs> get hoverChanged => _hoverChangedHandle;
+  Stream<EventArgs> get hoverChanged => _hoverChangedHandle.stream;
 
   List<Player> get highlightCandidates => _highlightCandidates;
 
@@ -42,7 +42,7 @@ class CondorcetView extends HtmlView {
       var evenCandidateRow = true;
 
       // add columns for opponents
-      _candidates = _election.places.selectMany((p) => p).toReadOnlyCollection();
+      _candidates = _election.places.expand((p) => p).toReadOnlyCollection();
 
       for(final opp in _candidates) {
         cell = new Element.tag('th');
@@ -114,14 +114,14 @@ class CondorcetView extends HtmlView {
               cell.classes.add(cellData);
               cell.classes.add(cellClass);
               cell.classes.add('left_value');
-              cell.dataAttributes[_pairIdsKey] = cellData;
+              cell.dataset[_pairIdsKey] = cellData;
 
               cell = row.insertCell(-1);
               cell.innerHtml = middleText;
               cell.classes.add('pair-cell');
               cell.classes.add(cellClass);
               cell.classes.add(cellData);
-              cell.dataAttributes[_pairIdsKey] = cellData;
+              cell.dataset[_pairIdsKey] = cellData;
 
               cell = row.insertCell(-1);
               cell.innerHtml = pair.secondOverFirst.toString();
@@ -131,7 +131,7 @@ class CondorcetView extends HtmlView {
               cell.classes.add(cellClass);
               cell.classes.add('pair-cell');
               cell.classes.add(cellData);
-              cell.dataAttributes[_pairIdsKey] = cellData;
+              cell.dataset[_pairIdsKey] = cellData;
             }
           }
 
@@ -153,7 +153,7 @@ class CondorcetView extends HtmlView {
     if(pair != _highlightCandidates) {
       _highlightCandidates = pair;
       _updateCellHoverStyle();
-      _hoverChangedHandle.fireEvent(EventArgs.empty);
+      _hoverChangedHandle.add(EventArgs.empty);
     }
   }
 
@@ -203,7 +203,7 @@ class CondorcetView extends HtmlView {
   }
 
   static Tuple<int, int> _getPair(Element elem) {
-    String pairIdStr = elem.dataAttributes[_pairIdsKey];
+    String pairIdStr = elem.dataset[_pairIdsKey];
     if(pairIdStr != null) {
       assert(pairIdStr.startsWith('pair'));
       pairIdStr = pairIdStr.substring(4);

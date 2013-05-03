@@ -19,8 +19,8 @@ class RootMapElement extends ParentThing {
     _candidateMap.registerParent(this);
   }
 
-  EventRoot<EventArgs> get candidatesMoved =>
-     _candidatesMovedHandle;
+  Stream<EventArgs> get candidatesMoved =>
+     _candidatesMovedHandle.stream;
 
   int get visualChildCount => 2;
 
@@ -47,7 +47,7 @@ class RootMapElement extends ParentThing {
     _voterMap.playerHexMap = value;
   }
 
-  void set voters(Collection<MapPlayer> value) {
+  void set voters(Iterable<MapPlayer> value) {
     requireArgumentNotNull(value, "value");
     // TODO: would be great to use this calculation, but need to make it async
     //final vals = _getAverageCloseness(value);
@@ -62,19 +62,19 @@ class RootMapElement extends ParentThing {
     _voterMap.players = value;
   }
 
-  void set candidates(Collection<MapPlayer> value) {
+  void set candidates(Iterable<MapPlayer> value) {
     requireArgumentNotNull(value, "value");
     _candidateMap.players = value;
   }
 
-  Collection<MapPlayer> get showOnlyPlayers => _candidateMap.showOnlyPlayers;
+  Sequence<MapPlayer> get showOnlyPlayers => _candidateMap.showOnlyPlayers;
 
   void set showOnlyPlayers(Iterable<MapPlayer> value) {
     _candidateMap.showOnlyPlayers = value;
   }
 
   void dragCandidate(MapPlayer candidate, Vector delta) {
-    final can = _candidateMap.players.singleMatching((mp) => mp == candidate);
+    final can = _candidateMap.players.singleWhere((mp) => mp == candidate);
 
     final candidateLocPixels = _tx.transformCoordinate(candidate.location);
     final newCanLocPix = candidateLocPixels + delta;
@@ -83,7 +83,7 @@ class RootMapElement extends ParentThing {
 
     can.location = newLocation;
 
-    _candidatesMovedHandle.fireEvent(EventArgs.empty);
+    _candidatesMovedHandle.add(EventArgs.empty);
   }
 
   void update(){

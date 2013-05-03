@@ -28,7 +28,7 @@ class CandidateMapElement extends ParentThing implements MapElementBase {
 
   Iterable<MapPlayer> get players => _players;
 
-  void set players(Collection<MapPlayer> value) {
+  void set players(Iterable<MapPlayer> value) {
     requireArgumentNotNull(value, "value");
     _players.clear();
     _players.addAll(value);
@@ -36,7 +36,7 @@ class CandidateMapElement extends ParentThing implements MapElementBase {
     invalidateDraw();
   }
 
-  Collection<MapPlayer> get showOnlyPlayers => _showOnlyPlayers;
+  Sequence<MapPlayer> get showOnlyPlayers => _showOnlyPlayers;
 
   void set showOnlyPlayers(Iterable<MapPlayer> value) {
     if(value == null) {
@@ -67,7 +67,7 @@ class CandidateMapElement extends ParentThing implements MapElementBase {
 
         MouseManager.setCursor(ce, 'pointer');
         MouseManager.setDraggable(ce, true);
-        MouseManager.addDragHandler(ce, _candidateDragged);
+        MouseManager.getDragStream(ce).listen(_candidateDragged);
 
         final tempTx = ce.addTransform();
         tempTx.concatenate(_tx);

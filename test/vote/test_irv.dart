@@ -110,6 +110,7 @@ class TestIrv {
 
     final firstRound = ce.rounds[0];
     expect(firstRound.places.length, 3);
+    expect(firstRound.candidates, hasLength(3));
 
     final firstElimination = firstRound.eliminations.single;
     expect(firstElimination.candidate, canCC);
