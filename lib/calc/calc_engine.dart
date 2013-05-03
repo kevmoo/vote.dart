@@ -10,7 +10,7 @@ class CalcEngine {
   List<MapPlayer> _highlightCandidates;
 
   CalcEngine() {
-    _distanceElectionMapper.outputChanged.add((args) {
+    _distanceElectionMapper.outputChanged.listen((args) {
       _distanceElectionChanged();
     });
   }
@@ -71,22 +71,22 @@ class CalcEngine {
   //
   // Events
   //
-  EventRoot<EventArgs> get locationDataChanged =>
+  Stream<EventArgs> get locationDataChanged =>
       _distanceElectionMapper.inputChanged;
 
-  EventRoot<EventArgs> get distanceElectionChanged =>
+  Stream<EventArgs> get distanceElectionChanged =>
       _distanceElectionMapper.outputChanged;
 
-  EventRoot<EventArgs> get pluralityElectionChanged =>
+  Stream<EventArgs> get pluralityElectionChanged =>
       _pluralityElectionMapper.outputChanged;
 
-  EventRoot<EventArgs> get condorcetElectionChanged =>
+  Stream<EventArgs> get condorcetElectionChanged =>
       _condorcetElectionMapper.outputChanged;
 
-  EventRoot<EventArgs> get irvElectionChanged =>
+  Stream<EventArgs> get irvElectionChanged =>
       _irvElectionMapper.outputChanged;
 
-  EventRoot<EventArgs> get voterHueMapperChanged =>
+  Stream<EventArgs> get voterHueMapperChanged =>
       _voterHexMapper.outputChanged;
 
   //
@@ -120,13 +120,13 @@ void _distanceElectionIsolate() {
 }
 
 class _PluralityElectionMapper
-  extends SendPortValue<Collection<PluralityBallot<MapPlayer, MapPlayer>>, PluralityElection> {
+  extends SendPortValue<Sequence<PluralityBallot<MapPlayer, MapPlayer>>, PluralityElection> {
 
   _PluralityElectionMapper() : super(spawnFunction(_pluralityElectionIsolate));
 }
 
 void _pluralityElectionIsolate() {
-  port.receive((Collection<PluralityBallot<MapPlayer, MapPlayer>> ballots,
+  port.receive((Sequence<PluralityBallot<MapPlayer, MapPlayer>> ballots,
       SendPort reply) {
     final pluralityElection = new PluralityElection(ballots);
     reply.send(pluralityElection);
@@ -134,13 +134,13 @@ void _pluralityElectionIsolate() {
 }
 
 class _CondorcetElectionMapper
-  extends SendPortValue<Collection<RankedBallot<MapPlayer, MapPlayer>>, CondorcetElection> {
+  extends SendPortValue<Sequence<RankedBallot<MapPlayer, MapPlayer>>, CondorcetElection> {
 
   _CondorcetElectionMapper() : super(spawnFunction(_condorcetElectionIsolate));
 }
 
 void _condorcetElectionIsolate() {
-  port.receive((Collection<RankedBallot<MapPlayer, MapPlayer>> ballots,
+  port.receive((Sequence<RankedBallot<MapPlayer, MapPlayer>> ballots,
       SendPort reply) {
     final election = new CondorcetElection(ballots);
     reply.send(election);
@@ -148,13 +148,13 @@ void _condorcetElectionIsolate() {
 }
 
 class _IrvElectionMapper
-  extends SendPortValue<Collection<RankedBallot<MapPlayer, MapPlayer>>, IrvElection> {
+  extends SendPortValue<Sequence<RankedBallot<MapPlayer, MapPlayer>>, IrvElection> {
 
   _IrvElectionMapper() : super(spawnFunction(_irvElectionIsolate));
 }
 
 void _irvElectionIsolate() {
-  port.receive((Collection<RankedBallot<MapPlayer, MapPlayer>> ballots,
+  port.receive((Sequence<RankedBallot<MapPlayer, MapPlayer>> ballots,
       SendPort reply) {
     final election = new IrvElection(ballots);
     reply.send(election);

@@ -73,7 +73,7 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
   Iterable<TCandidate> get candidates => CollectionUtil.selectMany(places, (p) => p);
 
   IrvElimination<TVoter, TCandidate> getElimination(TCandidate candidate) {
-    return eliminations.singleMatching((e) => e.candidate == candidate);
+    return eliminations.singleWhere((e) => e.candidate == candidate);
   }
 
   static List<Player> _getEliminatedCandidates(

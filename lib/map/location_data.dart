@@ -71,7 +71,7 @@ class LocationData {
     for(i = 0; i < newCans.length; i++) {
       final mp = newCans[i];
       assert(mp.name.length == 1);
-      final mpCC = mp.name.charCodeAt(0);
+      final mpCC = mp.name.codeUnitAt(0);
       final letterIndex = mpCC - _ACharCode;
       assert(letterIndex >= i);
 
@@ -86,7 +86,7 @@ class LocationData {
     final loc = coord.scale(span);
     final mp = new MapPlayer(loc, newName);
 
-    newCans.insertRange(i, 1, mp);
+    newCans.insert(i, mp);
 
     return new LocationData(voters, new ReadOnlyCollection(newCans));
   }
@@ -97,7 +97,7 @@ class LocationData {
     }
     final letter = candidate.name;
     assert(letter != null && letter.length == 1);
-    final letterCode = (letter.charCodeAt(0) - _ACharCode);
+    final letterCode = (letter.codeUnitAt(0) - _ACharCode);
     assert(letterCode >= 0 && letterCode < maxCandidateCount);
 
     return _candidateHues[letterCode];
@@ -109,7 +109,7 @@ class LocationData {
     assert(maxValue > 0);
     assert(sliceCount > 1);
 
-    final values = new List<num>.fixedLength(itemCount);
+    final values = new List<num>(itemCount);
     int index = 0;
 
     num sliceSize = maxValue / sliceCount;

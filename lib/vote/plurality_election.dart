@@ -11,7 +11,7 @@ class PluralityElection<TVoter extends Player, TCandidate extends Player>
       places = new ReadOnlyCollection(sourcePlaces);
 
   factory PluralityElection(
-    Collection<PluralityBallot<TVoter, TCandidate>> ballots) {
+    Iterable<PluralityBallot<TVoter, TCandidate>> ballots) {
 
     final roBallots = new ReadOnlyCollection(ballots);
 
@@ -53,5 +53,5 @@ class PluralityElection<TVoter extends Player, TCandidate extends Player>
     return new PluralityElection._internal(roBallots, group, places);
   }
 
-  Collection<TCandidate> get candidates => _ballotGroup.getKeys();
+  Iterable<TCandidate> get candidates => _ballotGroup.getKeys();
 }

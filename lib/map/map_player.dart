@@ -1,12 +1,14 @@
 part of vote_map;
 
 class MapPlayer extends Player {
-  final GlobalId _id;
+  static int _counter = 0;
+
+  final int _id;
   final String name;
   Coordinate _location;
 
   MapPlayer(this._location, [this.name = null]) :
-    _id = new GlobalId();
+    _id = _counter++;
 
   Coordinate get location => _location;
 
@@ -15,7 +17,7 @@ class MapPlayer extends Player {
     _location = value;
   }
 
-  int get id => _id.id;
+  int get id => _id;
 
   int compareTo(MapPlayer other) => _id.compareTo(other._id);
 

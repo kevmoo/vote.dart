@@ -28,10 +28,10 @@ class TestCalcEngine {
       expect(engine.condorcetElection, isNot(isNull));
     });
 
-    engine.locationDataChanged.add(locationDataHandler);
-    engine.distanceElectionChanged.add(distanceElectionHandler);
-    engine.pluralityElectionChanged.add(pluralityElectionHandler);
-    engine.condorcetElectionChanged.add(condorcetElectionHandler);
+    engine.locationDataChanged.listen(locationDataHandler);
+    engine.distanceElectionChanged.listen(distanceElectionHandler);
+    engine.pluralityElectionChanged.listen(pluralityElectionHandler);
+    engine.condorcetElectionChanged.listen(condorcetElectionHandler);
 
     expect(engine.locationData, isNull);
     expect(engine.distanceElection, isNull);

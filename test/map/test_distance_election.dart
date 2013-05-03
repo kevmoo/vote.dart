@@ -45,7 +45,7 @@ class TestDistanceElection {
         expect(ballots, isNotNull);
         expect(ballots.length, equals(5));
 
-        for(final b in ballots.getRange(0, 4)) {
+        for(final b in ballots.take(4).toList()) {
           expect(b.choice, equals(c0));
           expect(b.rank.length, equals(2));
           expect(b.rank[0], equals(c0));

@@ -12,7 +12,7 @@ class CondorcetPair<TVoter extends Player, TCandidate extends Player>
     super(can1, can2);
 
   factory CondorcetPair(TCandidate can1, TCandidate can2,
-    [Collection<RankedBallot<TVoter, TCandidate>> bals = null]) {
+    [Iterable<RankedBallot<TVoter, TCandidate>> bals = null]) {
     requireArgumentNotNull(can1, 'can1');
     requireArgumentNotNull(can2, 'can2');
     requireArgument(can1 != can2, 'can1 and can2 must be different');
