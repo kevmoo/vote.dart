@@ -1,6 +1,6 @@
 library vote_test;
 
-import 'package:bot/bot_test.dart';
+import 'package:bot_test/bot_test.dart';
 import 'package:unittest/unittest.dart';
 import 'package:vote/vote.dart';
 

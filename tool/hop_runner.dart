@@ -10,14 +10,14 @@ void main() {
   addTask('test', createUnitTestTask(test_console.testCore));
   addAsyncTask('pages', _ghPages);
 
-  addTask('analyze_libs', createDartAnalyzerTask(_getLibs(['lib', 'web'])));
+  addTask('analyze_libs', createAnalyzerTask(_getLibs(['lib', 'web'])));
 
   //
   // Dart2js
   //
   final paths = const ['web/vote_demo.dart', 'test/browser_test_harness.dart'];
 
-  addTask('dart2js', createDart2JsTask(paths));
+  addTask('dart2js', createDartCompilerTask(paths));
   runHop();
 }
 
