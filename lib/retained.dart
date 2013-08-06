@@ -6,7 +6,6 @@ import 'dart:math' as math;
 import 'package:bot/bot.dart';
 import 'package:bot_web/bot_html.dart';
 import 'package:bot_web/bot_retained.dart';
-import 'package:vote/vote.dart';
 import 'package:vote/map.dart';
 
 part 'retained/root_map_element.dart';

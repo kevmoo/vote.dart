@@ -1,12 +1,10 @@
 import 'dart:html';
-import 'package:bot/bot.dart';
 import 'package:bot_web/bot_html.dart';
 import 'package:bot_web/bot_retained.dart';
 import 'package:vote/calc.dart';
 import 'package:vote/html.dart';
 import 'package:vote/map.dart';
 import 'package:vote/retained.dart';
-import 'package:vote/vote.dart';
 
 main(){
   CanvasElement canvas = query("#content");
