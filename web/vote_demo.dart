@@ -6,13 +6,13 @@ import 'package:vote/html.dart';
 import 'package:vote/map.dart';
 import 'package:vote/retained.dart';
 
-main(){
-  CanvasElement canvas = query("#content");
-  DivElement pluralityDiv = query('#pluralityView');
-  DivElement distanceDiv = query('#distanceView');
-  DivElement condorcetDiv = query('#condorcetView');
-  DivElement canManDiv = query('#canManView');
-  DivElement irvDiv = query('#irvView');
+void main() {
+  CanvasElement canvas = querySelector("#content");
+  DivElement pluralityDiv = querySelector('#pluralityView');
+  DivElement distanceDiv = querySelector('#distanceView');
+  DivElement condorcetDiv = querySelector('#condorcetView');
+  DivElement canManDiv = querySelector('#canManView');
+  DivElement irvDiv = querySelector('#irvView');
   var demo = new VoteDemo(canvas, pluralityDiv, distanceDiv, condorcetDiv,
       canManDiv, irvDiv);
   demo.requestFrame();
@@ -130,6 +130,7 @@ class VoteDemo extends StageWrapper<RootMapElement> {
     requestFrame();
   }
 
+  @override
   void drawFrame(double highResTime){
     super.drawFrame(highResTime);
 

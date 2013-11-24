@@ -10,7 +10,7 @@ class DistanceBallot<TVoter extends MapPlayer, TCandidate extends MapPlayer>
 
   factory DistanceBallot(TVoter voter, Iterable<TCandidate> candidates) {
     final distances = $(candidates).toMap((c) {
-      var d = voter.location.getDistance(c.location);
+      var d = voter.location.distanceTo(c.location);
       return (d * 128).toInt() / 128;
     });
 

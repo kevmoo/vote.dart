@@ -4,12 +4,14 @@ import 'package:hop/hop.dart';
 import 'package:hop/hop_tasks.dart';
 import '../test/console_test_harness.dart' as test_console;
 
-void main() {
+void main(List<String> args) {
 
   addTask('test', createUnitTestTask(test_console.testCore));
-  addAsyncTask('pages', _ghPages);
+  addTask('pages', _ghPages);
 
   addTask('analyze_libs', createAnalyzerTask(_getLibs(['lib', 'web'])));
+
+  addTask('update_js', createCopyJSTask('web', browserDart: true));
 
   //
   // Dart2js
@@ -17,7 +19,7 @@ void main() {
   final paths = const ['web/vote_demo.dart', 'test/browser_test_harness.dart'];
 
   addTask('dart2js', createDartCompilerTask(paths));
-  runHop();
+  runHop(args);
 }
 
 Future<List<String>> _getLibs(Iterable<String> parentDirs) {

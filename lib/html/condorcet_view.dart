@@ -160,7 +160,7 @@ class CondorcetView extends HtmlView {
   void _updateCellHoverStyle() {
     final String hoverPairClass = 'hover-pair';
 
-    final List<Element> cells = node.queryAll('td.pair-cell.$hoverPairClass');
+    final List<Element> cells = node.querySelectorAll('td.pair-cell.$hoverPairClass');
     cells.forEach((e){
       e.classes.remove(hoverPairClass);
     });
@@ -168,7 +168,7 @@ class CondorcetView extends HtmlView {
     if(_highlightCandidates != null) {
       final matchClass =
           _getPairElementName(_highlightCandidates[0], _highlightCandidates[1]);
-      final List<Element> thePairs = node.queryAll('td.pair-cell.$matchClass');
+      final List<Element> thePairs = node.querySelectorAll('td.pair-cell.$matchClass');
       thePairs.forEach((e){
         e.classes.add(hoverPairClass);
       });

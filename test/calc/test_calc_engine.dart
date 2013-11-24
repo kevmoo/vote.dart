@@ -12,7 +12,7 @@ class TestCalcEngine {
 
     final data = new LocationData.random();
 
-    final locationDataHandler = expectAsync1((EventArgs arg) {
+    final locationDataHandler = expectAsync1((LocationData arg) {
       expect(engine.locationData, isNot(isNull));
     });
 

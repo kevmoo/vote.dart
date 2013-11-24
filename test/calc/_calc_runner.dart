@@ -1,6 +1,5 @@
 library vote_test_calc;
 
-import 'package:bot/bot.dart';
 import 'package:unittest/unittest.dart';
 import 'package:vote/calc.dart';
 import 'package:vote/map.dart';

@@ -150,7 +150,7 @@ class RootMapElement extends ParentThing {
 
       for (final playerB in players) {
         if(playerA != playerB) {
-          final distance = playerA.location.getDistance(playerB.location);
+          final distance = playerA.location.distanceTo(playerB.location);
           if(distance >= 0.5 && (closestDistance == null || distance < closestDistance)) {
             closestDistance = distance;
           }

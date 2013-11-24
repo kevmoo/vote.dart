@@ -1,25 +1,39 @@
 part of vote_calc;
 
 class CalcEngine {
-  final _DistanceElectionMapper _distanceElectionMapper = new _DistanceElectionMapper();
-  final _PluralityElectionMapper _pluralityElectionMapper = new _PluralityElectionMapper();
-  final _CondorcetElectionMapper _condorcetElectionMapper = new _CondorcetElectionMapper();
-  final _IrvElectionMapper _irvElectionMapper = new _IrvElectionMapper();
-  final _VoterHexMapper _voterHexMapper = new _VoterHexMapper();
+  final ThrottledStream<LocationData, DistanceElection> _distanceElectionMapper
+    = new ThrottledStream(_distanceElectionIsolate);
+
+  final ThrottledStream<Sequence<PluralityBallot<MapPlayer, MapPlayer>>, PluralityElection> _pluralityElectionMapper
+    = new ThrottledStream<Sequence<PluralityBallot<MapPlayer, MapPlayer>>, PluralityElection>(_pluralityElectionIsolate);
+
+  final ThrottledStream<Sequence<RankedBallot<MapPlayer, MapPlayer>>, CondorcetElection> _condorcetElectionMapper
+    = new ThrottledStream<Sequence<RankedBallot<MapPlayer, MapPlayer>>, CondorcetElection>(_condorcetElectionIsolate);
+
+  final ThrottledStream<Sequence<RankedBallot<MapPlayer, MapPlayer>>, IrvElection> _irvElectionMapper =
+      new ThrottledStream<Sequence<RankedBallot<MapPlayer, MapPlayer>>, IrvElection>(_irvElectionIsolate);
+
+  final ThrottledStream<Tuple3<DistanceElection, LocationData, List<MapPlayer>>, Map<MapPlayer, String>> _voterHexMapper
+    = new ThrottledStream<Tuple3<DistanceElection, LocationData, List<MapPlayer>>, Map<MapPlayer, String>>(_voterHexIsolate);
+
+  final StreamController<LocationData> _locationData = new StreamController<LocationData>();
 
   List<MapPlayer> _highlightCandidates;
 
   CalcEngine() {
-    _distanceElectionMapper.outputChanged.listen((args) {
+    _distanceElectionMapper.outputStream.listen((args) {
       _distanceElectionChanged();
     });
   }
 
-  LocationData get locationData => _distanceElectionMapper.input;
+  LocationData get locationData => _distanceElectionMapper.source;
 
   void set locationData(LocationData data) {
     requireArgumentNotNull(data, 'data');
-    _distanceElectionMapper.input = data;
+    if(data != _distanceElectionMapper.source) {
+      _distanceElectionMapper.source = data;
+      _locationData.add(data);
+    }
   }
 
   void candidatesMoved() {
@@ -34,7 +48,7 @@ class CalcEngine {
     final roCandidates = new ReadOnlyCollection<MapPlayer>(value);
 
     if(roCandidates.length > 0) {
-      final newData = new LocationData(_distanceElectionMapper.input.voters, roCandidates);
+      final newData = new LocationData(_distanceElectionMapper.source.voters, roCandidates);
 
       locationData = newData;
     } else {
@@ -47,143 +61,96 @@ class CalcEngine {
     _updateVoterHexMapper();
   }
 
-  DistanceElection get distanceElection => _distanceElectionMapper.output;
+  DistanceElection get distanceElection => _distanceElectionMapper.outputValue;
 
-  PluralityElection get pluralityElection => _pluralityElectionMapper.output;
+  PluralityElection get pluralityElection => _pluralityElectionMapper.outputValue;
 
-  CondorcetElection get condorcetElection => _condorcetElectionMapper.output;
+  CondorcetElection get condorcetElection => _condorcetElectionMapper.outputValue;
 
-  IrvElection get irvElection => _irvElectionMapper.output;
+  IrvElection get irvElection => _irvElectionMapper.outputValue;
 
-  Map<MapPlayer, String> get voterHexMap => _voterHexMapper.output;
+  Map<MapPlayer, String> get voterHexMap => _voterHexMapper.outputValue;
 
   void addCandidate() {
     assert(locationData != null);
     final newData = locationData.cloneAndAddCandidate();
-    _distanceElectionMapper.input = newData;
+    locationData = newData;
   }
 
   void removeCandidate(MapPlayer candidate) {
     final newData = locationData.cloneAndRemove(candidate);
-    _distanceElectionMapper.input = newData;
+    locationData = newData;
   }
 
   //
   // Events
   //
-  Stream<EventArgs> get locationDataChanged =>
-      _distanceElectionMapper.inputChanged;
+  Stream<LocationData> get locationDataChanged =>
+      _locationData.stream;
 
-  Stream<EventArgs> get distanceElectionChanged =>
-      _distanceElectionMapper.outputChanged;
+  Stream<DistanceElection> get distanceElectionChanged =>
+      _distanceElectionMapper.outputStream;
 
-  Stream<EventArgs> get pluralityElectionChanged =>
-      _pluralityElectionMapper.outputChanged;
+  Stream<PluralityElection> get pluralityElectionChanged =>
+      _pluralityElectionMapper.outputStream;
 
-  Stream<EventArgs> get condorcetElectionChanged =>
-      _condorcetElectionMapper.outputChanged;
+  Stream<CondorcetElection> get condorcetElectionChanged =>
+      _condorcetElectionMapper.outputStream;
 
-  Stream<EventArgs> get irvElectionChanged =>
-      _irvElectionMapper.outputChanged;
+  Stream<IrvElection> get irvElectionChanged =>
+      _irvElectionMapper.outputStream;
 
-  Stream<EventArgs> get voterHueMapperChanged =>
-      _voterHexMapper.outputChanged;
+  Stream<Map<MapPlayer, String>> get voterHueMapperChanged =>
+      _voterHexMapper.outputStream;
 
   //
   // Privates
   //
 
   void _distanceElectionChanged() {
-    _pluralityElectionMapper.input = distanceElection.ballots;
-    _condorcetElectionMapper.input = distanceElection.ballots;
-    _irvElectionMapper.input = distanceElection.ballots;
+    _pluralityElectionMapper.source = distanceElection.ballots;
+    _condorcetElectionMapper.source = distanceElection.ballots;
+    _irvElectionMapper.source = distanceElection.ballots;
     _updateVoterHexMapper();
   }
 
   void _updateVoterHexMapper() {
     final val = new Tuple3(distanceElection, locationData, _highlightCandidates);
-    _voterHexMapper.input = val;
+    _voterHexMapper.source = val;
   }
 }
 
-class _DistanceElectionMapper
-  extends SendPortValue<LocationData, DistanceElection> {
-
-  _DistanceElectionMapper() : super(spawnFunction(_distanceElectionIsolate));
+DistanceElection _distanceElectionIsolate(LocationData data) {
+  return new DistanceElection.fromData(data);
 }
 
-void _distanceElectionIsolate() {
-  port.receive((LocationData data, SendPort reply) {
-    final distanceElection = new DistanceElection.fromData(data);
-    reply.send(distanceElection);
-  });
+PluralityElection _pluralityElectionIsolate(Sequence<PluralityBallot<MapPlayer, MapPlayer>> ballots) {
+  return new PluralityElection(ballots);
 }
 
-class _PluralityElectionMapper
-  extends SendPortValue<Sequence<PluralityBallot<MapPlayer, MapPlayer>>, PluralityElection> {
-
-  _PluralityElectionMapper() : super(spawnFunction(_pluralityElectionIsolate));
+CondorcetElection _condorcetElectionIsolate(Sequence<RankedBallot<MapPlayer, MapPlayer>> ballots) {
+  return new CondorcetElection(ballots);
 }
 
-void _pluralityElectionIsolate() {
-  port.receive((Sequence<PluralityBallot<MapPlayer, MapPlayer>> ballots,
-      SendPort reply) {
-    final pluralityElection = new PluralityElection(ballots);
-    reply.send(pluralityElection);
-  });
+IrvElection _irvElectionIsolate(Sequence<RankedBallot<MapPlayer, MapPlayer>> ballots) {
+  return new IrvElection(ballots);
 }
 
-class _CondorcetElectionMapper
-  extends SendPortValue<Sequence<RankedBallot<MapPlayer, MapPlayer>>, CondorcetElection> {
-
-  _CondorcetElectionMapper() : super(spawnFunction(_condorcetElectionIsolate));
-}
-
-void _condorcetElectionIsolate() {
-  port.receive((Sequence<RankedBallot<MapPlayer, MapPlayer>> ballots,
-      SendPort reply) {
-    final election = new CondorcetElection(ballots);
-    reply.send(election);
-  });
-}
-
-class _IrvElectionMapper
-  extends SendPortValue<Sequence<RankedBallot<MapPlayer, MapPlayer>>, IrvElection> {
-
-  _IrvElectionMapper() : super(spawnFunction(_irvElectionIsolate));
-}
-
-void _irvElectionIsolate() {
-  port.receive((Sequence<RankedBallot<MapPlayer, MapPlayer>> ballots,
-      SendPort reply) {
-    final election = new IrvElection(ballots);
-    reply.send(election);
-  });
-}
-
-class _VoterHexMapper
-  extends SendPortValue<Tuple3<DistanceElection, LocationData, List<MapPlayer>>, Map<MapPlayer, String>> {
-
-  _VoterHexMapper() : super(spawnFunction(_voterHexMapperIsolate));
-}
-
-void _voterHexMapperIsolate() {
-  port.receive((Tuple3<DistanceElection, LocationData, List<MapPlayer>> tuple, SendPort reply) {
-    final map = new Map<MapPlayer, String>();
-    for(final b in tuple.item1.ballots) {
-      MapPlayer candidate;
-      if(tuple.item3 == null) {
-        candidate = b.choice;
-      } else {
-        // TODO: this will blow up wonderfully if the item is not found
-        // need to implement firstOrDefault
-        candidate = b.rank.where((c) => tuple.item3.indexOf(c) >= 0).first;
-      }
-      if(candidate != null) {
-        final hue = LocationData.getHue(candidate);
-        map[b.voter] = (new HslColor(hue, 0.5, 0.75)).toRgb().toHex();
-      }
+Map<MapPlayer, String> _voterHexIsolate(Tuple3<DistanceElection, LocationData, List<MapPlayer>> tuple) {
+  final map = new Map<MapPlayer, String>();
+  for(final b in tuple.item1.ballots) {
+    MapPlayer candidate;
+    if(tuple.item3 == null) {
+      candidate = b.choice;
+    } else {
+      // TODO: this will blow up wonderfully if the item is not found
+      // need to implement firstOrDefault
+      candidate = b.rank.where((c) => tuple.item3.indexOf(c) >= 0).first;
     }
-    reply.send(map);
-  });
+    if(candidate != null) {
+      final hue = LocationData.getHue(candidate);
+      map[b.voter] = (new HslColor(hue, 0.5, 0.75)).toRgb().toHex();
+    }
+  }
+  return map;
 }
