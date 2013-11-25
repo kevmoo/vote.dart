@@ -54,7 +54,7 @@ class VoteDemo extends StageWrapper<RootMapElement> {
       this._canManView, this._irvView) :
         super(canvas, rootMapElement) {
 
-     final mm = new MouseManager(stage);
+    final mm = new MouseManager(stage);
 
     _calcEngine.locationDataChanged.listen(_locationDataUpdated);
     _calcEngine.distanceElectionChanged.listen(_distanceElectionUpdated);
@@ -65,21 +65,15 @@ class VoteDemo extends StageWrapper<RootMapElement> {
 
     rootThing.candidatesMoved.listen((data) => _calcEngine.candidatesMoved());
 
-    _canManView.candidateRemoveRequest.listen((data) {
-      _calcEngine.removeCandidate(data);
-    });
+    _canManView.candidateRemoveRequest.listen(_calcEngine.removeCandidate);
 
-    _canManView.newCandidateRequest.listen((args) {
-      _calcEngine.addCandidate();
-    });
+    _canManView.newCandidateRequest.listen((_) => _calcEngine.addCandidate());
 
-    _condorcetView.hoverChanged.listen((args) {
-      _updateHighlightCandidates(_condorcetView.highlightCandidates);
-    });
+    _condorcetView.hoverChanged.listen((_) =>
+      _updateHighlightCandidates(_condorcetView.highlightCandidates));
 
-    _irvView.hoverChanged.listen((args) {
-      _updateHighlightCandidates(_irvView.highlightCandidates);
-    });
+    _irvView.hoverChanged.listen((_) =>
+        _updateHighlightCandidates(_irvView.highlightCandidates));
 
     final initialData = new LocationData.random();
 
