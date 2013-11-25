@@ -1,7 +1,7 @@
 part of vote_html;
 
 class CandidateManagerView extends HtmlView {
-  static const String _candidateIdAttribute = 'candidate-id';
+  static const String _CANDIDATE_ID_ATTRIBUTE = 'candidate-id';
   final EventHandle<MapPlayer> _requestRemoveCandidateHandle;
   final EventHandle<EventArgs> _requestNewCandidateHandle;
   ReadOnlyCollection<MapPlayer> _candidates;
@@ -35,7 +35,7 @@ class CandidateManagerView extends HtmlView {
 
     final addButton = new ButtonElement();
     addButton.text = "Add Candidate";
-    if(_candidates.length < LocationData.maxCandidateCount) {
+    if(_candidates.length < LocationData.MAX_CANDIDATE_COUNT) {
       addButton.onClick.listen(_requestNewCandidate);
     } else {
       addButton.disabled = true;
@@ -61,7 +61,7 @@ class CandidateManagerView extends HtmlView {
         cell = row.insertCell(-1);
         final deleteButton = new ButtonElement();
         deleteButton.text = 'Delete';
-        deleteButton.dataset[_candidateIdAttribute] = candidate.id.toString();
+        deleteButton.dataset[_CANDIDATE_ID_ATTRIBUTE] = candidate.id.toString();
         if(_candidates.length > 1) {
           deleteButton.onClick.listen(_deleteClick);
         } else {
@@ -81,7 +81,7 @@ class CandidateManagerView extends HtmlView {
 
   void _deleteClick(MouseEvent args) {
     final ButtonElement source = args.toElement;
-    final candidateId = int.parse(source.dataset[_candidateIdAttribute]);
+    final candidateId = int.parse(source.dataset[_CANDIDATE_ID_ATTRIBUTE]);
     _removeCandidateWithId(candidateId);
     source.disabled = true;
   }

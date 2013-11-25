@@ -1,7 +1,7 @@
 part of vote_html;
 
 class IrvView extends HtmlView {
-  static const _roundCellClass = 'irv_round';
+  static const _ROUND_CELL_CLASS = 'irv_round';
 
   final EventHandle<EventArgs> _hoverChangedHandle = new EventHandle<EventArgs>();
   int _highlightRound;
@@ -123,7 +123,7 @@ class IrvView extends HtmlView {
       // blank cell on the left
       cell = new Element.tag('th');
       cell.innerHtml = 'Round ${i+1}';
-      cell.classes.add(_roundCellClass);
+      cell.classes.add(_ROUND_CELL_CLASS);
       cell.dataset['roundIndex'] = i.toString();
       row.children.add(cell);
 
@@ -179,7 +179,7 @@ class IrvView extends HtmlView {
   void _onMouseOver(MouseEvent e) {
     if(e.toElement is Element) {
       final Element elem = e.toElement;
-      if(elem.classes.contains(_roundCellClass)) {
+      if(elem.classes.contains(_ROUND_CELL_CLASS)) {
         _updateHighlightedRound(int.parse(elem.dataset['roundIndex']));
         return;
       }

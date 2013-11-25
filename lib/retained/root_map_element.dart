@@ -51,7 +51,7 @@ class RootMapElement extends ParentThing {
     requireArgumentNotNull(value, "value");
     // TODO: would be great to use this calculation, but need to make it async
     //final vals = _getAverageCloseness(value);
-    final vals = new Tuple<num, Box>(1, new Box(0,0,LocationData.span,LocationData.span));
+    final vals = new Tuple<num, Box>(1, new Box(0,0,LocationData.SPAN,LocationData.SPAN));
 
     _averageCloseness = vals.item1;
     assert(isValidNumber(_averageCloseness));
@@ -79,7 +79,7 @@ class RootMapElement extends ParentThing {
     final candidateLocPixels = _tx.transformCoordinate(candidate.location);
     final newCanLocPix = candidateLocPixels + delta;
     var newLocation = _tx.createInverse().transformCoordinate(newCanLocPix);
-    newLocation = LocationData.bounds.constrain(newLocation);
+    newLocation = LocationData.BOUNDS.constrain(newLocation);
 
     can.location = newLocation;
 
@@ -140,6 +140,7 @@ class RootMapElement extends ParentThing {
 
     int count = 0;
     num sum = 0;
+
     for(final playerA in players) {
       num closestDistance = null;
 
@@ -165,7 +166,6 @@ class RootMapElement extends ParentThing {
 
     final avgDist = count == null ? null : sum / count;
 
-    return new Tuple<num, Box>(avgDist,
-        new Box(left, top, right, bottom));
+    return new Tuple<num, Box>(avgDist, new Box(left, top, right, bottom));
   }
 }

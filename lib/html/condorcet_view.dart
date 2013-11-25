@@ -1,7 +1,7 @@
 part of vote_html;
 
 class CondorcetView extends HtmlView {
-  static final String _pairIdsKey = 'pair-ids';
+  static const String _PAIS_IDS_KEY = 'pair-ids';
 
   final EventHandle<EventArgs> _hoverChangedHandle = new EventHandle<EventArgs>();
   CondorcetElection _election;
@@ -114,14 +114,14 @@ class CondorcetView extends HtmlView {
               cell.classes.add(cellData);
               cell.classes.add(cellClass);
               cell.classes.add('left_value');
-              cell.dataset[_pairIdsKey] = cellData;
+              cell.dataset[_PAIS_IDS_KEY] = cellData;
 
               cell = row.insertCell(-1);
               cell.innerHtml = middleText;
               cell.classes.add('pair-cell');
               cell.classes.add(cellClass);
               cell.classes.add(cellData);
-              cell.dataset[_pairIdsKey] = cellData;
+              cell.dataset[_PAIS_IDS_KEY] = cellData;
 
               cell = row.insertCell(-1);
               cell.innerHtml = pair.secondOverFirst.toString();
@@ -131,7 +131,7 @@ class CondorcetView extends HtmlView {
               cell.classes.add(cellClass);
               cell.classes.add('pair-cell');
               cell.classes.add(cellData);
-              cell.dataset[_pairIdsKey] = cellData;
+              cell.dataset[_PAIS_IDS_KEY] = cellData;
             }
           }
 
@@ -203,7 +203,7 @@ class CondorcetView extends HtmlView {
   }
 
   static Tuple<int, int> _getPair(Element elem) {
-    String pairIdStr = elem.dataset[_pairIdsKey];
+    String pairIdStr = elem.dataset[_PAIS_IDS_KEY];
     if(pairIdStr != null) {
       assert(pairIdStr.startsWith('pair'));
       pairIdStr = pairIdStr.substring(4);

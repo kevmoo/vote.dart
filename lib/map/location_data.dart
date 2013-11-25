@@ -1,26 +1,27 @@
 part of vote_map;
 
 class LocationData {
-  static const int maxCandidateCount = 26;
-  static const Box bounds = const Box(0,0, span, span);
-  static const int _ACharCode = 65;
-  static const num span = 10;
-  final ReadOnlyCollection<MapPlayer> candidates;
-  final ReadOnlyCollection<MapPlayer> voters;
+  static const int MAX_CANDIDATE_COUNT = 26;
+  static const Box BOUNDS = const Box(0,0, SPAN, SPAN);
+  static const int _A_CHAR_CODE = 65;
+  static const num SPAN = 10;
 
   static List<num> _candidateHues;
+
+  final ReadOnlyCollection<MapPlayer> candidates;
+  final ReadOnlyCollection<MapPlayer> voters;
 
   LocationData(this.voters, this.candidates) {
     assert(this.candidates.length > 0);
   }
 
   factory LocationData.random() {
-    final spanTweak = span / (span - 1);
+    final spanTweak = SPAN / (SPAN - 1);
 
     // 100 voters from 1,1 to 10,10
     final voters = new List<MapPlayer>();
-    for(var i = 0; i < span; i++) {
-      for(var j = 0; j < span; j++) {
+    for(var i = 0; i < SPAN; i++) {
+      for(var j = 0; j < SPAN; j++) {
         voters.add(new MapPlayer(new Coordinate(i * spanTweak, j * spanTweak)));
       }
     }
@@ -43,7 +44,7 @@ class LocationData {
 
     final candidates = new List<MapPlayer>();
     $(coords)
-      .map((c) => c.scale(span))
+      .map((c) => c.scale(SPAN))
       .forEachWithIndex((c,i) {
         final candidate = new MapPlayer(c, getCandidateName(i));
         candidates.add(candidate);
@@ -72,7 +73,7 @@ class LocationData {
       final mp = newCans[i];
       assert(mp.name.length == 1);
       final mpCC = mp.name.codeUnitAt(0);
-      final letterIndex = mpCC - _ACharCode;
+      final letterIndex = mpCC - _A_CHAR_CODE;
       assert(letterIndex >= i);
 
       if(letterIndex > i) {
@@ -83,7 +84,7 @@ class LocationData {
     final newName = getCandidateName(i);
 
     var coord = new Vector(rnd.nextDouble(), rnd.nextDouble());
-    final loc = coord.scale(span);
+    final loc = coord.scale(SPAN);
     final mp = new MapPlayer(loc, newName);
 
     newCans.insert(i, mp);
@@ -93,12 +94,12 @@ class LocationData {
 
   static num getHue(MapPlayer candidate) {
     if(_candidateHues == null) {
-      _candidateHues = _slice(maxCandidateCount, 360, 3);
+      _candidateHues = _slice(MAX_CANDIDATE_COUNT, 360, 3);
     }
     final letter = candidate.name;
     assert(letter != null && letter.length == 1);
-    final letterCode = (letter.codeUnitAt(0) - _ACharCode);
-    assert(letterCode >= 0 && letterCode < maxCandidateCount);
+    final letterCode = (letter.codeUnitAt(0) - _A_CHAR_CODE);
+    assert(letterCode >= 0 && letterCode < MAX_CANDIDATE_COUNT);
 
     return _candidateHues[letterCode];
   }
@@ -138,7 +139,7 @@ class LocationData {
 
   static String getCandidateName(int i) {
     requireArgument(i >= 0, 'i');
-    requireArgument(i < maxCandidateCount, 'i');
-    return new String.fromCharCodes([i + _ACharCode]);
+    requireArgument(i < MAX_CANDIDATE_COUNT, 'i');
+    return new String.fromCharCodes([i + _A_CHAR_CODE]);
   }
 }
