@@ -1,7 +1,7 @@
 part of vote_html;
 
 class CandidateManagerView extends HtmlView {
-  static final String _candidateIdAttribute = 'candidate-id';
+  static const String _candidateIdAttribute = 'candidate-id';
   final EventHandle<MapPlayer> _requestRemoveCandidateHandle;
   final EventHandle<EventArgs> _requestNewCandidateHandle;
   ReadOnlyCollection<MapPlayer> _candidates;

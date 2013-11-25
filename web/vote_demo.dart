@@ -63,9 +63,7 @@ class VoteDemo extends StageWrapper<RootMapElement> {
     _calcEngine.irvElectionChanged.listen(_irvElectionUpdated);
     _calcEngine.voterHueMapperChanged.listen(_voterHexMapperUpdated);
 
-    rootThing.candidatesMoved.listen((data) {
-      _calcEngine.candidatesMoved();
-    });
+    rootThing.candidatesMoved.listen((data) => _calcEngine.candidatesMoved());
 
     _canManView.candidateRemoveRequest.listen((data) {
       _calcEngine.removeCandidate(data);

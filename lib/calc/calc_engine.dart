@@ -16,7 +16,7 @@ class CalcEngine {
   final ThrottledStream<Tuple3<DistanceElection, LocationData, List<MapPlayer>>, Map<MapPlayer, String>> _voterHexMapper
     = new ThrottledStream<Tuple3<DistanceElection, LocationData, List<MapPlayer>>, Map<MapPlayer, String>>(_voterHexIsolate);
 
-  final StreamController<LocationData> _locationData = new StreamController<LocationData>();
+  final StreamController<LocationData> _locationDataStream = new StreamController<LocationData>();
 
   List<MapPlayer> _highlightCandidates;
 
@@ -30,15 +30,14 @@ class CalcEngine {
 
   void set locationData(LocationData data) {
     requireArgumentNotNull(data, 'data');
-    if(data != _distanceElectionMapper.source) {
-      _distanceElectionMapper.source = data;
-      _locationData.add(data);
-    }
+
+    _distanceElectionMapper.source = data;
+    _locationDataStream.add(data);
   }
 
   void candidatesMoved() {
-    // just force _distanceElection to reprocess existing data
-    this.locationData = locationData;
+    _distanceElectionMapper.refresh();
+    _locationDataStream.add(locationData);
   }
 
   void set candidateData(Iterable<MapPlayer> value) {
@@ -86,7 +85,7 @@ class CalcEngine {
   // Events
   //
   Stream<LocationData> get locationDataChanged =>
-      _locationData.stream;
+      _locationDataStream.stream;
 
   Stream<DistanceElection> get distanceElectionChanged =>
       _distanceElectionMapper.outputStream;
