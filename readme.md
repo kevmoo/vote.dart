@@ -19,7 +19,7 @@
  * [Kevin Moore](https://github.com/kevmoo) ([@kevmoo](http://twitter.com/kevmoo))
 
 ## Dependencies
- * __vote.dart__ uses [bot.dart](https://github.com/kevmoo/bot.dart) via [pub](http://www.dartlang.org/docs/pub-package-manager/).
+ * __vote.dart__ uses [bot.dart](https://github.com/kevmoo/bot.dart) via [pub](http://pub.dartlang.org/doc/).
 
 ## More Info
  * [Condorcet Method](http://en.wikipedia.org/wiki/Condorcet_method) - Wikipedia
