@@ -1,20 +1,18 @@
 import 'dart:html';
-import 'package:bot/bot.dart';
-import 'package:bot/bot_html.dart';
-import 'package:bot/bot_retained.dart';
+import 'package:bot_web/bot_html.dart';
+import 'package:bot_web/bot_retained.dart';
 import 'package:vote/calc.dart';
 import 'package:vote/html.dart';
 import 'package:vote/map.dart';
 import 'package:vote/retained.dart';
-import 'package:vote/vote.dart';
 
-main(){
-  CanvasElement canvas = query("#content");
-  DivElement pluralityDiv = query('#pluralityView');
-  DivElement distanceDiv = query('#distanceView');
-  DivElement condorcetDiv = query('#condorcetView');
-  DivElement canManDiv = query('#canManView');
-  DivElement irvDiv = query('#irvView');
+void main() {
+  CanvasElement canvas = querySelector("#content");
+  DivElement pluralityDiv = querySelector('#pluralityView');
+  DivElement distanceDiv = querySelector('#distanceView');
+  DivElement condorcetDiv = querySelector('#condorcetView');
+  DivElement canManDiv = querySelector('#canManView');
+  DivElement irvDiv = querySelector('#irvView');
   var demo = new VoteDemo(canvas, pluralityDiv, distanceDiv, condorcetDiv,
       canManDiv, irvDiv);
   demo.requestFrame();
@@ -24,14 +22,14 @@ class VoteDemo extends StageWrapper<RootMapElement> {
 
   final CalcEngine _calcEngine = new CalcEngine();
 
-  final HashMap<MapPlayer, num> _playerHues = new HashMap<MapPlayer, num>();
+  final Map<MapPlayer, num> _playerHues = new Map<MapPlayer, num>();
   final CondorcetView _condorcetView;
   final IrvView _irvView;
   final DistanceView _distanceView;
   final PluralityView _pluralityView;
   final CandidateManagerView _canManView;
 
-  HashMap<MapPlayer, num> _candidateHues;
+  Map<MapPlayer, num> _candidateHues;
 
   factory VoteDemo(CanvasElement canvas, DivElement pluralityDiv,
     DivElement distanceDiv, DivElement condorcetDiv, DivElement canManDiv,
@@ -58,30 +56,28 @@ class VoteDemo extends StageWrapper<RootMapElement> {
 
      final mm = new MouseManager(stage);
 
-    _calcEngine.locationDataChanged.add(_locationDataUpdated);
-    _calcEngine.distanceElectionChanged.add(_distanceElectionUpdated);
-    _calcEngine.pluralityElectionChanged.add(_pluralityElectionUpdated);
-    _calcEngine.condorcetElectionChanged.add(_condorcetElectionUpdated);
-    _calcEngine.irvElectionChanged.add(_irvElectionUpdated);
-    _calcEngine.voterHueMapperChanged.add(_voterHexMapperUpdated);
+    _calcEngine.locationDataChanged.listen(_locationDataUpdated);
+    _calcEngine.distanceElectionChanged.listen(_distanceElectionUpdated);
+    _calcEngine.pluralityElectionChanged.listen(_pluralityElectionUpdated);
+    _calcEngine.condorcetElectionChanged.listen(_condorcetElectionUpdated);
+    _calcEngine.irvElectionChanged.listen(_irvElectionUpdated);
+    _calcEngine.voterHueMapperChanged.listen(_voterHexMapperUpdated);
 
-    rootThing.candidatesMoved.add((data) {
-      _calcEngine.candidatesMoved();
-    });
+    rootThing.candidatesMoved.listen((data) => _calcEngine.candidatesMoved());
 
-    _canManView.candidateRemoveRequest.add((data) {
+    _canManView.candidateRemoveRequest.listen((data) {
       _calcEngine.removeCandidate(data);
     });
 
-    _canManView.newCandidateRequest.add((args) {
+    _canManView.newCandidateRequest.listen((args) {
       _calcEngine.addCandidate();
     });
 
-    _condorcetView.hoverChanged.add((args) {
+    _condorcetView.hoverChanged.listen((args) {
       _updateHighlightCandidates(_condorcetView.highlightCandidates);
     });
 
-    _irvView.hoverChanged.add((args) {
+    _irvView.hoverChanged.listen((args) {
       _updateHighlightCandidates(_irvView.highlightCandidates);
     });
 
@@ -132,6 +128,7 @@ class VoteDemo extends StageWrapper<RootMapElement> {
     requestFrame();
   }
 
+  @override
   void drawFrame(double highResTime){
     super.drawFrame(highResTime);
 
