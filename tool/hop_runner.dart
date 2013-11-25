@@ -18,7 +18,7 @@ void main(List<String> args) {
   //
   final paths = const ['web/vote_demo.dart', 'test/browser_test_harness.dart'];
 
-  addTask('dart2js', createDartCompilerTask(paths));
+  addTask('dart2js', createDartCompilerTask(paths, minify: true));
   runHop(args);
 }
 
