@@ -82,7 +82,7 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
       tarjanMap[candidate] = tarjanLostTiedSet;
     }
 
-    var components = TarjanCycleDetect.getStronglyConnectedComponents(tarjanMap);
+    var components = stronglyConnectedComponents(tarjanMap);
 
     var places = new List<ElectionPlace<TCandidate>>();
     int placeNumber = 1;
