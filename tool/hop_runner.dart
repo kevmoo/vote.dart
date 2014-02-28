@@ -11,8 +11,6 @@ void main(List<String> args) {
 
   addTask('analyze_libs', createAnalyzerTask(_getLibs(['lib', 'web'])));
 
-  addTask('update_js', createCopyJSTask('web', browserDart: true));
-
   //
   // Dart2js
   //

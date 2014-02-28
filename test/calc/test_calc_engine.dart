@@ -12,19 +12,19 @@ class TestCalcEngine {
 
     final data = new LocationData.random();
 
-    final locationDataHandler = expectAsync1((LocationData arg) {
+    final locationDataHandler = expectAsync((LocationData arg) {
       expect(engine.locationData, isNot(isNull));
     });
 
-    final distanceElectionHandler = expectAsync1((args) {
+    final distanceElectionHandler = expectAsync((args) {
       expect(engine.distanceElection, isNot(isNull));
     });
 
-    final pluralityElectionHandler = expectAsync1((args) {
+    final pluralityElectionHandler = expectAsync((args) {
       expect(engine.pluralityElection, isNot(isNull));
     });
 
-    final condorcetElectionHandler = expectAsync1((args) {
+    final condorcetElectionHandler = expectAsync((args) {
       expect(engine.condorcetElection, isNot(isNull));
     });
 
