@@ -529,7 +529,7 @@ y.Hg=x+1
 y=P.L5(null,null,null,J.im,H.yo)
 w=P.Ls(null,null,null,J.im)
 v=new H.yo(0,null,!1)
-u=new H.aX(x,y,w,new I(),v,P.N3(),!1,[],P.Ls(null,null,null,null))
+u=new H.aX(x,y,w,new I(),v,P.N3(),P.N3(),!1,[],P.Ls(null,null,null,null),null,!1)
 w.h(0,0)
 u.v8(0,v)
 init.globalState.yc=u
@@ -571,7 +571,7 @@ y.Hg=q+1
 y=P.L5(null,null,null,J.im,H.yo)
 p=P.Ls(null,null,null,J.im)
 o=new H.yo(0,null,!1)
-n=new H.aX(q,y,p,new I(),o,P.N3(),!1,[],P.Ls(null,null,null,null))
+n=new H.aX(q,y,p,new I(),o,P.N3(),P.N3(),!1,[],P.Ls(null,null,null,null),null,!1)
 p.h(0,0)
 n.v8(0,o)
 init.globalState.Xz.Rk.NZ(new H.IY(n,new H.jl(w,v,u,t,s,r),"worker-start"))
@@ -626,7 +626,7 @@ $.eb=$.eb+("_"+y)
 y=z.WE
 x=init.globalState.N0.jO
 w=z.Qy
-J.jV(f,["spawned",new H.JM(y,x),w])
+J.jV(f,["spawned",new H.JM(y,x),w,z.PX])
 x=new H.Vg(a,b,c,d)
 if(e===!0){z.V0(w,w)
 init.globalState.Xz.Rk.NZ(new H.IY(z,x,"start isolate"))}else x.call$0()},
@@ -669,7 +669,7 @@ w=function (e) { H.Mg(z, e); }
 $.jk().onmessage=w
 $.jk().dartPrint = function (object) {}}}},
 aX:{
-"^":"a;jO>,Gx,fW,En<,WE<,Qy,UF,C9,lJ",
+"^":"a;jO>,Gx,fW,En<,WE<,Qy,PX,UF,C9,lJ,Jp,pa",
 V0:function(a,b){if(!this.Qy.n(0,a))return
 if(this.lJ.h(0,b)&&!this.UF)this.UF=!0
 this.PC()},
@@ -680,6 +680,17 @@ z.Rz(0,a)
 if(z.X5===0){for(z=this.C9;y=z.length,y!==0;){if(0>=y)return H.e(z,0)
 x=z.pop()
 init.globalState.Xz.Rk.qz(x)}this.UF=!1}this.PC()},
+iK:function(a){var z=this.Jp
+if(z==null){z=[]
+this.Jp=z}if(J.kE(z,a))return
+this.Jp.push(a)},
+Hh:function(a){var z=this.Jp
+if(z==null)return
+J.V1(z,a)},
+MZ:function(a,b){if(!this.PX.n(0,a))return
+this.pa=b},
+Wq:function(a,b){if(J.xC(b,2))init.globalState.Xz.Rk.NZ(new H.IY(this,new H.oU(a),"ping"))
+else J.jV(a,null)},
 vV:function(a){var z,y
 z=init.globalState.N0
 init.globalState.N0=this
@@ -691,11 +702,14 @@ Zt:function(a){return this.Gx.t(0,a)},
 v8:function(a,b){var z=this.Gx
 if(z.x4(a))throw H.b(P.FM("Registry: ports must be registered only once."))
 z.u(0,a,b)},
-PC:function(){var z,y
-z=this.Gx.X5-this.fW.X5>0||this.UF
-y=this.jO
-if(z)init.globalState.i2.u(0,y,this)
-else init.globalState.i2.Rz(0,y)}},
+PC:function(){if(this.Gx.X5-this.fW.X5>0||this.UF)init.globalState.i2.u(0,this.jO,this)
+else this.UM()},
+UM:function(){init.globalState.i2.Rz(0,this.jO)
+var z=this.Jp
+if(z!=null)for(z=new H.a7(z,z.length,0,null);z.G();)J.jV(z.lo,null)}},
+oU:{
+"^":"Tp:16;a",
+call$0:function(){J.jV(this.a,null)}},
 cC:{
 "^":"a;Rk,GL",
 Jc:function(){var z=this.Rk
@@ -768,7 +782,15 @@ switch(z.t(y,0)){case"pause":x.V0(z.t(y,1),z.t(y,2))
 break
 case"resume":x.cK(z.t(y,1))
 break
-default:P.JS("UNKOWN MESSAGE: "+H.d(y))}return}y=init.globalState.Xz
+case"add-ondone":x.iK(z.t(y,1))
+break
+case"remove-ondone":x.Hh(z.t(y,1))
+break
+case"set-errors-fatal":x.MZ(z.t(y,1),z.t(y,2))
+break
+case"ping":x.Wq(z.t(y,1),z.t(y,2))
+break
+default:P.JS("UNKNOWN MESSAGE: "+H.d(y))}return}y=init.globalState.Xz
 w="receive "+H.d(b)
 y.Rk.NZ(new H.IY(x,new H.Ua(z,this,v),w))},
 n:function(a,b){var z
@@ -853,7 +875,7 @@ X1:{
 t:function(a,b){return},
 u:function(a,b,c){},
 CH:function(a){},
-F4:function(){return}},
+F4:function(){}},
 HU:{
 "^":"a;",
 M0:function(a){var z
@@ -2410,7 +2432,7 @@ if(!a)this.Gf=null}},
 Gz:function(){var z=X.Xb(1,0,0,1,0,0)
 H.bQ(this.aX,z.gt5())
 return z},
-Li:function(){return},
+Li:function(){},
 Bv:function(a){var z,y,x,w
 a.save()
 z=this.Gz()
@@ -2749,7 +2771,7 @@ QE:[function(a){},"call$1","QN",2,0,2],
 SZ:[function(a,b){var z=$.X3
 z.toString
 P.L2(z,null,z,a,b)},function(a){return P.SZ(a,null)},null,"call$2","call$1","AY",2,2,3,4],
-dL:[function(){return},"call$0","v3",0,0,1],
+dL:[function(){},"call$0","v3",0,0,1],
 FE:function(a,b,c){var z,y,x,w
 try{b.call$1(a.call$0())}catch(x){w=H.Ru(x)
 z=w
@@ -2798,8 +2820,8 @@ gY8:function(){return this.Y8},
 uR:function(a){var z=this.Ae
 if(typeof z!=="number")return z.i()
 return(z&1)===a},
-uO:[function(){return},"call$0","gp4",0,0,1],
-LP:[function(){return},"call$0","gZ9",0,0,1],
+uO:[function(){},"call$0","gp4",0,0,1],
+LP:[function(){},"call$0","gZ9",0,0,1],
 static:{"^":"Ph,HC,fw"}},
 WV:{
 "^":"a;iE@,SJ?",
@@ -2966,10 +2988,14 @@ for(y=null;z!=null;y=z,z=x){x=z.gBQ()
 z.BQ=y}return y},
 rX:function(a){var z,y
 z=J.x(a)
-if(typeof a==="object"&&a!==null&&!!z.$isb8){P.GZ(a,this)
-return}y=this.Qq()
+if(typeof a==="object"&&a!==null&&!!z.$isb8)if(typeof a==="object"&&a!==null&&!!z.$isvs)P.A9(a,this)
+else P.k3(a,this)
+else{y=this.Qq()
 this.Am(a)
-P.HZ(this,y)},
+P.HZ(this,y)}},
+R8:function(a){var z=this.Qq()
+this.Am(a)
+P.HZ(this,z)},
 K5:[function(a,b){var z=this.Qq()
 this.E6(a,b)
 P.HZ(this,z)},function(a){return this.K5(a,null)},"IW","call$2","call$1","gbY",2,2,3,4],
@@ -2981,12 +3007,10 @@ z.toString
 P.Tk(z,null,z,new P.rH(this,a))},
 $isvs:true,
 $isb8:true,
-static:{"^":"Gn,RV,cp,UX,NK",Dt:function(a){return H.VM(new P.vs(0,$.X3,null,null,null,null,null,null),[a])},GZ:function(a,b){var z
-b.Gv=2
-z=J.x(a)
-if(typeof a==="object"&&a!==null&&!!z.$isvs)if(a.Gv>=4)P.HZ(a,b)
-else a.au(b)
-else a.Rx(new P.xw(b),new P.dm(b))},yE:function(a,b){var z
+static:{"^":"Gn,RV,cp,UX,NK",Dt:function(a){return H.VM(new P.vs(0,$.X3,null,null,null,null,null,null),[a])},k3:function(a,b){b.Gv=2
+a.Rx(new P.pV(b),new P.U7(b))},A9:function(a,b){b.Gv=2
+if(a.Gv>=4)P.HZ(a,b)
+else a.au(b)},yE:function(a,b){var z
 do{z=b.gBQ()
 b.BQ=null
 P.HZ(a,b)
@@ -3039,10 +3063,11 @@ u=typeof y==="object"&&y!==null&&!!u.$isb8
 y=u}else y=!1}else y=!1
 if(y){p=x.c
 y=J.x(p)
-if(typeof p==="object"&&p!==null&&!!y.$isvs&&p.Gv>=4){b.Gv=2
+if(typeof p==="object"&&p!==null&&!!y.$isvs)if(p.Gv>=4){b.Gv=2
 z.e=p
 y=p
-continue}P.GZ(p,b)
+continue}else P.A9(p,b)
+else P.k3(p,b)
 return}}if(x.b===!0){o=b.Qq()
 y=x.c
 b.Gv=4
@@ -3057,16 +3082,19 @@ b=o}}}},
 da:{
 "^":"Tp:16;a,b",
 call$0:function(){P.HZ(this.a,this.b)}},
-xw:{
+pV:{
 "^":"Tp:18;a",
-call$1:function(a){this.a.rX(a)}},
-dm:{
+call$1:function(a){this.a.R8(a)}},
+U7:{
 "^":"Tp:27;b",
 call$2:function(a,b){this.b.K5(a,b)},
 call$1:function(a){return this.call$2(a,null)}},
-rH:{
+eX:{
 "^":"Tp:16;a,b",
-call$0:function(){this.a.rX(this.b)}},
+call$0:function(){P.A9(this.b,this.a)}},
+rH:{
+"^":"Tp:16;c,d",
+call$0:function(){this.c.R8(this.d)}},
 rq:{
 "^":"Tp:28;b,d,e,f",
 call$0:function(){var z,y,x,w,v
@@ -4360,9 +4388,7 @@ H.qG(y,w,w+z,x,0)
 this.av=0
 this.eZ=this.v5.length
 this.v5=y},
-Eo:function(a,b){var z
-if(typeof 8!=="number")return H.s(8)
-z=Array(8)
+Eo:function(a,b){var z=Array(8)
 z.fixed$length=init
 this.v5=H.VM(z,[b])},
 $isqC:true,
@@ -4455,7 +4481,7 @@ h:function(a,b){return P.Wu(this.y3+b.gVs(),this.aL)},
 RM:function(a,b){if(Math.abs(a)>8640000000000000)throw H.b(new P.AT(a))},
 EK:function(){H.o2(this)},
 $isiP:true,
-static:{"^":"aV,bI,Ej,p2,ch,QC,Px,Yp,kc,Gi,k3,cR,E0,mj,lT,Nr,bm,o4,Kz,ek,yf,Fk",Wu:function(a,b){var z=new P.iP(a,b)
+static:{"^":"aV,bI,Ej,p2,ch,QC,Px,Yp,kc,Gi,Fz,cR,E0,mj,lT,Nr,bm,o4,Kz,ek,yf,Fk",Wu:function(a,b){var z=new P.iP(a,b)
 z.RM(a,b)
 return z},Gq:function(a){var z,y
 z=Math.abs(a)
@@ -4514,8 +4540,7 @@ LK:{
 bu:function(a){return"Throw of null."}},
 AT:{
 "^":"Ge;G1>",
-bu:function(a){var z=this.gG1(this)
-if(z!=null)return"Illegal argument(s): "+H.d(z)
+bu:function(a){if(this.gG1(this)!=null)return"Illegal argument(s): "+H.d(this.gG1(this))
 return"Illegal argument(s)"},
 static:{u:function(a){return new P.AT(a)}}},
 bJ:{
@@ -6589,7 +6614,7 @@ xA:[function(a){return S.p8(a.gPf(),a.gVD(),null,null)},"call$1","hf",2,0,11],
 ly:[function(a){return R.yx(a,null,null)},"call$1","Ri",2,0,12],
 Oc:[function(a){return R.yz(a,null,null)},"call$1","oS",2,0,13],
 Ae:[function(a){return R.pY(a,null,null)},"call$1","Ze",2,0,14],
-pV:[function(a){var z,y,x,w,v,u,t
+Fp:[function(a){var z,y,x,w,v,u,t
 z=P.L5(null,null,null,S.HH,J.O)
 for(y=a.gKG().gYI(),y=new X.f4(y,y.gB(y),-1,null);y.G();){x=y.Ah
 if(a.gkO()==null)w=x.gSf()
@@ -6598,7 +6623,7 @@ v=X.KM(P.mW.prototype.ev.call(v,v,new R.Pu(a)))
 u=v.gA(v)
 if(!u.G())H.vh(new P.lj("No elements"))
 w=u.gl()}if(w!=null){t=S.AW(w)
-z.u(0,x.gH6(),X.NQ(t,0.5,0.75).iQ().F7())}}return z},"call$1","Jr",2,0,15],
+z.u(0,x.gH6(),X.NQ(t,0.5,0.75).iQ().F7())}}return z},"call$1","HP",2,0,15],
 CI:{
 "^":"a;uI,uB,dK,j7,ei,aU,NF",
 sxp:function(a){var z
@@ -6619,7 +6644,7 @@ x.N2=H.VM(new X.he(this.NF,y,z),[null,null,null])
 x.n8()},
 Ye:function(){var z=this.uI.ik
 H.VM(new P.Gm(z),[H.Kp(z,0)]).yI(new R.mF(this))},
-static:{Fg:function(){var z=new R.CI(H.VM(new Y.Zh(R.hf(),P.bK(null,null,!1,null),null,null,null,null,!1),[null,null]),H.VM(new Y.Zh(R.Ri(),P.bK(null,null,!1,null),null,null,null,null,!1),[[X.os,[R.V4,S.HH,S.HH]],R.fo]),H.VM(new Y.Zh(R.oS(),P.bK(null,null,!1,null),null,null,null,null,!1),[[X.os,[R.QV,S.HH,S.HH]],R.nh]),H.VM(new Y.Zh(R.Ze(),P.bK(null,null,!1,null),null,null,null,null,!1),[[X.os,[R.QV,S.HH,S.HH]],R.tu]),H.VM(new Y.Zh(R.Jr(),P.bK(null,null,!1,null),null,null,null,null,!1),[[X.he,S.El,S.kY,[J.Q,S.HH]],[P.L8,S.HH,J.O]]),P.x2(null,null,null,null,!1,S.kY),null)
+static:{Fg:function(){var z=new R.CI(H.VM(new Y.Zh(R.hf(),P.bK(null,null,!1,null),null,null,null,null,!1),[null,null]),H.VM(new Y.Zh(R.Ri(),P.bK(null,null,!1,null),null,null,null,null,!1),[[X.os,[R.V4,S.HH,S.HH]],R.fo]),H.VM(new Y.Zh(R.oS(),P.bK(null,null,!1,null),null,null,null,null,!1),[[X.os,[R.QV,S.HH,S.HH]],R.nh]),H.VM(new Y.Zh(R.Ze(),P.bK(null,null,!1,null),null,null,null,null,!1),[[X.os,[R.QV,S.HH,S.HH]],R.tu]),H.VM(new Y.Zh(R.HP(),P.bK(null,null,!1,null),null,null,null,null,!1),[[X.he,S.El,S.kY,[J.Q,S.HH]],[P.L8,S.HH,J.O]]),P.x2(null,null,null,null,!1,S.kY),null)
 z.Ye()
 return z}}},
 mF:{
@@ -7522,8 +7547,6 @@ P.iP.$asfR=[null]
 P.iP.$isa=true
 P.fI.$isfI=true
 P.fI.$isa=true
-$.$signature_bh={func:"bh",args:[null,null]}
-$.$signature_aB={func:"aB",args:[null]}
 J.Qc=function(a){if(typeof a=="number")return J.P.prototype
 if(typeof a=="string")return J.O.prototype
 if(a==null)return a
