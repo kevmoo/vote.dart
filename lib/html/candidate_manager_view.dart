@@ -2,13 +2,13 @@ part of vote.html;
 
 class CandidateManagerView extends HtmlView {
   static const String _CANDIDATE_ID_ATTRIBUTE = 'candidate-id';
-  final EventHandle<MapPlayer> _requestRemoveCandidateHandle;
-  final EventHandle<EventArgs> _requestNewCandidateHandle;
+  final StreamController<MapPlayer> _requestRemoveCandidateHandle;
+  final StreamController _requestNewCandidateHandle;
   ReadOnlyCollection<MapPlayer> _candidates;
 
   CandidateManagerView(DivElement node) :
-    _requestRemoveCandidateHandle = new EventHandle<MapPlayer>(),
-    _requestNewCandidateHandle = new EventHandle<EventArgs>(),
+    _requestRemoveCandidateHandle = new StreamController<MapPlayer>(),
+    _requestNewCandidateHandle = new StreamController(),
     _candidates = new ReadOnlyCollection<MapPlayer>.empty(),
     super(node);
 
@@ -21,7 +21,7 @@ class CandidateManagerView extends HtmlView {
   Stream<MapPlayer> get candidateRemoveRequest =>
       _requestRemoveCandidateHandle.stream;
 
-  Stream<EventArgs> get newCandidateRequest =>
+  Stream get newCandidateRequest =>
       _requestNewCandidateHandle.stream;
 
   void updateElement() {
@@ -75,7 +75,7 @@ class CandidateManagerView extends HtmlView {
 
   void _requestNewCandidate(MouseEvent args) {
     final ButtonElement source = args.toElement;
-    _requestNewCandidateHandle.add(EventArgs.empty);
+    _requestNewCandidateHandle.add(null);
     source.disabled = true;
   }
 

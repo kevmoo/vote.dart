@@ -3,7 +3,7 @@ part of vote.html;
 class IrvView extends HtmlView {
   static const _ROUND_CELL_CLASS = 'irv_round';
 
-  final EventHandle<EventArgs> _hoverChangedHandle = new EventHandle<EventArgs>();
+  final StreamController _hoverChangedHandle = new StreamController();
   int _highlightRound;
 
   IrvElection _election;
@@ -17,7 +17,7 @@ class IrvView extends HtmlView {
     markDirty();
   }
 
-  Stream<EventArgs> get hoverChanged => _hoverChangedHandle.stream;
+  Stream get hoverChanged => _hoverChangedHandle.stream;
 
   List<Player> get highlightCandidates {
     if(_highlightRound == null) {
@@ -194,7 +194,7 @@ class IrvView extends HtmlView {
   void _updateHighlightedRound(int roundIndex) {
     if(roundIndex != _highlightRound) {
       _highlightRound = roundIndex;
-      _hoverChangedHandle.add(EventArgs.empty);
+      _hoverChangedHandle.add(null);
     }
   }
 }

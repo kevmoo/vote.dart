@@ -3,7 +3,7 @@ part of vote.html;
 class CondorcetView extends HtmlView {
   static const String _PAIS_IDS_KEY = 'pair-ids';
 
-  final EventHandle<EventArgs> _hoverChangedHandle = new EventHandle<EventArgs>();
+  final StreamController _hoverChangedHandle = new StreamController();
   CondorcetElection _election;
   ReadOnlyCollection<Player> _candidates;
   List<Player> _highlightCandidates;
@@ -18,7 +18,7 @@ class CondorcetView extends HtmlView {
     markDirty();
   }
 
-  Stream<EventArgs> get hoverChanged => _hoverChangedHandle.stream;
+  Stream get hoverChanged => _hoverChangedHandle.stream;
 
   List<Player> get highlightCandidates => _highlightCandidates;
 
@@ -153,7 +153,7 @@ class CondorcetView extends HtmlView {
     if(pair != _highlightCandidates) {
       _highlightCandidates = pair;
       _updateCellHoverStyle();
-      _hoverChangedHandle.add(EventArgs.empty);
+      _hoverChangedHandle.add(null);
     }
   }
 

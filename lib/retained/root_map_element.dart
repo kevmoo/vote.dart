@@ -4,8 +4,7 @@ class RootMapElement extends ParentThing {
   final VoterMapElement _voterMap;
   final CandidateMapElement _candidateMap;
   final AffineTransform _tx = new AffineTransform();
-  final EventHandle<EventArgs> _candidatesMovedHandle =
-      new EventHandle<EventArgs>();
+  final StreamController _candidatesMovedHandle = new StreamController();
 
   num _averageCloseness;
   Box _bounds;
@@ -19,8 +18,7 @@ class RootMapElement extends ParentThing {
     _candidateMap.registerParent(this);
   }
 
-  Stream<EventArgs> get candidatesMoved =>
-     _candidatesMovedHandle.stream;
+  Stream get candidatesMoved => _candidatesMovedHandle.stream;
 
   int get visualChildCount => 2;
 
@@ -83,7 +81,7 @@ class RootMapElement extends ParentThing {
 
     can.location = newLocation;
 
-    _candidatesMovedHandle.add(EventArgs.empty);
+    _candidatesMovedHandle.add(null);
   }
 
   void update(){
