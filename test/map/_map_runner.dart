@@ -9,10 +9,8 @@ part 'test_distance_election.dart';
 part 'test_spoiler_map.dart';
 part 'test_location_data.dart';
 
-void runMapTests() {
-  group('map', () {
-    TestDistanceElection.run();
-    TestSpoilerMap.run();
-    TestLocationData.run();
-  });
+void main() {
+  TestDistanceElection.run();
+  TestSpoilerMap.run();
+  TestLocationData.run();
 }

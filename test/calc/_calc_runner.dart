@@ -6,8 +6,6 @@ import 'package:vote/map.dart';
 
 part 'test_calc_engine.dart';
 
-void runCalcTests() {
-  group('calc', () {
-    TestCalcEngine.run();
-  });
+void main() {
+  TestCalcEngine.run();
 }
