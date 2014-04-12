@@ -1,4 +1,4 @@
-part of vote_retanied;
+part of vote.retanied;
 
 abstract class MapElementBase {
   void setTransform(AffineTransform value);

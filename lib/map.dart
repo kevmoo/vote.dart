@@ -1,6 +1,7 @@
-library vote_map;
+library vote.map;
 
 import 'package:bot/bot.dart';
+
 import 'vote.dart';
 
 part 'map/map_player.dart';

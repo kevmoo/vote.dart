@@ -1,4 +1,4 @@
-part of vote_retanied;
+part of vote.retanied;
 
 class VoterMapElement extends Thing implements MapElementBase {
   final List<MapPlayer> _players = new List<MapPlayer>();

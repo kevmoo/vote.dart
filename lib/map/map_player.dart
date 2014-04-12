@@ -1,4 +1,4 @@
-part of vote_map;
+part of vote.map;
 
 class MapPlayer extends Player {
   static int _counter = 0;

@@ -1,4 +1,4 @@
-part of vote_retanied;
+part of vote.retanied;
 
 class RootMapElement extends ParentThing {
   final VoterMapElement _voterMap;

@@ -1,4 +1,4 @@
-part of vote_html;
+part of vote.html;
 
 class IrvView extends HtmlView {
   static const _ROUND_CELL_CLASS = 'irv_round';

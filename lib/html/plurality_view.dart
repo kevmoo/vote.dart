@@ -1,4 +1,4 @@
-part of vote_html;
+part of vote.html;
 
 class PluralityView extends HtmlView {
   PluralityElection _election;

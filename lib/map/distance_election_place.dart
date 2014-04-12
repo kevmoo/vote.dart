@@ -1,4 +1,4 @@
-part of vote_map;
+part of vote.map;
 
 class DistanceElectionPlace<TCandidate extends MapPlayer>
   extends ElectionPlace<TCandidate> {

@@ -1,4 +1,4 @@
-part of vote_html;
+part of vote.html;
 
 class CandidateManagerView extends HtmlView {
   static const String _CANDIDATE_ID_ATTRIBUTE = 'candidate-id';

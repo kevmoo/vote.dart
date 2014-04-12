@@ -1,4 +1,4 @@
-part of vote_html;
+part of vote.html;
 
 class CondorcetView extends HtmlView {
   static const String _PAIS_IDS_KEY = 'pair-ids';

@@ -1,4 +1,4 @@
-part of vote_map;
+part of vote.map;
 
 class LocationData {
   static const int MAX_CANDIDATE_COUNT = 26;

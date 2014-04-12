@@ -1,4 +1,4 @@
-part of vote_map;
+part of vote.map;
 
 class DistanceBallot<TVoter extends MapPlayer, TCandidate extends MapPlayer>
   extends RankedBallot<TVoter, TCandidate> {
