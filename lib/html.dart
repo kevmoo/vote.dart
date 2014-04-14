@@ -8,11 +8,11 @@ import 'package:bot_web/bot_html.dart';
 import 'map.dart';
 import 'vote.dart';
 
-part 'html/candidate_manager_view.dart';
-part 'html/plurality_view.dart';
-part 'html/distance_view.dart';
-part 'html/condorcet_view.dart';
-part 'html/irv_view.dart';
+part 'src/html/candidate_manager_view.dart';
+part 'src/html/plurality_view.dart';
+part 'src/html/distance_view.dart';
+part 'src/html/condorcet_view.dart';
+part 'src/html/irv_view.dart';
 
 const String _grayHex = '#999999';
 
