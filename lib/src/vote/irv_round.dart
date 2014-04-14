@@ -15,7 +15,7 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
       return new Tuple3(b, pruned, winner);
     });
 
-    final activeBallotCount = cleanedBallots.count((t) => t.item3 != null);
+    final activeBallotCount = $(cleanedBallots).count((t) => t.item3 != null);
 
     final candidateAllocations = new Grouping(cleanedBallots
         .where((t) => t.item3 != null),
@@ -89,7 +89,7 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
     // duh, I know. Being paranoid.
     assert(places.length >= 2);
 
-    final int totalVotes = places.selectNumbers((p) {
+    final int totalVotes = $(places).selectNumbers((p) {
       return p.voteCount * p.length;
     }).sum();
 

@@ -42,7 +42,7 @@ class CondorcetView extends HtmlView {
       var evenCandidateRow = true;
 
       // add columns for opponents
-      _candidates = _election.places.expand((p) => p).toReadOnlyCollection();
+      _candidates = new ReadOnlyCollection(_election.places.expand((p) => p));
 
       for(final opp in _candidates) {
         cell = new Element.tag('th');

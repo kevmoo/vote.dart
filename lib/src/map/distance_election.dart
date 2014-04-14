@@ -22,7 +22,7 @@ class DistanceElection<TVoter extends MapPlayer, TCandidate extends MapPlayer>
     //
     // Places
     //
-    final distanceGroups = cans.group((candidate) {
+    final distanceGroups = $(cans).group((candidate) {
       num sumOfDistance = 0;
       num sumOfSquaredDistance = 0;
       int count = 0;

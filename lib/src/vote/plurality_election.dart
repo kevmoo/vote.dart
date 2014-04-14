@@ -20,7 +20,7 @@ class PluralityElection<TVoter extends Player, TCandidate extends Player>
     requireArgument(CollectionUtil.allUnique(voterList),
       "Only one ballot per voter is allowed");
 
-    final group = roBallots.group((pb) => pb.choice);
+    final group = $(roBallots).group((pb) => pb.choice);
 
     //
     // create a Map of candidates keyed on their vote count

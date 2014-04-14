@@ -12,10 +12,9 @@ class IrvElection<TVoter extends Player, TCandidate extends Player>
   factory IrvElection(Iterable<RankedBallot<TVoter, TCandidate>> ballots) {
     final roBallots = new ReadOnlyCollection(ballots);
 
-    final roCandidates = roBallots
+    final roCandidates = new ReadOnlyCollection($(roBallots)
         .expand((b) => b.rank)
-        .distinct()
-        .toReadOnlyCollection();
+        .distinct());
 
     final rounds = new List<IrvRound<TVoter, TCandidate>>();
 

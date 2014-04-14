@@ -35,9 +35,8 @@ class IrvView extends HtmlView {
       return;
     }
 
-    final candidates = _election.rounds.first.places
-        .expand((p) => p)
-        .toReadOnlyCollection();
+    final candidates = new ReadOnlyCollection(_election.rounds.first.places
+        .expand((p) => p));
 
     var table = new TableElement();
 

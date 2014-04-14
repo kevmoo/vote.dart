@@ -36,14 +36,14 @@ class CandidateMapElement extends ParentThing implements MapElementBase {
     invalidateDraw();
   }
 
-  Sequence<MapPlayer> get showOnlyPlayers => _showOnlyPlayers;
+  List<MapPlayer> get showOnlyPlayers => _showOnlyPlayers;
 
   void set showOnlyPlayers(Iterable<MapPlayer> value) {
     if(value == null) {
       _showOnlyPlayers = null;
     } else {
       var newVal = new ReadOnlyCollection(value);
-      assert(newVal.distinct().length == newVal.length);
+      assert($(newVal).distinct().length == newVal.length);
       assert(newVal.every((e) => _players.indexOf(e) >= 0));
       _showOnlyPlayers = newVal;
     }

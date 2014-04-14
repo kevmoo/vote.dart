@@ -65,7 +65,7 @@ class RootMapElement extends ParentThing {
     _candidateMap.players = value;
   }
 
-  Sequence<MapPlayer> get showOnlyPlayers => _candidateMap.showOnlyPlayers;
+  List<MapPlayer> get showOnlyPlayers => _candidateMap.showOnlyPlayers;
 
   void set showOnlyPlayers(Iterable<MapPlayer> value) {
     _candidateMap.showOnlyPlayers = value;

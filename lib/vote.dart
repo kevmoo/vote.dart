@@ -1,6 +1,8 @@
 library vote;
 
-import 'package:bot/bot.dart';
+import 'package:bot/bot.dart' hide ReadOnlyCollection;
+
+import 'src/util.dart';
 
 part 'src/vote/election_place.dart';
 part 'src/vote/player.dart';

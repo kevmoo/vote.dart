@@ -2,23 +2,24 @@ library vote.calc;
 
 import 'dart:async';
 
-import 'package:bot/bot.dart';
+import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
 import 'map.dart';
 import 'vote.dart';
+import 'src/util.dart';
 
 class CalcEngine {
   final ThrottledStream<LocationData, DistanceElection> _distanceElectionMapper
     = new ThrottledStream(_distanceElectionIsolate);
 
-  final ThrottledStream<Sequence<PluralityBallot<MapPlayer, MapPlayer>>, PluralityElection> _pluralityElectionMapper
-    = new ThrottledStream<Sequence<PluralityBallot<MapPlayer, MapPlayer>>, PluralityElection>(_pluralityElectionIsolate);
+  final ThrottledStream<List<PluralityBallot<MapPlayer, MapPlayer>>, PluralityElection> _pluralityElectionMapper
+    = new ThrottledStream<List<PluralityBallot<MapPlayer, MapPlayer>>, PluralityElection>(_pluralityElectionIsolate);
 
-  final ThrottledStream<Sequence<RankedBallot<MapPlayer, MapPlayer>>, CondorcetElection> _condorcetElectionMapper
-    = new ThrottledStream<Sequence<RankedBallot<MapPlayer, MapPlayer>>, CondorcetElection>(_condorcetElectionIsolate);
+  final ThrottledStream<List<RankedBallot<MapPlayer, MapPlayer>>, CondorcetElection> _condorcetElectionMapper
+    = new ThrottledStream<List<RankedBallot<MapPlayer, MapPlayer>>, CondorcetElection>(_condorcetElectionIsolate);
 
-  final ThrottledStream<Sequence<RankedBallot<MapPlayer, MapPlayer>>, IrvElection> _irvElectionMapper =
-      new ThrottledStream<Sequence<RankedBallot<MapPlayer, MapPlayer>>, IrvElection>(_irvElectionIsolate);
+  final ThrottledStream<List<RankedBallot<MapPlayer, MapPlayer>>, IrvElection> _irvElectionMapper =
+      new ThrottledStream<List<RankedBallot<MapPlayer, MapPlayer>>, IrvElection>(_irvElectionIsolate);
 
   final ThrottledStream<Tuple3<DistanceElection, LocationData, List<MapPlayer>>, Map<MapPlayer, String>> _voterHexMapper
     = new ThrottledStream<Tuple3<DistanceElection, LocationData, List<MapPlayer>>, Map<MapPlayer, String>>(_voterHexIsolate);
@@ -130,15 +131,15 @@ DistanceElection _distanceElectionIsolate(LocationData data) {
   return new DistanceElection.fromData(data);
 }
 
-PluralityElection _pluralityElectionIsolate(Sequence<PluralityBallot<MapPlayer, MapPlayer>> ballots) {
+PluralityElection _pluralityElectionIsolate(List<PluralityBallot<MapPlayer, MapPlayer>> ballots) {
   return new PluralityElection(ballots);
 }
 
-CondorcetElection _condorcetElectionIsolate(Sequence<RankedBallot<MapPlayer, MapPlayer>> ballots) {
+CondorcetElection _condorcetElectionIsolate(List<RankedBallot<MapPlayer, MapPlayer>> ballots) {
   return new CondorcetElection(ballots);
 }
 
-IrvElection _irvElectionIsolate(Sequence<RankedBallot<MapPlayer, MapPlayer>> ballots) {
+IrvElection _irvElectionIsolate(List<RankedBallot<MapPlayer, MapPlayer>> ballots) {
   return new IrvElection(ballots);
 }
 
