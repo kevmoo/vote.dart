@@ -2,7 +2,7 @@ part of vote.map;
 
 class LocationData {
   static const int MAX_CANDIDATE_COUNT = 26;
-  static const Box BOUNDS = const Box(0,0, SPAN, SPAN);
+  static const Rectangle BOUNDS = const Rectangle(0,0, SPAN, SPAN);
   static const int _A_CHAR_CODE = 65;
   static const num SPAN = 10;
 

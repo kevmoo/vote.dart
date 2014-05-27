@@ -7,7 +7,7 @@ class RootMapElement extends ParentThing {
   final StreamController _candidatesMovedHandle = new StreamController();
 
   num _averageCloseness;
-  Box _bounds;
+  Rectangle _bounds;
   num _radius;
 
   RootMapElement(int w, int h) :
@@ -49,12 +49,11 @@ class RootMapElement extends ParentThing {
     requireArgumentNotNull(value, "value");
     // TODO: would be great to use this calculation, but need to make it async
     //final vals = _getAverageCloseness(value);
-    final vals = new Tuple<num, Box>(1, new Box(0,0,LocationData.SPAN,LocationData.SPAN));
+    final vals = new Tuple<num, Rectangle>(1, new Rectangle(0,0,LocationData.SPAN,LocationData.SPAN));
 
     _averageCloseness = vals.item1;
     assert(isValidNumber(_averageCloseness));
     _bounds = vals.item2;
-    assert(_bounds.isValid);
 
     _radius = null;
     _voterMap.players = value;
@@ -77,7 +76,7 @@ class RootMapElement extends ParentThing {
     final candidateLocPixels = _tx.transformCoordinate(candidate.location);
     final newCanLocPix = candidateLocPixels + delta;
     var newLocation = _tx.createInverse().transformCoordinate(newCanLocPix);
-    newLocation = LocationData.BOUNDS.constrain(newLocation);
+    newLocation = _constrain(LocationData.BOUNDS, newLocation);
 
     can.location = newLocation;
 
@@ -130,7 +129,7 @@ class RootMapElement extends ParentThing {
   // For each player
   // 1) find the closest guy [>= 0.5 away to avoid overlapping]
   // 2) find the average of the closest guys
-  static Tuple<num, Box> _getAverageCloseness(Iterable<MapPlayer> players) {
+  static Tuple<num, Rectangle> _getAverageCloseness(Iterable<MapPlayer> players) {
     num top = double.INFINITY;
     num left = double.INFINITY;
     num bottom = double.NEGATIVE_INFINITY;
@@ -164,6 +163,15 @@ class RootMapElement extends ParentThing {
 
     final avgDist = count == null ? null : sum / count;
 
-    return new Tuple<num, Box>(avgDist, new Box(left, top, right, bottom));
+    return new Tuple<num, Rectangle>(avgDist, new Rectangle(left, top, right, bottom));
   }
+}
+
+Point _constrain(Rectangle rect, Point value) {
+  requireArgumentNotNull(value, 'value');
+
+  var x = math.min(rect.right, math.max(rect.left, value.x));
+  var y = math.min(rect.bottom, math.max(rect.top, value.y));
+
+  return new Coordinate(x, y);
 }

@@ -7,11 +7,10 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
   factory IrvRound(ReadOnlyCollection<RankedBallot<TVoter, TCandidate>> ballots,
     List<TCandidate> eliminatedCandidates) {
 
-    final cleanedBallots = ballots.map((b) {
-      final pruned = $(b.rank).exclude(eliminatedCandidates)
-          .toReadOnlyCollection();
-      final winner = pruned.length == 0 ?
-          null : pruned[0];
+    var cleanedBallots = ballots.map((b) {
+      var pruned =
+          new ReadOnlyCollection($(b.rank).exclude(eliminatedCandidates));
+      var winner = pruned.length == 0 ? null : pruned[0];
       return new Tuple3(b, pruned, winner);
     });
 
@@ -46,7 +45,7 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
 
       for(final b in cleanedBallots.where((t) => t.item3 == c)) {
         final rb = b.item1;
-        final pruned = b.item2.exclude(newlyEliminatedCandidates);
+        final pruned = $(b.item2).exclude(newlyEliminatedCandidates);
         if(pruned.isEmpty) {
           // we're exhausted
           exhausted.add(rb);

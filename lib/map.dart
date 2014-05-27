@@ -1,5 +1,7 @@
 library vote.map;
 
+import 'dart:math';
+
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
 import 'vote.dart';
