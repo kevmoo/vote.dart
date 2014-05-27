@@ -1,7 +1,11 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:hop/hop.dart';
 import 'package:hop/hop_tasks.dart';
+import 'package:hop_git/hop_git.dart';
+import 'package:hop_unittest/hop_unittest.dart';
+
 import '../test/console_test_harness.dart' as test_console;
 
 void main(List<String> args) {
@@ -32,4 +36,3 @@ Future<List<String>> _getLibs(Iterable<String> parentDirs) {
 
 Future<bool> _ghPages(TaskContext ctx) =>
     branchForDir(ctx, 'master', 'build/web', 'gh-pages');
-
