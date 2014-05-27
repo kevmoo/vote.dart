@@ -102,7 +102,7 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
   CondorcetPair<TVoter, TCandidate> getPair(TCandidate c1, TCandidate c2) {
     var filter = _pairs.where((p) => p.matches(c1, c2));
     assert(filter.length <= 1);
-    if(filter.isEmpty) {
+    if (filter.isEmpty) {
       return null;
     } else {
       assert(filter.length == 1);

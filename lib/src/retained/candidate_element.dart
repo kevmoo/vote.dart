@@ -16,20 +16,19 @@ class CandidateElement extends Thing {
 
   void set hidden(bool value) {
     assert(value != null);
-    if(value != _hidden) {
+    if (value != _hidden) {
       _hidden = value;
       invalidateDraw();
     }
   }
 
-  void drawOverride(CanvasRenderingContext2D ctx){
-    if(hidden) {
+  void drawOverride(CanvasRenderingContext2D ctx) {
+    if (hidden) {
       ctx.globalAlpha = 0.3;
       ctx.fillStyle = '#999999';
     } else {
 
-      final num shadowDistance = (Mouse.isMouseDirectlyOver(this))?
-          4 : 2;
+      final num shadowDistance = (Mouse.isMouseDirectlyOver(this)) ? 4 : 2;
 
       ctx.shadowColor = 'black';
       ctx.shadowBlur = 6;

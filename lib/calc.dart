@@ -145,16 +145,16 @@ IrvElection _irvElectionIsolate(List<RankedBallot<MapPlayer, MapPlayer>> ballots
 
 Map<MapPlayer, String> _voterHexIsolate(Tuple3<DistanceElection, LocationData, List<MapPlayer>> tuple) {
   final map = new Map<MapPlayer, String>();
-  for(final b in tuple.item1.ballots) {
+  for (final b in tuple.item1.ballots) {
     MapPlayer candidate;
-    if(tuple.item3 == null) {
+    if (tuple.item3 == null) {
       candidate = b.choice;
     } else {
       // TODO: this will blow up wonderfully if the item is not found
       // need to implement firstOrDefault
       candidate = b.rank.where((c) => tuple.item3.indexOf(c) >= 0).first;
     }
-    if(candidate != null) {
+    if (candidate != null) {
       final hue = LocationData.getHue(candidate);
       map[b.voter] = (new HslColor(hue, 0.5, 0.75)).toRgb().toHex();
     }

@@ -33,8 +33,8 @@ class VoterMapElement extends Thing implements MapElementBase {
     invalidateDraw();
   }
 
-  void drawOverride(CanvasRenderingContext2D ctx){
-    for(final player in _players) {
+  void drawOverride(CanvasRenderingContext2D ctx) {
+    for (final player in _players) {
       _drawPlayer(ctx, player);
     }
   }

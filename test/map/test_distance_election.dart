@@ -2,7 +2,7 @@ part of vote_test_map;
 
 class TestDistanceElection {
   static void run() {
-    group('DistanceElection', (){
+    group('DistanceElection', () {
       _testSimpleElection();
       test('tie', _testTie);
     });
@@ -10,9 +10,9 @@ class TestDistanceElection {
 
   static void _testTie() {
     var voters = new List<MapPlayer>();
-    for(int i = -2; i <= 2; i++) {
-      for(int j = -2; j <= 2; j++) {
-        voters.add(new MapPlayer(new Coordinate(i,j)));
+    for (int i = -2; i <= 2; i++) {
+      for (int j = -2; j <= 2; j++) {
+        voters.add(new MapPlayer(new Coordinate(i, j)));
       }
     }
 
@@ -28,24 +28,24 @@ class TestDistanceElection {
   }
 
   static void _testSimpleElection() {
-    var v1 = new MapPlayer(const Coordinate(1,1));
+    var v1 = new MapPlayer(const Coordinate(1, 1));
     var v2 = new MapPlayer(const Coordinate(-1, 1));
     var v3 = new MapPlayer(const Coordinate(-1, -1));
     var v4 = new MapPlayer(const Coordinate(1, -1));
     var v5 = new MapPlayer(const Coordinate(9, 9));
 
     var c0 = new MapPlayer(const Coordinate());
-    var c1 = new MapPlayer(const Coordinate(10,10));
+    var c1 = new MapPlayer(const Coordinate(10, 10));
 
-    final mapElection = new DistanceElection([v1,v2,v3,v4,v5], [c0, c1]);
+    final mapElection = new DistanceElection([v1, v2, v3, v4, v5], [c0, c1]);
     final ballots = mapElection.ballots;
 
     group('simple, obvious map', () {
-      test('ballots', (){
+      test('ballots', () {
         expect(ballots, isNotNull);
         expect(ballots.length, equals(5));
 
-        for(final b in ballots.take(4).toList()) {
+        for (final b in ballots.take(4).toList()) {
           expect(b.choice, equals(c0));
           expect(b.rank.length, equals(2));
           expect(b.rank[0], equals(c0));
@@ -62,7 +62,7 @@ class TestDistanceElection {
         expect(mapElection.singleWinner, equals(c0));
       });
 
-      test('PluralityElection', (){
+      test('PluralityElection', () {
         var pluralityElection = new PluralityElection(ballots);
         expect(pluralityElection.singleWinner, equals(c0));
         expect(pluralityElection.places.length, equals(2));

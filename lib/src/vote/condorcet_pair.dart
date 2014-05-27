@@ -42,10 +42,9 @@ class CondorcetPair<TVoter extends Player, TCandidate extends Player>
         requireArgument(secondIndex >= 0, 'bals');
 
         assert(firstIndex != secondIndex);
-        if(firstIndex < secondIndex) {
+        if (firstIndex < secondIndex) {
           fos++;
-        }
-        else {
+        } else {
           sof++;
         }
       });
@@ -56,13 +55,11 @@ class CondorcetPair<TVoter extends Player, TCandidate extends Player>
   }
 
   TCandidate get winner {
-    if(firstOverSecond > secondOverFirst) {
+    if (firstOverSecond > secondOverFirst) {
       return item1;
-    }
-    else if(secondOverFirst > firstOverSecond) {
+    } else if (secondOverFirst > firstOverSecond) {
       return item2;
-    }
-    else {
+    } else {
       assert(isTie);
       return null;
     }
@@ -75,7 +72,7 @@ class CondorcetPair<TVoter extends Player, TCandidate extends Player>
     requireArgumentNotNull(can2, 'can2');
     requireArgument(can1 != can2, 'can1 and can2 must be different');
 
-    if(can1.compareTo(can2) > 0) {
+    if (can1.compareTo(can2) > 0) {
       var temp = can2;
       can2 = can1;
       can1 = temp;
@@ -86,7 +83,7 @@ class CondorcetPair<TVoter extends Player, TCandidate extends Player>
 
   // sometimes it's nice to deal w/ a properly aligned pair
   CondorcetPair<TVoter, TCandidate> flip(TCandidate can1, TCandidate can2) {
-    if(item1.compareTo(item2) > 0) {
+    if (item1.compareTo(item2) > 0) {
       throw 'already flipped!';
     }
     requireArgumentNotNull(can1, 'can1');
@@ -94,7 +91,7 @@ class CondorcetPair<TVoter extends Player, TCandidate extends Player>
     requireArgument(can1 != can2, 'can1 and can2 must be different');
 
     bool flipped = false;
-    if(can1.compareTo(can2) > 0) {
+    if (can1.compareTo(can2) > 0) {
       var temp = can2;
       can2 = can1;
       can1 = temp;

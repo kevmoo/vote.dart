@@ -2,7 +2,7 @@ part of vote.map;
 
 class LocationData {
   static const int MAX_CANDIDATE_COUNT = 26;
-  static const Rectangle BOUNDS = const Rectangle(0,0, SPAN, SPAN);
+  static const Rectangle BOUNDS = const Rectangle(0, 0, SPAN, SPAN);
   static const int _A_CHAR_CODE = 65;
   static const num SPAN = 10;
 
@@ -20,8 +20,8 @@ class LocationData {
 
     // 100 voters from 1,1 to 10,10
     final voters = new List<MapPlayer>();
-    for(var i = 0; i < SPAN; i++) {
-      for(var j = 0; j < SPAN; j++) {
+    for (var i = 0; i < SPAN; i++) {
+      for (var j = 0; j < SPAN; j++) {
         voters.add(new MapPlayer(new Coordinate(i * spanTweak, j * spanTweak)));
       }
     }
@@ -32,10 +32,10 @@ class LocationData {
 
     final bool mirror = false;
 
-    for(var i = 0; i < 4; i++) {
+    for (var i = 0; i < 4; i++) {
       var coord = new Vector(rnd.nextDouble(), rnd.nextDouble());
       coords.add(coord);
-      if(mirror) {
+      if (mirror) {
         final delta = middle - coord;
         coords.add(middle + delta);
         i++;
@@ -69,14 +69,14 @@ class LocationData {
     var newCans = candidates.toList();
 
     int i;
-    for(i = 0; i < newCans.length; i++) {
+    for (i = 0; i < newCans.length; i++) {
       final mp = newCans[i];
       assert(mp.name.length == 1);
       final mpCC = mp.name.codeUnitAt(0);
       final letterIndex = mpCC - _A_CHAR_CODE;
       assert(letterIndex >= i);
 
-      if(letterIndex > i) {
+      if (letterIndex > i) {
         break;
       }
     }
@@ -93,7 +93,7 @@ class LocationData {
   }
 
   static num getHue(MapPlayer candidate) {
-    if(_candidateHues == null) {
+    if (_candidateHues == null) {
       _candidateHues = _slice(MAX_CANDIDATE_COUNT, 360, 3);
     }
     final letter = candidate.name;
@@ -115,20 +115,20 @@ class LocationData {
 
     num sliceSize = maxValue / sliceCount;
 
-    for(int i = 0; i < sliceCount; i++) {
-      if(index == itemCount) {
+    for (int i = 0; i < sliceCount; i++) {
+      if (index == itemCount) {
         return values;
       } else {
         values[index++] = i * sliceSize;
       }
     }
 
-    while(true) {
+    while (true) {
       final startCount = index;
       sliceSize = maxValue / (startCount * 2);
 
-      for(int i = 0; i < startCount; i++) {
-        if(index == itemCount) {
+      for (int i = 0; i < startCount; i++) {
+        if (index == itemCount) {
           return values;
         } else {
           values[index++] = values[i] + sliceSize;

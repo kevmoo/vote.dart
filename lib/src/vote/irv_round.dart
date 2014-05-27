@@ -26,7 +26,7 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
 
     final placeVotes = voteGroups.getKeys().toList();
     // reverse sorting -> most votes first
-    placeVotes.sort((a,b) => b.compareTo(a));
+    placeVotes.sort((a, b) => b.compareTo(a));
 
     int placeNumber = 1;
     final places = new ReadOnlyCollection(placeVotes.map((pv) {
@@ -43,10 +43,10 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
 
       final exhausted = new List<RankedBallot<TVoter, TCandidate>>();
 
-      for(final b in cleanedBallots.where((t) => t.item3 == c)) {
+      for (final b in cleanedBallots.where((t) => t.item3 == c)) {
         final rb = b.item1;
         final pruned = $(b.item2).exclude(newlyEliminatedCandidates);
-        if(pruned.isEmpty) {
+        if (pruned.isEmpty) {
           // we're exhausted
           exhausted.add(rb);
         } else {
@@ -80,7 +80,7 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
     assert(places != null);
     assert(places.length > 0);
 
-    if(places.length == 1) {
+    if (places.length == 1) {
       // it's a tie for first
       return [];
     }
@@ -101,12 +101,12 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
     // unless
     // a) first place is single candiadate
     // b) first place votes > (0.5 * total + 1)
-    if(places[0].length == 1 && places[0].voteCount >= majorityCount){
+    if (places[0].length == 1 && places[0].voteCount >= majorityCount) {
       return [];
     }
 
     // DARTBUG https://code.google.com/p/dart/issues/detail?id=7085
     // last() seems to be f'd up when compiled
-    return places[places.length-1].map((p) => p).toList();
+    return places[places.length - 1].map((p) => p).toList();
   }
 }

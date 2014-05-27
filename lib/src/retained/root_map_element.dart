@@ -10,10 +10,10 @@ class RootMapElement extends ParentThing {
   Rectangle _bounds;
   num _radius;
 
-  RootMapElement(int w, int h) :
-    _voterMap = new VoterMapElement(w, h),
-    _candidateMap = new CandidateMapElement(w, h),
-    super(w, h) {
+  RootMapElement(int w, int h)
+      : _voterMap = new VoterMapElement(w, h),
+        _candidateMap = new CandidateMapElement(w, h),
+        super(w, h) {
     _voterMap.registerParent(this);
     _candidateMap.registerParent(this);
   }
@@ -22,8 +22,8 @@ class RootMapElement extends ParentThing {
 
   int get visualChildCount => 2;
 
-  Thing getVisualChild(int index){
-    switch(index) {
+  Thing getVisualChild(int index) {
+    switch (index) {
       case 0:
         return _voterMap;
       case 1:
@@ -83,24 +83,25 @@ class RootMapElement extends ParentThing {
     _candidatesMovedHandle.add(null);
   }
 
-  void update(){
+  void update() {
     // calculate important bits if we need to
-    if(_bounds != null && _radius == null) {
+    if (_bounds != null && _radius == null) {
 
       // dimensions of the points factoring in the radius
       final dataScale = new Size(_bounds.width + _averageCloseness,
-        _bounds.height + _averageCloseness);
+          _bounds.height + _averageCloseness);
 
-      num scale, offsetX = 0, offsetY = 0;
+      num scale,
+          offsetX = 0,
+          offsetY = 0;
       // now are we bound by width or height?
-      if(dataScale.aspectRatio > size.aspectRatio) {
+      if (dataScale.aspectRatio > size.aspectRatio) {
         // bound by width
         scale = width / dataScale.width;
 
         final targetHeight = height / scale;
         offsetY = (targetHeight - dataScale.height) / 2;
-      }
-      else {
+      } else {
         // bound by height
         scale = height / dataScale.height;
 
@@ -138,7 +139,7 @@ class RootMapElement extends ParentThing {
     int count = 0;
     num sum = 0;
 
-    for(final playerA in players) {
+    for (final playerA in players) {
       num closestDistance = null;
 
       left = math.min(playerA.location.x, left);
@@ -147,14 +148,14 @@ class RootMapElement extends ParentThing {
       bottom = math.max(playerA.location.y, bottom);
 
       for (final playerB in players) {
-        if(playerA != playerB) {
+        if (playerA != playerB) {
           final distance = playerA.location.distanceTo(playerB.location);
           if(distance >= 0.5 && (closestDistance == null || distance < closestDistance)) {
             closestDistance = distance;
           }
         }
       }
-      if(closestDistance != null) {
+      if (closestDistance != null) {
         assert(closestDistance >= 0.5);
         sum += closestDistance;
         count++;

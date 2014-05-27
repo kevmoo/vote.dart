@@ -35,15 +35,15 @@ class DistanceView extends HtmlView {
     var evenPlaceRow = true;
     var evenCandidateRow = true;
 
-    if(_election != null) {
-      for(final place in _election.places) {
+    if (_election != null) {
+      for (final place in _election.places) {
         var first = true;
-        for(final candidate in place) {
+        for (final candidate in place) {
 
           row = table.insertRow(-1);
           row.classes.add(evenPlaceRow ? 'row-even' : 'row-odd');
 
-          if(first) {
+          if (first) {
             cell = new Element.tag('th');
             row.children.add(cell);
             cell.classes.add('place-number');
@@ -54,7 +54,7 @@ class DistanceView extends HtmlView {
           cell = row.insertCell(-1);
           cell.classes.add('candidate-cell');
           final hue = LocationData.getHue(candidate);
-          if(hue != null) {
+          if (hue != null) {
             final hsl = new HslColor(hue, 1, 0.75);
             final rgb = hsl.toRgb();
             cell.style.background = rgb.toHex();
@@ -62,7 +62,7 @@ class DistanceView extends HtmlView {
           cell.innerHtml = candidate.toString();
 
 
-          if(first) {
+          if (first) {
             first = false;
 
             cell = row.insertCell(-1);

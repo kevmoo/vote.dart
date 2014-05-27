@@ -20,7 +20,7 @@ class TestSpoilerMap {
   static void run() {
 
     group('spoiler', () {
-      test('PluralityElection', (){
+      test('PluralityElection', () {
         var test = new TestSpoilerMap();
 
         var election = new PluralityElection(test.mapElection.ballots);
@@ -34,7 +34,7 @@ class TestSpoilerMap {
         expect(election.places[2][0], equals(test.canCenter));
       });
 
-      test('CondorcetElection', (){
+      test('CondorcetElection', () {
         var test = new TestSpoilerMap();
 
         var election = new CondorcetElection(test.mapElection.ballots);

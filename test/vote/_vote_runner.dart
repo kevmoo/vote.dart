@@ -17,7 +17,7 @@ void main() {
   TestCondorcetElection.run();
   TestCondorcetPair.run();
   irv.main();
-  test('majority threshold', (){
+  test('majority threshold', () {
     expect(majorityThreshold(5), 3);
     expect(majorityThreshold(4), 3);
     expect(majorityThreshold(49), 25);

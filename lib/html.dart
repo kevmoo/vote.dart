@@ -19,7 +19,7 @@ const String _grayHex = '#999999';
 
 String getCandidateHexColor(c, [bool dark = false]) {
   final hue = LocationData.getHue(c);
-  if(hue == null) {
+  if (hue == null) {
     return _grayHex;
   } else {
     final hsl = new HslColor(hue, 1, dark ? 0.3 : 0.75);

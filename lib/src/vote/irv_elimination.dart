@@ -15,7 +15,7 @@ class IrvElimination<TVoter extends Player, TCandidate extends Player> {
 
   int getTransferCount(TCandidate key) {
     final list = _transfers[key];
-    if(list == null) {
+    if (list == null) {
       return 0;
     } else {
       return list.length;

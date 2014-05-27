@@ -37,14 +37,14 @@ class CondorcetView extends HtmlView {
     row.children.add(cell);
     cell.innerHtml = "Candidate";
 
-    if(_election != null) {
+    if (_election != null) {
       var evenPlaceRow = true;
       var evenCandidateRow = true;
 
       // add columns for opponents
       _candidates = new ReadOnlyCollection(_election.places.expand((p) => p));
 
-      for(final opp in _candidates) {
+      for (final opp in _candidates) {
         cell = new Element.tag('th');
         row.children.add(cell);
         cell.innerHtml = opp.toString();
@@ -53,14 +53,14 @@ class CondorcetView extends HtmlView {
         cell.colSpan = 3;
       }
 
-      for(final place in _election.places) {
+      for (final place in _election.places) {
         bool first = true;
-        for(final candidate in place) {
+        for (final candidate in place) {
 
           row = table.insertRow(-1);
           row.classes.add(evenPlaceRow ? 'row-even' : 'row-odd');
 
-          if(first) {
+          if (first) {
             first = false;
             cell = new Element.tag('th');
             row.children.add(cell);
@@ -75,8 +75,8 @@ class CondorcetView extends HtmlView {
           cell.style.background = getCandidateHexColor(candidate);
           cell.innerHtml = candidate.toString();
 
-          for(final opp in _candidates) {
-            if(opp == candidate) {
+          for (final opp in _candidates) {
+            if (opp == candidate) {
               cell = row.insertCell(-1);
               cell.style.background = _grayHex;
               cell.colSpan = 3;
@@ -86,12 +86,12 @@ class CondorcetView extends HtmlView {
               String leftColor, rightColor;
               var pair = _election.getPair(candidate, opp);
               assert(pair != null);
-              if(candidate == pair.winner) {
+              if (candidate == pair.winner) {
                 cellClass = 'winner';
                 leftColor = getCandidateHexColor(candidate, true);
                 rightColor = getCandidateHexColor(opp, true);
                 middleText = '&gt;';
-              } else if(opp == pair.winner) {
+              } else if (opp == pair.winner) {
                 cellClass = 'loser';
                 leftColor = getCandidateHexColor(candidate);
                 rightColor = getCandidateHexColor(opp);
@@ -150,7 +150,7 @@ class CondorcetView extends HtmlView {
 
   void set _thePair(List<Player> pair) {
     assert(_candidates != null);
-    if(pair != _highlightCandidates) {
+    if (pair != _highlightCandidates) {
       _highlightCandidates = pair;
       _updateCellHoverStyle();
       _hoverChangedHandle.add(null);
@@ -177,10 +177,10 @@ class CondorcetView extends HtmlView {
 
   void _onMouseOver(MouseEvent e) {
     assert(_candidates != null);
-    if(e.toElement is Element) {
+    if (e.toElement is Element) {
       final Element elem = e.toElement;
       final pair = _getPair(elem);
-      if(pair != null) {
+      if (pair != null) {
         _thePair = [_candidates[pair.item1], _candidates[pair.item2]];
         return;
       }
@@ -204,7 +204,7 @@ class CondorcetView extends HtmlView {
 
   static Tuple<int, int> _getPair(Element elem) {
     String pairIdStr = elem.dataset[_PAIS_IDS_KEY];
-    if(pairIdStr != null) {
+    if (pairIdStr != null) {
       assert(pairIdStr.startsWith('pair'));
       pairIdStr = pairIdStr.substring(4);
 

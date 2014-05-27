@@ -2,7 +2,7 @@ part of vote_test_map;
 
 class TestLocationData {
   static void run() {
-    group('LocationData', (){
+    group('LocationData', () {
       test('getCandidateName', _testGetCandidateName);
       test('cloneAndAddCandidate', _testCloneAndAddRemoveCandidate);
     });

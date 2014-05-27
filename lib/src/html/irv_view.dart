@@ -20,7 +20,7 @@ class IrvView extends HtmlView {
   Stream get hoverChanged => _hoverChangedHandle.stream;
 
   List<Player> get highlightCandidates {
-    if(_highlightRound == null) {
+    if (_highlightRound == null) {
       return null;
     } else {
       final round = _election.rounds[_highlightRound];
@@ -31,7 +31,7 @@ class IrvView extends HtmlView {
   void updateElement() {
     node.children.clear();
 
-    if(election == null) {
+    if (election == null) {
       return;
     }
 
@@ -44,26 +44,26 @@ class IrvView extends HtmlView {
     TableCellElement cell;
     ReadOnlyCollection<PluralityElectionPlace> previousPlaces;
 
-    for(var i = 0; i < election.rounds.length; i++) {
+    for (var i = 0; i < election.rounds.length; i++) {
       final round = election.rounds[i];
 
       // first, see if we need to re-draw places
       // a) if there is no previous place, then yes
       // b) if there is a previous place, but it doesn't match the current round
       bool drawPlaces = false;
-      if(previousPlaces == null) {
+      if (previousPlaces == null) {
         drawPlaces = true;
-      } else if(previousPlaces.length < round.places.length) {
+      } else if (previousPlaces.length < round.places.length) {
         drawPlaces = true;
       } else {
-        for(var i = 0; i < round.places.length; i++) {
+        for (var i = 0; i < round.places.length; i++) {
           final currentPlace = round.places[i];
           final previousPlace = previousPlaces[i];
-          if(currentPlace.length != previousPlace.length) {
+          if (currentPlace.length != previousPlace.length) {
             drawPlaces = true;
           } else {
-            for(var j = 0; j < currentPlace.length; j++) {
-              if(currentPlace[j] != previousPlace[j]) {
+            for (var j = 0; j < currentPlace.length; j++) {
+              if (currentPlace[j] != previousPlace[j]) {
                 drawPlaces = true;
                 break;
               }
@@ -74,7 +74,7 @@ class IrvView extends HtmlView {
       }
       previousPlaces = round.places;
 
-      if(drawPlaces) {
+      if (drawPlaces) {
         //
         // 1) Draw headers
         //
@@ -87,7 +87,7 @@ class IrvView extends HtmlView {
         // blank cell on the left
         row.insertCell(-1).innerHtml = '&nbsp;';
 
-        for(final place in round.places) {
+        for (final place in round.places) {
           cell = new Element.tag('th');
           row.children.add(cell);
           cell.colSpan = place.length;
@@ -103,8 +103,8 @@ class IrvView extends HtmlView {
         // blank cell on the left
         row.insertCell(-1).innerHtml = '&nbsp;';
 
-        for(final place in round.places) {
-          for(final c in place) {
+        for (final place in round.places) {
+          for (final c in place) {
             cell = new Element.tag('th');
             row.children.add(cell);
             cell.innerHtml = c.toString();
@@ -126,8 +126,8 @@ class IrvView extends HtmlView {
       cell.dataset['roundIndex'] = i.toString();
       row.children.add(cell);
 
-      for(final place in round.places) {
-        for(final c in place) {
+      for (final place in round.places) {
+        for (final c in place) {
           cell = row.insertCell(-1);
           cell.innerHtml = place.voteCount.toString();
           cell.classes.add('candidate-cell');
@@ -140,7 +140,7 @@ class IrvView extends HtmlView {
       // 3) Eliminations
       //
       final el = round.eliminations.length;
-      for(var ei = 0; ei < el; ei++) {
+      for (var ei = 0; ei < el; ei++) {
         final elimination = round.eliminations[el - ei - 1];
         row = table.insertRow(-1);
         cell = row.insertCell(-1);
@@ -151,14 +151,14 @@ class IrvView extends HtmlView {
         cell.style.textAlign = 'right';
 
         bool foundSelf = false;
-        for(final c in round.candidates) {
+        for (final c in round.candidates) {
           cell = row.insertCell(-1);
-          if(c == elimination.candidate) {
+          if (c == elimination.candidate) {
             cell.innerHtml = '&larr;';
             foundSelf = true;
           } else {
             final transferCount = elimination.getTransferCount(c);
-            if(transferCount > 0) {
+            if (transferCount > 0) {
               cell.innerHtml = transferCount.toString();
               cell.classes.add('vote-count');
             }
@@ -176,9 +176,9 @@ class IrvView extends HtmlView {
   }
 
   void _onMouseOver(MouseEvent e) {
-    if(e.toElement is Element) {
+    if (e.toElement is Element) {
       final Element elem = e.toElement;
-      if(elem.classes.contains(_ROUND_CELL_CLASS)) {
+      if (elem.classes.contains(_ROUND_CELL_CLASS)) {
         _updateHighlightedRound(int.parse(elem.dataset['roundIndex']));
         return;
       }
@@ -191,7 +191,7 @@ class IrvView extends HtmlView {
   }
 
   void _updateHighlightedRound(int roundIndex) {
-    if(roundIndex != _highlightRound) {
+    if (roundIndex != _highlightRound) {
       _highlightRound = roundIndex;
       _hoverChangedHandle.add(null);
     }

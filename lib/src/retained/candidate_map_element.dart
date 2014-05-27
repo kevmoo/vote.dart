@@ -15,7 +15,7 @@ class CandidateMapElement extends ParentThing implements MapElementBase {
     return _elements.length;
   }
 
-  Thing getVisualChild(int index){
+  Thing getVisualChild(int index) {
     _ensureElements();
     return _elements[index];
   }
@@ -39,7 +39,7 @@ class CandidateMapElement extends ParentThing implements MapElementBase {
   List<MapPlayer> get showOnlyPlayers => _showOnlyPlayers;
 
   void set showOnlyPlayers(Iterable<MapPlayer> value) {
-    if(value == null) {
+    if (value == null) {
       _showOnlyPlayers = null;
     } else {
       var newVal = new ReadOnlyCollection(value);
@@ -48,7 +48,7 @@ class CandidateMapElement extends ParentThing implements MapElementBase {
       _showOnlyPlayers = newVal;
     }
 
-    if(_elements == null) {
+    if (_elements == null) {
       invalidateDraw();
     } else {
       _updateCandidateElements();
@@ -56,9 +56,9 @@ class CandidateMapElement extends ParentThing implements MapElementBase {
   }
 
   void _ensureElements() {
-    if(_elements == null) {
+    if (_elements == null) {
       _elements = new List<CandidateElement>();
-      for(final p in _players) {
+      for (final p in _players) {
         final hue = LocationData.getHue(p);
         final rgb = (new HslColor(hue, 0.5, 0.6)).toRgb();
         final ce = new CandidateElement(_radius * 4, _radius * 4,

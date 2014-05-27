@@ -6,10 +6,9 @@ abstract class Election<TVoter extends Player, TCandidate extends Player> {
   ReadOnlyCollection<ElectionPlace<TCandidate>> get places;
 
   TCandidate get singleWinner {
-    if(places.length > 0 && places[0].length == 1) {
+    if (places.length > 0 && places[0].length == 1) {
       return places[0][0];
-    }
-    else {
+    } else {
       return null;
     }
   }

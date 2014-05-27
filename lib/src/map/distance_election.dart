@@ -1,7 +1,7 @@
 part of vote.map;
 
 class DistanceElection<TVoter extends MapPlayer, TCandidate extends MapPlayer>
-  extends Election<TVoter, TCandidate> {
+    extends Election<TVoter, TCandidate> {
 
   final ReadOnlyCollection<TCandidate> candidates;
   final ReadOnlyCollection<DistanceBallot<TVoter, TCandidate>> ballots;
@@ -26,18 +26,19 @@ class DistanceElection<TVoter extends MapPlayer, TCandidate extends MapPlayer>
       num sumOfDistance = 0;
       num sumOfSquaredDistance = 0;
       int count = 0;
-      for(final b in ballots) {
+      for (final b in ballots) {
         final distance = b.getDistance(candidate);
         sumOfDistance += distance;
         sumOfSquaredDistance += distance * distance;
         count++;
       }
 
-      return new Tuple<num, num>(sumOfDistance / count, sumOfSquaredDistance / count);
+      return new Tuple<num, num>(sumOfDistance / count, sumOfSquaredDistance /
+          count);
     });
 
-    final distances = new List<Tuple<num,num>>.from(distanceGroups.getKeys());
-    distances.sort((a,b) => a.item1.compareTo(b.item1));
+    final distances = new List<Tuple<num, num>>.from(distanceGroups.getKeys());
+    distances.sort((a, b) => a.item1.compareTo(b.item1));
 
     int placeNumber = 1;
     final places = new ReadOnlyCollection(distances.map((d) {

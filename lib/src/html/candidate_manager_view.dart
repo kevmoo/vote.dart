@@ -6,11 +6,11 @@ class CandidateManagerView extends HtmlView {
   final StreamController _requestNewCandidateHandle;
   ReadOnlyCollection<MapPlayer> _candidates;
 
-  CandidateManagerView(DivElement node) :
-    _requestRemoveCandidateHandle = new StreamController<MapPlayer>(),
-    _requestNewCandidateHandle = new StreamController(),
-    _candidates = new ReadOnlyCollection<MapPlayer>.empty(),
-    super(node);
+  CandidateManagerView(DivElement node)
+      : _requestRemoveCandidateHandle = new StreamController<MapPlayer>(),
+        _requestNewCandidateHandle = new StreamController(),
+        _candidates = new ReadOnlyCollection<MapPlayer>.empty(),
+        super(node);
 
   void set candidates(ReadOnlyCollection<MapPlayer> value) {
     assert(value != null);
@@ -21,8 +21,7 @@ class CandidateManagerView extends HtmlView {
   Stream<MapPlayer> get candidateRemoveRequest =>
       _requestRemoveCandidateHandle.stream;
 
-  Stream get newCandidateRequest =>
-      _requestNewCandidateHandle.stream;
+  Stream get newCandidateRequest => _requestNewCandidateHandle.stream;
 
   void updateElement() {
     node.children.clear();
@@ -35,7 +34,7 @@ class CandidateManagerView extends HtmlView {
 
     final addButton = new ButtonElement();
     addButton.text = "Add Candidate";
-    if(_candidates.length < LocationData.MAX_CANDIDATE_COUNT) {
+    if (_candidates.length < LocationData.MAX_CANDIDATE_COUNT) {
       addButton.onClick.listen(_requestNewCandidate);
     } else {
       addButton.disabled = true;
@@ -43,12 +42,12 @@ class CandidateManagerView extends HtmlView {
 
     cell.children.add(addButton);
 
-    if(_candidates != null) {
-      for(final candidate in _candidates) {
+    if (_candidates != null) {
+      for (final candidate in _candidates) {
         row = table.insertRow(-1);
 
         final hue = LocationData.getHue(candidate);
-        if(hue != null) {
+        if (hue != null) {
           final hsl = new HslColor(hue, 1, 0.75);
           final rgb = hsl.toRgb();
           row.style.background = rgb.toHex();
@@ -62,7 +61,7 @@ class CandidateManagerView extends HtmlView {
         final deleteButton = new ButtonElement();
         deleteButton.text = 'Delete';
         deleteButton.dataset[_CANDIDATE_ID_ATTRIBUTE] = candidate.id.toString();
-        if(_candidates.length > 1) {
+        if (_candidates.length > 1) {
           deleteButton.onClick.listen(_deleteClick);
         } else {
           deleteButton.disabled = true;

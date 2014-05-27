@@ -40,7 +40,7 @@ class PluralityElection<TVoter extends Player, TCandidate extends Player>
     var ballotCounts = new List<int>.from(voteCounts.keys);
 
     // NOTE: reverse sorting
-    ballotCounts.sort((a,b) => b.compareTo(a));
+    ballotCounts.sort((a, b) => b.compareTo(a));
 
     int place = 1;
     var places = new List<PluralityElectionPlace<TCandidate>>();
