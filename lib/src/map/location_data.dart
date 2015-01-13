@@ -43,17 +43,13 @@ class LocationData {
     }
 
     final candidates = new List<MapPlayer>();
-    $(coords)
-      .map((c) => c.scale(SPAN))
-      .forEachWithIndex((c,i) {
-        final candidate = new MapPlayer(c, getCandidateName(i));
-        candidates.add(candidate);
-      });
+    $(coords).map((c) => c.scale(SPAN)).forEachWithIndex((c, i) {
+      final candidate = new MapPlayer(c, getCandidateName(i));
+      candidates.add(candidate);
+    });
 
-    return new LocationData(
-      new ReadOnlyCollection<MapPlayer>.wrap(voters),
-      new ReadOnlyCollection<MapPlayer>.wrap(candidates));
-
+    return new LocationData(new ReadOnlyCollection<MapPlayer>.wrap(voters),
+        new ReadOnlyCollection<MapPlayer>.wrap(candidates));
   }
 
   LocationData cloneAndRemove(MapPlayer mp) {

@@ -1,5 +1,3 @@
 part of vote;
 
-abstract class Player implements Comparable {
-
-}
+abstract class Player implements Comparable {}

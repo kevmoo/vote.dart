@@ -4,8 +4,9 @@ class DistanceBallot<TVoter extends MapPlayer, TCandidate extends MapPlayer>
     extends RankedBallot<TVoter, TCandidate> {
   final Map<TCandidate, num> _distances;
 
-  DistanceBallot._internal(TVoter voter, ReadOnlyCollection<TCandidate>
-      items, this._distances) : super.protected(voter, items);
+  DistanceBallot._internal(
+      TVoter voter, ReadOnlyCollection<TCandidate> items, this._distances)
+      : super.protected(voter, items);
 
   factory DistanceBallot(TVoter voter, Iterable<TCandidate> candidates) {
     final distances = $(candidates).toMap((c) {

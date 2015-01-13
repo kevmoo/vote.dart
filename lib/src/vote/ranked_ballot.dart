@@ -1,12 +1,12 @@
 part of vote;
 
 class RankedBallot<TVoter extends Player, TCandidate extends Player>
-  extends PluralityBallot<TVoter, TCandidate> {
+    extends PluralityBallot<TVoter, TCandidate> {
   final ReadOnlyCollection<TCandidate> rank;
 
-  RankedBallot.protected(TVoter voter, ReadOnlyCollection<TCandidate> items):
-    super(voter, items[0]),
-    rank = items;
+  RankedBallot.protected(TVoter voter, ReadOnlyCollection<TCandidate> items)
+      : super(voter, items[0]),
+        rank = items;
 
   factory RankedBallot(TVoter voter, Iterable<TCandidate> rank) {
     requireArgumentNotNull(voter, 'voter');
@@ -19,5 +19,6 @@ class RankedBallot<TVoter extends Player, TCandidate extends Player>
     return new RankedBallot.protected(voter, items);
   }
 
-  String toString() => "{RankedBallot for '$voter', ranked ${rank.length} candidates}";
+  String toString() =>
+      "{RankedBallot for '$voter', ranked ${rank.length} candidates}";
 }

@@ -1,8 +1,7 @@
 part of vote;
 
 class IrvElection<TVoter extends Player, TCandidate extends Player>
-  extends Election<TVoter, TCandidate> {
-
+    extends Election<TVoter, TCandidate> {
   final ReadOnlyCollection<TCandidate> candidates;
   final ReadOnlyCollection<Ballot<TVoter, TCandidate>> ballots;
   final ReadOnlyCollection<IrvRound<TVoter, TCandidate>> rounds;
@@ -12,9 +11,8 @@ class IrvElection<TVoter extends Player, TCandidate extends Player>
   factory IrvElection(Iterable<RankedBallot<TVoter, TCandidate>> ballots) {
     final roBallots = new ReadOnlyCollection(ballots);
 
-    final roCandidates = new ReadOnlyCollection($(roBallots)
-        .expand((b) => b.rank)
-        .distinct());
+    final roCandidates =
+        new ReadOnlyCollection($(roBallots).expand((b) => b.rank).distinct());
 
     final rounds = new List<IrvRound<TVoter, TCandidate>>();
 
@@ -25,12 +23,10 @@ class IrvElection<TVoter extends Player, TCandidate extends Player>
       rounds.add(round);
 
       eliminatedCandidates.addAll(round.eliminatedCandidates.toList());
-    } while(!round.isFinal);
+    } while (!round.isFinal);
 
     return new IrvElection._internal(
-      roCandidates,
-      roBallots,
-      new ReadOnlyCollection.wrap(rounds));
+        roCandidates, roBallots, new ReadOnlyCollection.wrap(rounds));
   }
 
   // TODO: need to add `places`

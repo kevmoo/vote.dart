@@ -7,8 +7,7 @@ class MapPlayer extends Player {
   final String name;
   Coordinate _location;
 
-  MapPlayer(this._location, [this.name = null]) :
-    _id = _counter++;
+  MapPlayer(this._location, [this.name = null]) : _id = _counter++;
 
   Coordinate get location => _location;
 
@@ -26,7 +25,7 @@ class MapPlayer extends Player {
   bool operator ==(MapPlayer other) => other != null && other._id == _id;
 
   String toString() {
-    if(name == null) {
+    if (name == null) {
       return "MapPlayer at [${_location.x.toStringAsFixed(1)}, ${_location.y.toStringAsFixed(1)}]";
     } else {
       return name;

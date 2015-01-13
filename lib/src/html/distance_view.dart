@@ -39,7 +39,6 @@ class DistanceView extends HtmlView {
       for (final place in _election.places) {
         var first = true;
         for (final candidate in place) {
-
           row = table.insertRow(-1);
           row.classes.add(evenPlaceRow ? 'row-even' : 'row-odd');
 
@@ -61,7 +60,6 @@ class DistanceView extends HtmlView {
           }
           cell.innerHtml = candidate.toString();
 
-
           if (first) {
             first = false;
 
@@ -80,7 +78,6 @@ class DistanceView extends HtmlView {
         }
         evenPlaceRow = !evenPlaceRow;
       }
-
     }
 
     node.children.add(table);

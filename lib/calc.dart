@@ -9,22 +9,27 @@ import 'vote.dart';
 import 'src/util.dart';
 
 class CalcEngine {
-  final ThrottledStream<LocationData, DistanceElection> _distanceElectionMapper
-    = new ThrottledStream(_distanceElectionIsolate);
+  final ThrottledStream<LocationData, DistanceElection> _distanceElectionMapper =
+      new ThrottledStream(_distanceElectionIsolate);
 
-  final ThrottledStream<List<PluralityBallot<MapPlayer, MapPlayer>>, PluralityElection> _pluralityElectionMapper
-    = new ThrottledStream<List<PluralityBallot<MapPlayer, MapPlayer>>, PluralityElection>(_pluralityElectionIsolate);
+  final ThrottledStream<List<PluralityBallot<MapPlayer, MapPlayer>>, PluralityElection> _pluralityElectionMapper =
+      new ThrottledStream<List<PluralityBallot<MapPlayer, MapPlayer>>, PluralityElection>(
+          _pluralityElectionIsolate);
 
-  final ThrottledStream<List<RankedBallot<MapPlayer, MapPlayer>>, CondorcetElection> _condorcetElectionMapper
-    = new ThrottledStream<List<RankedBallot<MapPlayer, MapPlayer>>, CondorcetElection>(_condorcetElectionIsolate);
+  final ThrottledStream<List<RankedBallot<MapPlayer, MapPlayer>>, CondorcetElection> _condorcetElectionMapper =
+      new ThrottledStream<List<RankedBallot<MapPlayer, MapPlayer>>, CondorcetElection>(
+          _condorcetElectionIsolate);
 
   final ThrottledStream<List<RankedBallot<MapPlayer, MapPlayer>>, IrvElection> _irvElectionMapper =
-      new ThrottledStream<List<RankedBallot<MapPlayer, MapPlayer>>, IrvElection>(_irvElectionIsolate);
+      new ThrottledStream<List<RankedBallot<MapPlayer, MapPlayer>>, IrvElection>(
+          _irvElectionIsolate);
 
-  final ThrottledStream<Tuple3<DistanceElection, LocationData, List<MapPlayer>>, Map<MapPlayer, String>> _voterHexMapper
-    = new ThrottledStream<Tuple3<DistanceElection, LocationData, List<MapPlayer>>, Map<MapPlayer, String>>(_voterHexIsolate);
+  final ThrottledStream<Tuple3<DistanceElection, LocationData, List<MapPlayer>>, Map<MapPlayer, String>> _voterHexMapper =
+      new ThrottledStream<Tuple3<DistanceElection, LocationData, List<MapPlayer>>, Map<MapPlayer, String>>(
+          _voterHexIsolate);
 
-  final StreamController<LocationData> _locationDataStream = new StreamController<LocationData>();
+  final StreamController<LocationData> _locationDataStream =
+      new StreamController<LocationData>();
 
   List<MapPlayer> _highlightCandidates;
 
@@ -54,12 +59,14 @@ class CalcEngine {
 
     final roCandidates = new ReadOnlyCollection<MapPlayer>(value);
 
-    if(roCandidates.length > 0) {
-      final newData = new LocationData(_distanceElectionMapper.source.voters, roCandidates);
+    if (roCandidates.length > 0) {
+      final newData =
+          new LocationData(_distanceElectionMapper.source.voters, roCandidates);
 
       locationData = newData;
     } else {
-      print('TODO: we blow up at the moment w/ zero candidates. Probably okay.');
+      print(
+          'TODO: we blow up at the moment w/ zero candidates. Probably okay.');
     }
   }
 
@@ -70,9 +77,11 @@ class CalcEngine {
 
   DistanceElection get distanceElection => _distanceElectionMapper.outputValue;
 
-  PluralityElection get pluralityElection => _pluralityElectionMapper.outputValue;
+  PluralityElection get pluralityElection =>
+      _pluralityElectionMapper.outputValue;
 
-  CondorcetElection get condorcetElection => _condorcetElectionMapper.outputValue;
+  CondorcetElection get condorcetElection =>
+      _condorcetElectionMapper.outputValue;
 
   IrvElection get irvElection => _irvElectionMapper.outputValue;
 
@@ -92,8 +101,7 @@ class CalcEngine {
   //
   // Events
   //
-  Stream<LocationData> get locationDataChanged =>
-      _locationDataStream.stream;
+  Stream<LocationData> get locationDataChanged => _locationDataStream.stream;
 
   Stream<DistanceElection> get distanceElectionChanged =>
       _distanceElectionMapper.outputStream;
@@ -104,8 +112,7 @@ class CalcEngine {
   Stream<CondorcetElection> get condorcetElectionChanged =>
       _condorcetElectionMapper.outputStream;
 
-  Stream<IrvElection> get irvElectionChanged =>
-      _irvElectionMapper.outputStream;
+  Stream<IrvElection> get irvElectionChanged => _irvElectionMapper.outputStream;
 
   Stream<Map<MapPlayer, String>> get voterHueMapperChanged =>
       _voterHexMapper.outputStream;
@@ -122,7 +129,8 @@ class CalcEngine {
   }
 
   void _updateVoterHexMapper() {
-    final val = new Tuple3(distanceElection, locationData, _highlightCandidates);
+    final val =
+        new Tuple3(distanceElection, locationData, _highlightCandidates);
     _voterHexMapper.source = val;
   }
 }
@@ -131,19 +139,23 @@ DistanceElection _distanceElectionIsolate(LocationData data) {
   return new DistanceElection.fromData(data);
 }
 
-PluralityElection _pluralityElectionIsolate(List<PluralityBallot<MapPlayer, MapPlayer>> ballots) {
+PluralityElection _pluralityElectionIsolate(
+    List<PluralityBallot<MapPlayer, MapPlayer>> ballots) {
   return new PluralityElection(ballots);
 }
 
-CondorcetElection _condorcetElectionIsolate(List<RankedBallot<MapPlayer, MapPlayer>> ballots) {
+CondorcetElection _condorcetElectionIsolate(
+    List<RankedBallot<MapPlayer, MapPlayer>> ballots) {
   return new CondorcetElection(ballots);
 }
 
-IrvElection _irvElectionIsolate(List<RankedBallot<MapPlayer, MapPlayer>> ballots) {
+IrvElection _irvElectionIsolate(
+    List<RankedBallot<MapPlayer, MapPlayer>> ballots) {
   return new IrvElection(ballots);
 }
 
-Map<MapPlayer, String> _voterHexIsolate(Tuple3<DistanceElection, LocationData, List<MapPlayer>> tuple) {
+Map<MapPlayer, String> _voterHexIsolate(
+    Tuple3<DistanceElection, LocationData, List<MapPlayer>> tuple) {
   final map = new Map<MapPlayer, String>();
   for (final b in tuple.item1.ballots) {
     MapPlayer candidate;

@@ -6,9 +6,7 @@ class ReadOnlyCollection<T> extends UnmodifiableListView<T> {
   ReadOnlyCollection(Iterable<T> source)
       : super(source.toList(growable: false));
 
-  ReadOnlyCollection.wrap(Iterable<T> source)
-      : super(source);
+  ReadOnlyCollection.wrap(Iterable<T> source) : super(source);
 
-  ReadOnlyCollection.empty()
-      : super(const []);
+  ReadOnlyCollection.empty() : super(const []);
 }

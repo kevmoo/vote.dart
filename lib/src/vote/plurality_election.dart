@@ -1,24 +1,23 @@
 part of vote;
 
 class PluralityElection<TVoter extends Player, TCandidate extends Player>
-  extends Election<TVoter, TCandidate> {
+    extends Election<TVoter, TCandidate> {
   final ReadOnlyCollection<Ballot<TVoter, TCandidate>> ballots;
   final Grouping<TCandidate, PluralityBallot<TVoter, TCandidate>> _ballotGroup;
   final ReadOnlyCollection<PluralityElectionPlace<TCandidate>> places;
 
   PluralityElection._internal(this.ballots, this._ballotGroup,
-    Iterable<PluralityElectionPlace<TCandidate>> sourcePlaces) :
-      places = new ReadOnlyCollection(sourcePlaces);
+      Iterable<PluralityElectionPlace<TCandidate>> sourcePlaces)
+      : places = new ReadOnlyCollection(sourcePlaces);
 
   factory PluralityElection(
-    Iterable<PluralityBallot<TVoter, TCandidate>> ballots) {
-
+      Iterable<PluralityBallot<TVoter, TCandidate>> ballots) {
     final roBallots = new ReadOnlyCollection(ballots);
 
     // Check voter uniqueness
     final voterList = new ReadOnlyCollection(roBallots.map((pb) => pb.voter));
     requireArgument(CollectionUtil.allUnique(voterList),
-      "Only one ballot per voter is allowed");
+        "Only one ballot per voter is allowed");
 
     final group = $(roBallots).group((pb) => pb.choice);
 

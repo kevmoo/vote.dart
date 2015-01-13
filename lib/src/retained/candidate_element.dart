@@ -7,8 +7,10 @@ class CandidateElement extends Thing {
   AffineTransform _tx;
   bool _hidden = false;
 
-  CandidateElement(num w, num h, this._color, MapPlayer p) :
-    player = p, _text = p.name, super(w, h) {
+  CandidateElement(num w, num h, this._color, MapPlayer p)
+      : player = p,
+        _text = p.name,
+        super(w, h) {
     _tx = addTransform();
   }
 
@@ -27,7 +29,6 @@ class CandidateElement extends Thing {
       ctx.globalAlpha = 0.3;
       ctx.fillStyle = '#999999';
     } else {
-
       final num shadowDistance = (Mouse.isMouseDirectlyOver(this)) ? 4 : 2;
 
       ctx.shadowColor = 'black';

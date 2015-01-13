@@ -61,8 +61,8 @@ class CandidateMapElement extends ParentThing implements MapElementBase {
       for (final p in _players) {
         final hue = LocationData.getHue(p);
         final rgb = (new HslColor(hue, 0.5, 0.6)).toRgb();
-        final ce = new CandidateElement(_radius * 4, _radius * 4,
-          rgb.toHex(), p);
+        final ce =
+            new CandidateElement(_radius * 4, _radius * 4, rgb.toHex(), p);
         ce.registerParent(this);
 
         MouseManager.setCursor(ce, 'pointer');
@@ -71,7 +71,8 @@ class CandidateMapElement extends ParentThing implements MapElementBase {
 
         final tempTx = ce.addTransform();
         tempTx.concatenate(_tx);
-        tempTx.translate(p.location.x - 2 * _radius, p.location.y - 2 * _radius);
+        tempTx.translate(
+            p.location.x - 2 * _radius, p.location.y - 2 * _radius);
 
         _elements.add(ce);
       }
@@ -89,8 +90,9 @@ class CandidateMapElement extends ParentThing implements MapElementBase {
 
   void _updateCandidateElements() {
     assert(_elements != null);
-    for(final e in _elements) {
-      e.hidden = _showOnlyPlayers != null && _showOnlyPlayers.indexOf(e.player) < 0;
+    for (final e in _elements) {
+      e.hidden =
+          _showOnlyPlayers != null && _showOnlyPlayers.indexOf(e.player) < 0;
     }
   }
 }

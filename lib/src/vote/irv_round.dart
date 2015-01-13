@@ -5,8 +5,7 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
   final ReadOnlyCollection<IrvElimination<TVoter, TCandidate>> eliminations;
 
   factory IrvRound(ReadOnlyCollection<RankedBallot<TVoter, TCandidate>> ballots,
-    List<TCandidate> eliminatedCandidates) {
-
+      List<TCandidate> eliminatedCandidates) {
     var cleanedBallots = ballots.map((b) {
       var pruned =
           new ReadOnlyCollection($(b.rank).exclude(eliminatedCandidates));
@@ -16,9 +15,8 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
 
     final activeBallotCount = $(cleanedBallots).count((t) => t.item3 != null);
 
-    final candidateAllocations = new Grouping(cleanedBallots
-        .where((t) => t.item3 != null),
-        (tuple) => tuple.item3);
+    final candidateAllocations = new Grouping(
+        cleanedBallots.where((t) => t.item3 != null), (tuple) => tuple.item3);
 
     final voteGroups = new Grouping(candidateAllocations.getKeys(), (c) {
       return candidateAllocations[c].length;
@@ -38,8 +36,10 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
 
     final newlyEliminatedCandidates = _getEliminatedCandidates(places);
 
-    final eliminations = new ReadOnlyCollection(newlyEliminatedCandidates.map((c) {
-      final xfers = new Map<TCandidate, List<RankedBallot<TVoter, TCandidate>>>();
+    final eliminations = new ReadOnlyCollection(newlyEliminatedCandidates.map(
+        (c) {
+      final xfers =
+          new Map<TCandidate, List<RankedBallot<TVoter, TCandidate>>>();
 
       final exhausted = new List<RankedBallot<TVoter, TCandidate>>();
 
@@ -56,7 +56,8 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
         }
       }
 
-      return new IrvElimination<TVoter, TCandidate>(c, xfers, new ReadOnlyCollection.wrap(exhausted));
+      return new IrvElimination<TVoter, TCandidate>(
+          c, xfers, new ReadOnlyCollection.wrap(exhausted));
     }));
 
     return new IrvRound._internal(places, eliminations);
@@ -66,8 +67,8 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
 
   bool get isFinal => eliminations.length == 0;
 
-  Iterable<TCandidate> get eliminatedCandidates => eliminations
-      .map((ie) => ie.candidate);
+  Iterable<TCandidate> get eliminatedCandidates =>
+      eliminations.map((ie) => ie.candidate);
 
   Iterable<TCandidate> get candidates => places.expand((p) => p);
 

@@ -13,7 +13,7 @@ class TestLocationData {
 
     expect(data.candidates, hasLength(5));
     expect(data.candidates.map((mp) => mp.name),
-      orderedEquals(['A', 'B', 'C', 'D', 'E']));
+        orderedEquals(['A', 'B', 'C', 'D', 'E']));
 
     final canC = data.candidates[2];
     expect(canC.name, equals('C'));
@@ -21,18 +21,17 @@ class TestLocationData {
     data = data.cloneAndRemove(canC);
     expect(data.candidates, hasLength(4));
     expect(data.candidates.map((mp) => mp.name),
-      orderedEquals(['A', 'B', 'D', 'E']));
+        orderedEquals(['A', 'B', 'D', 'E']));
 
     data = data.cloneAndAddCandidate();
     expect(data.candidates, hasLength(5));
     expect(data.candidates.map((mp) => mp.name),
-      orderedEquals(['A', 'B', 'C', 'D', 'E']));
+        orderedEquals(['A', 'B', 'C', 'D', 'E']));
 
     data = data.cloneAndAddCandidate();
     expect(data.candidates, hasLength(6));
     expect(data.candidates.map((mp) => mp.name),
-      orderedEquals(['A', 'B', 'C', 'D', 'E', 'F']));
-
+        orderedEquals(['A', 'B', 'C', 'D', 'E', 'F']));
   }
 
   static void _testGetCandidateName() {
@@ -41,5 +40,4 @@ class TestLocationData {
     expect(LocationData.getCandidateName(25), equals('Z'));
     expect(() => LocationData.getCandidateName(26), throwsArgumentError);
   }
-
 }

@@ -49,7 +49,8 @@ class RootMapElement extends ParentThing {
     requireArgumentNotNull(value, "value");
     // TODO: would be great to use this calculation, but need to make it async
     //final vals = _getAverageCloseness(value);
-    final vals = new Tuple<num, Rectangle>(1, new Rectangle(0,0,LocationData.SPAN,LocationData.SPAN));
+    final vals = new Tuple<num, Rectangle>(
+        1, new Rectangle(0, 0, LocationData.SPAN, LocationData.SPAN));
 
     _averageCloseness = vals.item1;
     assert(isValidNumber(_averageCloseness));
@@ -112,7 +113,7 @@ class RootMapElement extends ParentThing {
 
       // Traslate the topLeft
       _tx.translate(_bounds.left + _averageCloseness / 2 + offsetX,
-        _bounds.top + _averageCloseness / 2 + offsetY);
+          _bounds.top + _averageCloseness / 2 + offsetY);
 
       // radius is used to space items.
       // should be less than half of the average Closeness
@@ -130,7 +131,8 @@ class RootMapElement extends ParentThing {
   // For each player
   // 1) find the closest guy [>= 0.5 away to avoid overlapping]
   // 2) find the average of the closest guys
-  static Tuple<num, Rectangle> _getAverageCloseness(Iterable<MapPlayer> players) {
+  static Tuple<num, Rectangle> _getAverageCloseness(
+      Iterable<MapPlayer> players) {
     num top = double.INFINITY;
     num left = double.INFINITY;
     num bottom = double.NEGATIVE_INFINITY;
@@ -150,7 +152,8 @@ class RootMapElement extends ParentThing {
       for (final playerB in players) {
         if (playerA != playerB) {
           final distance = playerA.location.distanceTo(playerB.location);
-          if(distance >= 0.5 && (closestDistance == null || distance < closestDistance)) {
+          if (distance >= 0.5 &&
+              (closestDistance == null || distance < closestDistance)) {
             closestDistance = distance;
           }
         }
@@ -164,7 +167,8 @@ class RootMapElement extends ParentThing {
 
     final avgDist = count == null ? null : sum / count;
 
-    return new Tuple<num, Rectangle>(avgDist, new Rectangle(left, top, right, bottom));
+    return new Tuple<num, Rectangle>(
+        avgDist, new Rectangle(left, top, right, bottom));
   }
 }
 

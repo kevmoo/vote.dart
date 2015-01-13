@@ -38,7 +38,6 @@ class PluralityView extends HtmlView {
       for (final place in _election.places) {
         var first = true;
         for (final candidate in place) {
-
           row = table.insertRow(-1);
           row.classes.add(evenPlaceRow ? 'row-even' : 'row-odd');
 
@@ -60,7 +59,6 @@ class PluralityView extends HtmlView {
           }
           cell.innerHtml = candidate.toString();
 
-
           if (first) {
             cell = row.insertCell(-1);
             cell.rowSpan = place.length;
@@ -74,10 +72,8 @@ class PluralityView extends HtmlView {
         }
         evenPlaceRow = !evenPlaceRow;
       }
-
     }
 
     node.children.add(table);
-
   }
 }

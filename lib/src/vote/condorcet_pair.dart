@@ -1,36 +1,34 @@
 part of vote;
 
 class CondorcetPair<TVoter extends Player, TCandidate extends Player>
-  extends Tuple<TCandidate, TCandidate> {
-
+    extends Tuple<TCandidate, TCandidate> {
   final ReadOnlyCollection<RankedBallot<TVoter, TCandidate>> ballots;
   final int firstOverSecond;
   final int secondOverFirst;
 
-  CondorcetPair._internal(TCandidate can1, TCandidate can2,
-    this.ballots, this.firstOverSecond, this.secondOverFirst) :
-    super(can1, can2);
+  CondorcetPair._internal(TCandidate can1, TCandidate can2, this.ballots,
+      this.firstOverSecond, this.secondOverFirst) : super(can1, can2);
 
   factory CondorcetPair(TCandidate can1, TCandidate can2,
-    [Iterable<RankedBallot<TVoter, TCandidate>> bals = null]) {
+      [Iterable<RankedBallot<TVoter, TCandidate>> bals = null]) {
     requireArgumentNotNull(can1, 'can1');
     requireArgumentNotNull(can2, 'can2');
     requireArgument(can1 != can2, 'can1 and can2 must be different');
 
-    if(can1.compareTo(can2) > 0) {
+    if (can1.compareTo(can2) > 0) {
       var temp = can2;
       can2 = can1;
       can1 = temp;
     }
 
-    if(bals == null) {
+    if (bals == null) {
       return new CondorcetPair._internal(can1, can2, null, 0, 0);
-    }
-    else {
-      var roBallots = new ReadOnlyCollection<RankedBallot<TVoter, TCandidate>>(bals);
+    } else {
+      var roBallots =
+          new ReadOnlyCollection<RankedBallot<TVoter, TCandidate>>(bals);
 
       requireArgument(CollectionUtil.allUnique(roBallots),
-        "Only one ballot per voter is allowed");
+          "Only one ballot per voter is allowed");
 
       int fos = 0;
       int sof = 0;
@@ -51,7 +49,6 @@ class CondorcetPair<TVoter extends Player, TCandidate extends Player>
 
       return new CondorcetPair._internal(can1, can2, roBallots, fos, sof);
     }
-
   }
 
   TCandidate get winner {
@@ -101,12 +98,11 @@ class CondorcetPair<TVoter extends Player, TCandidate extends Player>
     requireArgument(can1 == item1, 'can1');
     requireArgument(can2 == item2, 'can1');
 
-    if(flipped) {
-      return new CondorcetPair._internal(can2, can1, ballots,
-        secondOverFirst, firstOverSecond);
+    if (flipped) {
+      return new CondorcetPair._internal(
+          can2, can1, ballots, secondOverFirst, firstOverSecond);
     } else {
       return this;
     }
   }
-
 }

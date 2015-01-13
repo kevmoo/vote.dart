@@ -1,21 +1,21 @@
 part of vote_test;
 
 class TestPlurality {
-
   static void run() {
-    group('plurality', (){
+    group('plurality', () {
       test('random vote test', randomVoteTest);
-      test('Plurality Election Hates Double Votes', testPluralityElectionHatesDoubleVotes);
+      test('Plurality Election Hates Double Votes',
+          testPluralityElectionHatesDoubleVotes);
       test('tied for 1st', testTiedforFirst);
       test('single vote, single winner', testSingleVoteSingleWinner);
     });
   }
 
-  static void randomVoteTest(){
+  static void randomVoteTest() {
     var c1 = "candidate 1";
 
     var voters = new List<String>();
-    for(num i = 0;i < 10; i++){
+    for (num i = 0; i < 10; i++) {
       voters.add("Voter ${i}");
     }
 
@@ -24,13 +24,14 @@ class TestPlurality {
     var election = new PluralityElection(ballots);
   }
 
-  static void testSingleVoteSingleWinner(){
+  static void testSingleVoteSingleWinner() {
     var c1 = "candidate 1";
 
     var voter = "Bad Voter";
     var voters = [voter];
 
-    var ballots = new List.from(voters.map((v) => new PluralityBallot(v, c1)).toList());
+    var ballots =
+        new List.from(voters.map((v) => new PluralityBallot(v, c1)).toList());
 
     var election = new PluralityElection(ballots);
     expect(election.singleWinner, equals(c1));
@@ -46,7 +47,7 @@ class TestPlurality {
     var c3 = "candidate 3";
 
     var voters = new List<String>();
-    for(num i = 0; i < 10; i++){
+    for (num i = 0; i < 10; i++) {
       voters.add("c1 Voter ${i}");
     }
 
@@ -55,14 +56,14 @@ class TestPlurality {
     ballots.addAll(voters.map((v) => new PluralityBallot(v, c1)).toList());
 
     voters = new List<String>();
-    for(num i = 0; i < 10; i++){
+    for (num i = 0; i < 10; i++) {
       voters.add("c2 Voter ${voters.length}");
     }
 
     ballots.addAll(voters.map((v) => new PluralityBallot(v, c2)).toList());
 
     voters = new List<String>();
-    for(num i = 0; i < 9; i++){
+    for (num i = 0; i < 9; i++) {
       voters.add("c3 Voter ${voters.length}");
     }
 
@@ -82,17 +83,18 @@ class TestPlurality {
     expect(thirdPlace[0], equals(c3));
   }
 
-  static void testPluralityElectionHatesDoubleVotes(){
+  static void testPluralityElectionHatesDoubleVotes() {
     var c1 = "candidate 1";
 
     var voter = "Bad Voter";
     var voters = [voter, voter];
 
-
-    var ballots = new List.from(voters.map((v) => new PluralityBallot(v, c1)).toList());
+    var ballots =
+        new List.from(voters.map((v) => new PluralityBallot(v, c1)).toList());
 
     bool exception = false;
-    expect(() { new PluralityElection(ballots); }, throws);
-
+    expect(() {
+      new PluralityElection(ballots);
+    }, throws);
   }
 }

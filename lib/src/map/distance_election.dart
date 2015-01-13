@@ -2,7 +2,6 @@ part of vote.map;
 
 class DistanceElection<TVoter extends MapPlayer, TCandidate extends MapPlayer>
     extends Election<TVoter, TCandidate> {
-
   final ReadOnlyCollection<TCandidate> candidates;
   final ReadOnlyCollection<DistanceBallot<TVoter, TCandidate>> ballots;
   final ReadOnlyCollection<DistanceElectionPlace<TCandidate>> places;
@@ -13,7 +12,8 @@ class DistanceElection<TVoter extends MapPlayer, TCandidate extends MapPlayer>
     return new DistanceElection(data.voters, data.candidates);
   }
 
-  factory DistanceElection(Iterable<TVoter> voters, Iterable<TCandidate> candidates) {
+  factory DistanceElection(
+      Iterable<TVoter> voters, Iterable<TCandidate> candidates) {
     final cans = new ReadOnlyCollection<TCandidate>(candidates);
 
     final ballots = new ReadOnlyCollection(voters
@@ -33,8 +33,8 @@ class DistanceElection<TVoter extends MapPlayer, TCandidate extends MapPlayer>
         count++;
       }
 
-      return new Tuple<num, num>(sumOfDistance / count, sumOfSquaredDistance /
-          count);
+      return new Tuple<num, num>(
+          sumOfDistance / count, sumOfSquaredDistance / count);
     });
 
     final distances = new List<Tuple<num, num>>.from(distanceGroups.getKeys());
@@ -43,8 +43,8 @@ class DistanceElection<TVoter extends MapPlayer, TCandidate extends MapPlayer>
     int placeNumber = 1;
     final places = new ReadOnlyCollection(distances.map((d) {
       var placeCans = distanceGroups[d];
-      final place = new DistanceElectionPlace(placeNumber, placeCans,
-        d.item1, d.item2);
+      final place =
+          new DistanceElectionPlace(placeNumber, placeCans, d.item1, d.item2);
       placeNumber += placeCans.length;
       return place;
     }));

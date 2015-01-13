@@ -21,19 +21,19 @@ void _testNoTransfersBetweenEliminated() {
   var voter = 1;
 
   final ballots = new List<RankedBallot>();
-  for(var i=0;i<10;i++) {
+  for (var i = 0; i < 10; i++) {
     ballots.add(new RankedBallot("Voter ${voter++}", [canA]));
   }
 
-  for(var i=0;i<8;i++) {
+  for (var i = 0; i < 8; i++) {
     ballots.add(new RankedBallot("Voter ${voter++}", [canB]));
   }
 
-  for(var i=0;i<2;i++) {
+  for (var i = 0; i < 2; i++) {
     ballots.add(new RankedBallot("Voter ${voter++}", [canC, canD]));
   }
 
-  for(var i=0;i<2;i++) {
+  for (var i = 0; i < 2; i++) {
     ballots.add(new RankedBallot("Voter ${voter++}", [canD, canC]));
   }
 
@@ -89,17 +89,17 @@ void _testIceCream() {
   var ballots = new List<RankedBallot>();
 
   // 29 cc, c, v
-  for(var i=0;i<29;i++) {
+  for (var i = 0; i < 29; i++) {
     ballots.add(new RankedBallot("Voter ${voter++}", [canCC, canC, canVan]));
   }
 
   // 31 c, cc, v
-  for(var i=0;i<31;i++) {
+  for (var i = 0; i < 31; i++) {
     ballots.add(new RankedBallot("Voter ${voter++}", [canC, canCC, canVan]));
   }
 
   // 40 v, c, cc
-  for(var i=0;i<40;i++) {
+  for (var i = 0; i < 40; i++) {
     ballots.add(new RankedBallot("Voter ${voter++}", [canVan, canC, canCC]));
   }
 
@@ -148,13 +148,18 @@ void _threeWayTieForFirst() {
 
   var ballots = new List<RankedBallot>();
 
-  ballots.add(new RankedBallot("Voter ${voter++}", [cA1, cA2, cA3, cB1, cC1, cC2, cD1]));
-  ballots.add(new RankedBallot("Voter ${voter++}", [cA1, cA2, cA3, cB1, cC2, cC1, cD1]));
-  ballots.add(new RankedBallot("Voter ${voter++}", [cA2, cA3, cA1, cB1, cC1, cC2, cD1]));
-  ballots.add(new RankedBallot("Voter ${voter++}", [cA2, cA3, cA1, cB1, cC2, cC1, cD1]));
-  ballots.add(new RankedBallot("Voter ${voter++}", [cA3, cA1, cA2, cB1, cC1, cC2, cD1]));
-  ballots.add(new RankedBallot("Voter ${voter++}", [cA3, cA1, cA2, cB1, cC2, cC1, cD1]));
-
+  ballots.add(new RankedBallot(
+      "Voter ${voter++}", [cA1, cA2, cA3, cB1, cC1, cC2, cD1]));
+  ballots.add(new RankedBallot(
+      "Voter ${voter++}", [cA1, cA2, cA3, cB1, cC2, cC1, cD1]));
+  ballots.add(new RankedBallot(
+      "Voter ${voter++}", [cA2, cA3, cA1, cB1, cC1, cC2, cD1]));
+  ballots.add(new RankedBallot(
+      "Voter ${voter++}", [cA2, cA3, cA1, cB1, cC2, cC1, cD1]));
+  ballots.add(new RankedBallot(
+      "Voter ${voter++}", [cA3, cA1, cA2, cB1, cC1, cC2, cD1]));
+  ballots.add(new RankedBallot(
+      "Voter ${voter++}", [cA3, cA1, cA2, cB1, cC2, cC1, cD1]));
 
   var ce = new IrvElection(ballots);
 }

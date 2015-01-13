@@ -14,13 +14,12 @@ void main() {
   DivElement condorcetDiv = querySelector('#condorcetView');
   DivElement canManDiv = querySelector('#canManView');
   DivElement irvDiv = querySelector('#irvView');
-  var demo = new VoteDemo(canvas, pluralityDiv, distanceDiv, condorcetDiv,
-      canManDiv, irvDiv);
+  var demo = new VoteDemo(
+      canvas, pluralityDiv, distanceDiv, condorcetDiv, canManDiv, irvDiv);
   demo.requestFrame();
 }
 
 class VoteDemo extends StageWrapper<RootMapElement> {
-
   final CalcEngine _calcEngine = new CalcEngine();
 
   final Map<MapPlayer, num> _playerHues = new Map<MapPlayer, num>();
@@ -33,8 +32,8 @@ class VoteDemo extends StageWrapper<RootMapElement> {
   Map<MapPlayer, num> _candidateHues;
 
   factory VoteDemo(CanvasElement canvas, DivElement pluralityDiv,
-    DivElement distanceDiv, DivElement condorcetDiv, DivElement canManDiv,
-    DivElement irvDiv) {
+      DivElement distanceDiv, DivElement condorcetDiv, DivElement canManDiv,
+      DivElement irvDiv) {
     var voterMap = new RootMapElement(canvas.width, canvas.height);
 
     var distanceView = new DistanceView(distanceDiv);
@@ -46,15 +45,13 @@ class VoteDemo extends StageWrapper<RootMapElement> {
 
     final canManView = new CandidateManagerView(canManDiv);
 
-    return new VoteDemo._internal(canvas, voterMap,
-      condorcetView, pluralityView, distanceView, canManView, irvView);
+    return new VoteDemo._internal(canvas, voterMap, condorcetView,
+        pluralityView, distanceView, canManView, irvView);
   }
 
   VoteDemo._internal(CanvasElement canvas, RootMapElement rootMapElement,
       this._condorcetView, this._pluralityView, this._distanceView,
-      this._canManView, this._irvView) :
-        super(canvas, rootMapElement) {
-
+      this._canManView, this._irvView) : super(canvas, rootMapElement) {
     final mm = new MouseManager(stage);
 
     _calcEngine.locationDataChanged.listen(_locationDataUpdated);
@@ -70,11 +67,11 @@ class VoteDemo extends StageWrapper<RootMapElement> {
 
     _canManView.newCandidateRequest.listen((_) => _calcEngine.addCandidate());
 
-    _condorcetView.hoverChanged.listen((_) =>
-      _updateHighlightCandidates(_condorcetView.highlightCandidates));
+    _condorcetView.hoverChanged.listen(
+        (_) => _updateHighlightCandidates(_condorcetView.highlightCandidates));
 
-    _irvView.hoverChanged.listen((_) =>
-        _updateHighlightCandidates(_irvView.highlightCandidates));
+    _irvView.hoverChanged.listen(
+        (_) => _updateHighlightCandidates(_irvView.highlightCandidates));
 
     final initialData = new LocationData.random();
 
@@ -124,7 +121,7 @@ class VoteDemo extends StageWrapper<RootMapElement> {
   }
 
   @override
-  void drawFrame(double highResTime){
+  void drawFrame(double highResTime) {
     super.drawFrame(highResTime);
 
     _condorcetView.draw();

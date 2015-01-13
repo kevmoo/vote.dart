@@ -56,7 +56,6 @@ class CondorcetView extends HtmlView {
       for (final place in _election.places) {
         bool first = true;
         for (final candidate in place) {
-
           row = table.insertRow(-1);
           row.classes.add(evenPlaceRow ? 'row-even' : 'row-odd');
 
@@ -139,7 +138,6 @@ class CondorcetView extends HtmlView {
         }
         evenPlaceRow = !evenPlaceRow;
       }
-
     }
 
     table.onMouseMove.listen(_onMouseOver);
@@ -160,16 +158,18 @@ class CondorcetView extends HtmlView {
   void _updateCellHoverStyle() {
     final String hoverPairClass = 'hover-pair';
 
-    final List<Element> cells = node.querySelectorAll('td.pair-cell.$hoverPairClass');
-    cells.forEach((e){
+    final List<Element> cells =
+        node.querySelectorAll('td.pair-cell.$hoverPairClass');
+    cells.forEach((e) {
       e.classes.remove(hoverPairClass);
     });
 
-    if(_highlightCandidates != null) {
+    if (_highlightCandidates != null) {
       final matchClass =
           _getPairElementName(_highlightCandidates[0], _highlightCandidates[1]);
-      final List<Element> thePairs = node.querySelectorAll('td.pair-cell.$matchClass');
-      thePairs.forEach((e){
+      final List<Element> thePairs =
+          node.querySelectorAll('td.pair-cell.$matchClass');
+      thePairs.forEach((e) {
         e.classes.add(hoverPairClass);
       });
     }
