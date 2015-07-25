@@ -6,5 +6,6 @@ class DistanceElectionPlace<TCandidate extends MapPlayer>
   final num avgDistanceSquared;
 
   DistanceElectionPlace(int place, Iterable<TCandidate> candidates,
-      this.avgDistance, this.avgDistanceSquared) : super(place, candidates);
+      this.avgDistance, this.avgDistanceSquared)
+      : super(place, candidates);
 }

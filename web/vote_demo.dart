@@ -51,7 +51,8 @@ class VoteDemo extends StageWrapper<RootMapElement> {
 
   VoteDemo._internal(CanvasElement canvas, RootMapElement rootMapElement,
       this._condorcetView, this._pluralityView, this._distanceView,
-      this._canManView, this._irvView) : super(canvas, rootMapElement) {
+      this._canManView, this._irvView)
+      : super(canvas, rootMapElement) {
     final mm = new MouseManager(stage);
 
     _calcEngine.locationDataChanged.listen(_locationDataUpdated);

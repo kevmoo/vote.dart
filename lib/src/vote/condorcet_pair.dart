@@ -7,7 +7,8 @@ class CondorcetPair<TVoter extends Player, TCandidate extends Player>
   final int secondOverFirst;
 
   CondorcetPair._internal(TCandidate can1, TCandidate can2, this.ballots,
-      this.firstOverSecond, this.secondOverFirst) : super(can1, can2);
+      this.firstOverSecond, this.secondOverFirst)
+      : super(can1, can2);
 
   factory CondorcetPair(TCandidate can1, TCandidate can2,
       [Iterable<RankedBallot<TVoter, TCandidate>> bals = null]) {
