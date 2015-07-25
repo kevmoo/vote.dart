@@ -1,13 +1,9 @@
-part of vote_test_calc;
+import 'package:test/test.dart';
+import 'package:vote/calc.dart';
+import 'package:vote/map.dart';
 
-class TestCalcEngine {
-  static void run() {
-    group('CalcEngine', () {
-      test('base', _testBase);
-    });
-  }
-
-  static void _testBase() {
+void main() {
+  test('CalcEngine', () {
     final engine = new CalcEngine();
 
     final data = new LocationData.random();
@@ -40,5 +36,5 @@ class TestCalcEngine {
     expect(engine.locationData, isNull);
 
     engine.locationData = data;
-  }
+  });
 }

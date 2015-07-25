@@ -1,15 +1,13 @@
 library vote.test_irv_election;
 
-import 'package:unittest/unittest.dart';
+import 'package:test/test.dart';
 import 'package:vote/vote.dart';
 
 void main() {
-  group('IrvElection', () {
-    test('no transfers between eliminated', _testNoTransfersBetweenEliminated);
-    test('one candidate', _testOneCandidate);
-    test('three candidates, tied', _threeWayTieForFirst);
-    test('Ice Cream', _testIceCream);
-  });
+  test('no transfers between eliminated', _testNoTransfersBetweenEliminated);
+  test('one candidate', _testOneCandidate);
+  test('three candidates, tied', _threeWayTieForFirst);
+  test('Ice Cream', _testIceCream);
 }
 
 void _testNoTransfersBetweenEliminated() {
