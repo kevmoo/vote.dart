@@ -21,7 +21,7 @@ class TestPlurality {
 
     var ballots = voters.map((v) => new PluralityBallot(v, c1)).toList();
 
-    var election = new PluralityElection(ballots);
+    new PluralityElection(ballots);
   }
 
   static void testSingleVoteSingleWinner() {
@@ -92,7 +92,6 @@ class TestPlurality {
     var ballots =
         new List.from(voters.map((v) => new PluralityBallot(v, c1)).toList());
 
-    bool exception = false;
     expect(() {
       new PluralityElection(ballots);
     }, throws);

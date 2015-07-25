@@ -97,14 +97,6 @@ class TestCondorcetElection {
     ballots.add(new RankedBallot(
         "Voter ${voter++}", [cA3, cA1, cA2, cB1, cC2, cC1, cD1]));
 
-    var ce = new CondorcetElection(ballots);
-  }
-
-  static void _threeWayTieForSecond() {
-    pending();
-  }
-
-  static void _twoWayTie() {
-    pending();
+    new CondorcetElection(ballots);
   }
 }

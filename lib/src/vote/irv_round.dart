@@ -13,8 +13,6 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
       return new Tuple3(b, pruned, winner);
     });
 
-    final activeBallotCount = $(cleanedBallots).count((t) => t.item3 != null);
-
     final candidateAllocations = new Grouping(
         cleanedBallots.where((t) => t.item3 != null), (tuple) => tuple.item3);
 

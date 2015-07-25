@@ -22,14 +22,11 @@ void main() {
 class VoteDemo extends StageWrapper<RootMapElement> {
   final CalcEngine _calcEngine = new CalcEngine();
 
-  final Map<MapPlayer, num> _playerHues = new Map<MapPlayer, num>();
   final CondorcetView _condorcetView;
   final IrvView _irvView;
   final DistanceView _distanceView;
   final PluralityView _pluralityView;
   final CandidateManagerView _canManView;
-
-  Map<MapPlayer, num> _candidateHues;
 
   factory VoteDemo(CanvasElement canvas, DivElement pluralityDiv,
       DivElement distanceDiv, DivElement condorcetDiv, DivElement canManDiv,
@@ -53,7 +50,7 @@ class VoteDemo extends StageWrapper<RootMapElement> {
       this._condorcetView, this._pluralityView, this._distanceView,
       this._canManView, this._irvView)
       : super(canvas, rootMapElement) {
-    final mm = new MouseManager(stage);
+    new MouseManager(stage);
 
     _calcEngine.locationDataChanged.listen(_locationDataUpdated);
     _calcEngine.distanceElectionChanged.listen(_distanceElectionUpdated);

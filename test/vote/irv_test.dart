@@ -161,5 +161,5 @@ void _threeWayTieForFirst() {
   ballots.add(new RankedBallot(
       "Voter ${voter++}", [cA3, cA1, cA2, cB1, cC2, cC1, cD1]));
 
-  var ce = new IrvElection(ballots);
+  new IrvElection(ballots);
 }

@@ -10,7 +10,7 @@ class TestCondorcetPair {
 
       test('no dupe candidates', () {
         expect(() {
-          var pair = new CondorcetPair(c1, c1);
+          new CondorcetPair(c1, c1);
         }, throwsArgumentError);
       });
 
@@ -18,7 +18,7 @@ class TestCondorcetPair {
         var b1 = new RankedBallot(v1, [c1, c2]);
         var b2 = new RankedBallot(v1, [c1, c2]);
         expect(() {
-          var pair = new CondorcetPair(c1, c2, [b1, b2]);
+          new CondorcetPair(c1, c2, [b1, b2]);
         }, throwsArgumentError);
       });
 
@@ -26,10 +26,10 @@ class TestCondorcetPair {
         var b1 = new RankedBallot(v1, [c1]);
         var b2 = new RankedBallot(v1, [c2]);
         expect(() {
-          var pair = new CondorcetPair(c1, c2, [b1]);
+          new CondorcetPair(c1, c2, [b1]);
         }, throwsArgumentError);
         expect(() {
-          var pair = new CondorcetPair(c1, c2, [b2]);
+          new CondorcetPair(c1, c2, [b2]);
         }, throwsArgumentError);
       });
 

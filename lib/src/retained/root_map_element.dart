@@ -127,49 +127,6 @@ class RootMapElement extends ParentThing {
 
     super.update();
   }
-
-  // For each player
-  // 1) find the closest guy [>= 0.5 away to avoid overlapping]
-  // 2) find the average of the closest guys
-  static Tuple<num, Rectangle> _getAverageCloseness(
-      Iterable<MapPlayer> players) {
-    num top = double.INFINITY;
-    num left = double.INFINITY;
-    num bottom = double.NEGATIVE_INFINITY;
-    num right = double.NEGATIVE_INFINITY;
-
-    int count = 0;
-    num sum = 0;
-
-    for (final playerA in players) {
-      num closestDistance = null;
-
-      left = math.min(playerA.location.x, left);
-      top = math.min(playerA.location.y, top);
-      right = math.max(playerA.location.x, right);
-      bottom = math.max(playerA.location.y, bottom);
-
-      for (final playerB in players) {
-        if (playerA != playerB) {
-          final distance = playerA.location.distanceTo(playerB.location);
-          if (distance >= 0.5 &&
-              (closestDistance == null || distance < closestDistance)) {
-            closestDistance = distance;
-          }
-        }
-      }
-      if (closestDistance != null) {
-        assert(closestDistance >= 0.5);
-        sum += closestDistance;
-        count++;
-      }
-    }
-
-    final avgDist = count == null ? null : sum / count;
-
-    return new Tuple<num, Rectangle>(
-        avgDist, new Rectangle(left, top, right, bottom));
-  }
 }
 
 Point _constrain(Rectangle rect, Point value) {
