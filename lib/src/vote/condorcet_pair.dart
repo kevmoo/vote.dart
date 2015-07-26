@@ -1,4 +1,10 @@
-part of vote;
+library vote.vote.condorcet_pair;
+
+import 'package:bot/bot.dart' hide ReadOnlyCollection;
+
+import 'player.dart';
+import '../util.dart';
+import 'ranked_ballot.dart';
 
 class CondorcetPair<TVoter extends Player, TCandidate extends Player>
     extends Tuple<TCandidate, TCandidate> {

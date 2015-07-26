@@ -1,4 +1,13 @@
-part of vote;
+library vote.vote.plurality_election;
+
+import 'package:bot/bot.dart' hide ReadOnlyCollection;
+
+import '../util.dart';
+import 'ballot.dart';
+import 'election.dart';
+import 'player.dart';
+import 'plurality_ballot.dart';
+import 'plurality_election_place.dart';
 
 class PluralityElection<TVoter extends Player, TCandidate extends Player>
     extends Election<TVoter, TCandidate> {

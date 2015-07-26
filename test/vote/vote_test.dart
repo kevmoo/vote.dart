@@ -1,7 +1,7 @@
 library vote_test;
 
 import 'package:test/test.dart';
-import 'package:vote/vote.dart';
+import 'package:vote/src/vote/vote_util.dart';
 
 void main() {
   test('majority threshold', () {

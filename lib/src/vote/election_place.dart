@@ -1,4 +1,7 @@
-part of vote;
+library vote.vote.election_place;
+
+import '../util.dart';
+import 'player.dart';
 
 class ElectionPlace<TCandidate extends Player>
     extends ReadOnlyCollection<TCandidate> {

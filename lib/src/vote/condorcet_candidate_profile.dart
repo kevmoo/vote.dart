@@ -1,4 +1,7 @@
-part of vote;
+library vote.vote.condorcet_candidate_profile;
+
+import '../util.dart';
+import 'player.dart';
 
 class CondorcetCandidateProfile<TCandidate extends Player> {
   final TCandidate candidate;
@@ -6,7 +9,7 @@ class CondorcetCandidateProfile<TCandidate extends Player> {
   final ReadOnlyCollection<TCandidate> beat;
   final ReadOnlyCollection<TCandidate> tied;
 
-  CondorcetCandidateProfile._internal(
+  CondorcetCandidateProfile(
       this.candidate, this.lostTo, this.beat, this.tied);
 
   int get hashCode => this.candidate.hashCode;

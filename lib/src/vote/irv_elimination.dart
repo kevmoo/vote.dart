@@ -1,4 +1,8 @@
-part of vote;
+library vote.vote.irv_elimination;
+
+import '../util.dart';
+import 'player.dart';
+import 'ranked_ballot.dart';
 
 class IrvElimination<TVoter extends Player, TCandidate extends Player> {
   final TCandidate candidate;

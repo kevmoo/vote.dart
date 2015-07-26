@@ -1,4 +1,13 @@
-part of vote;
+library vote.vote.irv_election;
+
+import 'package:bot/bot.dart' hide ReadOnlyCollection;
+
+import '../util.dart';
+import 'player.dart';
+import 'ballot.dart';
+import 'irv_round.dart';
+import 'election.dart';
+import 'ranked_ballot.dart';
 
 class IrvElection<TVoter extends Player, TCandidate extends Player>
     extends Election<TVoter, TCandidate> {

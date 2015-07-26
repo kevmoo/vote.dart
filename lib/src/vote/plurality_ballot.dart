@@ -1,4 +1,7 @@
-part of vote;
+library vote.vote.plurality_ballot;
+
+import 'ballot.dart';
+import 'player.dart';
 
 class PluralityBallot<TVoter extends Player, TCandidate extends Player>
     extends Ballot {

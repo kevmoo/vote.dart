@@ -1,4 +1,13 @@
-part of vote;
+library vote.vote.irv_round;
+
+import 'package:bot/bot.dart' hide ReadOnlyCollection;
+
+import '../util.dart';
+import 'player.dart';
+import 'plurality_election_place.dart';
+import 'irv_elimination.dart';
+import 'ranked_ballot.dart';
+import 'vote_util.dart';
 
 class IrvRound<TVoter extends Player, TCandidate extends Player> {
   final ReadOnlyCollection<PluralityElectionPlace<TCandidate>> places;

@@ -1,4 +1,10 @@
-part of vote;
+library vote.vote.ranked_ballot;
+
+import 'package:bot/bot.dart' hide ReadOnlyCollection;
+
+import '../util.dart';
+import 'player.dart';
+import 'plurality_ballot.dart';
 
 class RankedBallot<TVoter extends Player, TCandidate extends Player>
     extends PluralityBallot<TVoter, TCandidate> {

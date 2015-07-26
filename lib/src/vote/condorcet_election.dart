@@ -1,4 +1,14 @@
-part of vote;
+library vote.vote.condorcet_election;
+
+import 'package:bot/bot.dart' hide ReadOnlyCollection;
+
+import '../util.dart';
+import 'player.dart';
+import 'condorcet_pair.dart';
+import 'election.dart';
+import 'condorcet_candidate_profile.dart';
+import 'ranked_ballot.dart';
+import 'election_place.dart';
 
 class CondorcetElection<TVoter extends Player, TCandidate extends Player>
     extends Election<TVoter, TCandidate> {
@@ -72,7 +82,7 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
         }
       }
 
-      var profile = new CondorcetCandidateProfile._internal(candidate,
+      var profile = new CondorcetCandidateProfile(candidate,
           new ReadOnlyCollection(lostTo), new ReadOnlyCollection(beat),
           new ReadOnlyCollection(tied));
       candidateProfiles[candidate] = profile;

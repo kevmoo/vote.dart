@@ -1,4 +1,10 @@
-part of vote;
+library vote.vote.election;
+
+import 'player.dart';
+import 'ballot.dart';
+
+import '../util.dart';
+import 'election_place.dart';
 
 abstract class Election<TVoter extends Player, TCandidate extends Player> {
   Iterable<TCandidate> get candidates;
