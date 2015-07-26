@@ -2,8 +2,7 @@
 ## Code to simulate, run, and calculate elections with different election methods
 
 <img src="https://github.com/kevmoo/vote.dart/raw/master/vote_dart_preview.png" width='750'>
-
-[![](https://drone.io/kevmoo/vote.dart/status.png)](https://drone.io/kevmoo/vote.dart/latest)
+[![Build Status](https://travis-ci.org/kevmoo/vote.dart.svg)](https://travis-ci.org/kevmoo/vote.dart)
 
 ## The Simulation
 
