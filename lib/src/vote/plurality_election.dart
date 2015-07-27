@@ -2,7 +2,6 @@ library vote.vote.plurality_election;
 
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
-import '../util.dart';
 import 'ballot.dart';
 import 'election.dart';
 import 'player.dart';
@@ -11,20 +10,20 @@ import 'plurality_election_place.dart';
 
 class PluralityElection<TVoter extends Player, TCandidate extends Player>
     extends Election<TVoter, TCandidate> {
-  final ReadOnlyCollection<Ballot<TVoter, TCandidate>> ballots;
+  final List<Ballot<TVoter, TCandidate>> ballots;
   final Grouping<TCandidate, PluralityBallot<TVoter, TCandidate>> _ballotGroup;
-  final ReadOnlyCollection<PluralityElectionPlace<TCandidate>> places;
+  final List<PluralityElectionPlace<TCandidate>> places;
 
   PluralityElection._internal(this.ballots, this._ballotGroup,
       Iterable<PluralityElectionPlace<TCandidate>> sourcePlaces)
-      : places = new ReadOnlyCollection(sourcePlaces);
+      : places = new List.unmodifiable(sourcePlaces);
 
   factory PluralityElection(
       Iterable<PluralityBallot<TVoter, TCandidate>> ballots) {
-    final roBallots = new ReadOnlyCollection(ballots);
+    final roBallots = new List.unmodifiable(ballots);
 
     // Check voter uniqueness
-    final voterList = new ReadOnlyCollection(roBallots.map((pb) => pb.voter));
+    final voterList = new List.unmodifiable(roBallots.map((pb) => pb.voter));
     requireArgument(CollectionUtil.allUnique(voterList),
         "Only one ballot per voter is allowed");
 

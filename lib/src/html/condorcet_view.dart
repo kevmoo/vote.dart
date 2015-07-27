@@ -5,7 +5,7 @@ class CondorcetView extends HtmlView {
 
   final StreamController _hoverChangedHandle = new StreamController();
   CondorcetElection _election;
-  ReadOnlyCollection<Player> _candidates;
+  List<Player> _candidates;
   List<Player> _highlightCandidates;
 
   CondorcetView(DivElement node) : super(node);
@@ -42,7 +42,7 @@ class CondorcetView extends HtmlView {
       var evenCandidateRow = true;
 
       // add columns for opponents
-      _candidates = new ReadOnlyCollection(_election.places.expand((p) => p));
+      _candidates = new List.unmodifiable(_election.places.expand((p) => p));
 
       for (final opp in _candidates) {
         cell = new Element.tag('th');

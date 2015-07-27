@@ -3,12 +3,11 @@ library vote.vote.condorcet_pair;
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
 import 'player.dart';
-import '../util.dart';
 import 'ranked_ballot.dart';
 
 class CondorcetPair<TVoter extends Player, TCandidate extends Player>
     extends Tuple<TCandidate, TCandidate> {
-  final ReadOnlyCollection<RankedBallot<TVoter, TCandidate>> ballots;
+  final List<RankedBallot<TVoter, TCandidate>> ballots;
   final int firstOverSecond;
   final int secondOverFirst;
 
@@ -32,7 +31,7 @@ class CondorcetPair<TVoter extends Player, TCandidate extends Player>
       return new CondorcetPair._internal(can1, can2, null, 0, 0);
     } else {
       var roBallots =
-          new ReadOnlyCollection<RankedBallot<TVoter, TCandidate>>(bals);
+          new List<RankedBallot<TVoter, TCandidate>>.unmodifiable(bals);
 
       requireArgument(CollectionUtil.allUnique(roBallots),
           "Only one ballot per voter is allowed");

@@ -8,8 +8,8 @@ class LocationData {
 
   static List<num> _candidateHues;
 
-  final ReadOnlyCollection<MapPlayer> candidates;
-  final ReadOnlyCollection<MapPlayer> voters;
+  final List<MapPlayer> candidates;
+  final List<MapPlayer> voters;
 
   LocationData(this.voters, this.candidates) {
     assert(this.candidates.length > 0);
@@ -48,14 +48,14 @@ class LocationData {
       candidates.add(candidate);
     });
 
-    return new LocationData(new ReadOnlyCollection<MapPlayer>.wrap(voters),
-        new ReadOnlyCollection<MapPlayer>.wrap(candidates));
+    return new LocationData(new List<MapPlayer>.unmodifiable(voters),
+        new List<MapPlayer>.unmodifiable(candidates));
   }
 
   LocationData cloneAndRemove(MapPlayer mp) {
     requireArgumentNotNull(mp, 'mp');
 
-    var newCans = new ReadOnlyCollection(candidates.where((e) => e != mp));
+    var newCans = new List.unmodifiable(candidates.where((e) => e != mp));
 
     return new LocationData(voters, newCans);
   }
@@ -85,7 +85,7 @@ class LocationData {
 
     newCans.insert(i, mp);
 
-    return new LocationData(voters, new ReadOnlyCollection(newCans));
+    return new LocationData(voters, new List.unmodifiable(newCans));
   }
 
   static num getHue(MapPlayer candidate) {

@@ -5,7 +5,7 @@ class DistanceBallot<TVoter extends MapPlayer, TCandidate extends MapPlayer>
   final Map<TCandidate, num> _distances;
 
   DistanceBallot._internal(
-      TVoter voter, ReadOnlyCollection<TCandidate> items, this._distances)
+      TVoter voter, List<TCandidate> items, this._distances)
       : super.protected(voter, items);
 
   factory DistanceBallot(TVoter voter, Iterable<TCandidate> candidates) {
@@ -26,7 +26,7 @@ class DistanceBallot<TVoter extends MapPlayer, TCandidate extends MapPlayer>
       return d;
     });
 
-    var items = new ReadOnlyCollection(rank);
+    var items = new List.unmodifiable(rank);
 
     return new DistanceBallot._internal(voter, items, distances);
   }

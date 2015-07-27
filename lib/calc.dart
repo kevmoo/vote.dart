@@ -6,7 +6,6 @@ import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
 import 'map.dart';
 import 'vote.dart';
-import 'src/util.dart';
 
 class CalcEngine {
   final ThrottledStream<LocationData, DistanceElection> _distanceElectionMapper =
@@ -57,7 +56,7 @@ class CalcEngine {
     assert(value != null);
     assert(locationData != null);
 
-    final roCandidates = new ReadOnlyCollection<MapPlayer>(value);
+    final roCandidates = new List<MapPlayer>.unmodifiable(value);
 
     if (roCandidates.length > 0) {
       final newData =

@@ -2,15 +2,14 @@ library vote.vote.ranked_ballot;
 
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
-import '../util.dart';
 import 'player.dart';
 import 'plurality_ballot.dart';
 
 class RankedBallot<TVoter extends Player, TCandidate extends Player>
     extends PluralityBallot<TVoter, TCandidate> {
-  final ReadOnlyCollection<TCandidate> rank;
+  final List<TCandidate> rank;
 
-  RankedBallot.protected(TVoter voter, ReadOnlyCollection<TCandidate> items)
+  RankedBallot.protected(TVoter voter, List<TCandidate> items)
       : super(voter, items[0]),
         rank = items;
 
@@ -18,7 +17,7 @@ class RankedBallot<TVoter extends Player, TCandidate extends Player>
     requireArgumentNotNull(voter, 'voter');
     requireArgumentNotNull(rank, 'rank');
 
-    var items = new ReadOnlyCollection(rank);
+    var items = new List.unmodifiable(rank);
     requireArgument(items.length > 0, 'rank');
     requireArgument(CollectionUtil.allUnique(items), 'rank');
 

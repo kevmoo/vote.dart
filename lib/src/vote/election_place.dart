@@ -1,10 +1,10 @@
 library vote.vote.election_place;
 
-import '../util.dart';
+import 'dart:collection';
 import 'player.dart';
 
 class ElectionPlace<TCandidate extends Player>
-    extends ReadOnlyCollection<TCandidate> {
+    extends UnmodifiableListView<TCandidate> {
   final int place;
 
   ElectionPlace(this.place, Iterable<TCandidate> candidates)

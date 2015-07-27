@@ -4,15 +4,15 @@ class CandidateManagerView extends HtmlView {
   static const String _CANDIDATE_ID_ATTRIBUTE = 'candidate-id';
   final StreamController<MapPlayer> _requestRemoveCandidateHandle;
   final StreamController _requestNewCandidateHandle;
-  ReadOnlyCollection<MapPlayer> _candidates;
+  List<MapPlayer> _candidates;
 
   CandidateManagerView(DivElement node)
       : _requestRemoveCandidateHandle = new StreamController<MapPlayer>(),
         _requestNewCandidateHandle = new StreamController(),
-        _candidates = new ReadOnlyCollection<MapPlayer>.empty(),
+        _candidates = new List<MapPlayer>.unmodifiable([]),
         super(node);
 
-  void set candidates(ReadOnlyCollection<MapPlayer> value) {
+  void set candidates(List<MapPlayer> value) {
     assert(value != null);
     _candidates = value;
     markDirty();

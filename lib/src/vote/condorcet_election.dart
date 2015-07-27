@@ -2,7 +2,6 @@ library vote.vote.condorcet_election;
 
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
-import '../util.dart';
 import 'player.dart';
 import 'condorcet_pair.dart';
 import 'election.dart';
@@ -14,18 +13,18 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
     extends Election<TVoter, TCandidate> {
   final Set<CondorcetPair<TVoter, TCandidate>> _pairs;
   final Map<TCandidate, CondorcetCandidateProfile<TCandidate>> _profiles;
-  final ReadOnlyCollection<RankedBallot<TVoter, TCandidate>> ballots;
-  final ReadOnlyCollection<ElectionPlace<TCandidate>> places;
+  final List<RankedBallot<TVoter, TCandidate>> ballots;
+  final List<ElectionPlace<TCandidate>> places;
 
   CondorcetElection._internal(
       this._pairs, this._profiles, this.ballots, this.places);
 
   factory CondorcetElection(
       Iterable<RankedBallot<TVoter, TCandidate>> ballots) {
-    final roBallots = new ReadOnlyCollection(ballots);
+    final roBallots = new List.unmodifiable(ballots);
 
     // Check voter uniqueness
-    final voterList = new ReadOnlyCollection(roBallots.map((b) => b.voter));
+    final voterList = new List.unmodifiable(roBallots.map((b) => b.voter));
     requireArgument(CollectionUtil.allUnique(voterList),
         "Only one ballot per voter is allowed");
 
@@ -83,8 +82,8 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
       }
 
       var profile = new CondorcetCandidateProfile(candidate,
-          new ReadOnlyCollection(lostTo), new ReadOnlyCollection(beat),
-          new ReadOnlyCollection(tied));
+          new List.unmodifiable(lostTo), new List.unmodifiable(beat),
+          new List.unmodifiable(tied));
       candidateProfiles[candidate] = profile;
 
       tarjanMap[candidate] = tarjanLostTiedSet;
@@ -101,7 +100,7 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
     }
 
     return new CondorcetElection._internal(set, candidateProfiles, roBallots,
-        new ReadOnlyCollection<ElectionPlace<TCandidate>>(places));
+        new List<ElectionPlace<TCandidate>>.unmodifiable(places));
   }
 
   Iterable<TCandidate> get candidates => _profiles.keys;

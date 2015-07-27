@@ -6,7 +6,7 @@ class CandidateMapElement extends ParentThing implements MapElementBase {
 
   num _radius = 0;
   List<CandidateElement> _elements;
-  ReadOnlyCollection<MapPlayer> _showOnlyPlayers = null;
+  List<MapPlayer> _showOnlyPlayers = null;
 
   CandidateMapElement(int w, int h) : super(w, h);
 
@@ -42,7 +42,7 @@ class CandidateMapElement extends ParentThing implements MapElementBase {
     if (value == null) {
       _showOnlyPlayers = null;
     } else {
-      var newVal = new ReadOnlyCollection(value);
+      var newVal = new List.unmodifiable(value);
       assert($(newVal).distinct().length == newVal.length);
       assert(newVal.every((e) => _players.indexOf(e) >= 0));
       _showOnlyPlayers = newVal;

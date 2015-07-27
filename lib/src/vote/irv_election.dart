@@ -2,7 +2,6 @@ library vote.vote.irv_election;
 
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
-import '../util.dart';
 import 'player.dart';
 import 'ballot.dart';
 import 'irv_round.dart';
@@ -11,17 +10,17 @@ import 'ranked_ballot.dart';
 
 class IrvElection<TVoter extends Player, TCandidate extends Player>
     extends Election<TVoter, TCandidate> {
-  final ReadOnlyCollection<TCandidate> candidates;
-  final ReadOnlyCollection<Ballot<TVoter, TCandidate>> ballots;
-  final ReadOnlyCollection<IrvRound<TVoter, TCandidate>> rounds;
+  final List<TCandidate> candidates;
+  final List<Ballot<TVoter, TCandidate>> ballots;
+  final List<IrvRound<TVoter, TCandidate>> rounds;
 
   IrvElection._internal(this.candidates, this.ballots, this.rounds);
 
   factory IrvElection(Iterable<RankedBallot<TVoter, TCandidate>> ballots) {
-    final roBallots = new ReadOnlyCollection(ballots);
+    final roBallots = new List.unmodifiable(ballots);
 
     final roCandidates =
-        new ReadOnlyCollection($(roBallots).expand((b) => b.rank).distinct());
+        new List.unmodifiable($(roBallots).expand((b) => b.rank).distinct());
 
     final rounds = new List<IrvRound<TVoter, TCandidate>>();
 
@@ -35,7 +34,7 @@ class IrvElection<TVoter extends Player, TCandidate extends Player>
     } while (!round.isFinal);
 
     return new IrvElection._internal(
-        roCandidates, roBallots, new ReadOnlyCollection.wrap(rounds));
+        roCandidates, roBallots, new List.unmodifiable(rounds));
   }
 
   // TODO: need to add `places`

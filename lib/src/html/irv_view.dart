@@ -36,13 +36,13 @@ class IrvView extends HtmlView {
     }
 
     final candidates =
-        new ReadOnlyCollection(_election.rounds.first.places.expand((p) => p));
+        new List.unmodifiable(_election.rounds.first.places.expand((p) => p));
 
     var table = new TableElement();
 
     TableRowElement row;
     TableCellElement cell;
-    ReadOnlyCollection<PluralityElectionPlace> previousPlaces;
+    List<PluralityElectionPlace> previousPlaces;
 
     for (var i = 0; i < election.rounds.length; i++) {
       final round = election.rounds[i];

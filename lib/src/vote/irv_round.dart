@@ -2,7 +2,6 @@ library vote.vote.irv_round;
 
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
-import '../util.dart';
 import 'player.dart';
 import 'plurality_election_place.dart';
 import 'irv_elimination.dart';
@@ -10,14 +9,14 @@ import 'ranked_ballot.dart';
 import 'vote_util.dart';
 
 class IrvRound<TVoter extends Player, TCandidate extends Player> {
-  final ReadOnlyCollection<PluralityElectionPlace<TCandidate>> places;
-  final ReadOnlyCollection<IrvElimination<TVoter, TCandidate>> eliminations;
+  final List<PluralityElectionPlace<TCandidate>> places;
+  final List<IrvElimination<TVoter, TCandidate>> eliminations;
 
-  factory IrvRound(ReadOnlyCollection<RankedBallot<TVoter, TCandidate>> ballots,
+  factory IrvRound(List<RankedBallot<TVoter, TCandidate>> ballots,
       List<TCandidate> eliminatedCandidates) {
     var cleanedBallots = ballots.map((b) {
       var pruned =
-          new ReadOnlyCollection($(b.rank).exclude(eliminatedCandidates));
+          new List.unmodifiable($(b.rank).exclude(eliminatedCandidates));
       var winner = pruned.length == 0 ? null : pruned[0];
       return new Tuple3(b, pruned, winner);
     });
@@ -34,7 +33,7 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
     placeVotes.sort((a, b) => b.compareTo(a));
 
     int placeNumber = 1;
-    final places = new ReadOnlyCollection(placeVotes.map((pv) {
+    final places = new List.unmodifiable(placeVotes.map((pv) {
       final vg = voteGroups[pv];
       final currentPlaceNumber = placeNumber;
       placeNumber += vg.length;
@@ -43,7 +42,7 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
 
     final newlyEliminatedCandidates = _getEliminatedCandidates(places);
 
-    final eliminations = new ReadOnlyCollection(newlyEliminatedCandidates
+    final eliminations = new List.unmodifiable(newlyEliminatedCandidates
         .map((c) {
       final xfers =
           new Map<TCandidate, List<RankedBallot<TVoter, TCandidate>>>();
@@ -64,7 +63,7 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
       }
 
       return new IrvElimination<TVoter, TCandidate>(
-          c, xfers, new ReadOnlyCollection.wrap(exhausted));
+          c, xfers, new List.unmodifiable(exhausted));
     }));
 
     return new IrvRound._internal(places, eliminations);
@@ -84,7 +83,7 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
   }
 
   static List<Player> _getEliminatedCandidates(
-      ReadOnlyCollection<PluralityElectionPlace> places) {
+      List<PluralityElectionPlace> places) {
     assert(places != null);
     assert(places.length > 0);
 

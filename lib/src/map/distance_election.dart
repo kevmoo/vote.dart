@@ -2,9 +2,9 @@ part of vote.map;
 
 class DistanceElection<TVoter extends MapPlayer, TCandidate extends MapPlayer>
     extends Election<TVoter, TCandidate> {
-  final ReadOnlyCollection<TCandidate> candidates;
-  final ReadOnlyCollection<DistanceBallot<TVoter, TCandidate>> ballots;
-  final ReadOnlyCollection<DistanceElectionPlace<TCandidate>> places;
+  final List<TCandidate> candidates;
+  final List<DistanceBallot<TVoter, TCandidate>> ballots;
+  final List<DistanceElectionPlace<TCandidate>> places;
 
   DistanceElection._internal(this.candidates, this.ballots, this.places);
 
@@ -14,9 +14,9 @@ class DistanceElection<TVoter extends MapPlayer, TCandidate extends MapPlayer>
 
   factory DistanceElection(
       Iterable<TVoter> voters, Iterable<TCandidate> candidates) {
-    final cans = new ReadOnlyCollection<TCandidate>(candidates);
+    final cans = new List<TCandidate>.unmodifiable(candidates);
 
-    final ballots = new ReadOnlyCollection(voters
+    final ballots = new List.unmodifiable(voters
         .map((voter) => new DistanceBallot<MapPlayer, MapPlayer>(voter, cans)));
 
     //
@@ -41,7 +41,7 @@ class DistanceElection<TVoter extends MapPlayer, TCandidate extends MapPlayer>
     distances.sort((a, b) => a.item1.compareTo(b.item1));
 
     int placeNumber = 1;
-    final places = new ReadOnlyCollection(distances.map((d) {
+    final places = new List.unmodifiable(distances.map((d) {
       var placeCans = distanceGroups[d];
       final place =
           new DistanceElectionPlace(placeNumber, placeCans, d.item1, d.item2);

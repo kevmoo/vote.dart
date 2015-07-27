@@ -7,7 +7,6 @@ import 'package:bot/bot.dart' hide ReadOnlyCollection;
 import 'package:bot_web/bot_html.dart';
 import 'map.dart';
 import 'vote.dart';
-import 'src/util.dart';
 
 part 'src/html/candidate_manager_view.dart';
 part 'src/html/plurality_view.dart';

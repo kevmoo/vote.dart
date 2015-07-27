@@ -1,13 +1,12 @@
 library vote.vote.irv_elimination;
 
-import '../util.dart';
 import 'player.dart';
 import 'ranked_ballot.dart';
 
 class IrvElimination<TVoter extends Player, TCandidate extends Player> {
   final TCandidate candidate;
   final Map<TCandidate, List<RankedBallot<TVoter, TCandidate>>> _transfers;
-  final ReadOnlyCollection<RankedBallot<TVoter, TCandidate>> exhausted;
+  final List<RankedBallot<TVoter, TCandidate>> exhausted;
 
   IrvElimination(this.candidate, this._transfers, this.exhausted) {
     assert(candidate != null);

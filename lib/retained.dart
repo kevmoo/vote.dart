@@ -9,8 +9,6 @@ import 'package:bot_web/bot_html.dart';
 import 'package:bot_web/bot_retained.dart';
 import 'package:vote/map.dart';
 
-import 'src/util.dart';
-
 part 'src/retained/candidate_element.dart';
 part 'src/retained/candidate_map_element.dart';
 part 'src/retained/map_element_base.dart';
