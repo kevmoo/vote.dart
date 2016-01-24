@@ -1,5 +1,3 @@
-library vote.vote.condorcet_candidate_profile;
-
 import 'player.dart';
 
 class CondorcetCandidateProfile<TCandidate extends Player> {

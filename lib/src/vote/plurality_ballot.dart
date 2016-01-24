@@ -1,5 +1,3 @@
-library vote.vote.plurality_ballot;
-
 import 'ballot.dart';
 import 'player.dart';
 

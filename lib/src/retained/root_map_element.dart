@@ -1,4 +1,14 @@
-part of vote.retanied;
+import 'dart:async';
+import 'dart:html';
+import 'dart:math' as math;
+
+import 'package:bot/bot.dart' hide ReadOnlyCollection;
+import 'package:bot_web/bot_retained.dart';
+import 'package:vote/map.dart';
+
+import 'candidate_map_element.dart';
+import 'map_element_base.dart';
+import 'voter_map_element.dart';
 
 class RootMapElement extends ParentThing {
   final VoterMapElement _voterMap;
@@ -117,8 +127,9 @@ class RootMapElement extends ParentThing {
       _radius = _averageCloseness * 0.3;
     }
 
-    [_voterMap, _candidateMap].forEach((m) {
-      m._radius = _radius;
+    <
+        MapElementBase>[_voterMap, _candidateMap].forEach((MapElementBase m) {
+      m.radius = _radius;
       m.setTransform(_tx);
     });
 

@@ -1,4 +1,8 @@
-part of vote.map;
+import 'dart:math';
+
+import 'package:bot/bot.dart' hide ReadOnlyCollection;
+
+import 'map_player.dart';
 
 class LocationData {
   static const int MAX_CANDIDATE_COUNT = 26;

@@ -1,5 +1,3 @@
-library vote.vote.plurality_election;
-
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
 import 'ballot.dart';

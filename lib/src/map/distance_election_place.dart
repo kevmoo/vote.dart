@@ -1,4 +1,5 @@
-part of vote.map;
+import '../../vote.dart';
+import 'map_player.dart';
 
 class DistanceElectionPlace<TCandidate extends MapPlayer>
     extends ElectionPlace<TCandidate> {

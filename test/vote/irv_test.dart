@@ -1,5 +1,3 @@
-library vote.test_irv_election;
-
 import 'package:test/test.dart';
 import 'package:vote/vote.dart';
 

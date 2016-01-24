@@ -1,4 +1,10 @@
-part of vote.html;
+import 'dart:async';
+import 'dart:html' hide Player;
+
+import 'package:bot_web/bot_html.dart';
+
+import '../../vote.dart';
+import 'html_util.dart';
 
 class IrvView extends HtmlView {
   static const _ROUND_CELL_CLASS = 'irv_round';

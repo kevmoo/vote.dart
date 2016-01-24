@@ -1,6 +1,5 @@
-library vote.demo;
-
 import 'dart:html';
+
 import 'package:bot_web/bot_retained.dart';
 import 'package:vote/calc.dart';
 import 'package:vote/html.dart';

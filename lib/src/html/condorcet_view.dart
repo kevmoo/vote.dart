@@ -1,4 +1,12 @@
-part of vote.html;
+import 'dart:async';
+import 'dart:html' hide Player;
+import 'dart:math' as math;
+
+import 'package:bot/bot.dart' hide ReadOnlyCollection;
+import 'package:bot_web/bot_html.dart';
+
+import '../../vote.dart';
+import 'html_util.dart';
 
 class CondorcetView extends HtmlView {
   static const String _PAIS_IDS_KEY = 'pair-ids';
@@ -77,7 +85,7 @@ class CondorcetView extends HtmlView {
           for (final opp in _candidates) {
             if (opp == candidate) {
               cell = row.insertCell(-1);
-              cell.style.background = _grayHex;
+              cell.style.background = grayHex;
               cell.colSpan = 3;
             } else {
               String middleText;

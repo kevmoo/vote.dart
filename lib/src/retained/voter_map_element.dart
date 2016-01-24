@@ -1,15 +1,22 @@
-part of vote.retanied;
+import 'dart:html';
+
+import 'package:bot/bot.dart' hide ReadOnlyCollection;
+import 'package:bot_web/bot_html.dart';
+import 'package:bot_web/bot_retained.dart';
+import 'package:vote/map.dart';
+
+import 'map_element_base.dart';
 
 class VoterMapElement extends Thing implements MapElementBase {
   final List<MapPlayer> _players = new List<MapPlayer>();
   final AffineTransform _tx = new AffineTransform();
 
-  num _radius;
+  num radius;
   Map<MapPlayer, String> _map = new Map<MapPlayer, String>();
 
   VoterMapElement(int w, int h) : super(w, h) {
     cacheEnabled = true;
-    _radius = 0.3;
+    radius = 0.3;
   }
 
   void setTransform(AffineTransform value) {
@@ -47,7 +54,7 @@ class VoterMapElement extends Thing implements MapElementBase {
     ctx.fillStyle = hex;
     final txLoc = _tx.transformCoordinate(player.location);
 
-    CanvasUtil.centeredCircle(ctx, txLoc.x, txLoc.y, _radius * _tx.scaleX);
+    CanvasUtil.centeredCircle(ctx, txLoc.x, txLoc.y, radius * _tx.scaleX);
     ctx.fill();
   }
 }

@@ -1,5 +1,3 @@
-library vote.vote.irv_round;
-
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
 import 'player.dart';

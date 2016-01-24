@@ -1,5 +1,3 @@
-library vote.vote.irv_elimination;
-
 import 'player.dart';
 import 'ranked_ballot.dart';
 

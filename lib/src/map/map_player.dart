@@ -1,4 +1,6 @@
-part of vote.map;
+import 'package:bot/bot.dart' hide ReadOnlyCollection;
+
+import '../../vote.dart';
 
 class MapPlayer extends Player {
   static int _counter = 0;

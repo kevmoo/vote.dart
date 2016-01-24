@@ -1,5 +1,3 @@
-library vote_test;
-
 import 'package:test/test.dart';
 import 'package:vote/src/vote/vote_util.dart';
 

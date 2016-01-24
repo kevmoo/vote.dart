@@ -1,5 +1,3 @@
-library vote.calc;
-
 import 'dart:async';
 
 import 'package:bot/bot.dart' hide ReadOnlyCollection;

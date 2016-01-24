@@ -1,13 +1,5 @@
-library vote.map;
-
-import 'dart:math';
-
-import 'package:bot/bot.dart' hide ReadOnlyCollection;
-
-import 'vote.dart';
-
-part 'src/map/distance_election.dart';
-part 'src/map/distance_election_place.dart';
-part 'src/map/distance_ballot.dart';
-part 'src/map/location_data.dart';
-part 'src/map/map_player.dart';
+export 'src/map/distance_election.dart';
+export 'src/map/distance_election_place.dart';
+export 'src/map/distance_ballot.dart';
+export 'src/map/location_data.dart';
+export 'src/map/map_player.dart';

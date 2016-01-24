@@ -1,5 +1,3 @@
-library vote.vote.ranked_ballot;
-
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
 import 'player.dart';

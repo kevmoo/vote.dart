@@ -1,10 +1,16 @@
-part of vote.retanied;
+import 'package:bot/bot.dart' hide ReadOnlyCollection;
+import 'package:bot_web/bot_retained.dart';
+import 'package:vote/map.dart';
+
+import 'candidate_element.dart';
+import 'map_element_base.dart';
+import 'root_map_element.dart';
 
 class CandidateMapElement extends ParentThing implements MapElementBase {
   final List<MapPlayer> _players = new List<MapPlayer>();
   final AffineTransform _tx = new AffineTransform();
 
-  num _radius = 0;
+  num radius = 0;
   List<CandidateElement> _elements;
   List<MapPlayer> _showOnlyPlayers = null;
 
@@ -61,8 +67,7 @@ class CandidateMapElement extends ParentThing implements MapElementBase {
       for (final p in _players) {
         final hue = LocationData.getHue(p);
         final rgb = (new HslColor(hue, 0.5, 0.6)).toRgb();
-        final ce =
-            new CandidateElement(_radius * 4, _radius * 4, rgb.toHex(), p);
+        final ce = new CandidateElement(radius * 4, radius * 4, rgb.toHex(), p);
         ce.registerParent(this);
 
         MouseManager.setCursor(ce, 'pointer');
@@ -71,8 +76,7 @@ class CandidateMapElement extends ParentThing implements MapElementBase {
 
         final tempTx = ce.addTransform();
         tempTx.concatenate(_tx);
-        tempTx.translate(
-            p.location.x - 2 * _radius, p.location.y - 2 * _radius);
+        tempTx.translate(p.location.x - 2 * radius, p.location.y - 2 * radius);
 
         _elements.add(ce);
       }

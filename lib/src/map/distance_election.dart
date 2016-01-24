@@ -1,4 +1,10 @@
-part of vote.map;
+import 'package:bot/bot.dart' hide ReadOnlyCollection;
+
+import '../../vote.dart';
+import 'distance_ballot.dart';
+import 'distance_election_place.dart';
+import 'location_data.dart';
+import 'map_player.dart';
 
 class DistanceElection<TVoter extends MapPlayer, TCandidate extends MapPlayer>
     extends Election<TVoter, TCandidate> {

@@ -1,4 +1,10 @@
-part of vote.html;
+import 'dart:html' hide Player;
+
+import 'package:bot/bot.dart' hide ReadOnlyCollection;
+import 'package:bot_web/bot_html.dart';
+
+import '../../map.dart';
+import '../../vote.dart';
 
 class PluralityView extends HtmlView {
   PluralityElection _election;

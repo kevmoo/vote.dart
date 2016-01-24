@@ -1,5 +1,3 @@
-library vote.vote.ballot;
-
 import 'player.dart';
 
 class Ballot<TVoter extends Player, TCandidate extends Player> {

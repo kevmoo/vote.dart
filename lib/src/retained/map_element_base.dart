@@ -1,6 +1,6 @@
-part of vote.retanied;
+import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
 abstract class MapElementBase {
   void setTransform(AffineTransform value);
-  void set _radius(num value);
+  void set radius(num value);
 }

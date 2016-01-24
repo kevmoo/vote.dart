@@ -1,5 +1,3 @@
-library vote;
-
 export 'src/vote/condorcet_election.dart';
 export 'src/vote/condorcet_pair.dart';
 export 'src/vote/election.dart';

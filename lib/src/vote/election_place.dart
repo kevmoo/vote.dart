@@ -1,5 +1,3 @@
-library vote.vote.election_place;
-
 import 'dart:collection';
 import 'player.dart';
 

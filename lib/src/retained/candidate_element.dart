@@ -1,18 +1,19 @@
-part of vote.retanied;
+import 'dart:html';
+
+import 'package:bot_web/bot_html.dart';
+import 'package:bot_web/bot_retained.dart';
+import 'package:vote/map.dart';
 
 class CandidateElement extends Thing {
   final String _color;
   final MapPlayer player;
   final String _text;
-  AffineTransform _tx;
   bool _hidden = false;
 
   CandidateElement(num w, num h, this._color, MapPlayer p)
       : player = p,
         _text = p.name,
-        super(w, h) {
-    _tx = addTransform();
-  }
+        super(w, h);
 
   bool get hidden => _hidden;
 

@@ -1,5 +1,3 @@
-library vote.vote.condorcet_pair;
-
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
 import 'player.dart';
