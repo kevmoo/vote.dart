@@ -28,8 +28,12 @@ class VoteDemo extends StageWrapper<RootMapElement> {
   final PluralityView _pluralityView;
   final CandidateManagerView _canManView;
 
-  factory VoteDemo(CanvasElement canvas, DivElement pluralityDiv,
-      DivElement distanceDiv, DivElement condorcetDiv, DivElement canManDiv,
+  factory VoteDemo(
+      CanvasElement canvas,
+      DivElement pluralityDiv,
+      DivElement distanceDiv,
+      DivElement condorcetDiv,
+      DivElement canManDiv,
       DivElement irvDiv) {
     var voterMap = new RootMapElement(canvas.width, canvas.height);
 
@@ -46,9 +50,14 @@ class VoteDemo extends StageWrapper<RootMapElement> {
         pluralityView, distanceView, canManView, irvView);
   }
 
-  VoteDemo._internal(CanvasElement canvas, RootMapElement rootMapElement,
-      this._condorcetView, this._pluralityView, this._distanceView,
-      this._canManView, this._irvView)
+  VoteDemo._internal(
+      CanvasElement canvas,
+      RootMapElement rootMapElement,
+      this._condorcetView,
+      this._pluralityView,
+      this._distanceView,
+      this._canManView,
+      this._irvView)
       : super(canvas, rootMapElement) {
     new MouseManager(stage);
 

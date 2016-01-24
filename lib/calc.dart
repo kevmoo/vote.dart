@@ -8,24 +8,29 @@ import 'map.dart';
 import 'vote.dart';
 
 class CalcEngine {
-  final ThrottledStream<LocationData, DistanceElection> _distanceElectionMapper =
+  final ThrottledStream<LocationData,
+          DistanceElection> _distanceElectionMapper =
       new ThrottledStream(_distanceElectionIsolate);
 
-  final ThrottledStream<List<PluralityBallot<MapPlayer, MapPlayer>>, PluralityElection> _pluralityElectionMapper =
-      new ThrottledStream<List<PluralityBallot<MapPlayer, MapPlayer>>, PluralityElection>(
-          _pluralityElectionIsolate);
+  final ThrottledStream<List<PluralityBallot<MapPlayer, MapPlayer>>,
+      PluralityElection> _pluralityElectionMapper = new ThrottledStream<
+      List<PluralityBallot<MapPlayer, MapPlayer>>,
+      PluralityElection>(_pluralityElectionIsolate);
 
-  final ThrottledStream<List<RankedBallot<MapPlayer, MapPlayer>>, CondorcetElection> _condorcetElectionMapper =
-      new ThrottledStream<List<RankedBallot<MapPlayer, MapPlayer>>, CondorcetElection>(
-          _condorcetElectionIsolate);
+  final ThrottledStream<List<RankedBallot<MapPlayer, MapPlayer>>,
+      CondorcetElection> _condorcetElectionMapper = new ThrottledStream<
+      List<RankedBallot<MapPlayer, MapPlayer>>,
+      CondorcetElection>(_condorcetElectionIsolate);
 
-  final ThrottledStream<List<RankedBallot<MapPlayer, MapPlayer>>, IrvElection> _irvElectionMapper =
-      new ThrottledStream<List<RankedBallot<MapPlayer, MapPlayer>>, IrvElection>(
-          _irvElectionIsolate);
+  final ThrottledStream<List<RankedBallot<MapPlayer, MapPlayer>>,
+      IrvElection> _irvElectionMapper = new ThrottledStream<
+      List<RankedBallot<MapPlayer, MapPlayer>>,
+      IrvElection>(_irvElectionIsolate);
 
-  final ThrottledStream<Tuple3<DistanceElection, LocationData, List<MapPlayer>>, Map<MapPlayer, String>> _voterHexMapper =
-      new ThrottledStream<Tuple3<DistanceElection, LocationData, List<MapPlayer>>, Map<MapPlayer, String>>(
-          _voterHexIsolate);
+  final ThrottledStream<Tuple3<DistanceElection, LocationData, List<MapPlayer>>,
+      Map<MapPlayer, String>> _voterHexMapper = new ThrottledStream<
+      Tuple3<DistanceElection, LocationData, List<MapPlayer>>,
+      Map<MapPlayer, String>>(_voterHexIsolate);
 
   final StreamController<LocationData> _locationDataStream =
       new StreamController<LocationData>();

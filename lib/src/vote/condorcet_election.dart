@@ -28,8 +28,8 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
     requireArgument(CollectionUtil.allUnique(voterList),
         "Only one ballot per voter is allowed");
 
-    var map =
-        new Map<CondorcetPair<TVoter, TCandidate>, List<RankedBallot<TVoter, TCandidate>>>();
+    var map = new Map<CondorcetPair<TVoter, TCandidate>,
+        List<RankedBallot<TVoter, TCandidate>>>();
     var candidateSet = new Set<TCandidate>();
 
     for (final ballot in ballots) {
@@ -81,8 +81,10 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
         }
       }
 
-      var profile = new CondorcetCandidateProfile(candidate,
-          new List.unmodifiable(lostTo), new List.unmodifiable(beat),
+      var profile = new CondorcetCandidateProfile(
+          candidate,
+          new List.unmodifiable(lostTo),
+          new List.unmodifiable(beat),
           new List.unmodifiable(tied));
       candidateProfiles[candidate] = profile;
 

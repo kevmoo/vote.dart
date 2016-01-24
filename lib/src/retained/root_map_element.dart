@@ -87,14 +87,11 @@ class RootMapElement extends ParentThing {
   void update() {
     // calculate important bits if we need to
     if (_bounds != null && _radius == null) {
-
       // dimensions of the points factoring in the radius
       final dataScale = new Size(_bounds.width + _averageCloseness,
           _bounds.height + _averageCloseness);
 
-      num scale,
-          offsetX = 0,
-          offsetY = 0;
+      num scale, offsetX = 0, offsetY = 0;
       // now are we bound by width or height?
       if (dataScale.aspectRatio > size.aspectRatio) {
         // bound by width

@@ -42,8 +42,8 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
 
     final newlyEliminatedCandidates = _getEliminatedCandidates(places);
 
-    final eliminations = new List.unmodifiable(newlyEliminatedCandidates
-        .map((c) {
+    final eliminations =
+        new List.unmodifiable(newlyEliminatedCandidates.map((c) {
       final xfers =
           new Map<TCandidate, List<RankedBallot<TVoter, TCandidate>>>();
 
