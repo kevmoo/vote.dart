@@ -35,9 +35,6 @@ class IrvView extends HtmlView {
       return;
     }
 
-    final candidates =
-        new List.unmodifiable(_election.rounds.first.places.expand((p) => p));
-
     var table = new TableElement();
 
     TableRowElement row;
