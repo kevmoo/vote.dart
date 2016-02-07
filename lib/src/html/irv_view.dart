@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:html' hide Player;
+import 'dart:html';
 
 import 'package:bot_web/bot_html.dart';
 

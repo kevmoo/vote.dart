@@ -1,4 +1,4 @@
-import 'dart:html' hide Player;
+import 'dart:html';
 
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 import 'package:bot_web/bot_html.dart';

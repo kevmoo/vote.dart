@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:html' hide Player;
+import 'dart:html';
 import 'dart:math' as math;
 
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
