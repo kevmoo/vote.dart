@@ -2,15 +2,15 @@ import 'dart:async';
 
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
-import 'src/map/distance_election.dart';
-import 'src/map/location_data.dart';
-import 'src/map/map_player.dart';
+import 'map/distance_election.dart';
+import 'map/location_data.dart';
+import 'map/map_player.dart';
 
-import 'src/vote/condorcet_election.dart';
-import 'src/vote/irv_election.dart';
-import 'src/vote/plurality_ballot.dart';
-import 'src/vote/plurality_election.dart';
-import 'src/vote/ranked_ballot.dart';
+import 'vote/condorcet_election.dart';
+import 'vote/irv_election.dart';
+import 'vote/plurality_ballot.dart';
+import 'vote/plurality_election.dart';
+import 'vote/ranked_ballot.dart';
 
 class CalcEngine {
   final ThrottledStream<LocationData, DistanceElection>
