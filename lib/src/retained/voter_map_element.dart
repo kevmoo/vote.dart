@@ -3,7 +3,8 @@ import 'dart:html';
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 import 'package:bot_web/bot_html.dart';
 import 'package:bot_web/bot_retained.dart';
-import 'package:vote/map.dart';
+
+import '../map/map_player.dart';
 
 import 'map_element_base.dart';
 

@@ -2,7 +2,8 @@ import 'dart:html';
 
 import 'package:bot_web/bot_html.dart';
 import 'package:bot_web/bot_retained.dart';
-import 'package:vote/map.dart';
+
+import '../map/map_player.dart';
 
 class CandidateElement extends Thing {
   final String _color;

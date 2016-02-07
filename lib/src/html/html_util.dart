@@ -1,6 +1,6 @@
 import 'package:bot/bot.dart' show HslColor;
 
-import '../../map.dart';
+import '../map/location_data.dart';
 
 const String grayHex = '#999999';
 

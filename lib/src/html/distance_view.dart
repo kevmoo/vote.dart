@@ -3,7 +3,9 @@ import 'dart:html' hide Player;
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 import 'package:bot_web/bot_html.dart';
 
-import '../../map.dart';
+import '../map/distance_election.dart';
+import '../map/location_data.dart';
+import '../map/map_player.dart';
 
 class DistanceView extends HtmlView {
   DistanceElection<MapPlayer, MapPlayer> _election;

@@ -4,7 +4,9 @@ import 'dart:math' as math;
 
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 import 'package:bot_web/bot_retained.dart';
-import 'package:vote/map.dart';
+
+import '../map/location_data.dart';
+import '../map/map_player.dart';
 
 import 'candidate_map_element.dart';
 import 'map_element_base.dart';

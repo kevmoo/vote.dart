@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
-import 'map.dart';
+import 'src/map/distance_election.dart';
+import 'src/map/location_data.dart';
+import 'src/map/map_player.dart';
 
 import 'src/vote/condorcet_election.dart';
 import 'src/vote/irv_election.dart';

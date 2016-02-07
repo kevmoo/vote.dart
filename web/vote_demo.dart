@@ -3,7 +3,7 @@ import 'dart:html';
 import 'package:bot_web/bot_retained.dart';
 import 'package:vote/calc.dart';
 import 'package:vote/html.dart';
-import 'package:vote/map.dart';
+import 'package:vote/src/map/location_data.dart';
 import 'package:vote/retained.dart';
 
 void main() {

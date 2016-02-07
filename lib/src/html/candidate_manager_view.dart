@@ -4,7 +4,8 @@ import 'dart:html' hide Player;
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 import 'package:bot_web/bot_html.dart';
 
-import '../../map.dart';
+import '../map/location_data.dart';
+import '../map/map_player.dart';
 
 class CandidateManagerView extends HtmlView {
   static const String _CANDIDATE_ID_ATTRIBUTE = 'candidate-id';

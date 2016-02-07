@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 import 'package:vote/calc.dart';
-import 'package:vote/map.dart';
+import 'package:vote/src/map/location_data.dart';
 
 void main() {
   test('CalcEngine', () {
