@@ -6667,57 +6667,7 @@ this.d7()}},kC:{"^":"Tp:0;a",
 $1:function(a){return J.RM(a,this.a)}},JS:{"^":"Tp:26;a",
 $1:function(a){var z=this.a
 a.sjn(z.fx)
-a.A3(0,z.db)}}}],["","",,R,{"^":"",
-t:[function(){var z,y,x,w,v,u,t,s,r,q,p,o,n,m,l,k,j,i,h,g,f,e
-z=document.querySelector("#content")
-y=document.querySelector("#pluralityView")
-x=document.querySelector("#distanceView")
-w=document.querySelector("#condorcetView")
-v=document.querySelector("#canManView")
-u=document.querySelector("#irvView")
-t=J.w(z)
-s=t.gP(z)
-t=t.gL(z)
-r=E.o(1,0,0,1,0,0)
-q=P.D(null,null,null,null,!1,null)
-p=H.L([],[N.H])
-o=E.o(1,0,0,1,0,0)
-n=H.L(new H.u(0,null,null,null,null,null,0),[N.H,P.K])
-m=H.L([],[E.v])
-l=P.D(null,null,null,null,!1,null)
-k=H.L(new H.u(0,null,null,null,null,null,0),[A.x,P.a])
-p=new Y.m(p,o,null,n,m,l,null,s,t,1,!1,null,null,k,H.L(new H.u(0,null,null,null,null,null,0),[A.j,S.M]),!1)
-p.si(!0)
-p.db=0.3
-o=H.L([],[N.H])
-n=E.o(1,0,0,1,0,0)
-m=H.L([],[E.v])
-l=P.D(null,null,null,null,!1,null)
-k=H.L(new H.u(0,null,null,null,null,null,0),[A.x,P.a])
-o=new A.A(o,n,0,null,null,m,l,null,s,t,1,!1,null,null,k,H.L(new H.u(0,null,null,null,null,null,0),[A.j,S.M]),!1)
-n=H.L([],[E.v])
-m=P.D(null,null,null,null,!1,null)
-l=H.L(new H.u(0,null,null,null,null,null,0),[A.x,P.a])
-j=new T.n(p,o,r,q,null,null,null,n,m,null,s,t,1,!1,null,null,l,H.L(new H.u(0,null,null,null,null,null,0),[A.j,S.M]),!1)
-p.I(j)
-o.I(j)
-i=new Y.z(null,x,null)
-Y.J(x,"node")
-i.b=!0
-h=new S.q(null,y,null)
-Y.J(y,"node")
-h.b=!0
-g=new K.c(P.D(null,null,null,null,!1,null),null,null,null,w,null)
-Y.J(w,"node")
-g.b=!0
-f=new L.b(P.D(null,null,null,null,!1,null),null,null,u,null)
-Y.J(u,"node")
-f.b=!0
-e=new R.k(P.D(null,null,null,null,!1,N.H),P.D(null,null,null,null,!1,null),P.I([],N.H),v,null)
-Y.J(v,"node")
-e.b=!0
-R.E(z,j,g,h,i,e,f).q()},"$0","ej",0,0,2],
-fc:{"^":"SL;r,x,y,z,Q,ch,b,c,d,e,f,a",
+a.A3(0,z.db)}}}],["","",,R,{"^":"",fc:{"^":"SL;r,x,y,z,Q,ch,b,c,d,e,f,a",
 eR:[function(a){var z,y,x,w,v,u
 z=this.r.a.c
 y=this.d
@@ -6817,8 +6767,7 @@ b.I(y)
 y=new R.fc(z,c,g,e,d,f,a,y,b,null,!1,!1)
 y.Qa(a,b)
 y.it(a,b,c,d,e,f,g)
-return y}}},
-Xy:{"^":"Tp:0;a",
+return y}}},Xy:{"^":"Tp:0;a",
 $1:function(a){var z,y
 z=this.a.r
 y=z.a
@@ -6828,12 +6777,10 @@ z=z.f
 y=y.c
 if(z.b>=4)H.r(z.Jz())
 z.B7(y)
-return}},
-vm:{"^":"Tp:0;a",
+return}},vm:{"^":"Tp:0;a",
 $1:function(a){var z=this.a.r
 z.sxp(z.a.c.v7())
-return}},
-kL:{"^":"Tp:0;a",
+return}},kL:{"^":"Tp:0;a",
 $1:function(a){var z,y,x
 z=this.a
 y=z.x.f
@@ -6841,8 +6788,7 @@ x=z.r
 x.r=y
 x.hX()
 z.d.cy.sfs(y)
-return}},
-qf:{"^":"Tp:0;a",
+return}},qf:{"^":"Tp:0;a",
 $1:function(a){var z,y,x
 z=this.a
 y=z.y.gea()
@@ -6850,7 +6796,56 @@ x=z.r
 x.r=y
 x.hX()
 z.d.cy.sfs(y)
-return}}},1],["","",,Y,{"^":"",m:{"^":"SP;cx,cy,jn:db?,dx,d,e,f,r,x,y,z,Q,ch,b,c,a",
+return}}}],["","",,R,{"^":"",
+t:[function(){var z,y,x,w,v,u,t,s,r,q,p,o,n,m,l,k,j,i,h,g,f,e
+z=document.querySelector("#content")
+y=document.querySelector("#pluralityView")
+x=document.querySelector("#distanceView")
+w=document.querySelector("#condorcetView")
+v=document.querySelector("#canManView")
+u=document.querySelector("#irvView")
+t=J.w(z)
+s=t.gP(z)
+t=t.gL(z)
+r=E.o(1,0,0,1,0,0)
+q=P.D(null,null,null,null,!1,null)
+p=H.L([],[N.H])
+o=E.o(1,0,0,1,0,0)
+n=H.L(new H.u(0,null,null,null,null,null,0),[N.H,P.K])
+m=H.L([],[E.v])
+l=P.D(null,null,null,null,!1,null)
+k=H.L(new H.u(0,null,null,null,null,null,0),[A.x,P.a])
+p=new Y.m(p,o,null,n,m,l,null,s,t,1,!1,null,null,k,H.L(new H.u(0,null,null,null,null,null,0),[A.j,S.M]),!1)
+p.si(!0)
+p.db=0.3
+o=H.L([],[N.H])
+n=E.o(1,0,0,1,0,0)
+m=H.L([],[E.v])
+l=P.D(null,null,null,null,!1,null)
+k=H.L(new H.u(0,null,null,null,null,null,0),[A.x,P.a])
+o=new A.A(o,n,0,null,null,m,l,null,s,t,1,!1,null,null,k,H.L(new H.u(0,null,null,null,null,null,0),[A.j,S.M]),!1)
+n=H.L([],[E.v])
+m=P.D(null,null,null,null,!1,null)
+l=H.L(new H.u(0,null,null,null,null,null,0),[A.x,P.a])
+j=new T.n(p,o,r,q,null,null,null,n,m,null,s,t,1,!1,null,null,l,H.L(new H.u(0,null,null,null,null,null,0),[A.j,S.M]),!1)
+p.I(j)
+o.I(j)
+i=new Y.z(null,x,null)
+Y.J(x,"node")
+i.b=!0
+h=new S.q(null,y,null)
+Y.J(y,"node")
+h.b=!0
+g=new K.c(P.D(null,null,null,null,!1,null),null,null,null,w,null)
+Y.J(w,"node")
+g.b=!0
+f=new L.b(P.D(null,null,null,null,!1,null),null,null,u,null)
+Y.J(u,"node")
+f.b=!0
+e=new R.k(P.D(null,null,null,null,!1,N.H),P.D(null,null,null,null,!1,null),P.I([],N.H),v,null)
+Y.J(v,"node")
+e.b=!0
+R.E(z,j,g,h,i,e,f).q()},"$0","ej",0,0,2]},1],["","",,Y,{"^":"",m:{"^":"SP;cx,cy,jn:db?,dx,d,e,f,r,x,y,z,Q,ch,b,c,a",
 A3:function(a,b){Y.J(b,"value")
 this.cy.tw(b)
 this.B1()},
