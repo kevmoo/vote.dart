@@ -5,7 +5,9 @@ import 'dart:math' as math;
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 import 'package:bot_web/bot_html.dart';
 
-import '../../vote.dart';
+import '../vote/condorcet_election.dart';
+import '../vote/player.dart';
+
 import 'html_util.dart';
 
 class CondorcetView extends HtmlView {

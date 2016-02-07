@@ -1,6 +1,6 @@
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
-import '../../vote.dart';
+import '../vote/player.dart';
 
 class MapPlayer extends Player {
   static int _counter = 0;

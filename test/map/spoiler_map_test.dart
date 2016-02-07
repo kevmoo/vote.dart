@@ -1,7 +1,9 @@
 import 'package:bot/bot.dart';
 import 'package:test/test.dart';
 import 'package:vote/map.dart';
-import 'package:vote/vote.dart';
+
+import 'package:vote/src/vote/condorcet_election.dart';
+import 'package:vote/src/vote/plurality_election.dart';
 
 void main() {
   group('spoiler', () {

@@ -3,7 +3,9 @@ import 'dart:html' hide Player;
 
 import 'package:bot_web/bot_html.dart';
 
-import '../../vote.dart';
+import '../vote/irv_election.dart';
+import '../vote/player.dart';
+import '../vote/plurality_election_place.dart';
 import 'html_util.dart';
 
 class IrvView extends HtmlView {

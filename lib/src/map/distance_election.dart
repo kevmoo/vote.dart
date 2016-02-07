@@ -1,6 +1,7 @@
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
-import '../../vote.dart';
+import '../vote/election.dart';
+
 import 'distance_ballot.dart';
 import 'distance_election_place.dart';
 import 'location_data.dart';

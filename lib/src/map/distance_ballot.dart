@@ -1,6 +1,6 @@
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
-import '../../vote.dart';
+import '../vote/ranked_ballot.dart';
 import 'map_player.dart';
 
 class DistanceBallot<TVoter extends MapPlayer, TCandidate extends MapPlayer>
