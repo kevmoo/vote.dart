@@ -144,24 +144,20 @@ class CalcEngine {
   }
 }
 
-DistanceElection _distanceElectionIsolate(LocationData data) {
-  return new DistanceElection.fromData(data);
-}
+DistanceElection _distanceElectionIsolate(LocationData data) =>
+    new DistanceElection.fromData(data);
 
 PluralityElection _pluralityElectionIsolate(
-    List<PluralityBallot<MapPlayer, MapPlayer>> ballots) {
-  return new PluralityElection(ballots);
-}
+        List<PluralityBallot<MapPlayer, MapPlayer>> ballots) =>
+    new PluralityElection(ballots);
 
 CondorcetElection _condorcetElectionIsolate(
-    List<RankedBallot<MapPlayer, MapPlayer>> ballots) {
-  return new CondorcetElection(ballots);
-}
+        List<RankedBallot<MapPlayer, MapPlayer>> ballots) =>
+    new CondorcetElection(ballots);
 
 IrvElection _irvElectionIsolate(
-    List<RankedBallot<MapPlayer, MapPlayer>> ballots) {
-  return new IrvElection(ballots);
-}
+        List<RankedBallot<MapPlayer, MapPlayer>> ballots) =>
+    new IrvElection(ballots);
 
 Map<MapPlayer, String> _voterHexIsolate(
     Tuple3<DistanceElection, LocationData, List<MapPlayer>> tuple) {
