@@ -685,7 +685,7 @@ $.eb=$.eb+("_"+y)
 y=z.e
 x=init.globalState.d.a
 w=z.f
-J.jl(f,["spawned",new H.JM(y,x),w,z.r])
+J.jl(f,["spawned",new H.Z6(y,x),w,z.r])
 x=new H.Vg(a,b,c,d,z)
 if(e===!0){z.v8(w,w)
 init.globalState.f.a.WQ(new H.IY(z,x,"start isolate"))}else x.$0()},
@@ -845,7 +845,7 @@ else{x=H.KT(x,[x]).Zg(y)
 if(x)y.$1(this.b)
 else y.$0()}}z.Wp()}},
 Iy:{"^":"a;"},
-JM:{"^":"Iy;b,a",
+Z6:{"^":"Iy;b,a",
 wR:function(a,b){var z,y,x,w
 z=init.globalState.z.W(0,this.a)
 if(z==null)return
@@ -876,7 +876,7 @@ break}return}y=init.globalState.f
 w="receive "+H.e(b)
 y.a.WQ(new H.IY(z,new H.Ua(this,x),w))},
 DN:function(a,b){if(b==null)return!1
-return b instanceof H.JM&&J.RM(this.b,b.b)},
+return b instanceof H.Z6&&J.RM(this.b,b.b)},
 giO:function(a){return this.b.gEa()}},
 Ua:{"^":"Tp:1;a,b",
 $0:function(){var z=this.a.b
@@ -959,7 +959,7 @@ z=H.K1(z,x,H.W8(z,"cX",0),null)
 return["map",w,P.PW(z,!0,H.W8(z,"cX",0))]}if(!!z.$isHl)return this.OD(a)
 if(!!z.$isvB)this.jf(a)
 if(!!z.$isSF)this.Fd(a,"RawReceivePorts can't be transmitted:")
-if(!!z.$isJM)return this.PE(a)
+if(!!z.$isZ6)return this.PE(a)
 if(!!z.$isns)return this.ff(a)
 if(!!z.$isTp){v=a.$static_name
 if(v==null)this.Fd(a,"Closures can't be transmitted:")
@@ -1085,7 +1085,7 @@ if(J.RM(y,init.globalState.b)){v=init.globalState.z.W(0,x)
 if(v==null)return
 u=v.Zt(w)
 if(u==null)return
-t=new H.JM(u,x)}else t=new H.ns(y,w,x)
+t=new H.Z6(u,x)}else t=new H.ns(y,w,x)
 this.b.push(t)
 return t},
 ZQ:function(a){var z,y,x,w,v,u,t
@@ -2146,38 +2146,40 @@ if(b==null)return!1
 z=H.RB(b,"$isSw",[H.Kp(this,0)],null)
 return z&&J.RM(J.pX(b),this.a)},
 giO:function(a){return J.hf(this.a)}},qI:{"^":"a;a,b,c,d,e,f",
-kv:function(){var z,y,x,w,v
+kv:function(){var z,y,x,w
 for(z=this.e.a,z=z.gUQ(z),z=z.gw(z),y=this.a;z.F();){x=z.gl()
-w=H.of(x,"expando$values")
-v=w==null?null:H.of(w,y.KV())
-if(J.RM(v==null?-1:v,-1))this.EF(x)}return this.d},
-EF:function(a){var z,y,x,w,v,u,t,s,r
-z=this.a
-z.Y5(0,a,this.f)
-y=this.b
-y.Y5(0,a,this.f);++this.f
-x=this.c
-x.qz(a)
-for(w=a.gyh(),v=new P.qC(w,w.r,null,null),v.c=w.e;v.F();){u=v.d
-t=H.of(u,"expando$values")
-s=t==null?null:H.of(t,z.KV())
-if(J.RM(s==null?-1:s,-1)){this.EF(u)
-t=H.of(a,"expando$values")
-w=t==null?null:H.of(t,y.KV())
-t=H.of(u,"expando$values")
-y.Y5(0,a,P.LU(w,t==null?null:H.of(t,y.KV())))}else if(x.tg(0,u)){t=H.of(a,"expando$values")
-w=t==null?null:H.of(t,y.KV())
-t=H.of(u,"expando$values")
-s=t==null?null:H.of(t,z.KV())
-y.Y5(0,a,P.LU(w,s==null?-1:s))}}t=H.of(a,"expando$values")
-y=t==null?null:H.of(t,y.KV())
-t=H.of(a,"expando$values")
-s=t==null?null:H.of(t,z.KV())
-if(J.RM(y,s==null?-1:s)){r=H.L([],[H.Kp(this,0)])
-do{u=x.AR()
-z=J.w(u)
-r.push(z.gnw(u))}while(!z.DN(u,a))
-this.d.push(r)}}}}],["","",,Z,{"^":"",RU:{"^":"wC;a,b",
+w=y.W(0,x)
+if(J.RM(w==null?-1:w,-1))this.EF(x)}return this.d},
+EF:function(a){var z,y,x,w,v,u,t,s,r,q
+z=this.f
+y=this.a
+x=y.b
+if(typeof x!=="string")x.set(a,z)
+else P.cp(x,a,z)
+z=this.f
+x=this.b
+w=x.b
+v=typeof w!=="string"
+if(v)w.set(a,z)
+else P.cp(w,a,z);++this.f
+z=this.c
+z.qz(a)
+for(u=a.gyh(),t=new P.qC(u,u.r,null,null),t.c=u.e;t.F();){s=t.d
+r=y.W(0,s)
+if(J.RM(r==null?-1:r,-1)){this.EF(s)
+u=P.LU(x.W(0,a),x.W(0,s))
+if(v)w.set(a,u)
+else P.cp(w,a,u)}else if(z.tg(0,s)){u=x.W(0,a)
+r=y.W(0,s)
+u=P.LU(u,r==null?-1:r)
+if(v)w.set(a,u)
+else P.cp(w,a,u)}}x=x.W(0,a)
+r=y.W(0,a)
+if(J.RM(x,r==null?-1:r)){q=H.L([],[H.Kp(this,0)])
+do{s=z.AR()
+y=J.w(s)
+q.push(y.gnw(s))}while(!y.DN(s,a))
+this.d.push(q)}}}}],["","",,Z,{"^":"",RU:{"^":"wC;a,b",
 gw:function(a){return this.BI(this.a)},
 BI:function(a){return this.b.$1(a)},
 $aswC:function(a,b){return[b]},
@@ -2853,7 +2855,7 @@ c.immutable$list=Array
 n.Y5(0,l,H.L(new T.S0(l,e,d,c),[null]))
 m.Y5(0,l,h)}Y.J(m,"graph")
 b=M.Du(m,null)
-a=H.L(new M.qI(new P.kM("index"),new P.kM("link"),P.NZ(null,M.Sw),H.L([],[P.zM]),b,0),[null]).kv()
+a=H.L(new M.qI(P.JM("index"),P.JM("link"),P.NZ(null,M.Sw),H.L([],[P.zM]),b,0),[null]).kv()
 a0=H.L([],[[N.We,a6]])
 for(w=a.length,a1=1,a2=0;a2<a.length;a.length===w||(0,H.lk)(a),++a2){a3=a[a2]
 a0.push(H.L(new N.We(a1,a3),[null]))
@@ -3475,9 +3477,7 @@ this.a.$0()}},
 Gm:{"^":"u8;a"},
 JI:{"^":"yU;y,tL:z@,SL:Q?,x,a,b,c,d,e,f,r",
 gz3:function(){return this.x},
-uO:function(a){var z=this.y
-if(typeof z!=="number")return z.zM()
-return(z&1)===a},
+uO:function(a){return(this.y&1)===a},
 lT:[function(){},"$0","gb9",0,0,2],
 ie:[function(){},"$0","gxl",0,0,2],
 $isNO:1},
@@ -3505,7 +3505,7 @@ z=new P.EM($.X3,0,c)
 z.$builtinTypeInfo=this.$builtinTypeInfo
 z.q1()
 return z}z=$.X3
-y=new P.JI(null,null,null,this,null,null,null,z,d?1:0,null,null)
+y=new P.JI(0,null,null,this,null,null,null,z,d?1:0,null,null)
 y.$builtinTypeInfo=this.$builtinTypeInfo
 y.CY(a,b,c,d,H.Kp(this,0))
 y.Q=y
@@ -3521,8 +3521,7 @@ return y},
 rR:function(a){var z
 if(a.gtL()===a)return
 z=a.y
-if(typeof z!=="number")return z.zM()
-if((z&2)!==0)a.y=z|4
+if((z&2)!==0)a.y=(z|4)>>>0
 else{this.fC(a)
 if((this.c&2)===0&&this.d===this)this.hg()}return},
 EB:function(a){},
@@ -3550,19 +3549,13 @@ y=this.d
 if(y===this)return
 x=z&1
 this.c=z^3
-for(;y!==this;)if(y.uO(x)){z=y.y
-if(typeof z!=="number")return z.Ag()
-y.y=z|2
+for(;y!==this;)if(y.uO(x)){y.y=(y.y|2)>>>0
 a.$1(y)
-z=y.y
-if(typeof z!=="number")return z.wO()
-z^=1
+z=(y.y^1)>>>0
 y.y=z
 w=y.z
 if((z&4)!==0)this.fC(y)
-z=y.y
-if(typeof z!=="number")return z.zM()
-y.y=z&4294967293
+y.y=(y.y&4294967293)>>>0
 y=w}else y=y.z
 this.c&=4294967293
 if(this.d===this)this.hg()},
@@ -4979,21 +4972,25 @@ x=this.b
 if(typeof x!=="string")return y
 if(x.length>78)x=J.ld(x,0,75)+"..."
 return y+"\n"+H.e(x)}},
-kM:{"^":"a;oc:a>",
+kM:{"^":"a;oc:a>,b",
 Z:function(a){return"Expando:"+H.e(this.a)},
-W:function(a,b){var z=H.of(b,"expando$values")
-return z==null?null:H.of(z,this.KV())},
-Y5:function(a,b,c){var z=H.of(b,"expando$values")
-if(z==null){z=new P.a()
-H.aw(b,"expando$values",z)}H.aw(z,this.KV(),c)},
-KV:function(){var z,y
-z=H.of(this,"expando$key")
-if(z==null){y=$.Ss
-$.Ss=y+1
-z="expando$key$"+y
-H.aw(this,"expando$key",z)}return z},
+W:function(a,b){var z,y
+z=this.b
+if(typeof z!=="string"){if(b==null||typeof b==="boolean"||typeof b==="number"||typeof b==="string")H.r(P.L3(b,"Expandos are not allowed on strings, numbers, booleans or null",null))
+return z.get(b)}y=H.of(b,"expando$values")
+return y==null?null:H.of(y,z)},
+Y5:function(a,b,c){var z=this.b
+if(typeof z!=="string")z.set(b,c)
+else P.cp(z,b,c)},
 static:{
-oP:function(a){return new P.kM(a)}}},
+cp:function(a,b,c){var z=H.of(b,"expando$values")
+if(z==null){z=new P.a()
+H.aw(b,"expando$values",z)}H.aw(z,a,c)},
+JM:function(a){var z
+if(typeof WeakMap=="function")z=new WeakMap()
+else{z=$.Ss
+$.Ss=z+1
+z="expando$key$"+z}return new P.kM(a,z)}}},
 KN:{"^":"FK;"},
 "+int":0,
 cX:{"^":"a;",
@@ -7193,7 +7190,7 @@ init.deferredLibraryUris={}
 init.deferredLibraryHashes={};(function(a){for(var z=0;z<a.length;){var y=a[z++]
 var x=a[z++]
 var w=a[z++]
-I.$lazy(y,x,w)}})(["fa","$get$fa",function(){return init.getIsolateTag("_$dart_dartClosure")},"Kb","$get$Kb",function(){return H.Qh()},"jp","$get$jp",function(){return P.oP(null)},"lm","$get$lm",function(){return H.cM(H.S7({
+I.$lazy(y,x,w)}})(["fa","$get$fa",function(){return init.getIsolateTag("_$dart_dartClosure")},"Kb","$get$Kb",function(){return H.Qh()},"jp","$get$jp",function(){return P.JM(null)},"lm","$get$lm",function(){return H.cM(H.S7({
 toString:function(){return"$receiver$"}}))},"k1","$get$k1",function(){return H.cM(H.S7({$method$:null,
 toString:function(){return"$receiver$"}}))},"R1","$get$R1",function(){return H.cM(H.S7(null))},"fN","$get$fN",function(){return H.cM(function(){var $argumentsExpr$='$arguments$'
 try{null.$method$($argumentsExpr$)}catch(z){return z.message}}())},"qi","$get$qi",function(){return H.cM(H.S7(void 0))},"rZ","$get$rZ",function(){return H.cM(function(){var $argumentsExpr$='$arguments$'
