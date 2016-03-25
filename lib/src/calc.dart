@@ -5,7 +5,6 @@ import 'package:bot/bot.dart' hide ReadOnlyCollection;
 import 'map/distance_election.dart';
 import 'map/location_data.dart';
 import 'map/map_player.dart';
-
 import 'vote/condorcet_election.dart';
 import 'vote/irv_election.dart';
 import 'vote/plurality_ballot.dart';
@@ -16,10 +15,10 @@ class CalcEngine {
   final ThrottledStream<LocationData, DistanceElection>
       _distanceElectionMapper = new ThrottledStream(_distanceElectionIsolate);
 
-  final ThrottledStream<List<PluralityBallot<MapPlayer, MapPlayer>>,
-          PluralityElection> _pluralityElectionMapper =
-      new ThrottledStream<List<PluralityBallot<MapPlayer, MapPlayer>>,
-          PluralityElection>(_pluralityElectionIsolate);
+  final ThrottledStream<List<PluralityBallot>, PluralityElection>
+      _pluralityElectionMapper =
+      new ThrottledStream<List<PluralityBallot>, PluralityElection>(
+          _pluralityElectionIsolate);
 
   final ThrottledStream<List<RankedBallot<MapPlayer, MapPlayer>>,
           CondorcetElection> _condorcetElectionMapper =
@@ -138,8 +137,8 @@ class CalcEngine {
   }
 
   void _updateVoterHexMapper() {
-    final val =
-        new Tuple3(distanceElection, locationData, _highlightCandidates);
+    final val = new Tuple3<DistanceElection, LocationData, List<MapPlayer>>(
+        distanceElection, locationData, _highlightCandidates);
     _voterHexMapper.source = val;
   }
 }
@@ -147,8 +146,7 @@ class CalcEngine {
 DistanceElection _distanceElectionIsolate(LocationData data) =>
     new DistanceElection.fromData(data);
 
-PluralityElection _pluralityElectionIsolate(
-        List<PluralityBallot<MapPlayer, MapPlayer>> ballots) =>
+PluralityElection _pluralityElectionIsolate(List<PluralityBallot> ballots) =>
     new PluralityElection(ballots);
 
 CondorcetElection _condorcetElectionIsolate(

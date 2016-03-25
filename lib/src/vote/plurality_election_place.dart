@@ -1,8 +1,6 @@
 import 'election_place.dart';
-import 'player.dart';
 
-class PluralityElectionPlace<TCandidate extends Player>
-    extends ElectionPlace<TCandidate> {
+class PluralityElectionPlace<TCandidate> extends ElectionPlace<TCandidate> {
   final int voteCount;
 
   PluralityElectionPlace(
@@ -11,6 +9,7 @@ class PluralityElectionPlace<TCandidate extends Player>
     assert(voteCount >= 0);
   }
 
+  @override
   String toString() {
     return "Votes: $voteCount; ${super.toString()}";
   }

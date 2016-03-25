@@ -1,8 +1,6 @@
 import 'ballot.dart';
-import 'player.dart';
 
-class PluralityBallot<TVoter extends Player, TCandidate extends Player>
-    extends Ballot {
+class PluralityBallot<TVoter, TCandidate> extends Ballot<TVoter> {
   final TCandidate choice;
 
   PluralityBallot(TVoter voter, this.choice) : super(voter);

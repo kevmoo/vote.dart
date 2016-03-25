@@ -26,6 +26,7 @@ class CandidateElement extends Thing {
     }
   }
 
+  @override
   void drawOverride(CanvasRenderingContext2D ctx) {
     if (hidden) {
       ctx.globalAlpha = 0.3;

@@ -1,14 +1,13 @@
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
-import 'player.dart';
-import 'plurality_election_place.dart';
 import 'irv_elimination.dart';
+import 'plurality_election_place.dart';
 import 'ranked_ballot.dart';
 import 'vote_util.dart';
 
-class IrvRound<TVoter extends Player, TCandidate extends Player> {
-  final List<PluralityElectionPlace<TCandidate>> places;
-  final List<IrvElimination<TVoter, TCandidate>> eliminations;
+class IrvRound<TVoter, TCandidate> {
+  final List<PluralityElectionPlace> places;
+  final List<IrvElimination> eliminations;
 
   factory IrvRound(List<RankedBallot<TVoter, TCandidate>> ballots,
       List<TCandidate> eliminatedCandidates) {
@@ -31,7 +30,8 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
     placeVotes.sort((a, b) => b.compareTo(a));
 
     int placeNumber = 1;
-    final places = new List.unmodifiable(placeVotes.map((pv) {
+    final places =
+        new List<PluralityElectionPlace>.unmodifiable(placeVotes.map((pv) {
       final vg = voteGroups[pv];
       final currentPlaceNumber = placeNumber;
       placeNumber += vg.length;
@@ -40,8 +40,8 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
 
     final newlyEliminatedCandidates = _getEliminatedCandidates(places);
 
-    final eliminations =
-        new List.unmodifiable(newlyEliminatedCandidates.map((c) {
+    final eliminations = new List<IrvElimination>.unmodifiable(
+        newlyEliminatedCandidates.map((TCandidate c) {
       final xfers =
           new Map<TCandidate, List<RankedBallot<TVoter, TCandidate>>>();
 
@@ -80,8 +80,7 @@ class IrvRound<TVoter extends Player, TCandidate extends Player> {
     return eliminations.singleWhere((e) => e.candidate == candidate);
   }
 
-  static List<Player> _getEliminatedCandidates(
-      List<PluralityElectionPlace> places) {
+  static List _getEliminatedCandidates(List<PluralityElectionPlace> places) {
     assert(places != null);
     assert(places.length > 0);
 

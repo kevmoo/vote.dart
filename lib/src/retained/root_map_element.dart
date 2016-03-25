@@ -7,7 +7,6 @@ import 'package:bot_web/bot_retained.dart';
 
 import '../map/location_data.dart';
 import '../map/map_player.dart';
-
 import 'candidate_map_element.dart';
 import 'map_element_base.dart';
 import 'voter_map_element.dart';
@@ -32,8 +31,10 @@ class RootMapElement extends ParentThing {
 
   Stream get candidatesMoved => _candidatesMovedHandle.stream;
 
+  @override
   int get visualChildCount => 2;
 
+  @override
   Thing getVisualChild(int index) {
     switch (index) {
       case 0:
@@ -96,6 +97,7 @@ class RootMapElement extends ParentThing {
     _candidatesMovedHandle.add(null);
   }
 
+  @override
   void update() {
     // calculate important bits if we need to
     if (_bounds != null && _radius == null) {

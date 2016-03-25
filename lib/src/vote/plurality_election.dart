@@ -2,22 +2,23 @@ import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
 import 'ballot.dart';
 import 'election.dart';
-import 'player.dart';
 import 'plurality_ballot.dart';
 import 'plurality_election_place.dart';
 
-class PluralityElection<TVoter extends Player, TCandidate extends Player>
+class PluralityElection<TVoter, TCandidate extends Comparable>
     extends Election<TVoter, TCandidate> {
-  final List<Ballot<TVoter, TCandidate>> ballots;
-  final Grouping<TCandidate, PluralityBallot<TVoter, TCandidate>> _ballotGroup;
+  @override
+  final List<Ballot<TVoter>> ballots;
+  final Grouping<TCandidate, PluralityBallot> _ballotGroup;
+
+  @override
   final List<PluralityElectionPlace<TCandidate>> places;
 
   PluralityElection._internal(this.ballots, this._ballotGroup,
-      Iterable<PluralityElectionPlace<TCandidate>> sourcePlaces)
+      Iterable<PluralityElectionPlace> sourcePlaces)
       : places = new List.unmodifiable(sourcePlaces);
 
-  factory PluralityElection(
-      Iterable<PluralityBallot<TVoter, TCandidate>> ballots) {
+  factory PluralityElection(Iterable<PluralityBallot> ballots) {
     final roBallots = new List.unmodifiable(ballots);
 
     // Check voter uniqueness
@@ -31,7 +32,7 @@ class PluralityElection<TVoter extends Player, TCandidate extends Player>
     // create a Map of candidates keyed on their vote count
     //
     var voteCounts = new Map<int, List<TCandidate>>();
-    Action2<TCandidate, List<PluralityBallot<TVoter, TCandidate>>> f = (c, b) {
+    Action2<TCandidate, List<PluralityBallot>> f = (c, b) {
       var count = b.length;
       List<TCandidate> candidates =
           voteCounts.putIfAbsent(count, () => new List<TCandidate>());
@@ -48,7 +49,7 @@ class PluralityElection<TVoter extends Player, TCandidate extends Player>
     ballotCounts.sort((a, b) => b.compareTo(a));
 
     int place = 1;
-    var places = new List<PluralityElectionPlace<TCandidate>>();
+    var places = new List<PluralityElectionPlace>();
     for (final int count in ballotCounts) {
       var p = new PluralityElectionPlace(place, voteCounts[count], count);
       places.add(p);
@@ -58,5 +59,6 @@ class PluralityElection<TVoter extends Player, TCandidate extends Player>
     return new PluralityElection._internal(roBallots, group, places);
   }
 
+  @override
   Iterable<TCandidate> get candidates => _ballotGroup.getKeys();
 }

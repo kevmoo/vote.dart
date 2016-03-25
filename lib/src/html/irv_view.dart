@@ -4,7 +4,6 @@ import 'dart:html';
 import 'package:bot_web/bot_html.dart';
 
 import '../vote/irv_election.dart';
-import '../vote/player.dart';
 import '../vote/plurality_election_place.dart';
 import 'html_util.dart';
 
@@ -27,7 +26,7 @@ class IrvView extends HtmlView {
 
   Stream get hoverChanged => _hoverChangedHandle.stream;
 
-  List<Player> get highlightCandidates {
+  List get highlightCandidates {
     if (_highlightRound == null) {
       return null;
     } else {
@@ -36,6 +35,7 @@ class IrvView extends HtmlView {
     }
   }
 
+  @override
   void updateElement() {
     node.children.clear();
 
@@ -181,8 +181,9 @@ class IrvView extends HtmlView {
   }
 
   void _onMouseOver(MouseEvent e) {
-    if (e.toElement is Element) {
-      final Element elem = e.toElement;
+    var target = e.target;
+    if (target is Element) {
+      final Element elem = target as Element;
       if (elem.classes.contains(_ROUND_CELL_CLASS)) {
         _updateHighlightedRound(int.parse(elem.dataset['roundIndex']));
         return;
@@ -191,7 +192,7 @@ class IrvView extends HtmlView {
     _updateHighlightedRound(null);
   }
 
-  void _onMouseOut(args) {
+  void _onMouseOut(MouseEvent args) {
     _updateHighlightedRound(null);
   }
 

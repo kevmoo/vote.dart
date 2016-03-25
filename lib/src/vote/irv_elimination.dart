@@ -1,7 +1,6 @@
-import 'player.dart';
 import 'ranked_ballot.dart';
 
-class IrvElimination<TVoter extends Player, TCandidate extends Player> {
+class IrvElimination<TVoter, TCandidate> {
   final TCandidate candidate;
   final Map<TCandidate, List<RankedBallot<TVoter, TCandidate>>> _transfers;
   final List<RankedBallot<TVoter, TCandidate>> exhausted;

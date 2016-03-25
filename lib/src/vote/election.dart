@@ -1,11 +1,9 @@
-import 'player.dart';
 import 'ballot.dart';
-
 import 'election_place.dart';
 
-abstract class Election<TVoter extends Player, TCandidate extends Player> {
+abstract class Election<TVoter, TCandidate extends Comparable> {
   Iterable<TCandidate> get candidates;
-  Iterable<Ballot<TVoter, TCandidate>> get ballots;
+  Iterable<Ballot<TVoter>> get ballots;
   List<ElectionPlace<TCandidate>> get places;
 
   TCandidate get singleWinner {

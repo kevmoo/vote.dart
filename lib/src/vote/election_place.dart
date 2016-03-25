@@ -1,8 +1,6 @@
 import 'dart:collection';
-import 'player.dart';
 
-class ElectionPlace<TCandidate extends Player>
-    extends UnmodifiableListView<TCandidate> {
+class ElectionPlace<TCandidate> extends UnmodifiableListView<TCandidate> {
   final int place;
 
   ElectionPlace(this.place, Iterable<TCandidate> candidates)
@@ -11,5 +9,6 @@ class ElectionPlace<TCandidate extends Player>
     assert(length > 0);
   }
 
+  @override
   String toString() => "Place: $place; ${super.toString()}";
 }

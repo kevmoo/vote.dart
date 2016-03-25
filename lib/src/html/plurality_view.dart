@@ -18,6 +18,7 @@ class PluralityView extends HtmlView {
     markDirty();
   }
 
+  @override
   void updateElement() {
     node.children.clear();
 

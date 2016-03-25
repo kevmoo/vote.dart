@@ -59,7 +59,8 @@ class LocationData {
   LocationData cloneAndRemove(MapPlayer mp) {
     requireArgumentNotNull(mp, 'mp');
 
-    var newCans = new List.unmodifiable(candidates.where((e) => e != mp));
+    var newCans =
+        new List<MapPlayer>.unmodifiable(candidates.where((e) => e != mp));
 
     return new LocationData(voters, newCans);
   }

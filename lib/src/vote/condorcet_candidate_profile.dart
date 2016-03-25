@@ -1,6 +1,4 @@
-import 'player.dart';
-
-class CondorcetCandidateProfile<TCandidate extends Player> {
+class CondorcetCandidateProfile<TCandidate extends Comparable> {
   final TCandidate candidate;
   final List<TCandidate> lostTo;
   final List<TCandidate> beat;
@@ -8,8 +6,10 @@ class CondorcetCandidateProfile<TCandidate extends Player> {
 
   CondorcetCandidateProfile(this.candidate, this.lostTo, this.beat, this.tied);
 
+  @override
   int get hashCode => this.candidate.hashCode;
 
+  @override
   String toString() =>
       "[ $candidate: Beat: ${beat.length}, Tied: ${tied.length}, Lost to: ${lostTo.length}";
 }

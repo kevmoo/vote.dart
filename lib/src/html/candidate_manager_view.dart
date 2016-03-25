@@ -30,6 +30,7 @@ class CandidateManagerView extends HtmlView {
 
   Stream get newCandidateRequest => _requestNewCandidateHandle.stream;
 
+  @override
   void updateElement() {
     node.children.clear();
 
@@ -80,13 +81,13 @@ class CandidateManagerView extends HtmlView {
   }
 
   void _requestNewCandidate(MouseEvent args) {
-    final ButtonElement source = args.toElement;
+    final ButtonElement source = args.target;
     _requestNewCandidateHandle.add(null);
     source.disabled = true;
   }
 
   void _deleteClick(MouseEvent args) {
-    final ButtonElement source = args.toElement;
+    final ButtonElement source = args.target;
     final candidateId = int.parse(source.dataset[_CANDIDATE_ID_ATTRIBUTE]);
     _removeCandidateWithId(candidateId);
     source.disabled = true;

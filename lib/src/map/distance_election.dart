@@ -1,17 +1,20 @@
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
 import '../vote/election.dart';
-
 import 'distance_ballot.dart';
 import 'distance_election_place.dart';
 import 'location_data.dart';
 import 'map_player.dart';
 
-class DistanceElection<TVoter extends MapPlayer, TCandidate extends MapPlayer>
-    extends Election<TVoter, TCandidate> {
-  final List<TCandidate> candidates;
-  final List<DistanceBallot<TVoter, TCandidate>> ballots;
-  final List<DistanceElectionPlace<TCandidate>> places;
+class DistanceElection extends Election {
+  @override
+  final List<MapPlayer> candidates;
+
+  @override
+  final List<DistanceBallot> ballots;
+
+  @override
+  final List<DistanceElectionPlace> places;
 
   DistanceElection._internal(this.candidates, this.ballots, this.places);
 
@@ -20,11 +23,11 @@ class DistanceElection<TVoter extends MapPlayer, TCandidate extends MapPlayer>
   }
 
   factory DistanceElection(
-      Iterable<TVoter> voters, Iterable<TCandidate> candidates) {
-    final cans = new List<TCandidate>.unmodifiable(candidates);
+      Iterable<MapPlayer> voters, Iterable<MapPlayer> candidates) {
+    final cans = new List<MapPlayer>.unmodifiable(candidates);
 
-    final ballots = new List.unmodifiable(voters
-        .map((voter) => new DistanceBallot<MapPlayer, MapPlayer>(voter, cans)));
+    final ballots = new List<DistanceBallot>.unmodifiable(
+        voters.map((voter) => new DistanceBallot(voter, cans)));
 
     //
     // Places

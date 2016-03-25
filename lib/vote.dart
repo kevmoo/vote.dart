@@ -4,12 +4,15 @@ import 'package:bot_web/bot_retained.dart';
 
 import 'src/calc.dart';
 import 'src/html/candidate_manager_view.dart';
-import 'src/html/plurality_view.dart';
-import 'src/html/distance_view.dart';
 import 'src/html/condorcet_view.dart';
+import 'src/html/distance_view.dart';
 import 'src/html/irv_view.dart';
+import 'src/html/plurality_view.dart';
+import 'src/map/distance_election.dart';
 import 'src/map/location_data.dart';
+import 'src/map/map_player.dart';
 import 'src/retained/root_map_element.dart';
+import 'src/vote/condorcet_election.dart';
 
 class VoteDemo extends StageWrapper<RootMapElement> {
   final CalcEngine _calcEngine = new CalcEngine();
@@ -77,43 +80,43 @@ class VoteDemo extends StageWrapper<RootMapElement> {
     _calcEngine.locationData = initialData;
   }
 
-  void _updateHighlightCandidates(List candidates) {
+  void _updateHighlightCandidates(List<MapPlayer> candidates) {
     _calcEngine.hoverPair = candidates;
     rootThing.showOnlyPlayers = candidates;
   }
 
-  void _locationDataUpdated(dynamic args) {
+  void _locationDataUpdated(LocationData args) {
     assert(_calcEngine.locationData != null);
     final locData = _calcEngine.locationData;
     rootThing.locationData = locData;
     _canManView.candidates = locData.candidates;
   }
 
-  void _distanceElectionUpdated(dynamic args) {
+  void _distanceElectionUpdated(DistanceElection args) {
     assert(_calcEngine.distanceElection != null);
     _distanceView.election = _calcEngine.distanceElection;
     requestFrame();
   }
 
-  void _pluralityElectionUpdated(dynamic args) {
+  void _pluralityElectionUpdated(_) {
     assert(_calcEngine.pluralityElection != null);
     _pluralityView.election = _calcEngine.pluralityElection;
     requestFrame();
   }
 
-  void _condorcetElectionUpdated(dynamic args) {
+  void _condorcetElectionUpdated(CondorcetElection args) {
     assert(_calcEngine.condorcetElection != null);
     _condorcetView.election = _calcEngine.condorcetElection;
     requestFrame();
   }
 
-  void _irvElectionUpdated(args) {
+  void _irvElectionUpdated(_) {
     assert(_calcEngine.irvElection != null);
     _irvView.election = _calcEngine.irvElection;
     requestFrame();
   }
 
-  void _voterHexMapperUpdated(dynamic args) {
+  void _voterHexMapperUpdated(Map args) {
     assert(_calcEngine.voterHexMap != null);
     rootThing.voterHexMap = _calcEngine.voterHexMap;
     requestFrame();

@@ -1,24 +1,25 @@
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
-import 'player.dart';
+import 'condorcet_candidate_profile.dart';
 import 'condorcet_pair.dart';
 import 'election.dart';
-import 'condorcet_candidate_profile.dart';
-import 'ranked_ballot.dart';
 import 'election_place.dart';
+import 'ranked_ballot.dart';
 
-class CondorcetElection<TVoter extends Player, TCandidate extends Player>
-    extends Election<TVoter, TCandidate> {
-  final Set<CondorcetPair<TVoter, TCandidate>> _pairs;
-  final Map<TCandidate, CondorcetCandidateProfile<TCandidate>> _profiles;
-  final List<RankedBallot<TVoter, TCandidate>> ballots;
-  final List<ElectionPlace<TCandidate>> places;
+class CondorcetElection extends Election {
+  final Set<CondorcetPair> _pairs;
+  final Map<Comparable, CondorcetCandidateProfile> _profiles;
+
+  @override
+  final List<RankedBallot> ballots;
+
+  @override
+  final List<ElectionPlace> places;
 
   CondorcetElection._internal(
       this._pairs, this._profiles, this.ballots, this.places);
 
-  factory CondorcetElection(
-      Iterable<RankedBallot<TVoter, TCandidate>> ballots) {
+  factory CondorcetElection(Iterable<RankedBallot> ballots) {
     final roBallots = new List.unmodifiable(ballots);
 
     // Check voter uniqueness
@@ -26,9 +27,8 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
     requireArgument(CollectionUtil.allUnique(voterList),
         "Only one ballot per voter is allowed");
 
-    var map = new Map<CondorcetPair<TVoter, TCandidate>,
-        List<RankedBallot<TVoter, TCandidate>>>();
-    var candidateSet = new Set<TCandidate>();
+    var map = new Map<CondorcetPair, List<RankedBallot>>();
+    var candidateSet = new Set();
 
     for (final ballot in ballots) {
       for (var i = 0; i < ballot.rank.length; i++) {
@@ -38,29 +38,28 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
         for (var j = i + 1; j < ballot.rank.length; j++) {
           final pair = new CondorcetPair(candidateI, ballot.rank[j]);
 
-          final pairBallotList = map.putIfAbsent(
-              pair, () => new List<RankedBallot<TVoter, TCandidate>>());
+          final pairBallotList =
+              map.putIfAbsent(pair, () => new List<RankedBallot>());
           pairBallotList.add(ballot);
         }
       }
     }
 
-    var set = new Set<CondorcetPair<TVoter, TCandidate>>();
+    var set = new Set<CondorcetPair>();
     map.forEach((k, v) {
       var c = new CondorcetPair(k.item1, k.item2, v);
       set.add(c);
     });
 
-    var candidateProfiles =
-        new Map<TCandidate, CondorcetCandidateProfile<TCandidate>>();
-    var tarjanMap = new Map<TCandidate, Set<TCandidate>>();
+    var candidateProfiles = new Map<dynamic, CondorcetCandidateProfile>();
+    var tarjanMap = new Map<dynamic, Set<dynamic>>();
 
     for (final candidate in candidateSet) {
-      var lostTo = new List<TCandidate>();
-      var beat = new List<TCandidate>();
-      var tied = new List<TCandidate>();
+      var lostTo = [];
+      var beat = [];
+      var tied = [];
 
-      final tarjanLostTiedSet = new Set<TCandidate>();
+      final tarjanLostTiedSet = new Set();
 
       for (final pair in set) {
         if (pair.item1 == candidate || pair.item2 == candidate) {
@@ -91,7 +90,7 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
 
     var components = stronglyConnectedComponents(tarjanMap);
 
-    var places = new List<ElectionPlace<TCandidate>>();
+    var places = new List<ElectionPlace>();
     int placeNumber = 1;
     for (final round in components) {
       final place = new ElectionPlace(placeNumber, round);
@@ -100,12 +99,13 @@ class CondorcetElection<TVoter extends Player, TCandidate extends Player>
     }
 
     return new CondorcetElection._internal(set, candidateProfiles, roBallots,
-        new List<ElectionPlace<TCandidate>>.unmodifiable(places));
+        new List<ElectionPlace>.unmodifiable(places));
   }
 
-  Iterable<TCandidate> get candidates => _profiles.keys;
+  @override
+  Iterable get candidates => _profiles.keys;
 
-  CondorcetPair<TVoter, TCandidate> getPair(TCandidate c1, TCandidate c2) {
+  CondorcetPair getPair(c1, c2) {
     var filter = _pairs.where((p) => p.matches(c1, c2));
     assert(filter.length <= 1);
     if (filter.isEmpty) {

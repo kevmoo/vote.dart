@@ -3,15 +3,14 @@ import 'package:bot/bot.dart' hide ReadOnlyCollection;
 import '../vote/ranked_ballot.dart';
 import 'map_player.dart';
 
-class DistanceBallot<TVoter extends MapPlayer, TCandidate extends MapPlayer>
-    extends RankedBallot<TVoter, TCandidate> {
-  final Map<TCandidate, num> _distances;
+class DistanceBallot extends RankedBallot<MapPlayer, MapPlayer> {
+  final Map<MapPlayer, num> _distances;
 
   DistanceBallot._internal(
-      TVoter voter, List<TCandidate> items, this._distances)
+      MapPlayer voter, List<MapPlayer> items, this._distances)
       : super.protected(voter, items);
 
-  factory DistanceBallot(TVoter voter, Iterable<TCandidate> candidates) {
+  factory DistanceBallot(MapPlayer voter, Iterable<MapPlayer> candidates) {
     final distances = $(candidates).toMap((c) {
       var d = voter.location.distanceTo(c.location);
       return (d * 128).toInt() / 128;
@@ -29,12 +28,12 @@ class DistanceBallot<TVoter extends MapPlayer, TCandidate extends MapPlayer>
       return d;
     });
 
-    var items = new List.unmodifiable(rank);
+    var items = new List<MapPlayer>.unmodifiable(rank);
 
     return new DistanceBallot._internal(voter, items, distances);
   }
 
-  num getDistance(TCandidate candidate) {
+  num getDistance(MapPlayer candidate) {
     return _distances[candidate];
   }
 }

@@ -3,7 +3,6 @@ import 'package:bot_web/bot_retained.dart';
 
 import '../map/location_data.dart';
 import '../map/map_player.dart';
-
 import 'candidate_element.dart';
 import 'map_element_base.dart';
 import 'root_map_element.dart';
@@ -12,22 +11,26 @@ class CandidateMapElement extends ParentThing implements MapElementBase {
   final List<MapPlayer> _players = new List<MapPlayer>();
   final AffineTransform _tx = new AffineTransform();
 
+  @override
   num radius = 0;
   List<CandidateElement> _elements;
   List<MapPlayer> _showOnlyPlayers = null;
 
   CandidateMapElement(int w, int h) : super(w, h);
 
+  @override
   int get visualChildCount {
     _ensureElements();
     return _elements.length;
   }
 
+  @override
   Thing getVisualChild(int index) {
     _ensureElements();
     return _elements[index];
   }
 
+  @override
   void setTransform(AffineTransform value) {
     requireArgumentNotNull(value, 'value');
     _tx.setFromTransfrom(value);
@@ -50,7 +53,7 @@ class CandidateMapElement extends ParentThing implements MapElementBase {
     if (value == null) {
       _showOnlyPlayers = null;
     } else {
-      var newVal = new List.unmodifiable(value);
+      var newVal = new List<MapPlayer>.unmodifiable(value);
       assert($(newVal).distinct().length == newVal.length);
       assert(newVal.every((e) => _players.indexOf(e) >= 0));
       _showOnlyPlayers = newVal;

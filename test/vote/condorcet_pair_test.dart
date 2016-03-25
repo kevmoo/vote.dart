@@ -1,5 +1,4 @@
 import 'package:test/test.dart';
-
 import 'package:vote/src/vote/condorcet_pair.dart';
 import 'package:vote/src/vote/ranked_ballot.dart';
 

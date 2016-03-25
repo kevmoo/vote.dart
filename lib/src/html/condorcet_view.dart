@@ -6,8 +6,6 @@ import 'package:bot/bot.dart' hide ReadOnlyCollection;
 import 'package:bot_web/bot_html.dart';
 
 import '../vote/condorcet_election.dart';
-import '../vote/player.dart';
-
 import 'html_util.dart';
 
 class CondorcetView extends HtmlView {
@@ -15,8 +13,8 @@ class CondorcetView extends HtmlView {
 
   final StreamController _hoverChangedHandle = new StreamController();
   CondorcetElection _election;
-  List<Player> _candidates;
-  List<Player> _highlightCandidates;
+  List _candidates;
+  List _highlightCandidates;
 
   CondorcetView(DivElement node) : super(node);
 
@@ -30,8 +28,9 @@ class CondorcetView extends HtmlView {
 
   Stream get hoverChanged => _hoverChangedHandle.stream;
 
-  List<Player> get highlightCandidates => _highlightCandidates;
+  List get highlightCandidates => _highlightCandidates;
 
+  @override
   void updateElement() {
     node.children.clear();
 
@@ -156,7 +155,7 @@ class CondorcetView extends HtmlView {
     node.children.add(table);
   }
 
-  void set _thePair(List<Player> pair) {
+  void set _thePair(List pair) {
     assert(_candidates != null);
     if (pair != _highlightCandidates) {
       _highlightCandidates = pair;
@@ -187,8 +186,8 @@ class CondorcetView extends HtmlView {
 
   void _onMouseOver(MouseEvent e) {
     assert(_candidates != null);
-    if (e.toElement is Element) {
-      final Element elem = e.toElement;
+    if (e.target is Element) {
+      final Element elem = e.target;
       final pair = _getPair(elem);
       if (pair != null) {
         _thePair = [_candidates[pair.item1], _candidates[pair.item2]];
@@ -198,7 +197,7 @@ class CondorcetView extends HtmlView {
     _thePair = null;
   }
 
-  void _onMouseOut(args) {
+  void _onMouseOut(MouseEvent args) {
     assert(_candidates != null);
     _thePair = null;
   }

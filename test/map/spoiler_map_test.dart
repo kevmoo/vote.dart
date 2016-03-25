@@ -1,9 +1,7 @@
 import 'package:bot/bot.dart';
 import 'package:test/test.dart';
-
 import 'package:vote/src/map/distance_election.dart';
 import 'package:vote/src/map/map_player.dart';
-
 import 'package:vote/src/vote/condorcet_election.dart';
 import 'package:vote/src/vote/plurality_election.dart';
 

@@ -5,13 +5,13 @@ import 'package:bot_web/bot_html.dart';
 import 'package:bot_web/bot_retained.dart';
 
 import '../map/map_player.dart';
-
 import 'map_element_base.dart';
 
 class VoterMapElement extends Thing implements MapElementBase {
   final List<MapPlayer> _players = new List<MapPlayer>();
   final AffineTransform _tx = new AffineTransform();
 
+  @override
   num radius;
   Map<MapPlayer, String> _map = new Map<MapPlayer, String>();
 
@@ -20,6 +20,7 @@ class VoterMapElement extends Thing implements MapElementBase {
     radius = 0.3;
   }
 
+  @override
   void setTransform(AffineTransform value) {
     requireArgumentNotNull(value, 'value');
     _tx.setFromTransfrom(value);
@@ -41,6 +42,7 @@ class VoterMapElement extends Thing implements MapElementBase {
     invalidateDraw();
   }
 
+  @override
   void drawOverride(CanvasRenderingContext2D ctx) {
     for (final player in _players) {
       _drawPlayer(ctx, player);

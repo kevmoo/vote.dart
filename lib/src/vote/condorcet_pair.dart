@@ -1,9 +1,8 @@
 import 'package:bot/bot.dart' hide ReadOnlyCollection;
 
-import 'player.dart';
 import 'ranked_ballot.dart';
 
-class CondorcetPair<TVoter extends Player, TCandidate extends Player>
+class CondorcetPair<TVoter extends Comparable, TCandidate extends Comparable>
     extends Tuple<TCandidate, TCandidate> {
   final List<RankedBallot<TVoter, TCandidate>> ballots;
   final int firstOverSecond;

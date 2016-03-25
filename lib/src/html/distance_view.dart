@@ -5,18 +5,18 @@ import 'package:bot_web/bot_html.dart';
 
 import '../map/distance_election.dart';
 import '../map/location_data.dart';
-import '../map/map_player.dart';
 
 class DistanceView extends HtmlView {
-  DistanceElection<MapPlayer, MapPlayer> _election;
+  DistanceElection _election;
 
   DistanceView(DivElement node) : super(node);
 
-  void set election(DistanceElection<MapPlayer, MapPlayer> value) {
+  void set election(DistanceElection value) {
     _election = value;
     markDirty();
   }
 
+  @override
   void updateElement() {
     node.children.clear();
 

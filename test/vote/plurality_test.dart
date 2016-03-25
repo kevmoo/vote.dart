@@ -1,5 +1,4 @@
 import 'package:test/test.dart';
-
 import 'package:vote/src/vote/plurality_ballot.dart';
 import 'package:vote/src/vote/plurality_election.dart';
 
@@ -16,7 +15,7 @@ void randomVoteTest() {
 
   var voters = new List<String>();
   for (num i = 0; i < 10; i++) {
-    voters.add("Voter ${i}");
+    voters.add("Voter $i");
   }
 
   var ballots = voters.map((v) => new PluralityBallot(v, c1)).toList();
@@ -48,10 +47,10 @@ void testTiedforFirst() {
 
   var voters = new List<String>();
   for (num i = 0; i < 10; i++) {
-    voters.add("c1 Voter ${i}");
+    voters.add("c1 Voter $i");
   }
 
-  var ballots = new List();
+  var ballots = new List<PluralityBallot>();
 
   ballots.addAll(voters.map((v) => new PluralityBallot(v, c1)).toList());
 
@@ -89,8 +88,8 @@ void testPluralityElectionHatesDoubleVotes() {
   var voter = "Bad Voter";
   var voters = [voter, voter];
 
-  var ballots =
-      new List.from(voters.map((v) => new PluralityBallot(v, c1)).toList());
+  var ballots = new List<PluralityBallot>.from(
+      voters.map((v) => new PluralityBallot(v, c1)).toList());
 
   expect(() {
     new PluralityElection(ballots);
