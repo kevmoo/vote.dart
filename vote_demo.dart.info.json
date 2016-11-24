@@ -350,7 +350,7 @@
         "id": "library/8",
         "kind": "library",
         "name": "dart.math",
-        "size": 3552,
+        "size": 3540,
         "children": [
           "function/551",
           "function/552",
@@ -394,7 +394,7 @@
         "id": "library/11",
         "kind": "library",
         "name": "_interceptors",
-        "size": 10326,
+        "size": 10314,
         "children": [
           "function/678",
           "function/679",
@@ -600,7 +600,7 @@
         "id": "library/18",
         "kind": "library",
         "name": "dart.dom.html",
-        "size": 27866,
+        "size": 27854,
         "children": [
           "function/1112",
           "function/1113",
@@ -1125,7 +1125,7 @@
         "id": "library/41",
         "kind": "library",
         "name": "bot.util",
-        "size": 330,
+        "size": 318,
         "children": [
           "class/1353"
         ],
@@ -4146,7 +4146,7 @@
         "id": "class/286",
         "kind": "class",
         "name": "JSString",
-        "size": 3110,
+        "size": 3098,
         "outputUnit": "outputUnit/0",
         "parent": "library/11",
         "modifiers": {
@@ -14459,7 +14459,7 @@
         "name": "DateTime.now",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "38744",
+        "coverageId": "38813",
         "parent": "class/56",
         "children": [],
         "modifiers": {
@@ -15009,7 +15009,7 @@
         "name": "moveNext",
         "size": 22,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36114",
+        "coverageId": "36116",
         "parent": "class/75",
         "children": [],
         "modifiers": {
@@ -15033,7 +15033,7 @@
         "name": "current",
         "size": 21,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36115",
+        "coverageId": "36117",
         "parent": "class/75",
         "children": [],
         "modifiers": {
@@ -15057,7 +15057,7 @@
         "name": "SkipIterator",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36144",
+        "coverageId": "36146",
         "parent": "class/79",
         "children": [],
         "modifiers": {
@@ -15092,7 +15092,7 @@
         "name": "moveNext",
         "size": 79,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36145",
+        "coverageId": "36147",
         "parent": "class/79",
         "children": [],
         "modifiers": {
@@ -15116,7 +15116,7 @@
         "name": "current",
         "size": 33,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36146",
+        "coverageId": "36148",
         "parent": "class/79",
         "children": [],
         "modifiers": {
@@ -15140,7 +15140,7 @@
         "name": "EfficientLengthSkipIterable",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36135",
+        "coverageId": "36137",
         "parent": "class/80",
         "children": [],
         "modifiers": {
@@ -15175,7 +15175,7 @@
         "name": "length",
         "size": 112,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36136",
+        "coverageId": "36138",
         "parent": "class/80",
         "children": [],
         "modifiers": {
@@ -15199,7 +15199,7 @@
         "name": "SkipIterable",
         "size": 104,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36124",
+        "coverageId": "36126",
         "parent": "class/81",
         "children": [],
         "modifiers": {
@@ -15234,7 +15234,7 @@
         "name": "SkipIterable._",
         "size": 64,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36125",
+        "coverageId": "36127",
         "parent": "class/81",
         "children": [],
         "modifiers": {
@@ -15269,7 +15269,7 @@
         "name": "iterator",
         "size": 61,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36127",
+        "coverageId": "36129",
         "parent": "class/81",
         "children": [],
         "modifiers": {
@@ -16276,7 +16276,7 @@
         "name": "SubListIterable",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36018",
+        "coverageId": "36020",
         "parent": "class/96",
         "children": [],
         "modifiers": {
@@ -21918,7 +21918,7 @@
         "name": "call",
         "size": 33,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47579",
+        "coverageId": "47537",
         "parent": "closure/7",
         "children": [],
         "modifiers": {
@@ -21942,7 +21942,7 @@
         "name": "call",
         "size": 39,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47581",
+        "coverageId": "47539",
         "parent": "closure/8",
         "children": [],
         "modifiers": {
@@ -21966,7 +21966,7 @@
         "name": "call",
         "size": 46,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47583",
+        "coverageId": "47541",
         "parent": "closure/9",
         "children": [],
         "modifiers": {
@@ -21990,7 +21990,7 @@
         "name": "call",
         "size": 53,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47585",
+        "coverageId": "47543",
         "parent": "closure/10",
         "children": [],
         "modifiers": {
@@ -22014,7 +22014,7 @@
         "name": "call",
         "size": 60,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47587",
+        "coverageId": "47545",
         "parent": "closure/11",
         "children": [],
         "modifiers": {
@@ -24396,7 +24396,7 @@
         "name": "_ListQueueIterator",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36178",
+        "coverageId": "36180",
         "parent": "class/183",
         "children": [],
         "modifiers": {
@@ -24426,7 +24426,7 @@
         "name": "current",
         "size": 28,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36179",
+        "coverageId": "36181",
         "parent": "class/183",
         "children": [],
         "modifiers": {
@@ -24450,7 +24450,7 @@
         "name": "moveNext",
         "size": 195,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36181",
+        "coverageId": "36183",
         "parent": "class/183",
         "children": [],
         "modifiers": {
@@ -26791,7 +26791,7 @@
         "name": "_Es6LinkedIdentityHashMap",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "35226",
+        "coverageId": "35219",
         "parent": "class/228",
         "children": [],
         "modifiers": {
@@ -28438,7 +28438,7 @@
         "id": "function/547",
         "kind": "function",
         "name": "combine",
-        "size": 83,
+        "size": 79,
         "outputUnit": "outputUnit/0",
         "coverageId": "40552",
         "parent": "class/240",
@@ -28465,7 +28465,7 @@
         ],
         "sideEffects": "Depends on [] field store static store, Changes [] field static.",
         "inlinedCount": 0,
-        "code": "VC:function(a,b){a=536870911&a+b\na=536870911&a+((524287&a)<<10>>>0)\nreturn a^a>>>6}\n",
+        "code": "VC:function(a,b){a=536870911&a+b\na=536870911&a+((524287&a)<<10)\nreturn a^a>>>6}\n",
         "type": "(int, int) -> int",
         "measurements": null
       },
@@ -28473,7 +28473,7 @@
         "id": "function/548",
         "kind": "function",
         "name": "finish",
-        "size": 100,
+        "size": 92,
         "outputUnit": "outputUnit/0",
         "coverageId": "40553",
         "parent": "class/240",
@@ -28495,7 +28495,7 @@
         ],
         "sideEffects": "Depends on [] field store static store, Changes [] field static.",
         "inlinedCount": 0,
-        "code": "xk:function(a){a=536870911&a+((67108863&a)<<3>>>0)\na^=a>>>11\nreturn 536870911&a+((16383&a)<<15>>>0)}\n",
+        "code": "xk:function(a){a=536870911&a+((67108863&a)<<3)\na^=a>>>11\nreturn 536870911&a+((16383&a)<<15)}\n",
         "type": "(int) -> int",
         "measurements": null
       },
@@ -29883,7 +29883,7 @@
         "id": "function/592",
         "kind": "function",
         "name": "hashCode",
-        "size": 215,
+        "size": 203,
         "outputUnit": "outputUnit/0",
         "coverageId": "6542",
         "parent": "class/286",
@@ -29899,7 +29899,7 @@
         "parameters": [],
         "sideEffects": "Depends on [] field store static store, Changes [] field static.",
         "inlinedCount": 0,
-        "code": "giO:function(a){var z,y,x\nfor(z=a.length,y=0,x=0;x<z;++x){y=536870911&y+a.charCodeAt(x)\ny=536870911&y+((524287&y)<<10>>>0)\ny^=y>>6}y=536870911&y+((67108863&y)<<3>>>0)\ny^=y>>11\nreturn 536870911&y+((16383&y)<<15>>>0)}\n",
+        "code": "giO:function(a){var z,y,x\nfor(z=a.length,y=0,x=0;x<z;++x){y=536870911&y+a.charCodeAt(x)\ny=536870911&y+((524287&y)<<10)\ny^=y>>6}y=536870911&y+((67108863&y)<<3)\ny^=y>>11\nreturn 536870911&y+((16383&y)<<15)}\n",
         "type": "() -> int",
         "measurements": null
       },
@@ -37491,7 +37491,7 @@
         "name": "_MapStream",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39387",
+        "coverageId": "39604",
         "parent": "class/352",
         "children": [],
         "modifiers": {
@@ -37526,7 +37526,7 @@
         "name": "_handleData",
         "size": 117,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39388",
+        "coverageId": "39605",
         "parent": "class/352",
         "children": [],
         "modifiers": {
@@ -37601,7 +37601,7 @@
         "name": "_ForwardingStreamSubscription",
         "size": 149,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36742",
+        "coverageId": "39458",
         "parent": "class/354",
         "children": [],
         "modifiers": {
@@ -37651,7 +37651,7 @@
         "name": "_add",
         "size": 51,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36743",
+        "coverageId": "39459",
         "parent": "class/354",
         "children": [],
         "modifiers": {
@@ -37681,7 +37681,7 @@
         "name": "_addError",
         "size": 55,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36744",
+        "coverageId": "39460",
         "parent": "class/354",
         "children": [],
         "modifiers": {
@@ -37716,7 +37716,7 @@
         "name": "_onPause",
         "size": 72,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36745",
+        "coverageId": "39461",
         "parent": "class/354",
         "children": [],
         "modifiers": {
@@ -37740,7 +37740,7 @@
         "name": "_onResume",
         "size": 71,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36746",
+        "coverageId": "39462",
         "parent": "class/354",
         "children": [],
         "modifiers": {
@@ -37764,7 +37764,7 @@
         "name": "_onCancel",
         "size": 72,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36747",
+        "coverageId": "39463",
         "parent": "class/354",
         "children": [],
         "modifiers": {
@@ -37788,7 +37788,7 @@
         "name": "_handleData",
         "size": 141,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36748",
+        "coverageId": "39464",
         "parent": "class/354",
         "children": [],
         "modifiers": {
@@ -37818,7 +37818,7 @@
         "name": "_handleError",
         "size": 57,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36749",
+        "coverageId": "39465",
         "parent": "class/354",
         "children": [],
         "modifiers": {
@@ -37853,7 +37853,7 @@
         "name": "_handleDone",
         "size": 43,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36750",
+        "coverageId": "39466",
         "parent": "class/354",
         "children": [],
         "modifiers": {
@@ -37877,7 +37877,7 @@
         "name": "listen",
         "size": 96,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36701",
+        "coverageId": "39422",
         "parent": "class/355",
         "children": [],
         "modifiers": {
@@ -37922,7 +37922,7 @@
         "name": "_createSubscription",
         "size": 83,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36702",
+        "coverageId": "39423",
         "parent": "class/355",
         "children": [],
         "modifiers": {
@@ -37967,7 +37967,7 @@
         "name": "_handleData",
         "size": 25,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36703",
+        "coverageId": "39424",
         "parent": "class/355",
         "children": [],
         "modifiers": {
@@ -38002,7 +38002,7 @@
         "name": "_handleError",
         "size": 29,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36704",
+        "coverageId": "39425",
         "parent": "class/355",
         "children": [],
         "modifiers": {
@@ -38042,7 +38042,7 @@
         "name": "_handleDone",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36705",
+        "coverageId": "39426",
         "parent": "class/355",
         "children": [],
         "modifiers": {
@@ -38072,7 +38072,7 @@
         "name": "call",
         "size": 39,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47377",
+        "coverageId": "47673",
         "parent": "closure/28",
         "children": [],
         "modifiers": {
@@ -38138,7 +38138,7 @@
         "name": "call",
         "size": 41,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47707",
+        "coverageId": "47785",
         "parent": "closure/29",
         "children": [],
         "modifiers": {
@@ -38210,7 +38210,7 @@
         "name": "call",
         "size": 46,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47711",
+        "coverageId": "47789",
         "parent": "closure/30",
         "children": [],
         "modifiers": {
@@ -38549,7 +38549,7 @@
         "name": "isEmpty",
         "size": 36,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36896",
+        "coverageId": "36815",
         "parent": "class/361",
         "children": [],
         "modifiers": {
@@ -38573,7 +38573,7 @@
         "name": "add",
         "size": 84,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36898",
+        "coverageId": "36817",
         "parent": "class/361",
         "children": [],
         "modifiers": {
@@ -38603,7 +38603,7 @@
         "name": "handleNext",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36899",
+        "coverageId": "36818",
         "parent": "class/361",
         "children": [],
         "modifiers": {
@@ -38633,7 +38633,7 @@
         "name": "_StreamImplEvents",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36902",
+        "coverageId": "36821",
         "parent": "class/361",
         "children": [],
         "modifiers": {
@@ -38657,7 +38657,7 @@
         "name": "isScheduled",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36851",
+        "coverageId": "36803",
         "parent": "class/362",
         "children": [],
         "modifiers": {
@@ -38681,7 +38681,7 @@
         "name": "_eventScheduled",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36853",
+        "coverageId": "36805",
         "parent": "class/362",
         "children": [],
         "modifiers": {
@@ -38705,7 +38705,7 @@
         "name": "call",
         "size": 118,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47419",
+        "coverageId": "47618",
         "parent": "closure/31",
         "children": [],
         "modifiers": {
@@ -38729,7 +38729,7 @@
         "name": "schedule",
         "size": 237,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36855",
+        "coverageId": "36807",
         "parent": "class/362",
         "children": [
           "closure/31"
@@ -38761,7 +38761,7 @@
         "name": "cancelSchedule",
         "size": 37,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36856",
+        "coverageId": "36808",
         "parent": "class/362",
         "children": [],
         "modifiers": {
@@ -38785,7 +38785,7 @@
         "name": "perform",
         "size": 22,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36887",
+        "coverageId": "36912",
         "parent": "class/363",
         "children": [],
         "modifiers": {
@@ -38815,7 +38815,7 @@
         "name": "next",
         "size": 22,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36888",
+        "coverageId": "36913",
         "parent": "class/363",
         "children": [],
         "modifiers": {
@@ -38839,7 +38839,7 @@
         "name": "next",
         "size": 63,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36890",
+        "coverageId": "36915",
         "parent": "class/363",
         "children": [],
         "modifiers": {
@@ -38869,7 +38869,7 @@
         "name": "_DelayedError",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36915",
+        "coverageId": "39483",
         "parent": "class/364",
         "children": [],
         "modifiers": {
@@ -38904,7 +38904,7 @@
         "name": "perform",
         "size": 35,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36916",
+        "coverageId": "39484",
         "parent": "class/364",
         "children": [],
         "modifiers": {
@@ -38934,7 +38934,7 @@
         "name": "_DelayedData",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36931",
+        "coverageId": "36945",
         "parent": "class/365",
         "children": [],
         "modifiers": {
@@ -38964,7 +38964,7 @@
         "name": "perform",
         "size": 28,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36932",
+        "coverageId": "36946",
         "parent": "class/365",
         "children": [],
         "modifiers": {
@@ -39083,7 +39083,7 @@
         "name": "listen",
         "size": 146,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39571",
+        "coverageId": "36966",
         "parent": "class/369",
         "children": [],
         "modifiers": {
@@ -39128,7 +39128,7 @@
         "name": "_onListen",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39573",
+        "coverageId": "36968",
         "parent": "class/369",
         "children": [],
         "modifiers": {
@@ -39158,7 +39158,7 @@
         "name": "_setPendingEvents",
         "size": 96,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36767",
+        "coverageId": "36843",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39188,7 +39188,7 @@
         "name": "onData",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36768",
+        "coverageId": "36844",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39218,7 +39218,7 @@
         "name": "onError",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36769",
+        "coverageId": "36845",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39248,7 +39248,7 @@
         "name": "onDone",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36770",
+        "coverageId": "36846",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39278,7 +39278,7 @@
         "name": "pause",
         "size": 194,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36771",
+        "coverageId": "36847",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39308,7 +39308,7 @@
         "name": "resume",
         "size": 228,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36772",
+        "coverageId": "36848",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39332,7 +39332,7 @@
         "name": "cancel",
         "size": 114,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36773",
+        "coverageId": "36849",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39356,7 +39356,7 @@
         "name": "_isInputPaused",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36775",
+        "coverageId": "36851",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39380,7 +39380,7 @@
         "name": "_isClosed",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36777",
+        "coverageId": "36853",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39404,7 +39404,7 @@
         "name": "_isCanceled",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36779",
+        "coverageId": "36855",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39428,7 +39428,7 @@
         "name": "_waitsForCancel",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36781",
+        "coverageId": "36857",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39452,7 +39452,7 @@
         "name": "_inCallback",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36783",
+        "coverageId": "36859",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39476,7 +39476,7 @@
         "name": "_hasPending",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36785",
+        "coverageId": "36861",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39500,7 +39500,7 @@
         "name": "_isPaused",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36787",
+        "coverageId": "36863",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39524,7 +39524,7 @@
         "name": "_canFire",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36789",
+        "coverageId": "36865",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39548,7 +39548,7 @@
         "name": "_mayResumeInput",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36791",
+        "coverageId": "36867",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39572,7 +39572,7 @@
         "name": "_cancelOnError",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36793",
+        "coverageId": "36869",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39596,7 +39596,7 @@
         "name": "_cancel",
         "size": 118,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36797",
+        "coverageId": "36873",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39620,7 +39620,7 @@
         "name": "_decrementPauseCount",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36798",
+        "coverageId": "36874",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39644,7 +39644,7 @@
         "name": "_add",
         "size": 112,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36799",
+        "coverageId": "36875",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39674,7 +39674,7 @@
         "name": "_addError",
         "size": 111,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36800",
+        "coverageId": "36876",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39709,7 +39709,7 @@
         "name": "_close",
         "size": 105,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36801",
+        "coverageId": "36877",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39733,7 +39733,7 @@
         "name": "_onPause",
         "size": 34,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36802",
+        "coverageId": "36878",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39757,7 +39757,7 @@
         "name": "_onResume",
         "size": 34,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36803",
+        "coverageId": "36879",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39781,7 +39781,7 @@
         "name": "_onCancel",
         "size": 21,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36804",
+        "coverageId": "36880",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39805,7 +39805,7 @@
         "name": "_addPending",
         "size": 166,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36805",
+        "coverageId": "36881",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39835,7 +39835,7 @@
         "name": "_sendData",
         "size": 116,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36806",
+        "coverageId": "36882",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -39865,7 +39865,7 @@
         "name": "call",
         "size": 225,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47458",
+        "coverageId": "47712",
         "parent": "closure/32",
         "children": [],
         "modifiers": {
@@ -39889,7 +39889,7 @@
         "name": "_sendError",
         "size": 477,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36807",
+        "coverageId": "36883",
         "parent": "class/370",
         "children": [
           "closure/32"
@@ -39926,7 +39926,7 @@
         "name": "call",
         "size": 110,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47439",
+        "coverageId": "47604",
         "parent": "closure/33",
         "children": [],
         "modifiers": {
@@ -39950,7 +39950,7 @@
         "name": "_sendDone",
         "size": 301,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36808",
+        "coverageId": "36884",
         "parent": "class/370",
         "children": [
           "closure/33"
@@ -39976,7 +39976,7 @@
         "name": "_guardCallback",
         "size": 103,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36809",
+        "coverageId": "36885",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -40006,7 +40006,7 @@
         "name": "_checkState",
         "size": 429,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36810",
+        "coverageId": "36886",
         "parent": "class/370",
         "children": [],
         "modifiers": {
@@ -40036,7 +40036,7 @@
         "name": "_ControllerSubscription",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39523",
+        "coverageId": "36823",
         "parent": "class/376",
         "children": [],
         "modifiers": {
@@ -40086,7 +40086,7 @@
         "name": "_onCancel",
         "size": 37,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39524",
+        "coverageId": "36824",
         "parent": "class/376",
         "children": [],
         "modifiers": {
@@ -40110,7 +40110,7 @@
         "name": "_onPause",
         "size": 49,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39525",
+        "coverageId": "36825",
         "parent": "class/376",
         "children": [],
         "modifiers": {
@@ -40134,7 +40134,7 @@
         "name": "_onResume",
         "size": 49,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39526",
+        "coverageId": "36826",
         "parent": "class/376",
         "children": [],
         "modifiers": {
@@ -40158,7 +40158,7 @@
         "name": "_ControllerStream",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39566",
+        "coverageId": "36961",
         "parent": "class/377",
         "children": [],
         "modifiers": {
@@ -40188,7 +40188,7 @@
         "name": "_createSubscription",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39567",
+        "coverageId": "36962",
         "parent": "class/377",
         "children": [],
         "modifiers": {
@@ -40233,7 +40233,7 @@
         "name": "hashCode",
         "size": 51,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39568",
+        "coverageId": "36963",
         "parent": "class/377",
         "children": [],
         "modifiers": {
@@ -40257,7 +40257,7 @@
         "name": "==",
         "size": 111,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39570",
+        "coverageId": "36965",
         "parent": "class/377",
         "children": [],
         "modifiers": {
@@ -40317,7 +40317,7 @@
         "name": "_SyncStreamController",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39487",
+        "coverageId": "36756",
         "parent": "class/378",
         "children": [],
         "modifiers": {
@@ -40362,7 +40362,7 @@
         "name": "_sendData",
         "size": 32,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39476",
+        "coverageId": "36745",
         "parent": "class/381",
         "children": [],
         "modifiers": {
@@ -40392,7 +40392,7 @@
         "name": "_AsyncStreamController",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39498",
+        "coverageId": "36767",
         "parent": "class/379",
         "children": [],
         "modifiers": {
@@ -40437,7 +40437,7 @@
         "name": "_sendData",
         "size": 54,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39492",
+        "coverageId": "36761",
         "parent": "class/380",
         "children": [],
         "modifiers": {
@@ -40467,7 +40467,7 @@
         "name": "stream",
         "size": 47,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39427",
+        "coverageId": "36686",
         "parent": "class/382",
         "children": [],
         "modifiers": {
@@ -40491,7 +40491,7 @@
         "name": "hasListener",
         "size": 36,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39433",
+        "coverageId": "36692",
         "parent": "class/382",
         "children": [],
         "modifiers": {
@@ -40515,7 +40515,7 @@
         "name": "_isInitialState",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39435",
+        "coverageId": "36694",
         "parent": "class/382",
         "children": [],
         "modifiers": {
@@ -40539,7 +40539,7 @@
         "name": "isClosed",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39437",
+        "coverageId": "36696",
         "parent": "class/382",
         "children": [],
         "modifiers": {
@@ -40563,7 +40563,7 @@
         "name": "_isAddingStream",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39441",
+        "coverageId": "36700",
         "parent": "class/382",
         "children": [],
         "modifiers": {
@@ -40587,7 +40587,7 @@
         "name": "_mayAddEvent",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39443",
+        "coverageId": "36702",
         "parent": "class/382",
         "children": [],
         "modifiers": {
@@ -40611,7 +40611,7 @@
         "name": "_pendingEvents",
         "size": 67,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39445",
+        "coverageId": "36704",
         "parent": "class/382",
         "children": [],
         "modifiers": {
@@ -40635,7 +40635,7 @@
         "name": "_ensurePendingEvents",
         "size": 145,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39447",
+        "coverageId": "36706",
         "parent": "class/382",
         "children": [],
         "modifiers": {
@@ -40659,7 +40659,7 @@
         "name": "_subscription",
         "size": 67,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39448",
+        "coverageId": "36707",
         "parent": "class/382",
         "children": [],
         "modifiers": {
@@ -40683,7 +40683,7 @@
         "name": "_badEventState",
         "size": 140,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39450",
+        "coverageId": "36709",
         "parent": "class/382",
         "children": [],
         "modifiers": {
@@ -40707,7 +40707,7 @@
         "name": "add",
         "size": 62,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39455",
+        "coverageId": "36714",
         "parent": "class/382",
         "children": [],
         "modifiers": {
@@ -40737,7 +40737,7 @@
         "name": "_add",
         "size": 112,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39459",
+        "coverageId": "36718",
         "parent": "class/382",
         "children": [],
         "modifiers": {
@@ -40767,7 +40767,7 @@
         "name": "call",
         "size": 29,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47791",
+        "coverageId": "47646",
         "parent": "closure/34",
         "children": [],
         "modifiers": {
@@ -40791,7 +40791,7 @@
         "name": "_subscribe",
         "size": 371,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39462",
+        "coverageId": "36721",
         "parent": "class/382",
         "children": [
           "closure/34"
@@ -40838,7 +40838,7 @@
         "name": "call",
         "size": 60,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47805",
+        "coverageId": "47666",
         "parent": "closure/35",
         "children": [],
         "modifiers": {
@@ -40862,7 +40862,7 @@
         "name": "_recordCancel",
         "size": 381,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39463",
+        "coverageId": "36722",
         "parent": "class/382",
         "children": [
           "closure/35"
@@ -40894,7 +40894,7 @@
         "name": "_recordPause",
         "size": 59,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39464",
+        "coverageId": "36723",
         "parent": "class/382",
         "children": [],
         "modifiers": {
@@ -40924,7 +40924,7 @@
         "name": "_recordResume",
         "size": 58,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39465",
+        "coverageId": "36724",
         "parent": "class/382",
         "children": [],
         "modifiers": {
@@ -41074,7 +41074,7 @@
         "name": "call",
         "size": 73,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47691",
+        "coverageId": "47769",
         "parent": "closure/36",
         "children": [],
         "modifiers": {
@@ -41104,7 +41104,7 @@
         "name": "call",
         "size": 39,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47693",
+        "coverageId": "47771",
         "parent": "closure/37",
         "children": [],
         "modifiers": {
@@ -41128,7 +41128,7 @@
         "name": "call",
         "size": 16,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47695",
+        "coverageId": "47773",
         "parent": "closure/38",
         "children": [],
         "modifiers": {
@@ -41158,7 +41158,7 @@
         "name": "call",
         "size": 30,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47697",
+        "coverageId": "47775",
         "parent": "closure/39",
         "children": [],
         "modifiers": {
@@ -41217,7 +41217,7 @@
         "name": "call",
         "size": 26,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47682",
+        "coverageId": "47760",
         "parent": "closure/40",
         "children": [],
         "modifiers": {
@@ -41247,7 +41247,7 @@
         "name": "call",
         "size": 34,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47684",
+        "coverageId": "47762",
         "parent": "closure/41",
         "children": [],
         "modifiers": {
@@ -41298,7 +41298,7 @@
         "name": "call",
         "size": 30,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47664",
+        "coverageId": "47742",
         "parent": "closure/42",
         "children": [],
         "modifiers": {
@@ -41328,7 +41328,7 @@
         "name": "call",
         "size": 32,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47666",
+        "coverageId": "47744",
         "parent": "closure/43",
         "children": [],
         "modifiers": {
@@ -41379,7 +41379,7 @@
         "name": "call",
         "size": 81,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47362",
+        "coverageId": "47428",
         "parent": "closure/44",
         "children": [],
         "modifiers": {
@@ -41409,7 +41409,7 @@
         "name": "call",
         "size": 67,
         "outputUnit": "outputUnit/0",
-        "coverageId": "47364",
+        "coverageId": "47430",
         "parent": "closure/45",
         "children": [],
         "modifiers": {
@@ -46513,7 +46513,7 @@
         "name": "_EventStreamSubscription",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "37320",
+        "coverageId": "37389",
         "parent": "class/544",
         "children": [],
         "modifiers": {
@@ -46558,7 +46558,7 @@
         "name": "cancel",
         "size": 78,
         "outputUnit": "outputUnit/0",
-        "coverageId": "37321",
+        "coverageId": "37390",
         "parent": "class/544",
         "children": [],
         "modifiers": {
@@ -46582,7 +46582,7 @@
         "name": "_canceled",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "37322",
+        "coverageId": "37391",
         "parent": "class/544",
         "children": [],
         "modifiers": {
@@ -46606,7 +46606,7 @@
         "name": "pause",
         "size": 97,
         "outputUnit": "outputUnit/0",
-        "coverageId": "37327",
+        "coverageId": "37396",
         "parent": "class/544",
         "children": [],
         "modifiers": {
@@ -46636,7 +46636,7 @@
         "name": "isPaused",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "37328",
+        "coverageId": "37397",
         "parent": "class/544",
         "children": [],
         "modifiers": {
@@ -46660,7 +46660,7 @@
         "name": "resume",
         "size": 67,
         "outputUnit": "outputUnit/0",
-        "coverageId": "37330",
+        "coverageId": "37399",
         "parent": "class/544",
         "children": [],
         "modifiers": {
@@ -46684,7 +46684,7 @@
         "name": "_tryResume",
         "size": 74,
         "outputUnit": "outputUnit/0",
-        "coverageId": "37331",
+        "coverageId": "37400",
         "parent": "class/544",
         "children": [],
         "modifiers": {
@@ -46708,7 +46708,7 @@
         "name": "_unlisten",
         "size": 63,
         "outputUnit": "outputUnit/0",
-        "coverageId": "37332",
+        "coverageId": "37401",
         "parent": "class/544",
         "children": [],
         "modifiers": {
@@ -46772,7 +46772,7 @@
         "name": "_EventStream",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "37297",
+        "coverageId": "37366",
         "parent": "class/547",
         "children": [],
         "modifiers": {
@@ -46812,7 +46812,7 @@
         "name": "listen",
         "size": 135,
         "outputUnit": "outputUnit/0",
-        "coverageId": "37301",
+        "coverageId": "37370",
         "parent": "class/547",
         "children": [],
         "modifiers": {
@@ -48650,7 +48650,7 @@
         "id": "function/1224",
         "kind": "function",
         "name": "combine",
-        "size": 83,
+        "size": 79,
         "outputUnit": "outputUnit/0",
         "coverageId": "42018",
         "parent": "class/601",
@@ -48677,7 +48677,7 @@
         ],
         "sideEffects": "Depends on [] field store static store, Changes [] field static.",
         "inlinedCount": 0,
-        "code": "C0:function(a,b){a=536870911&a+b\na=536870911&a+((524287&a)<<10>>>0)\nreturn a^a>>>6}\n",
+        "code": "C0:function(a,b){a=536870911&a+b\na=536870911&a+((524287&a)<<10)\nreturn a^a>>>6}\n",
         "type": "(int, int) -> int",
         "measurements": null
       },
@@ -48685,7 +48685,7 @@
         "id": "function/1225",
         "kind": "function",
         "name": "finish",
-        "size": 100,
+        "size": 92,
         "outputUnit": "outputUnit/0",
         "coverageId": "42019",
         "parent": "class/601",
@@ -48707,7 +48707,7 @@
         ],
         "sideEffects": "Depends on [] field store static store, Changes [] field static.",
         "inlinedCount": 0,
-        "code": "Up:function(a){a=536870911&a+((67108863&a)<<3>>>0)\na^=a>>>11\nreturn 536870911&a+((16383&a)<<15>>>0)}\n",
+        "code": "Up:function(a){a=536870911&a+((67108863&a)<<3)\na^=a>>>11\nreturn 536870911&a+((16383&a)<<15)}\n",
         "type": "(int) -> int",
         "measurements": null
       },
@@ -60434,7 +60434,7 @@
         "id": "function/1626",
         "kind": "function",
         "name": "getHashCode",
-        "size": 320,
+        "size": 308,
         "outputUnit": "outputUnit/0",
         "coverageId": "40543",
         "parent": "class/1353",
@@ -60456,7 +60456,7 @@
         ],
         "sideEffects": "Depends on [] field store static store, Changes [] field static.",
         "inlinedCount": 0,
-        "code": "Ql:function(a){var z,y,x,w,v\nY.J(a,\"source\")\nfor(z=a.length,y=0,x=0;x<a.length;a.length===z||(0,H.lk)(a),++x){w=a[x]\nv=w==null?0:J.hf(w)\nif(typeof v!==\"number\")return H.pY(v)\ny=536870911&y+v\ny=536870911&y+((524287&y)<<10>>>0)\ny^=y>>>6}y=536870911&y+((67108863&y)<<3>>>0)\ny^=y>>>11\nreturn 536870911&y+((16383&y)<<15>>>0)}\n",
+        "code": "Ql:function(a){var z,y,x,w,v\nY.J(a,\"source\")\nfor(z=a.length,y=0,x=0;x<a.length;a.length===z||(0,H.lk)(a),++x){w=a[x]\nv=w==null?0:J.hf(w)\nif(typeof v!==\"number\")return H.pY(v)\ny=536870911&y+v\ny=536870911&y+((524287&y)<<10)\ny^=y>>>6}y=536870911&y+((67108863&y)<<3)\ny^=y>>>11\nreturn 536870911&y+((16383&y)<<15)}\n",
         "type": "(Iterable) -> int",
         "measurements": null
       },
@@ -68967,7 +68967,7 @@
         "name": "_value",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "38740",
+        "coverageId": "38809",
         "parent": "class/56",
         "children": [],
         "inferredType": "[subclass=JSInt]",
@@ -68980,7 +68980,7 @@
         "name": "isUtc",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "38741",
+        "coverageId": "38810",
         "parent": "class/56",
         "children": [],
         "inferredType": "[exact=JSBool]",
@@ -68993,7 +68993,7 @@
         "name": "_MAX_MILLISECONDS_SINCE_EPOCH",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "38746",
+        "coverageId": "38815",
         "parent": "class/56",
         "children": [],
         "inferredType": "[subclass=JSPositiveInt]",
@@ -69034,7 +69034,7 @@
         "name": "_iterator",
         "size": 2,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36142",
+        "coverageId": "36144",
         "parent": "class/79",
         "children": [],
         "inferredType": "[null|subclass=Object]",
@@ -69047,7 +69047,7 @@
         "name": "_skipCount",
         "size": 2,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36143",
+        "coverageId": "36145",
         "parent": "class/79",
         "children": [],
         "inferredType": "[subclass=JSNumber]",
@@ -69060,7 +69060,7 @@
         "name": "_iterable",
         "size": 4,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36122",
+        "coverageId": "36124",
         "parent": "class/81",
         "children": [],
         "inferredType": "Union of [[subtype=EfficientLength], [subtype=Iterable]]",
@@ -69073,7 +69073,7 @@
         "name": "_skipCount",
         "size": 4,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36123",
+        "coverageId": "36125",
         "parent": "class/81",
         "children": [],
         "inferredType": "[subclass=JSNumber]",
@@ -69411,7 +69411,7 @@
         "name": "_iterable",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36015",
+        "coverageId": "36017",
         "parent": "class/96",
         "children": [],
         "inferredType": "Union of [[subclass=JSArray], [subclass=ListIterable], [subtype=ListMixin]]",
@@ -69424,7 +69424,7 @@
         "name": "_start",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36016",
+        "coverageId": "36018",
         "parent": "class/96",
         "children": [],
         "inferredType": "[subclass=JSInt]",
@@ -69437,7 +69437,7 @@
         "name": "_endOrLength",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36017",
+        "coverageId": "36019",
         "parent": "class/96",
         "children": [],
         "inferredType": "[null]",
@@ -71755,7 +71755,7 @@
         "name": "_queue",
         "size": 2,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36173",
+        "coverageId": "36175",
         "parent": "class/183",
         "children": [],
         "inferredType": "[exact=ListQueue]",
@@ -71768,7 +71768,7 @@
         "name": "_end",
         "size": 2,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36174",
+        "coverageId": "36176",
         "parent": "class/183",
         "children": [],
         "inferredType": "[subclass=JSInt]",
@@ -71781,7 +71781,7 @@
         "name": "_modificationCount",
         "size": 2,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36175",
+        "coverageId": "36177",
         "parent": "class/183",
         "children": [],
         "inferredType": "[subclass=JSPositiveInt]",
@@ -71794,7 +71794,7 @@
         "name": "_position",
         "size": 2,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36176",
+        "coverageId": "36178",
         "parent": "class/183",
         "children": [],
         "inferredType": "[subclass=JSUInt32]",
@@ -71807,7 +71807,7 @@
         "name": "_current",
         "size": 2,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36177",
+        "coverageId": "36179",
         "parent": "class/183",
         "children": [],
         "inferredType": "[null|subclass=Object]",
@@ -72172,7 +72172,7 @@
         "name": "_map",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "35293",
+        "coverageId": "35286",
         "parent": "class/226",
         "children": [],
         "inferredType": "[exact=_Es6LinkedIdentityHashMap]",
@@ -72185,7 +72185,7 @@
         "name": "_modifications",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "35294",
+        "coverageId": "35287",
         "parent": "class/226",
         "children": [],
         "inferredType": "[exact=JSUInt31]",
@@ -72198,7 +72198,7 @@
         "name": "_isKeys",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "35295",
+        "coverageId": "35288",
         "parent": "class/226",
         "children": [],
         "inferredType": "[exact=JSBool]",
@@ -72211,7 +72211,7 @@
         "name": "_jsIterator",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "35296",
+        "coverageId": "35289",
         "parent": "class/226",
         "children": [],
         "inferredType": "[null|subclass=Object]",
@@ -72224,7 +72224,7 @@
         "name": "_next",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "35297",
+        "coverageId": "35290",
         "parent": "class/226",
         "children": [],
         "inferredType": "[null|subclass=Object]",
@@ -72237,7 +72237,7 @@
         "name": "_current",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "35298",
+        "coverageId": "35291",
         "parent": "class/226",
         "children": [],
         "inferredType": "[null|subclass=Object]",
@@ -72250,7 +72250,7 @@
         "name": "_done",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "35299",
+        "coverageId": "35292",
         "parent": "class/226",
         "children": [],
         "inferredType": "[exact=JSBool]",
@@ -72263,7 +72263,7 @@
         "name": "_map",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "35270",
+        "coverageId": "35263",
         "parent": "class/227",
         "children": [],
         "inferredType": "[exact=_Es6LinkedIdentityHashMap]",
@@ -72276,7 +72276,7 @@
         "name": "_isKeys",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "35271",
+        "coverageId": "35264",
         "parent": "class/227",
         "children": [],
         "inferredType": "[exact=JSBool]",
@@ -72289,7 +72289,7 @@
         "name": "_map",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "35224",
+        "coverageId": "35217",
         "parent": "class/228",
         "children": [],
         "inferredType": "[null|subclass=Object]",
@@ -72302,7 +72302,7 @@
         "name": "_modifications",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "35225",
+        "coverageId": "35218",
         "parent": "class/228",
         "children": [],
         "inferredType": "[exact=JSUInt31]",
@@ -73642,7 +73642,7 @@
         "name": "_transform",
         "size": 2,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39386",
+        "coverageId": "39603",
         "parent": "class/352",
         "children": [],
         "inferredType": "[subtype=Function]",
@@ -73655,7 +73655,7 @@
         "name": "_stream",
         "size": 2,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36740",
+        "coverageId": "39456",
         "parent": "class/354",
         "children": [],
         "inferredType": "[subclass=_ForwardingStream]",
@@ -73668,7 +73668,7 @@
         "name": "_subscription",
         "size": 2,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36741",
+        "coverageId": "39457",
         "parent": "class/354",
         "children": [],
         "inferredType": "Union of [[exact=_EventStreamSubscription], [null|exact=_DoneStreamSubscription], [subclass=_ControllerSubscription], [subclass=_ForwardingStreamSubscription]]",
@@ -73681,7 +73681,7 @@
         "name": "_source",
         "size": 2,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36697",
+        "coverageId": "39418",
         "parent": "class/355",
         "children": [],
         "inferredType": "[subclass=Stream]",
@@ -73775,7 +73775,7 @@
         "name": "firstPendingEvent",
         "size": 2,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36894",
+        "coverageId": "36813",
         "parent": "class/361",
         "children": [],
         "inferredType": "[null|subclass=Object]",
@@ -73788,7 +73788,7 @@
         "name": "lastPendingEvent",
         "size": 2,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36895",
+        "coverageId": "36814",
         "parent": "class/361",
         "children": [],
         "inferredType": "[null|subclass=Object]",
@@ -73801,7 +73801,7 @@
         "name": "_STATE_UNSCHEDULED",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36845",
+        "coverageId": "36797",
         "parent": "class/362",
         "children": [],
         "inferredType": "[exact=JSUInt31]",
@@ -73815,7 +73815,7 @@
         "name": "_STATE_SCHEDULED",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36846",
+        "coverageId": "36798",
         "parent": "class/362",
         "children": [],
         "inferredType": "[exact=JSUInt31]",
@@ -73829,7 +73829,7 @@
         "name": "_STATE_CANCELED",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36847",
+        "coverageId": "36799",
         "parent": "class/362",
         "children": [],
         "inferredType": "[exact=JSUInt31]",
@@ -73843,7 +73843,7 @@
         "name": "_state",
         "size": 8,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36848",
+        "coverageId": "36800",
         "parent": "class/362",
         "children": [],
         "inferredType": "[exact=JSUInt31]",
@@ -73856,7 +73856,7 @@
         "name": "error",
         "size": 6,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36913",
+        "coverageId": "39481",
         "parent": "class/364",
         "children": [],
         "inferredType": "[null|subclass=Object]",
@@ -73869,7 +73869,7 @@
         "name": "stackTrace",
         "size": 6,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36914",
+        "coverageId": "39482",
         "parent": "class/364",
         "children": [],
         "inferredType": "[null|subclass=Object]",
@@ -73882,7 +73882,7 @@
         "name": "value",
         "size": 6,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36930",
+        "coverageId": "36944",
         "parent": "class/365",
         "children": [],
         "inferredType": "[null|subclass=Object]",
@@ -73895,7 +73895,7 @@
         "name": "next",
         "size": 10,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36872",
+        "coverageId": "36916",
         "parent": "class/366",
         "children": [],
         "inferredType": "[null|subclass=Object]",
@@ -73908,7 +73908,7 @@
         "name": "_STATE_CANCEL_ON_ERROR",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36751",
+        "coverageId": "36827",
         "parent": "class/370",
         "children": [],
         "inferredType": "[exact=JSUInt31]",
@@ -73922,7 +73922,7 @@
         "name": "_STATE_CLOSED",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36752",
+        "coverageId": "36828",
         "parent": "class/370",
         "children": [],
         "inferredType": "[exact=JSUInt31]",
@@ -73936,7 +73936,7 @@
         "name": "_STATE_INPUT_PAUSED",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36753",
+        "coverageId": "36829",
         "parent": "class/370",
         "children": [],
         "inferredType": "[exact=JSUInt31]",
@@ -73950,7 +73950,7 @@
         "name": "_STATE_CANCELED",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36754",
+        "coverageId": "36830",
         "parent": "class/370",
         "children": [],
         "inferredType": "[exact=JSUInt31]",
@@ -73964,7 +73964,7 @@
         "name": "_STATE_WAIT_FOR_CANCEL",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36755",
+        "coverageId": "36831",
         "parent": "class/370",
         "children": [],
         "inferredType": "[exact=JSUInt31]",
@@ -73978,7 +73978,7 @@
         "name": "_STATE_IN_CALLBACK",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36756",
+        "coverageId": "36832",
         "parent": "class/370",
         "children": [],
         "inferredType": "[exact=JSUInt31]",
@@ -73992,7 +73992,7 @@
         "name": "_STATE_HAS_PENDING",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36757",
+        "coverageId": "36833",
         "parent": "class/370",
         "children": [],
         "inferredType": "[exact=JSUInt31]",
@@ -74006,7 +74006,7 @@
         "name": "_STATE_PAUSE_COUNT",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36758",
+        "coverageId": "36834",
         "parent": "class/370",
         "children": [],
         "inferredType": "[exact=JSUInt31]",
@@ -74020,7 +74020,7 @@
         "name": "_onData",
         "size": 6,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36759",
+        "coverageId": "36835",
         "parent": "class/370",
         "children": [],
         "inferredType": "[null|subtype=Function]",
@@ -74033,7 +74033,7 @@
         "name": "_onError",
         "size": 6,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36760",
+        "coverageId": "36836",
         "parent": "class/370",
         "children": [],
         "inferredType": "[null|subtype=Function]",
@@ -74046,7 +74046,7 @@
         "name": "_onDone",
         "size": 6,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36761",
+        "coverageId": "36837",
         "parent": "class/370",
         "children": [],
         "inferredType": "[null|subtype=Function]",
@@ -74059,7 +74059,7 @@
         "name": "_zone",
         "size": 6,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36762",
+        "coverageId": "36838",
         "parent": "class/370",
         "children": [],
         "inferredType": "[null|exact=_RootZone]",
@@ -74072,7 +74072,7 @@
         "name": "_state",
         "size": 12,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36763",
+        "coverageId": "36839",
         "parent": "class/370",
         "children": [],
         "inferredType": "[subclass=JSInt]",
@@ -74085,7 +74085,7 @@
         "name": "_cancelFuture",
         "size": 6,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36764",
+        "coverageId": "36840",
         "parent": "class/370",
         "children": [],
         "inferredType": "[null|exact=_Future]",
@@ -74098,7 +74098,7 @@
         "name": "_pending",
         "size": 6,
         "outputUnit": "outputUnit/0",
-        "coverageId": "36765",
+        "coverageId": "36841",
         "parent": "class/370",
         "children": [],
         "inferredType": "Union of [[exact=_ControllerSubscription], [null|exact=_StreamImplEvents]]",
@@ -74111,7 +74111,7 @@
         "name": "_controller",
         "size": 4,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39522",
+        "coverageId": "36822",
         "parent": "class/376",
         "children": [],
         "inferredType": "Union of [[subclass=_BroadcastStreamController], [subclass=_StreamController]]",
@@ -74124,7 +74124,7 @@
         "name": "_controller",
         "size": 4,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39565",
+        "coverageId": "36960",
         "parent": "class/377",
         "children": [],
         "inferredType": "Union of [[subclass=_BroadcastStreamController], [subclass=_StreamController]]",
@@ -74137,7 +74137,7 @@
         "name": "_STATE_INITIAL",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39413",
+        "coverageId": "36672",
         "parent": "class/382",
         "children": [],
         "inferredType": "[exact=JSUInt31]",
@@ -74151,7 +74151,7 @@
         "name": "_STATE_SUBSCRIBED",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39414",
+        "coverageId": "36673",
         "parent": "class/382",
         "children": [],
         "inferredType": "[exact=JSUInt31]",
@@ -74165,7 +74165,7 @@
         "name": "_STATE_CANCELED",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39415",
+        "coverageId": "36674",
         "parent": "class/382",
         "children": [],
         "inferredType": "[exact=JSUInt31]",
@@ -74179,7 +74179,7 @@
         "name": "_STATE_SUBSCRIPTION_MASK",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39416",
+        "coverageId": "36675",
         "parent": "class/382",
         "children": [],
         "inferredType": "[exact=JSUInt31]",
@@ -74193,7 +74193,7 @@
         "name": "_STATE_CLOSED",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39417",
+        "coverageId": "36676",
         "parent": "class/382",
         "children": [],
         "inferredType": "[exact=JSUInt31]",
@@ -74207,7 +74207,7 @@
         "name": "_STATE_ADDSTREAM",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39418",
+        "coverageId": "36677",
         "parent": "class/382",
         "children": [],
         "inferredType": "[exact=JSUInt31]",
@@ -74221,7 +74221,7 @@
         "name": "_varData",
         "size": 4,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39419",
+        "coverageId": "36678",
         "parent": "class/382",
         "children": [],
         "inferredType": "Union of [[exact=_ControllerSubscription], [null|exact=_StreamImplEvents]]",
@@ -74234,7 +74234,7 @@
         "name": "_state",
         "size": 10,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39420",
+        "coverageId": "36679",
         "parent": "class/382",
         "children": [],
         "inferredType": "[exact=JSUInt31]",
@@ -74247,7 +74247,7 @@
         "name": "_doneFuture",
         "size": 4,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39421",
+        "coverageId": "36680",
         "parent": "class/382",
         "children": [],
         "inferredType": "[null|exact=_Future]",
@@ -74260,7 +74260,7 @@
         "name": "onListen",
         "size": 4,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39422",
+        "coverageId": "36681",
         "parent": "class/382",
         "children": [],
         "inferredType": "[null]",
@@ -74273,7 +74273,7 @@
         "name": "onPause",
         "size": 4,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39423",
+        "coverageId": "36682",
         "parent": "class/382",
         "children": [],
         "inferredType": "[null]",
@@ -74286,7 +74286,7 @@
         "name": "onResume",
         "size": 4,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39424",
+        "coverageId": "36683",
         "parent": "class/382",
         "children": [],
         "inferredType": "[null]",
@@ -74299,7 +74299,7 @@
         "name": "onCancel",
         "size": 4,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39425",
+        "coverageId": "36684",
         "parent": "class/382",
         "children": [],
         "inferredType": "[null|subtype=Function]",
@@ -75277,7 +75277,7 @@
         "name": "_pauseCount",
         "size": 2,
         "outputUnit": "outputUnit/0",
-        "coverageId": "37315",
+        "coverageId": "37384",
         "parent": "class/544",
         "children": [],
         "inferredType": "[subclass=JSInt]",
@@ -75290,7 +75290,7 @@
         "name": "_target",
         "size": 2,
         "outputUnit": "outputUnit/0",
-        "coverageId": "37316",
+        "coverageId": "37385",
         "parent": "class/544",
         "children": [],
         "inferredType": "[null|subclass=Object]",
@@ -75303,7 +75303,7 @@
         "name": "_eventType",
         "size": 2,
         "outputUnit": "outputUnit/0",
-        "coverageId": "37317",
+        "coverageId": "37386",
         "parent": "class/544",
         "children": [],
         "inferredType": "[exact=JSString]",
@@ -75316,7 +75316,7 @@
         "name": "_onData",
         "size": 2,
         "outputUnit": "outputUnit/0",
-        "coverageId": "37318",
+        "coverageId": "37387",
         "parent": "class/544",
         "children": [],
         "inferredType": "[null|subtype=Function]",
@@ -75329,7 +75329,7 @@
         "name": "_useCapture",
         "size": 2,
         "outputUnit": "outputUnit/0",
-        "coverageId": "37319",
+        "coverageId": "37388",
         "parent": "class/544",
         "children": [],
         "inferredType": "Value mask: [false] type: [exact=JSBool]",
@@ -75381,7 +75381,7 @@
         "name": "_target",
         "size": 4,
         "outputUnit": "outputUnit/0",
-        "coverageId": "37294",
+        "coverageId": "37363",
         "parent": "class/547",
         "children": [],
         "inferredType": "[null|subclass=Object]",
@@ -75394,7 +75394,7 @@
         "name": "_eventType",
         "size": 4,
         "outputUnit": "outputUnit/0",
-        "coverageId": "37295",
+        "coverageId": "37364",
         "parent": "class/547",
         "children": [],
         "inferredType": "[exact=JSString]",
@@ -75407,7 +75407,7 @@
         "name": "_useCapture",
         "size": 4,
         "outputUnit": "outputUnit/0",
-        "coverageId": "37296",
+        "coverageId": "37365",
         "parent": "class/547",
         "children": [],
         "inferredType": "Value mask: [false] type: [exact=JSBool]",
@@ -78714,7 +78714,7 @@
         "name": "values",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39133",
+        "coverageId": "39202",
         "parent": "class/1062",
         "children": [],
         "inferredType": "Container mask: [null|subclass=Object] length: null type: [exact=JSExtendableArray]",
@@ -78727,7 +78727,7 @@
         "name": "copies",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39134",
+        "coverageId": "39203",
         "parent": "class/1062",
         "children": [],
         "inferredType": "Container mask: [null|subclass=Object] length: null type: [exact=JSExtendableArray]",
@@ -78740,7 +78740,7 @@
         "name": "mustCopy",
         "size": 0,
         "outputUnit": "outputUnit/0",
-        "coverageId": "39135",
+        "coverageId": "39204",
         "parent": "class/1062",
         "children": [],
         "inferredType": "[exact=JSBool]",
@@ -108063,11 +108063,11 @@
         "mask": "Union of [[exact=_AsyncCallbackEntry], [subtype=_DelayedEvent]]"
       },
       {
-        "id": "function/895",
+        "id": "function/897",
         "mask": "Union of [[exact=_AsyncCallbackEntry], [subtype=_DelayedEvent]]"
       },
       {
-        "id": "function/897",
+        "id": "function/895",
         "mask": "Union of [[exact=_AsyncCallbackEntry], [subtype=_DelayedEvent]]"
       },
       {
@@ -108255,15 +108255,15 @@
         "mask": "Union of [[exact=_ControllerSubscription], [null|exact=_StreamImplEvents]]"
       },
       {
-        "id": "function/855",
-        "mask": "[subclass=_BufferingStreamSubscription]"
-      },
-      {
         "id": "function/925",
         "mask": "[subclass=_BufferingStreamSubscription]"
       },
       {
         "id": "function/938",
+        "mask": "[subclass=_BufferingStreamSubscription]"
+      },
+      {
+        "id": "function/855",
         "mask": "[subclass=_BufferingStreamSubscription]"
       },
       {
@@ -108313,15 +108313,15 @@
         "mask": "Union of [[exact=_ControllerSubscription], [null|exact=_StreamImplEvents]]"
       },
       {
-        "id": "function/856",
-        "mask": "[subclass=_BufferingStreamSubscription]"
-      },
-      {
         "id": "function/926",
         "mask": "[subclass=_BufferingStreamSubscription]"
       },
       {
         "id": "function/939",
+        "mask": "[subclass=_BufferingStreamSubscription]"
+      },
+      {
+        "id": "function/856",
         "mask": "[subclass=_BufferingStreamSubscription]"
       },
       {
@@ -108411,15 +108411,15 @@
         "mask": "Union of [[exact=_ControllerSubscription], [null|exact=_StreamImplEvents]]"
       },
       {
-        "id": "function/857",
-        "mask": "[subclass=_BufferingStreamSubscription]"
-      },
-      {
         "id": "function/927",
         "mask": "[subclass=_BufferingStreamSubscription]"
       },
       {
         "id": "function/937",
+        "mask": "[subclass=_BufferingStreamSubscription]"
+      },
+      {
+        "id": "function/857",
         "mask": "[subclass=_BufferingStreamSubscription]"
       },
       {
@@ -108773,10 +108773,6 @@
         "mask": "Union of [[exact=_ControllerSubscription], [null|exact=_StreamImplEvents]]"
       },
       {
-        "id": "function/855",
-        "mask": "[subclass=_BufferingStreamSubscription]"
-      },
-      {
         "id": "function/925",
         "mask": "[subclass=_BufferingStreamSubscription]"
       },
@@ -108785,11 +108781,11 @@
         "mask": "[subclass=_BufferingStreamSubscription]"
       },
       {
-        "id": "function/1095",
+        "id": "function/855",
         "mask": "[subclass=_BufferingStreamSubscription]"
       },
       {
-        "id": "function/856",
+        "id": "function/1095",
         "mask": "[subclass=_BufferingStreamSubscription]"
       },
       {
@@ -108798,6 +108794,10 @@
       },
       {
         "id": "function/939",
+        "mask": "[subclass=_BufferingStreamSubscription]"
+      },
+      {
+        "id": "function/856",
         "mask": "[subclass=_BufferingStreamSubscription]"
       },
       {
@@ -109455,7 +109455,7 @@
         "mask": "[exact=_Future]"
       },
       {
-        "id": "function/861",
+        "id": "function/901",
         "mask": "[subclass=Stream]"
       },
       {
@@ -109463,7 +109463,7 @@
         "mask": "[subclass=Stream]"
       },
       {
-        "id": "function/901",
+        "id": "function/861",
         "mask": "[subclass=Stream]"
       },
       {
@@ -109495,7 +109495,7 @@
         "mask": "[exact=_Future]"
       },
       {
-        "id": "function/861",
+        "id": "function/901",
         "mask": "[subclass=Stream]"
       },
       {
@@ -109503,7 +109503,7 @@
         "mask": "[subclass=Stream]"
       },
       {
-        "id": "function/901",
+        "id": "function/861",
         "mask": "[subclass=Stream]"
       },
       {
@@ -109555,7 +109555,7 @@
         "mask": "[exact=_Future]"
       },
       {
-        "id": "function/861",
+        "id": "function/901",
         "mask": "[subclass=Stream]"
       },
       {
@@ -109563,7 +109563,7 @@
         "mask": "[subclass=Stream]"
       },
       {
-        "id": "function/901",
+        "id": "function/861",
         "mask": "[subclass=Stream]"
       },
       {
@@ -109721,7 +109721,7 @@
         "mask": "[exact=_Future]"
       },
       {
-        "id": "function/861",
+        "id": "function/901",
         "mask": "[subclass=Stream]"
       },
       {
@@ -109729,7 +109729,7 @@
         "mask": "[subclass=Stream]"
       },
       {
-        "id": "function/901",
+        "id": "function/861",
         "mask": "[subclass=Stream]"
       },
       {
@@ -110535,7 +110535,7 @@
         "mask": "[null|subclass=Object]"
       },
       {
-        "id": "field/414",
+        "id": "field/426",
         "mask": "[null|subclass=Object]"
       },
       {
@@ -110543,7 +110543,7 @@
         "mask": "[null|subclass=Object]"
       },
       {
-        "id": "field/426",
+        "id": "field/414",
         "mask": "[null|subclass=Object]"
       },
       {
@@ -120701,11 +120701,11 @@
         "mask": "[subclass=JsLinkedHashMap]"
       },
       {
-        "id": "field/615",
+        "id": "function/949",
         "mask": "[null|subclass=Object]"
       },
       {
-        "id": "function/949",
+        "id": "field/615",
         "mask": "[null|subclass=Object]"
       },
       {
@@ -120761,6 +120761,10 @@
         "mask": "[subclass=Object]"
       },
       {
+        "id": "function/959",
+        "mask": "[subclass=Object]"
+      },
+      {
         "id": "function/883",
         "mask": "[subclass=Object]"
       },
@@ -120770,10 +120774,6 @@
       },
       {
         "id": "function/442",
-        "mask": "[subclass=Object]"
-      },
-      {
-        "id": "function/959",
         "mask": "[subclass=Object]"
       },
       {
@@ -120979,6 +120979,10 @@
         "mask": "[subclass=Object]"
       },
       {
+        "id": "function/959",
+        "mask": "[subclass=Object]"
+      },
+      {
         "id": "function/883",
         "mask": "[subclass=Object]"
       },
@@ -120988,10 +120992,6 @@
       },
       {
         "id": "function/442",
-        "mask": "[subclass=Object]"
-      },
-      {
-        "id": "function/959",
         "mask": "[subclass=Object]"
       },
       {
@@ -128643,6 +128643,10 @@
         "mask": "[null|subclass=Object]"
       },
       {
+        "id": "function/959",
+        "mask": "[null|subclass=Object]"
+      },
+      {
         "id": "function/883",
         "mask": "[null|subclass=Object]"
       },
@@ -128652,10 +128656,6 @@
       },
       {
         "id": "function/442",
-        "mask": "[null|subclass=Object]"
-      },
-      {
-        "id": "function/959",
         "mask": "[null|subclass=Object]"
       },
       {
@@ -130349,6 +130349,10 @@
         "mask": "[null|subclass=Object]"
       },
       {
+        "id": "function/959",
+        "mask": "[null|subclass=Object]"
+      },
+      {
         "id": "function/883",
         "mask": "[null|subclass=Object]"
       },
@@ -130358,10 +130362,6 @@
       },
       {
         "id": "function/442",
-        "mask": "[null|subclass=Object]"
-      },
-      {
-        "id": "function/959",
         "mask": "[null|subclass=Object]"
       },
       {
@@ -131529,6 +131529,10 @@
         "mask": "[null|subclass=Object]"
       },
       {
+        "id": "function/959",
+        "mask": "[null|subclass=Object]"
+      },
+      {
         "id": "function/883",
         "mask": "[null|subclass=Object]"
       },
@@ -131538,10 +131542,6 @@
       },
       {
         "id": "function/442",
-        "mask": "[null|subclass=Object]"
-      },
-      {
-        "id": "function/959",
         "mask": "[null|subclass=Object]"
       },
       {
@@ -144901,7 +144901,7 @@
       "id": "outputUnit/0",
       "kind": "outputUnit",
       "name": null,
-      "size": 226117,
+      "size": 226069,
       "imports": [
         null
       ]
@@ -144912,11 +144912,11 @@
   "dump_minor_version": "0",
   "program": {
     "entrypoint": "function/0",
-    "size": 226117,
+    "size": 226069,
     "dart2jsVersion": null,
-    "compilationMoment": "2016-11-19 17:26:00.659912",
-    "compilationDuration": 7839729,
-    "toJsonDuration": 30000,
+    "compilationMoment": "2016-11-23 19:48:56.526595",
+    "compilationDuration": 7637406,
+    "toJsonDuration": 33000,
     "dumpInfoDuration": 0,
     "noSuchMethodEnabled": false,
     "minified": true
