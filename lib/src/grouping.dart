@@ -15,33 +15,23 @@ class Grouping<K, V> {
     }
   }
 
-  /**
-   * Returns whether this map contains the given [key].
-   */
+  /// Returns whether this map contains the given [key].
   bool containsKey(K key) => _values.containsKey(key);
 
   List<V> operator [](K key) => _values[key];
 
-  /**
-   * Applies [f] to each {key, value} pair of the map.
-   */
+  /// Applies [f] to each {key, value} pair of the map.
   void forEach(void f(K key, List<V> value)) => _values.forEach(f);
 
-  /**
-   * Returns a collection containing all the keys in the map.
-   */
+  /// Returns a collection containing all the keys in the map.
   Iterable<K> getKeys() => _values.keys;
 
   Iterable<V> getValues() => _values.values.expand((a) => a);
 
-  /**
-   * The number of {key, value} pairs in the map.
-   */
+  /// The number of {key, value} pairs in the map.
   int get length => _values.length;
 
-  /**
-   * Returns true if there is no {key, value} pair in the map.
-   */
+  /// Returns true if there is no {key, value} pair in the map.
   bool get isEmpty => _values.isEmpty;
 
   @override

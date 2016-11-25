@@ -36,7 +36,4 @@ class IrvElection extends Election {
     return new IrvElection._internal(
         roCandidates, roBallots, new List.unmodifiable(rounds));
   }
-
-  // TODO: need to add `places`
-  // ReadOnlyCollection<ElectionPlace<TCandidate>> get places;
 }

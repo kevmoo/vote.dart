@@ -57,9 +57,7 @@ int hashValues(Object arg01, Object arg02) {
   return _finish(result);
 }
 
-/**
- * [Tarjan's strongly connected components algorithm](http://en.wikipedia.org/wiki/Tarjan's_strongly_connected_components_algorithm)
- */
+/// [Tarjan's strongly connected components algorithm](http://en.wikipedia.org/wiki/Tarjan's_strongly_connected_components_algorithm)
 List<List> stronglyConnectedComponents(Map<dynamic, Iterable> graph) {
   requireArgumentNotNull(graph, 'graph');
 

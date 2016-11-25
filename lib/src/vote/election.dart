@@ -7,8 +7,8 @@ abstract class Election<TVoter, TCandidate extends Comparable> {
   List<ElectionPlace<TCandidate>> get places;
 
   TCandidate get singleWinner {
-    if (places.length > 0 && places[0].length == 1) {
-      return places[0][0];
+    if (places.isNotEmpty && places.first.length == 1) {
+      return places.first.first;
     } else {
       return null;
     }
