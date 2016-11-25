@@ -1,10 +1,10 @@
-import 'package:bot/bot.dart' hide ReadOnlyCollection;
-
 import 'condorcet_candidate_profile.dart';
 import 'condorcet_pair.dart';
 import 'election.dart';
 import 'election_place.dart';
 import 'ranked_ballot.dart';
+
+import '../util.dart';
 
 class CondorcetElection extends Election {
   final Set<CondorcetPair> _pairs;
@@ -14,20 +14,22 @@ class CondorcetElection extends Election {
   final List<RankedBallot> ballots;
 
   @override
-  final List<ElectionPlace> places;
+  final List<ElectionPlace<Comparable>> places;
 
   CondorcetElection._internal(
       this._pairs, this._profiles, this.ballots, this.places);
 
-  factory CondorcetElection(Iterable<RankedBallot> ballots) {
-    final roBallots = new List.unmodifiable(ballots);
+  factory CondorcetElection(
+      Iterable<RankedBallot<Comparable, Comparable>> ballots) {
+    final roBallots = new List<RankedBallot>.unmodifiable(ballots);
 
     // Check voter uniqueness
     final voterList = new List.unmodifiable(roBallots.map((b) => b.voter));
-    requireArgument(CollectionUtil.allUnique(voterList),
-        "Only one ballot per voter is allowed");
+    requireArgument(
+        allUnique(voterList), "Only one ballot per voter is allowed");
 
-    var map = new Map<CondorcetPair, List<RankedBallot>>();
+    var map =
+        new Map<CondorcetPair, List<RankedBallot<Comparable, Comparable>>>();
     var candidateSet = new Set();
 
     for (final ballot in ballots) {
@@ -36,10 +38,11 @@ class CondorcetElection extends Election {
         candidateSet.add(candidateI);
 
         for (var j = i + 1; j < ballot.rank.length; j++) {
-          final pair = new CondorcetPair(candidateI, ballot.rank[j]);
+          final pair = new CondorcetPair<Comparable, Comparable>(
+              candidateI, ballot.rank[j]);
 
-          final pairBallotList =
-              map.putIfAbsent(pair, () => new List<RankedBallot>());
+          final pairBallotList = map.putIfAbsent(
+              pair, () => new List<RankedBallot<Comparable, Comparable>>());
           pairBallotList.add(ballot);
         }
       }
@@ -47,11 +50,11 @@ class CondorcetElection extends Election {
 
     var set = new Set<CondorcetPair>();
     map.forEach((k, v) {
-      var c = new CondorcetPair(k.item1, k.item2, v);
+      var c = new CondorcetPair<Comparable, Comparable>(k.item1, k.item2, v);
       set.add(c);
     });
 
-    var candidateProfiles = new Map<dynamic, CondorcetCandidateProfile>();
+    var candidateProfiles = new Map<Comparable, CondorcetCandidateProfile>();
     var tarjanMap = new Map<dynamic, Set<dynamic>>();
 
     for (final candidate in candidateSet) {
@@ -78,7 +81,7 @@ class CondorcetElection extends Election {
         }
       }
 
-      var profile = new CondorcetCandidateProfile(
+      var profile = new CondorcetCandidateProfile<Comparable>(
           candidate,
           new List.unmodifiable(lostTo),
           new List.unmodifiable(beat),
@@ -103,7 +106,7 @@ class CondorcetElection extends Election {
   }
 
   @override
-  Iterable get candidates => _profiles.keys;
+  Iterable<Comparable> get candidates => _profiles.keys;
 
   CondorcetPair getPair(c1, c2) {
     var filter = _pairs.where((p) => p.matches(c1, c2));

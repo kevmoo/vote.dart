@@ -29,8 +29,8 @@ void testSingleVoteSingleWinner() {
   var voter = "Bad Voter";
   var voters = [voter];
 
-  var ballots =
-      new List.from(voters.map((v) => new PluralityBallot(v, c1)).toList());
+  var ballots = new List<PluralityBallot>.from(
+      voters.map((v) => new PluralityBallot(v, c1)).toList());
 
   var election = new PluralityElection(ballots);
   expect(election.singleWinner, equals(c1));

@@ -1,9 +1,10 @@
-import 'package:bot/bot.dart' hide ReadOnlyCollection;
+import 'package:tuple/tuple.dart';
 
 import 'ranked_ballot.dart';
+import '../util.dart';
 
 class CondorcetPair<TVoter extends Comparable, TCandidate extends Comparable>
-    extends Tuple<TCandidate, TCandidate> {
+    extends Tuple2<TCandidate, TCandidate> {
   final List<RankedBallot<TVoter, TCandidate>> ballots;
   final int firstOverSecond;
   final int secondOverFirst;
@@ -30,8 +31,8 @@ class CondorcetPair<TVoter extends Comparable, TCandidate extends Comparable>
       var roBallots =
           new List<RankedBallot<TVoter, TCandidate>>.unmodifiable(bals);
 
-      requireArgument(CollectionUtil.allUnique(roBallots),
-          "Only one ballot per voter is allowed");
+      requireArgument(
+          allUnique(roBallots), "Only one ballot per voter is allowed");
 
       int fos = 0;
       int sof = 0;

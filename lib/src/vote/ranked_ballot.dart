@@ -1,6 +1,6 @@
-import 'package:bot/bot.dart' hide ReadOnlyCollection;
-
 import 'plurality_ballot.dart';
+
+import '../util.dart';
 
 class RankedBallot<TVoter, TCandidate>
     extends PluralityBallot<TVoter, TCandidate> {
@@ -16,7 +16,7 @@ class RankedBallot<TVoter, TCandidate>
 
     var items = new List<TCandidate>.unmodifiable(rank);
     requireArgument(items.length > 0, 'rank');
-    requireArgument(CollectionUtil.allUnique(items), 'rank');
+    requireArgument(allUnique(items), 'rank');
 
     return new RankedBallot.protected(voter, items);
   }

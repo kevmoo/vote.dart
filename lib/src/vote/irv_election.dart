@@ -1,5 +1,3 @@
-import 'package:bot/bot.dart' hide ReadOnlyCollection;
-
 import 'ballot.dart';
 import 'election.dart';
 import 'irv_round.dart';
@@ -19,10 +17,10 @@ class IrvElection extends Election {
   IrvElection._internal(this.candidates, this.ballots, this.rounds);
 
   factory IrvElection(Iterable<RankedBallot> ballots) {
-    final roBallots = new List.unmodifiable(ballots);
+    final roBallots = new List<RankedBallot>.unmodifiable(ballots);
 
-    final roCandidates =
-        new List.unmodifiable($(roBallots).expand((b) => b.rank).distinct());
+    final roCandidates = new List<Comparable>.unmodifiable(
+        roBallots.expand((b) => b.rank).toSet());
 
     final rounds = new List<IrvRound>();
 

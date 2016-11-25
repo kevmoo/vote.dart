@@ -32,7 +32,7 @@ void _sample2() {
 
   var voter = 1;
 
-  var ballots = new List<RankedBallot>();
+  var ballots = new List<RankedBallot<Comparable, Comparable>>();
 
   // 29 cc, c, v
   for (var i = 0; i < 29; i++) {
@@ -81,7 +81,7 @@ void _threeWayTieForFirst() {
 
   var voter = 1;
 
-  var ballots = new List<RankedBallot>();
+  var ballots = new List<RankedBallot<Comparable, Comparable>>();
 
   ballots.add(new RankedBallot(
       "Voter ${voter++}", [cA1, cA2, cA3, cB1, cC1, cC2, cD1]));

@@ -4,7 +4,7 @@ class Ballot<TVoter> {
   Ballot(this.voter);
 
   @override
-  bool operator ==(Ballot other) => other != null && other.voter == voter;
+  bool operator ==(Object other) => other is Ballot && other.voter == voter;
 
   @override
   int get hashCode => voter.hashCode;

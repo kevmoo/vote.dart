@@ -1,27 +1,31 @@
-import 'package:bot/bot.dart' hide ReadOnlyCollection;
+import 'package:tuple/tuple.dart';
 
 import 'irv_elimination.dart';
 import 'plurality_election_place.dart';
 import 'ranked_ballot.dart';
 import 'vote_util.dart';
 
+import '../grouping.dart';
+
 class IrvRound<TVoter, TCandidate> {
-  final List<PluralityElectionPlace> places;
-  final List<IrvElimination> eliminations;
+  final List<PluralityElectionPlace<TCandidate>> places;
+  final List<IrvElimination<TVoter, TCandidate>> eliminations;
 
   factory IrvRound(List<RankedBallot<TVoter, TCandidate>> ballots,
       List<TCandidate> eliminatedCandidates) {
     var cleanedBallots = ballots.map((b) {
-      var pruned =
-          new List.unmodifiable($(b.rank).exclude(eliminatedCandidates));
+      var pruned = new List.unmodifiable(
+          b.rank.toList()..removeWhere(eliminatedCandidates.contains));
       var winner = pruned.length == 0 ? null : pruned[0];
-      return new Tuple3(b, pruned, winner);
+      return new Tuple3<RankedBallot<TVoter, TCandidate>, List, dynamic>(
+          b, pruned, winner);
     });
 
-    final candidateAllocations = new Grouping(
+    final candidateAllocations = new Grouping<TCandidate, Tuple3>(
         cleanedBallots.where((t) => t.item3 != null), (tuple) => tuple.item3);
 
-    final voteGroups = new Grouping(candidateAllocations.getKeys(), (c) {
+    final voteGroups =
+        new Grouping<int, TCandidate>(candidateAllocations.getKeys(), (c) {
       return candidateAllocations[c].length;
     });
 
@@ -47,9 +51,11 @@ class IrvRound<TVoter, TCandidate> {
 
       final exhausted = new List<RankedBallot<TVoter, TCandidate>>();
 
-      for (final b in cleanedBallots.where((t) => t.item3 == c)) {
+      for (Tuple3<RankedBallot<TVoter, TCandidate>, List, dynamic> b
+          in cleanedBallots.where((t) => t.item3 == c)) {
         final rb = b.item1;
-        final pruned = $(b.item2).exclude(newlyEliminatedCandidates);
+        final pruned = b.item2.toList()
+          ..removeWhere(newlyEliminatedCandidates.contains);
         if (pruned.isEmpty) {
           // we're exhausted
           exhausted.add(rb);
@@ -64,7 +70,7 @@ class IrvRound<TVoter, TCandidate> {
           c, xfers, new List.unmodifiable(exhausted));
     }));
 
-    return new IrvRound._internal(places, eliminations);
+    return new IrvRound<TVoter, TCandidate>._internal(places, eliminations);
   }
 
   IrvRound._internal(this.places, this.eliminations);
@@ -92,9 +98,9 @@ class IrvRound<TVoter, TCandidate> {
     // duh, I know. Being paranoid.
     assert(places.length >= 2);
 
-    final int totalVotes = $(places).selectNumbers((p) {
+    final int totalVotes = places.map((p) {
       return p.voteCount * p.length;
-    }).sum();
+    }).fold(0, (a, b) => a + b);
 
     final majorityCount = majorityThreshold(totalVotes);
 
