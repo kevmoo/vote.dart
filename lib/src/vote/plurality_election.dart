@@ -1,11 +1,9 @@
+import '../grouping.dart';
+import '../util.dart';
 import 'ballot.dart';
 import 'election.dart';
 import 'plurality_ballot.dart';
 import 'plurality_election_place.dart';
-
-import '../grouping.dart';
-
-import '../util.dart';
 
 class PluralityElection<TVoter, TCandidate extends Comparable>
     extends Election<TVoter, TCandidate> {

@@ -93,5 +93,5 @@ void testPluralityElectionHatesDoubleVotes() {
 
   expect(() {
     new PluralityElection(ballots);
-  }, throws);
+  }, throwsArgumentError);
 }

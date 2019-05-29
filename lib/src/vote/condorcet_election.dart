@@ -1,10 +1,9 @@
+import '../util.dart';
 import 'condorcet_candidate_profile.dart';
 import 'condorcet_pair.dart';
 import 'election.dart';
 import 'election_place.dart';
 import 'ranked_ballot.dart';
-
-import '../util.dart';
 
 class CondorcetElection extends Election {
   final Set<CondorcetPair> _pairs;
@@ -30,7 +29,7 @@ class CondorcetElection extends Election {
 
     var map =
         new Map<CondorcetPair, List<RankedBallot<Comparable, Comparable>>>();
-    var candidateSet = new Set();
+    var candidateSet = new Set<Comparable>();
 
     for (final ballot in ballots) {
       for (var i = 0; i < ballot.rank.length; i++) {
@@ -55,14 +54,14 @@ class CondorcetElection extends Election {
     });
 
     var candidateProfiles = new Map<Comparable, CondorcetCandidateProfile>();
-    var tarjanMap = new Map<dynamic, Set<dynamic>>();
+    var tarjanMap = new Map<Comparable, Set<Comparable>>();
 
     for (final candidate in candidateSet) {
       var lostTo = [];
       var beat = [];
       var tied = [];
 
-      final tarjanLostTiedSet = new Set();
+      final tarjanLostTiedSet = new Set<Comparable>();
 
       for (final pair in set) {
         if (pair.item1 == candidate || pair.item2 == candidate) {
@@ -91,18 +90,22 @@ class CondorcetElection extends Election {
       tarjanMap[candidate] = tarjanLostTiedSet;
     }
 
-    var components = stronglyConnectedComponents(tarjanMap);
+    var components = stronglyConnectedComponents<Comparable>(tarjanMap);
 
-    var places = new List<ElectionPlace>();
+    var places = new List<ElectionPlace<Comparable>>();
     int placeNumber = 1;
     for (final round in components) {
-      final place = new ElectionPlace(placeNumber, round);
+      final place = new ElectionPlace<Comparable>(placeNumber, round);
       places.add(place);
       placeNumber += round.length;
     }
 
-    return new CondorcetElection._internal(set, candidateProfiles, roBallots,
-        new List<ElectionPlace>.unmodifiable(places));
+    return new CondorcetElection._internal(
+      set,
+      candidateProfiles,
+      roBallots,
+      new List.unmodifiable(places),
+    );
   }
 
   @override

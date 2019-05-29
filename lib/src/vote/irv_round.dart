@@ -1,11 +1,10 @@
 import 'package:tuple/tuple.dart';
 
+import '../grouping.dart';
 import 'irv_elimination.dart';
 import 'plurality_election_place.dart';
 import 'ranked_ballot.dart';
 import 'vote_util.dart';
-
-import '../grouping.dart';
 
 class IrvRound<TVoter, TCandidate> {
   final List<PluralityElectionPlace<TCandidate>> places;
@@ -42,7 +41,8 @@ class IrvRound<TVoter, TCandidate> {
       return new PluralityElectionPlace<TCandidate>(currentPlaceNumber, vg, pv);
     }));
 
-    final newlyEliminatedCandidates = _getEliminatedCandidates(places);
+    final newlyEliminatedCandidates =
+        _getEliminatedCandidates<TCandidate>(places);
 
     final eliminations = new List<IrvElimination>.unmodifiable(
         newlyEliminatedCandidates.map((TCandidate c) {
@@ -86,7 +86,8 @@ class IrvRound<TVoter, TCandidate> {
     return eliminations.singleWhere((e) => e.candidate == candidate);
   }
 
-  static List _getEliminatedCandidates(List<PluralityElectionPlace> places) {
+  static List<TCandidate> _getEliminatedCandidates<TCandidate>(
+      List<PluralityElectionPlace<TCandidate>> places) {
     assert(places != null);
     assert(places.length > 0);
 
@@ -115,8 +116,6 @@ class IrvRound<TVoter, TCandidate> {
       return [];
     }
 
-    // DARTBUG https://code.google.com/p/dart/issues/detail?id=7085
-    // last() seems to be f'd up when compiled
-    return places[places.length - 1].map((p) => p).toList();
+    return places.last.map((p) => p).toList();
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:collection';
-
 import 'dart:math' as math;
 
 void require(bool truth, [String message]) {
@@ -58,11 +57,11 @@ int hashValues(Object arg01, Object arg02) {
 }
 
 /// [Tarjan's strongly connected components algorithm](http://en.wikipedia.org/wiki/Tarjan's_strongly_connected_components_algorithm)
-List<List> stronglyConnectedComponents(Map<dynamic, Iterable> graph) {
+List<List<T>> stronglyConnectedComponents<T>(Map<dynamic, Iterable<T>> graph) {
   requireArgumentNotNull(graph, 'graph');
 
-  var nodes = new _Graph(graph);
-  var tarjan = new _TarjanCycleDetect(nodes);
+  var nodes = new _Graph<T>(graph);
+  var tarjan = new _TarjanCycleDetect<T>(nodes);
   return tarjan.calculate();
 }
 
