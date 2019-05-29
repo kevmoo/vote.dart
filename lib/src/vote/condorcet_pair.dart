@@ -3,7 +3,7 @@ import 'package:tuple/tuple.dart';
 import '../util.dart';
 import 'ranked_ballot.dart';
 
-class CondorcetPair<TVoter extends Comparable, TCandidate extends Comparable>
+class CondorcetPair<TVoter, TCandidate extends Comparable>
     extends Tuple2<TCandidate, TCandidate> {
   final List<RankedBallot<TVoter, TCandidate>> ballots;
   final int firstOverSecond;

@@ -1,4 +1,4 @@
-class CondorcetCandidateProfile<TCandidate extends Comparable> {
+class CondorcetCandidateProfile<TCandidate> {
   final TCandidate candidate;
   final List<TCandidate> lostTo;
   final List<TCandidate> beat;

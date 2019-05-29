@@ -5,8 +5,8 @@ import 'election.dart';
 import 'election_place.dart';
 import 'ranked_ballot.dart';
 
-class CondorcetElection<TVoter extends Comparable,
-    TCandidate extends Comparable> extends Election<TVoter, TCandidate> {
+class CondorcetElection<TVoter, TCandidate extends Comparable>
+    extends Election<TVoter, TCandidate> {
   final Set<CondorcetPair> _pairs;
   final Map<TCandidate, CondorcetCandidateProfile> _profiles;
 
