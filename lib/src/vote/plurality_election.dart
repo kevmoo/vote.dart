@@ -1,4 +1,5 @@
-import '../grouping.dart';
+import 'package:collection/collection.dart';
+
 import '../util.dart';
 import 'ballot.dart';
 import 'election.dart';
@@ -9,7 +10,7 @@ class PluralityElection<TVoter, TCandidate>
     extends Election<TVoter, TCandidate> {
   @override
   final List<Ballot<TVoter>> ballots;
-  final Grouping<TCandidate, PluralityBallot> _ballotGroup;
+  final Map<TCandidate, List<PluralityBallot>> _ballotGroup;
 
   @override
   final List<PluralityElectionPlace<TCandidate>> places;
@@ -27,7 +28,7 @@ class PluralityElection<TVoter, TCandidate>
     requireArgument(
         allUnique(voterList), "Only one ballot per voter is allowed");
 
-    final group = Grouping<TCandidate, PluralityBallot<TVoter, TCandidate>>(
+    final group = groupBy<PluralityBallot<TVoter, TCandidate>, TCandidate>(
         roBallots, (pb) => pb.choice);
 
     //
@@ -64,5 +65,5 @@ class PluralityElection<TVoter, TCandidate>
   }
 
   @override
-  Iterable<TCandidate> get candidates => _ballotGroup.getKeys();
+  Iterable<TCandidate> get candidates => _ballotGroup.keys;
 }

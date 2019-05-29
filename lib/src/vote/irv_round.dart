@@ -1,6 +1,6 @@
+import 'package:collection/collection.dart';
 import 'package:tuple/tuple.dart';
 
-import '../grouping.dart';
 import 'irv_elimination.dart';
 import 'plurality_election_place.dart';
 import 'ranked_ballot.dart';
@@ -21,16 +21,15 @@ class IrvRound<TVoter, TCandidate> {
     });
 
     final candidateAllocations =
-        Grouping<TCandidate, Tuple3<RankedBallot, List, TCandidate>>(
+        groupBy<Tuple3<RankedBallot, List, TCandidate>, TCandidate>(
             cleanedBallots.where((t) => t.item3 != null),
             (tuple) => tuple.item3);
 
-    final voteGroups =
-        Grouping<int, TCandidate>(candidateAllocations.getKeys(), (c) {
+    final voteGroups = groupBy<TCandidate, int>(candidateAllocations.keys, (c) {
       return candidateAllocations[c].length;
     });
 
-    final placeVotes = voteGroups.getKeys().toList();
+    final placeVotes = voteGroups.keys.toList();
     // reverse sorting -> most votes first
     placeVotes.sort((a, b) => b.compareTo(a));
 
