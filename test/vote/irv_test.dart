@@ -17,24 +17,24 @@ void _testNoTransfersBetweenEliminated() {
 
   var voter = 1;
 
-  final ballots = new List<RankedBallot>();
+  final ballots = List<RankedBallot>();
   for (var i = 0; i < 10; i++) {
-    ballots.add(new RankedBallot("Voter ${voter++}", [canA]));
+    ballots.add(RankedBallot("Voter ${voter++}", [canA]));
   }
 
   for (var i = 0; i < 8; i++) {
-    ballots.add(new RankedBallot("Voter ${voter++}", [canB]));
+    ballots.add(RankedBallot("Voter ${voter++}", [canB]));
   }
 
   for (var i = 0; i < 2; i++) {
-    ballots.add(new RankedBallot("Voter ${voter++}", [canC, canD]));
+    ballots.add(RankedBallot("Voter ${voter++}", [canC, canD]));
   }
 
   for (var i = 0; i < 2; i++) {
-    ballots.add(new RankedBallot("Voter ${voter++}", [canD, canC]));
+    ballots.add(RankedBallot("Voter ${voter++}", [canD, canC]));
   }
 
-  var elec = new IrvElection(ballots);
+  var elec = IrvElection(ballots);
 
   expect(elec, isNotNull);
   //expect(elec.singleWinner, equals(canC));
@@ -62,9 +62,9 @@ void _testNoTransfersBetweenEliminated() {
 void _testOneCandidate() {
   var c = "Candidate 1";
   var v = "Voter 1";
-  var b = new RankedBallot(v, [c]);
+  var b = RankedBallot(v, [c]);
 
-  var ce = new IrvElection([b]);
+  var ce = IrvElection([b]);
 
   expect(ce, isNotNull);
   //expect(ce.singleWinner, equals(c));
@@ -83,24 +83,24 @@ void _testIceCream() {
 
   var voter = 1;
 
-  var ballots = new List<RankedBallot>();
+  var ballots = List<RankedBallot>();
 
   // 29 cc, c, v
   for (var i = 0; i < 29; i++) {
-    ballots.add(new RankedBallot("Voter ${voter++}", [canCC, canC, canVan]));
+    ballots.add(RankedBallot("Voter ${voter++}", [canCC, canC, canVan]));
   }
 
   // 31 c, cc, v
   for (var i = 0; i < 31; i++) {
-    ballots.add(new RankedBallot("Voter ${voter++}", [canC, canCC, canVan]));
+    ballots.add(RankedBallot("Voter ${voter++}", [canC, canCC, canVan]));
   }
 
   // 40 v, c, cc
   for (var i = 0; i < 40; i++) {
-    ballots.add(new RankedBallot("Voter ${voter++}", [canVan, canC, canCC]));
+    ballots.add(RankedBallot("Voter ${voter++}", [canVan, canC, canCC]));
   }
 
-  var ce = new IrvElection(ballots);
+  var ce = IrvElection(ballots);
 
   expect(ce, isNotNull);
   //expect(ce.singleWinner, equals(canC));
@@ -143,20 +143,20 @@ void _threeWayTieForFirst() {
 
   var voter = 1;
 
-  var ballots = new List<RankedBallot>();
+  var ballots = List<RankedBallot>();
 
-  ballots.add(new RankedBallot(
-      "Voter ${voter++}", [cA1, cA2, cA3, cB1, cC1, cC2, cD1]));
-  ballots.add(new RankedBallot(
-      "Voter ${voter++}", [cA1, cA2, cA3, cB1, cC2, cC1, cD1]));
-  ballots.add(new RankedBallot(
-      "Voter ${voter++}", [cA2, cA3, cA1, cB1, cC1, cC2, cD1]));
-  ballots.add(new RankedBallot(
-      "Voter ${voter++}", [cA2, cA3, cA1, cB1, cC2, cC1, cD1]));
-  ballots.add(new RankedBallot(
-      "Voter ${voter++}", [cA3, cA1, cA2, cB1, cC1, cC2, cD1]));
-  ballots.add(new RankedBallot(
-      "Voter ${voter++}", [cA3, cA1, cA2, cB1, cC2, cC1, cD1]));
+  ballots.add(
+      RankedBallot("Voter ${voter++}", [cA1, cA2, cA3, cB1, cC1, cC2, cD1]));
+  ballots.add(
+      RankedBallot("Voter ${voter++}", [cA1, cA2, cA3, cB1, cC2, cC1, cD1]));
+  ballots.add(
+      RankedBallot("Voter ${voter++}", [cA2, cA3, cA1, cB1, cC1, cC2, cD1]));
+  ballots.add(
+      RankedBallot("Voter ${voter++}", [cA2, cA3, cA1, cB1, cC2, cC1, cD1]));
+  ballots.add(
+      RankedBallot("Voter ${voter++}", [cA3, cA1, cA2, cB1, cC1, cC2, cD1]));
+  ballots.add(
+      RankedBallot("Voter ${voter++}", [cA3, cA1, cA2, cB1, cC2, cC1, cD1]));
 
-  new IrvElection(ballots);
+  IrvElection(ballots);
 }

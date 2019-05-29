@@ -9,34 +9,34 @@ void main() {
 
     test('no null voters', () {
       expect(() {
-        new RankedBallot(null, [c1]);
+        RankedBallot(null, [c1]);
       }, throwsArgumentError);
     });
 
     test('no null candidates', () {
       expect(() {
-        new RankedBallot(v2, null);
+        RankedBallot(v2, null);
       }, throwsArgumentError);
     });
 
     test('no empty candidates', () {
       expect(() {
-        new RankedBallot(v2, []);
+        RankedBallot(v2, []);
       }, throwsArgumentError);
     });
 
     test('no dupe candidates', () {
       expect(() {
-        new RankedBallot(v2, [c1, c1]);
+        RankedBallot(v2, [c1, c1]);
       }, throwsArgumentError);
     });
 
     test('1 candidate is cool', () {
-      new RankedBallot(v2, [c1]);
+      RankedBallot(v2, [c1]);
     });
 
     test('2 candidates is cool', () {
-      new RankedBallot(v2, [c1, c2]);
+      RankedBallot(v2, [c1, c2]);
     });
   });
 }

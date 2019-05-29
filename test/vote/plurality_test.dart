@@ -13,14 +13,14 @@ void main() {
 void randomVoteTest() {
   var c1 = "candidate 1";
 
-  var voters = new List<String>();
+  var voters = List<String>();
   for (num i = 0; i < 10; i++) {
     voters.add("Voter $i");
   }
 
-  var ballots = voters.map((v) => new PluralityBallot(v, c1)).toList();
+  var ballots = voters.map((v) => PluralityBallot(v, c1)).toList();
 
-  new PluralityElection(ballots);
+  PluralityElection(ballots);
 }
 
 void testSingleVoteSingleWinner() {
@@ -29,10 +29,10 @@ void testSingleVoteSingleWinner() {
   var voter = "Bad Voter";
   var voters = [voter];
 
-  var ballots = new List<PluralityBallot>.from(
-      voters.map((v) => new PluralityBallot(v, c1)).toList());
+  var ballots = List<PluralityBallot>.from(
+      voters.map((v) => PluralityBallot(v, c1)).toList());
 
-  var election = new PluralityElection(ballots);
+  var election = PluralityElection(ballots);
   expect(election.singleWinner, equals(c1));
   expect(election.places.length, equals(1));
   var firstPlace = election.places[0];
@@ -45,30 +45,30 @@ void testTiedforFirst() {
   var c2 = "candidate 2";
   var c3 = "candidate 3";
 
-  var voters = new List<String>();
+  var voters = List<String>();
   for (num i = 0; i < 10; i++) {
     voters.add("c1 Voter $i");
   }
 
-  var ballots = new List<PluralityBallot>();
+  var ballots = List<PluralityBallot>();
 
-  ballots.addAll(voters.map((v) => new PluralityBallot(v, c1)).toList());
+  ballots.addAll(voters.map((v) => PluralityBallot(v, c1)).toList());
 
-  voters = new List<String>();
+  voters = List<String>();
   for (num i = 0; i < 10; i++) {
     voters.add("c2 Voter ${voters.length}");
   }
 
-  ballots.addAll(voters.map((v) => new PluralityBallot(v, c2)).toList());
+  ballots.addAll(voters.map((v) => PluralityBallot(v, c2)).toList());
 
-  voters = new List<String>();
+  voters = List<String>();
   for (num i = 0; i < 9; i++) {
     voters.add("c3 Voter ${voters.length}");
   }
 
-  ballots.addAll(voters.map((v) => new PluralityBallot(v, c3)).toList());
+  ballots.addAll(voters.map((v) => PluralityBallot(v, c3)).toList());
 
-  var election = new PluralityElection(ballots);
+  var election = PluralityElection(ballots);
   expect(election.singleWinner, isNull);
   expect(election.places.length, equals(2));
 
@@ -88,10 +88,10 @@ void testPluralityElectionHatesDoubleVotes() {
   var voter = "Bad Voter";
   var voters = [voter, voter];
 
-  var ballots = new List<PluralityBallot>.from(
-      voters.map((v) => new PluralityBallot(v, c1)).toList());
+  var ballots = List<PluralityBallot>.from(
+      voters.map((v) => PluralityBallot(v, c1)).toList());
 
   expect(() {
-    new PluralityElection(ballots);
+    PluralityElection(ballots);
   }, throwsArgumentError);
 }

@@ -26,10 +26,9 @@ class CondorcetPair<TVoter extends Comparable, TCandidate extends Comparable>
     }
 
     if (bals == null) {
-      return new CondorcetPair._internal(can1, can2, null, 0, 0);
+      return CondorcetPair._internal(can1, can2, null, 0, 0);
     } else {
-      var roBallots =
-          new List<RankedBallot<TVoter, TCandidate>>.unmodifiable(bals);
+      var roBallots = List<RankedBallot<TVoter, TCandidate>>.unmodifiable(bals);
 
       requireArgument(
           allUnique(roBallots), "Only one ballot per voter is allowed");
@@ -51,7 +50,7 @@ class CondorcetPair<TVoter extends Comparable, TCandidate extends Comparable>
         }
       });
 
-      return new CondorcetPair._internal(can1, can2, roBallots, fos, sof);
+      return CondorcetPair._internal(can1, can2, roBallots, fos, sof);
     }
   }
 
@@ -103,7 +102,7 @@ class CondorcetPair<TVoter extends Comparable, TCandidate extends Comparable>
     requireArgument(can2 == item2, 'can1');
 
     if (flipped) {
-      return new CondorcetPair._internal(
+      return CondorcetPair._internal(
           can2, can1, ballots, secondOverFirst, firstOverSecond);
     } else {
       return this;

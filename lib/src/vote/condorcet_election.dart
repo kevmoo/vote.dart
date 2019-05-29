@@ -5,31 +5,33 @@ import 'election.dart';
 import 'election_place.dart';
 import 'ranked_ballot.dart';
 
-class CondorcetElection extends Election {
+class CondorcetElection<TVoter extends Comparable,
+    TCandidate extends Comparable> extends Election<TVoter, TCandidate> {
   final Set<CondorcetPair> _pairs;
-  final Map<Comparable, CondorcetCandidateProfile> _profiles;
+  final Map<TCandidate, CondorcetCandidateProfile> _profiles;
 
   @override
-  final List<RankedBallot> ballots;
+  final List<RankedBallot<TVoter, TCandidate>> ballots;
 
   @override
-  final List<ElectionPlace<Comparable>> places;
+  final List<ElectionPlace<TCandidate>> places;
 
   CondorcetElection._internal(
       this._pairs, this._profiles, this.ballots, this.places);
 
   factory CondorcetElection(
-      Iterable<RankedBallot<Comparable, Comparable>> ballots) {
-    final roBallots = new List<RankedBallot>.unmodifiable(ballots);
+      Iterable<RankedBallot<TVoter, TCandidate>> ballots) {
+    final roBallots =
+        List<RankedBallot<TVoter, TCandidate>>.unmodifiable(ballots);
 
     // Check voter uniqueness
-    final voterList = new List.unmodifiable(roBallots.map((b) => b.voter));
+    final voterList = List.unmodifiable(roBallots.map((b) => b.voter));
     requireArgument(
         allUnique(voterList), "Only one ballot per voter is allowed");
 
-    var map =
-        new Map<CondorcetPair, List<RankedBallot<Comparable, Comparable>>>();
-    var candidateSet = new Set<Comparable>();
+    var map = Map<CondorcetPair<TVoter, TCandidate>,
+        List<RankedBallot<TVoter, TCandidate>>>();
+    var candidateSet = Set<TCandidate>();
 
     for (final ballot in ballots) {
       for (var i = 0; i < ballot.rank.length; i++) {
@@ -37,31 +39,32 @@ class CondorcetElection extends Election {
         candidateSet.add(candidateI);
 
         for (var j = i + 1; j < ballot.rank.length; j++) {
-          final pair = new CondorcetPair<Comparable, Comparable>(
-              candidateI, ballot.rank[j]);
+          final pair =
+              CondorcetPair<TVoter, TCandidate>(candidateI, ballot.rank[j]);
 
           final pairBallotList = map.putIfAbsent(
-              pair, () => new List<RankedBallot<Comparable, Comparable>>());
+              pair, () => List<RankedBallot<TVoter, TCandidate>>());
           pairBallotList.add(ballot);
         }
       }
     }
 
-    var set = new Set<CondorcetPair>();
+    var set = Set<CondorcetPair<TVoter, TCandidate>>();
     map.forEach((k, v) {
-      var c = new CondorcetPair<Comparable, Comparable>(k.item1, k.item2, v);
+      var c = CondorcetPair<TVoter, TCandidate>(k.item1, k.item2, v);
       set.add(c);
     });
 
-    var candidateProfiles = new Map<Comparable, CondorcetCandidateProfile>();
-    var tarjanMap = new Map<Comparable, Set<Comparable>>();
+    var candidateProfiles =
+        Map<TCandidate, CondorcetCandidateProfile<TCandidate>>();
+    var tarjanMap = Map<TCandidate, Set<TCandidate>>();
 
     for (final candidate in candidateSet) {
       var lostTo = [];
       var beat = [];
       var tied = [];
 
-      final tarjanLostTiedSet = new Set<Comparable>();
+      final tarjanLostTiedSet = Set<TCandidate>();
 
       for (final pair in set) {
         if (pair.item1 == candidate || pair.item2 == candidate) {
@@ -80,38 +83,38 @@ class CondorcetElection extends Election {
         }
       }
 
-      var profile = new CondorcetCandidateProfile<Comparable>(
+      var profile = CondorcetCandidateProfile<TCandidate>(
           candidate,
-          new List.unmodifiable(lostTo),
-          new List.unmodifiable(beat),
-          new List.unmodifiable(tied));
+          List.unmodifiable(lostTo),
+          List.unmodifiable(beat),
+          List.unmodifiable(tied));
       candidateProfiles[candidate] = profile;
 
       tarjanMap[candidate] = tarjanLostTiedSet;
     }
 
-    var components = stronglyConnectedComponents<Comparable>(tarjanMap);
+    var components = stronglyConnectedComponents<TCandidate>(tarjanMap);
 
-    var places = new List<ElectionPlace<Comparable>>();
+    var places = List<ElectionPlace<TCandidate>>();
     int placeNumber = 1;
     for (final round in components) {
-      final place = new ElectionPlace<Comparable>(placeNumber, round);
+      final place = ElectionPlace<TCandidate>(placeNumber, round);
       places.add(place);
       placeNumber += round.length;
     }
 
-    return new CondorcetElection._internal(
+    return CondorcetElection._internal(
       set,
       candidateProfiles,
       roBallots,
-      new List.unmodifiable(places),
+      List.unmodifiable(places),
     );
   }
 
   @override
-  Iterable<Comparable> get candidates => _profiles.keys;
+  Iterable<TCandidate> get candidates => _profiles.keys;
 
-  CondorcetPair getPair(c1, c2) {
+  CondorcetPair getPair(TCandidate c1, TCandidate c2) {
     var filter = _pairs.where((p) => p.matches(c1, c2));
     assert(filter.length <= 1);
     if (filter.isEmpty) {

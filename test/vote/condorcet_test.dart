@@ -11,9 +11,9 @@ void main() {
 void _sample1() {
   var c = "Candidate 1";
   var v = "Voter 1";
-  var b = new RankedBallot(v, [c]);
+  var b = RankedBallot(v, [c]);
 
-  var ce = new CondorcetElection([b]);
+  var ce = CondorcetElection([b]);
 
   expect(ce, isNotNull);
   expect(ce.singleWinner, equals(c));
@@ -32,24 +32,24 @@ void _sample2() {
 
   var voter = 1;
 
-  var ballots = new List<RankedBallot<Comparable, Comparable>>();
+  var ballots = List<RankedBallot<Comparable, Comparable>>();
 
   // 29 cc, c, v
   for (var i = 0; i < 29; i++) {
-    ballots.add(new RankedBallot("Voter ${voter++}", [canCC, canC, canVan]));
+    ballots.add(RankedBallot("Voter ${voter++}", [canCC, canC, canVan]));
   }
 
   // 31 c, cc, v
   for (var i = 0; i < 31; i++) {
-    ballots.add(new RankedBallot("Voter ${voter++}", [canC, canCC, canVan]));
+    ballots.add(RankedBallot("Voter ${voter++}", [canC, canCC, canVan]));
   }
 
   // 40 v, c, cc
   for (var i = 0; i < 40; i++) {
-    ballots.add(new RankedBallot("Voter ${voter++}", [canVan, canC, canCC]));
+    ballots.add(RankedBallot("Voter ${voter++}", [canVan, canC, canCC]));
   }
 
-  var ce = new CondorcetElection(ballots);
+  var ce = CondorcetElection(ballots);
 
   expect(ce, isNotNull);
   expect(ce.singleWinner, equals(canC));
@@ -81,20 +81,20 @@ void _threeWayTieForFirst() {
 
   var voter = 1;
 
-  var ballots = new List<RankedBallot<Comparable, Comparable>>();
+  var ballots = List<RankedBallot<Comparable, Comparable>>();
 
-  ballots.add(new RankedBallot(
-      "Voter ${voter++}", [cA1, cA2, cA3, cB1, cC1, cC2, cD1]));
-  ballots.add(new RankedBallot(
-      "Voter ${voter++}", [cA1, cA2, cA3, cB1, cC2, cC1, cD1]));
-  ballots.add(new RankedBallot(
-      "Voter ${voter++}", [cA2, cA3, cA1, cB1, cC1, cC2, cD1]));
-  ballots.add(new RankedBallot(
-      "Voter ${voter++}", [cA2, cA3, cA1, cB1, cC2, cC1, cD1]));
-  ballots.add(new RankedBallot(
-      "Voter ${voter++}", [cA3, cA1, cA2, cB1, cC1, cC2, cD1]));
-  ballots.add(new RankedBallot(
-      "Voter ${voter++}", [cA3, cA1, cA2, cB1, cC2, cC1, cD1]));
+  ballots.add(
+      RankedBallot("Voter ${voter++}", [cA1, cA2, cA3, cB1, cC1, cC2, cD1]));
+  ballots.add(
+      RankedBallot("Voter ${voter++}", [cA1, cA2, cA3, cB1, cC2, cC1, cD1]));
+  ballots.add(
+      RankedBallot("Voter ${voter++}", [cA2, cA3, cA1, cB1, cC1, cC2, cD1]));
+  ballots.add(
+      RankedBallot("Voter ${voter++}", [cA2, cA3, cA1, cB1, cC2, cC1, cD1]));
+  ballots.add(
+      RankedBallot("Voter ${voter++}", [cA3, cA1, cA2, cB1, cC1, cC2, cD1]));
+  ballots.add(
+      RankedBallot("Voter ${voter++}", [cA3, cA1, cA2, cB1, cC2, cC1, cD1]));
 
-  new CondorcetElection(ballots);
+  CondorcetElection(ballots);
 }

@@ -16,28 +16,28 @@ class PluralityElection<TVoter, TCandidate extends Comparable>
 
   PluralityElection._internal(this.ballots, this._ballotGroup,
       Iterable<PluralityElectionPlace> sourcePlaces)
-      : places = new List.unmodifiable(sourcePlaces);
+      : places = List.unmodifiable(sourcePlaces);
 
   factory PluralityElection(Iterable<PluralityBallot> ballots) {
     final roBallots =
-        new List<PluralityBallot<TVoter, TCandidate>>.unmodifiable(ballots);
+        List<PluralityBallot<TVoter, TCandidate>>.unmodifiable(ballots);
 
     // Check voter uniqueness
-    final voterList = new List.unmodifiable(roBallots.map((pb) => pb.voter));
+    final voterList = List.unmodifiable(roBallots.map((pb) => pb.voter));
     requireArgument(
         allUnique(voterList), "Only one ballot per voter is allowed");
 
-    final group =
-        new Grouping<TCandidate, PluralityBallot>(roBallots, (pb) => pb.choice);
+    final group = Grouping<TCandidate, PluralityBallot<TVoter, TCandidate>>(
+        roBallots, (pb) => pb.choice);
 
     //
     // create a Map of candidates keyed on their vote count
     //
-    var voteCounts = new Map<int, List<TCandidate>>();
+    var voteCounts = Map<int, List<TCandidate>>();
     void f(TCandidate c, List<PluralityBallot> b) {
       var count = b.length;
       List<TCandidate> candidates =
-          voteCounts.putIfAbsent(count, () => new List<TCandidate>());
+          voteCounts.putIfAbsent(count, () => List<TCandidate>());
       candidates.add(c);
     }
 
@@ -46,20 +46,20 @@ class PluralityElection<TVoter, TCandidate extends Comparable>
     //
     // Now the keys of voteCounts are unique, one for each vote count
     //
-    var ballotCounts = new List<int>.from(voteCounts.keys);
+    var ballotCounts = List<int>.from(voteCounts.keys);
 
     // NOTE: reverse sorting
     ballotCounts.sort((a, b) => b.compareTo(a));
 
     int place = 1;
-    var places = new List<PluralityElectionPlace>();
+    var places = List<PluralityElectionPlace>();
     for (final int count in ballotCounts) {
-      var p = new PluralityElectionPlace(place, voteCounts[count], count);
+      var p = PluralityElectionPlace(place, voteCounts[count], count);
       places.add(p);
       place += p.length;
     }
 
-    return new PluralityElection<TVoter, TCandidate>._internal(
+    return PluralityElection<TVoter, TCandidate>._internal(
         roBallots, group, places);
   }
 

@@ -8,7 +8,7 @@ class IrvElection extends Election {
   final List<Comparable> candidates;
 
   @override
-  get places => throw new UnimplementedError();
+  get places => throw UnimplementedError();
 
   @override
   final List<Ballot> ballots;
@@ -17,23 +17,23 @@ class IrvElection extends Election {
   IrvElection._internal(this.candidates, this.ballots, this.rounds);
 
   factory IrvElection(Iterable<RankedBallot> ballots) {
-    final roBallots = new List<RankedBallot>.unmodifiable(ballots);
+    final roBallots = List<RankedBallot>.unmodifiable(ballots);
 
-    final roCandidates = new List<Comparable>.unmodifiable(
-        roBallots.expand((b) => b.rank).toSet());
+    final roCandidates =
+        List<Comparable>.unmodifiable(roBallots.expand((b) => b.rank).toSet());
 
-    final rounds = new List<IrvRound>();
+    final rounds = List<IrvRound>();
 
     IrvRound round;
-    var eliminatedCandidates = new List();
+    var eliminatedCandidates = List();
     do {
-      round = new IrvRound(roBallots, eliminatedCandidates);
+      round = IrvRound(roBallots, eliminatedCandidates);
       rounds.add(round);
 
       eliminatedCandidates.addAll(round.eliminatedCandidates.toList());
     } while (!round.isFinal);
 
-    return new IrvElection._internal(
-        roCandidates, roBallots, new List.unmodifiable(rounds));
+    return IrvElection._internal(
+        roCandidates, roBallots, List.unmodifiable(rounds));
   }
 }

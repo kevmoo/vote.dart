@@ -3,7 +3,7 @@ import 'dart:math' as math;
 
 void require(bool truth, [String message]) {
   if (!truth) {
-    throw new Exception(message);
+    throw Exception(message);
   }
 }
 
@@ -12,13 +12,13 @@ void requireArgument(bool truth, String argName, [String message]) {
     if (message == null || message.isEmpty) {
       message = 'value was invalid';
     }
-    throw new ArgumentError([argName, message]);
+    throw ArgumentError([argName, message]);
   }
 }
 
 void requireArgumentNotNull(argument, String argName) {
   if (argument == null) {
-    throw new ArgumentError.notNull(argName);
+    throw ArgumentError.notNull(argName);
   }
 }
 
@@ -57,20 +57,20 @@ int hashValues(Object arg01, Object arg02) {
 }
 
 /// [Tarjan's strongly connected components algorithm](http://en.wikipedia.org/wiki/Tarjan's_strongly_connected_components_algorithm)
-List<List<T>> stronglyConnectedComponents<T>(Map<dynamic, Iterable<T>> graph) {
+List<List<T>> stronglyConnectedComponents<T>(Map<T, Iterable<T>> graph) {
   requireArgumentNotNull(graph, 'graph');
 
-  var nodes = new _Graph<T>(graph);
-  var tarjan = new _TarjanCycleDetect<T>(nodes);
+  var nodes = _Graph<T>(graph);
+  var tarjan = _TarjanCycleDetect<T>(nodes);
   return tarjan.calculate();
 }
 
 class _TarjanCycleDetect<T> {
-  final _indexExpando = new Expando<int>('index');
-  final _linkExpando = new Expando<int>('link');
+  final _indexExpando = Expando<int>('index');
+  final _linkExpando = Expando<int>('link');
 
-  final Queue<_GraphNode<T>> _stack = new Queue<_GraphNode<T>>();
-  final List<List<T>> _scc = new List<List<T>>();
+  final Queue<_GraphNode<T>> _stack = Queue<_GraphNode<T>>();
+  final List<List<T>> _scc = List<List<T>>();
   final _Graph<T> _list;
 
   int _index = 0;
@@ -100,8 +100,8 @@ class _TarjanCycleDetect<T> {
       }
     }
     if (_getLowLink(v) == _getIndex(v)) {
-      _GraphNode n;
-      var component = new List<T>();
+      _GraphNode<T> n;
+      var component = List<T>();
       do {
         n = _stack.removeFirst();
         component.add(n.value);
@@ -126,10 +126,10 @@ class _Graph<T> {
   final LinkedHashMap<T, _GraphNode<T>> _map;
 
   factory _Graph(Map<T, Iterable<T>> items) {
-    var map = new LinkedHashMap<T, _GraphNode<T>>();
+    var map = LinkedHashMap<T, _GraphNode<T>>();
 
     _GraphNode<T> getNode(T value) =>
-        map.putIfAbsent(value, () => new _GraphNode<T>(value));
+        map.putIfAbsent(value, () => _GraphNode<T>(value));
 
     items.forEach((T item, Iterable<T> outLinks) {
       if (outLinks == null) outLinks = <T>[];
@@ -141,7 +141,7 @@ class _Graph<T> {
       }
     });
 
-    return new _Graph.core(map);
+    return _Graph.core(map);
   }
 
   _Graph.core(this._map);
@@ -150,7 +150,7 @@ class _Graph<T> {
 
   @override
   String toString() {
-    var sb = new StringBuffer();
+    var sb = StringBuffer();
     sb.writeln('{');
     _map.values.forEach((_GraphNode<T> value) {
       var outNodeStr = value.outNodes.map((gn) => gn.value).join(', ');
@@ -165,8 +165,7 @@ class _Graph<T> {
 
 class _GraphNode<T> {
   final T value;
-  final LinkedHashSet<_GraphNode<T>> outNodes =
-      new LinkedHashSet<_GraphNode<T>>();
+  final LinkedHashSet<_GraphNode<T>> outNodes = LinkedHashSet<_GraphNode<T>>();
 
   _GraphNode(this.value);
 

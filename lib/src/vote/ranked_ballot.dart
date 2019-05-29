@@ -1,6 +1,5 @@
-import 'plurality_ballot.dart';
-
 import '../util.dart';
+import 'plurality_ballot.dart';
 
 class RankedBallot<TVoter, TCandidate>
     extends PluralityBallot<TVoter, TCandidate> {
@@ -14,11 +13,11 @@ class RankedBallot<TVoter, TCandidate>
     requireArgumentNotNull(voter, 'voter');
     requireArgumentNotNull(rank, 'rank');
 
-    var items = new List<TCandidate>.unmodifiable(rank);
-    requireArgument(items.length > 0, 'rank');
+    var items = List<TCandidate>.unmodifiable(rank);
+    requireArgument(items.isNotEmpty, 'rank');
     requireArgument(allUnique(items), 'rank');
 
-    return new RankedBallot.protected(voter, items);
+    return RankedBallot.protected(voter, items);
   }
 
   @override

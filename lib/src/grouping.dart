@@ -1,16 +1,12 @@
 import 'dart:collection';
 
 class Grouping<K, V> {
-  final HashMap<K, List<V>> _values = new HashMap<K, List<V>>();
+  final HashMap<K, List<V>> _values = HashMap<K, List<V>>();
 
-  Grouping(Iterable<V> source, [K keyFunc(V) = null]) {
-    if (keyFunc == null) {
-      keyFunc = (v) => v;
-    }
-
+  Grouping(Iterable<V> source, K Function(V) keyFunc) {
     for (final V value in source) {
       final K key = keyFunc(value);
-      final values = _values.putIfAbsent(key, () => new List<V>());
+      final values = _values.putIfAbsent(key, () => List<V>());
       values.add(value);
     }
   }

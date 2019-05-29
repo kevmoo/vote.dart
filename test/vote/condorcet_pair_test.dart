@@ -10,48 +10,48 @@ void main() {
 
   test('no dupe candidates', () {
     expect(() {
-      new CondorcetPair(c1, c1);
+      CondorcetPair(c1, c1);
     }, throwsArgumentError);
   });
 
   test('no dupe ballots ~~ dupe voters', () {
-    var b1 = new RankedBallot(v1, [c1, c2]);
-    var b2 = new RankedBallot(v1, [c1, c2]);
+    var b1 = RankedBallot(v1, [c1, c2]);
+    var b2 = RankedBallot(v1, [c1, c2]);
     expect(() {
-      new CondorcetPair(c1, c2, [b1, b2]);
+      CondorcetPair(c1, c2, [b1, b2]);
     }, throwsArgumentError);
   });
 
   test('must have a rank for both candidates', () {
-    var b1 = new RankedBallot(v1, [c1]);
-    var b2 = new RankedBallot(v1, [c2]);
+    var b1 = RankedBallot(v1, [c1]);
+    var b2 = RankedBallot(v1, [c2]);
     expect(() {
-      new CondorcetPair(c1, c2, [b1]);
+      CondorcetPair(c1, c2, [b1]);
     }, throwsArgumentError);
     expect(() {
-      new CondorcetPair(c1, c2, [b2]);
+      CondorcetPair(c1, c2, [b2]);
     }, throwsArgumentError);
   });
 
   test('one ballot is cool', () {
-    var b1 = new RankedBallot(v1, [c1, c2]);
-    var pair = new CondorcetPair(c1, c2, [b1]);
+    var b1 = RankedBallot(v1, [c1, c2]);
+    var pair = CondorcetPair(c1, c2, [b1]);
     expect(pair.firstOverSecond, equals(1));
     expect(pair.secondOverFirst, equals(0));
   });
 
   test('two ballot is cool', () {
-    var b1 = new RankedBallot(v1, [c1, c2]);
-    var b2 = new RankedBallot(v2, [c1, c2]);
-    var pair = new CondorcetPair(c1, c2, [b1, b2]);
+    var b1 = RankedBallot(v1, [c1, c2]);
+    var b2 = RankedBallot(v2, [c1, c2]);
+    var pair = CondorcetPair(c1, c2, [b1, b2]);
     expect(pair.firstOverSecond, equals(2));
     expect(pair.secondOverFirst, equals(0));
   });
 
   test('two ballot tie', () {
-    var b1 = new RankedBallot(v1, [c1, c2]);
-    var b2 = new RankedBallot(v2, [c2, c1]);
-    var pair = new CondorcetPair(c1, c2, [b1, b2]);
+    var b1 = RankedBallot(v1, [c1, c2]);
+    var b2 = RankedBallot(v2, [c2, c1]);
+    var pair = CondorcetPair(c1, c2, [b1, b2]);
     expect(pair.firstOverSecond, equals(1));
     expect(pair.secondOverFirst, equals(1));
   });

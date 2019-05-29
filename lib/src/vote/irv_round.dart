@@ -13,18 +13,20 @@ class IrvRound<TVoter, TCandidate> {
   factory IrvRound(List<RankedBallot<TVoter, TCandidate>> ballots,
       List<TCandidate> eliminatedCandidates) {
     var cleanedBallots = ballots.map((b) {
-      var pruned = new List.unmodifiable(
+      var pruned = List<TCandidate>.unmodifiable(
           b.rank.toList()..removeWhere(eliminatedCandidates.contains));
-      var winner = pruned.length == 0 ? null : pruned[0];
-      return new Tuple3<RankedBallot<TVoter, TCandidate>, List, dynamic>(
-          b, pruned, winner);
+      var winner = pruned.isEmpty ? null : pruned[0];
+      return Tuple3<RankedBallot<TVoter, TCandidate>, List<TCandidate>,
+          TCandidate>(b, pruned, winner);
     });
 
-    final candidateAllocations = new Grouping<TCandidate, Tuple3>(
-        cleanedBallots.where((t) => t.item3 != null), (tuple) => tuple.item3);
+    final candidateAllocations =
+        Grouping<TCandidate, Tuple3<RankedBallot, List, TCandidate>>(
+            cleanedBallots.where((t) => t.item3 != null),
+            (tuple) => tuple.item3);
 
     final voteGroups =
-        new Grouping<int, TCandidate>(candidateAllocations.getKeys(), (c) {
+        Grouping<int, TCandidate>(candidateAllocations.getKeys(), (c) {
       return candidateAllocations[c].length;
     });
 
@@ -33,26 +35,24 @@ class IrvRound<TVoter, TCandidate> {
     placeVotes.sort((a, b) => b.compareTo(a));
 
     int placeNumber = 1;
-    final places =
-        new List<PluralityElectionPlace>.unmodifiable(placeVotes.map((pv) {
+    final places = List<PluralityElectionPlace<TCandidate>>.unmodifiable(
+        placeVotes.map((pv) {
       final vg = voteGroups[pv];
       final currentPlaceNumber = placeNumber;
       placeNumber += vg.length;
-      return new PluralityElectionPlace<TCandidate>(currentPlaceNumber, vg, pv);
+      return PluralityElectionPlace<TCandidate>(currentPlaceNumber, vg, pv);
     }));
 
     final newlyEliminatedCandidates =
         _getEliminatedCandidates<TCandidate>(places);
 
-    final eliminations = new List<IrvElimination>.unmodifiable(
+    final eliminations = List<IrvElimination<TVoter, TCandidate>>.unmodifiable(
         newlyEliminatedCandidates.map((TCandidate c) {
-      final xfers =
-          new Map<TCandidate, List<RankedBallot<TVoter, TCandidate>>>();
+      final xfers = Map<TCandidate, List<RankedBallot<TVoter, TCandidate>>>();
 
-      final exhausted = new List<RankedBallot<TVoter, TCandidate>>();
+      final exhausted = List<RankedBallot<TVoter, TCandidate>>();
 
-      for (Tuple3<RankedBallot<TVoter, TCandidate>, List, dynamic> b
-          in cleanedBallots.where((t) => t.item3 == c)) {
+      for (var b in cleanedBallots.where((t) => t.item3 == c)) {
         final rb = b.item1;
         final pruned = b.item2.toList()
           ..removeWhere(newlyEliminatedCandidates.contains);
@@ -62,20 +62,20 @@ class IrvRound<TVoter, TCandidate> {
         } else {
           // #2 gets the transfer
           final runnerUp = pruned.first;
-          xfers.putIfAbsent(runnerUp, () => new List()).add(rb);
+          xfers.putIfAbsent(runnerUp, () => List()).add(rb);
         }
       }
 
-      return new IrvElimination<TVoter, TCandidate>(
-          c, xfers, new List.unmodifiable(exhausted));
+      return IrvElimination<TVoter, TCandidate>(
+          c, xfers, List.unmodifiable(exhausted));
     }));
 
-    return new IrvRound<TVoter, TCandidate>._internal(places, eliminations);
+    return IrvRound<TVoter, TCandidate>._internal(places, eliminations);
   }
 
   IrvRound._internal(this.places, this.eliminations);
 
-  bool get isFinal => eliminations.length == 0;
+  bool get isFinal => eliminations.isEmpty;
 
   Iterable<TCandidate> get eliminatedCandidates =>
       eliminations.map((ie) => ie.candidate);
@@ -89,7 +89,7 @@ class IrvRound<TVoter, TCandidate> {
   static List<TCandidate> _getEliminatedCandidates<TCandidate>(
       List<PluralityElectionPlace<TCandidate>> places) {
     assert(places != null);
-    assert(places.length > 0);
+    assert(places.isNotEmpty);
 
     if (places.length == 1) {
       // it's a tie for first
