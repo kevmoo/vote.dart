@@ -25,24 +25,3 @@ bool allUnique(Iterable items) {
   }
   return true;
 }
-
-int _combine(int hash, Object o) {
-  assert(o is! Iterable);
-  hash = 0x1fffffff & (hash + o.hashCode);
-  hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-  return hash ^ (hash >> 6);
-}
-
-int _finish(int hash) {
-  hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-  hash = hash ^ (hash >> 11);
-  return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-}
-
-int hashValues(Object arg01, Object arg02) {
-  int result = 0;
-  result = _combine(result, arg01);
-  result = _combine(result, arg02);
-
-  return _finish(result);
-}
