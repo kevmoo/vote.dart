@@ -3,7 +3,7 @@ author: Kevin Moore <github@j832.com>
 homepage: https://github.com/kevmoo/vote.dart
 
 environment:
-  sdk: '>=2.3.0-dev <3.0.0'
+  sdk: '>=2.3.0-dev.0.3 <3.0.0'
 
 dependencies:
   collection: ^1.0.0
