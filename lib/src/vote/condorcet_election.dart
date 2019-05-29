@@ -1,3 +1,5 @@
+import 'package:graphs/graphs.dart';
+
 import '../util.dart';
 import 'condorcet_candidate_profile.dart';
 import 'condorcet_pair.dart';
@@ -93,7 +95,8 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
       tarjanMap[candidate] = tarjanLostTiedSet;
     }
 
-    var components = stronglyConnectedComponents<TCandidate>(tarjanMap);
+    var components = stronglyConnectedComponents<TCandidate>(
+        tarjanMap.keys, (node) => tarjanMap[node]);
 
     var places = List<ElectionPlace<TCandidate>>();
     int placeNumber = 1;

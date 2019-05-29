@@ -6,6 +6,7 @@ environment:
   sdk: '>=2.3.0-dev <3.0.0'
 
 dependencies:
+  graphs: ^0.2.0
   tuple: ^1.0.1
 
 dev_dependencies:
