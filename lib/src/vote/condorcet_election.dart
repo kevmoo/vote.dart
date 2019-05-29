@@ -53,7 +53,7 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
 
     var set = Set<CondorcetPair<TVoter, TCandidate>>();
     map.forEach((k, v) {
-      var c = CondorcetPair<TVoter, TCandidate>(k.item1, k.item2, v);
+      var c = CondorcetPair<TVoter, TCandidate>(k.candidate1, k.candidate2, v);
       set.add(c);
     });
 
@@ -69,8 +69,10 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
       final tarjanLostTiedSet = Set<TCandidate>();
 
       for (final pair in set) {
-        if (pair.item1 == candidate || pair.item2 == candidate) {
-          final other = (pair.item1 == candidate) ? pair.item2 : pair.item1;
+        if (pair.candidate1 == candidate || pair.candidate2 == candidate) {
+          final other = (pair.candidate1 == candidate)
+              ? pair.candidate2
+              : pair.candidate1;
 
           if (pair.isTie) {
             tied.add(other);

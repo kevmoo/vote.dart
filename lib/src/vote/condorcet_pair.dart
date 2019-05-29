@@ -1,17 +1,14 @@
-import 'package:tuple/tuple.dart';
-
 import '../util.dart';
 import 'ranked_ballot.dart';
 
-class CondorcetPair<TVoter, TCandidate extends Comparable>
-    extends Tuple2<TCandidate, TCandidate> {
+class CondorcetPair<TVoter, TCandidate extends Comparable> {
+  final TCandidate candidate1, candidate2;
   final List<RankedBallot<TVoter, TCandidate>> ballots;
   final int firstOverSecond;
   final int secondOverFirst;
 
-  CondorcetPair._internal(TCandidate can1, TCandidate can2, this.ballots,
-      this.firstOverSecond, this.secondOverFirst)
-      : super(can1, can2);
+  CondorcetPair._internal(this.candidate1, this.candidate2, this.ballots,
+      this.firstOverSecond, this.secondOverFirst);
 
   factory CondorcetPair(TCandidate can1, TCandidate can2,
       [Iterable<RankedBallot<TVoter, TCandidate>> bals]) {
@@ -56,9 +53,9 @@ class CondorcetPair<TVoter, TCandidate extends Comparable>
 
   TCandidate get winner {
     if (firstOverSecond > secondOverFirst) {
-      return item1;
+      return candidate1;
     } else if (secondOverFirst > firstOverSecond) {
-      return item2;
+      return candidate2;
     } else {
       assert(isTie);
       return null;
@@ -78,12 +75,12 @@ class CondorcetPair<TVoter, TCandidate extends Comparable>
       can1 = temp;
     }
 
-    return (item1 == can1) && (item2 == can2);
+    return (candidate1 == can1) && (candidate2 == can2);
   }
 
   // sometimes it's nice to deal w/ a properly aligned pair
   CondorcetPair<TVoter, TCandidate> flip(TCandidate can1, TCandidate can2) {
-    if (item1.compareTo(item2) > 0) {
+    if (candidate1.compareTo(candidate2) > 0) {
       throw 'already flipped!';
     }
     requireArgumentNotNull(can1, 'can1');
@@ -98,8 +95,8 @@ class CondorcetPair<TVoter, TCandidate extends Comparable>
       flipped = true;
     }
 
-    requireArgument(can1 == item1, 'can1');
-    requireArgument(can2 == item2, 'can1');
+    requireArgument(can1 == candidate1, 'can1');
+    requireArgument(can2 == candidate2, 'can1');
 
     if (flipped) {
       return CondorcetPair._internal(
@@ -108,4 +105,13 @@ class CondorcetPair<TVoter, TCandidate extends Comparable>
       return this;
     }
   }
+
+  @override
+  bool operator ==(Object other) =>
+      other is CondorcetPair &&
+      candidate1 == other.candidate1 &&
+      candidate2 == other.candidate2;
+
+  @override
+  int get hashCode => candidate1.hashCode * 37 ^ candidate2.hashCode;
 }
