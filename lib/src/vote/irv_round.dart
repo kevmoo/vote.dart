@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:tuple/tuple.dart';
 
 import 'irv_elimination.dart';
 import 'plurality_election_place.dart';
@@ -16,14 +15,13 @@ class IrvRound<TVoter, TCandidate> {
       var pruned = List<TCandidate>.unmodifiable(
           b.rank.toList()..removeWhere(eliminatedCandidates.contains));
       var winner = pruned.isEmpty ? null : pruned[0];
-      return Tuple3<RankedBallot<TVoter, TCandidate>, List<TCandidate>,
-          TCandidate>(b, pruned, winner);
+      return _Tuple3<TVoter, TCandidate>(b, pruned, winner);
     });
 
     final candidateAllocations =
-        groupBy<Tuple3<RankedBallot, List, TCandidate>, TCandidate>(
-            cleanedBallots.where((t) => t.item3 != null),
-            (tuple) => tuple.item3);
+        groupBy<_Tuple3<TVoter, TCandidate>, TCandidate>(
+            cleanedBallots.where((t) => t.winner != null),
+            (tuple) => tuple.winner);
 
     final voteGroups = groupBy<TCandidate, int>(candidateAllocations.keys, (c) {
       return candidateAllocations[c].length;
@@ -51,9 +49,9 @@ class IrvRound<TVoter, TCandidate> {
 
       final exhausted = List<RankedBallot<TVoter, TCandidate>>();
 
-      for (var b in cleanedBallots.where((t) => t.item3 == c)) {
-        final rb = b.item1;
-        final pruned = b.item2.toList()
+      for (var b in cleanedBallots.where((t) => t.winner == c)) {
+        final rb = b.ballot;
+        final pruned = b.remaining.toList()
           ..removeWhere(newlyEliminatedCandidates.contains);
         if (pruned.isEmpty) {
           // we're exhausted
@@ -117,4 +115,12 @@ class IrvRound<TVoter, TCandidate> {
 
     return places.last.map((p) => p).toList();
   }
+}
+
+class _Tuple3<TVoter, TCandidate> {
+  final RankedBallot<TVoter, TCandidate> ballot;
+  final List<TCandidate> remaining;
+  final TCandidate winner;
+
+  _Tuple3(this.ballot, this.remaining, this.winner);
 }
