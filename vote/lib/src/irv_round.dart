@@ -5,7 +5,7 @@ import 'plurality_election_place.dart';
 import 'ranked_ballot.dart';
 import 'vote_util.dart';
 
-class IrvRound<TVoter, TCandidate> {
+class IrvRound<TVoter, TCandidate extends Comparable> {
   final List<PluralityElectionPlace<TCandidate>> places;
 
   final List<IrvElimination<TVoter, TCandidate>> eliminations;
@@ -86,8 +86,9 @@ class IrvRound<TVoter, TCandidate> {
           TCandidate candidate) =>
       eliminations.singleWhere((e) => e.candidate == candidate);
 
-  static List<TCandidate> _getEliminatedCandidates<TCandidate>(
-      List<PluralityElectionPlace<TCandidate>> places) {
+  static List<TCandidate>
+      _getEliminatedCandidates<TCandidate extends Comparable>(
+          List<PluralityElectionPlace<TCandidate>> places) {
     assert(places != null);
     assert(places.isNotEmpty);
 

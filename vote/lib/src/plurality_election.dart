@@ -6,7 +6,7 @@ import 'plurality_ballot.dart';
 import 'plurality_election_place.dart';
 import 'util.dart';
 
-class PluralityElection<TVoter, TCandidate>
+class PluralityElection<TVoter, TCandidate extends Comparable>
     extends Election<TVoter, TCandidate> {
   @override
   final List<Ballot<TVoter>> ballots;

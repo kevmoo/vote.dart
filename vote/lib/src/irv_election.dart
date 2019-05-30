@@ -3,7 +3,8 @@ import 'election_place.dart';
 import 'irv_round.dart';
 import 'ranked_ballot.dart';
 
-class IrvElection<TVoter, TCandidate> extends Election<TVoter, TCandidate> {
+class IrvElection<TVoter, TCandidate extends Comparable>
+    extends Election<TVoter, TCandidate> {
   @override
   final List<TCandidate> candidates;
 

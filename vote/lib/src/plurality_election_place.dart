@@ -1,6 +1,7 @@
 import 'election_place.dart';
 
-class PluralityElectionPlace<TCandidate> extends ElectionPlace<TCandidate> {
+class PluralityElectionPlace<TCandidate extends Comparable>
+    extends ElectionPlace<TCandidate> {
   final int voteCount;
 
   PluralityElectionPlace(
