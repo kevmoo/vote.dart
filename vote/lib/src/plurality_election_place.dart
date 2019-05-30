@@ -11,6 +11,6 @@ class PluralityElectionPlace<TCandidate> extends ElectionPlace<TCandidate> {
 
   @override
   String toString() {
-    return "Votes: $voteCount; ${super.toString()}";
+    return 'Votes: $voteCount; ${super.toString()}';
   }
 }

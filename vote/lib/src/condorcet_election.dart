@@ -28,7 +28,7 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
     // Check voter uniqueness
     final voterList = List.unmodifiable(roBallots.map((b) => b.voter));
     requireArgument(
-        allUnique(voterList), "Only one ballot per voter is allowed");
+        allUnique(voterList), 'Only one ballot per voter is allowed');
 
     final map = <CondorcetPair<TVoter, TCandidate>,
         List<RankedBallot<TVoter, TCandidate>>>{};
@@ -141,5 +141,5 @@ class _CondorcetCandidateProfile<TCandidate> {
 
   @override
   String toString() =>
-      "[ $candidate: Beat: ${beat.length}, Tied: ${tied.length}, Lost to: ${lostTo.length}";
+      '[ $candidate: Beat: ${beat.length}, Tied: ${tied.length}, Lost to: ${lostTo.length}';
 }

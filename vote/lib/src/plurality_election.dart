@@ -26,7 +26,7 @@ class PluralityElection<TVoter, TCandidate>
     // Check voter uniqueness
     final voterList = List.unmodifiable(roBallots.map((pb) => pb.voter));
     requireArgument(
-        allUnique(voterList), "Only one ballot per voter is allowed");
+        allUnique(voterList), 'Only one ballot per voter is allowed');
 
     final group = groupBy<PluralityBallot<TVoter, TCandidate>, TCandidate>(
         roBallots, (pb) => pb.choice);

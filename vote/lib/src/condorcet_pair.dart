@@ -29,7 +29,7 @@ class CondorcetPair<TVoter, TCandidate extends Comparable> {
           List<RankedBallot<TVoter, TCandidate>>.unmodifiable(bals);
 
       requireArgument(
-          allUnique(roBallots), "Only one ballot per voter is allowed");
+          allUnique(roBallots), 'Only one ballot per voter is allowed');
 
       var fos = 0;
       var sof = 0;

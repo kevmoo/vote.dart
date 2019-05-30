@@ -10,5 +10,5 @@ class ElectionPlace<TCandidate> extends UnmodifiableListView<TCandidate> {
   }
 
   @override
-  String toString() => "Place: $place; ${super.toString()}";
+  String toString() => 'Place: $place; ${super.toString()}';
 }
