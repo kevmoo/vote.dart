@@ -46,12 +46,10 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
       }
     }
 
-    final set = <CondorcetPair<TVoter, TCandidate>>{};
-    map.forEach((k, v) {
-      final c =
-          CondorcetPair<TVoter, TCandidate>(k.candidate1, k.candidate2, v);
-      set.add(c);
-    });
+    final set = map.entries
+        .map((entry) => CondorcetPair<TVoter, TCandidate>(
+            entry.key.candidate1, entry.key.candidate2, entry.value))
+        .toSet();
 
     final candidateProfiles =
         <TCandidate, _CondorcetCandidateProfile<TCandidate>>{};
