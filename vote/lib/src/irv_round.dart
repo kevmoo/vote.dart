@@ -35,9 +35,8 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
             cleanedBallots.where((t) => t.winner != null),
             (tuple) => tuple.winner);
 
-    final voteGroups = groupBy<TCandidate, int>(candidateAllocations.keys, (c) {
-      return candidateAllocations[c].length;
-    });
+    final voteGroups = groupBy<TCandidate, int>(
+        candidateAllocations.keys, (c) => candidateAllocations[c].length);
 
     final placeVotes = voteGroups.keys.toList()
       // reverse sorting -> most votes first
@@ -100,9 +99,8 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
     // duh, I know. Being paranoid.
     assert(places.length >= 2);
 
-    final totalVotes = places.map((p) {
-      return p.voteCount * p.length;
-    }).fold<int>(0, (a, b) => a + b);
+    final totalVotes =
+        places.map((p) => p.voteCount * p.length).fold<int>(0, (a, b) => a + b);
 
     final majorityCount = majorityThreshold(totalVotes);
 

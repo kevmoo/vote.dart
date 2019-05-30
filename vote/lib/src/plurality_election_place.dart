@@ -10,7 +10,5 @@ class PluralityElectionPlace<TCandidate extends Comparable>
         super(place, candidates);
 
   @override
-  String toString() {
-    return 'Votes: $voteCount; ${super.toString()}';
-  }
+  String toString() => 'Votes: $voteCount; ${super.toString()}';
 }
