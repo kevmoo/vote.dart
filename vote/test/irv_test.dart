@@ -45,13 +45,13 @@ void _testNoTransfersBetweenEliminated() {
   final firstRound = elec.rounds.first;
   expect(firstRound.eliminatedCandidates, unorderedEquals([canC, canD]));
 
-  final elimC = firstRound.getElimination(canC);
+  final elimC = firstRound.eliminationForCandidate(canC);
   expect(elimC.getTransferCount(canA), 0);
   expect(elimC.getTransferCount(canB), 0);
   expect(elimC.getTransferCount(canC), 0);
   expect(elimC.getTransferCount(canD), 0);
 
-  final elimD = firstRound.getElimination(canD);
+  final elimD = firstRound.eliminationForCandidate(canD);
   expect(elimD.getTransferCount(canA), 0);
   expect(elimD.getTransferCount(canB), 0);
   expect(elimD.getTransferCount(canC), 0);

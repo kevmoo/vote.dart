@@ -12,6 +12,7 @@ class IrvElection<TVoter, TCandidate> extends Election<TVoter, TCandidate> {
 
   @override
   final List<RankedBallot<TVoter, TCandidate>> ballots;
+
   final List<IrvRound<TVoter, TCandidate>> rounds;
 
   IrvElection._internal(this.candidates, this.ballots, this.rounds);

@@ -7,10 +7,22 @@ import 'vote_util.dart';
 
 class IrvRound<TVoter, TCandidate> {
   final List<PluralityElectionPlace<TCandidate>> places;
+
   final List<IrvElimination<TVoter, TCandidate>> eliminations;
 
-  factory IrvRound(List<RankedBallot<TVoter, TCandidate>> ballots,
-      List<TCandidate> eliminatedCandidates) {
+  bool get isFinal => eliminations.isEmpty;
+
+  Iterable<TCandidate> get eliminatedCandidates =>
+      eliminations.map((ie) => ie.candidate);
+
+  Iterable<TCandidate> get candidates => places.expand((p) => p);
+
+  IrvRound._internal(this.places, this.eliminations);
+
+  factory IrvRound(
+    List<RankedBallot<TVoter, TCandidate>> ballots,
+    List<TCandidate> eliminatedCandidates,
+  ) {
     var cleanedBallots = ballots.map((b) {
       var pruned = List<TCandidate>.unmodifiable(
           b.rank.toList()..removeWhere(eliminatedCandidates.contains));
@@ -70,18 +82,9 @@ class IrvRound<TVoter, TCandidate> {
     return IrvRound<TVoter, TCandidate>._internal(places, eliminations);
   }
 
-  IrvRound._internal(this.places, this.eliminations);
-
-  bool get isFinal => eliminations.isEmpty;
-
-  Iterable<TCandidate> get eliminatedCandidates =>
-      eliminations.map((ie) => ie.candidate);
-
-  Iterable<TCandidate> get candidates => places.expand((p) => p);
-
-  IrvElimination<TVoter, TCandidate> getElimination(TCandidate candidate) {
-    return eliminations.singleWhere((e) => e.candidate == candidate);
-  }
+  IrvElimination<TVoter, TCandidate> eliminationForCandidate(
+          TCandidate candidate) =>
+      eliminations.singleWhere((e) => e.candidate == candidate);
 
   static List<TCandidate> _getEliminatedCandidates<TCandidate>(
       List<PluralityElectionPlace<TCandidate>> places) {
