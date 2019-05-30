@@ -6,9 +6,8 @@ class PluralityElectionPlace<TCandidate extends Comparable>
 
   PluralityElectionPlace(
       int place, Iterable<TCandidate> candidates, this.voteCount)
-      : super(place, candidates) {
-    assert(voteCount >= 0);
-  }
+      : assert(voteCount >= 0),
+        super(place, candidates);
 
   @override
   String toString() {

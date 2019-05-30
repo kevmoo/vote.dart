@@ -5,10 +5,9 @@ class ElectionPlace<TCandidate extends Comparable>
   final int place;
 
   ElectionPlace(this.place, Iterable<TCandidate> candidates)
-      : super(candidates.toList()..sort()) {
-    assert(place > 0);
-    assert(length > 0);
-  }
+      : assert(place > 0),
+        assert(length > 0),
+        super(candidates.toList()..sort());
 
   @override
   String toString() => 'Place: $place; ${super.toString()}';
