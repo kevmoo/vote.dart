@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 import 'irv_elimination.dart';
 import 'plurality_election_place.dart';
 import 'ranked_ballot.dart';
-import 'vote_util.dart';
+import 'util.dart';
 
 @immutable
 class IrvRound<TVoter, TCandidate extends Comparable> {

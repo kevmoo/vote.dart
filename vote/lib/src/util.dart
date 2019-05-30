@@ -13,6 +13,11 @@ void requireArgumentNotNull(argument, String argName) {
   }
 }
 
+int majorityThreshold(int votes) {
+  assert(votes > 0);
+  return votes ~/ 2 + 1;
+}
+
 bool allUnique(Iterable items) {
   requireArgumentNotNull(items, 'items');
 
