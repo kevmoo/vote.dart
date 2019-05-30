@@ -19,7 +19,7 @@ class CondorcetPair<TVoter, TCandidate extends Comparable> {
   );
 
   factory CondorcetPair(TCandidate can1, TCandidate can2,
-      [Iterable<RankedBallot<TVoter, TCandidate>> ballots]) {
+      [List<RankedBallot<TVoter, TCandidate>> ballots]) {
     requireArgumentNotNull(can1, 'can1');
     requireArgumentNotNull(can2, 'can2');
     requireArgument(can1 != can2, 'can1 and can2 must be different');
@@ -33,15 +33,12 @@ class CondorcetPair<TVoter, TCandidate extends Comparable> {
     if (ballots == null) {
       return CondorcetPair._internal(can1, can2, null, 0, 0);
     } else {
-      final roBallots =
-          List<RankedBallot<TVoter, TCandidate>>.unmodifiable(ballots);
-
       requireArgument(
-          allUnique(roBallots), 'Only one ballot per voter is allowed');
+          allUnique(ballots), 'Only one ballot per voter is allowed');
 
       var fos = 0;
       var sof = 0;
-      for (var b in roBallots) {
+      for (var b in ballots) {
         final firstIndex = b.rank.indexOf(can1);
         requireArgument(firstIndex >= 0, 'bals');
 
@@ -56,7 +53,7 @@ class CondorcetPair<TVoter, TCandidate extends Comparable> {
         }
       }
 
-      return CondorcetPair._internal(can1, can2, roBallots, fos, sof);
+      return CondorcetPair._internal(can1, can2, ballots, fos, sof);
     }
   }
 

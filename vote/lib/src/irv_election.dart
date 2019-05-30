@@ -21,25 +21,20 @@ class IrvElection<TVoter, TCandidate extends Comparable>
 
   IrvElection._internal(this.candidates, this.ballots, this.rounds);
 
-  factory IrvElection(Iterable<RankedBallot<TVoter, TCandidate>> ballots) {
-    final roBallots =
-        List<RankedBallot<TVoter, TCandidate>>.unmodifiable(ballots);
-
-    final roCandidates =
-        List<TCandidate>.unmodifiable(roBallots.expand((b) => b.rank).toSet());
+  factory IrvElection(List<RankedBallot<TVoter, TCandidate>> ballots) {
+    final candidates =
+        ballots.expand((b) => b.rank).toSet().toList(growable: false);
 
     final rounds = <IrvRound<TVoter, TCandidate>>[];
 
     IrvRound<TVoter, TCandidate> round;
-    final eliminatedCandidates = <TCandidate>[];
+    final eliminatedCandidates = <TCandidate>{};
     do {
-      round = IrvRound<TVoter, TCandidate>(roBallots, eliminatedCandidates);
+      round = IrvRound<TVoter, TCandidate>(ballots, eliminatedCandidates);
       rounds.add(round);
-
-      eliminatedCandidates.addAll(round.eliminatedCandidates.toList());
+      eliminatedCandidates.addAll(round.eliminatedCandidates);
     } while (!round.isFinal);
 
-    return IrvElection._internal(
-        roCandidates, roBallots, List.unmodifiable(rounds));
+    return IrvElection._internal(candidates, ballots, rounds);
   }
 }

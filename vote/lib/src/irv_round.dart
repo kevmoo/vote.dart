@@ -23,11 +23,12 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
 
   factory IrvRound(
     List<RankedBallot<TVoter, TCandidate>> ballots,
-    List<TCandidate> eliminatedCandidates,
+    Iterable<TCandidate> eliminatedCandidates,
   ) {
     final cleanedBallots = ballots.map((b) {
-      final pruned = List<TCandidate>.unmodifiable(
-          b.rank.toList()..removeWhere(eliminatedCandidates.contains));
+      final pruned = b.rank
+          .where((c) => !eliminatedCandidates.contains(c))
+          .toList(growable: false);
       final winner = pruned.isEmpty ? null : pruned[0];
       return _Tuple3<TVoter, TCandidate>(b, pruned, winner);
     });
@@ -40,32 +41,30 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
     final voteGroups = groupBy<TCandidate, int>(
         candidateAllocations.keys, (c) => candidateAllocations[c].length);
 
-    final placeVotes = voteGroups.keys.toList()
+    final placeVotes = voteGroups.keys.toList(growable: false)
       // reverse sorting -> most votes first
       ..sort((a, b) => b.compareTo(a));
 
     var placeNumber = 1;
-    final places = List<PluralityElectionPlace<TCandidate>>.unmodifiable(
-        placeVotes.map((pv) {
+    final places = placeVotes.map((pv) {
       final vg = voteGroups[pv];
       final currentPlaceNumber = placeNumber;
       placeNumber += vg.length;
       return PluralityElectionPlace<TCandidate>(currentPlaceNumber, vg, pv);
-    }));
+    }).toList(growable: false);
 
     final newlyEliminatedCandidates =
         _getEliminatedCandidates<TCandidate>(places);
 
-    final eliminations = List<IrvElimination<TVoter, TCandidate>>.unmodifiable(
-        newlyEliminatedCandidates.map((TCandidate c) {
+    final eliminations = newlyEliminatedCandidates.map((TCandidate c) {
       final transfers = <TCandidate, List<RankedBallot<TVoter, TCandidate>>>{};
 
       final exhausted = <RankedBallot<TVoter, TCandidate>>[];
 
       for (var b in cleanedBallots.where((t) => t.winner == c)) {
         final rb = b.ballot;
-        final pruned = b.remaining.toList()
-          ..removeWhere(newlyEliminatedCandidates.contains);
+        final pruned =
+            b.remaining.where((c) => !newlyEliminatedCandidates.contains(c));
         if (pruned.isEmpty) {
           // we're exhausted
           exhausted.add(rb);
@@ -76,9 +75,8 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
         }
       }
 
-      return IrvElimination<TVoter, TCandidate>(
-          c, transfers, List.unmodifiable(exhausted));
-    }));
+      return IrvElimination<TVoter, TCandidate>(c, transfers, exhausted);
+    }).toList(growable: false);
 
     return IrvRound<TVoter, TCandidate>._internal(places, eliminations);
   }
@@ -117,7 +115,7 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
       return [];
     }
 
-    return places.last.map((p) => p).toList();
+    return places.last.map((p) => p).toList(growable: false);
   }
 }
 

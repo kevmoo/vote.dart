@@ -20,13 +20,9 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
   CondorcetElection._internal(
       this._pairs, this._profiles, this.ballots, this.places);
 
-  factory CondorcetElection(
-      Iterable<RankedBallot<TVoter, TCandidate>> ballots) {
-    final roBallots =
-        List<RankedBallot<TVoter, TCandidate>>.unmodifiable(ballots);
-
+  factory CondorcetElection(List<RankedBallot<TVoter, TCandidate>> ballots) {
     // Check voter uniqueness
-    final voterList = List.unmodifiable(roBallots.map((b) => b.voter));
+    final voterList = ballots.map((b) => b.voter).toList(growable: false);
     requireArgument(
         allUnique(voterList), 'Only one ballot per voter is allowed');
 
@@ -62,9 +58,9 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
     final candidateMap = <TCandidate, Set<TCandidate>>{};
 
     for (final candidate in candidateSet) {
-      final lostTo = [];
-      final beat = [];
-      final tied = [];
+      final lostTo = <TCandidate>[];
+      final beat = <TCandidate>[];
+      final tied = <TCandidate>[];
 
       final lostTiedSet = <TCandidate>{};
 
@@ -87,11 +83,8 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
         }
       }
 
-      final profile = _CondorcetCandidateProfile<TCandidate>(
-          candidate,
-          List.unmodifiable(lostTo),
-          List.unmodifiable(beat),
-          List.unmodifiable(tied));
+      final profile =
+          _CondorcetCandidateProfile<TCandidate>(candidate, lostTo, beat, tied);
       candidateProfiles[candidate] = profile;
 
       candidateMap[candidate] = lostTiedSet;
@@ -103,7 +96,7 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
     final places = <ElectionPlace<TCandidate>>[];
     var placeNumber = 1;
     for (final round in components) {
-      final place = ElectionPlace<TCandidate>(placeNumber, round);
+      final place = ElectionPlace<TCandidate>(placeNumber, round..sort());
       places.add(place);
       placeNumber += round.length;
     }
@@ -111,8 +104,8 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
     return CondorcetElection._internal(
       set,
       candidateProfiles,
-      roBallots,
-      List.unmodifiable(places),
+      ballots,
+      places,
     );
   }
 

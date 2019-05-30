@@ -5,11 +5,9 @@ void main() {
   test('random vote test', () {
     final c1 = "candidate 1";
 
-    final voters = [
-      for (num i = 0; i < 10; i++) "Voter $i",
+    final ballots = [
+      for (num i = 0; i < 10; i++) PluralityBallot("Voter $i", c1),
     ];
-
-    final ballots = voters.map((v) => PluralityBallot(v, c1)).toList();
 
     PluralityElection(ballots);
   });
@@ -20,8 +18,7 @@ void main() {
     final voter = "Bad Voter";
     final voters = [voter, voter];
 
-    final ballots = List<PluralityBallot>.from(
-        voters.map((v) => PluralityBallot(v, c1)).toList());
+    final ballots = voters.map((v) => PluralityBallot(v, c1)).toList();
 
     expect(() {
       PluralityElection(ballots);
@@ -74,8 +71,7 @@ void main() {
     final voter = "Bad Voter";
     final voters = [voter];
 
-    final ballots = List<PluralityBallot>.from(
-        voters.map((v) => PluralityBallot(v, c1)).toList());
+    final ballots = voters.map((v) => PluralityBallot(v, c1)).toList();
 
     final election = PluralityElection(ballots);
     expect(election.singleWinner, equals(c1));

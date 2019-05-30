@@ -17,21 +17,16 @@ class PluralityElection<TVoter, TCandidate extends Comparable>
   @override
   final List<PluralityElectionPlace<TCandidate>> places;
 
-  PluralityElection._internal(this.ballots, this._ballotGroup,
-      Iterable<PluralityElectionPlace> sourcePlaces)
-      : places = List.unmodifiable(sourcePlaces);
+  PluralityElection._internal(this.ballots, this._ballotGroup, this.places);
 
-  factory PluralityElection(Iterable<PluralityBallot> ballots) {
-    final roBallots =
-        List<PluralityBallot<TVoter, TCandidate>>.unmodifiable(ballots);
-
+  factory PluralityElection(List<PluralityBallot<TVoter, TCandidate>> ballots) {
     // Check voter uniqueness
-    final voterList = List.unmodifiable(roBallots.map((pb) => pb.voter));
+    final voterList = ballots.map((pb) => pb.voter).toList(growable: false);
     requireArgument(
         allUnique(voterList), 'Only one ballot per voter is allowed');
 
     final group = groupBy<PluralityBallot<TVoter, TCandidate>, TCandidate>(
-        roBallots, (pb) => pb.choice);
+        ballots, (pb) => pb.choice);
 
     //
     // create a Map of candidates keyed on their vote count
@@ -52,7 +47,7 @@ class PluralityElection<TVoter, TCandidate extends Comparable>
       ..sort((a, b) => b.compareTo(a));
 
     var place = 1;
-    final places = <PluralityElectionPlace>[];
+    final places = <PluralityElectionPlace<TCandidate>>[];
     for (var count in ballotCounts) {
       final p = PluralityElectionPlace(place, voteCounts[count], count);
       places.add(p);
@@ -60,7 +55,7 @@ class PluralityElection<TVoter, TCandidate extends Comparable>
     }
 
     return PluralityElection<TVoter, TCandidate>._internal(
-        roBallots, group, places);
+        ballots, group, places);
   }
 
   @override
