@@ -103,7 +103,7 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
     final places = <ElectionPlace<TCandidate>>[];
     var placeNumber = 1;
     for (final round in components) {
-      final place = ElectionPlace<TCandidate>(placeNumber, round);
+      final place = ElectionPlace<TCandidate>(placeNumber, round..sort());
       places.add(place);
       placeNumber += round.length;
     }
