@@ -1,5 +1,5 @@
-import '../util.dart';
 import 'ranked_ballot.dart';
+import 'util.dart';
 
 class CondorcetPair<TVoter, TCandidate extends Comparable> {
   final TCandidate candidate1, candidate2;

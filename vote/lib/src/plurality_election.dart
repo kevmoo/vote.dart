@@ -1,10 +1,10 @@
 import 'package:collection/collection.dart';
 
-import '../util.dart';
 import 'ballot.dart';
 import 'election.dart';
 import 'plurality_ballot.dart';
 import 'plurality_election_place.dart';
+import 'util.dart';
 
 class PluralityElection<TVoter, TCandidate>
     extends Election<TVoter, TCandidate> {
