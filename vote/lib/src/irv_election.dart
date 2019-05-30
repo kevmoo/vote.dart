@@ -1,4 +1,5 @@
 import 'election.dart';
+import 'election_place.dart';
 import 'irv_round.dart';
 import 'ranked_ballot.dart';
 
@@ -7,11 +8,11 @@ class IrvElection<TVoter, TCandidate> extends Election<TVoter, TCandidate> {
   final List<TCandidate> candidates;
 
   @override
-  get places => throw UnimplementedError();
+  List<ElectionPlace<TCandidate>> get places => throw UnimplementedError();
 
   @override
   final List<RankedBallot<TVoter, TCandidate>> ballots;
-  final List<IrvRound> rounds;
+  final List<IrvRound<TVoter, TCandidate>> rounds;
 
   IrvElection._internal(this.candidates, this.ballots, this.rounds);
 
@@ -22,12 +23,12 @@ class IrvElection<TVoter, TCandidate> extends Election<TVoter, TCandidate> {
     final roCandidates =
         List<TCandidate>.unmodifiable(roBallots.expand((b) => b.rank).toSet());
 
-    final rounds = List<IrvRound>();
+    final rounds = List<IrvRound<TVoter, TCandidate>>();
 
-    IrvRound round;
-    var eliminatedCandidates = List();
+    IrvRound<TVoter, TCandidate> round;
+    var eliminatedCandidates = List<TCandidate>();
     do {
-      round = IrvRound(roBallots, eliminatedCandidates);
+      round = IrvRound<TVoter, TCandidate>(roBallots, eliminatedCandidates);
       rounds.add(round);
 
       eliminatedCandidates.addAll(round.eliminatedCandidates.toList());
