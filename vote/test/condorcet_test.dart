@@ -26,22 +26,19 @@ void main() {
 
     var voter = 1;
 
-    final ballots = <RankedBallot<Comparable, Comparable>>[];
+    final ballots = [
+      // 29 cc, c, v
+      for (var i = 0; i < 29; i++)
+        RankedBallot("Voter ${voter++}", [canCC, canC, canVan]),
 
-    // 29 cc, c, v
-    for (var i = 0; i < 29; i++) {
-      ballots.add(RankedBallot("Voter ${voter++}", [canCC, canC, canVan]));
-    }
+      // 31 c, cc, v
+      for (var i = 0; i < 31; i++)
+        RankedBallot("Voter ${voter++}", [canC, canCC, canVan]),
 
-    // 31 c, cc, v
-    for (var i = 0; i < 31; i++) {
-      ballots.add(RankedBallot("Voter ${voter++}", [canC, canCC, canVan]));
-    }
-
-    // 40 v, c, cc
-    for (var i = 0; i < 40; i++) {
-      ballots.add(RankedBallot("Voter ${voter++}", [canVan, canC, canCC]));
-    }
+      // 40 v, c, cc
+      for (var i = 0; i < 40; i++)
+        RankedBallot("Voter ${voter++}", [canVan, canC, canCC]),
+    ];
 
     final ce = CondorcetElection(ballots);
 
