@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:vote/src/vote/ranked_ballot.dart';
+import 'package:vote/src/ranked_ballot.dart';
 
 void main() {
   group('ranked ballot', () {

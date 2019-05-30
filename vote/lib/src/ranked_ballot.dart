@@ -1,5 +1,5 @@
-import '../util.dart';
 import 'plurality_ballot.dart';
+import 'util.dart';
 
 class RankedBallot<TVoter, TCandidate>
     extends PluralityBallot<TVoter, TCandidate> {

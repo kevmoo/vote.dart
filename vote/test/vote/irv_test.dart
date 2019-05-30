@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
-import 'package:vote/src/vote/irv_election.dart';
-import 'package:vote/src/vote/ranked_ballot.dart';
+import 'package:vote/src/irv_election.dart';
+import 'package:vote/src/ranked_ballot.dart';
 
 void main() {
   test('no transfers between eliminated', _testNoTransfersBetweenEliminated);

@@ -1,11 +1,11 @@
 import 'package:graphs/graphs.dart';
 
-import '../util.dart';
 import 'condorcet_candidate_profile.dart';
 import 'condorcet_pair.dart';
 import 'election.dart';
 import 'election_place.dart';
 import 'ranked_ballot.dart';
+import 'util.dart';
 
 class CondorcetElection<TVoter, TCandidate extends Comparable>
     extends Election<TVoter, TCandidate> {
