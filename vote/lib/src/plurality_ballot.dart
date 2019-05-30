@@ -1,7 +1,10 @@
+import 'package:meta/meta.dart';
+
 import 'ballot.dart';
 
+@immutable
 class PluralityBallot<TVoter, TCandidate> extends Ballot<TVoter> {
   final TCandidate choice;
 
-  PluralityBallot(TVoter voter, this.choice) : super(voter);
+  const PluralityBallot(TVoter voter, this.choice) : super(voter);
 }

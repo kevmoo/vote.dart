@@ -1,10 +1,12 @@
 import 'package:collection/collection.dart';
+import 'package:meta/meta.dart';
 
 import 'irv_elimination.dart';
 import 'plurality_election_place.dart';
 import 'ranked_ballot.dart';
 import 'vote_util.dart';
 
+@immutable
 class IrvRound<TVoter, TCandidate extends Comparable> {
   final List<PluralityElectionPlace<TCandidate>> places;
 
@@ -17,7 +19,7 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
 
   Iterable<TCandidate> get candidates => places.expand((p) => p);
 
-  IrvRound._internal(this.places, this.eliminations);
+  const IrvRound._internal(this.places, this.eliminations);
 
   factory IrvRound(
     List<RankedBallot<TVoter, TCandidate>> ballots,
@@ -124,5 +126,5 @@ class _Tuple3<TVoter, TCandidate> {
   final List<TCandidate> remaining;
   final TCandidate winner;
 
-  _Tuple3(this.ballot, this.remaining, this.winner);
+  const _Tuple3(this.ballot, this.remaining, this.winner);
 }

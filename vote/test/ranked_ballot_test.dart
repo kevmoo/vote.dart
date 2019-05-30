@@ -20,7 +20,7 @@ void main() {
 
   test('no empty candidates', () {
     expect(() {
-      RankedBallot(v2, []);
+      RankedBallot(v2, const []);
     }, throwsArgumentError);
   });
 

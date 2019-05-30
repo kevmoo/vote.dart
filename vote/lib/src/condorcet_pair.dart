@@ -1,14 +1,22 @@
+import 'package:meta/meta.dart';
+
 import 'ranked_ballot.dart';
 import 'util.dart';
 
+@immutable
 class CondorcetPair<TVoter, TCandidate extends Comparable> {
   final TCandidate candidate1, candidate2;
   final List<RankedBallot<TVoter, TCandidate>> ballots;
   final int firstOverSecond;
   final int secondOverFirst;
 
-  CondorcetPair._internal(this.candidate1, this.candidate2, this.ballots,
-      this.firstOverSecond, this.secondOverFirst);
+  const CondorcetPair._internal(
+    this.candidate1,
+    this.candidate2,
+    this.ballots,
+    this.firstOverSecond,
+    this.secondOverFirst,
+  );
 
   factory CondorcetPair(TCandidate can1, TCandidate can2,
       [Iterable<RankedBallot<TVoter, TCandidate>> ballots]) {

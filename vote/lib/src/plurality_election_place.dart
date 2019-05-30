@@ -1,5 +1,8 @@
+import 'package:meta/meta.dart';
+
 import 'election_place.dart';
 
+@immutable
 class PluralityElectionPlace<TCandidate extends Comparable>
     extends ElectionPlace<TCandidate> {
   final int voteCount;

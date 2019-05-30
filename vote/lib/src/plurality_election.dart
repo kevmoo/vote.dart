@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:meta/meta.dart';
 
 import 'ballot.dart';
 import 'election.dart';
@@ -6,6 +7,7 @@ import 'plurality_ballot.dart';
 import 'plurality_election_place.dart';
 import 'util.dart';
 
+@immutable
 class PluralityElection<TVoter, TCandidate extends Comparable>
     extends Election<TVoter, TCandidate> {
   @override

@@ -1,8 +1,11 @@
+import 'package:meta/meta.dart';
+
 import 'election.dart';
 import 'election_place.dart';
 import 'irv_round.dart';
 import 'ranked_ballot.dart';
 
+@immutable
 class IrvElection<TVoter, TCandidate extends Comparable>
     extends Election<TVoter, TCandidate> {
   @override

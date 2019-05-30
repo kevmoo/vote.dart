@@ -1,11 +1,14 @@
+import 'package:meta/meta.dart';
+
 import 'plurality_ballot.dart';
 import 'util.dart';
 
+@immutable
 class RankedBallot<TVoter, TCandidate>
     extends PluralityBallot<TVoter, TCandidate> {
   final List<TCandidate> rank;
 
-  RankedBallot.protected(TVoter voter, this.rank) : super(voter, rank[0]);
+  RankedBallot._(TVoter voter, this.rank) : super(voter, rank[0]);
 
   factory RankedBallot(TVoter voter, Iterable<TCandidate> rank) {
     requireArgumentNotNull(voter, 'voter');
@@ -15,7 +18,7 @@ class RankedBallot<TVoter, TCandidate>
     requireArgument(items.isNotEmpty, 'rank');
     requireArgument(allUnique(items), 'rank');
 
-    return RankedBallot.protected(voter, items);
+    return RankedBallot._(voter, items);
   }
 
   @override
