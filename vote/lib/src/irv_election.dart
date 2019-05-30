@@ -1,26 +1,26 @@
-import 'ballot.dart';
 import 'election.dart';
 import 'irv_round.dart';
 import 'ranked_ballot.dart';
 
-class IrvElection extends Election {
+class IrvElection<TVoter, TCandidate> extends Election<TVoter, TCandidate> {
   @override
-  final List<Comparable> candidates;
+  final List<TCandidate> candidates;
 
   @override
   get places => throw UnimplementedError();
 
   @override
-  final List<Ballot> ballots;
+  final List<RankedBallot<TVoter, TCandidate>> ballots;
   final List<IrvRound> rounds;
 
   IrvElection._internal(this.candidates, this.ballots, this.rounds);
 
-  factory IrvElection(Iterable<RankedBallot> ballots) {
-    final roBallots = List<RankedBallot>.unmodifiable(ballots);
+  factory IrvElection(Iterable<RankedBallot<TVoter, TCandidate>> ballots) {
+    final roBallots =
+        List<RankedBallot<TVoter, TCandidate>>.unmodifiable(ballots);
 
     final roCandidates =
-        List<Comparable>.unmodifiable(roBallots.expand((b) => b.rank).toSet());
+        List<TCandidate>.unmodifiable(roBallots.expand((b) => b.rank).toSet());
 
     final rounds = List<IrvRound>();
 
