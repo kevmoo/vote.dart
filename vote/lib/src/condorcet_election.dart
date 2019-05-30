@@ -1,6 +1,5 @@
 import 'package:graphs/graphs.dart';
 
-import 'condorcet_candidate_profile.dart';
 import 'condorcet_pair.dart';
 import 'election.dart';
 import 'election_place.dart';
@@ -10,7 +9,7 @@ import 'util.dart';
 class CondorcetElection<TVoter, TCandidate extends Comparable>
     extends Election<TVoter, TCandidate> {
   final Set<CondorcetPair> _pairs;
-  final Map<TCandidate, CondorcetCandidateProfile> _profiles;
+  final Map<TCandidate, _CondorcetCandidateProfile> _profiles;
 
   @override
   final List<RankedBallot<TVoter, TCandidate>> ballots;
@@ -58,7 +57,7 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
     });
 
     var candidateProfiles =
-        Map<TCandidate, CondorcetCandidateProfile<TCandidate>>();
+        Map<TCandidate, _CondorcetCandidateProfile<TCandidate>>();
     var tarjanMap = Map<TCandidate, Set<TCandidate>>();
 
     for (final candidate in candidateSet) {
@@ -87,7 +86,7 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
         }
       }
 
-      var profile = CondorcetCandidateProfile<TCandidate>(
+      var profile = _CondorcetCandidateProfile<TCandidate>(
           candidate,
           List.unmodifiable(lostTo),
           List.unmodifiable(beat),
@@ -129,4 +128,17 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
       return filter.first.flip(c1, c2);
     }
   }
+}
+
+class _CondorcetCandidateProfile<TCandidate> {
+  final TCandidate candidate;
+  final List<TCandidate> lostTo;
+  final List<TCandidate> beat;
+  final List<TCandidate> tied;
+
+  _CondorcetCandidateProfile(this.candidate, this.lostTo, this.beat, this.tied);
+
+  @override
+  String toString() =>
+      "[ $candidate: Beat: ${beat.length}, Tied: ${tied.length}, Lost to: ${lostTo.length}";
 }

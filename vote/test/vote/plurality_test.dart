@@ -1,6 +1,5 @@
 import 'package:test/test.dart';
-import 'package:vote/src/plurality_ballot.dart';
-import 'package:vote/src/plurality_election.dart';
+import 'package:vote/vote.dart';
 
 void main() {
   test('random vote test', randomVoteTest);

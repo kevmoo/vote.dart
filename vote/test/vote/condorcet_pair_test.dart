@@ -1,6 +1,5 @@
 import 'package:test/test.dart';
-import 'package:vote/src/condorcet_pair.dart';
-import 'package:vote/src/ranked_ballot.dart';
+import 'package:vote/vote.dart';
 
 void main() {
   var c1 = "Can 1";

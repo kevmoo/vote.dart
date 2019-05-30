@@ -1,6 +1,5 @@
 import 'package:test/test.dart';
-import 'package:vote/src/condorcet_election.dart';
-import 'package:vote/src/ranked_ballot.dart';
+import 'package:vote/vote.dart';
 
 void main() {
   test('simple', _sample1);
