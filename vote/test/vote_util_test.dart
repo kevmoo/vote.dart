@@ -9,4 +9,26 @@ void main() {
     expect(majorityThreshold(50), 26);
     expect(majorityThreshold(51), 26);
   });
+
+  group('sorted', () {
+    const items = <List<int>, bool>{
+      []: true,
+      [1]: true,
+      [1, 2]: true,
+      [1, 2, 3]: true,
+      [2, 1]: false,
+      [2, 2]: true,
+      [0, 2, 1]: false,
+    };
+
+    for (var entry in items.entries) {
+      test(entry.key.toString(), () {
+        expect(sorted(entry.key), entry.value);
+      });
+    }
+
+    test('null items throw', () {
+      expect(() => sorted([null]), throwsArgumentError);
+    });
+  });
 }
