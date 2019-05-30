@@ -16,7 +16,7 @@ void _testNoTransfersBetweenEliminated() {
 
   var voter = 1;
 
-  final ballots = List<RankedBallot>();
+  final ballots = <RankedBallot>[];
   for (var i = 0; i < 10; i++) {
     ballots.add(RankedBallot("Voter ${voter++}", [canA]));
   }
@@ -33,7 +33,7 @@ void _testNoTransfersBetweenEliminated() {
     ballots.add(RankedBallot("Voter ${voter++}", [canD, canC]));
   }
 
-  var elec = IrvElection(ballots);
+  final elec = IrvElection(ballots);
 
   expect(elec, isNotNull);
   //expect(elec.singleWinner, equals(canC));
@@ -59,11 +59,11 @@ void _testNoTransfersBetweenEliminated() {
 }
 
 void _testOneCandidate() {
-  var c = "Candidate 1";
-  var v = "Voter 1";
-  var b = RankedBallot(v, [c]);
+  final c = "Candidate 1";
+  final v = "Voter 1";
+  final b = RankedBallot(v, [c]);
 
-  var ce = IrvElection([b]);
+  final ce = IrvElection([b]);
 
   expect(ce, isNotNull);
   //expect(ce.singleWinner, equals(c));
@@ -76,13 +76,13 @@ void _testOneCandidate() {
 }
 
 void _testIceCream() {
-  var canC = "Chocolate";
-  var canCC = "Chocolate Chunk";
-  var canVan = "Vanilla";
+  final canC = "Chocolate";
+  final canCC = "Chocolate Chunk";
+  final canVan = "Vanilla";
 
   var voter = 1;
 
-  var ballots = List<RankedBallot>();
+  final ballots = <RankedBallot>[];
 
   // 29 cc, c, v
   for (var i = 0; i < 29; i++) {
@@ -99,7 +99,7 @@ void _testIceCream() {
     ballots.add(RankedBallot("Voter ${voter++}", [canVan, canC, canCC]));
   }
 
-  var ce = IrvElection(ballots);
+  final ce = IrvElection(ballots);
 
   expect(ce, isNotNull);
   //expect(ce.singleWinner, equals(canC));
@@ -132,30 +132,25 @@ void _testIceCream() {
 void _threeWayTieForFirst() {
   // 1st, 4th, 5th, 7th
   // 3,   1,   2,   1
-  var cA1 = "A1";
-  var cA2 = "A2";
-  var cA3 = "A3";
-  var cB1 = "B1";
-  var cC1 = "C1";
-  var cC2 = "C2";
-  var cD1 = "D1";
+  final cA1 = "A1";
+  final cA2 = "A2";
+  final cA3 = "A3";
+  final cB1 = "B1";
+  final cC1 = "C1";
+  final cC2 = "C2";
+  final cD1 = "D1";
 
   var voter = 1;
 
-  var ballots = List<RankedBallot>();
-
-  ballots.add(
-      RankedBallot("Voter ${voter++}", [cA1, cA2, cA3, cB1, cC1, cC2, cD1]));
-  ballots.add(
-      RankedBallot("Voter ${voter++}", [cA1, cA2, cA3, cB1, cC2, cC1, cD1]));
-  ballots.add(
-      RankedBallot("Voter ${voter++}", [cA2, cA3, cA1, cB1, cC1, cC2, cD1]));
-  ballots.add(
-      RankedBallot("Voter ${voter++}", [cA2, cA3, cA1, cB1, cC2, cC1, cD1]));
-  ballots.add(
-      RankedBallot("Voter ${voter++}", [cA3, cA1, cA2, cB1, cC1, cC2, cD1]));
-  ballots.add(
-      RankedBallot("Voter ${voter++}", [cA3, cA1, cA2, cB1, cC2, cC1, cD1]));
+  final ballots = <RankedBallot>[
+    RankedBallot("Voter ${voter++}", [cA1, cA2, cA3, cB1, cC1, cC2, cD1]),
+    RankedBallot("Voter ${voter++}", [cA1, cA2, cA3, cB1, cC2, cC1, cD1]),
+    RankedBallot("Voter ${voter++}", [cA2, cA3, cA1, cB1, cC1, cC2, cD1]),
+    RankedBallot("Voter ${voter++}", [cA2, cA3, cA1, cB1, cC2, cC1, cD1]),
+    RankedBallot("Voter ${voter++}", [cA3, cA1, cA2, cB1, cC1, cC2, cD1]),
+    RankedBallot("Voter ${voter++}", [cA3, cA1, cA2, cB1, cC2, cC1, cD1]),
+  ];
 
   IrvElection(ballots);
+  // TODO: test something!
 }

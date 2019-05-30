@@ -30,9 +30,9 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
     requireArgument(
         allUnique(voterList), "Only one ballot per voter is allowed");
 
-    var map = Map<CondorcetPair<TVoter, TCandidate>,
-        List<RankedBallot<TVoter, TCandidate>>>();
-    var candidateSet = Set<TCandidate>();
+    final map = <CondorcetPair<TVoter, TCandidate>,
+        List<RankedBallot<TVoter, TCandidate>>>{};
+    final candidateSet = <TCandidate>{};
 
     for (final ballot in ballots) {
       for (var i = 0; i < ballot.rank.length; i++) {
@@ -43,29 +43,30 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
           final pair =
               CondorcetPair<TVoter, TCandidate>(candidateI, ballot.rank[j]);
 
-          final pairBallotList = map.putIfAbsent(
-              pair, () => List<RankedBallot<TVoter, TCandidate>>());
-          pairBallotList.add(ballot);
+          map
+              .putIfAbsent(pair, () => <RankedBallot<TVoter, TCandidate>>[])
+              .add(ballot);
         }
       }
     }
 
-    var set = Set<CondorcetPair<TVoter, TCandidate>>();
+    final set = <CondorcetPair<TVoter, TCandidate>>{};
     map.forEach((k, v) {
-      var c = CondorcetPair<TVoter, TCandidate>(k.candidate1, k.candidate2, v);
+      final c =
+          CondorcetPair<TVoter, TCandidate>(k.candidate1, k.candidate2, v);
       set.add(c);
     });
 
-    var candidateProfiles =
-        Map<TCandidate, _CondorcetCandidateProfile<TCandidate>>();
-    var tarjanMap = Map<TCandidate, Set<TCandidate>>();
+    final candidateProfiles =
+        <TCandidate, _CondorcetCandidateProfile<TCandidate>>{};
+    final tarjanMap = <TCandidate, Set<TCandidate>>{};
 
     for (final candidate in candidateSet) {
-      var lostTo = [];
-      var beat = [];
-      var tied = [];
+      final lostTo = [];
+      final beat = [];
+      final tied = [];
 
-      final tarjanLostTiedSet = Set<TCandidate>();
+      final tarjanLostTiedSet = <TCandidate>{};
 
       for (final pair in set) {
         if (pair.candidate1 == candidate || pair.candidate2 == candidate) {
@@ -86,7 +87,7 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
         }
       }
 
-      var profile = _CondorcetCandidateProfile<TCandidate>(
+      final profile = _CondorcetCandidateProfile<TCandidate>(
           candidate,
           List.unmodifiable(lostTo),
           List.unmodifiable(beat),
@@ -96,11 +97,11 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
       tarjanMap[candidate] = tarjanLostTiedSet;
     }
 
-    var components = stronglyConnectedComponents<TCandidate>(
+    final components = stronglyConnectedComponents<TCandidate>(
         tarjanMap.keys, (node) => tarjanMap[node]);
 
-    var places = List<ElectionPlace<TCandidate>>();
-    int placeNumber = 1;
+    final places = <ElectionPlace<TCandidate>>[];
+    var placeNumber = 1;
     for (final round in components) {
       final place = ElectionPlace<TCandidate>(placeNumber, round);
       places.add(place);
@@ -119,7 +120,7 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
   Iterable<TCandidate> get candidates => _profiles.keys;
 
   CondorcetPair getPair(TCandidate c1, TCandidate c2) {
-    var filter = _pairs.where((p) => p.matches(c1, c2));
+    final filter = _pairs.where((p) => p.matches(c1, c2));
     assert(filter.length <= 1);
     if (filter.isEmpty) {
       return null;

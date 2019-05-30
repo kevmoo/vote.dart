@@ -24,10 +24,10 @@ class IrvElection<TVoter, TCandidate> extends Election<TVoter, TCandidate> {
     final roCandidates =
         List<TCandidate>.unmodifiable(roBallots.expand((b) => b.rank).toSet());
 
-    final rounds = List<IrvRound<TVoter, TCandidate>>();
+    final rounds = <IrvRound<TVoter, TCandidate>>[];
 
     IrvRound<TVoter, TCandidate> round;
-    var eliminatedCandidates = List<TCandidate>();
+    final eliminatedCandidates = <TCandidate>[];
     do {
       round = IrvRound<TVoter, TCandidate>(roBallots, eliminatedCandidates);
       rounds.add(round);

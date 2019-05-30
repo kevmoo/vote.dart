@@ -17,7 +17,7 @@ class CondorcetPair<TVoter, TCandidate extends Comparable> {
     requireArgument(can1 != can2, 'can1 and can2 must be different');
 
     if (can1.compareTo(can2) > 0) {
-      var temp = can2;
+      final temp = can2;
       can2 = can1;
       can1 = temp;
     }
@@ -25,14 +25,15 @@ class CondorcetPair<TVoter, TCandidate extends Comparable> {
     if (bals == null) {
       return CondorcetPair._internal(can1, can2, null, 0, 0);
     } else {
-      var roBallots = List<RankedBallot<TVoter, TCandidate>>.unmodifiable(bals);
+      final roBallots =
+          List<RankedBallot<TVoter, TCandidate>>.unmodifiable(bals);
 
       requireArgument(
           allUnique(roBallots), "Only one ballot per voter is allowed");
 
-      int fos = 0;
-      int sof = 0;
-      roBallots.forEach((b) {
+      var fos = 0;
+      var sof = 0;
+      for (var b in roBallots) {
         final firstIndex = b.rank.indexOf(can1);
         requireArgument(firstIndex >= 0, 'bals');
 
@@ -45,7 +46,7 @@ class CondorcetPair<TVoter, TCandidate extends Comparable> {
         } else {
           sof++;
         }
-      });
+      }
 
       return CondorcetPair._internal(can1, can2, roBallots, fos, sof);
     }
@@ -70,7 +71,7 @@ class CondorcetPair<TVoter, TCandidate extends Comparable> {
     requireArgument(can1 != can2, 'can1 and can2 must be different');
 
     if (can1.compareTo(can2) > 0) {
-      var temp = can2;
+      final temp = can2;
       can2 = can1;
       can1 = temp;
     }
@@ -81,15 +82,15 @@ class CondorcetPair<TVoter, TCandidate extends Comparable> {
   // sometimes it's nice to deal w/ a properly aligned pair
   CondorcetPair<TVoter, TCandidate> flip(TCandidate can1, TCandidate can2) {
     if (candidate1.compareTo(candidate2) > 0) {
-      throw 'already flipped!';
+      throw ArgumentError('already flipped!');
     }
     requireArgumentNotNull(can1, 'can1');
     requireArgumentNotNull(can2, 'can2');
     requireArgument(can1 != can2, 'can1 and can2 must be different');
 
-    bool flipped = false;
+    var flipped = false;
     if (can1.compareTo(can2) > 0) {
-      var temp = can2;
+      final temp = can2;
       can2 = can1;
       can1 = temp;
       flipped = true;

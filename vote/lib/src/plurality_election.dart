@@ -34,12 +34,10 @@ class PluralityElection<TVoter, TCandidate>
     //
     // create a Map of candidates keyed on their vote count
     //
-    var voteCounts = Map<int, List<TCandidate>>();
+    final voteCounts = <int, List<TCandidate>>{};
     void f(TCandidate c, List<PluralityBallot> b) {
-      var count = b.length;
-      List<TCandidate> candidates =
-          voteCounts.putIfAbsent(count, () => List<TCandidate>());
-      candidates.add(c);
+      final count = b.length;
+      voteCounts.putIfAbsent(count, () => <TCandidate>[]).add(c);
     }
 
     group.forEach(f);
@@ -47,15 +45,14 @@ class PluralityElection<TVoter, TCandidate>
     //
     // Now the keys of voteCounts are unique, one for each vote count
     //
-    var ballotCounts = List<int>.from(voteCounts.keys);
+    final ballotCounts = List<int>.from(voteCounts.keys)
+      // NOTE: reverse sorting
+      ..sort((a, b) => b.compareTo(a));
 
-    // NOTE: reverse sorting
-    ballotCounts.sort((a, b) => b.compareTo(a));
-
-    int place = 1;
-    var places = List<PluralityElectionPlace>();
-    for (final int count in ballotCounts) {
-      var p = PluralityElectionPlace(place, voteCounts[count], count);
+    var place = 1;
+    final places = <PluralityElectionPlace>[];
+    for (var count in ballotCounts) {
+      final p = PluralityElectionPlace(place, voteCounts[count], count);
       places.add(p);
       place += p.length;
     }

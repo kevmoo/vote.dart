@@ -23,10 +23,10 @@ class IrvRound<TVoter, TCandidate> {
     List<RankedBallot<TVoter, TCandidate>> ballots,
     List<TCandidate> eliminatedCandidates,
   ) {
-    var cleanedBallots = ballots.map((b) {
-      var pruned = List<TCandidate>.unmodifiable(
+    final cleanedBallots = ballots.map((b) {
+      final pruned = List<TCandidate>.unmodifiable(
           b.rank.toList()..removeWhere(eliminatedCandidates.contains));
-      var winner = pruned.isEmpty ? null : pruned[0];
+      final winner = pruned.isEmpty ? null : pruned[0];
       return _Tuple3<TVoter, TCandidate>(b, pruned, winner);
     });
 
@@ -39,11 +39,11 @@ class IrvRound<TVoter, TCandidate> {
       return candidateAllocations[c].length;
     });
 
-    final placeVotes = voteGroups.keys.toList();
-    // reverse sorting -> most votes first
-    placeVotes.sort((a, b) => b.compareTo(a));
+    final placeVotes = voteGroups.keys.toList()
+      // reverse sorting -> most votes first
+      ..sort((a, b) => b.compareTo(a));
 
-    int placeNumber = 1;
+    var placeNumber = 1;
     final places = List<PluralityElectionPlace<TCandidate>>.unmodifiable(
         placeVotes.map((pv) {
       final vg = voteGroups[pv];
@@ -57,9 +57,9 @@ class IrvRound<TVoter, TCandidate> {
 
     final eliminations = List<IrvElimination<TVoter, TCandidate>>.unmodifiable(
         newlyEliminatedCandidates.map((TCandidate c) {
-      final xfers = Map<TCandidate, List<RankedBallot<TVoter, TCandidate>>>();
+      final xfers = <TCandidate, List<RankedBallot<TVoter, TCandidate>>>{};
 
-      final exhausted = List<RankedBallot<TVoter, TCandidate>>();
+      final exhausted = <RankedBallot<TVoter, TCandidate>>[];
 
       for (var b in cleanedBallots.where((t) => t.winner == c)) {
         final rb = b.ballot;
@@ -71,7 +71,7 @@ class IrvRound<TVoter, TCandidate> {
         } else {
           // #2 gets the transfer
           final runnerUp = pruned.first;
-          xfers.putIfAbsent(runnerUp, () => List()).add(rb);
+          xfers.putIfAbsent(runnerUp, () => []).add(rb);
         }
       }
 
@@ -99,9 +99,9 @@ class IrvRound<TVoter, TCandidate> {
     // duh, I know. Being paranoid.
     assert(places.length >= 2);
 
-    final int totalVotes = places.map((p) {
+    final totalVotes = places.map((p) {
       return p.voteCount * p.length;
-    }).fold(0, (a, b) => a + b);
+    }).fold<int>(0, (a, b) => a + b);
 
     final majorityCount = majorityThreshold(totalVotes);
 
