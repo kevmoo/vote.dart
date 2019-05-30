@@ -11,7 +11,7 @@ class CondorcetPair<TVoter, TCandidate extends Comparable> {
       this.firstOverSecond, this.secondOverFirst);
 
   factory CondorcetPair(TCandidate can1, TCandidate can2,
-      [Iterable<RankedBallot<TVoter, TCandidate>> bals]) {
+      [Iterable<RankedBallot<TVoter, TCandidate>> ballots]) {
     requireArgumentNotNull(can1, 'can1');
     requireArgumentNotNull(can2, 'can2');
     requireArgument(can1 != can2, 'can1 and can2 must be different');
@@ -22,11 +22,11 @@ class CondorcetPair<TVoter, TCandidate extends Comparable> {
       can1 = temp;
     }
 
-    if (bals == null) {
+    if (ballots == null) {
       return CondorcetPair._internal(can1, can2, null, 0, 0);
     } else {
       final roBallots =
-          List<RankedBallot<TVoter, TCandidate>>.unmodifiable(bals);
+          List<RankedBallot<TVoter, TCandidate>>.unmodifiable(ballots);
 
       requireArgument(
           allUnique(roBallots), 'Only one ballot per voter is allowed');

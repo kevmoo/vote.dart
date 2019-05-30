@@ -5,7 +5,7 @@ void main() {
   test('random vote test', randomVoteTest);
   test('Plurality Election Hates Double Votes',
       testPluralityElectionHatesDoubleVotes);
-  test('tied for 1st', testTiedforFirst);
+  test('tied for 1st', testTiedForFirst);
   test('single vote, single winner', testSingleVoteSingleWinner);
 }
 
@@ -39,7 +39,7 @@ void testSingleVoteSingleWinner() {
   expect(firstPlace[0], equals(c1));
 }
 
-void testTiedforFirst() {
+void testTiedForFirst() {
   final c1 = "candidate 1";
   final c2 = "candidate 2";
   final c3 = "candidate 3";

@@ -10,7 +10,7 @@ class IrvElimination<TVoter, TCandidate> {
         assert(_transfers != null),
         assert(exhausted != null);
 
-  Iterable<TCandidate> get transferedCandidates => _transfers.keys;
+  Iterable<TCandidate> get transferredCandidates => _transfers.keys;
 
   int getTransferCount(TCandidate key) {
     final list = _transfers[key];

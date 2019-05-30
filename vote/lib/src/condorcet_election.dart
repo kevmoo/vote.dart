@@ -59,14 +59,14 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
 
     final candidateProfiles =
         <TCandidate, _CondorcetCandidateProfile<TCandidate>>{};
-    final tarjanMap = <TCandidate, Set<TCandidate>>{};
+    final candidateMap = <TCandidate, Set<TCandidate>>{};
 
     for (final candidate in candidateSet) {
       final lostTo = [];
       final beat = [];
       final tied = [];
 
-      final tarjanLostTiedSet = <TCandidate>{};
+      final lostTiedSet = <TCandidate>{};
 
       for (final pair in set) {
         if (pair.candidate1 == candidate || pair.candidate2 == candidate) {
@@ -76,13 +76,13 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
 
           if (pair.isTie) {
             tied.add(other);
-            tarjanLostTiedSet.add(other);
+            lostTiedSet.add(other);
           } else if (pair.winner == candidate) {
             beat.add(other);
           } else {
             assert(pair.winner == other);
             lostTo.add(other);
-            tarjanLostTiedSet.add(other);
+            lostTiedSet.add(other);
           }
         }
       }
@@ -94,11 +94,11 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
           List.unmodifiable(tied));
       candidateProfiles[candidate] = profile;
 
-      tarjanMap[candidate] = tarjanLostTiedSet;
+      candidateMap[candidate] = lostTiedSet;
     }
 
     final components = stronglyConnectedComponents<TCandidate>(
-        tarjanMap.keys, (node) => tarjanMap[node]);
+        candidateMap.keys, (node) => candidateMap[node]);
 
     final places = <ElectionPlace<TCandidate>>[];
     var placeNumber = 1;

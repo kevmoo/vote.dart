@@ -57,7 +57,7 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
 
     final eliminations = List<IrvElimination<TVoter, TCandidate>>.unmodifiable(
         newlyEliminatedCandidates.map((TCandidate c) {
-      final xfers = <TCandidate, List<RankedBallot<TVoter, TCandidate>>>{};
+      final transfers = <TCandidate, List<RankedBallot<TVoter, TCandidate>>>{};
 
       final exhausted = <RankedBallot<TVoter, TCandidate>>[];
 
@@ -71,12 +71,12 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
         } else {
           // #2 gets the transfer
           final runnerUp = pruned.first;
-          xfers.putIfAbsent(runnerUp, () => []).add(rb);
+          transfers.putIfAbsent(runnerUp, () => []).add(rb);
         }
       }
 
       return IrvElimination<TVoter, TCandidate>(
-          c, xfers, List.unmodifiable(exhausted));
+          c, transfers, List.unmodifiable(exhausted));
     }));
 
     return IrvRound<TVoter, TCandidate>._internal(places, eliminations);
@@ -111,7 +111,7 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
     //
     // 2 or more 'places'
     // unless
-    // a) first place is single candiadate
+    // a) first place is single candidate
     // b) first place votes > (0.5 * total + 1)
     if (places[0].length == 1 && places[0].voteCount >= majorityCount) {
       return [];

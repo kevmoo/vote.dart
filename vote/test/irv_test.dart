@@ -18,29 +18,29 @@ void main() {
       for (var i = 0; i < 2; i++) RankedBallot("Voter ${voter++}", [canD, canC])
     ];
 
-    final elec = IrvElection(ballots);
+    final election = IrvElection(ballots);
 
-    expect(elec, isNotNull);
-    //expect(elec.singleWinner, equals(canC));
-    expect(elec.candidates, unorderedEquals([canA, canB, canC, canD]));
-    expect(elec.ballots, unorderedEquals(ballots));
+    expect(election, isNotNull);
+    //expect(election.singleWinner, equals(canC));
+    expect(election.candidates, unorderedEquals([canA, canB, canC, canD]));
+    expect(election.ballots, unorderedEquals(ballots));
 
-    expect(elec.rounds.length, 2);
+    expect(election.rounds.length, 2);
 
-    final firstRound = elec.rounds.first;
+    final firstRound = election.rounds.first;
     expect(firstRound.eliminatedCandidates, unorderedEquals([canC, canD]));
 
-    final elimC = firstRound.eliminationForCandidate(canC);
-    expect(elimC.getTransferCount(canA), 0);
-    expect(elimC.getTransferCount(canB), 0);
-    expect(elimC.getTransferCount(canC), 0);
-    expect(elimC.getTransferCount(canD), 0);
+    final eliminationC = firstRound.eliminationForCandidate(canC);
+    expect(eliminationC.getTransferCount(canA), 0);
+    expect(eliminationC.getTransferCount(canB), 0);
+    expect(eliminationC.getTransferCount(canC), 0);
+    expect(eliminationC.getTransferCount(canD), 0);
 
-    final elimD = firstRound.eliminationForCandidate(canD);
-    expect(elimD.getTransferCount(canA), 0);
-    expect(elimD.getTransferCount(canB), 0);
-    expect(elimD.getTransferCount(canC), 0);
-    expect(elimD.getTransferCount(canD), 0);
+    final eliminationD = firstRound.eliminationForCandidate(canD);
+    expect(eliminationD.getTransferCount(canA), 0);
+    expect(eliminationD.getTransferCount(canB), 0);
+    expect(eliminationD.getTransferCount(canC), 0);
+    expect(eliminationD.getTransferCount(canD), 0);
   });
 
   test('one candidate', () {
@@ -130,7 +130,7 @@ void main() {
 
     final firstElimination = firstRound.eliminations.single;
     expect(firstElimination.candidate, canCC);
-    expect(firstElimination.transferedCandidates, unorderedEquals([canC]));
+    expect(firstElimination.transferredCandidates, unorderedEquals([canC]));
     expect(firstElimination.getTransferCount(canC), 29);
 
     /*
