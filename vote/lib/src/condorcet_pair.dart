@@ -20,9 +20,9 @@ class CondorcetPair<TVoter, TCandidate extends Comparable> {
 
   factory CondorcetPair(TCandidate can1, TCandidate can2,
       [List<RankedBallot<TVoter, TCandidate>> ballots]) {
-    requireArgumentNotNull(can1, 'can1');
-    requireArgumentNotNull(can2, 'can2');
-    requireArgument(can1 != can2, 'can1 and can2 must be different');
+    assert(can1 != null, 'can1');
+    assert(can2 != null, 'can2');
+    assert(can1 != can2, 'can1 and can2 must be different');
 
     if (can1.compareTo(can2) > 0) {
       final temp = can2;
@@ -33,17 +33,16 @@ class CondorcetPair<TVoter, TCandidate extends Comparable> {
     if (ballots == null) {
       return CondorcetPair._internal(can1, can2, null, 0, 0);
     } else {
-      requireArgument(
-          allUnique(ballots), 'Only one ballot per voter is allowed');
+      assert(allUnique(ballots), 'Only one ballot per voter is allowed');
 
       var fos = 0;
       var sof = 0;
       for (var b in ballots) {
         final firstIndex = b.rank.indexOf(can1);
-        requireArgument(firstIndex >= 0, 'bals');
+        assert(firstIndex >= 0, 'bals');
 
         final secondIndex = b.rank.indexOf(can2);
-        requireArgument(secondIndex >= 0, 'bals');
+        assert(secondIndex >= 0, 'bals');
 
         assert(firstIndex != secondIndex);
         if (firstIndex < secondIndex) {
@@ -71,9 +70,9 @@ class CondorcetPair<TVoter, TCandidate extends Comparable> {
   bool get isTie => firstOverSecond == secondOverFirst;
 
   bool matches(TCandidate can1, TCandidate can2) {
-    requireArgumentNotNull(can1, 'can1');
-    requireArgumentNotNull(can2, 'can2');
-    requireArgument(can1 != can2, 'can1 and can2 must be different');
+    assert(can1 != null, 'can1');
+    assert(can2 != null, 'can2');
+    assert(can1 != can2, 'can1 and can2 must be different');
 
     if (can1.compareTo(can2) > 0) {
       final temp = can2;
@@ -89,9 +88,9 @@ class CondorcetPair<TVoter, TCandidate extends Comparable> {
     if (candidate1.compareTo(candidate2) > 0) {
       throw ArgumentError('already flipped!');
     }
-    requireArgumentNotNull(can1, 'can1');
-    requireArgumentNotNull(can2, 'can2');
-    requireArgument(can1 != can2, 'can1 and can2 must be different');
+    assert(can1 != null, 'can1');
+    assert(can2 != null, 'can2');
+    assert(can1 != can2, 'can1 and can2 must be different');
 
     var flipped = false;
     if (can1.compareTo(can2) > 0) {
@@ -101,8 +100,8 @@ class CondorcetPair<TVoter, TCandidate extends Comparable> {
       flipped = true;
     }
 
-    requireArgument(can1 == candidate1, 'can1');
-    requireArgument(can2 == candidate2, 'can1');
+    assert(can1 == candidate1, 'can1');
+    assert(can2 == candidate2, 'can1');
 
     if (flipped) {
       return CondorcetPair._internal(

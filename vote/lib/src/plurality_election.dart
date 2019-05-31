@@ -22,8 +22,7 @@ class PluralityElection<TVoter, TCandidate extends Comparable>
   factory PluralityElection(List<PluralityBallot<TVoter, TCandidate>> ballots) {
     // Check voter uniqueness
     final voterList = ballots.map((pb) => pb.voter).toList(growable: false);
-    requireArgument(
-        allUnique(voterList), 'Only one ballot per voter is allowed');
+    assert(allUnique(voterList), 'Only one ballot per voter is allowed');
 
     final group = groupBy<PluralityBallot<TVoter, TCandidate>, TCandidate>(
         ballots, (pb) => pb.choice);

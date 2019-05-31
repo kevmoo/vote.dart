@@ -1,6 +1,8 @@
 import 'package:test/test.dart';
 import 'package:vote/vote.dart';
 
+import 'test_util.dart';
+
 void main() {
   test('random vote test', () {
     final c1 = "candidate 1";
@@ -22,7 +24,7 @@ void main() {
 
     expect(() {
       PluralityElection(ballots);
-    }, throwsArgumentError);
+    }, throwsAssertionError);
   });
 
   test('tied for 1st', () {

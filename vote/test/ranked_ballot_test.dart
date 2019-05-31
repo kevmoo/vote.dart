@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 import 'package:vote/vote.dart';
 
-final throwsAssertionError = throwsA(isA<AssertionError>());
+import 'test_util.dart';
 
 void main() {
   final v2 = "voter2";

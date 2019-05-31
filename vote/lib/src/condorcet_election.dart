@@ -23,8 +23,7 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
   factory CondorcetElection(List<RankedBallot<TVoter, TCandidate>> ballots) {
     // Check voter uniqueness
     final voterList = ballots.map((b) => b.voter).toList(growable: false);
-    requireArgument(
-        allUnique(voterList), 'Only one ballot per voter is allowed');
+    assert(allUnique(voterList), 'Only one ballot per voter is allowed');
 
     final map = <CondorcetPair<TVoter, TCandidate>,
         List<RankedBallot<TVoter, TCandidate>>>{};

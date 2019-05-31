@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 
 @immutable
-class Ballot<TVoter> {
+abstract class Ballot<TVoter> {
   final TVoter voter;
 
   const Ballot(this.voter);

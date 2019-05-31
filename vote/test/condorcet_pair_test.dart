@@ -1,6 +1,8 @@
 import 'package:test/test.dart';
 import 'package:vote/vote.dart';
 
+import 'test_util.dart';
+
 void main() {
   final c1 = "Can 1";
   final c2 = "Can 2";
@@ -10,7 +12,7 @@ void main() {
   test('no dupe candidates', () {
     expect(() {
       CondorcetPair(c1, c1);
-    }, throwsArgumentError);
+    }, throwsAssertionError);
   });
 
   test('no dupe ballots ~~ dupe voters', () {
@@ -18,7 +20,7 @@ void main() {
     final b2 = RankedBallot(v1, [c1, c2]);
     expect(() {
       CondorcetPair(c1, c2, [b1, b2]);
-    }, throwsArgumentError);
+    }, throwsAssertionError);
   });
 
   test('must have a rank for both candidates', () {
@@ -26,10 +28,11 @@ void main() {
     final b2 = RankedBallot(v1, [c2]);
     expect(() {
       CondorcetPair(c1, c2, [b1]);
-    }, throwsArgumentError);
+    }, throwsAssertionError);
+
     expect(() {
       CondorcetPair(c1, c2, [b2]);
-    }, throwsArgumentError);
+    }, throwsAssertionError);
   });
 
   test('one ballot is cool', () {
