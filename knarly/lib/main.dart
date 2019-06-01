@@ -1,8 +1,14 @@
 import 'package:flutter_web/material.dart';
+import 'package:knarly/src/model.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(MyApp());
+import 'src/vote_town_widget.dart';
+
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp();
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) => MaterialApp(
@@ -10,49 +16,13 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      );
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) =>
-      // The Flutter framework has been optimized to make rerunning build methods
-      // fast, so that you can just rebuild anything that needs updating rather
-      // than having to individually change instances of widgets.
-      Scaffold(
-        appBar: AppBar(
-          title: Text(title),
+        home: const MultiProvider(
+          providers: [
+            Provider<VoteTown>(builder: _voteTownBuilder),
+          ],
+          child: Center(child: VoteTownWidget()),
         ),
-        body: Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
-          child: Column(
-            // Column is also layout widget. It takes a list of children and
-            // arranges them vertically. By default, it sizes itself to fit its
-            // children horizontally, and tries to be as tall as its parent.
-            //
-            // Invoke "debug painting" (choose the "Toggle Debug Paint" action
-            // from the Flutter Inspector in Android Studio, or the "Toggle Debug
-            // Paint" command in Visual Studio Code) to see the wireframe for each
-            // widget.
-            //
-            // Column has various properties to control how it sizes itself and
-            // how it positions its children. Here we use mainAxisAlignment to
-            // center the children vertically; the main axis here is the vertical
-            // axis because Columns are vertical (the cross axis would be
-            // horizontal).
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const <Widget>[
-              Text(
-                'Hello, World!',
-              ),
-            ],
-          ),
-        ), // This trailing comma makes auto-formatting nicer for build methods.
       );
 }
+
+VoteTown _voteTownBuilder(_) => VoteTown.random();
