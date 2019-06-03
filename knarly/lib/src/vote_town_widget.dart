@@ -4,13 +4,17 @@ import 'package:provider/provider.dart';
 
 import 'model.dart';
 
+const _targetSize = Size(400, 400);
+
 class VoteTownWidget extends StatelessWidget {
   const VoteTownWidget();
 
   @override
   Widget build(BuildContext context) => CustomPaint(
         painter: _VoteTownPainter(Provider.of<VoteTown>(context)),
-        size: const Size(400, 400),
+        size: _targetSize,
+        isComplex: true,
+        willChange: true,
       );
 }
 
@@ -26,7 +30,17 @@ class _VoteTownPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final rect = Rect.fromLTWH(0, 0, size.width, size.height);
+    final xPaintOffset =
+        size.width <= _targetSize.width ? 0 : size.width - _targetSize.width;
+    final yPaintOffset = size.height <= _targetSize.height
+        ? 0
+        : size.height - _targetSize.height;
+
+    if (xPaintOffset != 0 || yPaintOffset != 0) {
+      canvas.translate(xPaintOffset / 2, yPaintOffset / 2);
+    }
+
+    final rect = Rect.fromLTWH(0, 0, _targetSize.width, _targetSize.height);
 
     canvas.drawRect(rect, _backgroundPaint);
 
