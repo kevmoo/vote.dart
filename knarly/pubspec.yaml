@@ -8,6 +8,8 @@ dependencies:
   flutter_web: any
   flutter_web_ui: any
   provider: any
+  vote:
+    path: ../vote
 
 dev_dependencies:
   build_runner: ^1.4.0

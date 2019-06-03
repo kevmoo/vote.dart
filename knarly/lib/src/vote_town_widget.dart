@@ -1,4 +1,5 @@
-import 'package:flutter_web/material.dart';
+import 'package:flutter_web/material.dart' hide TextStyle;
+import 'package:flutter_web_ui/ui.dart';
 import 'package:provider/provider.dart';
 
 import 'model.dart';
@@ -14,7 +15,8 @@ class VoteTownWidget extends StatelessWidget {
 }
 
 final _voterPaint = Paint()..color = Colors.blue;
-final _candidatePaint = Paint()..color = Colors.red;
+final _candidatePaint = Paint()
+  ..color = const Color.fromARGB(255, 255, 102, 102);
 final _backgroundPaint = Paint()..color = const Color.fromARGB(12, 0, 0, 0);
 
 class _VoteTownPainter extends CustomPainter {
@@ -28,15 +30,39 @@ class _VoteTownPainter extends CustomPainter {
 
     canvas.drawRect(rect, _backgroundPaint);
 
-    const radius = 10.0;
-
-    for (var candidate in _voteTown.candidates) {
-      canvas.drawCircle(
-          candidate.location.toOffset() * 4, radius * 2, _candidatePaint);
-    }
+    const offsetMultiplier = 4.0;
+    const radius = 2.5 * offsetMultiplier;
 
     for (var voter in _voteTown.voters) {
-      canvas.drawCircle(voter.location.toOffset() * 4, radius, _voterPaint);
+      canvas.drawCircle(
+          voter.location.toOffset() * offsetMultiplier, radius, _voterPaint);
+    }
+
+    for (var candidate in _voteTown.candidates) {
+      final center = candidate.location.toOffset() * offsetMultiplier;
+      canvas.drawCircle(center, radius * 2, _candidatePaint);
+
+      final pb = ParagraphBuilder(
+        ParagraphStyle(
+          textAlign: TextAlign.center,
+          fontSize: radius * 2,
+        ),
+      )
+        ..pushStyle(
+          TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        )
+        ..addText(candidate.id);
+
+      const candidateParagraphConstraints =
+          ParagraphConstraints(width: radius * 4);
+
+      final paragraph = pb.build()..layout(candidateParagraphConstraints);
+
+      canvas.drawParagraph(
+          paragraph, center - const Offset(radius * 2, radius * 1.2));
     }
   }
 
