@@ -16,11 +16,21 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const MultiProvider(
-          providers: [
+        home: MultiProvider(
+          providers: const [
             Provider<VoteTown>(builder: _voteTownBuilder),
           ],
-          child: Center(child: VoteTownWidget()),
+          child: GridView.extent(
+            primary: false,
+            padding: const EdgeInsets.all(20.0),
+            mainAxisSpacing: 10.0,
+            crossAxisSpacing: 10.0,
+            maxCrossAxisExtent: 500,
+            children: const [
+              VoteTownWidget(),
+              Placeholder(),
+            ],
+          ),
         ),
       );
 }
