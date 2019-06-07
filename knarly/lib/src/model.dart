@@ -18,6 +18,9 @@ class Sim<T extends Comparable> implements Comparable<Sim<T>> {
 
   @override
   int compareTo(Sim<T> other) => id.compareTo(other.id);
+
+  @override
+  String toString() => 'Sim($id)';
 }
 
 class VoteTown {
@@ -68,7 +71,10 @@ class VoteTown {
     return VoteTown(votes, candidates);
   }
 
-  List<VoteTownDistancePlace> get places => VoteTownDistancePlace.create(this);
+  List<VoteTownDistancePlace> _places;
+
+  List<VoteTownDistancePlace> get places =>
+      _places ??= VoteTownDistancePlace.create(this);
 }
 
 class VoteTownDistancePlace extends ElectionPlace<Sim<String>> {
@@ -100,6 +106,7 @@ class VoteTownDistancePlace extends ElectionPlace<Sim<String>> {
       final placeValue = place;
       place += e.value.length;
       return VoteTownDistancePlace._(e.key, placeValue, e.value);
-    }).toList(growable: false);
+    }).toList(growable: false)
+      ..sort((a, b) => a.averageDistance.compareTo(b.averageDistance));
   }
 }
