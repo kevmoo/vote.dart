@@ -2,6 +2,7 @@ import 'package:flutter_web/material.dart';
 import 'package:knarly/src/model.dart';
 import 'package:provider/provider.dart';
 
+import 'src/distance_election_result_widget.dart';
 import 'src/vote_town_widget.dart';
 
 void main() => runApp(const MyApp());
@@ -16,20 +17,22 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: MultiProvider(
-          providers: const [
-            Provider<VoteTown>(builder: _voteTownBuilder),
-          ],
-          child: GridView.extent(
-            primary: false,
-            padding: const EdgeInsets.all(20.0),
-            mainAxisSpacing: 10.0,
-            crossAxisSpacing: 10.0,
-            maxCrossAxisExtent: 500,
-            children: const [
-              VoteTownWidget(),
-              Placeholder(),
+        home: Scaffold(
+          body: MultiProvider(
+            providers: const [
+              Provider<VoteTown>(builder: _voteTownBuilder),
             ],
+            child: GridView.extent(
+              primary: false,
+              padding: const EdgeInsets.all(20.0),
+              mainAxisSpacing: 10.0,
+              crossAxisSpacing: 10.0,
+              maxCrossAxisExtent: 500,
+              children: const [
+                VoteTownWidget(),
+                DistanceElectionResultWidget(),
+              ],
+            ),
           ),
         ),
       );
