@@ -35,10 +35,11 @@ class VoteTown {
   factory VoteTown.random({int candidateCount = 5}) {
     candidateCount ??= 5;
     assert(candidateCount > 0);
+    assert(candidateCount < 2 * _across);
 
     final rnd = math.Random();
 
-    final votes = [
+    final voters = [
       for (var y = 0; y < _across; y++)
         for (var x = 0; x < _across; x++)
           Sim(
@@ -58,17 +59,22 @@ class VoteTown {
           _across * _spacing / 2,
         ),
       ),
-      for (var i = 1; i < candidateCount; i++)
-        Sim(
-          (candidateNumber++).toString(),
-          Point(
-            rnd.nextDouble() * _across * _spacing,
-            rnd.nextDouble() * _across * _spacing,
-          ),
-        ),
     ];
 
-    return VoteTown(votes, candidates);
+    while (candidates.length < candidateCount) {
+      Point point;
+
+      do {
+        point = Point(
+          _spacing + rnd.nextInt(_across - 1) * _spacing,
+          _spacing + rnd.nextInt(_across - 1) * _spacing,
+        );
+      } while (candidates.indexWhere((s) => s.location == point) >= 0);
+
+      candidates.add(Sim((candidateNumber++).toString(), point));
+    }
+
+    return VoteTown(voters, candidates);
   }
 
   List<VoteTownDistancePlace> _places;
