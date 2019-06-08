@@ -21,7 +21,6 @@ class VoteTownWidget extends StatelessWidget {
 final _voterPaint = Paint()..color = Colors.blue;
 final _candidatePaint = Paint()
   ..color = const Color.fromARGB(255, 255, 102, 102);
-final _backgroundPaint = Paint()..color = const Color.fromARGB(12, 0, 0, 0);
 
 class _VoteTownPainter extends CustomPainter {
   final VoteTown _voteTown;
@@ -30,10 +29,6 @@ class _VoteTownPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final rect = Rect.fromLTWH(0, 0, size.width, size.height);
-
-    canvas.drawRect(rect, _backgroundPaint);
-
     final smallerDimension = math.min(size.height, size.width);
 
     final offsetMultiplier = smallerDimension / 100;
