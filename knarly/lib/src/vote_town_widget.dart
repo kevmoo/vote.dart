@@ -1,10 +1,10 @@
+import 'dart:math' as math;
+
 import 'package:flutter_web/material.dart' hide TextStyle;
 import 'package:flutter_web_ui/ui.dart';
 import 'package:provider/provider.dart';
 
 import 'model.dart';
-
-const _targetSize = Size(400, 400);
 
 class VoteTownWidget extends StatelessWidget {
   const VoteTownWidget();
@@ -12,7 +12,7 @@ class VoteTownWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => CustomPaint(
         painter: _VoteTownPainter(Provider.of<VoteTown>(context)),
-        size: _targetSize,
+        size: const Size(400, 400),
         isComplex: true,
         willChange: true,
       );
@@ -30,22 +30,14 @@ class _VoteTownPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final xPaintOffset =
-        size.width <= _targetSize.width ? 0 : size.width - _targetSize.width;
-    final yPaintOffset = size.height <= _targetSize.height
-        ? 0
-        : size.height - _targetSize.height;
-
-    if (xPaintOffset != 0 || yPaintOffset != 0) {
-      canvas.translate(xPaintOffset / 2, yPaintOffset / 2);
-    }
-
-    final rect = Rect.fromLTWH(0, 0, _targetSize.width, _targetSize.height);
+    final rect = Rect.fromLTWH(0, 0, size.width, size.height);
 
     canvas.drawRect(rect, _backgroundPaint);
 
-    const offsetMultiplier = 4.0;
-    const radius = 2.5 * offsetMultiplier;
+    final smallerDimension = math.min(size.height, size.width);
+
+    final offsetMultiplier = smallerDimension / 100;
+    final radius = 2.5 * offsetMultiplier;
 
     for (var voter in _voteTown.voters) {
       canvas.drawCircle(
@@ -70,13 +62,13 @@ class _VoteTownPainter extends CustomPainter {
         )
         ..addText(candidate.id);
 
-      const candidateParagraphConstraints =
+      final candidateParagraphConstraints =
           ParagraphConstraints(width: radius * 4);
 
       final paragraph = pb.build()..layout(candidateParagraphConstraints);
 
       canvas.drawParagraph(
-          paragraph, center - const Offset(radius * 2, radius * 1.2));
+          paragraph, center - Offset(radius * 2, radius * 1.2));
     }
   }
 
