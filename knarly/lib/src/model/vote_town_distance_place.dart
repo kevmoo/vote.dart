@@ -26,14 +26,16 @@ class VoteTownDistancePlace extends ElectionPlace<Sim<String>> {
                 .roundToDouble() /
             town.voters.length);
 
-    final groups = groupBy(distances.keys, (key) => distances[key]);
+    final groups = groupBy(distances.keys, (key) => distances[key])
+        .entries
+        .toList(growable: false)
+          ..sort((a, b) => a.key.compareTo(b.key));
 
     var place = 1;
-    return groups.entries.map((e) {
+    return groups.map((e) {
       final placeValue = place;
       place += e.value.length;
       return VoteTownDistancePlace._(e.key, placeValue, e.value);
-    }).toList(growable: false)
-      ..sort((a, b) => a.averageDistance.compareTo(b.averageDistance));
+    }).toList(growable: false);
   }
 }
