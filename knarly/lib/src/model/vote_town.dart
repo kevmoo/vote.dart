@@ -5,6 +5,8 @@ import 'package:flutter_web_ui/ui.dart';
 import 'sim.dart';
 import 'vote_town_distance_place.dart';
 
+const _capitalACharCode = 65;
+
 class VoteTown {
   static const _across = 10;
   static const _spacing = 10.0;
@@ -18,6 +20,7 @@ class VoteTown {
     candidateCount ??= 5;
     assert(candidateCount > 0);
     assert(candidateCount < 2 * _across);
+    assert(candidateCount <= 26);
 
     final rnd = math.Random();
 
@@ -32,10 +35,13 @@ class VoteTown {
               )),
     ];
 
-    var candidateNumber = 1;
+    var candidateNumber = 0;
+    String nextCandidate() =>
+        String.fromCharCode(_capitalACharCode + candidateNumber++);
+
     final candidates = [
       Sim(
-        (candidateNumber++).toString(),
+        nextCandidate(),
         const Point(
           _across * _spacing / 2,
           _across * _spacing / 2,
@@ -53,7 +59,7 @@ class VoteTown {
         );
       } while (candidates.indexWhere((s) => s.location == point) >= 0);
 
-      candidates.add(Sim((candidateNumber++).toString(), point));
+      candidates.add(Sim(nextCandidate(), point));
     }
 
     return VoteTown(voters, candidates);
