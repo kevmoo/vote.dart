@@ -39,18 +39,33 @@ class _VoteTownPainter extends CustomPainter {
 
     for (var candidate in _voteTown.candidates) {
       final center = candidate.location.toOffset() * offsetMultiplier;
-      canvas.drawCircle(center, radius * 2, Paint()..color = candidate.color);
+
+      canvas
+        ..drawCircle(
+          center,
+          radius * 2,
+          Paint()
+            ..color = candidate.color
+            ..style = PaintingStyle.fill,
+        )
+        ..drawCircle(
+          center,
+          radius * 2,
+          Paint()
+            ..color = Colors.black.withAlpha(128)
+            ..style = PaintingStyle.stroke,
+        );
 
       final pb = ParagraphBuilder(
         ParagraphStyle(
           textAlign: TextAlign.center,
-          fontSize: radius * 2,
+          fontSize: radius * 2.5,
         ),
       )
         ..pushStyle(
           TextStyle(
             color: Colors.black,
-            fontWeight: FontWeight.bold,
+            //fontWeight: FontWeight.bold,
           ),
         )
         ..addText(candidate.id);
@@ -61,7 +76,7 @@ class _VoteTownPainter extends CustomPainter {
       final paragraph = pb.build()..layout(candidateParagraphConstraints);
 
       canvas.drawParagraph(
-          paragraph, center - Offset(radius * 2, radius * 1.2));
+          paragraph, center - Offset(radius * 2, radius * 1.5));
     }
   }
 

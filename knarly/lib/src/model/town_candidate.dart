@@ -17,7 +17,7 @@ class TownCandidate implements Sim<String> {
   TownCandidate(int index, this.location)
       : assert(index >= 0),
         assert(index < _maxCandidateCount),
-        color = HslColor(_candidateHues[index], 1, 0.75).toRgb(),
+        color = HslColor(_candidateHues[index], 1, 0.8).toRgb(),
         id = String.fromCharCode(index + _capitalACharCode);
 
   @override
