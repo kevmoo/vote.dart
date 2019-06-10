@@ -63,10 +63,10 @@ class VoteTown {
     return VoteTown(voters, candidates);
   }
 
-  List<VoteTownDistancePlace> _places;
+  List<VoteTownDistancePlace> _distancePlaces;
 
-  List<VoteTownDistancePlace> get places =>
-      _places ??= VoteTownDistancePlace.create(this);
+  List<VoteTownDistancePlace> get distancePlaces =>
+      _distancePlaces ??= VoteTownDistancePlace.create(this);
 
   List<RankedBallot<Sim<int>, TownCandidate>> _ballots;
 

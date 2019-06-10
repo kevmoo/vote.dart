@@ -18,9 +18,9 @@ class DistanceElectionResultWidget extends StatelessWidget {
             builder: (context, voteTown, _) => ListView.builder(
                   shrinkWrap: true,
                   padding: const EdgeInsets.all(8.0),
-                  itemCount: voteTown.places.length,
+                  itemCount: voteTown.distancePlaces.length,
                   itemBuilder: (ctx, index) {
-                    final entry = voteTown.places[index];
+                    final entry = voteTown.distancePlaces[index];
                     return Container(
                       color: entry.length == 1 ? entry.single.color : null,
                       child: Row(children: [
