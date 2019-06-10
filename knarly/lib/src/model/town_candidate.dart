@@ -1,17 +1,14 @@
 import 'package:flutter_web_ui/ui.dart';
 
 import '../hsl_color.dart';
-import 'sim.dart';
 
-class TownCandidate implements Sim<String> {
+class TownCandidate implements Comparable<TownCandidate> {
   static const _capitalACharCode = 65;
 
-  @override
   final String id;
 
   final Color color;
 
-  @override
   final Point location;
 
   TownCandidate(int index, this.location)
@@ -21,7 +18,7 @@ class TownCandidate implements Sim<String> {
         id = String.fromCharCode(index + _capitalACharCode);
 
   @override
-  int compareTo(Sim<String> other) => id.compareTo(other.id);
+  int compareTo(TownCandidate other) => id.compareTo(other.id);
 
   @override
   bool operator ==(other) => other is TownCandidate && id == other.id;

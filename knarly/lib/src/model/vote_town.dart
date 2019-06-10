@@ -3,8 +3,8 @@ import 'dart:math' as math;
 import 'package:flutter_web_ui/ui.dart';
 import 'package:vote/vote.dart';
 
-import 'sim.dart';
 import 'town_candidate.dart';
+import 'town_voter.dart';
 import 'vote_town_distance_place.dart';
 
 final _rnd = math.Random(2);
@@ -13,7 +13,7 @@ class VoteTown {
   static const _across = 10;
   static const _spacing = 10.0;
 
-  final List<Sim<int>> voters;
+  final List<TownVoter> voters;
   final List<TownCandidate> candidates;
 
   VoteTown(this.voters, this.candidates);
@@ -27,7 +27,7 @@ class VoteTown {
     final voters = [
       for (var y = 0; y < _across; y++)
         for (var x = 0; x < _across; x++)
-          Sim(
+          TownVoter(
               x + y * _across,
               Point(
                 _spacing / 2 + x * _spacing,
@@ -68,9 +68,9 @@ class VoteTown {
   List<VoteTownDistancePlace> get distancePlaces =>
       _distancePlaces ??= VoteTownDistancePlace.create(this);
 
-  List<RankedBallot<Sim<int>, TownCandidate>> _ballots;
+  List<RankedBallot<TownVoter, TownCandidate>> _ballots;
 
-  List<RankedBallot<Sim<int>, TownCandidate>> get ballots =>
+  List<RankedBallot<TownVoter, TownCandidate>> get ballots =>
       _ballots ??= voters.map((v) {
         final rankedCandidates = candidates.toList(growable: false)
           ..sort((a, b) {
@@ -86,11 +86,11 @@ class VoteTown {
             }
             return value;
           });
-        return RankedBallot<Sim<int>, TownCandidate>(v, rankedCandidates);
+        return RankedBallot<TownVoter, TownCandidate>(v, rankedCandidates);
       }).toList(growable: false);
 
-  PluralityElection<Sim<int>, TownCandidate> _pluralityElection;
+  PluralityElection<TownVoter, TownCandidate> _pluralityElection;
 
-  PluralityElection<Sim<int>, TownCandidate> get pluralityElection =>
+  PluralityElection<TownVoter, TownCandidate> get pluralityElection =>
       _pluralityElection ??= PluralityElection(ballots);
 }

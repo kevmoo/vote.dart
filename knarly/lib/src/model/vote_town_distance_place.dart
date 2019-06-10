@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:vote/vote.dart';
 
-import 'sim.dart';
 import 'town_candidate.dart';
 import 'vote_town.dart';
 
@@ -22,7 +21,7 @@ class VoteTownDistancePlace extends ElectionPlace<TownCandidate> {
                     0,
                     (value, voter) =>
                         value +
-                        (voter.location - (candidate as Sim<String>).location)
+                        (voter.location - (candidate as TownCandidate).location)
                             .distance)
                 .roundToDouble() /
             town.voters.length);
