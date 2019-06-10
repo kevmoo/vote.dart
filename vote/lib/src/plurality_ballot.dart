@@ -7,4 +7,7 @@ class PluralityBallot<TVoter, TCandidate> extends Ballot<TVoter> {
   final TCandidate choice;
 
   const PluralityBallot(TVoter voter, this.choice) : super(voter);
+
+  @override
+  String toString() => 'PluralityBallot($choice)';
 }
