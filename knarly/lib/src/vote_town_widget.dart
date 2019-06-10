@@ -19,8 +19,6 @@ class VoteTownWidget extends StatelessWidget {
 }
 
 final _voterPaint = Paint()..color = Colors.blue;
-final _candidatePaint = Paint()
-  ..color = const Color.fromARGB(255, 255, 102, 102);
 
 class _VoteTownPainter extends CustomPainter {
   final VoteTown _voteTown;
@@ -41,7 +39,7 @@ class _VoteTownPainter extends CustomPainter {
 
     for (var candidate in _voteTown.candidates) {
       final center = candidate.location.toOffset() * offsetMultiplier;
-      canvas.drawCircle(center, radius * 2, _candidatePaint);
+      canvas.drawCircle(center, radius * 2, Paint()..color = candidate.color);
 
       final pb = ParagraphBuilder(
         ParagraphStyle(

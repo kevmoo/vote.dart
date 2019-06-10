@@ -16,21 +16,31 @@ class DistanceElectionResultWidget extends StatelessWidget {
                 itemCount: voteTown.places.length,
                 itemBuilder: (ctx, index) {
                   final entry = voteTown.places[index];
-                  final entryString = entry.map((s) => s.id).join(', ');
                   return Row(children: [
                     Expanded(
+                      flex: 1,
                       child: Text(
                         entry.place.toString(),
                         textAlign: TextAlign.right,
                       ),
-                      flex: 1,
                     ),
                     Expanded(
-                      child: Text(
-                        entryString,
-                        textAlign: TextAlign.right,
-                      ),
                       flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: List.generate(
+                          entry.length,
+                          (candidateIndex) {
+                            final candidate = entry[candidateIndex];
+                            return Text(
+                              candidate.id,
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(backgroundColor: candidate.color),
+                            );
+                          },
+                        ),
+                      ),
                     ),
                     Expanded(
                       child: Text(

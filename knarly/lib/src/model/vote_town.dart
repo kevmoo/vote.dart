@@ -6,12 +6,14 @@ import 'sim.dart';
 import 'town_candidate.dart';
 import 'vote_town_distance_place.dart';
 
+final _rnd = math.Random();
+
 class VoteTown {
   static const _across = 10;
   static const _spacing = 10.0;
 
   final List<Sim<int>> voters;
-  final List<Sim<String>> candidates;
+  final List<TownCandidate> candidates;
 
   VoteTown(this.voters, this.candidates);
 
@@ -20,8 +22,6 @@ class VoteTown {
     assert(candidateCount > 0);
     assert(candidateCount < 2 * _across);
     assert(candidateCount <= 26);
-
-    final rnd = math.Random();
 
     final voters = [
       for (var y = 0; y < _across; y++)
@@ -51,8 +51,8 @@ class VoteTown {
 
       do {
         point = Point(
-          _spacing + rnd.nextInt(_across - 1) * _spacing,
-          _spacing + rnd.nextInt(_across - 1) * _spacing,
+          _spacing + _rnd.nextInt(_across - 1) * _spacing,
+          _spacing + _rnd.nextInt(_across - 1) * _spacing,
         );
       } while (candidates.indexWhere((s) => s.location == point) >= 0);
 
