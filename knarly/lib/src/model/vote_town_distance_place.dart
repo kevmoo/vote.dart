@@ -2,19 +2,20 @@ import 'package:collection/collection.dart';
 import 'package:vote/vote.dart';
 
 import 'sim.dart';
+import 'town_candidate.dart';
 import 'vote_town.dart';
 
-class VoteTownDistancePlace extends ElectionPlace<Sim<String>> {
+class VoteTownDistancePlace extends ElectionPlace<TownCandidate> {
   final double averageDistance;
 
   VoteTownDistancePlace._(
     this.averageDistance,
     int place,
-    List<Sim<String>> candidates,
+    List<TownCandidate> candidates,
   ) : super(place, candidates);
 
   static List<VoteTownDistancePlace> create(VoteTown town) {
-    final distances = Map<Sim<String>, double>.fromIterable(town.candidates,
+    final distances = Map<TownCandidate, double>.fromIterable(town.candidates,
         value: (candidate) =>
             town.voters
                 .fold<double>(
