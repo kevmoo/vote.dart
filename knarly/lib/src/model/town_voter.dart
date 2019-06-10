@@ -1,13 +1,16 @@
 import 'package:flutter_web_ui/ui.dart';
 
+import 'town_candidate.dart';
+
 class TownVoter implements Comparable<TownVoter> {
   final int id;
 
   Color get color => null;
 
   final Point location;
+  final List<TownCandidate> closestCandidates;
 
-  TownVoter(this.id, this.location) : assert(id >= 0);
+  TownVoter(this.id, this.location, this.closestCandidates) : assert(id >= 0);
 
   @override
   int compareTo(TownVoter other) => id.compareTo(other.id);

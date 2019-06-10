@@ -24,17 +24,6 @@ class VoteTown {
     assert(candidateCount < 2 * _across);
     assert(candidateCount <= 26);
 
-    final voters = [
-      for (var y = 0; y < _across; y++)
-        for (var x = 0; x < _across; x++)
-          TownVoter(
-              x + y * _across,
-              Point(
-                _spacing / 2 + x * _spacing,
-                _spacing / 2 + y * _spacing,
-              )),
-    ];
-
     var candidateNumber = 0;
 
     final candidates = [
@@ -60,6 +49,39 @@ class VoteTown {
       candidates.add(TownCandidate(candidateNumber++, point));
     }
 
+    TownVoter createVoter(int x, int y) {
+      final location = Point(
+        _spacing / 2 + x * _spacing,
+        _spacing / 2 + y * _spacing,
+      );
+
+      final rankedCandidates = candidates.toList(growable: false)
+        ..sort((a, b) {
+          // using distanceSquared because it's fine for comparison -
+          // and it avoids a square-root
+          final distanceA = (a.location - location).distanceSquared;
+          final distanceB = (b.location - location).distanceSquared;
+
+          var value = distanceA.compareTo(distanceB);
+
+          if (value == 0) {
+            value = a.id.compareTo(b.id);
+          }
+          return value;
+        });
+
+      return TownVoter(
+        x + y * _across,
+        location,
+        rankedCandidates,
+      );
+    }
+
+    final voters = [
+      for (var y = 0; y < _across; y++)
+        for (var x = 0; x < _across; x++) createVoter(x, y),
+    ];
+
     return VoteTown(voters, candidates);
   }
 
@@ -71,23 +93,10 @@ class VoteTown {
   List<RankedBallot<TownVoter, TownCandidate>> _ballots;
 
   List<RankedBallot<TownVoter, TownCandidate>> get ballots =>
-      _ballots ??= voters.map((v) {
-        final rankedCandidates = candidates.toList(growable: false)
-          ..sort((a, b) {
-            // using distanceSquared because it's fine for comparison -
-            // and it avoids a square-root
-            final distanceA = (a.location - v.location).distanceSquared;
-            final distanceB = (b.location - v.location).distanceSquared;
-
-            var value = distanceA.compareTo(distanceB);
-
-            if (value == 0) {
-              value = a.id.compareTo(b.id);
-            }
-            return value;
-          });
-        return RankedBallot<TownVoter, TownCandidate>(v, rankedCandidates);
-      }).toList(growable: false);
+      _ballots ??= voters
+          .map((v) =>
+              RankedBallot<TownVoter, TownCandidate>(v, v.closestCandidates))
+          .toList(growable: false);
 
   PluralityElection<TownVoter, TownCandidate> _pluralityElection;
 

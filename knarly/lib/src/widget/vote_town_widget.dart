@@ -18,8 +18,6 @@ class VoteTownWidget extends StatelessWidget {
       );
 }
 
-final _voterPaint = Paint()..color = Colors.blue;
-
 class _VoteTownPainter extends CustomPainter {
   final VoteTown _voteTown;
 
@@ -33,8 +31,8 @@ class _VoteTownPainter extends CustomPainter {
     final radius = 2.5 * offsetMultiplier;
 
     for (var voter in _voteTown.voters) {
-      canvas.drawCircle(
-          voter.location.toOffset() * offsetMultiplier, radius, _voterPaint);
+      canvas.drawCircle(voter.location.toOffset() * offsetMultiplier, radius,
+          Paint()..color = voter.closestCandidates.first.color);
     }
 
     for (var candidate in _voteTown.candidates) {
