@@ -1,10 +1,10 @@
 import 'package:flutter_web/material.dart';
 import 'package:provider/provider.dart';
 
-import 'src/distance_election_result_widget.dart';
 import 'src/model/vote_town.dart';
-import 'src/vote_town_widget.dart';
+import 'src/widget/distance_election_result_widget.dart';
 import 'src/widget/plurality_election_result_widget.dart';
+import 'src/widget/vote_town_widget.dart';
 
 void main() => runApp(const MyApp());
 

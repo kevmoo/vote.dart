@@ -4,7 +4,7 @@ import 'package:flutter_web/material.dart' hide TextStyle;
 import 'package:flutter_web_ui/ui.dart';
 import 'package:provider/provider.dart';
 
-import 'model/vote_town.dart';
+import '../model/vote_town.dart';
 
 class VoteTownWidget extends StatelessWidget {
   const VoteTownWidget();
