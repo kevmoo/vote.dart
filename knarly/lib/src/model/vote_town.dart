@@ -1,12 +1,13 @@
 import 'dart:math' as math;
 
 import 'package:flutter_web_ui/ui.dart';
+import 'package:vote/vote.dart';
 
 import 'sim.dart';
 import 'town_candidate.dart';
 import 'vote_town_distance_place.dart';
 
-final _rnd = math.Random();
+final _rnd = math.Random(2);
 
 class VoteTown {
   static const _across = 10;
@@ -66,4 +67,30 @@ class VoteTown {
 
   List<VoteTownDistancePlace> get places =>
       _places ??= VoteTownDistancePlace.create(this);
+
+  List<RankedBallot<Sim<int>, TownCandidate>> _ballots;
+
+  List<RankedBallot<Sim<int>, TownCandidate>> get ballots =>
+      _ballots ??= voters.map((v) {
+        final rankedCandidates = candidates.toList(growable: false)
+          ..sort((a, b) {
+            // using distanceSquared because it's fine for comparison -
+            // and it avoids a square-root
+            final distanceA = (a.location - v.location).distanceSquared;
+            final distanceB = (b.location - v.location).distanceSquared;
+
+            var value = distanceA.compareTo(distanceB);
+
+            if (value == 0) {
+              value = a.id.compareTo(b.id);
+            }
+            return value;
+          });
+        return RankedBallot<Sim<int>, TownCandidate>(v, rankedCandidates);
+      }).toList(growable: false);
+
+  PluralityElection<Sim<int>, TownCandidate> _pluralityElection;
+
+  PluralityElection<Sim<int>, TownCandidate> get pluralityElection =>
+      _pluralityElection ??= PluralityElection(ballots);
 }

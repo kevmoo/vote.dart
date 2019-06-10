@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'src/distance_election_result_widget.dart';
 import 'src/model/vote_town.dart';
 import 'src/vote_town_widget.dart';
+import 'src/widget/plurality_election_result_widget.dart';
 
 void main() => runApp(const MyApp());
 
@@ -24,13 +25,14 @@ class MyApp extends StatelessWidget {
             ],
             child: GridView.extent(
               primary: false,
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(10.0),
               mainAxisSpacing: 10.0,
               crossAxisSpacing: 10.0,
-              maxCrossAxisExtent: 500,
+              maxCrossAxisExtent: 400,
               children: const [
                 VoteTownWidget(),
                 DistanceElectionResultWidget(),
+                PluralityElectionResultWidget(),
               ],
             ),
           ),
