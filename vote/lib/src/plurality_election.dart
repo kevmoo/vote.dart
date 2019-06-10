@@ -48,7 +48,7 @@ class PluralityElection<TVoter, TCandidate extends Comparable>
     var place = 1;
     final places = <PluralityElectionPlace<TCandidate>>[];
     for (var count in ballotCounts) {
-      final p = PluralityElectionPlace(place, voteCounts[count], count);
+      final p = PluralityElectionPlace(place, voteCounts[count]..sort(), count);
       places.add(p);
       place += p.length;
     }

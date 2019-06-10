@@ -4,11 +4,10 @@ import 'package:vote/vote.dart';
 import 'test_util.dart';
 
 void main() {
-  test('random vote test', () {
-    final c1 = "candidate 1";
-
-    final ballots = [
-      for (num i = 0; i < 10; i++) PluralityBallot("Voter $i", c1),
+  test('sorted candidates', () {
+    const ballots = [
+      PluralityBallot("Voter 1", 2),
+      PluralityBallot("Voter 2", 1),
     ];
 
     PluralityElection(ballots);
