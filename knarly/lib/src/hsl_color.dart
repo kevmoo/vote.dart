@@ -10,7 +10,7 @@ class HslColor {
 
   factory HslColor(num h, num s, num l) => HslColor._internal(h % 360, s, l);
 
-  Color toRgb() {
+  Color toColor() {
     final normH = h / 360; // normalize h to fall in [0, 1]
 
     num r, g, b;

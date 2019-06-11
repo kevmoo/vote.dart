@@ -32,7 +32,7 @@ class _VoteTownPainter extends CustomPainter {
 
     for (var voter in _voteTown.voters) {
       canvas.drawCircle(voter.location.toOffset() * offsetMultiplier, radius,
-          Paint()..color = voter.closestCandidates.first.color);
+          Paint()..color = voter.closestCandidates.first.dartColor);
     }
 
     for (var candidate in _voteTown.candidates) {
@@ -74,7 +74,7 @@ class _VoteTownPainter extends CustomPainter {
       final paragraph = pb.build()..layout(candidateParagraphConstraints);
 
       canvas.drawParagraph(
-          paragraph, center - Offset(radius * 2, radius * 1.5));
+          paragraph, center - Offset(radius * 2, radius * 1.4));
     }
   }
 
