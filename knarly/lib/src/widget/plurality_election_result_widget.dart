@@ -1,65 +1,58 @@
 import 'package:flutter_web/material.dart';
+import 'package:knarly/src/model/town_candidate.dart';
 import 'package:provider/provider.dart';
+import 'package:vote/vote.dart';
 
 import '../model/vote_town.dart';
-import 'widget_util.dart';
+import 'table_helper.dart';
 
 class PluralityElectionResultWidget extends StatelessWidget {
   const PluralityElectionResultWidget();
 
   @override
-  Widget build(BuildContext context) => DefaultTextStyle(
-        textAlign: TextAlign.center,
-        style: DefaultTextStyle.of(context).style.apply(
-              fontSizeFactor: 2.0,
-            ),
-        child: Container(
-          alignment: Alignment.center,
-          child: Consumer<VoteTown>(
-            builder: (_, voteTown, __) => Table(
-                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                  children: <TableRow>[
-                    TableRow(
-                      decoration: BoxDecoration(color: Colors.grey.shade300),
-                      children: [
-                        tableHeader('Place'),
-                        tableHeader('Candidate'),
-                        tableHeader('Votes'),
-                      ],
-                    ),
-                    ...voteTown.pluralityElection.places.map(
-                      (entry) => TableRow(
-                            decoration: entry.length == 1
-                                ? BoxDecoration(color: entry.single.color)
-                                : null,
-                            children: [
-                              Text(entry.place.toString()),
-                              entry.length == 1
-                                  ? Text(entry.single.id)
-                                  : Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
-                                      children: List.generate(
-                                        entry.length,
-                                        (candidateIndex) {
-                                          final candidate =
-                                              entry[candidateIndex];
-                                          return Text(
-                                            candidate.id,
-                                            style: TextStyle(
-                                                backgroundColor:
-                                                    candidate.color),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                              Text(entry.voteCount.toString()),
-                            ],
-                          ),
-                    )
-                  ],
-                ),
-          ),
+  Widget build(BuildContext context) => Consumer<VoteTown>(
+        builder: (context, voteTown, __) =>
+            const _PluralityTableHelper().createTable(
+          context,
+          voteTown.pluralityElection.places,
         ),
       );
+}
+
+class _PluralityTableHelper
+    extends TableHelper<PluralityElectionPlace<TownCandidate>, TownCandidate> {
+  const _PluralityTableHelper();
+
+  @override
+  List<String> get columns => const ['Place', 'Candidate', 'Votes'];
+
+  @override
+  Color subEntryColor(TownCandidate subEntry) => subEntry.color;
+
+  @override
+  List<TownCandidate> subEntries(PluralityElectionPlace<TownCandidate> entry) =>
+      entry;
+
+  @override
+  bool isMulti(String column) => column == 'Candidate';
+
+  @override
+  String textForColumn(
+      String columnName, PluralityElectionPlace<TownCandidate> entry) {
+    switch (columnName) {
+      case 'Place':
+        return entry.place.toString();
+      case 'Votes':
+        return entry.voteCount.toString();
+    }
+    return super.textForColumn(columnName, entry);
+  }
+
+  @override
+  String textForSubEntry(String columnName, TownCandidate subEntry) {
+    if (columnName == 'Candidate') {
+      return subEntry.id;
+    }
+    return super.textForSubEntry(columnName, subEntry);
+  }
 }
