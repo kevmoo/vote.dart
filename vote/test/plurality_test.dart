@@ -26,6 +26,33 @@ void main() {
     }, throwsAssertionError);
   });
 
+  group('with candidates', () {
+    test('include candidate with no votes', () {
+      const ballots = [
+        PluralityBallot("Voter 1", 2),
+        PluralityBallot("Voter 2", 1),
+      ];
+
+      final election = PluralityElection(ballots, candidates: const [1, 2, 3]);
+
+      expect(election.places, hasLength(2));
+      expect(election.places[0], [1, 2]);
+      expect(election.places[1], [3]);
+    });
+
+    test('assert if ballot includes candidate that is not present', () {
+      const ballots = [
+        PluralityBallot("Voter 1", 2),
+        PluralityBallot("Voter 2", 1),
+      ];
+
+      expect(
+        () => PluralityElection(ballots, candidates: const [3]),
+        throwsAssertionError,
+      );
+    });
+  });
+
   test('tied for 1st', () {
     final c1 = "candidate 1";
     final c2 = "candidate 2";

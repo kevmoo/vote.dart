@@ -101,5 +101,5 @@ class VoteTown {
   PluralityElection<TownVoter, TownCandidate> _pluralityElection;
 
   PluralityElection<TownVoter, TownCandidate> get pluralityElection =>
-      _pluralityElection ??= PluralityElection(ballots);
+      _pluralityElection ??= PluralityElection(ballots, candidates: candidates);
 }

@@ -19,13 +19,33 @@ class PluralityElection<TVoter, TCandidate extends Comparable>
 
   PluralityElection._internal(this.ballots, this._ballotGroup, this.places);
 
-  factory PluralityElection(List<PluralityBallot<TVoter, TCandidate>> ballots) {
+  factory PluralityElection(
+    List<PluralityBallot<TVoter, TCandidate>> ballots, {
+    Iterable<TCandidate> candidates,
+  }) {
     // Check voter uniqueness
     final voterList = ballots.map((pb) => pb.voter).toList(growable: false);
     assert(allUnique(voterList), 'Only one ballot per voter is allowed');
 
     final group = groupBy<PluralityBallot<TVoter, TCandidate>, TCandidate>(
         ballots, (pb) => pb.choice);
+
+    final noVoteCandidates = <TCandidate>{};
+    if (candidates != null) {
+      assert(
+        group.keys.every(candidates.contains),
+        'If `candidates` is provided, then every candidate in `ballots` should '
+        'exist in `candidates`.',
+      );
+
+      noVoteCandidates
+        ..addAll(candidates)
+        ..removeAll(group.keys);
+
+      for (var noVoteCandidate in noVoteCandidates) {
+        group[noVoteCandidate] = [];
+      }
+    }
 
     //
     // create a Map of candidates keyed on their vote count
