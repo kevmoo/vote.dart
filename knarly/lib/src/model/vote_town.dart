@@ -7,7 +7,7 @@ import 'town_candidate.dart';
 import 'town_voter.dart';
 import 'vote_town_distance_place.dart';
 
-final _rnd = math.Random(2);
+final _rnd = math.Random();
 
 class VoteTown {
   static const _across = 10;
