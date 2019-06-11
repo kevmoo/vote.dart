@@ -15,27 +15,20 @@ class DistanceElectionResultWidget extends StatelessWidget {
         child: Container(
           alignment: Alignment.center,
           child: Consumer<VoteTown>(
-            builder: (context, voteTown, _) => ListView.builder(
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.all(8.0),
-                  itemCount: voteTown.distancePlaces.length,
-                  itemBuilder: (ctx, index) {
-                    final entry = voteTown.distancePlaces[index];
-                    return Container(
-                      color: entry.length == 1 ? entry.single.color : null,
-                      child: Row(children: [
-                        Expanded(
-                          flex: 1,
-                          child: Text(
-                            entry.place.toString(),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: entry.length == 1
-                              ? Text(
-                                  entry.single.id,
-                                )
+            builder: (_, voteTown, __) => Table(
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  children: List<TableRow>.generate(
+                    voteTown.distancePlaces.length,
+                    (index) {
+                      final entry = voteTown.distancePlaces[index];
+                      return TableRow(
+                        decoration: entry.length == 1
+                            ? BoxDecoration(color: entry.single.color)
+                            : null,
+                        children: [
+                          Text(entry.place.toString()),
+                          entry.length == 1
+                              ? Text(entry.single.id)
                               : Column(
                                   crossAxisAlignment:
                                       CrossAxisAlignment.stretch,
@@ -51,16 +44,11 @@ class DistanceElectionResultWidget extends StatelessWidget {
                                     },
                                   ),
                                 ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            entry.averageDistance.toStringAsFixed(2),
-                          ),
-                          flex: 1,
-                        ),
-                      ]),
-                    );
-                  },
+                          Text(entry.averageDistance.toStringAsFixed(2)),
+                        ],
+                      );
+                    },
+                  ),
                 ),
           ),
         ),
