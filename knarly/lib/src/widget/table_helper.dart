@@ -18,8 +18,7 @@ abstract class TableHelper<Entry, SubEntry> {
       throw ArgumentError(
           'Could not get a value for $columnName from $subEntry');
 
-  Widget createTable(BuildContext context, List<Entry> places) =>
-      DefaultTextStyle(
+  Widget build(BuildContext context, List<Entry> places) => DefaultTextStyle(
         textAlign: TextAlign.center,
         style: DefaultTextStyle.of(context).style.apply(
               fontSizeFactor: 2.0,
@@ -37,10 +36,12 @@ abstract class TableHelper<Entry, SubEntry> {
                 (entry) {
                   final subEntries2 = subEntries(entry);
                   return TableRow(
-                    decoration: subEntries2.length == 1
-                        ? BoxDecoration(
-                            color: subEntryColor(subEntries2.single))
-                        : null,
+                    decoration: BoxDecoration(
+                      color: subEntries2.length == 1
+                          ? subEntryColor(subEntries2.single)
+                          : null,
+                      border: Border.all(width: _itemPadding),
+                    ),
                     children: columns.map(
                       (column) {
                         if (isMulti(column)) {
@@ -48,19 +49,25 @@ abstract class TableHelper<Entry, SubEntry> {
                             return Text(
                                 textForSubEntry(column, subEntries2.single));
                           } else {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: List.generate(
-                                subEntries2.length,
-                                (subEntryIndex) {
-                                  final subEntry = subEntries2[subEntryIndex];
-                                  return Text(
-                                    textForSubEntry(column, subEntry),
-                                    style: TextStyle(
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: _itemPadding,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: List.generate(
+                                  subEntries2.length,
+                                  (subEntryIndex) {
+                                    final subEntry = subEntries2[subEntryIndex];
+                                    return Text(
+                                      textForSubEntry(column, subEntry),
+                                      style: TextStyle(
                                         backgroundColor:
-                                            subEntryColor(subEntry)),
-                                  );
-                                },
+                                            subEntryColor(subEntry),
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
                             );
                           }
@@ -77,6 +84,8 @@ abstract class TableHelper<Entry, SubEntry> {
         ),
       );
 }
+
+const double _itemPadding = 0.5;
 
 Widget _tableHeader(String content) => Container(
       padding: const EdgeInsets.symmetric(vertical: 7),

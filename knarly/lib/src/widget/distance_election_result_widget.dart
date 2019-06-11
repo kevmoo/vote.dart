@@ -11,8 +11,7 @@ class DistanceElectionResultWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Consumer<VoteTown>(
-        builder: (context, voteTown, __) =>
-            const _DistancePlaceRowInfo().createTable(
+        builder: (context, voteTown, __) => const _DistancePlaceRowInfo().build(
           context,
           voteTown.distancePlaces,
         ),
