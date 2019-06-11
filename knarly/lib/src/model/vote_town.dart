@@ -10,8 +10,8 @@ import 'vote_town_distance_place.dart';
 final _rnd = math.Random();
 
 class VoteTown {
-  static const _across = 10;
-  static const _spacing = 10.0;
+  static const votersAcross = 10;
+  static const voterSpacing = 10.0;
 
   final List<TownVoter> voters;
   final List<TownCandidate> candidates;
@@ -21,7 +21,7 @@ class VoteTown {
   factory VoteTown.random({int candidateCount = 5}) {
     candidateCount ??= 5;
     assert(candidateCount > 0);
-    assert(candidateCount < 2 * _across);
+    assert(candidateCount < 2 * votersAcross);
     assert(candidateCount <= 26);
 
     var candidateNumber = 0;
@@ -30,8 +30,8 @@ class VoteTown {
       TownCandidate(
         candidateNumber++,
         const Point(
-          _across * _spacing / 2,
-          _across * _spacing / 2,
+          votersAcross * voterSpacing / 2,
+          votersAcross * voterSpacing / 2,
         ),
       ),
     ];
@@ -41,8 +41,8 @@ class VoteTown {
 
       do {
         point = Point(
-          _spacing + _rnd.nextInt(_across - 1) * _spacing,
-          _spacing + _rnd.nextInt(_across - 1) * _spacing,
+          voterSpacing + _rnd.nextInt(votersAcross - 1) * voterSpacing,
+          voterSpacing + _rnd.nextInt(votersAcross - 1) * voterSpacing,
         );
       } while (candidates.indexWhere((s) => s.location == point) >= 0);
 
@@ -51,8 +51,8 @@ class VoteTown {
 
     TownVoter createVoter(int x, int y) {
       final location = Point(
-        _spacing / 2 + x * _spacing,
-        _spacing / 2 + y * _spacing,
+        voterSpacing / 2 + x * voterSpacing,
+        voterSpacing / 2 + y * voterSpacing,
       );
 
       final rankedCandidates = candidates.toList(growable: false)
@@ -71,15 +71,15 @@ class VoteTown {
         });
 
       return TownVoter(
-        x + y * _across,
+        x + y * votersAcross,
         location,
         rankedCandidates,
       );
     }
 
     final voters = [
-      for (var y = 0; y < _across; y++)
-        for (var x = 0; x < _across; x++) createVoter(x, y),
+      for (var y = 0; y < votersAcross; y++)
+        for (var x = 0; x < votersAcross; x++) createVoter(x, y),
     ];
 
     return VoteTown(voters, candidates);

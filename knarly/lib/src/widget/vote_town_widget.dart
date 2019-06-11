@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
-import 'package:flutter_web/material.dart' hide TextStyle;
-import 'package:flutter_web_ui/ui.dart';
+import 'package:flutter_web/material.dart';
+import 'package:knarly/src/model/town_candidate.dart';
 import 'package:provider/provider.dart';
 
 import '../model/vote_town.dart';
@@ -10,12 +10,79 @@ class VoteTownWidget extends StatelessWidget {
   const VoteTownWidget();
 
   @override
-  Widget build(BuildContext context) => CustomPaint(
-        painter: _VoteTownPainter(Provider.of<VoteTown>(context)),
-        size: const Size(400, 400),
-        isComplex: true,
-        willChange: true,
+  Widget build(BuildContext context) => Consumer<VoteTown>(
+        builder: (_, voteTown, __) => CustomPaint(
+          painter: _VoteTownPainter(voteTown),
+          child: Flow(
+            children: voteTown.candidates
+                .map(_candidateWidget)
+                .toList(growable: false),
+            delegate: _CandidateFlowDelegate(voteTown),
+          ),
+          size: const Size(400, 400),
+          isComplex: true,
+          willChange: true,
+        ),
       );
+}
+
+Widget _candidateWidget(TownCandidate candidate) => Container(
+      decoration: ShapeDecoration(
+        color: candidate.color,
+        shape: const CircleBorder(),
+        shadows: const [
+          BoxShadow(
+            offset: Offset(-1, 1),
+            blurRadius: 2,
+          ),
+        ],
+      ),
+      child: Center(
+        child: Text(
+          candidate.id,
+          textScaleFactor: 1.5,
+        ),
+      ),
+    );
+
+double _offsetMultiplier(Size size) =>
+    math.min(size.height, size.width) /
+    (VoteTown.votersAcross * VoteTown.voterSpacing);
+
+class _CandidateFlowDelegate extends FlowDelegate {
+  static const _candidateScale = 4.5;
+
+  final VoteTown _voteTown;
+
+  _CandidateFlowDelegate(this._voteTown);
+
+  @override
+  BoxConstraints getConstraintsForChild(int i, BoxConstraints constraints) {
+    final candidateSize =
+        _offsetMultiplier(constraints.biggest) * _candidateScale * 2;
+    return BoxConstraints.tightFor(width: candidateSize, height: candidateSize);
+  }
+
+  @override
+  void paintChildren(FlowPaintingContext context) {
+    final offsetMultiplier = _offsetMultiplier(context.size);
+
+    final centerShift = Offset(
+        offsetMultiplier * _candidateScale, offsetMultiplier * _candidateScale);
+
+    for (var i = 0; i < context.childCount; i++) {
+      final shift =
+          (_voteTown.candidates[i].location.toOffset() * offsetMultiplier) -
+              centerShift;
+
+      context.paintChild(i,
+          transform: Matrix4.translationValues(shift.dx, shift.dy, 0));
+    }
+  }
+
+  @override
+  bool shouldRepaint(_CandidateFlowDelegate oldDelegate) =>
+      oldDelegate._voteTown != _voteTown;
 }
 
 class _VoteTownPainter extends CustomPainter {
@@ -25,56 +92,12 @@ class _VoteTownPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final smallerDimension = math.min(size.height, size.width);
-
-    final offsetMultiplier = smallerDimension / 100;
+    final offsetMultiplier = _offsetMultiplier(size);
     final radius = 2.5 * offsetMultiplier;
 
     for (var voter in _voteTown.voters) {
       canvas.drawCircle(voter.location.toOffset() * offsetMultiplier, radius,
           Paint()..color = voter.closestCandidates.first.dartColor);
-    }
-
-    for (var candidate in _voteTown.candidates) {
-      final center = candidate.location.toOffset() * offsetMultiplier;
-
-      canvas
-        ..drawCircle(
-          center,
-          radius * 2,
-          Paint()
-            ..color = candidate.color
-            ..style = PaintingStyle.fill,
-        )
-        ..drawCircle(
-          center,
-          radius * 2,
-          Paint()
-            ..color = Colors.black.withAlpha(128)
-            ..style = PaintingStyle.stroke,
-        );
-
-      final pb = ParagraphBuilder(
-        ParagraphStyle(
-          textAlign: TextAlign.center,
-          fontSize: radius * 2.5,
-        ),
-      )
-        ..pushStyle(
-          TextStyle(
-            color: Colors.black,
-            //fontWeight: FontWeight.bold,
-          ),
-        )
-        ..addText(candidate.id);
-
-      final candidateParagraphConstraints =
-          ParagraphConstraints(width: radius * 4);
-
-      final paragraph = pb.build()..layout(candidateParagraphConstraints);
-
-      canvas.drawParagraph(
-          paragraph, center - Offset(radius * 2, radius * 1.4));
     }
   }
 
