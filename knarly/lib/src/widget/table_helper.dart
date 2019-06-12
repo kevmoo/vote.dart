@@ -85,7 +85,7 @@ abstract class TableHelper<Entry, SubEntry> {
       );
 }
 
-const double _itemPadding = 0.5;
+const double _itemPadding = 1;
 
 Widget _tableHeader(String content) => Container(
       padding: const EdgeInsets.symmetric(vertical: 7),
