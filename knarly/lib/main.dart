@@ -29,15 +29,29 @@ class MyApp extends StatelessWidget {
               mainAxisSpacing: 10.0,
               crossAxisSpacing: 10.0,
               maxCrossAxisExtent: 400,
-              children: const [
-                VoteTownWidget(),
-                DistanceElectionResultWidget(),
-                PluralityElectionResultWidget(),
+              children: [
+                const VoteTownWidget(),
+                _header('Distance', const DistanceElectionResultWidget()),
+                _header('Plurality', const PluralityElectionResultWidget()),
               ],
             ),
           ),
         ),
       );
 }
+
+Widget _header(String header, Widget widget) => Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(
+            header,
+            textScaleFactor: 2,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          widget,
+        ],
+      ),
+    );
 
 VoteTown _voteTownBuilder(_) => VoteTown.random();

@@ -23,64 +23,60 @@ abstract class TableHelper<Entry, SubEntry> {
         style: DefaultTextStyle.of(context).style.apply(
               fontSizeFactor: 2.0,
             ),
-        child: Container(
-          alignment: Alignment.center,
-          child: Table(
-            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-            children: <TableRow>[
-              TableRow(
-                decoration: BoxDecoration(color: Colors.grey.shade300),
-                children: columns.map(_tableHeader).toList(growable: false),
-              ),
-              ...places.map(
-                (entry) {
-                  final subEntries2 = subEntries(entry);
-                  return TableRow(
-                    decoration: BoxDecoration(
-                      color: subEntries2.length == 1
-                          ? subEntryColor(subEntries2.single)
-                          : null,
-                      border: Border.all(width: _itemPadding),
-                    ),
-                    children: columns.map(
-                      (column) {
-                        if (isMulti(column)) {
-                          if (subEntries2.length == 1) {
-                            return Text(
-                                textForSubEntry(column, subEntries2.single));
-                          } else {
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: _itemPadding,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: List.generate(
-                                  subEntries2.length,
-                                  (subEntryIndex) {
-                                    final subEntry = subEntries2[subEntryIndex];
-                                    return Text(
-                                      textForSubEntry(column, subEntry),
-                                      style: TextStyle(
-                                        backgroundColor:
-                                            subEntryColor(subEntry),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            );
-                          }
+        child: Table(
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          children: <TableRow>[
+            TableRow(
+              decoration: BoxDecoration(color: Colors.grey.shade300),
+              children: columns.map(_tableHeader).toList(growable: false),
+            ),
+            ...places.map(
+              (entry) {
+                final subEntries2 = subEntries(entry);
+                return TableRow(
+                  decoration: BoxDecoration(
+                    color: subEntries2.length == 1
+                        ? subEntryColor(subEntries2.single)
+                        : null,
+                    border: Border.all(width: _itemPadding),
+                  ),
+                  children: columns.map(
+                    (column) {
+                      if (isMulti(column)) {
+                        if (subEntries2.length == 1) {
+                          return Text(
+                              textForSubEntry(column, subEntries2.single));
                         } else {
-                          return Text(textForColumn(column, entry));
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: _itemPadding,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: List.generate(
+                                subEntries2.length,
+                                (subEntryIndex) {
+                                  final subEntry = subEntries2[subEntryIndex];
+                                  return Text(
+                                    textForSubEntry(column, subEntry),
+                                    style: TextStyle(
+                                      backgroundColor: subEntryColor(subEntry),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          );
                         }
-                      },
-                    ).toList(growable: false),
-                  );
-                },
-              )
-            ],
-          ),
+                      } else {
+                        return Text(textForColumn(column, entry));
+                      }
+                    },
+                  ).toList(growable: false),
+                );
+              },
+            )
+          ],
         ),
       );
 }
