@@ -17,7 +17,11 @@ class PluralityElection<TVoter, TCandidate extends Comparable>
   @override
   final List<PluralityElectionPlace<TCandidate>> places;
 
-  PluralityElection._internal(this.ballots, this._ballotGroup, this.places);
+  const PluralityElection._internal(
+    this.ballots,
+    this._ballotGroup,
+    this.places,
+  );
 
   factory PluralityElection(
     List<PluralityBallot<TVoter, TCandidate>> ballots, {

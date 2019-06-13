@@ -2,6 +2,8 @@ import 'ballot.dart';
 import 'election_place.dart';
 
 abstract class Election<TVoter, TCandidate extends Comparable> {
+  const Election();
+
   Iterable<TCandidate> get candidates;
 
   Iterable<Ballot<TVoter>> get ballots;

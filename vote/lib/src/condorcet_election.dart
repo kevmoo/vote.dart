@@ -1,4 +1,5 @@
 import 'package:graphs/graphs.dart';
+import 'package:meta/meta.dart';
 
 import 'condorcet_pair.dart';
 import 'election.dart';
@@ -6,6 +7,7 @@ import 'election_place.dart';
 import 'ranked_ballot.dart';
 import 'util.dart';
 
+@immutable
 class CondorcetElection<TVoter, TCandidate extends Comparable>
     extends Election<TVoter, TCandidate> {
   final Set<CondorcetPair> _pairs;
@@ -17,8 +19,15 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
   @override
   final List<ElectionPlace<TCandidate>> places;
 
+  @override
+  Iterable<TCandidate> get candidates => _profiles.keys;
+
   CondorcetElection._internal(
-      this._pairs, this._profiles, this.ballots, this.places);
+    this._pairs,
+    this._profiles,
+    this.ballots,
+    this.places,
+  ) : assert(_profilesOrdered(_profiles, places));
 
   factory CondorcetElection(List<RankedBallot<TVoter, TCandidate>> ballots) {
     // Check voter uniqueness
@@ -80,9 +89,12 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
         }
       }
 
-      final profile =
-          _CondorcetCandidateProfile<TCandidate>(candidate, lostTo, beat, tied);
-      candidateProfiles[candidate] = profile;
+      candidateProfiles[candidate] = _CondorcetCandidateProfile<TCandidate>(
+        candidate,
+        lostTo..sort(),
+        beat..sort(),
+        tied..sort(),
+      );
 
       candidateMap[candidate] = lostTiedSet;
     }
@@ -100,14 +112,13 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
 
     return CondorcetElection._internal(
       set,
-      candidateProfiles,
+      Map.fromEntries(places
+          .expand((place) => place)
+          .map((c) => MapEntry(c, candidateProfiles[c]))),
       ballots,
       places,
     );
   }
-
-  @override
-  Iterable<TCandidate> get candidates => _profiles.keys;
 
   CondorcetPair getPair(TCandidate c1, TCandidate c2) {
     final filter = _pairs.where((p) => p.matches(c1, c2));
@@ -121,15 +132,38 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
   }
 }
 
-class _CondorcetCandidateProfile<TCandidate> {
+bool _profilesOrdered<TCandidate extends Comparable>(
+    Map<TCandidate, _CondorcetCandidateProfile> profiles,
+    List<ElectionPlace<TCandidate>> places) {
+  final profileCandidates = profiles.keys.toList(growable: false);
+  final placeCandidates =
+      places.expand((place) => place).toList(growable: false);
+
+  if (profileCandidates.length != placeCandidates.length) {
+    return false;
+  }
+  for (var i = 0; i < profileCandidates.length; i++) {
+    if (profileCandidates[i] != placeCandidates[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+class _CondorcetCandidateProfile<TCandidate extends Comparable> {
   final TCandidate candidate;
   final List<TCandidate> lostTo;
   final List<TCandidate> beat;
   final List<TCandidate> tied;
 
-  _CondorcetCandidateProfile(this.candidate, this.lostTo, this.beat, this.tied);
+  _CondorcetCandidateProfile(this.candidate, this.lostTo, this.beat, this.tied)
+      : assert(sorted(lostTo)),
+        assert(sorted(beat)),
+        assert(sorted(tied));
 
   @override
-  String toString() =>
-      '[ $candidate: Beat: ${beat.length}, Tied: ${tied.length}, Lost to: ${lostTo.length}';
+  String toString() => '[ $candidate: '
+      'Beat: ${beat.length}, '
+      'Tied: ${tied.length}, '
+      'Lost to: ${lostTo.length} ]';
 }

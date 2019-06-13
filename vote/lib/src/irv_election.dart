@@ -19,7 +19,7 @@ class IrvElection<TVoter, TCandidate extends Comparable>
 
   final List<IrvRound<TVoter, TCandidate>> rounds;
 
-  IrvElection._internal(this.candidates, this.ballots, this.rounds);
+  const IrvElection._internal(this.candidates, this.ballots, this.rounds);
 
   factory IrvElection(List<RankedBallot<TVoter, TCandidate>> ballots) {
     final candidates =
