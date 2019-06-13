@@ -11,6 +11,10 @@ abstract class TableHelper<Entry, SubEntry> {
 
   bool isMulti(int columnIndex);
 
+  double get fontSizeFactor => 2.0;
+
+  TableColumnWidth get defaultTableColumnWidth => const FlexColumnWidth(1.0);
+
   String textForColumn(int columnIndex, Entry entry) =>
       throw ArgumentError('Could not get a value for $columnIndex from $entry');
 
@@ -21,9 +25,10 @@ abstract class TableHelper<Entry, SubEntry> {
   Widget build(BuildContext context, List<Entry> places) => DefaultTextStyle(
         textAlign: TextAlign.center,
         style: DefaultTextStyle.of(context).style.apply(
-              fontSizeFactor: 2.0,
+              fontSizeFactor: fontSizeFactor,
             ),
         child: Table(
+          defaultColumnWidth: defaultTableColumnWidth,
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: <TableRow>[
             TableRow(
@@ -44,8 +49,9 @@ abstract class TableHelper<Entry, SubEntry> {
                     (column) {
                       if (isMulti(column)) {
                         if (subEntries2.length == 1) {
-                          return Text(
-                              textForSubEntry(column, subEntries2.single));
+                          return _tableCell(
+                            textForSubEntry(column, subEntries2.single),
+                          );
                         } else {
                           return Padding(
                             padding: const EdgeInsets.symmetric(
@@ -57,11 +63,9 @@ abstract class TableHelper<Entry, SubEntry> {
                                 subEntries2.length,
                                 (subEntryIndex) {
                                   final subEntry = subEntries2[subEntryIndex];
-                                  return Text(
+                                  return _tableCell(
                                     textForSubEntry(column, subEntry),
-                                    style: TextStyle(
-                                      backgroundColor: subEntryColor(subEntry),
-                                    ),
+                                    color: subEntryColor(subEntry),
                                   );
                                 },
                               ),
@@ -69,7 +73,7 @@ abstract class TableHelper<Entry, SubEntry> {
                           );
                         }
                       } else {
-                        return Text(textForColumn(column, entry));
+                        return _tableCell(textForColumn(column, entry));
                       }
                     },
                   ).toList(growable: false),
@@ -81,10 +85,16 @@ abstract class TableHelper<Entry, SubEntry> {
       );
 }
 
+Widget _tableCell(String content, {Color color}) => Container(
+      color: color,
+      padding: const EdgeInsets.all(2),
+      child: Text(content),
+    );
+
 const double _itemPadding = 1;
 
 Widget _tableHeader(String content) => Container(
-      padding: const EdgeInsets.symmetric(vertical: 7),
+      padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 3),
       child: Text(
         content,
         textScaleFactor: 0.6,
