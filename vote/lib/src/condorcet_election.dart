@@ -10,7 +10,7 @@ import 'util.dart';
 @immutable
 class CondorcetElection<TVoter, TCandidate extends Comparable>
     extends Election<TVoter, TCandidate> {
-  final Set<CondorcetPair> _pairs;
+  final Set<CondorcetPair<TVoter, TCandidate>> _pairs;
   final Map<TCandidate, _CondorcetCandidateProfile> _profiles;
 
   @override
@@ -120,7 +120,7 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
     );
   }
 
-  CondorcetPair getPair(TCandidate c1, TCandidate c2) {
+  CondorcetPair<TVoter, TCandidate> getPair(TCandidate c1, TCandidate c2) {
     final filter = _pairs.where((p) => p.matches(c1, c2));
     assert(filter.length <= 1);
     if (filter.isEmpty) {
