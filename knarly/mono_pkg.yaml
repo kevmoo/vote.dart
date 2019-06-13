@@ -1,0 +1,14 @@
+# See https://github.com/dart-lang/mono_repo for details
+stages:
+- smoke_test:
+  - group:
+    - dartfmt
+    - dartanalyzer: --fatal-infos --fatal-warnings .
+    dart: [dev]
+  - group:
+    - dartanalyzer: --fatal-warnings .
+    dart: [2.3.0-dev.0.3]
+
+cache:
+  directories:
+  - .dart_tool/build
