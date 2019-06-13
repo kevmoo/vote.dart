@@ -2,6 +2,7 @@ import 'package:flutter_web/material.dart';
 import 'package:provider/provider.dart';
 
 import 'src/model/vote_town.dart';
+import 'src/widget/condorcet_election_result_widget.dart';
 import 'src/widget/distance_election_result_widget.dart';
 import 'src/widget/plurality_election_result_widget.dart';
 import 'src/widget/vote_town_widget.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
                 const VoteTownWidget(),
                 _header('Distance', const DistanceElectionResultWidget()),
                 _header('Plurality', const PluralityElectionResultWidget()),
+                _header('Condorcet', const CondorcetElectionResultWidget()),
               ],
             ),
           ),

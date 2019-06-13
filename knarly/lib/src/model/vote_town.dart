@@ -102,4 +102,9 @@ class VoteTown {
 
   PluralityElection<TownVoter, TownCandidate> get pluralityElection =>
       _pluralityElection ??= PluralityElection(ballots, candidates: candidates);
+
+  CondorcetElection<TownVoter, TownCandidate> _condorcetElection;
+
+  CondorcetElection<TownVoter, TownCandidate> get condorcetElection =>
+      _condorcetElection ??= CondorcetElection(ballots);
 }
