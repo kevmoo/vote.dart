@@ -47,7 +47,7 @@ Widget _header(String header, Widget widget) => Center(
           Text(
             header,
             textScaleFactor: 2,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           widget,
         ],
