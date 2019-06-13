@@ -7,18 +7,14 @@ import 'src/widget/distance_election_result_widget.dart';
 import 'src/widget/plurality_election_result_widget.dart';
 import 'src/widget/vote_town_widget.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(const VoteSimulation());
 
-class MyApp extends StatelessWidget {
-  const MyApp();
+class VoteSimulation extends StatelessWidget {
+  const VoteSimulation();
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) => MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
         home: Scaffold(
           body: MultiProvider(
             providers: const [
