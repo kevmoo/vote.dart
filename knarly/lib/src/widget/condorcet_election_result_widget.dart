@@ -14,56 +14,15 @@ class CondorcetElectionResultWidget extends StatelessWidget {
   Widget build(BuildContext context) => Consumer<VoteTown>(
         builder: (context, voteTown, __) => _CondorcetTableHelper(
           voteTown.condorcetElection,
-        ).build(
-          context,
-          voteTown.condorcetElection.places,
-        ),
-      );
-
-  Widget _build(BuildContext context,
-          CondorcetElection<TownVoter, TownCandidate> election) =>
-      DefaultTextStyle(
-        textAlign: TextAlign.center,
-        style: DefaultTextStyle.of(context).style,
-        child: Table(
-          columnWidths: const {
-            0: IntrinsicColumnWidth(),
-            1: IntrinsicColumnWidth(),
-          },
-          children: [
-            TableRow(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 2),
-                  child: Text('Place'),
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 2),
-                  child: Text('Candidate'),
-                ),
-                ...election.candidates.map(
-                  (c) => Text(c.id),
-                )
-              ],
-            ),
-            ...election.places.map(
-              (place) => TableRow(
-                children: [
-                  Text(place.place.toString()),
-                  Text(place.place.toString()),
-                  ...election.candidates.map(
-                    (c) => Text(c.id),
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
+        ).build(context),
       );
 }
 
 class _CondorcetTableHelper
     extends TableHelper<ElectionPlace<TownCandidate>, TownCandidate> {
+  @override
+  List<ElectionPlace<TownCandidate>> get places => _election.places;
+
   final CondorcetElection<TownVoter, TownCandidate> _election;
 
   const _CondorcetTableHelper(this._election);

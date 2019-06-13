@@ -3,6 +3,8 @@ import 'package:flutter_web/material.dart';
 abstract class TableHelper<Entry, SubEntry> {
   const TableHelper();
 
+  List<Entry> get places;
+
   List<String> get columns;
 
   List<SubEntry> subEntries(Entry entry);
@@ -22,7 +24,7 @@ abstract class TableHelper<Entry, SubEntry> {
       throw ArgumentError(
           'Could not get a value for $columnIndex from $subEntry');
 
-  Widget build(BuildContext context, List<Entry> places) => DefaultTextStyle(
+  Widget build(BuildContext context) => DefaultTextStyle(
         textAlign: TextAlign.center,
         style: DefaultTextStyle.of(context).style.apply(
               fontSizeFactor: fontSizeFactor,

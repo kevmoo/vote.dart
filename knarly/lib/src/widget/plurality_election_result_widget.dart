@@ -11,16 +11,18 @@ class PluralityElectionResultWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Consumer<VoteTown>(
-        builder: (context, voteTown, __) => const _PluralityTableHelper().build(
-          context,
-          voteTown.pluralityElection.places,
-        ),
+        builder: (context, voteTown, __) =>
+            _PluralityTableHelper(voteTown.pluralityElection.places)
+                .build(context),
       );
 }
 
 class _PluralityTableHelper
     extends TableHelper<PluralityElectionPlace<TownCandidate>, TownCandidate> {
-  const _PluralityTableHelper();
+  @override
+  final List<PluralityElectionPlace<TownCandidate>> places;
+
+  const _PluralityTableHelper(this.places);
 
   @override
   List<String> get columns => const ['Place', 'Candidate', 'Votes'];

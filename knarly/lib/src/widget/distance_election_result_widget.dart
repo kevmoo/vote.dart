@@ -11,16 +11,17 @@ class DistanceElectionResultWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Consumer<VoteTown>(
-        builder: (context, voteTown, __) => const _DistancePlaceRowInfo().build(
-          context,
-          voteTown.distancePlaces,
-        ),
+        builder: (context, voteTown, __) =>
+            _DistancePlaceRowInfo(voteTown.distancePlaces).build(context),
       );
 }
 
 class _DistancePlaceRowInfo
     extends TableHelper<VoteTownDistancePlace, TownCandidate> {
-  const _DistancePlaceRowInfo();
+  @override
+  final List<VoteTownDistancePlace> places;
+
+  const _DistancePlaceRowInfo(this.places);
 
   @override
   List<String> get columns => const ['Place', 'Candidate', 'Distance'];
