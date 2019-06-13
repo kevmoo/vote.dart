@@ -6,17 +6,17 @@ import 'test_util.dart';
 void main() {
   test('sorted candidates', () {
     const ballots = [
-      PluralityBallot("Voter 1", 2),
-      PluralityBallot("Voter 2", 1),
+      PluralityBallot('Voter 1', 2),
+      PluralityBallot('Voter 2', 1),
     ];
 
     PluralityElection(ballots);
   });
 
   test('Plurality Election Hates Double Votes', () {
-    final c1 = "candidate 1";
+    final c1 = 'candidate 1';
 
-    final voter = "Bad Voter";
+    final voter = 'Bad Voter';
     final voters = [voter, voter];
 
     final ballots = voters.map((v) => PluralityBallot(v, c1)).toList();
@@ -29,8 +29,8 @@ void main() {
   group('with candidates', () {
     test('include candidate with no votes', () {
       const ballots = [
-        PluralityBallot("Voter 1", 2),
-        PluralityBallot("Voter 2", 1),
+        PluralityBallot('Voter 1', 2),
+        PluralityBallot('Voter 2', 1),
       ];
 
       final election = PluralityElection(ballots, candidates: const [1, 2, 3]);
@@ -42,8 +42,8 @@ void main() {
 
     test('assert if ballot includes candidate that is not present', () {
       const ballots = [
-        PluralityBallot("Voter 1", 2),
-        PluralityBallot("Voter 2", 1),
+        PluralityBallot('Voter 1', 2),
+        PluralityBallot('Voter 2', 1),
       ];
 
       expect(
@@ -54,27 +54,27 @@ void main() {
   });
 
   test('tied for 1st', () {
-    final c1 = "candidate 1";
-    final c2 = "candidate 2";
-    final c3 = "candidate 3";
+    final c1 = 'candidate 1';
+    final c2 = 'candidate 2';
+    final c3 = 'candidate 3';
 
     var voters = <String>[];
     for (num i = 0; i < 10; i++) {
-      voters.add("c1 Voter $i");
+      voters.add('c1 Voter $i');
     }
 
     final ballots = voters.map((v) => PluralityBallot(v, c1)).toList();
 
     voters = <String>[];
     for (num i = 0; i < 10; i++) {
-      voters.add("c2 Voter ${voters.length}");
+      voters.add('c2 Voter ${voters.length}');
     }
 
     ballots.addAll(voters.map((v) => PluralityBallot(v, c2)).toList());
 
     voters = <String>[];
     for (num i = 0; i < 9; i++) {
-      voters.add("c3 Voter ${voters.length}");
+      voters.add('c3 Voter ${voters.length}');
     }
 
     ballots.addAll(voters.map((v) => PluralityBallot(v, c3)).toList());
@@ -94,9 +94,9 @@ void main() {
   });
 
   test('single vote, single winner', () {
-    final c1 = "candidate 1";
+    final c1 = 'candidate 1';
 
-    final voter = "Bad Voter";
+    final voter = 'Bad Voter';
     final voters = [voter];
 
     final ballots = voters.map((v) => PluralityBallot(v, c1)).toList();

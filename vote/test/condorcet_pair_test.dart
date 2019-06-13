@@ -4,10 +4,10 @@ import 'package:vote/vote.dart';
 import 'test_util.dart';
 
 void main() {
-  final c1 = "Can 1";
-  final c2 = "Can 2";
-  final v1 = "Voter 1";
-  final v2 = "Voter 2";
+  final c1 = 'Can 1';
+  final c2 = 'Can 2';
+  final v1 = 'Voter 1';
+  final v2 = 'Voter 2';
 
   test('no dupe candidates', () {
     expect(() {

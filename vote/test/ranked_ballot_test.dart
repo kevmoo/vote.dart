@@ -4,9 +4,9 @@ import 'package:vote/vote.dart';
 import 'test_util.dart';
 
 void main() {
-  final v2 = "voter2";
-  final c1 = "candidate 1";
-  final c2 = "candidate 2";
+  final v2 = 'voter2';
+  final c1 = 'candidate 1';
+  final c2 = 'candidate 2';
 
   test('no null voters', () {
     expect(() {
