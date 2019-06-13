@@ -33,23 +33,25 @@ class _PluralityTableHelper
       entry;
 
   @override
-  bool isMulti(String column) => column == 'Candidate';
+  bool isMulti(int column) => column == 1;
 
   @override
   String textForColumn(
-      String columnName, PluralityElectionPlace<TownCandidate> entry) {
+    int columnName,
+    PluralityElectionPlace<TownCandidate> entry,
+  ) {
     switch (columnName) {
-      case 'Place':
+      case 0:
         return entry.place.toString();
-      case 'Votes':
+      case 2:
         return entry.voteCount.toString();
     }
     return super.textForColumn(columnName, entry);
   }
 
   @override
-  String textForSubEntry(String columnName, TownCandidate subEntry) {
-    if (columnName == 'Candidate') {
+  String textForSubEntry(int columnName, TownCandidate subEntry) {
+    if (columnName == 1) {
       return subEntry.id;
     }
     return super.textForSubEntry(columnName, subEntry);

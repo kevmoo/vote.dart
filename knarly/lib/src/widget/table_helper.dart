@@ -9,14 +9,14 @@ abstract class TableHelper<Entry, SubEntry> {
 
   Color subEntryColor(SubEntry subEntry);
 
-  bool isMulti(String column);
+  bool isMulti(int columnIndex);
 
-  String textForColumn(String columnName, Entry entry) =>
-      throw ArgumentError('Could not get a value for $columnName from $entry');
+  String textForColumn(int columnIndex, Entry entry) =>
+      throw ArgumentError('Could not get a value for $columnIndex from $entry');
 
-  String textForSubEntry(String columnName, SubEntry subEntry) =>
+  String textForSubEntry(int columnIndex, SubEntry subEntry) =>
       throw ArgumentError(
-          'Could not get a value for $columnName from $subEntry');
+          'Could not get a value for $columnIndex from $subEntry');
 
   Widget build(BuildContext context, List<Entry> places) => DefaultTextStyle(
         textAlign: TextAlign.center,
@@ -40,7 +40,7 @@ abstract class TableHelper<Entry, SubEntry> {
                         : null,
                     border: Border.all(width: _itemPadding),
                   ),
-                  children: columns.map(
+                  children: Iterable<int>.generate(columns.length).map(
                     (column) {
                       if (isMulti(column)) {
                         if (subEntries2.length == 1) {
