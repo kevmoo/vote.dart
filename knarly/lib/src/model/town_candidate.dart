@@ -26,6 +26,9 @@ class TownCandidate implements Comparable<TownCandidate> {
 
   @override
   int get hashCode => id.hashCode;
+
+  @override
+  String toString() => 'TownCandidate($id)';
 }
 
 final _candidateHues = _slice(_maxCandidateCount, 360, 3);
