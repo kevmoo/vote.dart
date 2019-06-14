@@ -35,7 +35,8 @@ class _PluralityTableHelper
   Color subEntryColor(TownCandidate subEntry) => subEntry.color;
 
   @override
-  List<TownCandidate> subEntriesForEntry(PluralityElectionPlace<TownCandidate> entry) =>
+  List<TownCandidate> subEntriesForEntry(
+          PluralityElectionPlace<TownCandidate> entry) =>
       entry;
 
   @override

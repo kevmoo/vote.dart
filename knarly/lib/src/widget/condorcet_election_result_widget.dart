@@ -53,25 +53,43 @@ class _CondorcetTableHelper
   }
 
   @override
-  String textForSubEntry(int columnIndex, TownCandidate subEntry) {
+  Widget widgetForSubEntry(
+      int columnIndex, TownCandidate subEntry, bool isMulti) {
+    String textContent;
+    TextStyle style;
+
     if (columnIndex == 1) {
-      return subEntry.id;
-    }
-
-    if (columnIndex > 1) {
+      textContent = subEntry.id;
+    } else if (columnIndex > 1) {
       final columnCandidate = _election.candidates.elementAt(columnIndex - 2);
+
       if (columnCandidate == subEntry) {
-        return '';
+        textContent = '';
+      } else {
+        final pair = _election.getPair(subEntry, columnCandidate);
+
+        if (pair.isTie) {
+          style = const TextStyle(fontStyle: FontStyle.italic);
+        } else if (pair.winner == subEntry) {
+          style = const TextStyle(fontWeight: FontWeight.bold);
+        }
+
+        final comparison =
+            pair.isTie ? '=' : pair.winner == pair.candidate1 ? '>' : '<';
+        textContent =
+            '${pair.firstOverSecond}$comparison${pair.secondOverFirst}';
       }
-
-      final pair = _election.getPair(subEntry, columnCandidate);
-
-      final comparison =
-          pair.isTie ? '=' : pair.winner == pair.candidate1 ? '>' : '<';
-
-      return '${pair.firstOverSecond} $comparison ${pair.secondOverFirst}';
     }
-    return super.textForSubEntry(columnIndex, subEntry);
+
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 1),
+      color: subEntry.color,
+      padding: const EdgeInsets.all(2),
+      child: Text(
+        textContent,
+        style: style,
+      ),
+    );
   }
 
   @override

@@ -113,10 +113,4 @@ abstract class TableHelper<Entry, SubEntry> {
       );
 }
 
-Widget _tableCell(String content, {Color color}) => Container(
-      color: color,
-      padding: const EdgeInsets.all(2),
-      child: Text(content),
-    );
-
 const double _itemPadding = 1;
