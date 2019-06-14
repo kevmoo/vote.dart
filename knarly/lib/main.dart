@@ -20,17 +20,17 @@ class VoteSimulation extends StatelessWidget {
             providers: const [
               Provider<VoteTown>(builder: _voteTownBuilder),
             ],
-            child: GridView.extent(
-              primary: false,
-              padding: const EdgeInsets.all(10.0),
-              mainAxisSpacing: 10.0,
-              crossAxisSpacing: 10.0,
-              maxCrossAxisExtent: 400,
+            child: Table(
+              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
               children: [
-                const VoteTownWidget(),
-                _header('Distance', const DistanceElectionResultWidget()),
-                _header('Plurality', const PluralityElectionResultWidget()),
-                _header('Condorcet', const CondorcetElectionResultWidget()),
+                TableRow(children: [
+                  const VoteTownWidget(),
+                  _header('Distance', const DistanceElectionResultWidget()),
+                ]),
+                TableRow(children: [
+                  _header('Plurality', const PluralityElectionResultWidget()),
+                  _header('Condorcet', const CondorcetElectionResultWidget()),
+                ]),
               ],
             ),
           ),

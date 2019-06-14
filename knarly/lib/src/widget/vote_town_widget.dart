@@ -57,6 +57,15 @@ class _CandidateFlowDelegate extends FlowDelegate {
   _CandidateFlowDelegate(this._voteTown);
 
   @override
+  Size getSize(BoxConstraints constraints) {
+    var size = constraints.biggest;
+    if (size.height.isInfinite) {
+      size = Size(size.width, size.width);
+    }
+    return size;
+  }
+
+  @override
   BoxConstraints getConstraintsForChild(int i, BoxConstraints constraints) {
     final candidateSize =
         _offsetMultiplier(constraints.biggest) * _candidateScale * 2;
