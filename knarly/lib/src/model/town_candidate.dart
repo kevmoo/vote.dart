@@ -3,6 +3,8 @@ import 'package:flutter_web_ui/ui.dart';
 import '../hsl_color.dart';
 
 class TownCandidate implements Comparable<TownCandidate> {
+  static const candidateString = '🙎';
+
   static const _capitalACharCode = 65;
 
   final String id;

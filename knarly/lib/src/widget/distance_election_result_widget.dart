@@ -24,13 +24,17 @@ class _DistancePlaceRowInfo
   const _DistancePlaceRowInfo(this.places);
 
   @override
-  List<String> get columns => const ['Place', 'Candidate', 'Distance'];
+  List<String> get columns => const [
+        'Place',
+        TownCandidate.candidateString,
+        'Distance',
+      ];
 
   @override
   Color subEntryColor(TownCandidate subEntry) => subEntry.color;
 
   @override
-  List<TownCandidate> subEntries(VoteTownDistancePlace entry) => entry;
+  List<TownCandidate> subEntriesForEntry(VoteTownDistancePlace entry) => entry;
 
   @override
   bool isMulti(int column) => column == 1;

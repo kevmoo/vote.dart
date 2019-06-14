@@ -28,17 +28,21 @@ class _CondorcetTableHelper
   const _CondorcetTableHelper(this._election);
 
   @override
-  List<String> get columns =>
-      ['Place', 'Candidate', ..._election.candidates.map((c) => c.id)];
+  List<String> get columns => [
+        'Place',
+        TownCandidate.candidateString,
+        ..._election.candidates.map((c) => c.id),
+      ];
 
   @override
   Color subEntryColor(TownCandidate subEntry) => subEntry.color;
 
   @override
-  List<TownCandidate> subEntries(ElectionPlace<TownCandidate> entry) => entry;
+  List<TownCandidate> subEntriesForEntry(ElectionPlace<TownCandidate> entry) =>
+      entry;
 
   @override
-  bool isMulti(int columnIndex) => columnIndex >= 1;
+  bool isMulti(int columnIndex) => columnIndex != 0;
 
   @override
   String textForColumn(int columnIndex, ElectionPlace<TownCandidate> entry) {
@@ -74,6 +78,8 @@ class _CondorcetTableHelper
   TableColumnWidth get defaultTableColumnWidth => const IntrinsicColumnWidth();
 
   @override
-  // TODO: implement fontSizeFactor
-  double get fontSizeFactor => 1.0;
+  double get fontSizeFactor => 1.2;
+
+  @override
+  double get headerTextScaleFactor => 1.0;
 }

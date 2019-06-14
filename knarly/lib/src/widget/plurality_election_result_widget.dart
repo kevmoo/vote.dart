@@ -25,13 +25,17 @@ class _PluralityTableHelper
   const _PluralityTableHelper(this.places);
 
   @override
-  List<String> get columns => const ['Place', 'Candidate', 'Votes'];
+  List<String> get columns => const [
+        'Place',
+        TownCandidate.candidateString,
+        'Votes',
+      ];
 
   @override
   Color subEntryColor(TownCandidate subEntry) => subEntry.color;
 
   @override
-  List<TownCandidate> subEntries(PluralityElectionPlace<TownCandidate> entry) =>
+  List<TownCandidate> subEntriesForEntry(PluralityElectionPlace<TownCandidate> entry) =>
       entry;
 
   @override
