@@ -28,4 +28,4 @@ dependency_overrides:
   provider:
     git:
       url: https://github.com/kevmoo/provider
-      ref: flutter_web
+      ref: 5cf4521d4d635d7d7ca8ddbd6e28048a7f319ee0 #flutter_web
