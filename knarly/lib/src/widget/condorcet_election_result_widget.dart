@@ -96,7 +96,7 @@ class _CondorcetTableHelper
   TableColumnWidth get defaultTableColumnWidth => const IntrinsicColumnWidth();
 
   @override
-  double get fontSizeFactor => 1.2;
+  double get fontSizeFactor => 1.5;
 
   @override
   double get headerTextScaleFactor => 1.0;

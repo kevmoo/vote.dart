@@ -21,6 +21,7 @@ class VoteSimulation extends StatelessWidget {
               Provider<VoteTown>(builder: _voteTownBuilder),
             ],
             child: Table(
+              defaultColumnWidth: const FixedColumnWidth(500),
               defaultVerticalAlignment: TableCellVerticalAlignment.middle,
               children: [
                 TableRow(children: [
