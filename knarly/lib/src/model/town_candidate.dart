@@ -7,13 +7,15 @@ class TownCandidate implements Comparable<TownCandidate> {
 
   static const _capitalACharCode = 65;
 
+  final int index;
+
   final String id;
 
   final Color color, dartColor;
 
   final Point location;
 
-  TownCandidate(int index, this.location)
+  TownCandidate(this.index, this.location)
       : assert(index >= 0),
         assert(index < _maxCandidateCount),
         color = HslColor(_candidateHues[index], 1, 0.8).toColor(),
