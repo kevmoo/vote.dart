@@ -1,8 +1,8 @@
 import 'package:flutter_web/material.dart';
 import 'package:knarly/src/model/town_candidate.dart';
+import 'package:knarly/src/vote_town_notifier.dart';
 import 'package:provider/provider.dart';
 
-import '../model/vote_town.dart';
 import '../model/vote_town_distance_place.dart';
 import 'table_helper.dart';
 
@@ -10,9 +10,9 @@ class DistanceElectionResultWidget extends StatelessWidget {
   const DistanceElectionResultWidget();
 
   @override
-  Widget build(BuildContext context) => Consumer<VoteTown>(
-        builder: (context, voteTown, __) =>
-            _DistancePlaceRowInfo(voteTown.distancePlaces).build(context),
+  Widget build(BuildContext context) => Consumer<VoteTownNotifier>(
+        builder: (context, notifier, __) =>
+            _DistancePlaceRowInfo(notifier.value.distancePlaces).build(context),
       );
 }
 

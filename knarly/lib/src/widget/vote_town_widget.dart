@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter_web/material.dart';
 import 'package:knarly/src/model/town_candidate.dart';
+import 'package:knarly/src/vote_town_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../model/vote_town.dart';
@@ -10,19 +11,23 @@ class VoteTownWidget extends StatelessWidget {
   const VoteTownWidget();
 
   @override
-  Widget build(BuildContext context) => Consumer<VoteTown>(
-        builder: (_, voteTown, __) => CustomPaint(
-          painter: _VoteTownPainter(voteTown),
-          child: Flow(
-            children: voteTown.candidates
-                .map(_candidateWidget)
-                .toList(growable: false),
-            delegate: _CandidateFlowDelegate(voteTown),
-          ),
-          size: const Size(400, 400),
-          isComplex: true,
-          willChange: true,
-        ),
+  Widget build(BuildContext context) => Consumer<VoteTownNotifier>(
+        builder: (_, notifier, __) {
+          final voteTown = notifier.value;
+
+          return CustomPaint(
+            painter: _VoteTownPainter(voteTown),
+            child: Flow(
+              children: voteTown.candidates
+                  .map(_candidateWidget)
+                  .toList(growable: false),
+              delegate: _CandidateFlowDelegate(voteTown),
+            ),
+            size: const Size(400, 400),
+            isComplex: true,
+            willChange: true,
+          );
+        },
       );
 }
 

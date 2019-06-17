@@ -1,18 +1,18 @@
 import 'package:flutter_web/material.dart';
 import 'package:knarly/src/model/town_candidate.dart';
+import 'package:knarly/src/vote_town_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:vote/vote.dart';
 
-import '../model/vote_town.dart';
 import 'table_helper.dart';
 
 class PluralityElectionResultWidget extends StatelessWidget {
   const PluralityElectionResultWidget();
 
   @override
-  Widget build(BuildContext context) => Consumer<VoteTown>(
-        builder: (context, voteTown, __) =>
-            _PluralityTableHelper(voteTown.pluralityElection.places)
+  Widget build(BuildContext context) => Consumer<VoteTownNotifier>(
+        builder: (context, notifier, __) =>
+            _PluralityTableHelper(notifier.value.pluralityElection.places)
                 .build(context),
       );
 }

@@ -2,6 +2,7 @@ import 'package:flutter_web/material.dart';
 import 'package:provider/provider.dart';
 
 import 'src/model/vote_town.dart';
+import 'src/vote_town_notifier.dart';
 import 'src/widget/condorcet_election_result_widget.dart';
 import 'src/widget/distance_election_result_widget.dart';
 import 'src/widget/plurality_election_result_widget.dart';
@@ -16,10 +17,8 @@ class VoteSimulation extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
         home: Scaffold(
-          body: MultiProvider(
-            providers: const [
-              Provider<VoteTown>(builder: _voteTownBuilder),
-            ],
+          body: ChangeNotifierProvider<VoteTownNotifier>(
+            builder: _voteTownBuilder,
             child: Table(
               defaultColumnWidth: const FixedColumnWidth(500),
               defaultVerticalAlignment: TableCellVerticalAlignment.middle,
@@ -53,4 +52,5 @@ Widget _header(String header, Widget widget) => Center(
       ),
     );
 
-VoteTown _voteTownBuilder(_) => VoteTown.random();
+VoteTownNotifier _voteTownBuilder(_) =>
+    VoteTownNotifier(VoteTown.random(randomSeed: null));

@@ -1,19 +1,19 @@
 import 'package:flutter_web/material.dart';
+import 'package:knarly/src/vote_town_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:vote/vote.dart';
 
 import '../model/town_candidate.dart';
 import '../model/town_voter.dart';
-import '../model/vote_town.dart';
 import 'table_helper.dart';
 
 class CondorcetElectionResultWidget extends StatelessWidget {
   const CondorcetElectionResultWidget();
 
   @override
-  Widget build(BuildContext context) => Consumer<VoteTown>(
-        builder: (context, voteTown, __) => _CondorcetTableHelper(
-          voteTown.condorcetElection,
+  Widget build(BuildContext context) => Consumer<VoteTownNotifier>(
+        builder: (context, notifier, __) => _CondorcetTableHelper(
+          notifier.value.condorcetElection,
         ).build(context),
       );
 }
