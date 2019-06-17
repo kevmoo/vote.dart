@@ -15,13 +15,46 @@ class VoteTownWidget extends StatelessWidget {
         builder: (_, notifier, __) {
           final voteTown = notifier.value;
 
+          Widget candidateWidget(TownCandidate candidate) => GestureDetector(
+                onPanUpdate: (event) {
+                  if (notifier.townSizeCache == null) {
+                    print('oops? - null last size');
+                    return;
+                  }
+                  notifier.move(
+                      candidate, event.delta * (1 / notifier.townSizeCache));
+                },
+                child: Container(
+                  decoration: ShapeDecoration(
+                    color: candidate.color,
+                    shape: const CircleBorder(),
+                    shadows: const [
+                      BoxShadow(
+                        offset: Offset(-1, 1),
+                        blurRadius: 2,
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Text(
+                      candidate.id,
+                      textScaleFactor: 1.5,
+                    ),
+                  ),
+                ),
+              );
+
+          void _lastSizeCallback(Size value) {
+            notifier.townSizeCache = _offsetMultiplier(value);
+          }
+
           return CustomPaint(
             painter: _VoteTownPainter(voteTown),
             child: Flow(
               children: voteTown.candidates
-                  .map(_candidateWidget)
+                  .map(candidateWidget)
                   .toList(growable: false),
-              delegate: _CandidateFlowDelegate(voteTown),
+              delegate: _CandidateFlowDelegate(voteTown, _lastSizeCallback),
             ),
             size: const Size(400, 400),
             isComplex: true,
@@ -31,25 +64,6 @@ class VoteTownWidget extends StatelessWidget {
       );
 }
 
-Widget _candidateWidget(TownCandidate candidate) => Container(
-      decoration: ShapeDecoration(
-        color: candidate.color,
-        shape: const CircleBorder(),
-        shadows: const [
-          BoxShadow(
-            offset: Offset(-1, 1),
-            blurRadius: 2,
-          ),
-        ],
-      ),
-      child: Center(
-        child: Text(
-          candidate.id,
-          textScaleFactor: 1.5,
-        ),
-      ),
-    );
-
 double _offsetMultiplier(Size size) =>
     math.min(size.height, size.width) /
     (VoteTown.votersAcross * VoteTown.voterSpacing);
@@ -58,8 +72,9 @@ class _CandidateFlowDelegate extends FlowDelegate {
   static const _candidateScale = 4.5;
 
   final VoteTown _voteTown;
+  final void Function(Size) _lastSizeCallback;
 
-  _CandidateFlowDelegate(this._voteTown);
+  _CandidateFlowDelegate(this._voteTown, this._lastSizeCallback);
 
   @override
   Size getSize(BoxConstraints constraints) {
@@ -67,6 +82,7 @@ class _CandidateFlowDelegate extends FlowDelegate {
     if (size.height.isInfinite) {
       size = Size(size.width, size.width);
     }
+    _lastSizeCallback(size);
     return size;
   }
 

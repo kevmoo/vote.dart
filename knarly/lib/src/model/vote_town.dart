@@ -11,10 +11,9 @@ class VoteTown {
   static const votersAcross = 10;
   static const voterSpacing = 10.0;
 
-  final List<TownVoter> voters;
   final List<TownCandidate> candidates;
 
-  VoteTown(this.voters, this.candidates);
+  VoteTown(this.candidates);
 
   factory VoteTown.random({int candidateCount = 5, int randomSeed}) {
     candidateCount ??= 5;
@@ -49,6 +48,10 @@ class VoteTown {
       candidates.add(TownCandidate(candidateNumber++, point));
     }
 
+    return VoteTown(candidates);
+  }
+
+  static List<TownVoter> _createVoters(List<TownCandidate> candidates) {
     TownVoter createVoter(int x, int y) {
       final location = Point(
         voterSpacing / 2 + x * voterSpacing,
@@ -82,8 +85,12 @@ class VoteTown {
         for (var x = 0; x < votersAcross; x++) createVoter(x, y),
     ];
 
-    return VoteTown(voters, candidates);
+    return voters;
   }
+
+  List<TownVoter> get voters => _voters ??= _createVoters(candidates);
+
+  List<TownVoter> _voters;
 
   List<VoteTownDistancePlace> _distancePlaces;
 
