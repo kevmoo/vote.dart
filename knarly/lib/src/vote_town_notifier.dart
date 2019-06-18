@@ -58,17 +58,15 @@ class VoteTownNotifier extends ChangeNotifier
       return;
     }
 
-    final candidateIndex = _value.candidates.indexOf(candidate);
-    final originalCandidate = _value.candidates[candidateIndex];
-
-    if (newFixedLocation == originalCandidate.intLocation) {
-      // didn't move – skip!
+    if (_value.candidates.any((c) => c.intLocation == newFixedLocation)) {
+      // don't overlap an existing candidate – skip!
       return;
     }
 
     final candidatesCopy = _value.candidates.toList(growable: false);
-    candidatesCopy[candidateIndex] =
-        TownCandidate(originalCandidate.index, newFixedLocation);
+    final candidateIndex = _value.candidates.indexOf(candidate);
+    candidatesCopy[candidateIndex] = TownCandidate(
+        _value.candidates[candidateIndex].index, newFixedLocation);
 
     _value = VoteTown(candidatesCopy);
 
