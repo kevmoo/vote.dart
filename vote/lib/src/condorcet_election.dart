@@ -11,7 +11,6 @@ import 'util.dart';
 class CondorcetElection<TVoter, TCandidate extends Comparable>
     extends Election<TVoter, TCandidate> {
   final Set<CondorcetPair<TVoter, TCandidate>> _pairs;
-  final Map<TCandidate, _CondorcetCandidateProfile> _profiles;
 
   @override
   final List<RankedBallot<TVoter, TCandidate>> ballots;
@@ -20,14 +19,14 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
   final List<ElectionPlace<TCandidate>> places;
 
   @override
-  Iterable<TCandidate> get candidates => _profiles.keys;
+  final List<TCandidate> candidates;
 
-  CondorcetElection._internal(
+  const CondorcetElection._internal(
     this._pairs,
-    this._profiles,
+    this.candidates,
     this.ballots,
     this.places,
-  ) : assert(_profilesOrdered(_profiles, places));
+  );
 
   factory CondorcetElection(List<RankedBallot<TVoter, TCandidate>> ballots) {
     // Check voter uniqueness
@@ -54,7 +53,7 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
       }
     }
 
-    final set = map.entries
+    final pairs = map.entries
         .map((entry) => CondorcetPair<TVoter, TCandidate>(
             entry.key.candidate1, entry.key.candidate2, entry.value))
         .toSet();
@@ -70,7 +69,7 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
 
       final lostTiedSet = <TCandidate>{};
 
-      for (final pair in set) {
+      for (final pair in pairs) {
         if (pair.candidate1 == candidate || pair.candidate2 == candidate) {
           final other = (pair.candidate1 == candidate)
               ? pair.candidate2
@@ -111,16 +110,16 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
     }
 
     return CondorcetElection._internal(
-      set,
-      Map.fromEntries(places
-          .expand((place) => place)
-          .map((c) => MapEntry(c, candidateProfiles[c]))),
+      pairs,
+      places.expand((p) => p).toList(growable: false),
       ballots,
       places,
     );
   }
 
   CondorcetPair<TVoter, TCandidate> getPair(TCandidate c1, TCandidate c2) {
+    assert(candidates.contains(c1));
+    assert(candidates.contains(c2));
     final filter = _pairs.where((p) => p.matches(c1, c2));
     assert(filter.length <= 1);
     if (filter.isEmpty) {
@@ -130,24 +129,6 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
       return filter.first.flip(c1, c2);
     }
   }
-}
-
-bool _profilesOrdered<TCandidate extends Comparable>(
-    Map<TCandidate, _CondorcetCandidateProfile> profiles,
-    List<ElectionPlace<TCandidate>> places) {
-  final profileCandidates = profiles.keys.toList(growable: false);
-  final placeCandidates =
-      places.expand((place) => place).toList(growable: false);
-
-  if (profileCandidates.length != placeCandidates.length) {
-    return false;
-  }
-  for (var i = 0; i < profileCandidates.length; i++) {
-    if (profileCandidates[i] != placeCandidates[i]) {
-      return false;
-    }
-  }
-  return true;
 }
 
 class _CondorcetCandidateProfile<TCandidate extends Comparable> {
