@@ -17,21 +17,25 @@ class VoteSimulation extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
         home: Scaffold(
-          body: ChangeNotifierProvider<VoteTownNotifier>(
-            builder: _voteTownBuilder,
-            child: Table(
-              defaultColumnWidth: const FixedColumnWidth(500),
-              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-              children: [
-                TableRow(children: [
-                  const VoteTownWidget(),
-                  _header('Distance', const DistanceElectionResultWidget()),
-                ]),
-                TableRow(children: [
-                  _header('Plurality', const PluralityElectionResultWidget()),
-                  _header('Condorcet', const CondorcetElectionResultWidget()),
-                ]),
-              ],
+          body: Container(
+            alignment: Alignment.topCenter,
+            padding: const EdgeInsets.all(15),
+            child: ChangeNotifierProvider<VoteTownNotifier>(
+              builder: _voteTownBuilder,
+              child: Table(
+                defaultColumnWidth: const FixedColumnWidth(500),
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                children: [
+                  TableRow(children: [
+                    const VoteTownWidget(),
+                    _header('Distance', const DistanceElectionResultWidget()),
+                  ]),
+                  TableRow(children: [
+                    _header('Plurality', const PluralityElectionResultWidget()),
+                    _header('Condorcet', const CondorcetElectionResultWidget()),
+                  ]),
+                ],
+              ),
             ),
           ),
         ),
