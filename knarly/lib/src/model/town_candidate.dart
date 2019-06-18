@@ -1,8 +1,11 @@
+import 'dart:math' as math;
+
 import 'package:flutter_web_ui/ui.dart';
 
 import '../hsl_color.dart';
 
 class TownCandidate implements Comparable<TownCandidate> {
+  static const candidateSpacing = 5.0;
   static const candidateString = '🙎';
 
   static const _capitalACharCode = 65;
@@ -15,9 +18,12 @@ class TownCandidate implements Comparable<TownCandidate> {
 
   final Point location;
 
-  TownCandidate(this.index, this.location)
+  final math.Point<int> intLocation;
+
+  TownCandidate(this.index, this.intLocation)
       : assert(index >= 0),
         assert(index < _maxCandidateCount),
+        location = _unfixPoint(intLocation),
         color = HslColor(_candidateHues[index], 1, 0.8).toColor(),
         dartColor = HslColor(_candidateHues[index], 0.8, 0.7).toColor(),
         id = String.fromCharCode(index + _capitalACharCode);
@@ -69,3 +75,13 @@ List<double> _slice(int itemCount, num maxValue, int sliceCount) {
     }
   }
 }
+
+math.Point<int> fixPoint(Point value) => math.Point(
+      (value.x / TownCandidate.candidateSpacing - 1).round(),
+      (value.y / TownCandidate.candidateSpacing - 1).round(),
+    );
+
+Point _unfixPoint(math.Point<int> value) => Point(
+      (value.x + 1) * TownCandidate.candidateSpacing,
+      (value.y + 1) * TownCandidate.candidateSpacing,
+    );

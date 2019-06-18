@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter_web/material.dart';
 import 'package:flutter_web_ui/ui.dart';
 
@@ -43,29 +41,34 @@ class VoteTownNotifier extends ChangeNotifier
 
     assert(_workingPoint != null);
     _workingPoint += pixelOffset * townSizeRatio;
-
-    final candidateIndex = _value.candidates.indexOf(candidate);
-    final originalCandidate = _value.candidates[candidateIndex];
-
-    final originalFixedLocation = _fixPoint(originalCandidate.location);
-
-    final newFixedLocation = _fixPoint(_workingPoint);
-
-    if (newFixedLocation == originalFixedLocation) {
-      // didn't move – skip!
-      return;
-    }
+    final newFixedLocation = fixPoint(_workingPoint);
 
     if (newFixedLocation.x % 2 == 0 && newFixedLocation.y % 2 == 0) {
       // over a voter - skip!
       return;
     }
 
-    print(newFixedLocation);
+    const candidateLocationUpper = VoteTown.votersAcross * 2 - 1;
+
+    if (newFixedLocation.x < 0 ||
+        newFixedLocation.y < 0 ||
+        newFixedLocation.x >= candidateLocationUpper ||
+        newFixedLocation.y >= candidateLocationUpper) {
+      // off the edge – skip!
+      return;
+    }
+
+    final candidateIndex = _value.candidates.indexOf(candidate);
+    final originalCandidate = _value.candidates[candidateIndex];
+
+    if (newFixedLocation == originalCandidate.intLocation) {
+      // didn't move – skip!
+      return;
+    }
 
     final candidatesCopy = _value.candidates.toList(growable: false);
     candidatesCopy[candidateIndex] =
-        TownCandidate(originalCandidate.index, _unfixPoint(newFixedLocation));
+        TownCandidate(originalCandidate.index, newFixedLocation);
 
     _value = VoteTown(candidatesCopy);
 
@@ -79,15 +82,3 @@ class VoteTownNotifier extends ChangeNotifier
     notifyListeners();
   }
 }
-
-const _halfSpacing = VoteTown.voterSpacing / 2;
-
-math.Point<int> _fixPoint(Point value) => math.Point(
-      (value.x / _halfSpacing - 1).round(),
-      (value.y / _halfSpacing - 1).round(),
-    );
-
-Point _unfixPoint(math.Point<int> value) => Point(
-      (value.x + 1) * _halfSpacing,
-      (value.y + 1) * _halfSpacing,
-    );

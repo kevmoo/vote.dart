@@ -9,7 +9,7 @@ import 'vote_town_distance_place.dart';
 
 class VoteTown {
   static const votersAcross = 10;
-  static const voterSpacing = 10.0;
+  static const voterSpacing = TownCandidate.candidateSpacing * 2;
 
   final List<TownCandidate> candidates;
 
@@ -26,9 +26,9 @@ class VoteTown {
     final candidates = [
       TownCandidate(
         candidateNumber++,
-        const Point(
-          votersAcross * voterSpacing / 2,
-          votersAcross * voterSpacing / 2,
+        const math.Point(
+          votersAcross - 1,
+          votersAcross - 1,
         ),
       ),
     ];
@@ -36,14 +36,14 @@ class VoteTown {
     final rnd = math.Random(randomSeed);
 
     while (candidates.length < candidateCount) {
-      Point point;
+      math.Point<int> point;
 
       do {
-        point = Point(
-          voterSpacing + rnd.nextInt(votersAcross - 1) * voterSpacing,
-          voterSpacing + rnd.nextInt(votersAcross - 1) * voterSpacing,
+        point = math.Point<int>(
+          rnd.nextInt(votersAcross - 1) * 2 + 1,
+          rnd.nextInt(votersAcross - 1) * 2 + 1,
         );
-      } while (candidates.indexWhere((s) => s.location == point) >= 0);
+      } while (candidates.indexWhere((s) => s.intLocation == point) >= 0);
 
       candidates.add(TownCandidate(candidateNumber++, point));
     }
