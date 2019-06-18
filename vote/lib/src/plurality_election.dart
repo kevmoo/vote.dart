@@ -17,6 +17,9 @@ class PluralityElection<TVoter, TCandidate extends Comparable>
   @override
   final List<PluralityElectionPlace<TCandidate>> places;
 
+  @override
+  Iterable<TCandidate> get candidates => _ballotGroup.keys;
+
   const PluralityElection._internal(
     this.ballots,
     this._ballotGroup,
@@ -80,7 +83,4 @@ class PluralityElection<TVoter, TCandidate extends Comparable>
     return PluralityElection<TVoter, TCandidate>._internal(
         ballots, group, places);
   }
-
-  @override
-  Iterable<TCandidate> get candidates => _ballotGroup.keys;
 }
