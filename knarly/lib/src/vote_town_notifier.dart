@@ -11,12 +11,10 @@ class VoteTownNotifier extends ChangeNotifier
   VoteTown get value => _value;
   VoteTown _value;
 
-  /// A value we need to cache for dragging candidates.
-  ///
-  /// A bit weird to put it here, but I can't think of a better place.
-  double townSizeCache;
+  /// The scale from device pixels to the logical size of [VoteTown].
+  double townSizeRatio;
 
-  void move(TownCandidate candidate, Offset offset) {
+  void moveCandidateUpdate(TownCandidate candidate, Offset offset) {
     assert(_value.candidates.contains(candidate));
     assert(offset.isFinite);
 
@@ -24,6 +22,13 @@ class VoteTownNotifier extends ChangeNotifier
       // noop!
       return;
     }
+
+    if (townSizeRatio == null) {
+      print('oops? - null last size');
+      return;
+    }
+
+    offset = offset * townSizeRatio;
 
     final candidatesCopy = _value.candidates.toList(growable: false);
 

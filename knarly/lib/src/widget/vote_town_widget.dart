@@ -16,14 +16,8 @@ class VoteTownWidget extends StatelessWidget {
           final voteTown = notifier.value;
 
           Widget candidateWidget(TownCandidate candidate) => GestureDetector(
-                onPanUpdate: (event) {
-                  if (notifier.townSizeCache == null) {
-                    print('oops? - null last size');
-                    return;
-                  }
-                  notifier.move(
-                      candidate, event.delta * (1 / notifier.townSizeCache));
-                },
+                onPanUpdate: (DragUpdateDetails event) =>
+                    notifier.moveCandidateUpdate(candidate, event.delta),
                 child: Container(
                   decoration: ShapeDecoration(
                     color: candidate.color,
@@ -45,7 +39,7 @@ class VoteTownWidget extends StatelessWidget {
               );
 
           void _lastSizeCallback(Size value) {
-            notifier.townSizeCache = _offsetMultiplier(value);
+            notifier.townSizeRatio = 1/ _offsetMultiplier(value);
           }
 
           return CustomPaint(
