@@ -5,8 +5,6 @@ import 'model/vote_town.dart';
 
 class VoteTownNotifier extends ChangeNotifier
     implements ValueListenable<VoteTown> {
-  VoteTownNotifier(this._value);
-
   @override
   VoteTown get value => _value;
   VoteTown _value;
@@ -14,7 +12,20 @@ class VoteTownNotifier extends ChangeNotifier
   /// The scale from device pixels to the logical size of [VoteTown].
   double townSizeRatio;
 
+  TownCandidate get movingCandidate => _movingCandidate;
+  TownCandidate _movingCandidate;
+
+  VoteTownNotifier(this._value);
+
+  void moveCandidateStart(TownCandidate candidate) {
+    assert(_value.candidates.contains(candidate));
+    assert(_movingCandidate == null);
+    _movingCandidate = candidate;
+    notifyListeners();
+  }
+
   void moveCandidateUpdate(TownCandidate candidate, Offset offset) {
+    assert(candidate == _movingCandidate);
     assert(_value.candidates.contains(candidate));
     assert(offset.isFinite);
 
@@ -30,17 +41,23 @@ class VoteTownNotifier extends ChangeNotifier
 
     offset = offset * townSizeRatio;
 
+    final candidateIndex = _value.candidates.indexOf(candidate);
+    final originalCandidate = _value.candidates[candidateIndex];
+
+    final newLocation = originalCandidate.location + offset;
+
     final candidatesCopy = _value.candidates.toList(growable: false);
-
-    final candidateIndex = candidatesCopy.indexOf(candidate);
-
-    final originalCandidate = candidatesCopy[candidateIndex];
-
-    candidatesCopy[candidateIndex] = TownCandidate(
-        originalCandidate.index, originalCandidate.location + offset);
+    candidatesCopy[candidateIndex] =
+        TownCandidate(originalCandidate.index, newLocation);
 
     _value = VoteTown(candidatesCopy);
 
+    notifyListeners();
+  }
+
+  void moveCandidateEnd(TownCandidate candidate) {
+    assert(candidate == _movingCandidate);
+    _movingCandidate = null;
     notifyListeners();
   }
 }

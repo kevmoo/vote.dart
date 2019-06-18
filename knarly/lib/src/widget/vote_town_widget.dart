@@ -15,31 +15,35 @@ class VoteTownWidget extends StatelessWidget {
         builder: (_, notifier, __) {
           final voteTown = notifier.value;
 
-          Widget candidateWidget(TownCandidate candidate) => GestureDetector(
-                onPanUpdate: (DragUpdateDetails event) =>
-                    notifier.moveCandidateUpdate(candidate, event.delta),
-                child: Container(
-                  decoration: ShapeDecoration(
+          Widget candidateWidget(TownCandidate candidate) {
+            final moving = candidate == notifier.movingCandidate;
+            return GestureDetector(
+              onPanStart: (DragStartDetails details) =>
+                  notifier.moveCandidateStart(candidate),
+              onPanUpdate: (DragUpdateDetails event) =>
+                  notifier.moveCandidateUpdate(candidate, event.delta),
+              onPanEnd: (DragEndDetails details) =>
+                  notifier.moveCandidateEnd(candidate),
+              child: Container(
+                decoration: ShapeDecoration(
                     color: candidate.color,
                     shape: const CircleBorder(),
-                    shadows: const [
-                      BoxShadow(
-                        offset: Offset(-1, 1),
-                        blurRadius: 2,
-                      ),
-                    ],
-                  ),
-                  child: Center(
-                    child: Text(
-                      candidate.id,
-                      textScaleFactor: 1.5,
-                    ),
+                    shadows: moving
+                        ? _movingCandidateShadows
+                        : _stationaryCandidateShadows),
+                child: Center(
+                  child: Text(
+                    candidate.id,
+                    textScaleFactor: 1.5,
+                    style: moving ? _movingWidgetTextStyle : null,
                   ),
                 ),
-              );
+              ),
+            );
+          }
 
           void _lastSizeCallback(Size value) {
-            notifier.townSizeRatio = 1/ _offsetMultiplier(value);
+            notifier.townSizeRatio = 1 / _offsetMultiplier(value);
           }
 
           return CustomPaint(
@@ -56,6 +60,22 @@ class VoteTownWidget extends StatelessWidget {
           );
         },
       );
+
+  static const _movingWidgetTextStyle = TextStyle(fontWeight: FontWeight.bold);
+
+  static const _stationaryCandidateShadows = [
+    BoxShadow(
+      offset: Offset(-1, 1),
+      blurRadius: 2,
+    ),
+  ];
+
+  static const _movingCandidateShadows = [
+    BoxShadow(
+      offset: Offset(-2, 2),
+      blurRadius: 2,
+    ),
+  ];
 }
 
 double _offsetMultiplier(Size size) =>
