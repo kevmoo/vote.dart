@@ -3,9 +3,9 @@ import 'package:provider/provider.dart';
 
 import 'src/model/vote_town.dart';
 import 'src/vote_town_notifier.dart';
-import 'src/widget/condorcet_election_result_widget.dart';
 import 'src/widget/distance_election_result_widget.dart';
 import 'src/widget/plurality_election_result_widget.dart';
+import 'src/widget/ranked_choice_election_result_widget.dart';
 import 'src/widget/vote_town_widget.dart';
 
 void main() => runApp(const VoteSimulation());
@@ -32,7 +32,10 @@ class VoteSimulation extends StatelessWidget {
                   ]),
                   TableRow(children: [
                     _header('Plurality', const PluralityElectionResultWidget()),
-                    _header('Condorcet', const CondorcetElectionResultWidget()),
+                    _header(
+                      'Ranked Choice',
+                      const RankedChoiceElectionResultWidget(),
+                    ),
                   ]),
                 ],
               ),

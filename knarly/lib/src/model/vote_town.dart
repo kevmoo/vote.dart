@@ -115,6 +115,11 @@ class VoteTown {
   CondorcetElection<TownVoter, TownCandidate> get condorcetElection =>
       _condorcetElection ??= CondorcetElection(ballots);
 
+  IrvElection<TownVoter, TownCandidate> _irvElection;
+
+  IrvElection<TownVoter, TownCandidate> get irvElection =>
+      _irvElection ??= IrvElection(ballots);
+
   double _bestDistanceCache;
 
   double get _bestDistance {
