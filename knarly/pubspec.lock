@@ -7,7 +7,7 @@ packages:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.36.3"
+    version: "0.36.4"
   archive:
     dependency: transitive
     description:
@@ -77,7 +77,7 @@ packages:
       name: build_runner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.0"
+    version: "1.6.1"
   build_runner_core:
     dependency: transitive
     description:
@@ -91,7 +91,7 @@ packages:
       name: build_web_compilers
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.2"
   built_collection:
     dependency: transitive
     description:
@@ -147,14 +147,14 @@ packages:
       name: csslib
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.16.0"
+    version: "0.16.1"
   dart_style:
     dependency: transitive
     description:
       name: dart_style
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.8"
+    version: "1.2.9"
   fixnum:
     dependency: transitive
     description:
@@ -167,7 +167,7 @@ packages:
     description:
       path: "packages/flutter_web"
       ref: HEAD
-      resolved-ref: "1ed4317aa91038ba99531037ce00c04672c4bee1"
+      resolved-ref: "8d4c12a4e9b45f82b5cb862840ac47445e136f7b"
       url: "https://github.com/flutter/flutter_web"
     source: git
     version: "0.0.0"
@@ -176,7 +176,7 @@ packages:
     description:
       path: "packages/flutter_web_ui"
       ref: HEAD
-      resolved-ref: "1ed4317aa91038ba99531037ce00c04672c4bee1"
+      resolved-ref: "8d4c12a4e9b45f82b5cb862840ac47445e136f7b"
       url: "https://github.com/flutter/flutter_web"
     source: git
     version: "0.0.0"
@@ -186,7 +186,7 @@ packages:
       name: front_end
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.18"
+    version: "0.1.19"
   glob:
     dependency: transitive
     description:
@@ -263,7 +263,7 @@ packages:
       name: kernel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.18"
+    version: "0.3.19"
   logging:
     dependency: transitive
     description:
@@ -319,7 +319,7 @@ packages:
       name: pedantic
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.7.0"
+    version: "1.8.0+1"
   pool:
     dependency: transitive
     description:
