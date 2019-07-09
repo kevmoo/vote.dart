@@ -46,11 +46,12 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
       ..sort((a, b) => b.compareTo(a));
 
     var placeNumber = 1;
-    final places = placeVotes.map((pv) {
-      final vg = voteGroups[pv];
+    final places = placeVotes.map((vote) {
+      final voteGroup = voteGroups[vote]..sort();
       final currentPlaceNumber = placeNumber;
-      placeNumber += vg.length;
-      return PluralityElectionPlace<TCandidate>(currentPlaceNumber, vg, pv);
+      placeNumber += voteGroup.length;
+      return PluralityElectionPlace<TCandidate>(
+          currentPlaceNumber, voteGroup, vote);
     }).toList(growable: false);
 
     final newlyEliminatedCandidates =
