@@ -5,8 +5,6 @@ import 'town_candidate.dart';
 class TownVoter implements Comparable<TownVoter> {
   final int id;
 
-  Color get color => null;
-
   final Point location;
   final List<TownCandidate> closestCandidates;
 

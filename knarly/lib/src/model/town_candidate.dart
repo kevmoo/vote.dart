@@ -14,7 +14,7 @@ class TownCandidate implements Comparable<TownCandidate> {
 
   final String id;
 
-  final Color color, dartColor;
+  final Color color, darkColor;
 
   final Point location;
 
@@ -25,7 +25,7 @@ class TownCandidate implements Comparable<TownCandidate> {
         assert(index < _maxCandidateCount),
         location = _unfixPoint(intLocation),
         color = HslColor(_candidateHues[index], 1, 0.8).toColor(),
-        dartColor = HslColor(_candidateHues[index], 0.8, 0.7).toColor(),
+        darkColor = HslColor(_candidateHues[index], 0.8, 0.7).toColor(),
         id = String.fromCharCode(index + _capitalACharCode);
 
   @override

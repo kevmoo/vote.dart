@@ -141,7 +141,7 @@ class _VoteTownPainter extends CustomPainter {
 
     for (var voter in _voteTown.voters) {
       canvas.drawCircle(voter.location.toOffset() * offsetMultiplier, radius,
-          Paint()..color = voter.closestCandidates.first.dartColor);
+          Paint()..color = voter.closestCandidates.first.darkColor);
     }
   }
 
