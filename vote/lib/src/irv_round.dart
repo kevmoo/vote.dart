@@ -8,6 +8,11 @@ import 'util.dart';
 
 @immutable
 class IrvRound<TVoter, TCandidate extends Comparable> {
+  /// 1-indexed number of the round.
+  ///
+  /// The first round in an election is `1` and so on.
+  final int number;
+
   final List<PluralityElectionPlace<TCandidate>> places;
 
   final List<IrvElimination<TVoter, TCandidate>> eliminations;
@@ -19,9 +24,11 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
 
   Iterable<TCandidate> get candidates => places.expand((p) => p);
 
-  const IrvRound._internal(this.places, this.eliminations);
+  const IrvRound._internal(this.number, this.places, this.eliminations)
+      : assert(number > 0);
 
   factory IrvRound(
+    int roundNumber,
     List<RankedBallot<TVoter, TCandidate>> ballots,
     Iterable<TCandidate> eliminatedCandidates,
   ) {
@@ -79,7 +86,11 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
       return IrvElimination<TVoter, TCandidate>(c, transfers, exhausted);
     }).toList(growable: false);
 
-    return IrvRound<TVoter, TCandidate>._internal(places, eliminations);
+    return IrvRound<TVoter, TCandidate>._internal(
+      roundNumber,
+      places,
+      eliminations,
+    );
   }
 
   IrvElimination<TVoter, TCandidate> eliminationForCandidate(

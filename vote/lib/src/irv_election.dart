@@ -30,7 +30,11 @@ class IrvElection<TVoter, TCandidate extends Comparable>
     IrvRound<TVoter, TCandidate> round;
     final eliminatedCandidates = <TCandidate>{};
     do {
-      round = IrvRound<TVoter, TCandidate>(ballots, eliminatedCandidates);
+      round = IrvRound<TVoter, TCandidate>(
+        rounds.length + 1,
+        ballots,
+        eliminatedCandidates,
+      );
       rounds.add(round);
       eliminatedCandidates.addAll(round.eliminatedCandidates);
     } while (!round.isFinal);
