@@ -15,12 +15,5 @@ class IrvElimination<TVoter, TCandidate> {
 
   Iterable<TCandidate> get transferredCandidates => _transfers.keys;
 
-  int getTransferCount(TCandidate key) {
-    final list = _transfers[key];
-    if (list == null) {
-      return 0;
-    } else {
-      return list.length;
-    }
-  }
+  int getTransferCount(TCandidate key) => _transfers[key]?.length ?? 0;
 }

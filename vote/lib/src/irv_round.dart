@@ -95,7 +95,10 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
 
   IrvElimination<TVoter, TCandidate> eliminationForCandidate(
           TCandidate candidate) =>
-      eliminations.singleWhere((e) => e.candidate == candidate);
+      eliminations.singleWhere(
+        (e) => e.candidate == candidate,
+        orElse: () => null,
+      );
 
   static List<TCandidate>
       _getEliminatedCandidates<TCandidate extends Comparable>(
