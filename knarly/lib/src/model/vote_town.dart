@@ -114,4 +114,29 @@ class VoteTown {
 
   CondorcetElection<TownVoter, TownCandidate> get condorcetElection =>
       _condorcetElection ??= CondorcetElection(ballots);
+
+  double _bestDistanceCache;
+
+  double get _bestDistance {
+    if (_bestDistanceCache == null) {
+      final locationSum =
+          voters.map((v) => v.location.toOffset()).reduce((a, b) => a + b) /
+              voters.length.toDouble();
+
+      _bestDistanceCache =
+          _averageVoterDistanceTo(this, Point(locationSum.dx, locationSum.dy));
+    }
+    return _bestDistanceCache;
+  }
+}
+
+double _averageVoterDistanceTo(VoteTown town, Point location) =>
+    town.voters.fold<double>(
+        0, (value, voter) => value + (voter.location - location).distance) /
+    town.voters.length;
+
+double averageVoterDistanceTo(VoteTown town, Point location) {
+  final value = _averageVoterDistanceTo(town, location);
+  assert(value >= town._bestDistance);
+  return value - town._bestDistance;
 }
