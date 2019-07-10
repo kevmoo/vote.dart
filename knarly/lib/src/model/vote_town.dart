@@ -136,8 +136,10 @@ class VoteTown {
 }
 
 double _averageVoterDistanceTo(VoteTown town, Point location) =>
-    town.voters.fold<double>(
-        0, (value, voter) => value + (voter.location - location).distance) /
+    town.voters
+        .fold<double>(
+            0, (value, voter) => value + (voter.location - location).distance)
+        .roundToDouble() /
     town.voters.length;
 
 double averageVoterDistanceTo(VoteTown town, Point location) {
