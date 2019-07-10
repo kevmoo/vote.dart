@@ -93,9 +93,8 @@ class _CandidateFlowDelegate extends FlowDelegate {
   @override
   Size getSize(BoxConstraints constraints) {
     var size = constraints.biggest;
-    if (size.height.isInfinite) {
-      size = Size(size.width, size.width);
-    }
+    final minDimension = math.min(size.width, size.height);
+    size = Size(minDimension, minDimension);
     _lastSizeCallback(size);
     return size;
   }
