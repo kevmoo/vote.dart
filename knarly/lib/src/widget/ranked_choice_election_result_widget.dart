@@ -24,14 +24,6 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
   Iterable<List<Widget>> _updateElement(
     IrvElection<TownVoter, TownCandidate> election,
   ) sync* {
-    List<Widget> items;
-
-    void fillItems() {
-      while (items.length <= election.candidates.length) {
-        items.add(Container());
-      }
-    }
-
     List<_Data> lastRoundData;
     for (var round in election.rounds) {
       final roundData = [
@@ -44,43 +36,44 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
             ),
       ];
 
+      List<Widget> createFillers() => List<Widget>.generate(
+            election.candidates.length - roundData.length,
+            (_) => const SizedBox(),
+          );
+
       // Only output place numbers on the first round and follow-up rounds
       // if the place data changes.
       if (lastRoundData == null ||
           !_dataIterableEquals(
               roundData, lastRoundData.take(roundData.length))) {
         // places
-        items = <Widget>[
-          Container(),
+        yield <Widget>[
+          const SizedBox(),
           for (var item in roundData)
             _cell(
               item.placeNumber.toString(),
               fontWeight: FontWeight.bold,
             ),
+          ...createFillers(),
         ];
-        fillItems();
-
-        yield items;
       }
 
       lastRoundData = roundData;
 
       // candidates
-      items = <Widget>[
-        Container(),
+      yield <Widget>[
+        const SizedBox(),
         for (var item in roundData)
           _cell(
             item.candidate.id,
             fontWeight: FontWeight.bold,
             background: item.candidate.color,
           ),
+        ...createFillers(),
       ];
-      fillItems();
-
-      yield items;
 
       // vote count
-      items = <Widget>[
+      yield <Widget>[
         _cell(
           'Round ${round.number}',
           fontWeight: FontWeight.bold,
@@ -90,10 +83,8 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
             item.place.voteCount.toString(),
             background: item.candidate.color,
           ),
+        ...createFillers(),
       ];
-      fillItems();
-
-      yield items;
 
       // eliminations
       for (var elimination in round.eliminations) {
@@ -104,21 +95,20 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
 
           final count = elimination.getTransferCount(candidate);
           if (count == 0) {
-            return Container();
+            return const SizedBox();
           }
           return _cell(count.toString());
         }
 
-        items = <Widget>[
+        yield <Widget>[
           _cell(
             elimination.candidate.id,
             textAlign: TextAlign.right,
             fontStyle: FontStyle.italic,
           ),
           for (var item in roundData) eliminationContent(item.candidate),
+          ...createFillers(),
         ];
-        fillItems();
-        yield items;
       }
     }
   }
@@ -148,6 +138,7 @@ class _Data {
   int get hashCode => placeNumber ^ 7 * candidate.hashCode;
 }
 
+/// Returns a [Widget] with [content] surrounded by padding.
 Widget _cell(
   String content, {
   FontWeight fontWeight,
