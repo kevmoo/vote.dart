@@ -34,10 +34,10 @@ abstract class TableHelper<Entry, SubEntry> {
       throw ArgumentError(
           'Could not get a value for $columnIndex from $subEntry');
 
-  Widget _tableHeader(String content) => Container(
+  Widget _tableHeader(int columnIndex) => Container(
         padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 3),
         child: Text(
-          content,
+          columns[columnIndex],
           textScaleFactor: headerTextScaleFactor,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
@@ -78,7 +78,8 @@ abstract class TableHelper<Entry, SubEntry> {
           children: <TableRow>[
             TableRow(
               decoration: BoxDecoration(color: Colors.grey.shade300),
-              children: columns.map(_tableHeader).toList(growable: false),
+              children:
+                  List.generate(columns.length, _tableHeader, growable: false),
             ),
             ...places.map(
               (entry) {
@@ -90,41 +91,39 @@ abstract class TableHelper<Entry, SubEntry> {
                         : null,
                     border: Border.all(width: _itemPadding),
                   ),
-                  children: Iterable<int>.generate(columns.length).map(
-                    (column) {
-                      if (isMulti(column)) {
-                        if (subEntries.length == 1) {
-                          return widgetForSubEntry(
-                            column,
-                            subEntries.single,
-                            SubEntryPosition.single,
-                          );
-                        } else {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: _itemPadding,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: List.generate(
-                                subEntries.length,
-                                (subEntryIndex) {
-                                  final subEntry = subEntries[subEntryIndex];
-                                  return widgetForSubEntry(
-                                    column,
-                                    subEntry,
-                                    _position(subEntries.length, subEntryIndex),
-                                  );
-                                },
-                              ),
-                            ),
-                          );
-                        }
+                  children: List.generate(columns.length, (column) {
+                    if (isMulti(column)) {
+                      if (subEntries.length == 1) {
+                        return widgetForSubEntry(
+                          column,
+                          subEntries.single,
+                          SubEntryPosition.single,
+                        );
                       } else {
-                        return _tableCell(textForColumn(column, entry));
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: _itemPadding,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: List.generate(
+                              subEntries.length,
+                              (subEntryIndex) {
+                                final subEntry = subEntries[subEntryIndex];
+                                return widgetForSubEntry(
+                                  column,
+                                  subEntry,
+                                  _position(subEntries.length, subEntryIndex),
+                                );
+                              },
+                            ),
+                          ),
+                        );
                       }
-                    },
-                  ).toList(growable: false),
+                    } else {
+                      return _tableCell(textForColumn(column, entry));
+                    }
+                  }, growable: false),
                 );
               },
             )
