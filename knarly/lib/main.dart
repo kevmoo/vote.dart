@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'src/model/vote_town.dart';
 import 'src/vote_town_notifier.dart';
 import 'src/widget/distance_election_result_widget.dart';
+import 'src/widget/k_grid.dart';
 import 'src/widget/plurality_election_result_widget.dart';
 import 'src/widget/ranked_choice_election_result_widget.dart';
 import 'src/widget/vote_town_widget.dart';
@@ -19,20 +20,21 @@ class VoteSimulation extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
         home: Scaffold(
           body: Container(
-            alignment: Alignment.topCenter,
+            alignment: Alignment.center,
             padding: const EdgeInsets.all(15),
             child: ChangeNotifierProvider<VoteTownNotifier>(
               builder: _voteTownBuilder,
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Flexible(
-                    child: VoteTownWidget(),
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 500),
+                    child: const VoteTownWidget(),
                   ),
                   Expanded(
-                    child: ListView(
-                      shrinkWrap: true,
+                    child: KGrid(
+                      maxCrossAxisExtent: 500,
                       children: [
                         _header(
                           'Distance',
@@ -46,8 +48,10 @@ class VoteSimulation extends StatelessWidget {
                           'Ranked Pairs',
                           const CondorcetElectionResultWidget(),
                         ),
-                        _header('Ranked Choice',
-                            const RankedChoiceElectionResultWidget()),
+                        _header(
+                          'Ranked Choice',
+                          const RankedChoiceElectionResultWidget(),
+                        ),
                       ],
                     ),
                   ),
@@ -61,18 +65,16 @@ class VoteSimulation extends StatelessWidget {
 
 Widget _header(String header, Widget widget) => Padding(
       padding: const EdgeInsets.all(5),
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(
-              header,
-              textScaleFactor: 2,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            widget,
-          ],
-        ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(
+            header,
+            textScaleFactor: 2,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          widget,
+        ],
       ),
     );
 
