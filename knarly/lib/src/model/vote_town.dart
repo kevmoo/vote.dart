@@ -23,7 +23,7 @@ class VoteTown {
     var candidateNumber = 0;
 
     final candidates = [
-      TownCandidate(
+      TownCandidate.letter(
         candidateNumber++,
         const math.Point(
           votersAcross - 1,
@@ -44,7 +44,7 @@ class VoteTown {
         );
       } while (candidates.indexWhere((s) => s.intLocation == point) >= 0);
 
-      candidates.add(TownCandidate(candidateNumber++, point));
+      candidates.add(TownCandidate.letter(candidateNumber++, point));
     }
 
     return VoteTown(candidates);

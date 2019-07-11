@@ -65,8 +65,8 @@ class VoteTownNotifier extends ChangeNotifier
 
     final candidatesCopy = _value.candidates.toList(growable: false);
     final candidateIndex = _value.candidates.indexOf(candidate);
-    candidatesCopy[candidateIndex] = TownCandidate(
-        _value.candidates[candidateIndex].index, newFixedLocation);
+    candidatesCopy[candidateIndex] =
+        TownCandidate(candidate.id, candidate.hue, newFixedLocation);
 
     _value = VoteTown(candidatesCopy);
 

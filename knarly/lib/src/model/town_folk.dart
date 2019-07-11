@@ -12,9 +12,16 @@ class TownCandidate extends Candidate {
 
   final math.Point<int> intLocation;
 
-  TownCandidate(int index, this.intLocation)
+  TownCandidate(String id, double hue, this.intLocation)
       : location = _unfixPoint(intLocation),
-        super(index);
+        super(id, hue);
+
+  factory TownCandidate.letter(int index, math.Point<int> intLocation) {
+    assert(index >= 0);
+    assert(index < _maxCandidateCount);
+    return TownCandidate(String.fromCharCode(index + _capitalACharCode),
+        _candidateHues[index], intLocation);
+  }
 
   @override
   int compareTo(Candidate other) => id.compareTo(other.id);
@@ -44,4 +51,40 @@ class TownVoter extends Voter {
   final List<TownCandidate> closestCandidates;
 
   TownVoter(int id, this.location, this.closestCandidates) : super(id);
+}
+
+const _capitalACharCode = 65;
+final _candidateHues = _slice(_maxCandidateCount, 360, 3);
+const int _maxCandidateCount = 26;
+
+List<double> _slice(int itemCount, num maxValue, int sliceCount) {
+  assert(itemCount > 0);
+  assert(maxValue > 0);
+  assert(sliceCount > 1);
+
+  final values = List<double>(itemCount);
+  var index = 0;
+
+  var sliceSize = maxValue / sliceCount;
+
+  for (var i = 0; i < sliceCount; i++) {
+    if (index == itemCount) {
+      return values;
+    } else {
+      values[index++] = i * sliceSize;
+    }
+  }
+
+  for (;;) {
+    final startCount = index;
+    sliceSize = maxValue / (startCount * 2);
+
+    for (var i = 0; i < startCount; i++) {
+      if (index == itemCount) {
+        return values;
+      } else {
+        values[index++] = values[i] + sliceSize;
+      }
+    }
+  }
 }
