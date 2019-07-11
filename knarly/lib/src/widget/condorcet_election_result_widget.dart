@@ -1,11 +1,11 @@
 import 'package:flutter_web/material.dart';
-import 'package:knarly/src/vote_town_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:vote/vote.dart';
 
+import '../helpers/table_helper.dart';
 import '../model/town_candidate.dart';
 import '../model/town_voter.dart';
-import 'table_helper.dart';
+import '../vote_town_notifier.dart';
 
 class CondorcetElectionResultWidget extends StatelessWidget {
   const CondorcetElectionResultWidget();

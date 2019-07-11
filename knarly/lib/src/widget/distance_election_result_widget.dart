@@ -1,10 +1,10 @@
 import 'package:flutter_web/material.dart';
-import 'package:knarly/src/model/town_candidate.dart';
-import 'package:knarly/src/vote_town_notifier.dart';
 import 'package:provider/provider.dart';
 
+import '../helpers/table_helper.dart';
+import '../model/town_candidate.dart';
 import '../model/vote_town_distance_place.dart';
-import 'table_helper.dart';
+import '../vote_town_notifier.dart';
 
 class DistanceElectionResultWidget extends StatelessWidget {
   const DistanceElectionResultWidget();

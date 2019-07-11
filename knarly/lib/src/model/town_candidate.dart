@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter_web_ui/ui.dart';
 
-import '../hsl_color.dart';
+import '../helpers/hsl_color.dart';
 
 class TownCandidate implements Comparable<TownCandidate> {
   static const candidateSpacing = 5.0;
