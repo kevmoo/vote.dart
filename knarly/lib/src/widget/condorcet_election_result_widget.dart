@@ -54,7 +54,7 @@ class _CondorcetTableHelper
 
   @override
   Widget widgetForSubEntry(
-      int columnIndex, TownCandidate subEntry, bool isMulti) {
+      int columnIndex, TownCandidate subEntry, SubEntryPosition position) {
     String textContent;
     TextStyle style;
 
@@ -82,9 +82,17 @@ class _CondorcetTableHelper
     }
 
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 1),
       color: subEntry.color,
-      padding: const EdgeInsets.all(2),
+      // This is some very nuanced logic for making sure the sizes of rows
+      // are consistent as they are merged and un-merged
+      padding: EdgeInsets.fromLTRB(
+        2,
+        position == SubEntryPosition.last || position == SubEntryPosition.middle
+            ? 4
+            : 2,
+        2,
+        2,
+      ),
       child: Text(
         textContent,
         style: style,

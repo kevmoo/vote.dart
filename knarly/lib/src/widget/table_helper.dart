@@ -1,4 +1,12 @@
 import 'package:flutter_web/material.dart';
+import 'package:flutter_web/widgets.dart';
+
+enum SubEntryPosition {
+  first,
+  middle,
+  last,
+  single,
+}
 
 abstract class TableHelper<Entry, SubEntry> {
   const TableHelper();
@@ -35,16 +43,28 @@ abstract class TableHelper<Entry, SubEntry> {
         ),
       );
 
-  Widget _tableCell(String content, {Color color}) => Container(
+  Widget _tableCell(String content, {Color color, SubEntryPosition position}) =>
+      Container(
         color: color,
-        padding: const EdgeInsets.all(2),
+        // This is some very nuanced logic for making sure the sizes of rows
+        // are consistent as they are merged and un-merged
+        padding: EdgeInsets.fromLTRB(
+          3,
+          position == SubEntryPosition.first ? 2 : 3,
+          3,
+          position == SubEntryPosition.last ? 2 : 3,
+        ),
         child: Text(content),
       );
 
-  Widget widgetForSubEntry(int columnIndex, SubEntry subEntry, bool isMulti) =>
+  Widget widgetForSubEntry(
+          int columnIndex, SubEntry subEntry, SubEntryPosition position) =>
       _tableCell(
         textForSubEntry(columnIndex, subEntry),
-        color: isMulti ? subEntryColor(subEntry) : null,
+        position: position,
+        color: position == SubEntryPosition.single
+            ? null
+            : subEntryColor(subEntry),
       );
 
   Widget build(BuildContext context) => DefaultTextStyle(
@@ -77,7 +97,7 @@ abstract class TableHelper<Entry, SubEntry> {
                           return widgetForSubEntry(
                             column,
                             subEntries.single,
-                            false,
+                            SubEntryPosition.single,
                           );
                         } else {
                           return Padding(
@@ -93,7 +113,7 @@ abstract class TableHelper<Entry, SubEntry> {
                                   return widgetForSubEntry(
                                     column,
                                     subEntry,
-                                    true,
+                                    _position(subEntries.length, subEntryIndex),
                                   );
                                 },
                               ),
@@ -111,6 +131,25 @@ abstract class TableHelper<Entry, SubEntry> {
           ],
         ),
       );
+}
+
+SubEntryPosition _position(int length, int index) {
+  assert(length > 0);
+  assert(index >= 0 && index < length);
+  if (length == 1) {
+    assert(index == 0);
+    return SubEntryPosition.single;
+  }
+
+  if (index == 0) {
+    return SubEntryPosition.first;
+  }
+
+  if (index == length - 1) {
+    return SubEntryPosition.last;
+  }
+
+  return SubEntryPosition.middle;
 }
 
 const double _itemPadding = 1;
