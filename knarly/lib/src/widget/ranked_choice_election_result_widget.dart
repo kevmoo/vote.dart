@@ -3,8 +3,8 @@ import 'package:flutter_web/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vote/vote.dart';
 
-import '../model/town_candidate.dart';
-import '../model/town_voter.dart';
+import '../model/candidate.dart';
+import '../model/voter.dart';
 import '../vote_town_notifier.dart';
 
 class RankedChoiceElectionResultWidget extends StatelessWidget {
@@ -22,7 +22,7 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
       );
 
   Iterable<List<Widget>> _updateElement(
-    IrvElection<TownVoter, TownCandidate> election,
+    IrvElection<Voter, Candidate> election,
   ) sync* {
     List<_Data> lastRoundData;
     for (var round in election.rounds) {
@@ -88,7 +88,7 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
 
       // eliminations
       for (var elimination in round.eliminations) {
-        Widget eliminationContent(TownCandidate candidate) {
+        Widget eliminationContent(Candidate candidate) {
           if (candidate == elimination.candidate) {
             return _cell('←');
           }
@@ -119,8 +119,8 @@ bool _dataIterableEquals(Iterable<_Data> a, Iterable<_Data> b) =>
 
 class _Data {
   final int placeNumber;
-  final TownCandidate candidate;
-  final PluralityElectionPlace<TownCandidate> place;
+  final Candidate candidate;
+  final PluralityElectionPlace<Candidate> place;
 
   _Data(
     this.placeNumber,

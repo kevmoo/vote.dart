@@ -1,7 +1,7 @@
 import 'package:flutter_web/material.dart';
 import 'package:flutter_web_ui/ui.dart';
 
-import 'model/town_candidate.dart';
+import 'model/town_folk.dart';
 import 'model/vote_town.dart';
 
 class VoteTownNotifier extends ChangeNotifier

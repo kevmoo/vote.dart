@@ -1,11 +1,8 @@
-import 'dart:math' as math;
-
 import 'package:flutter_web_ui/ui.dart';
 
 import '../helpers/hsl_color.dart';
 
-class TownCandidate implements Comparable<TownCandidate> {
-  static const candidateSpacing = 5.0;
+abstract class Candidate implements Comparable<Candidate> {
   static const candidateString = '🙎';
 
   static const _capitalACharCode = 65;
@@ -16,29 +13,24 @@ class TownCandidate implements Comparable<TownCandidate> {
 
   final Color color, darkColor;
 
-  final Point location;
-
-  final math.Point<int> intLocation;
-
-  TownCandidate(this.index, this.intLocation)
+  Candidate(this.index)
       : assert(index >= 0),
         assert(index < _maxCandidateCount),
-        location = _unfixPoint(intLocation),
         color = HslColor(_candidateHues[index], 1, 0.8).toColor(),
         darkColor = HslColor(_candidateHues[index], 0.8, 0.7).toColor(),
         id = String.fromCharCode(index + _capitalACharCode);
 
   @override
-  int compareTo(TownCandidate other) => id.compareTo(other.id);
+  int compareTo(Candidate other) => id.compareTo(other.id);
 
   @override
-  bool operator ==(other) => other is TownCandidate && id == other.id;
+  bool operator ==(other) => other is Candidate && id == other.id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'TownCandidate($id)';
+  String toString() => 'Candidate($id)';
 }
 
 final _candidateHues = _slice(_maxCandidateCount, 360, 3);
@@ -75,13 +67,3 @@ List<double> _slice(int itemCount, num maxValue, int sliceCount) {
     }
   }
 }
-
-math.Point<int> fixPoint(Point value) => math.Point(
-      (value.x / TownCandidate.candidateSpacing - 1).round(),
-      (value.y / TownCandidate.candidateSpacing - 1).round(),
-    );
-
-Point _unfixPoint(math.Point<int> value) => Point(
-      (value.x + 1) * TownCandidate.candidateSpacing,
-      (value.y + 1) * TownCandidate.candidateSpacing,
-    );

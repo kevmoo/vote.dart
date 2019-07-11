@@ -3,8 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter_web_ui/ui.dart';
 import 'package:vote/vote.dart';
 
-import 'town_candidate.dart';
-import 'town_voter.dart';
+import 'town_folk.dart';
 import 'vote_town_distance_place.dart';
 
 class VoteTown {

@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:vote/vote.dart';
 
 import '../helpers/table_helper.dart';
-import '../model/town_candidate.dart';
-import '../model/town_voter.dart';
+import '../model/candidate.dart';
+import '../model/voter.dart';
 import '../vote_town_notifier.dart';
 
 class CondorcetElectionResultWidget extends StatelessWidget {
@@ -19,33 +19,32 @@ class CondorcetElectionResultWidget extends StatelessWidget {
 }
 
 class _CondorcetTableHelper
-    extends TableHelper<ElectionPlace<TownCandidate>, TownCandidate> {
+    extends TableHelper<ElectionPlace<Candidate>, Candidate> {
   @override
-  List<ElectionPlace<TownCandidate>> get places => _election.places;
+  List<ElectionPlace<Candidate>> get places => _election.places;
 
-  final CondorcetElection<TownVoter, TownCandidate> _election;
+  final CondorcetElection<Voter, Candidate> _election;
 
   const _CondorcetTableHelper(this._election);
 
   @override
   List<String> get columns => [
         'Place',
-        TownCandidate.candidateString,
+        Candidate.candidateString,
         ..._election.candidates.map((c) => c.id),
       ];
 
   @override
-  Color subEntryColor(TownCandidate subEntry) => subEntry.color;
+  Color subEntryColor(Candidate subEntry) => subEntry.color;
 
   @override
-  List<TownCandidate> subEntriesForEntry(ElectionPlace<TownCandidate> entry) =>
-      entry;
+  List<Candidate> subEntriesForEntry(ElectionPlace<Candidate> entry) => entry;
 
   @override
   bool isMulti(int columnIndex) => columnIndex != 0;
 
   @override
-  String textForColumn(int columnIndex, ElectionPlace<TownCandidate> entry) {
+  String textForColumn(int columnIndex, ElectionPlace<Candidate> entry) {
     if (columnIndex == 0) {
       return entry.place.toString();
     }
@@ -54,7 +53,7 @@ class _CondorcetTableHelper
 
   @override
   Widget widgetForSubEntry(
-      int columnIndex, TownCandidate subEntry, SubEntryPosition position) {
+      int columnIndex, Candidate subEntry, SubEntryPosition position) {
     String textContent;
     TextStyle style;
 

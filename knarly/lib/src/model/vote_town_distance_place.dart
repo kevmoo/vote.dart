@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:vote/vote.dart';
 
-import 'town_candidate.dart';
+import 'town_folk.dart';
 import 'vote_town.dart';
 
 class VoteTownDistancePlace extends ElectionPlace<TownCandidate> {

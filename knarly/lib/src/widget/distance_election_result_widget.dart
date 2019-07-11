@@ -2,7 +2,7 @@ import 'package:flutter_web/material.dart';
 import 'package:provider/provider.dart';
 
 import '../helpers/table_helper.dart';
-import '../model/town_candidate.dart';
+import '../model/candidate.dart';
 import '../model/vote_town_distance_place.dart';
 import '../vote_town_notifier.dart';
 
@@ -17,7 +17,7 @@ class DistanceElectionResultWidget extends StatelessWidget {
 }
 
 class _DistancePlaceRowInfo
-    extends TableHelper<VoteTownDistancePlace, TownCandidate> {
+    extends TableHelper<VoteTownDistancePlace, Candidate> {
   @override
   final List<VoteTownDistancePlace> places;
 
@@ -26,15 +26,15 @@ class _DistancePlaceRowInfo
   @override
   List<String> get columns => const [
         'Place',
-        TownCandidate.candidateString,
+        Candidate.candidateString,
         'Distance',
       ];
 
   @override
-  Color subEntryColor(TownCandidate subEntry) => subEntry.color;
+  Color subEntryColor(Candidate subEntry) => subEntry.color;
 
   @override
-  List<TownCandidate> subEntriesForEntry(VoteTownDistancePlace entry) => entry;
+  List<Candidate> subEntriesForEntry(VoteTownDistancePlace entry) => entry;
 
   @override
   bool isMulti(int column) => column == 1;
@@ -51,7 +51,7 @@ class _DistancePlaceRowInfo
   }
 
   @override
-  String textForSubEntry(int columnName, TownCandidate subEntry) {
+  String textForSubEntry(int columnName, Candidate subEntry) {
     if (columnName == 1) {
       return subEntry.id;
     }

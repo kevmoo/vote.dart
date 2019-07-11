@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter_web/material.dart';
 import 'package:provider/provider.dart';
 
-import '../model/town_candidate.dart';
+import '../model/town_folk.dart';
 import '../model/vote_town.dart';
 import '../vote_town_notifier.dart';
 
