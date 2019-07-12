@@ -1,8 +1,7 @@
 name: knarly
 
 environment:
-  # You must be using Flutter >=1.5.0 or Dart >=2.3.0
-  sdk: '>=2.3.0-dev.0.1 <3.0.0'
+  sdk: '>=2.5.0-dev.1.0 <3.0.0'
 
 dependencies:
   collection: ^1.14.0
@@ -29,4 +28,4 @@ dependency_overrides:
   provider:
     git:
       url: https://github.com/kevmoo/provider
-      ref: 5cf4521d4d635d7d7ca8ddbd6e28048a7f319ee0 #flutter_web
+      ref: flutter_web
