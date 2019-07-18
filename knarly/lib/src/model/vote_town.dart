@@ -3,20 +3,9 @@ import 'dart:math' as math;
 import 'package:flutter_web_ui/ui.dart';
 import 'package:vote/vote.dart';
 
-import 'candidate.dart';
+import 'election_data.dart';
 import 'town_folk.dart';
 import 'vote_town_distance_place.dart';
-import 'voter.dart';
-
-abstract class ElectionData {
-  List<Candidate> get candidates;
-
-  CondorcetElection<Voter, Candidate> get condorcetElection;
-
-  IrvElection<Voter, Candidate> get irvElection;
-
-  PluralityElection<Voter, Candidate> get pluralityElection;
-}
 
 class VoteTown implements ElectionData {
   static const votersAcross = 10;

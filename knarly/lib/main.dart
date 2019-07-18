@@ -4,6 +4,7 @@ import 'package:vote/vote.dart';
 
 import 'src/helpers/k_grid.dart';
 import 'src/model/candidate.dart';
+import 'src/model/election_data.dart';
 import 'src/model/vote_town.dart';
 import 'src/model/vote_town_distance_place.dart';
 import 'src/model/voter.dart';
