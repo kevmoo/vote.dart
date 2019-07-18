@@ -5,17 +5,16 @@ import 'package:vote/vote.dart';
 
 import '../model/candidate.dart';
 import '../model/voter.dart';
-import '../vote_town_notifier.dart';
 
 class RankedChoiceElectionResultWidget extends StatelessWidget {
   const RankedChoiceElectionResultWidget();
 
   @override
-  Widget build(BuildContext context) => Consumer<VoteTownNotifier>(
-        builder: (context, notifier, __) => Table(
+  Widget build(BuildContext context) => Consumer<IrvElection<Voter, Candidate>>(
+        builder: (context, irvElection, __) => Table(
           defaultColumnWidth: const IntrinsicColumnWidth(),
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          children: _updateElement(notifier.value.irvElection)
+          children: _updateElement(irvElection)
               .map((list) => TableRow(children: list))
               .toList(growable: false),
         ),

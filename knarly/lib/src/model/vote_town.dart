@@ -3,13 +3,26 @@ import 'dart:math' as math;
 import 'package:flutter_web_ui/ui.dart';
 import 'package:vote/vote.dart';
 
+import 'candidate.dart';
 import 'town_folk.dart';
 import 'vote_town_distance_place.dart';
+import 'voter.dart';
 
-class VoteTown {
+abstract class ElectionData {
+  List<Candidate> get candidates;
+
+  CondorcetElection<Voter, Candidate> get condorcetElection;
+
+  IrvElection<Voter, Candidate> get irvElection;
+
+  PluralityElection<Voter, Candidate> get pluralityElection;
+}
+
+class VoteTown implements ElectionData {
   static const votersAcross = 10;
   static const voterSpacing = TownCandidate.candidateSpacing * 2;
 
+  @override
   final List<TownCandidate> candidates;
 
   VoteTown(this.candidates);
@@ -106,16 +119,19 @@ class VoteTown {
 
   PluralityElection<TownVoter, TownCandidate> _pluralityElection;
 
+  @override
   PluralityElection<TownVoter, TownCandidate> get pluralityElection =>
       _pluralityElection ??= PluralityElection(ballots, candidates: candidates);
 
   CondorcetElection<TownVoter, TownCandidate> _condorcetElection;
 
+  @override
   CondorcetElection<TownVoter, TownCandidate> get condorcetElection =>
       _condorcetElection ??= CondorcetElection(ballots);
 
   IrvElection<TownVoter, TownCandidate> _irvElection;
 
+  @override
   IrvElection<TownVoter, TownCandidate> get irvElection =>
       _irvElection ??= IrvElection(ballots);
 

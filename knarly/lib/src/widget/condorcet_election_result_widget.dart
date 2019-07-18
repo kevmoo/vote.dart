@@ -5,15 +5,15 @@ import 'package:vote/vote.dart';
 import '../helpers/table_helper.dart';
 import '../model/candidate.dart';
 import '../model/voter.dart';
-import '../vote_town_notifier.dart';
 
 class CondorcetElectionResultWidget extends StatelessWidget {
   const CondorcetElectionResultWidget();
 
   @override
-  Widget build(BuildContext context) => Consumer<VoteTownNotifier>(
-        builder: (context, notifier, __) => _CondorcetTableHelper(
-          notifier.value.condorcetElection,
+  Widget build(BuildContext context) =>
+      Consumer<CondorcetElection<Voter, Candidate>>(
+        builder: (context, condorcetElection, __) => _CondorcetTableHelper(
+          condorcetElection,
         ).build(context),
       );
 }

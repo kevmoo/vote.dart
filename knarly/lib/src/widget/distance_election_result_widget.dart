@@ -4,15 +4,14 @@ import 'package:provider/provider.dart';
 import '../helpers/table_helper.dart';
 import '../model/candidate.dart';
 import '../model/vote_town_distance_place.dart';
-import '../vote_town_notifier.dart';
 
 class DistanceElectionResultWidget extends StatelessWidget {
   const DistanceElectionResultWidget();
 
   @override
-  Widget build(BuildContext context) => Consumer<VoteTownNotifier>(
-        builder: (context, notifier, __) =>
-            _DistancePlaceRowInfo(notifier.value.distancePlaces).build(context),
+  Widget build(BuildContext context) => Consumer<List<VoteTownDistancePlace>>(
+        builder: (context, distancePlaces, __) =>
+            _DistancePlaceRowInfo(distancePlaces).build(context),
       );
 }
 

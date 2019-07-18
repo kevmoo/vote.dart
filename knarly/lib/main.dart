@@ -1,8 +1,12 @@
 import 'package:flutter_web/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vote/vote.dart';
 
 import 'src/helpers/k_grid.dart';
+import 'src/model/candidate.dart';
 import 'src/model/vote_town.dart';
+import 'src/model/vote_town_distance_place.dart';
+import 'src/model/voter.dart';
 import 'src/vote_town_notifier.dart';
 import 'src/widget/condorcet_election_result_widget.dart';
 import 'src/widget/distance_election_result_widget.dart';
@@ -24,44 +28,61 @@ class VoteSimulation extends StatelessWidget {
             padding: const EdgeInsets.all(15),
             child: ChangeNotifierProvider<VoteTownNotifier>(
               builder: _voteTownBuilder,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 500),
-                    child: const VoteTownWidget(),
-                  ),
-                  Expanded(
-                    child: KGrid(
-                      maxCrossAxisExtent: 500,
-                      children: [
-                        _header(
-                          'Distance',
-                          const DistanceElectionResultWidget(),
-                        ),
-                        _header(
-                          'Plurality',
-                          const PluralityElectionResultWidget(),
-                        ),
-                        _header(
-                          'Ranked Pairs',
-                          const CondorcetElectionResultWidget(),
-                        ),
-                        _header(
-                          'Ranked Choice',
-                          const RankedChoiceElectionResultWidget(),
-                        ),
-                      ],
+              child: Consumer<VoteTownNotifier>(
+                builder: (_, notifier, __) => Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 500),
+                      child: const VoteTownWidget(),
                     ),
-                  ),
-                ],
+                    Expanded(
+                      child: KGrid(
+                        maxCrossAxisExtent: 500,
+                        children: _gridChildren(notifier.value),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       );
 }
+
+List<Widget> _gridChildren(ElectionData value) => [
+      if (value is VoteTown)
+        _header(
+          'Distance',
+          Provider<List<VoteTownDistancePlace>>.value(
+            value: value.distancePlaces,
+            child: const DistanceElectionResultWidget(),
+          ),
+        ),
+      _header(
+        'Plurality',
+        Provider<PluralityElection<Voter, Candidate>>.value(
+          value: value.pluralityElection,
+          child: const PluralityElectionResultWidget(),
+        ),
+      ),
+      _header(
+        'Ranked Pairs',
+        Provider<CondorcetElection<Voter, Candidate>>.value(
+          value: value.condorcetElection,
+          child: const CondorcetElectionResultWidget(),
+        ),
+      ),
+      _header(
+        'Ranked Choice',
+        Provider<IrvElection<Voter, Candidate>>.value(
+          value: value.irvElection,
+          child: const RankedChoiceElectionResultWidget(),
+        ),
+      ),
+    ];
 
 Widget _header(String header, Widget widget) => Padding(
       padding: const EdgeInsets.all(5),
