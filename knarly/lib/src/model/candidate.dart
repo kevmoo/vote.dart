@@ -2,7 +2,7 @@ import 'package:flutter_web_ui/ui.dart';
 
 import '../helpers/hsl_color.dart';
 
-abstract class Candidate implements Comparable<Candidate> {
+class Candidate implements Comparable<Candidate> {
   static const candidateString = '🙎';
 
   final String id;
