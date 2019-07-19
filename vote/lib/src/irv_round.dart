@@ -37,13 +37,14 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
           .where((c) => !eliminatedCandidates.contains(c))
           .toList(growable: false);
       final winner = pruned.isEmpty ? null : pruned[0];
-      return _Tuple3<TVoter, TCandidate>(b, pruned, winner);
+      return _CleanedBallot<TVoter, TCandidate>(b, pruned, winner);
     });
 
     final candidateAllocations =
-        groupBy<_Tuple3<TVoter, TCandidate>, TCandidate>(
-            cleanedBallots.where((t) => t.winner != null),
-            (tuple) => tuple.winner);
+        groupBy<_CleanedBallot<TVoter, TCandidate>, TCandidate>(
+      cleanedBallots.where((cb) => cb.winner != null),
+      (cb) => cb.winner,
+    );
 
     final voteGroups = groupBy<TCandidate, int>(
         candidateAllocations.keys, (c) => candidateAllocations[c].length);
@@ -69,10 +70,10 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
 
       final exhausted = <RankedBallot<TVoter, TCandidate>>[];
 
-      for (var b in cleanedBallots.where((t) => t.winner == c)) {
-        final rb = b.ballot;
+      for (var cb in cleanedBallots.where((cb) => cb.winner == c)) {
+        final rb = cb.ballot;
         final pruned =
-            b.remaining.where((c) => !newlyEliminatedCandidates.contains(c));
+            cb.remaining.where((c) => !newlyEliminatedCandidates.contains(c));
         if (pruned.isEmpty) {
           // we're exhausted
           exhausted.add(rb);
@@ -134,10 +135,10 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
   }
 }
 
-class _Tuple3<TVoter, TCandidate> {
+class _CleanedBallot<TVoter, TCandidate> {
   final RankedBallot<TVoter, TCandidate> ballot;
   final List<TCandidate> remaining;
   final TCandidate winner;
 
-  const _Tuple3(this.ballot, this.remaining, this.winner);
+  const _CleanedBallot(this.ballot, this.remaining, this.winner);
 }
