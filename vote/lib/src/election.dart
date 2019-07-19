@@ -46,12 +46,10 @@ abstract class Election<TVoter, TCandidate extends Comparable,
       }
     }
 
-    /*
     assert(placeCandidates.containsAll(allReferencedCandidates),
         ['', placeCandidates, allReferencedCandidates].join('\n'));
     assert(placeCandidates.containsAll(candidates),
         ['', placeCandidates, candidates].join('\n'));
-    */
     return true;
   }
 

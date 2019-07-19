@@ -22,8 +22,7 @@ class IrvElection<TVoter, TCandidate extends Comparable>
         );
 
   factory IrvElection(List<RankedBallot<TVoter, TCandidate>> ballots) {
-    final candidates =
-        ballots.expand((b) => b.rank).toSet().toList(growable: false);
+    final candidates = ballots.expand((b) => b.rank).toSet();
 
     final rounds = <IrvRound<TVoter, TCandidate>>[];
 
@@ -39,10 +38,31 @@ class IrvElection<TVoter, TCandidate extends Comparable>
       eliminatedCandidates.addAll(round.eliminatedCandidates);
     } while (!round.isFinal);
 
+    final candidatesInRounds = <TCandidate>{};
     final places = <ElectionPlace<TCandidate>>[];
+    for (var round in rounds.reversed) {
+      for (var roundPlace in round.places) {
+        final copy = roundPlace.toList()
+          ..removeWhere(places.expand((candidate) => candidate).contains);
 
+        if (copy.isNotEmpty) {
+          candidatesInRounds.addAll(copy);
+          final place =
+              places.isEmpty ? 1 : places.last.place + places.last.length;
+          places.add(ElectionPlace(place, copy));
+        }
+      }
+    }
+
+    final remaining = candidates.difference(candidatesInRounds);
+    if (remaining.isNotEmpty) {
+      places.add(ElectionPlace(
+        places.last.place + places.last.length,
+        remaining.toList(growable: false),
+      ));
+    }
     return IrvElection._internal(
-      candidates,
+      candidates.toList(growable: false),
       ballots,
       places,
       rounds,

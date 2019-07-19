@@ -133,17 +133,15 @@ void main() {
     expect(firstElimination.transferredCandidates, unorderedEquals([canC]));
     expect(firstElimination.getTransferCount(canC), 29);
 
-    /*
-  expect(ce.places.length, equals(3));
+    expect(ce.places.length, 3);
 
-  expect(ce.places[0].place, equals(1));
-  expect(ce.places[0], unorderedEquals([canC]));
+    expect(ce.places[0].place, 1);
+    expect(ce.places[0], [canC]);
 
-  expect(ce.places[1].place, equals(2));
-  expect(ce.places[1], unorderedEquals([canCC]));
+    expect(ce.places[1].place, 2);
+    expect(ce.places[1], [canVan]);
 
-  expect(ce.places[2].place, equals(3));
-  expect(ce.places[2], unorderedEquals([canVan]));
-  */
+    expect(ce.places[2].place, 3);
+    expect(ce.places[2], [canCC]);
   });
 }
