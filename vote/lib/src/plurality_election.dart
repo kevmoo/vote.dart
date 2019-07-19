@@ -9,22 +9,16 @@ import 'util.dart';
 
 @immutable
 class PluralityElection<TVoter, TCandidate extends Comparable>
-    extends Election<TVoter, TCandidate> {
-  @override
-  final List<Ballot<TVoter>> ballots;
-  final Map<TCandidate, List<PluralityBallot>> _ballotGroup;
-
-  @override
-  final List<PluralityElectionPlace<TCandidate>> places;
-
-  @override
-  Iterable<TCandidate> get candidates => _ballotGroup.keys;
-
-  const PluralityElection._internal(
-    this.ballots,
-    this._ballotGroup,
-    this.places,
-  );
+    extends Election<TVoter, TCandidate, PluralityElectionPlace<TCandidate>> {
+  PluralityElection._internal(
+    List<Ballot<TVoter>> ballots,
+    List<TCandidate> candidates,
+    List<PluralityElectionPlace<TCandidate>> places,
+  ) : super(
+          candidates: candidates,
+          ballots: ballots,
+          places: places,
+        );
 
   factory PluralityElection(
     List<PluralityBallot<TVoter, TCandidate>> ballots, {
@@ -81,6 +75,9 @@ class PluralityElection<TVoter, TCandidate extends Comparable>
     }
 
     return PluralityElection<TVoter, TCandidate>._internal(
-        ballots, group, places);
+      ballots,
+      group.keys.toList(growable: false),
+      places,
+    );
   }
 }

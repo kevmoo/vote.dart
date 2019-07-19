@@ -9,24 +9,19 @@ import 'util.dart';
 
 @immutable
 class CondorcetElection<TVoter, TCandidate extends Comparable>
-    extends Election<TVoter, TCandidate> {
+    extends Election<TVoter, TCandidate, ElectionPlace<TCandidate>> {
   final Set<CondorcetPair<TVoter, TCandidate>> _pairs;
 
-  @override
-  final List<RankedBallot<TVoter, TCandidate>> ballots;
-
-  @override
-  final List<ElectionPlace<TCandidate>> places;
-
-  @override
-  final List<TCandidate> candidates;
-
-  const CondorcetElection._internal(
+  CondorcetElection._internal(
     this._pairs,
-    this.candidates,
-    this.ballots,
-    this.places,
-  );
+    List<TCandidate> candidates,
+    List<RankedBallot<TVoter, TCandidate>> ballots,
+    List<ElectionPlace<TCandidate>> places,
+  ) : super(
+          candidates: candidates,
+          ballots: ballots,
+          places: places,
+        );
 
   factory CondorcetElection(List<RankedBallot<TVoter, TCandidate>> ballots) {
     // Check voter uniqueness

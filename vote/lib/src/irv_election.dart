@@ -7,19 +7,19 @@ import 'ranked_ballot.dart';
 
 @immutable
 class IrvElection<TVoter, TCandidate extends Comparable>
-    extends Election<TVoter, TCandidate> {
-  @override
-  final List<TCandidate> candidates;
-
-  @override
-  List<ElectionPlace<TCandidate>> get places => throw UnimplementedError();
-
-  @override
-  final List<RankedBallot<TVoter, TCandidate>> ballots;
-
+    extends Election<TVoter, TCandidate, ElectionPlace<TCandidate>> {
   final List<IrvRound<TVoter, TCandidate>> rounds;
 
-  const IrvElection._internal(this.candidates, this.ballots, this.rounds);
+  IrvElection._internal(
+    List<TCandidate> candidates,
+    List<RankedBallot<TVoter, TCandidate>> ballots,
+    List<ElectionPlace<TCandidate>> places,
+    this.rounds,
+  ) : super(
+          candidates: candidates,
+          ballots: ballots,
+          places: places,
+        );
 
   factory IrvElection(List<RankedBallot<TVoter, TCandidate>> ballots) {
     final candidates =
@@ -39,6 +39,13 @@ class IrvElection<TVoter, TCandidate extends Comparable>
       eliminatedCandidates.addAll(round.eliminatedCandidates);
     } while (!round.isFinal);
 
-    return IrvElection._internal(candidates, ballots, rounds);
+    final places = <ElectionPlace<TCandidate>>[];
+
+    return IrvElection._internal(
+      candidates,
+      ballots,
+      places,
+      rounds,
+    );
   }
 }
