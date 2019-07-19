@@ -21,6 +21,9 @@ class RankedBallot<TVoter, TCandidate>
         assert(allUnique(rank));
 
   @override
+  Iterable<TCandidate> referencedCandidates() => rank;
+
+  @override
   String toString() =>
       "{RankedBallot for '$voter', ranked ${rank.length} candidates}";
 

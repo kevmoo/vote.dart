@@ -11,7 +11,7 @@ import 'util.dart';
 class PluralityElection<TVoter, TCandidate extends Comparable>
     extends Election<TVoter, TCandidate, PluralityElectionPlace<TCandidate>> {
   PluralityElection._internal(
-    List<Ballot<TVoter>> ballots,
+    List<Ballot<TVoter, TCandidate>> ballots,
     List<TCandidate> candidates,
     List<PluralityElectionPlace<TCandidate>> places,
   ) : super(

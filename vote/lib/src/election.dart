@@ -13,7 +13,7 @@ abstract class Election<TVoter, TCandidate extends Comparable,
 
   final List<TCandidate> candidates;
 
-  final List<Ballot<TVoter>> ballots;
+  final List<Ballot<TVoter, TCandidate>> ballots;
 
   final List<TElectionPlace> places;
 
