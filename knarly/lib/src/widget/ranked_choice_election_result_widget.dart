@@ -81,6 +81,9 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
           _cell(
             item.place.voteCount.toString(),
             background: item.candidate.color,
+            fontStyle: round.eliminationForCandidate(item.candidate) == null
+                ? null
+                : FontStyle.italic,
           ),
         ...createFillers(),
       ];
