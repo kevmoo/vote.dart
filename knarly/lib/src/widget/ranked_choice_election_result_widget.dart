@@ -6,6 +6,9 @@ import 'package:vote/vote.dart';
 import '../model/candidate.dart';
 import '../model/voter.dart';
 
+// TODO: display candidates that don't even make the first round
+// TODO: replace arrows w/ X for candidates that don't transfer ballots
+
 class RankedChoiceElectionResultWidget extends StatelessWidget {
   const RankedChoiceElectionResultWidget();
 
