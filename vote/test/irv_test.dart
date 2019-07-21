@@ -21,11 +21,11 @@ void main() {
     final election = IrvElection(ballots);
 
     expect(election, isNotNull);
-    //expect(election.singleWinner, equals(canC));
+    expect(election.singleWinner, canA);
     expect(election.candidates, unorderedEquals([canA, canB, canC, canD]));
     expect(election.ballots, unorderedEquals(ballots));
 
-    expect(election.rounds.length, 2);
+    expect(election.rounds, hasLength(2));
 
     final firstRound = election.rounds.first;
     expect(firstRound.eliminatedCandidates, unorderedEquals([canC, canD]));
@@ -51,13 +51,10 @@ void main() {
     final ce = IrvElection([b]);
 
     expect(ce, isNotNull);
-    //expect(ce.singleWinner, equals(c));
-    //expect(ce.candidates, unorderedEquals([c]));
-    expect(ce.rounds.length, 1);
-    //expect(ce.places.length, equals(1));
-
-    //var first = ce.places[0];
-    //expect(first, unorderedEquals([c]));
+    expect(ce.singleWinner, equals(c));
+    expect(ce.candidates, [c]);
+    expect(ce.rounds, hasLength(1));
+    expect(ce.places.single, [c]);
   });
 
   test('three candidates, tied', () {
@@ -120,12 +117,12 @@ void main() {
     final ce = IrvElection(ballots);
 
     expect(ce, isNotNull);
-    //expect(ce.singleWinner, equals(canC));
+    expect(ce.singleWinner, equals(canC));
     expect(ce.candidates, unorderedEquals([canC, canCC, canVan]));
     expect(ce.ballots, unorderedEquals(ballots));
 
     final firstRound = ce.rounds[0];
-    expect(firstRound.places.length, 3);
+    expect(firstRound.places, hasLength(3));
     expect(firstRound.candidates, hasLength(3));
 
     final firstElimination = firstRound.eliminations.single;
@@ -133,7 +130,7 @@ void main() {
     expect(firstElimination.transferredCandidates, unorderedEquals([canC]));
     expect(firstElimination.getTransferCount(canC), 29);
 
-    expect(ce.places.length, 3);
+    expect(ce.places, hasLength(3));
 
     expect(ce.places[0].place, 1);
     expect(ce.places[0], [canC]);
