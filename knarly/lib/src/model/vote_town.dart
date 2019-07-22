@@ -7,7 +7,7 @@ import 'election_data.dart';
 import 'town_folk.dart';
 import 'vote_town_distance_place.dart';
 
-class VoteTown implements ElectionData {
+class VoteTown extends ElectionData {
   static const votersAcross = 10;
   static const voterSpacing = TownCandidate.candidateSpacing * 2;
 
@@ -100,29 +100,12 @@ class VoteTown implements ElectionData {
 
   List<RankedBallot<TownVoter, TownCandidate>> _ballots;
 
+  @override
   List<RankedBallot<TownVoter, TownCandidate>> get ballots =>
       _ballots ??= voters
           .map((v) =>
               RankedBallot<TownVoter, TownCandidate>(v, v.closestCandidates))
           .toList(growable: false);
-
-  PluralityElection<TownVoter, TownCandidate> _pluralityElection;
-
-  @override
-  PluralityElection<TownVoter, TownCandidate> get pluralityElection =>
-      _pluralityElection ??= PluralityElection(ballots, candidates: candidates);
-
-  CondorcetElection<TownVoter, TownCandidate> _condorcetElection;
-
-  @override
-  CondorcetElection<TownVoter, TownCandidate> get condorcetElection =>
-      _condorcetElection ??= CondorcetElection(ballots);
-
-  IrvElection<TownVoter, TownCandidate> _irvElection;
-
-  @override
-  IrvElection<TownVoter, TownCandidate> get irvElection =>
-      _irvElection ??= IrvElection(ballots);
 
   double _bestDistanceCache;
 

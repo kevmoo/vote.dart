@@ -4,11 +4,12 @@ import 'package:vote/vote.dart';
 
 import 'src/helpers/k_grid.dart';
 import 'src/model/candidate.dart';
-import 'src/model/election_data.dart';
 import 'src/model/vote_town.dart';
 import 'src/model/vote_town_distance_place.dart';
 import 'src/model/voter.dart';
-import 'src/view_model/vote_town_notifier.dart';
+import 'src/view_model/editor.dart';
+import 'src/view_model/knarly_view_model.dart';
+import 'src/view_model/vote_town_editor.dart';
 import 'src/widget/condorcet_election_result_widget.dart';
 import 'src/widget/distance_election_result_widget.dart';
 import 'src/widget/plurality_election_result_widget.dart';
@@ -27,21 +28,21 @@ class VoteSimulation extends StatelessWidget {
           body: Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.all(15),
-            child: ChangeNotifierProvider<VoteTownNotifier>(
-              builder: _voteTownBuilder,
-              child: Consumer<VoteTownNotifier>(
+            child: ChangeNotifierProvider<KnarlyViewModel>(
+              builder: (ctx) => KnarlyViewModel(_defaultEditor),
+              child: Consumer<KnarlyViewModel>(
                 builder: (_, notifier, __) => Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ConstrainedBox(
                       constraints: const BoxConstraints(maxWidth: 500),
-                      child: const VoteTownWidget(),
+                      child: _editor(notifier.editor),
                     ),
                     Expanded(
                       child: KGrid(
                         maxCrossAxisExtent: 500,
-                        children: _gridChildren(notifier.value),
+                        children: _gridChildren(notifier),
                       ),
                     ),
                   ],
@@ -53,33 +54,44 @@ class VoteSimulation extends StatelessWidget {
       );
 }
 
-List<Widget> _gridChildren(ElectionData value) => [
-      if (value is VoteTown)
+Widget _editor(KnarlyEditor editor) {
+  if (editor is VoteTownEditor) {
+    return ListenableProvider<VoteTownEditor>.value(
+      value: editor,
+      child: const VoteTownWidget(),
+    );
+  }
+
+  return const Placeholder();
+}
+
+List<Widget> _gridChildren(KnarlyViewModel value) => [
+      if (value.electionData is VoteTown)
         _header(
           'Distance',
           Provider<List<VoteTownDistancePlace>>.value(
-            value: value.distancePlaces,
+            value: (value.electionData as VoteTown).distancePlaces,
             child: const DistanceElectionResultWidget(),
           ),
         ),
       _header(
         'Plurality',
         Provider<PluralityElection<Voter, Candidate>>.value(
-          value: value.pluralityElection,
+          value: value.electionData.pluralityElection,
           child: const PluralityElectionResultWidget(),
         ),
       ),
       _header(
         'Ranked Pairs',
         Provider<CondorcetElection<Voter, Candidate>>.value(
-          value: value.condorcetElection,
+          value: value.electionData.condorcetElection,
           child: const CondorcetElectionResultWidget(),
         ),
       ),
       _header(
         'Ranked Choice',
         Provider<IrvElection<Voter, Candidate>>.value(
-          value: value.irvElection,
+          value: value.electionData.irvElection,
           child: const RankedChoiceElectionResultWidget(),
         ),
       ),
@@ -100,5 +112,4 @@ Widget _header(String header, Widget widget) => Padding(
       ),
     );
 
-VoteTownNotifier _voteTownBuilder(_) =>
-    VoteTownNotifier(VoteTown.random(randomSeed: null));
+KnarlyEditor get _defaultEditor => VoteTownEditor(VoteTown.random());

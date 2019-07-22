@@ -1,15 +1,10 @@
-import 'package:flutter_web/material.dart';
-import 'package:flutter_web_ui/ui.dart';
+import 'package:flutter_web_ui/ui.dart' show Point, Offset;
 
 import '../model/town_folk.dart';
 import '../model/vote_town.dart';
+import 'editor.dart';
 
-class VoteTownNotifier extends ChangeNotifier
-    implements ValueListenable<VoteTown> {
-  @override
-  VoteTown get value => _value;
-  VoteTown _value;
-
+class VoteTownEditor extends KnarlyEditor<VoteTown> {
   /// The scale from device pixels to the logical size of [VoteTown].
   double townSizeRatio;
 
@@ -18,10 +13,10 @@ class VoteTownNotifier extends ChangeNotifier
 
   Point _workingPoint;
 
-  VoteTownNotifier(this._value);
+  VoteTownEditor(VoteTown value) : super(value);
 
   void moveCandidateStart(TownCandidate candidate) {
-    assert(_value.candidates.contains(candidate));
+    assert(value.candidates.contains(candidate));
     assert(_movingCandidate == null);
     assert(_workingPoint == null);
     _movingCandidate = candidate;
@@ -31,7 +26,7 @@ class VoteTownNotifier extends ChangeNotifier
 
   void moveCandidateUpdate(TownCandidate candidate, Offset pixelOffset) {
     assert(candidate == _movingCandidate);
-    assert(_value.candidates.contains(candidate));
+    assert(value.candidates.contains(candidate));
     assert(pixelOffset.isFinite);
 
     if (townSizeRatio == null) {
@@ -58,17 +53,17 @@ class VoteTownNotifier extends ChangeNotifier
       return;
     }
 
-    if (_value.candidates.any((c) => c.intLocation == newFixedLocation)) {
+    if (value.candidates.any((c) => c.intLocation == newFixedLocation)) {
       // don't overlap an existing candidate – skip!
       return;
     }
 
-    final candidatesCopy = _value.candidates.toList(growable: false);
-    final candidateIndex = _value.candidates.indexOf(candidate);
+    final candidatesCopy = value.candidates.toList(growable: false);
+    final candidateIndex = value.candidates.indexOf(candidate);
     candidatesCopy[candidateIndex] =
         TownCandidate(candidate.id, candidate.hue, newFixedLocation);
 
-    _value = VoteTown(candidatesCopy);
+    setValue(VoteTown(candidatesCopy));
 
     notifyListeners();
   }

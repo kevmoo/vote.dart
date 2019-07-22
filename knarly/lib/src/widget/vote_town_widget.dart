@@ -5,13 +5,13 @@ import 'package:provider/provider.dart';
 
 import '../model/town_folk.dart';
 import '../model/vote_town.dart';
-import '../view_model/vote_town_notifier.dart';
+import '../view_model/vote_town_editor.dart';
 
 class VoteTownWidget extends StatelessWidget {
   const VoteTownWidget();
 
   @override
-  Widget build(BuildContext context) => Consumer<VoteTownNotifier>(
+  Widget build(BuildContext context) => Consumer<VoteTownEditor>(
         builder: (_, notifier, __) {
           final voteTown = notifier.value;
 
