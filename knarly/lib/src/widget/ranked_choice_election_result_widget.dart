@@ -7,6 +7,7 @@ import '../model/candidate.dart';
 import '../model/voter.dart';
 
 // TODO: display candidates that don't even make the first round
+// TODO: flip transfer rounds
 
 class RankedChoiceElectionResultWidget extends StatelessWidget {
   const RankedChoiceElectionResultWidget();
