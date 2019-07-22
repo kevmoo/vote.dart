@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../model/town_folk.dart';
 import '../model/vote_town.dart';
-import '../vote_town_notifier.dart';
+import '../view_model/vote_town_notifier.dart';
 
 class VoteTownWidget extends StatelessWidget {
   const VoteTownWidget();

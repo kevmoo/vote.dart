@@ -8,7 +8,7 @@ import 'src/model/election_data.dart';
 import 'src/model/vote_town.dart';
 import 'src/model/vote_town_distance_place.dart';
 import 'src/model/voter.dart';
-import 'src/vote_town_notifier.dart';
+import 'src/view_model/vote_town_notifier.dart';
 import 'src/widget/condorcet_election_result_widget.dart';
 import 'src/widget/distance_election_result_widget.dart';
 import 'src/widget/plurality_election_result_widget.dart';
