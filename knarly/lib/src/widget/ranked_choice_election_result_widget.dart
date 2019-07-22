@@ -7,7 +7,6 @@ import '../model/candidate.dart';
 import '../model/voter.dart';
 
 // TODO: display candidates that don't even make the first round
-// TODO: replace arrows w/ X for candidates that don't transfer ballots
 
 class RankedChoiceElectionResultWidget extends StatelessWidget {
   const RankedChoiceElectionResultWidget();
@@ -95,7 +94,9 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
       for (var elimination in round.eliminations) {
         Widget eliminationContent(Candidate candidate) {
           if (candidate == elimination.candidate) {
-            return _cell('←');
+            final content =
+                elimination.transferredCandidates.isEmpty ? '×' : '←';
+            return _cell(content);
           }
 
           final count = elimination.getTransferCount(candidate);
