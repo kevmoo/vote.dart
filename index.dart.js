@@ -32442,7 +32442,7 @@ M.dgu.prototype={
 tK:function(a){return U.j8(new M.aa(),S.qg)}}
 M.aa.prototype={
 $3:function(a,b,c){var u=null,t=C.e4.v(0,100)
-return M.Mx(u,L.Ii(M.uE(b.a.gYI()),!1,A.cV(u,u,u,u,u,u,u,u,"monospace",u,u,u,u,u,u,!0,u,u,u,u,u,u),u,u),t,u,u,500,C.VB,500)},
+return M.Mx(u,L.Ii(M.uE(b.a.gYI()),!1,C.kC,u,u),t,u,u,500,C.VB,500)},
 $C:"$3",
 $R:3}
 M.Ob.prototype={
@@ -35074,6 +35074,7 @@ C.S3=new Q.nv(0,C.DF)
 C.Vb=new Q.uH(3506372608)
 C.Ny=new Q.uH(4294967040)
 C.ej=new A.XI(!0,C.Vb,null,"monospace",null,null,48,C.Z6,null,null,null,null,null,null,null,null,C.X4,C.Ny,C.N0,null,"fallback style; consider putting your text in a Material",null)
+C.kC=new A.XI(!0,null,null,"monospace",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 C.Ek=new A.XI(!0,null,null,null,null,null,null,C.ju,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 C.V9=new A.XI(!0,null,null,null,null,null,null,null,C.lX,null,null,null,null,null,null,null,null,null,null,null,null,null)
 C.Lg=new Q.jx(0)
