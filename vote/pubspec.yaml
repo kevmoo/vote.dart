@@ -2,7 +2,7 @@ name: vote
 description: >-
   A number of voting methods implemented in Dart with base classes that allow
   easy comparison between implementations.
-version: 0.1.0+1
+version: 0.1.0+2
 author: Kevin Moore <github@j832.com>
 homepage: https://github.com/kevmoo/vote.dart
 
