@@ -1,6 +1,7 @@
 import 'package:flutter_web/material.dart' show ChangeNotifier, ValueListenable;
-import 'package:knarly/src/model/election_data.dart';
 import 'package:meta/meta.dart' show protected;
+
+import '../model/election_data.dart';
 
 abstract class KnarlyEditor<T extends ElectionData> extends ChangeNotifier
     implements ValueListenable<T> {
@@ -18,4 +19,6 @@ abstract class KnarlyEditor<T extends ElectionData> extends ChangeNotifier
   }
 
   KnarlyEditor(this._value);
+
+  bool updateSource(ElectionData data) => false;
 }

@@ -1,4 +1,5 @@
 import 'package:flutter_web/material.dart';
+import 'package:knarly/src/view_model/simple_ballot_editor.dart';
 import 'package:provider/provider.dart';
 import 'package:vote/vote.dart';
 
@@ -7,7 +8,6 @@ import 'src/model/candidate.dart';
 import 'src/model/vote_town.dart';
 import 'src/model/vote_town_distance_place.dart';
 import 'src/model/voter.dart';
-import 'src/view_model/editor.dart';
 import 'src/view_model/knarly_view_model.dart';
 import 'src/view_model/vote_town_editor.dart';
 import 'src/widget/condorcet_election_result_widget.dart';
@@ -29,20 +29,20 @@ class VoteSimulation extends StatelessWidget {
             alignment: Alignment.center,
             padding: const EdgeInsets.all(15),
             child: ChangeNotifierProvider<KnarlyViewModel>(
-              builder: (ctx) => KnarlyViewModel(_defaultEditor),
+              builder: _viewModel,
               child: Consumer<KnarlyViewModel>(
-                builder: (_, notifier, __) => Row(
+                builder: (_, kvm, __) => Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ConstrainedBox(
                       constraints: const BoxConstraints(maxWidth: 500),
-                      child: _editor(notifier.editor),
+                      child: _editor(kvm),
                     ),
                     Expanded(
                       child: KGrid(
                         maxCrossAxisExtent: 500,
-                        children: _gridChildren(notifier),
+                        children: _gridChildren(kvm),
                       ),
                     ),
                   ],
@@ -54,15 +54,26 @@ class VoteSimulation extends StatelessWidget {
       );
 }
 
-Widget _editor(KnarlyEditor editor) {
-  if (editor is VoteTownEditor) {
-    return ListenableProvider<VoteTownEditor>.value(
-      value: editor,
+Widget _editor(KnarlyViewModel kvm) {
+  Widget editorWidget;
+  if (kvm.editor is VoteTownEditor) {
+    editorWidget = ListenableProvider<VoteTownEditor>.value(
+      value: kvm.editor as VoteTownEditor,
       child: const VoteTownWidget(),
     );
+  } else {
+    editorWidget = const Placeholder();
   }
 
-  return const Placeholder();
+  return Column(
+    children: <Widget>[
+      RaisedButton(
+        child: const Text('Toggle'),
+        onPressed: kvm.toggleFunction,
+      ),
+      editorWidget,
+    ],
+  );
 }
 
 List<Widget> _gridChildren(KnarlyViewModel value) => [
@@ -112,4 +123,9 @@ Widget _header(String header, Widget widget) => Padding(
       ),
     );
 
-KnarlyEditor get _defaultEditor => VoteTownEditor(VoteTown.random());
+KnarlyViewModel _viewModel(BuildContext ctx) => KnarlyViewModel(
+      [
+        VoteTownEditor(VoteTown.random()),
+        SimpleBallotEditor(),
+      ],
+    );

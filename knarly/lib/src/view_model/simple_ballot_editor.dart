@@ -7,6 +7,15 @@ import 'editor.dart';
 
 class SimpleBallotEditor extends KnarlyEditor<ElectionData> {
   SimpleBallotEditor() : super(_sampleData());
+
+  @override
+  bool updateSource(ElectionData data) {
+    setValue(ElectionData.fromData(
+      data.ballots,
+      candidates: data.candidates,
+    ));
+    return true;
+  }
 }
 
 ElectionData _sampleData() {
