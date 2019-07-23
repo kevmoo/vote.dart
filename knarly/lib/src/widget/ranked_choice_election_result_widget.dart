@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:vote/vote.dart';
 
 import '../model/candidate.dart';
-import '../model/voter.dart';
 
 // TODO: display candidates that don't even make the first round
 // TODO: flip transfer rounds
@@ -13,7 +12,7 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
   const RankedChoiceElectionResultWidget();
 
   @override
-  Widget build(BuildContext context) => Consumer<IrvElection<Voter, Candidate>>(
+  Widget build(BuildContext context) => Consumer<IrvElection<Candidate>>(
         builder: (context, irvElection, __) => Table(
           defaultColumnWidth: const IntrinsicColumnWidth(),
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
@@ -24,7 +23,7 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
       );
 
   Iterable<List<Widget>> _updateElement(
-    IrvElection<Voter, Candidate> election,
+    IrvElection<Candidate> election,
   ) sync* {
     List<_Data> lastRoundData;
     for (var round in election.rounds) {

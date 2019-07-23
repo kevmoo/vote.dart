@@ -2,7 +2,6 @@ import 'package:vote/vote.dart';
 
 import '../model/candidate.dart';
 import '../model/election_data.dart';
-import '../model/voter.dart';
 import 'editor.dart';
 
 class SimpleBallotEditor extends KnarlyEditor<ElectionData> {
@@ -30,15 +29,13 @@ ElectionData _sampleData() {
   final cC2 = Candidate('C2', hue += 360 / 7);
   final cD1 = Candidate('D1', hue += 360 / 7);
 
-  var voter = 1;
-
   final ballots = [
-    RankedBallot(Voter(voter++), [cA1, cA2, cA3, cB1, cC1, cC2, cD1]),
-    RankedBallot(Voter(voter++), [cA1, cA2, cA3, cB1, cC2, cC1, cD1]),
-    RankedBallot(Voter(voter++), [cA2, cA3, cA1, cB1, cC1, cC2, cD1]),
-    RankedBallot(Voter(voter++), [cA2, cA3, cA1, cB1, cC2, cC1, cD1]),
-    RankedBallot(Voter(voter++), [cA3, cA1, cA2, cB1, cC1, cC2, cD1]),
-    RankedBallot(Voter(voter++), [cA3, cA1, cA2, cB1, cC2, cC1, cD1]),
+    RankedBallot([cA1, cA2, cA3, cB1, cC1, cC2, cD1]),
+    RankedBallot([cA1, cA2, cA3, cB1, cC2, cC1, cD1]),
+    RankedBallot([cA2, cA3, cA1, cB1, cC1, cC2, cD1]),
+    RankedBallot([cA2, cA3, cA1, cB1, cC2, cC1, cD1]),
+    RankedBallot([cA3, cA1, cA2, cB1, cC1, cC2, cD1]),
+    RankedBallot([cA3, cA1, cA2, cB1, cC2, cC1, cD1]),
   ];
 
   return ElectionData.fromData(ballots);

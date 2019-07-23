@@ -5,13 +5,12 @@ import 'ballot.dart';
 import 'election.dart';
 import 'plurality_ballot.dart';
 import 'plurality_election_place.dart';
-import 'util.dart';
 
 @immutable
-class PluralityElection<TVoter, TCandidate extends Comparable>
-    extends Election<TVoter, TCandidate, PluralityElectionPlace<TCandidate>> {
+class PluralityElection<TCandidate extends Comparable>
+    extends Election<TCandidate, PluralityElectionPlace<TCandidate>> {
   PluralityElection._internal(
-    List<Ballot<TVoter, TCandidate>> ballots,
+    List<Ballot<TCandidate>> ballots,
     List<TCandidate> candidates,
     List<PluralityElectionPlace<TCandidate>> places,
   ) : super(
@@ -21,14 +20,10 @@ class PluralityElection<TVoter, TCandidate extends Comparable>
         );
 
   factory PluralityElection(
-    List<PluralityBallot<TVoter, TCandidate>> ballots, {
+    List<PluralityBallot<TCandidate>> ballots, {
     Iterable<TCandidate> candidates,
   }) {
-    // Check voter uniqueness
-    final voterList = ballots.map((pb) => pb.voter).toList(growable: false);
-    assert(allUnique(voterList), 'Only one ballot per voter is allowed');
-
-    final group = groupBy<PluralityBallot<TVoter, TCandidate>, TCandidate>(
+    final group = groupBy<PluralityBallot<TCandidate>, TCandidate>(
         ballots, (pb) => pb.choice);
 
     final noVoteCandidates = <TCandidate>{};
@@ -74,7 +69,7 @@ class PluralityElection<TVoter, TCandidate extends Comparable>
       place += p.length;
     }
 
-    return PluralityElection<TVoter, TCandidate>._internal(
+    return PluralityElection<TCandidate>._internal(
       ballots,
       group.keys.toList(growable: false),
       places,

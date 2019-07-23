@@ -8,14 +8,14 @@ import 'ranked_ballot.dart';
 import 'util.dart';
 
 @immutable
-class CondorcetElection<TVoter, TCandidate extends Comparable>
-    extends Election<TVoter, TCandidate, ElectionPlace<TCandidate>> {
-  final Set<CondorcetPair<TVoter, TCandidate>> _pairs;
+class CondorcetElection<TCandidate extends Comparable>
+    extends Election<TCandidate, ElectionPlace<TCandidate>> {
+  final Set<CondorcetPair<TCandidate>> _pairs;
 
   CondorcetElection._internal(
     this._pairs,
     List<TCandidate> candidates,
-    List<RankedBallot<TVoter, TCandidate>> ballots,
+    List<RankedBallot<TCandidate>> ballots,
     List<ElectionPlace<TCandidate>> places,
   ) : super(
           candidates: candidates,
@@ -23,13 +23,8 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
           places: places,
         );
 
-  factory CondorcetElection(List<RankedBallot<TVoter, TCandidate>> ballots) {
-    // Check voter uniqueness
-    final voterList = ballots.map((b) => b.voter).toList(growable: false);
-    assert(allUnique(voterList), 'Only one ballot per voter is allowed');
-
-    final map = <CondorcetPair<TVoter, TCandidate>,
-        List<RankedBallot<TVoter, TCandidate>>>{};
+  factory CondorcetElection(List<RankedBallot<TCandidate>> ballots) {
+    final map = <CondorcetPair<TCandidate>, List<RankedBallot<TCandidate>>>{};
     final candidateSet = <TCandidate>{};
 
     for (final ballot in ballots) {
@@ -38,18 +33,15 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
         candidateSet.add(candidateI);
 
         for (var j = i + 1; j < ballot.rank.length; j++) {
-          final pair =
-              CondorcetPair<TVoter, TCandidate>(candidateI, ballot.rank[j]);
+          final pair = CondorcetPair<TCandidate>(candidateI, ballot.rank[j]);
 
-          map
-              .putIfAbsent(pair, () => <RankedBallot<TVoter, TCandidate>>[])
-              .add(ballot);
+          map.putIfAbsent(pair, () => <RankedBallot<TCandidate>>[]).add(ballot);
         }
       }
     }
 
     final pairs = map.entries
-        .map((entry) => CondorcetPair<TVoter, TCandidate>(
+        .map((entry) => CondorcetPair<TCandidate>(
             entry.key.candidate1, entry.key.candidate2, entry.value))
         .toSet();
 
@@ -112,7 +104,7 @@ class CondorcetElection<TVoter, TCandidate extends Comparable>
     );
   }
 
-  CondorcetPair<TVoter, TCandidate> getPair(TCandidate c1, TCandidate c2) {
+  CondorcetPair<TCandidate> getPair(TCandidate c1, TCandidate c2) {
     assert(candidates.contains(c1));
     assert(candidates.contains(c2));
     final filter = _pairs.where((p) => p.matches(c1, c2));

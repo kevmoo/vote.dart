@@ -1,12 +1,11 @@
 import 'package:meta/meta.dart';
 
 import 'ranked_ballot.dart';
-import 'util.dart';
 
 @immutable
-class CondorcetPair<TVoter, TCandidate extends Comparable> {
+class CondorcetPair<TCandidate extends Comparable> {
   final TCandidate candidate1, candidate2;
-  final List<RankedBallot<TVoter, TCandidate>> ballots;
+  final List<RankedBallot<TCandidate>> ballots;
   final int firstOverSecond;
   final int secondOverFirst;
 
@@ -19,7 +18,7 @@ class CondorcetPair<TVoter, TCandidate extends Comparable> {
   );
 
   factory CondorcetPair(TCandidate can1, TCandidate can2,
-      [List<RankedBallot<TVoter, TCandidate>> ballots]) {
+      [List<RankedBallot<TCandidate>> ballots]) {
     assert(can1 != null, 'can1');
     assert(can2 != null, 'can2');
     assert(can1 != can2, 'can1 and can2 must be different');
@@ -33,8 +32,6 @@ class CondorcetPair<TVoter, TCandidate extends Comparable> {
     if (ballots == null) {
       return CondorcetPair._internal(can1, can2, null, 0, 0);
     } else {
-      assert(allUnique(ballots), 'Only one ballot per voter is allowed');
-
       var fos = 0;
       var sof = 0;
       for (var b in ballots) {
@@ -84,7 +81,7 @@ class CondorcetPair<TVoter, TCandidate extends Comparable> {
   }
 
   // sometimes it's nice to deal w/ a properly aligned pair
-  CondorcetPair<TVoter, TCandidate> flip(TCandidate can1, TCandidate can2) {
+  CondorcetPair<TCandidate> flip(TCandidate can1, TCandidate can2) {
     if (candidate1.compareTo(candidate2) > 0) {
       throw ArgumentError('already flipped!');
     }

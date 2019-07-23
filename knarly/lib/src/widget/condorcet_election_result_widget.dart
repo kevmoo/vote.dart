@@ -4,14 +4,12 @@ import 'package:vote/vote.dart';
 
 import '../helpers/table_helper.dart';
 import '../model/candidate.dart';
-import '../model/voter.dart';
 
 class CondorcetElectionResultWidget extends StatelessWidget {
   const CondorcetElectionResultWidget();
 
   @override
-  Widget build(BuildContext context) =>
-      Consumer<CondorcetElection<Voter, Candidate>>(
+  Widget build(BuildContext context) => Consumer<CondorcetElection<Candidate>>(
         builder: (context, condorcetElection, __) => _CondorcetTableHelper(
           condorcetElection,
         ).build(context),
@@ -23,7 +21,7 @@ class _CondorcetTableHelper
   @override
   List<ElectionPlace<Candidate>> get places => _election.places;
 
-  final CondorcetElection<Voter, Candidate> _election;
+  final CondorcetElection<Candidate> _election;
 
   const _CondorcetTableHelper(this._election);
 

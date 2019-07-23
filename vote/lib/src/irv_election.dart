@@ -6,13 +6,13 @@ import 'irv_round.dart';
 import 'ranked_ballot.dart';
 
 @immutable
-class IrvElection<TVoter, TCandidate extends Comparable>
-    extends Election<TVoter, TCandidate, ElectionPlace<TCandidate>> {
-  final List<IrvRound<TVoter, TCandidate>> rounds;
+class IrvElection<TCandidate extends Comparable>
+    extends Election<TCandidate, ElectionPlace<TCandidate>> {
+  final List<IrvRound<TCandidate>> rounds;
 
   IrvElection._internal(
     List<TCandidate> candidates,
-    List<RankedBallot<TVoter, TCandidate>> ballots,
+    List<RankedBallot<TCandidate>> ballots,
     List<ElectionPlace<TCandidate>> places,
     this.rounds,
   ) : super(
@@ -21,15 +21,15 @@ class IrvElection<TVoter, TCandidate extends Comparable>
           places: places,
         );
 
-  factory IrvElection(List<RankedBallot<TVoter, TCandidate>> ballots) {
+  factory IrvElection(List<RankedBallot<TCandidate>> ballots) {
     final candidates = ballots.expand((b) => b.rank).toSet();
 
-    final rounds = <IrvRound<TVoter, TCandidate>>[];
+    final rounds = <IrvRound<TCandidate>>[];
 
-    IrvRound<TVoter, TCandidate> round;
+    IrvRound<TCandidate> round;
     final eliminatedCandidates = <TCandidate>{};
     do {
-      round = IrvRound<TVoter, TCandidate>(
+      round = IrvRound<TCandidate>(
         rounds.length + 1,
         ballots,
         eliminatedCandidates,

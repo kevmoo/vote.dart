@@ -4,14 +4,12 @@ import 'package:vote/vote.dart';
 
 import '../helpers/table_helper.dart';
 import '../model/candidate.dart';
-import '../model/voter.dart';
 
 class PluralityElectionResultWidget extends StatelessWidget {
   const PluralityElectionResultWidget();
 
   @override
-  Widget build(BuildContext context) =>
-      Consumer<PluralityElection<Voter, Candidate>>(
+  Widget build(BuildContext context) => Consumer<PluralityElection<Candidate>>(
         builder: (context, value, __) =>
             _PluralityTableHelper(value.places).build(context),
       );

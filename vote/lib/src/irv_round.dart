@@ -7,7 +7,7 @@ import 'ranked_ballot.dart';
 import 'util.dart';
 
 @immutable
-class IrvRound<TVoter, TCandidate extends Comparable> {
+class IrvRound<TCandidate extends Comparable> {
   /// 1-indexed number of the round.
   ///
   /// The first round in an election is `1` and so on.
@@ -15,7 +15,7 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
 
   final List<PluralityElectionPlace<TCandidate>> places;
 
-  final List<IrvElimination<TVoter, TCandidate>> eliminations;
+  final List<IrvElimination<TCandidate>> eliminations;
 
   bool get isFinal => eliminations.isEmpty;
 
@@ -29,7 +29,7 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
 
   factory IrvRound(
     int roundNumber,
-    List<RankedBallot<TVoter, TCandidate>> ballots,
+    List<RankedBallot<TCandidate>> ballots,
     Iterable<TCandidate> eliminatedCandidates,
   ) {
     final cleanedBallots = ballots.map((b) {
@@ -37,11 +37,11 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
           .where((c) => !eliminatedCandidates.contains(c))
           .toList(growable: false);
       final winner = pruned.isEmpty ? null : pruned[0];
-      return _CleanedBallot<TVoter, TCandidate>(b, pruned, winner);
+      return _CleanedBallot<TCandidate>(b, pruned, winner);
     });
 
     final candidateAllocations =
-        groupBy<_CleanedBallot<TVoter, TCandidate>, TCandidate>(
+        groupBy<_CleanedBallot<TCandidate>, TCandidate>(
       cleanedBallots.where((cb) => cb.winner != null),
       (cb) => cb.winner,
     );
@@ -66,9 +66,9 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
         _getEliminatedCandidates<TCandidate>(places);
 
     final eliminations = newlyEliminatedCandidates.map((TCandidate c) {
-      final transfers = <TCandidate, List<RankedBallot<TVoter, TCandidate>>>{};
+      final transfers = <TCandidate, List<RankedBallot<TCandidate>>>{};
 
-      final exhausted = <RankedBallot<TVoter, TCandidate>>[];
+      final exhausted = <RankedBallot<TCandidate>>[];
 
       for (var cb in cleanedBallots.where((cb) => cb.winner == c)) {
         final rb = cb.ballot;
@@ -84,18 +84,17 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
         }
       }
 
-      return IrvElimination<TVoter, TCandidate>(c, transfers, exhausted);
+      return IrvElimination<TCandidate>(c, transfers, exhausted);
     }).toList(growable: false);
 
-    return IrvRound<TVoter, TCandidate>._internal(
+    return IrvRound<TCandidate>._internal(
       roundNumber,
       places,
       eliminations,
     );
   }
 
-  IrvElimination<TVoter, TCandidate> eliminationForCandidate(
-          TCandidate candidate) =>
+  IrvElimination<TCandidate> eliminationForCandidate(TCandidate candidate) =>
       eliminations.singleWhere(
         (e) => e.candidate == candidate,
         orElse: () => null,
@@ -135,8 +134,8 @@ class IrvRound<TVoter, TCandidate extends Comparable> {
   }
 }
 
-class _CleanedBallot<TVoter, TCandidate> {
-  final RankedBallot<TVoter, TCandidate> ballot;
+class _CleanedBallot<TCandidate> {
+  final RankedBallot<TCandidate> ballot;
   final List<TCandidate> remaining;
   final TCandidate winner;
 

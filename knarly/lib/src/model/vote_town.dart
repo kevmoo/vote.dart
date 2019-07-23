@@ -98,14 +98,12 @@ class VoteTown extends ElectionData {
   List<VoteTownDistancePlace> get distancePlaces =>
       _distancePlaces ??= VoteTownDistancePlace.create(this);
 
-  List<RankedBallot<TownVoter, TownCandidate>> _ballots;
+  List<RankedBallot<TownCandidate>> _ballots;
 
   @override
-  List<RankedBallot<TownVoter, TownCandidate>> get ballots =>
-      _ballots ??= voters
-          .map((v) =>
-              RankedBallot<TownVoter, TownCandidate>(v, v.closestCandidates))
-          .toList(growable: false);
+  List<RankedBallot<TownCandidate>> get ballots => _ballots ??= voters
+      .map((v) => RankedBallot<TownCandidate>(v.closestCandidates))
+      .toList(growable: false);
 
   double _bestDistanceCache;
 

@@ -7,7 +7,6 @@ import 'src/helpers/k_grid.dart';
 import 'src/model/candidate.dart';
 import 'src/model/vote_town.dart';
 import 'src/model/vote_town_distance_place.dart';
-import 'src/model/voter.dart';
 import 'src/view_model/knarly_view_model.dart';
 import 'src/view_model/vote_town_editor.dart';
 import 'src/widget/condorcet_election_result_widget.dart';
@@ -87,21 +86,21 @@ List<Widget> _gridChildren(KnarlyViewModel value) => [
         ),
       _header(
         'Plurality',
-        Provider<PluralityElection<Voter, Candidate>>.value(
+        Provider<PluralityElection<Candidate>>.value(
           value: value.electionData.pluralityElection,
           child: const PluralityElectionResultWidget(),
         ),
       ),
       _header(
         'Ranked Pairs',
-        Provider<CondorcetElection<Voter, Candidate>>.value(
+        Provider<CondorcetElection<Candidate>>.value(
           value: value.electionData.condorcetElection,
           child: const CondorcetElectionResultWidget(),
         ),
       ),
       _header(
         'Ranked Choice',
-        Provider<IrvElection<Voter, Candidate>>.value(
+        Provider<IrvElection<Candidate>>.value(
           value: value.electionData.irvElection,
           child: const RankedChoiceElectionResultWidget(),
         ),

@@ -6,31 +6,18 @@ import 'test_util.dart';
 void main() {
   test('sorted candidates', () {
     const ballots = [
-      PluralityBallot('Voter 1', 2),
-      PluralityBallot('Voter 2', 1),
+      PluralityBallot(2),
+      PluralityBallot(1),
     ];
 
     PluralityElection(ballots);
   });
 
-  test('Plurality Election Hates Double Votes', () {
-    final c1 = 'candidate 1';
-
-    final voter = 'Bad Voter';
-    final voters = [voter, voter];
-
-    final ballots = voters.map((v) => PluralityBallot(v, c1)).toList();
-
-    expect(() {
-      PluralityElection(ballots);
-    }, throwsAssertionError);
-  });
-
   group('with candidates', () {
     test('include candidate with no votes', () {
       const ballots = [
-        PluralityBallot('Voter 1', 2),
-        PluralityBallot('Voter 2', 1),
+        PluralityBallot(2),
+        PluralityBallot(1),
       ];
 
       final election = PluralityElection(ballots, candidates: const [1, 2, 3]);
@@ -42,8 +29,8 @@ void main() {
 
     test('assert if ballot includes candidate that is not present', () {
       const ballots = [
-        PluralityBallot('Voter 1', 2),
-        PluralityBallot('Voter 2', 1),
+        PluralityBallot(2),
+        PluralityBallot(1),
       ];
 
       expect(
@@ -58,55 +45,37 @@ void main() {
     final c2 = 'candidate 2';
     final c3 = 'candidate 3';
 
-    var voters = <String>[];
-    for (num i = 0; i < 10; i++) {
-      voters.add('c1 Voter $i');
-    }
-
-    final ballots = voters.map((v) => PluralityBallot(v, c1)).toList();
-
-    voters = <String>[];
-    for (num i = 0; i < 10; i++) {
-      voters.add('c2 Voter ${voters.length}');
-    }
-
-    ballots.addAll(voters.map((v) => PluralityBallot(v, c2)).toList());
-
-    voters = <String>[];
-    for (num i = 0; i < 9; i++) {
-      voters.add('c3 Voter ${voters.length}');
-    }
-
-    ballots.addAll(voters.map((v) => PluralityBallot(v, c3)).toList());
+    final ballots = [
+      ...Iterable.generate(10, (_) => PluralityBallot(c1)),
+      ...Iterable.generate(10, (_) => PluralityBallot(c2)),
+      ...Iterable.generate(9, (_) => PluralityBallot(c3))
+    ];
 
     final election = PluralityElection(ballots);
     expect(election.singleWinner, isNull);
-    expect(election.places.length, equals(2));
+    expect(election.places, hasLength(2));
 
     final firstPlace = election.places[0];
     expect(firstPlace.place, equals(1));
-    expect(firstPlace.length, equals(2));
+    expect(firstPlace, hasLength(2));
 
     final thirdPlace = election.places[1];
     expect(thirdPlace.place, equals(3));
-    expect(thirdPlace.length, equals(1));
+    expect(thirdPlace, hasLength(1));
     expect(thirdPlace[0], equals(c3));
   });
 
   test('single vote, single winner', () {
     final c1 = 'candidate 1';
 
-    final voter = 'Bad Voter';
-    final voters = [voter];
-
-    final ballots = voters.map((v) => PluralityBallot(v, c1)).toList();
+    final ballots = [PluralityBallot(c1)];
 
     final election = PluralityElection(ballots);
     expect(election.singleWinner, equals(c1));
-    expect(election.places.length, equals(1));
+    expect(election.places, hasLength(1));
 
     final firstPlace = election.places[0];
-    expect(firstPlace.length, equals(1));
+    expect(firstPlace, hasLength(1));
     expect(firstPlace[0], equals(c1));
   });
 }

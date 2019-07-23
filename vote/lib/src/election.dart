@@ -4,7 +4,7 @@ import 'package:vote/src/util.dart';
 import 'ballot.dart';
 import 'election_place.dart';
 
-abstract class Election<TVoter, TCandidate extends Comparable,
+abstract class Election<TCandidate extends Comparable,
     TElectionPlace extends ElectionPlace<TCandidate>> {
   Election({
     @required this.candidates,
@@ -55,7 +55,7 @@ abstract class Election<TVoter, TCandidate extends Comparable,
 
   final List<TCandidate> candidates;
 
-  final List<Ballot<TVoter, TCandidate>> ballots;
+  final List<Ballot<TCandidate>> ballots;
 
   final List<TElectionPlace> places;
 

@@ -8,14 +8,11 @@ void main() {
     final canC = 'C';
     final canD = 'D';
 
-    var voter = 1;
-
     final ballots = [
-      for (var i = 0; i < 10; i++) RankedBallot('Voter ${voter++}', [canA]),
-      for (var i = 0; i < 8; i++) RankedBallot('Voter ${voter++}', [canB]),
-      for (var i = 0; i < 2; i++)
-        RankedBallot('Voter ${voter++}', [canC, canD]),
-      for (var i = 0; i < 2; i++) RankedBallot('Voter ${voter++}', [canD, canC])
+      for (var i = 0; i < 10; i++) RankedBallot([canA]),
+      for (var i = 0; i < 8; i++) RankedBallot([canB]),
+      for (var i = 0; i < 2; i++) RankedBallot([canC, canD]),
+      for (var i = 0; i < 2; i++) RankedBallot([canD, canC])
     ];
 
     final election = IrvElection(ballots);
@@ -45,8 +42,7 @@ void main() {
 
   test('one candidate', () {
     final c = 'Candidate 1';
-    final v = 'Voter 1';
-    final b = RankedBallot(v, [c]);
+    final b = RankedBallot([c]);
 
     final ce = IrvElection([b]);
 
@@ -68,15 +64,13 @@ void main() {
     final cC2 = 'C2';
     final cD1 = 'D1';
 
-    var voter = 1;
-
     final ballots = [
-      RankedBallot('Voter ${voter++}', [cA1, cA2, cA3, cB1, cC1, cC2, cD1]),
-      RankedBallot('Voter ${voter++}', [cA1, cA2, cA3, cB1, cC2, cC1, cD1]),
-      RankedBallot('Voter ${voter++}', [cA2, cA3, cA1, cB1, cC1, cC2, cD1]),
-      RankedBallot('Voter ${voter++}', [cA2, cA3, cA1, cB1, cC2, cC1, cD1]),
-      RankedBallot('Voter ${voter++}', [cA3, cA1, cA2, cB1, cC1, cC2, cD1]),
-      RankedBallot('Voter ${voter++}', [cA3, cA1, cA2, cB1, cC2, cC1, cD1]),
+      RankedBallot([cA1, cA2, cA3, cB1, cC1, cC2, cD1]),
+      RankedBallot([cA1, cA2, cA3, cB1, cC2, cC1, cD1]),
+      RankedBallot([cA2, cA3, cA1, cB1, cC1, cC2, cD1]),
+      RankedBallot([cA2, cA3, cA1, cB1, cC2, cC1, cD1]),
+      RankedBallot([cA3, cA1, cA2, cB1, cC1, cC2, cD1]),
+      RankedBallot([cA3, cA1, cA2, cB1, cC2, cC1, cD1]),
     ];
 
     final election = IrvElection(ballots);
@@ -98,20 +92,15 @@ void main() {
     final canCC = 'Chocolate Chunk';
     final canVan = 'Vanilla';
 
-    var voter = 1;
-
     final ballots = [
       // 29 cc, c, v
-      for (var i = 0; i < 29; i++)
-        RankedBallot('Voter ${voter++}', [canCC, canC, canVan]),
+      for (var i = 0; i < 29; i++) RankedBallot([canCC, canC, canVan]),
 
       // 31 c, cc, v
-      for (var i = 0; i < 31; i++)
-        RankedBallot('Voter ${voter++}', [canC, canCC, canVan]),
+      for (var i = 0; i < 31; i++) RankedBallot([canC, canCC, canVan]),
 
       // 40 v, c, cc
-      for (var i = 0; i < 40; i++)
-        RankedBallot('Voter ${voter++}', [canVan, canC, canCC]),
+      for (var i = 0; i < 40; i++) RankedBallot([canVan, canC, canCC]),
     ];
 
     final ce = IrvElection(ballots);
