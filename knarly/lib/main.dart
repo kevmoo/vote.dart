@@ -43,7 +43,7 @@ class VoteSimulation extends StatelessWidget {
                             child: const Text('Toggle'),
                             onPressed: kvm.toggleFunction,
                           ),
-                          if (kvm.editor.value is VoteTown) ...[
+                          if (kvm.editor is VoteTownEditor) ...[
                             ListenableProvider<VoteTownEditor>.value(
                               value: kvm.editor as VoteTownEditor,
                               child: const VoteTownWidget(),
@@ -113,9 +113,13 @@ Widget _header(String header, Widget widget) => Padding(
       ),
     );
 
-KnarlyViewModel _viewModel(BuildContext ctx) => KnarlyViewModel(
-      [
-        VoteTownEditor(VoteTown.random()),
-        SimpleBallotEditor(),
-      ],
-    );
+KnarlyViewModel _viewModel(BuildContext ctx) {
+  final data = VoteTown.random();
+
+  return KnarlyViewModel(
+    [
+      VoteTownEditor(data),
+      SimpleBallotEditor(electionData: data),
+    ],
+  );
+}

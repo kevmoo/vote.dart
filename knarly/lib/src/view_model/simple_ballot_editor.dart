@@ -5,7 +5,9 @@ import '../model/election_data.dart';
 import 'editor.dart';
 
 class SimpleBallotEditor extends KnarlyEditor<ElectionData> {
-  SimpleBallotEditor() : super(_sampleData());
+  SimpleBallotEditor({
+    ElectionData electionData,
+  }) : super(electionData ?? _sampleData());
 
   @override
   bool updateSource(ElectionData data) {
