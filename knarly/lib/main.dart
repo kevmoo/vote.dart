@@ -1,5 +1,4 @@
 import 'package:flutter_web/material.dart';
-import 'package:knarly/src/view_model/simple_ballot_editor.dart';
 import 'package:provider/provider.dart';
 import 'package:vote/vote.dart';
 
@@ -8,11 +7,13 @@ import 'src/model/candidate.dart';
 import 'src/model/vote_town.dart';
 import 'src/model/vote_town_distance_place.dart';
 import 'src/view_model/knarly_view_model.dart';
+import 'src/view_model/simple_ballot_editor.dart';
 import 'src/view_model/vote_town_editor.dart';
 import 'src/widget/condorcet_election_result_widget.dart';
 import 'src/widget/distance_election_result_widget.dart';
 import 'src/widget/plurality_election_result_widget.dart';
 import 'src/widget/ranked_choice_election_result_widget.dart';
+import 'src/widget/simple_editor_widget.dart';
 import 'src/widget/vote_town_widget.dart';
 
 void main() => runApp(const VoteSimulation());
@@ -53,7 +54,10 @@ class VoteSimulation extends StatelessWidget {
                               child: const DistanceElectionResultWidget(),
                             ),
                           ] else
-                            const Placeholder(),
+                            ListenableProvider<SimpleBallotEditor>.value(
+                              value: kvm.editor as SimpleBallotEditor,
+                              child: const SimpleEditorWidget(),
+                            ),
                         ],
                       ),
                     ),

@@ -54,7 +54,6 @@ class VoteTownWidget extends StatelessWidget {
                   .toList(growable: false),
               delegate: _CandidateFlowDelegate(voteTown, _lastSizeCallback),
             ),
-            size: const Size(400, 400),
             isComplex: true,
             willChange: true,
           );
