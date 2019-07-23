@@ -19,7 +19,7 @@ class SimpleEditorWidget extends StatelessWidget {
           child: Text(
             _ballotText(editor.value.ballots),
             softWrap: false,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: 'monospace',
             ),
           ),
