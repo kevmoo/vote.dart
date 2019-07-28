@@ -134,7 +134,7 @@ class IrvRound<TCandidate extends Comparable> {
   }
 }
 
-class _CleanedBallot<TCandidate> {
+class _CleanedBallot<TCandidate extends Comparable> {
   final RankedBallot<TCandidate> ballot;
   final List<TCandidate> remaining;
   final TCandidate winner;

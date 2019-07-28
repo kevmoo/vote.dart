@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 import 'ranked_ballot.dart';
 
 @immutable
-class IrvElimination<TCandidate> {
+class IrvElimination<TCandidate extends Comparable> {
   final TCandidate candidate;
   final Map<TCandidate, List<RankedBallot<TCandidate>>> _transfers;
   final List<RankedBallot<TCandidate>> exhausted;
