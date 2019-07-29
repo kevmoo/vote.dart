@@ -1,3 +1,4 @@
+import 'package:flutter_web/widgets.dart';
 import 'package:vote/vote.dart';
 
 import '../model/candidate.dart';
@@ -5,9 +6,20 @@ import '../model/election_data.dart';
 import 'editor.dart';
 
 class SimpleBallotEditor extends KnarlyEditor<ElectionData> {
+  final textController = TextEditingController();
+
   SimpleBallotEditor({
-    ElectionData electionData,
-  }) : super(electionData ?? _sampleData());
+    @required ElectionData electionData,
+  }) : super(electionData) {
+    textController
+      ..text = _BallotLines.fromBallots(value.ballots).text
+      ..addListener(_onTextChange);
+  }
+
+  void action() {
+    textController.selection =
+        TextSelection.collapsed(offset: textController.text.length);
+  }
 
   @override
   bool updateSource(ElectionData data) {
@@ -17,28 +29,79 @@ class SimpleBallotEditor extends KnarlyEditor<ElectionData> {
     ));
     return true;
   }
+
+  void _onTextChange() {
+    print('TODO: text changed');
+  }
+
+  @override
+  void dispose() {
+    textController.removeListener(_onTextChange);
+    super.dispose();
+  }
 }
 
-ElectionData _sampleData() {
-  // 1st, 4th, 5th, 7th
-  // 3,   1,   2,   1
-  var hue = 0.0;
-  final cA1 = Candidate('A1', hue);
-  final cA2 = Candidate('A2', hue += 360 / 7);
-  final cA3 = Candidate('A3', hue += 360 / 7);
-  final cB1 = Candidate('B1', hue += 360 / 7);
-  final cC1 = Candidate('C1', hue += 360 / 7);
-  final cC2 = Candidate('C2', hue += 360 / 7);
-  final cD1 = Candidate('D1', hue += 360 / 7);
+class _BallotLines {
+  final int countWidth;
+  final int candidateWidth;
+  final List<_BallotLine> lines;
 
-  final ballots = [
-    RankedBallot([cA1, cA2, cA3, cB1, cC1, cC2, cD1]),
-    RankedBallot([cA1, cA2, cA3, cB1, cC2, cC1, cD1]),
-    RankedBallot([cA2, cA3, cA1, cB1, cC1, cC2, cD1]),
-    RankedBallot([cA2, cA3, cA1, cB1, cC2, cC1, cD1]),
-    RankedBallot([cA3, cA1, cA2, cB1, cC1, cC2, cD1]),
-    RankedBallot([cA3, cA1, cA2, cB1, cC2, cC1, cD1]),
-  ];
+  _BallotLines(this.countWidth, this.candidateWidth, this.lines);
 
-  return ElectionData.fromData(ballots);
+  factory _BallotLines.fromBallots(Iterable<RankedBallot<Candidate>> ballots) {
+    final candidates = <Candidate>{};
+
+    final grouped = ballots.fold<Map<RankedBallot<Candidate>, int>>(
+      <RankedBallot<Candidate>, int>{},
+      (map, ballot) {
+        candidates.addAll(ballot.rank);
+        map[ballot] = (map[ballot] ?? 0) + 1;
+        return map;
+      },
+    );
+
+    final candidateWidth = candidates.fold<int>(0, (length, c) {
+      if (c.id.length > length) {
+        return c.id.length;
+      }
+      return length;
+    });
+
+    final countWidth = grouped.values.fold<int>(0, (length, value) {
+      final str = value.toString().length;
+      if (str > length) {
+        return str;
+      }
+      return length;
+    });
+
+    final sortedBallots = grouped.entries.toList(growable: false)
+      ..sort((a, b) {
+        var value = b.value.compareTo(a.value);
+        if (value == 0) {
+          value = a.key.compareTo(b.key);
+        }
+        return value;
+      });
+
+    return _BallotLines(
+        countWidth,
+        candidateWidth,
+        sortedBallots
+            .map((e) => _BallotLine(e.value, e.key.rank))
+            .toList(growable: false));
+  }
+
+  String get text => lines.map((b) {
+        final candidates =
+            b.candidates.map((c) => c.id.padLeft(candidateWidth)).join(' > ');
+        return '${b.count.toString().padLeft(countWidth)} : $candidates';
+      }).join('\n');
+}
+
+class _BallotLine {
+  final int count;
+  final List<Candidate> candidates;
+
+  _BallotLine(this.count, this.candidates);
 }
