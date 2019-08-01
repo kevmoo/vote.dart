@@ -6,6 +6,7 @@ export 'src/election_place.dart';
 export 'src/irv_election.dart';
 export 'src/irv_elimination.dart';
 export 'src/irv_round.dart';
+export 'src/parser/ballot_lines.dart' show BallotLines;
 export 'src/plurality_ballot.dart';
 export 'src/plurality_election.dart';
 export 'src/plurality_election_place.dart';

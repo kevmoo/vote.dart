@@ -34,18 +34,21 @@ class RankedBallot<TCandidate extends Comparable>
   int get hashCode => const ListEquality().hash(rank);
 
   @override
-  int compareTo(RankedBallot<TCandidate> other) {
+  int compareTo(RankedBallot<TCandidate> other) =>
+      compareRanks(rank, other.rank);
+
+  static int compareRanks<T extends Comparable>(List<T> a, List<T> b) {
     int value;
-    for (var i = 0; i < rank.length; i++) {
-      if (other.rank.length <= i) {
+    for (var i = 0; i < a.length; i++) {
+      if (b.length <= i) {
         return 1;
       }
-      value = rank[i].compareTo(other.rank[i]);
+      value = a[i].compareTo(b[i]);
       if (value != 0) {
         return value;
       }
     }
-    if (other.rank.length > rank.length) {
+    if (b.length > a.length) {
       return -1;
     }
 

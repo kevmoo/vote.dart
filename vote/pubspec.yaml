@@ -13,6 +13,7 @@ dependencies:
   collection: ^1.0.0
   graphs: ^0.2.0
   meta: ^1.0.0
+  string_scanner: ^1.0.0
 
 dev_dependencies:
   test: ^1.6.0
