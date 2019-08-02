@@ -83,4 +83,32 @@ void main() {
       ['D1']
     ]);
   });
+
+  test('parse silly', () {
+    final value = r'''
+20 : E
+19 : D > A > C > B
+14 : A > B > C > D
+13 : B > A > C > D
+11 : B > C > A > D
+ 8 : C > B > A > D
+ 6 : A > B > D > C
+ 6 : A > D > B > C
+ 5 : C > D > A > B
+ 5 : D > C > A > B
+ 4 : A > D > C > B
+ 3 : C > A > B > D
+ 2 : A > C > D > B
+ 2 : C > D > B > A
+ 1 : A > C > B > D
+ 1 : C > B > D > A''';
+
+    final lines = BallotLines<String>.parse(value, (v) => Map.fromIterable(v));
+
+    final election = CondorcetElection(lines.ballots.toList());
+
+    expect(election.places, hasLength(4));
+    expect(election.places[0], ['A']);
+    expect(election.places[3], ['E']);
+  });
 }

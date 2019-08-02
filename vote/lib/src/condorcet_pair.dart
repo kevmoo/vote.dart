@@ -3,18 +3,22 @@ import 'package:meta/meta.dart';
 import 'ranked_ballot.dart';
 
 @immutable
-class CondorcetPair<TCandidate extends Comparable> {
+class CondorcetPair<TCandidate extends Comparable>
+    implements Comparable<CondorcetPair> {
   final TCandidate candidate1, candidate2;
-  final List<RankedBallot<TCandidate>> ballots;
+
   final int firstOverSecond;
   final int secondOverFirst;
+
+  /// Number of ballots where neither candidate was listed
+  final int ties;
 
   const CondorcetPair._internal(
     this.candidate1,
     this.candidate2,
-    this.ballots,
     this.firstOverSecond,
     this.secondOverFirst,
+    this.ties,
   );
 
   factory CondorcetPair(TCandidate can1, TCandidate can2,
@@ -30,26 +34,38 @@ class CondorcetPair<TCandidate extends Comparable> {
     }
 
     if (ballots == null) {
-      return CondorcetPair._internal(can1, can2, null, 0, 0);
+      return CondorcetPair._internal(can1, can2, null, null, null);
     } else {
-      var fos = 0;
-      var sof = 0;
+      var firstOverSecond = 0;
+      var secondOverFirst = 0;
+      var ties = 0;
       for (var b in ballots) {
         final firstIndex = b.rank.indexOf(can1);
-        assert(firstIndex >= 0, 'bals');
-
         final secondIndex = b.rank.indexOf(can2);
-        assert(secondIndex >= 0, 'bals');
 
-        assert(firstIndex != secondIndex);
-        if (firstIndex < secondIndex) {
-          fos++;
+        if (firstIndex < 0) {
+          if (secondIndex < 0) {
+            // neither candidate is in the ballot
+            ties++;
+          } else {
+            secondOverFirst++;
+          }
+        } else if (secondIndex < 0) {
+          firstOverSecond++;
+        } else if (firstIndex < secondIndex) {
+          firstOverSecond++;
         } else {
-          sof++;
+          secondOverFirst++;
         }
       }
 
-      return CondorcetPair._internal(can1, can2, ballots, fos, sof);
+      return CondorcetPair._internal(
+        can1,
+        can2,
+        firstOverSecond,
+        secondOverFirst,
+        ties,
+      );
     }
   }
 
@@ -102,7 +118,12 @@ class CondorcetPair<TCandidate extends Comparable> {
 
     if (flipped) {
       return CondorcetPair._internal(
-          can2, can1, ballots, secondOverFirst, firstOverSecond);
+        can2,
+        can1,
+        secondOverFirst,
+        firstOverSecond,
+        ties,
+      );
     } else {
       return this;
     }
@@ -116,4 +137,16 @@ class CondorcetPair<TCandidate extends Comparable> {
 
   @override
   int get hashCode => candidate1.hashCode * 37 ^ candidate2.hashCode;
+
+  @override
+  String toString() => '($candidate1, $candidate2)';
+
+  @override
+  int compareTo(CondorcetPair<Comparable> other) {
+    var value = candidate1.compareTo(other.candidate1);
+    if (value == 0) {
+      value = candidate2.compareTo(other.candidate2);
+    }
+    return value;
+  }
 }

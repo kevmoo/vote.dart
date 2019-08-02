@@ -13,16 +13,36 @@ void main() {
     }, throwsAssertionError);
   });
 
-  test('must have a rank for both candidates', () {
+  test('omitting some candidates', () {
     final b1 = RankedBallot([c1]);
-    final b2 = RankedBallot([c2]);
-    expect(() {
-      CondorcetPair(c1, c2, [b1]);
-    }, throwsAssertionError);
+    final pair = CondorcetPair(c1, c2, [b1]);
 
-    expect(() {
-      CondorcetPair(c1, c2, [b2]);
-    }, throwsAssertionError);
+    expect(pair.candidate1, c1);
+    expect(pair.candidate2, c2);
+    expect(pair.firstOverSecond, 1);
+    expect(pair.secondOverFirst, 0);
+    expect(pair.ties, 0);
+
+    final b2 = RankedBallot([c2]);
+    final pair2 = CondorcetPair(c1, c2, [b2]);
+
+    expect(pair2.candidate1, c1);
+    expect(pair2.candidate2, c2);
+    expect(pair2.firstOverSecond, 0);
+    expect(pair2.secondOverFirst, 1);
+    expect(pair2.ties, 0);
+
+    final pair3 = CondorcetPair(c1, c2, [
+      b1,
+      b2,
+      RankedBallot(const ['c1']),
+    ]);
+
+    expect(pair3.candidate1, c1);
+    expect(pair3.candidate2, c2);
+    expect(pair3.firstOverSecond, 1);
+    expect(pair3.secondOverFirst, 1);
+    expect(pair3.ties, 1);
   });
 
   test('one ballot is cool', () {

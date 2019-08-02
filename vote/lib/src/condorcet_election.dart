@@ -5,7 +5,6 @@ import 'condorcet_pair.dart';
 import 'election.dart';
 import 'election_place.dart';
 import 'ranked_ballot.dart';
-import 'util.dart';
 
 @immutable
 class CondorcetElection<TCandidate extends Comparable>
@@ -24,32 +23,18 @@ class CondorcetElection<TCandidate extends Comparable>
         );
 
   factory CondorcetElection(List<RankedBallot<TCandidate>> ballots) {
-    final map = <CondorcetPair<TCandidate>, List<RankedBallot<TCandidate>>>{};
-    final candidateSet = <TCandidate>{};
+    final candidates =
+        ballots.expand((b) => b.rank).toSet().toList(growable: false)..sort();
 
-    for (final ballot in ballots) {
-      for (var i = 0; i < ballot.rank.length; i++) {
-        final candidateI = ballot.rank[i];
-        candidateSet.add(candidateI);
+    final pairs = {
+      for (var i = 0; i < candidates.length; i++)
+        for (var j = i + 1; j < candidates.length; j++)
+          CondorcetPair(candidates[i], candidates[j], ballots),
+    };
 
-        for (var j = i + 1; j < ballot.rank.length; j++) {
-          final pair = CondorcetPair<TCandidate>(candidateI, ballot.rank[j]);
-
-          map.putIfAbsent(pair, () => <RankedBallot<TCandidate>>[]).add(ballot);
-        }
-      }
-    }
-
-    final pairs = map.entries
-        .map((entry) => CondorcetPair<TCandidate>(
-            entry.key.candidate1, entry.key.candidate2, entry.value))
-        .toSet();
-
-    final candidateProfiles =
-        <TCandidate, _CondorcetCandidateProfile<TCandidate>>{};
     final candidateMap = <TCandidate, Set<TCandidate>>{};
 
-    for (final candidate in candidateSet) {
+    for (final candidate in candidates) {
       final lostTo = <TCandidate>[];
       final beat = <TCandidate>[];
       final tied = <TCandidate>[];
@@ -75,18 +60,28 @@ class CondorcetElection<TCandidate extends Comparable>
         }
       }
 
-      candidateProfiles[candidate] = _CondorcetCandidateProfile<TCandidate>(
-        candidate,
-        lostTo..sort(),
-        beat..sort(),
-        tied..sort(),
-      );
-
       candidateMap[candidate] = lostTiedSet;
     }
 
     final components = stronglyConnectedComponents<TCandidate>(
-        candidateMap.keys, (node) => candidateMap[node]);
+        candidateMap.keys, (node) => candidateMap[node])
+      ..sort((a, b) {
+        final firstA = a.first;
+        final firstB = b.first;
+
+        final pair = pairs.singleWhere((p) => p.matches(firstA, firstB));
+
+        if (pair.isTie) {
+          return 0;
+        }
+
+        if (pair.winner == firstA) {
+          return -1;
+        }
+
+        assert(pair.winner == firstB);
+        return 1;
+      });
 
     final places = <ElectionPlace<TCandidate>>[];
     var placeNumber = 1;
@@ -107,31 +102,7 @@ class CondorcetElection<TCandidate extends Comparable>
   CondorcetPair<TCandidate> getPair(TCandidate c1, TCandidate c2) {
     assert(candidates.contains(c1));
     assert(candidates.contains(c2));
-    final filter = _pairs.where((p) => p.matches(c1, c2));
-    assert(filter.length <= 1);
-    if (filter.isEmpty) {
-      return null;
-    } else {
-      assert(filter.length == 1);
-      return filter.first.flip(c1, c2);
-    }
+
+    return _pairs.singleWhere((p) => p.matches(c1, c2)).flip(c1, c2);
   }
-}
-
-class _CondorcetCandidateProfile<TCandidate extends Comparable> {
-  final TCandidate candidate;
-  final List<TCandidate> lostTo;
-  final List<TCandidate> beat;
-  final List<TCandidate> tied;
-
-  _CondorcetCandidateProfile(this.candidate, this.lostTo, this.beat, this.tied)
-      : assert(sorted(lostTo)),
-        assert(sorted(beat)),
-        assert(sorted(tied));
-
-  @override
-  String toString() => '[ $candidate: '
-      'Beat: ${beat.length}, '
-      'Tied: ${tied.length}, '
-      'Lost to: ${lostTo.length} ]';
 }
