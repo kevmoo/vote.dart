@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:string_scanner/string_scanner.dart';
 import 'package:test/test.dart';
 import 'package:vote/src/parser/ballot_line.dart';
 import 'package:vote/src/parser/parser.dart';
@@ -79,4 +80,81 @@ void main() {
       ],
     );
   });
+
+  group('invalid input', () {
+    for (var entry in _invalidInput.entries) {
+      test('"${entry.key}"', () {
+        expect(() => parse(entry.key), _throwsAFormatException(entry.value));
+      });
+    }
+  });
 }
+
+const _invalidInput = {
+  'a': r'''
+Error on line 1, column 1: expected a number greater than 0.
+  ╷
+1 │ a
+  │ ^
+  ╵''',
+  '3.14': r'''
+Error on line 1, column 2: expected a colon (:).
+  ╷
+1 │ 3.14
+  │  ^
+  ╵''',
+  '0 : a': r'''
+Error on line 1, column 1: expected a number greater than 0.
+  ╷
+1 │ 0 : a
+  │ ^
+  ╵''',
+  '-25 : a': r'''
+Error on line 1, column 1: expected a number greater than 0.
+  ╷
+1 │ -25 : a
+  │ ^
+  ╵''',
+  '1 a': r'''
+Error on line 1, column 2: expected a colon (:).
+  ╷
+1 │ 1 a
+  │  ^
+  ╵''',
+  '1 : a >': r'''
+Error on line 1, column 8: expected a candidate.
+  ╷
+1 │ 1 : a >
+  │        ^
+  ╵''',
+  '1 : a > :': r'''
+Error on line 1, column 8: expected a candidate.
+  ╷
+1 │ 1 : a > :
+  │        ^
+  ╵''',
+  '1 : a :': r'''
+Error on line 1, column 6: expected a newline.
+  ╷
+1 │ 1 : a :
+  │      ^
+  ╵''',
+  '1 : :': r'''
+Error on line 1, column 4: expected a candidate.
+  ╷
+1 │ 1 : :
+  │    ^
+  ╵''',
+  '1 : a >>': r'''
+Error on line 1, column 8: expected a candidate.
+  ╷
+1 │ 1 : a >>
+  │        ^
+  ╵''',
+};
+
+Matcher _throwsAFormatException(String message) =>
+    throwsA(const TypeMatcher<StringScannerException>().having((e) {
+      printOnFailure("r'''\n$e'''");
+      return e.toString();
+    }, 'toString()', message));

@@ -7,7 +7,9 @@ class BallotLine<TCandidate extends Comparable>
   final int count;
   final List<TCandidate> candidates;
 
-  BallotLine(this.count, this.candidates) : assert(allUnique(candidates));
+  BallotLine(this.count, this.candidates)
+      : assert(count > 0),
+        assert(allUnique(candidates));
 
   @override
   bool operator ==(Object other) {
@@ -30,4 +32,7 @@ class BallotLine<TCandidate extends Comparable>
     }
     return value;
   }
+
+  @override
+  String toString() => '$count : ${candidates.join(' > ')}';
 }
