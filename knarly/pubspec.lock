@@ -174,7 +174,7 @@ packages:
     description:
       path: "packages/flutter_web"
       ref: HEAD
-      resolved-ref: "1c1f2dbedd629689f404f509cbd7a9a040e93a72"
+      resolved-ref: "88a6325290b75326c072ae63bf3016e15a08fccc"
       url: "https://github.com/flutter/flutter_web"
     source: git
     version: "0.0.0"
@@ -183,7 +183,7 @@ packages:
     description:
       path: "packages/flutter_web_ui"
       ref: HEAD
-      resolved-ref: "1c1f2dbedd629689f404f509cbd7a9a040e93a72"
+      resolved-ref: "88a6325290b75326c072ae63bf3016e15a08fccc"
       url: "https://github.com/flutter/flutter_web"
     source: git
     version: "0.0.0"
@@ -370,7 +370,7 @@ packages:
       name: quiver
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.3"
+    version: "2.0.4"
   scratch_space:
     dependency: transitive
     description:
@@ -433,7 +433,7 @@ packages:
       name: string_scanner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   term_glyph:
     dependency: transitive
     description:
