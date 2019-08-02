@@ -12,7 +12,7 @@ class _Parser {
   Iterable<BallotLine<String>> parse() {
     final ballotLines = <BallotLine<String>>[];
 
-    while (true) {
+    for (;;) {
       // Here = _State.lineStart.
       _scanner.scan(_whitespace);
       if (_scanner.isDone) break;
