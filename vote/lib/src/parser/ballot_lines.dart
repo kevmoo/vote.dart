@@ -4,7 +4,7 @@ import 'package:collection/collection.dart';
 
 import '../ranked_ballot.dart';
 import 'ballot_line.dart';
-import 'parser.dart';
+import 'parse.dart';
 
 String _defaultCandidateText(Object candidate) => candidate.toString();
 

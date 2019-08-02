@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:string_scanner/string_scanner.dart';
 import 'package:test/test.dart';
 import 'package:vote/src/parser/ballot_line.dart';
-import 'package:vote/src/parser/parser.dart';
+import 'package:vote/src/parser/parse.dart';
 import 'package:vote/vote.dart';
 
 void _test(String name, String input, List<BallotLine> expectedResult) {
