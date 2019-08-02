@@ -107,7 +107,7 @@ Error on line 1, column 2: expected a colon (:).
 Error on line 1, column 1: expected a number greater than 0.
   ╷
 1 │ 0 : a
-  │ ^
+  │ ^^
   ╵''',
   '-25 : a': r'''
 Error on line 1, column 1: expected a number greater than 0.
@@ -116,10 +116,10 @@ Error on line 1, column 1: expected a number greater than 0.
   │ ^
   ╵''',
   '1 a': r'''
-Error on line 1, column 2: expected a colon (:).
+Error on line 1, column 3: expected a colon (:).
   ╷
 1 │ 1 a
-  │  ^
+  │   ^
   ╵''',
   '1 : a >': r'''
 Error on line 1, column 8: expected a candidate.
@@ -128,22 +128,22 @@ Error on line 1, column 8: expected a candidate.
   │        ^
   ╵''',
   '1 : a > :': r'''
-Error on line 1, column 8: expected a candidate.
+Error on line 1, column 9: expected a candidate.
   ╷
 1 │ 1 : a > :
-  │        ^
+  │         ^
   ╵''',
   '1 : a :': r'''
-Error on line 1, column 6: expected a newline.
+Error on line 1, column 7: expected a newline.
   ╷
 1 │ 1 : a :
-  │      ^
+  │       ^
   ╵''',
   '1 : :': r'''
-Error on line 1, column 4: expected a candidate.
+Error on line 1, column 5: expected a candidate.
   ╷
 1 │ 1 : :
-  │    ^
+  │     ^
   ╵''',
   '1 : a >>': r'''
 Error on line 1, column 8: expected a candidate.
