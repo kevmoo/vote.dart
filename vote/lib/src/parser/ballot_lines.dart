@@ -85,6 +85,13 @@ class BallotLines<TCandidate extends Comparable> {
         return '${b.count.toString().padLeft(countWidth)} : $candidates';
       }).join('\n');
 
+  Iterable<RankedBallot<TCandidate>> get ballots sync* {
+    for (var line in _lines) {
+      final ballot = RankedBallot<TCandidate>(line.candidates);
+      yield* Iterable.generate(line.count, (_) => ballot);
+    }
+  }
+
   @override
   bool operator ==(Object other) =>
       other is BallotLines<TCandidate> &&
