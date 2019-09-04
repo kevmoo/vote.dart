@@ -7,7 +7,7 @@ packages:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.38.1"
+    version: "0.38.2"
   archive:
     dependency: transitive
     description:
@@ -105,7 +105,7 @@ packages:
       name: built_value
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.7.0"
+    version: "6.7.1"
   charcode:
     dependency: transitive
     description:
@@ -174,7 +174,7 @@ packages:
     description:
       path: "packages/flutter_web"
       ref: HEAD
-      resolved-ref: bdd12b223a7e7f268508784a7b78312e47664556
+      resolved-ref: cc38319841009fcbdf632d9b03aab18d28939438
       url: "https://github.com/flutter/flutter_web"
     source: git
     version: "0.0.0"
@@ -183,7 +183,7 @@ packages:
     description:
       path: "packages/flutter_web_ui"
       ref: HEAD
-      resolved-ref: bdd12b223a7e7f268508784a7b78312e47664556
+      resolved-ref: cc38319841009fcbdf632d9b03aab18d28939438
       url: "https://github.com/flutter/flutter_web"
     source: git
     version: "0.0.0"
@@ -193,7 +193,7 @@ packages:
       name: front_end
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.23"
+    version: "0.1.24"
   glob:
     dependency: transitive
     description:
@@ -242,7 +242,7 @@ packages:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.15.8"
+    version: "0.16.0"
   io:
     dependency: transitive
     description:
@@ -270,7 +270,7 @@ packages:
       name: kernel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.23"
+    version: "0.3.24"
   logging:
     dependency: transitive
     description:
