@@ -1,6 +1,6 @@
-import 'dart:math' as math;
+import 'dart:math';
 
-import 'package:flutter_web_ui/ui.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'candidate.dart';
 import 'voter.dart';
@@ -8,15 +8,15 @@ import 'voter.dart';
 class TownCandidate extends Candidate {
   static const candidateSpacing = 5.0;
 
-  final Point location;
+  final Point<double> location;
 
-  final math.Point<int> intLocation;
+  final Point<int> intLocation;
 
   TownCandidate(String id, double hue, this.intLocation)
       : location = _unfixPoint(intLocation),
         super(id, hue);
 
-  factory TownCandidate.letter(int index, math.Point<int> intLocation) {
+  factory TownCandidate.letter(int index, Point<int> intLocation) {
     assert(index >= 0);
     assert(index < _maxCandidateCount);
     return TownCandidate(String.fromCharCode(index + _capitalACharCode),
@@ -36,18 +36,18 @@ class TownCandidate extends Candidate {
   String toString() => 'TownCandidate($id)';
 }
 
-math.Point<int> fixPoint(Point value) => math.Point(
-      (value.x / TownCandidate.candidateSpacing - 1).round(),
-      (value.y / TownCandidate.candidateSpacing - 1).round(),
+Point<int> fixPoint(Offset value) => Point(
+      (value.dx / TownCandidate.candidateSpacing - 1).round(),
+      (value.dy / TownCandidate.candidateSpacing - 1).round(),
     );
 
-Point _unfixPoint(math.Point<int> value) => Point(
+Point<double> _unfixPoint(Point<int> value) => Point(
       (value.x + 1) * TownCandidate.candidateSpacing,
       (value.y + 1) * TownCandidate.candidateSpacing,
     );
 
 class TownVoter extends Voter {
-  final Point location;
+  final Point<double> location;
   final List<TownCandidate> closestCandidates;
 
   TownVoter(int id, this.location, this.closestCandidates) : super(id);

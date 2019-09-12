@@ -1,4 +1,5 @@
-import 'package:flutter_web/material.dart' show ChangeNotifier, ValueListenable;
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart' show ChangeNotifier;
 import 'package:meta/meta.dart' show protected;
 
 import '../model/election_data.dart';

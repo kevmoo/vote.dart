@@ -1,4 +1,4 @@
-import 'package:flutter_web/widgets.dart';
+import 'package:flutter/widgets.dart';
 import 'package:vote/vote.dart';
 
 import '../model/candidate.dart';

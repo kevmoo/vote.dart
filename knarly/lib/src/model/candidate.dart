@@ -1,4 +1,4 @@
-import 'package:flutter_web_ui/ui.dart';
+import 'dart:ui';
 
 import '../helpers/hsl_color.dart';
 

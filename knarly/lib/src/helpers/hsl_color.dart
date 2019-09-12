@@ -1,4 +1,4 @@
-import 'package:flutter_web_ui/ui.dart';
+import 'dart:ui';
 
 // RGB-HSL conversion logic borrowed with love from Google Closure Library
 // http://code.google.com/p/closure-library/source/browse/trunk/closure/goog/color/color.js
