@@ -133,7 +133,7 @@ packages:
       name: collection
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.14.12"
+    version: "1.14.11"
   convert:
     dependency: transitive
     description:
@@ -169,23 +169,10 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.10.9"
-  flutter_web:
+  flutter:
     dependency: "direct main"
-    description:
-      path: "packages/flutter_web"
-      ref: HEAD
-      resolved-ref: "3973ac51f326c0a013232f39e9962bd02712d7dd"
-      url: "https://github.com/flutter/flutter_web"
-    source: git
-    version: "0.0.0"
-  flutter_web_ui:
-    dependency: "direct main"
-    description:
-      path: "packages/flutter_web_ui"
-      ref: HEAD
-      resolved-ref: "3973ac51f326c0a013232f39e9962bd02712d7dd"
-      url: "https://github.com/flutter/flutter_web"
-    source: git
+    description: flutter
+    source: sdk
     version: "0.0.0"
   front_end:
     dependency: transitive
@@ -236,13 +223,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.3"
-  intl:
-    dependency: transitive
-    description:
-      name: intl
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.16.0"
   io:
     dependency: transitive
     description:
@@ -344,12 +324,10 @@ packages:
   provider:
     dependency: "direct main"
     description:
-      path: "."
-      ref: flutter_web
-      resolved-ref: e41db8e7d554360a6d8314c23b4fb4d5d5d9aac4
-      url: "https://github.com/kevmoo/provider"
-    source: git
-    version: "3.0.0+1"
+      name: provider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.0"
   pub_semver:
     dependency: transitive
     description:
@@ -392,6 +370,11 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.3"
+  sky_engine:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.99"
   source_maps:
     dependency: transitive
     description:

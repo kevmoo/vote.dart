@@ -1,4 +1,4 @@
-import 'package:flutter_web_ui/ui.dart' show Point, Offset;
+import 'dart:ui' show Offset;
 
 import '../model/town_folk.dart';
 import '../model/vote_town.dart';
@@ -11,7 +11,7 @@ class VoteTownEditor extends KnarlyEditor<VoteTown> {
   TownCandidate get movingCandidate => _movingCandidate;
   TownCandidate _movingCandidate;
 
-  Point _workingPoint;
+  Offset _workingPoint;
 
   VoteTownEditor(VoteTown value) : super(value);
 
@@ -20,7 +20,7 @@ class VoteTownEditor extends KnarlyEditor<VoteTown> {
     assert(_movingCandidate == null);
     assert(_workingPoint == null);
     _movingCandidate = candidate;
-    _workingPoint = candidate.location;
+    _workingPoint = Offset(candidate.location.x, candidate.location.y);
     notifyListeners();
   }
 

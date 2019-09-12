@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:flutter_web/material.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../model/town_folk.dart';
@@ -113,9 +113,9 @@ class _CandidateFlowDelegate extends FlowDelegate {
         offsetMultiplier * _candidateScale, offsetMultiplier * _candidateScale);
 
     for (var i = 0; i < context.childCount; i++) {
+      final location = _voteTown.candidates[i].location;
       final shift =
-          (_voteTown.candidates[i].location.toOffset() * offsetMultiplier) -
-              centerShift;
+          (Offset(location.x, location.y) * offsetMultiplier) - centerShift;
 
       context.paintChild(i,
           transform: Matrix4.translationValues(shift.dx, shift.dy, 0));
@@ -138,8 +138,11 @@ class _VoteTownPainter extends CustomPainter {
     final radius = 2.5 * offsetMultiplier;
 
     for (var voter in _voteTown.voters) {
-      canvas.drawCircle(voter.location.toOffset() * offsetMultiplier, radius,
-          Paint()..color = voter.closestCandidates.first.darkColor);
+      canvas.drawCircle(
+        Offset(voter.location.x, voter.location.y) * offsetMultiplier,
+        radius,
+        Paint()..color = voter.closestCandidates.first.darkColor,
+      );
     }
   }
 

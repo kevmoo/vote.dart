@@ -1,6 +1,5 @@
-import 'dart:math' as math;
+import 'dart:math';
 
-import 'package:flutter_web_ui/ui.dart';
 import 'package:vote/vote.dart';
 
 import 'election_data.dart';
@@ -27,20 +26,20 @@ class VoteTown extends ElectionData {
     final candidates = [
       TownCandidate.letter(
         candidateNumber++,
-        const math.Point(
+        const Point(
           votersAcross - 1,
           votersAcross - 1,
         ),
       ),
     ];
 
-    final rnd = math.Random(randomSeed);
+    final rnd = Random(randomSeed);
 
     while (candidates.length < candidateCount) {
-      math.Point<int> point;
+      Point<int> point;
 
       do {
-        point = math.Point<int>(
+        point = Point<int>(
           rnd.nextInt(votersAcross - 1) * 2 + 1,
           rnd.nextInt(votersAcross - 1) * 2 + 1,
         );
@@ -63,8 +62,10 @@ class VoteTown extends ElectionData {
         ..sort((a, b) {
           // using distanceSquared because it's fine for comparison -
           // and it avoids a square-root
-          final distanceA = (a.location - location).distanceSquared;
-          final distanceB = (b.location - location).distanceSquared;
+          final distanceA =
+              (a.location - location).squaredDistanceTo(const Point(0, 0));
+          final distanceB =
+              (b.location - location).squaredDistanceTo(const Point(0, 0));
 
           var value = distanceA.compareTo(distanceB);
 
@@ -110,24 +111,23 @@ class VoteTown extends ElectionData {
   double get _bestDistance {
     if (_bestDistanceCache == null) {
       final locationSum =
-          voters.map((v) => v.location.toOffset()).reduce((a, b) => a + b) /
-              voters.length.toDouble();
+          voters.map((v) => v.location).reduce((a, b) => a + b) *
+              (1 / voters.length.toDouble());
 
-      _bestDistanceCache =
-          _averageVoterDistanceTo(this, Point(locationSum.dx, locationSum.dy));
+      _bestDistanceCache = _averageVoterDistanceTo(this, locationSum);
     }
     return _bestDistanceCache;
   }
 }
 
-double _averageVoterDistanceTo(VoteTown town, Point location) =>
+double _averageVoterDistanceTo(VoteTown town, Point<double> location) =>
     town.voters
         .fold<double>(
-            0, (value, voter) => value + (voter.location - location).distance)
+            0, (value, voter) => value + voter.location.distanceTo(location))
         .roundToDouble() /
     town.voters.length;
 
-double averageVoterDistanceTo(VoteTown town, Point location) {
+double averageVoterDistanceTo(VoteTown town, Point<double> location) {
   final value = _averageVoterDistanceTo(town, location);
   assert(value >= town._bestDistance);
   return value - town._bestDistance;

@@ -1,4 +1,4 @@
-import 'package:flutter_web/widgets.dart' show ChangeNotifier;
+import 'package:flutter/widgets.dart' show ChangeNotifier;
 import 'package:knarly/src/view_model/editor.dart';
 
 import '../model/election_data.dart';
