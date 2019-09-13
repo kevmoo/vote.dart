@@ -56,6 +56,19 @@ void main() {
     );
 
     _test(
+      'case normalized',
+      r'''
+1:value
+2:Value
+3:VALUE''',
+      [
+        BallotLine(1, ['value']),
+        BallotLine(2, ['value']),
+        BallotLine(3, ['value']),
+      ],
+    );
+
+    _test(
       'simple with extra whitespace',
       '\n\t  1  :   a   \n\n',
       [
@@ -155,6 +168,12 @@ Error on line 1, column 8: expected a candidate.
 Error on line 1, column 12: Cannot have duplicate values.
   ╷
 1 │ 1: value > value
+  │            ^^^^^
+  ╵''',
+  '1: value > Value': r'''
+Error on line 1, column 12: Cannot have duplicate values.
+  ╷
+1 │ 1: value > Value
   │            ^^^^^
   ╵''',
 };

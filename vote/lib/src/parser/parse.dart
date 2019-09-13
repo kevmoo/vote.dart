@@ -7,6 +7,8 @@ import 'ballot_line.dart';
 Iterable<BallotLine<String>> parse(String input) sync* {
   final _scanner = StringScanner(input);
 
+  final _caseMatches = <String, String>{};
+
   for (;;) {
     _scanner.scan(_whitespace);
     if (_scanner.isDone) break;
@@ -22,7 +24,10 @@ Iterable<BallotLine<String>> parse(String input) sync* {
     final candidates = <String>[];
     do {
       _scanner.expect(_candidate, name: 'a candidate');
-      final match = _scanner.lastMatch[1];
+      var match = _scanner.lastMatch[1];
+
+      match = _caseMatches.putIfAbsent(match.toLowerCase(), () => match);
+
       if (candidates.contains(match)) {
         _scanner.error('Cannot have duplicate values.');
       }
