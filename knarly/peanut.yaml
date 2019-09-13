@@ -1,5 +1,7 @@
 # Configuration for https://pub.dartlang.org/packages/peanut
 
+post-build-dart-script: tool/peanut_post_build.dart
+
 builder-options:
   build_web_compilers|entrypoint:
     dart2js_args:
