@@ -151,6 +151,12 @@ Error on line 1, column 8: expected a candidate.
 1 │ 1 : a >>
   │        ^
   ╵''',
+  '1: value > value': r'''
+Error on line 1, column 12: Cannot have duplicate values.
+  ╷
+1 │ 1: value > value
+  │            ^^^^^
+  ╵''',
 };
 
 Matcher _throwsAFormatException(String message) =>

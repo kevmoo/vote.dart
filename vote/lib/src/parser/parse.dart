@@ -22,7 +22,11 @@ Iterable<BallotLine<String>> parse(String input) sync* {
     final candidates = <String>[];
     do {
       _scanner.expect(_candidate, name: 'a candidate');
-      candidates.add(_scanner.lastMatch[1]);
+      final match = _scanner.lastMatch[1];
+      if (candidates.contains(match)) {
+        _scanner.error('Cannot have duplicate values.');
+      }
+      candidates.add(match);
     } while (_scanner.scan(_arrow));
 
     yield BallotLine<String>(count, candidates);
