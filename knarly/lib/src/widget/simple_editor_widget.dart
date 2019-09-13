@@ -8,28 +8,36 @@ class SimpleEditorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Consumer<SimpleBallotEditor>(
-        builder: (_, editor, __) => Stack(
-          alignment: Alignment.bottomRight,
-          children: [
-            Container(
-              width: 500,
-              height: 500,
-              padding: const EdgeInsets.all(10),
-              color: Colors.grey.shade100,
-              child: TextField(
-                decoration: null,
-                maxLines: null,
-                controller: editor.textController,
-                style: const TextStyle(
-                  fontFamily: 'RobotoMono',
+        builder: (_, editor, __) => Form(
+          autovalidate: true,
+          child: Stack(
+            alignment: Alignment.bottomRight,
+            children: [
+              Container(
+                width: 500,
+                height: 500,
+                padding: const EdgeInsets.all(10),
+                color: editor.error
+                    ? Colors.redAccent.shade100
+                    : Colors.grey.shade100,
+                child: TextFormField(
+                  controller: editor.textController,
+                  validator: editor.validator,
+                  decoration: const InputDecoration(errorStyle: _monoStyle),
+                  maxLines: null,
+                  style: _monoStyle,
                 ),
               ),
-            ),
-            FloatingActionButton(
-              child: Icon(Icons.save_alt),
-              onPressed: editor.action,
-            ),
-          ],
+              if (editor.valueChanged)
+                FloatingActionButton(
+                  child: Icon(Icons.save_alt),
+                  disabledElevation: 0,
+                  onPressed: editor.commitChange,
+                ),
+            ],
+          ),
         ),
       );
 }
+
+const _monoStyle = TextStyle(fontFamily: 'RobotoMono');

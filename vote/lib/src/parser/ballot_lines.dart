@@ -80,7 +80,7 @@ class BallotLines<TCandidate extends Comparable> {
 
   String get text => _text ??= _lines.map((b) {
         final candidates = b.candidates
-            .map((c) => candidateToText(c).padLeft(candidateWidth))
+            .map((c) => candidateToText(c).padRight(candidateWidth))
             .join(' > ');
         return '${b.count.toString().padLeft(countWidth)} : $candidates';
       }).join('\n');

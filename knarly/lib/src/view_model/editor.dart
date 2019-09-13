@@ -11,12 +11,14 @@ abstract class KnarlyEditor<T extends ElectionData> extends ChangeNotifier
   T _value;
 
   @protected
-  void setValue(T value) {
+  bool setValue(T value) {
     assert(value != null);
     if (value != _value) {
       _value = value;
       notifyListeners();
+      return true;
     }
+    return false;
   }
 
   KnarlyEditor(this._value);

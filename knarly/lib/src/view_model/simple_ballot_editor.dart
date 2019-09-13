@@ -8,18 +8,47 @@ import 'editor.dart';
 class SimpleBallotEditor extends KnarlyEditor<ElectionData> {
   final textController = TextEditingController();
 
+  BallotLines<Candidate> _candidateLines;
+  BallotLines<Candidate> _ballotLines;
+
   SimpleBallotEditor({
     @required ElectionData electionData,
   }) : super(electionData) {
-    textController
-      ..text = _BallotLines.fromBallots(value.ballots).text
-      ..addListener(_onTextChange);
+    _updateBallots();
   }
 
-  void action() {
-    textController.selection =
-        TextSelection.collapsed(offset: textController.text.length);
+  String validator(String input) {
+    BallotLines<Candidate> parsedValue;
+    try {
+      parsedValue = BallotLines<Candidate>.parse(
+        input,
+        _fromStrings,
+        candidateToText: (c) => c.id,
+      );
+    } catch (e) {
+      return e.toString();
+    } finally {
+      if (parsedValue != _candidateLines) {
+        Future.microtask(() {
+          _candidateLines = parsedValue;
+          notifyListeners();
+        });
+      }
+    }
+    return null;
   }
+
+  void commitChange() {
+    assert(_candidateLines != null);
+    assert(_ballotLines != _candidateLines);
+    updateSource(
+      ElectionData.fromData(_candidateLines.ballots.toList(growable: false)),
+    );
+  }
+
+  bool get error => _candidateLines == null;
+
+  bool get valueChanged => _ballotLines != _candidateLines;
 
   @override
   bool updateSource(ElectionData data) {
@@ -30,78 +59,32 @@ class SimpleBallotEditor extends KnarlyEditor<ElectionData> {
     return true;
   }
 
-  void _onTextChange() {
-    print('TODO: text changed');
-  }
-
   @override
-  void dispose() {
-    textController.removeListener(_onTextChange);
-    super.dispose();
+  bool setValue(ElectionData value) {
+    if (super.setValue(value)) {
+      _updateBallots();
+      return true;
+    }
+    return false;
   }
-}
 
-class _BallotLines {
-  final int countWidth;
-  final int candidateWidth;
-  final List<_BallotLine> lines;
-
-  _BallotLines(this.countWidth, this.candidateWidth, this.lines);
-
-  factory _BallotLines.fromBallots(Iterable<RankedBallot<Candidate>> ballots) {
-    final candidates = <Candidate>{};
-
-    final grouped = ballots.fold<Map<RankedBallot<Candidate>, int>>(
-      <RankedBallot<Candidate>, int>{},
-      (map, ballot) {
-        candidates.addAll(ballot.rank);
-        map[ballot] = (map[ballot] ?? 0) + 1;
-        return map;
-      },
+  void _updateBallots() {
+    _candidateLines = _ballotLines = BallotLines<Candidate>.fromBallots(
+      value.ballots,
+      candidateToText: (c) => c.id,
     );
-
-    final candidateWidth = candidates.fold<int>(0, (length, c) {
-      if (c.id.length > length) {
-        return c.id.length;
-      }
-      return length;
-    });
-
-    final countWidth = grouped.values.fold<int>(0, (length, value) {
-      final str = value.toString().length;
-      if (str > length) {
-        return str;
-      }
-      return length;
-    });
-
-    final sortedBallots = grouped.entries.toList(growable: false)
-      ..sort((a, b) {
-        var value = b.value.compareTo(a.value);
-        if (value == 0) {
-          value = a.key.compareTo(b.key);
-        }
-        return value;
-      });
-
-    return _BallotLines(
-        countWidth,
-        candidateWidth,
-        sortedBallots
-            .map((e) => _BallotLine(e.value, e.key.rank))
-            .toList(growable: false));
+    textController.text = _ballotLines.text;
   }
-
-  String get text => lines.map((b) {
-        final candidates =
-            b.candidates.map((c) => c.id.padLeft(candidateWidth)).join(' > ');
-        return '${b.count.toString().padLeft(countWidth)} : $candidates';
-      }).join('\n');
 }
 
-class _BallotLine {
-  final int count;
-  final List<Candidate> candidates;
-
-  _BallotLine(this.count, this.candidates);
+Map<String, Candidate> _fromStrings(Set<String> values) {
+  final sorted = values.toList(growable: false)..sort();
+  var offset = 0;
+  return Map.fromEntries(sorted.map(
+    (e) {
+      final hue = 360 * offset / values.length;
+      offset++;
+      return MapEntry(e, Candidate(e, hue));
+    },
+  ));
 }
