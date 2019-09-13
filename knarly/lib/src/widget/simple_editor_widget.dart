@@ -21,7 +21,7 @@ class SimpleEditorWidget extends StatelessWidget {
                 maxLines: null,
                 controller: editor.textController,
                 style: const TextStyle(
-                  fontFamily: 'monospace',
+                  fontFamily: 'RobotoMono',
                 ),
               ),
             ),
