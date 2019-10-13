@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart' show ChangeNotifier;
-import 'package:knarly/src/view_model/editor.dart';
 
 import '../model/election_data.dart';
+import 'editor.dart';
 
 class KnarlyViewModel extends ChangeNotifier {
   final List<KnarlyEditor> _editors;
