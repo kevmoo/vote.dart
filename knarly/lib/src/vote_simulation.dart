@@ -26,7 +26,7 @@ class VoteSimulation extends StatelessWidget {
             alignment: Alignment.center,
             padding: const EdgeInsets.all(15),
             child: ChangeNotifierProvider<KnarlyViewModel>(
-              builder: _viewModel,
+              create: _viewModel,
               child: Consumer<KnarlyViewModel>(
                 builder: (_, kvm, __) => Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,

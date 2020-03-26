@@ -272,6 +272,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.6+3"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   node_interop:
     dependency: transitive
     description:
@@ -292,7 +299,7 @@ packages:
       name: package_config
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.9.2"
+    version: "1.9.3"
   package_resolver:
     dependency: transitive
     description:
@@ -334,7 +341,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.0"
+    version: "4.0.4"
   pub_semver:
     dependency: transitive
     description:
@@ -482,3 +489,4 @@ packages:
     version: "2.2.0"
 sdks:
   dart: ">=2.8.0-dev.10.0 <3.0.0"
+  flutter: ">=1.12.1"
