@@ -52,13 +52,12 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
-analyzer
-args
-csslib
-logging
-protobuf
+_fe_analyzer_shared
+build_daemon
+checked_yaml
+package_config
 
-Copyright 2013, the Dart project authors. All rights reserved.
+Copyright 2019, the Dart project authors. All rights reserved.
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
 met:
@@ -86,19 +85,13 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 --------------------------------------------------------------------------------
-analyzer_plugin
-build_config
-build_modules
-build_web_compilers
-graphs
-io
-json_annotation
-pedantic
-scratch_space
-stream_transform
-term_glyph
+analyzer
+args
+csslib
+logging
+protobuf
 
-Copyright 2017, the Dart project authors. All rights reserved.
+Copyright 2013, the Dart project authors. All rights reserved.
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
 met:
@@ -994,9 +987,7 @@ collection
 convert
 crypto
 mime
-package_config
 package_resolver
-source_gen
 stream_channel
 typed_data
 
@@ -1156,8 +1147,6 @@ bazel_worker
 build
 build_runner
 code_builder
-front_end
-kernel
 meta
 web_socket_channel
 
@@ -4014,10 +4003,18 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
-build_daemon
-checked_yaml
+build_config
+build_modules
+build_web_compilers
+graphs
+io
+json_annotation
+pedantic
+scratch_space
+stream_transform
+term_glyph
 
-Copyright 2019, the Dart project authors. All rights reserved.
+Copyright 2017, the Dart project authors. All rights reserved.
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
 met:
@@ -4080,7 +4077,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 built_collection
 built_value
-built_value_generator
 vector_math
 
 Copyright 2015, Google Inc. All rights reserved.
