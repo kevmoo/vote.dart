@@ -1,5 +1,6 @@
 # 0.1.1-dev
 
+- Added `ApprovalElection` and `ApprovalBallot`.
 - Added support for optional `candidates` in `IrvElection` and 
   `CondorcetElection`.
 - Added `bool get hasSingleWinner` to `Election`.

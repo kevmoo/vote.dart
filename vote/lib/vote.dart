@@ -1,3 +1,5 @@
+export 'src/approval_ballot.dart';
+export 'src/approval_election.dart';
 export 'src/ballot.dart';
 export 'src/condorcet_election.dart';
 export 'src/condorcet_pair.dart';
