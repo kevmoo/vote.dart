@@ -25,7 +25,7 @@ abstract class TableHelper<Entry, SubEntry> {
 
   double get headerTextScaleFactor => 1.0;
 
-  TableColumnWidth get defaultTableColumnWidth => const FlexColumnWidth(1.0);
+  TableColumnWidth get defaultTableColumnWidth => const FlexColumnWidth();
 
   String textForColumn(int columnIndex, Entry entry) =>
       throw ArgumentError('Could not get a value for $columnIndex from $entry');

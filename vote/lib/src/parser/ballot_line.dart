@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
-import 'package:vote/src/util.dart';
-import 'package:vote/vote.dart' show RankedBallot;
+
+import '../ranked_ballot.dart' show RankedBallot;
+import '../util.dart';
 
 class BallotLine<TCandidate extends Comparable>
     implements Comparable<BallotLine> {
