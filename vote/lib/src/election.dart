@@ -1,8 +1,8 @@
 import 'package:meta/meta.dart';
-import 'package:vote/src/util.dart';
 
 import 'ballot.dart';
 import 'election_place.dart';
+import 'util.dart';
 
 abstract class Election<TCandidate extends Comparable,
     TElectionPlace extends ElectionPlace<TCandidate>> {
