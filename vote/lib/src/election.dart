@@ -18,6 +18,7 @@ abstract class Election<TCandidate extends Comparable,
   }
 
   bool _assert() {
+    // TODO: assert all candidates are sorted, too?
     assert(allUnique(candidates));
 
     final allReferencedCandidates =
