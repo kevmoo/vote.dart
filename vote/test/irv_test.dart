@@ -1,7 +1,13 @@
 import 'package:test/test.dart';
 import 'package:vote/vote.dart';
 
+import 'plurality_test_shared.dart';
+
 void main() {
+  registerPluralityTests((List<PluralityBallot<String>> ballots,
+          {List<String> candidates}) =>
+      IrvElection(ballots.map((e) => RankedBallot([e.choice])).toList()));
+
   test('no transfers between eliminated', () {
     final canA = 'A';
     final canB = 'B';
