@@ -19,7 +19,7 @@ void main() {
 
     final ce = CondorcetElection([b]);
 
-    expect(ce, isNotNull);
+    expect(ce.hasSingleWinner, isTrue);
     expect(ce.singleWinner, equals(c));
     expect(ce.candidates, unorderedEquals([c]));
     expect(ce.ballots, unorderedEquals([b]));
@@ -47,7 +47,7 @@ void main() {
 
     final ce = CondorcetElection(ballots);
 
-    expect(ce, isNotNull);
+    expect(ce.hasSingleWinner, isTrue);
     expect(ce.singleWinner, equals(canC));
     expect(ce.candidates, unorderedEquals([canC, canCC, canVan]));
     expect(ce.ballots, unorderedEquals(ballots));
@@ -86,6 +86,7 @@ void main() {
 
     final election = CondorcetElection(ballots);
 
+    expect(election.hasSingleWinner, isFalse);
     expect(election.singleWinner, isNull);
     expect(election.places, [
       ['A1', 'A2', 'A3'],

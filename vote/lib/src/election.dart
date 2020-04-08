@@ -60,8 +60,10 @@ abstract class Election<TCandidate extends Comparable,
 
   final List<TElectionPlace> places;
 
+  bool get hasSingleWinner => places.isNotEmpty && places.first.length == 1;
+
   TCandidate get singleWinner {
-    if (places.isNotEmpty && places.first.length == 1) {
+    if (hasSingleWinner) {
       return places.first.first;
     } else {
       return null;

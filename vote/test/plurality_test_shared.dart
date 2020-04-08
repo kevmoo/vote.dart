@@ -37,6 +37,7 @@ void registerPluralityTests(ElectionFactory electionFactory) {
     ];
 
     final election = electionFactory(ballots);
+    expect(election.hasSingleWinner, isFalse);
     expect(election.singleWinner, isNull);
     expect(election.places, hasLength(2));
 

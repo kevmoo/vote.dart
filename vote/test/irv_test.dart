@@ -28,7 +28,7 @@ void main() {
 
     final election = IrvElection(ballots);
 
-    expect(election, isNotNull);
+    expect(election.hasSingleWinner, isTrue);
     expect(election.singleWinner, canA);
     expect(election.candidates, unorderedEquals([canA, canB, canC, canD]));
     expect(election.ballots, unorderedEquals(ballots));
@@ -57,7 +57,7 @@ void main() {
 
     final ce = IrvElection([b]);
 
-    expect(ce, isNotNull);
+    expect(ce.hasSingleWinner, isTrue);
     expect(ce.singleWinner, equals(c));
     expect(ce.candidates, [c]);
     expect(ce.rounds, hasLength(1));
