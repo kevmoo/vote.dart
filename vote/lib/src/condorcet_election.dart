@@ -31,13 +31,11 @@ class CondorcetElection<TCandidate extends Comparable>
     final candidateSet =
         candidates == null ? ballotCandidates : candidates.toSet();
 
-    if (candidates != null) {
-      assert(
-        candidateSet.containsAll(ballotCandidates),
-        'If `candidates` is provided, then every candidate in `ballots` should '
-        'exist in `candidates`.',
-      );
-    }
+    assert(
+      candidates == null || candidateSet.containsAll(ballotCandidates),
+      'If `candidates` is provided, then every candidate in `ballots` should '
+      'exist in `candidates`.',
+    );
 
     final candidateList = candidateSet.toList(growable: false)..sort();
 
