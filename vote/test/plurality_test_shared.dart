@@ -55,8 +55,10 @@ void registerPluralityTests(ElectionFactory electionFactory) {
       PluralityBallot('1'),
     ];
 
-    final election =
-        electionFactory(ballots, candidates: const ['1', '2', '3']);
+    final election = electionFactory(
+      ballots,
+      candidates: const ['1', '2', '3'],
+    );
 
     expect(election.places, hasLength(2));
     expect(election.places[0], ['1', '2']);
