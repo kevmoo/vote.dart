@@ -4,9 +4,14 @@ import 'package:vote/vote.dart';
 import 'plurality_test_shared.dart';
 
 void main() {
-  registerPluralityTests((List<PluralityBallot<String>> ballots,
-          {List<String> candidates}) =>
-      CondorcetElection(ballots.map((e) => RankedBallot([e.choice])).toList()));
+  registerPluralityTests((
+    List<PluralityBallot<String>> ballots, {
+    List<String> candidates,
+  }) =>
+      CondorcetElection(
+        ballots.map((e) => RankedBallot([e.choice])).toList(),
+        candidates: candidates,
+      ));
 
   test('simple', () {
     final c = 'Candidate 1';

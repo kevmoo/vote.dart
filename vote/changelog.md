@@ -1,3 +1,8 @@
+# 0.1.1-dev
+
+- Added support for optional `candidates` in `IrvElection` and 
+  `CondorcetElection`.
+
 # 0.1.0+2
 
 - Put `changelog.md` in the right spot.

@@ -21,8 +21,22 @@ class IrvElection<TCandidate extends Comparable>
           places: places,
         );
 
-  factory IrvElection(List<RankedBallot<TCandidate>> ballots) {
-    final candidates = ballots.expand((b) => b.rank).toSet();
+  factory IrvElection(
+    List<RankedBallot<TCandidate>> ballots, {
+    Iterable<TCandidate> candidates,
+  }) {
+    final ballotCandidates = ballots.expand((b) => b.rank).toSet();
+
+    final candidateSet =
+        candidates == null ? ballotCandidates : candidates.toSet();
+
+    if (candidates != null) {
+      assert(
+        candidateSet.containsAll(ballotCandidates),
+        'If `candidates` is provided, then every candidate in `ballots` should '
+        'exist in `candidates`.',
+      );
+    }
 
     final rounds = <IrvRound<TCandidate>>[];
 
@@ -54,7 +68,7 @@ class IrvElection<TCandidate extends Comparable>
       }
     }
 
-    final remaining = candidates.difference(candidatesInRounds);
+    final remaining = candidateSet.difference(candidatesInRounds);
     if (remaining.isNotEmpty) {
       places.add(ElectionPlace(
         places.last.place + places.last.length,
@@ -62,7 +76,7 @@ class IrvElection<TCandidate extends Comparable>
       ));
     }
     return IrvElection._internal(
-      candidates.toList(growable: false),
+      candidateSet.toList(growable: false),
       ballots,
       places,
       rounds,

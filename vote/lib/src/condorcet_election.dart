@@ -22,19 +22,34 @@ class CondorcetElection<TCandidate extends Comparable>
           places: places,
         );
 
-  factory CondorcetElection(List<RankedBallot<TCandidate>> ballots) {
-    final candidates =
-        ballots.expand((b) => b.rank).toSet().toList(growable: false)..sort();
+  factory CondorcetElection(
+    List<RankedBallot<TCandidate>> ballots, {
+    Iterable<TCandidate> candidates,
+  }) {
+    final ballotCandidates = ballots.expand((b) => b.rank).toSet();
+
+    final candidateSet =
+        candidates == null ? ballotCandidates : candidates.toSet();
+
+    if (candidates != null) {
+      assert(
+        candidateSet.containsAll(ballotCandidates),
+        'If `candidates` is provided, then every candidate in `ballots` should '
+        'exist in `candidates`.',
+      );
+    }
+
+    final candidateList = candidateSet.toList(growable: false)..sort();
 
     final pairs = {
-      for (var i = 0; i < candidates.length; i++)
-        for (var j = i + 1; j < candidates.length; j++)
-          CondorcetPair(candidates[i], candidates[j], ballots),
+      for (var i = 0; i < candidateList.length; i++)
+        for (var j = i + 1; j < candidateList.length; j++)
+          CondorcetPair(candidateList[i], candidateList[j], ballots),
     };
 
     final candidateMap = <TCandidate, Set<TCandidate>>{};
 
-    for (final candidate in candidates) {
+    for (final candidate in candidateList) {
       final lostTo = <TCandidate>[];
       final beat = <TCandidate>[];
       final tied = <TCandidate>[];
