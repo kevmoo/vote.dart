@@ -22,12 +22,12 @@ abstract class ElectionData {
   CondorcetElection<Candidate> _condorcetElection;
 
   CondorcetElection<Candidate> get condorcetElection =>
-      _condorcetElection ??= CondorcetElection(ballots);
+      _condorcetElection ??= CondorcetElection(ballots, candidates: candidates);
 
   IrvElection<Candidate> _irvElection;
 
   IrvElection<Candidate> get irvElection =>
-      _irvElection ??= IrvElection(ballots);
+      _irvElection ??= IrvElection(ballots, candidates: candidates);
 }
 
 class _ElectionData extends ElectionData {
