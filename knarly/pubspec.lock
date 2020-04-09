@@ -140,7 +140,7 @@ packages:
       name: collection
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.14.11"
+    version: "1.14.12"
   convert:
     dependency: transitive
     description:
@@ -465,7 +465,7 @@ packages:
       path: "../vote"
       relative: true
     source: path
-    version: "0.1.0+2"
+    version: "0.1.1-dev"
   watcher:
     dependency: transitive
     description:
