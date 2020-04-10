@@ -1,6 +1,5 @@
 import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
+import 'dart:ui';
 
 import 'candidate.dart';
 import 'voter.dart';
