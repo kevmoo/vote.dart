@@ -9,7 +9,7 @@ class SimpleEditorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Consumer<SimpleBallotEditor>(
         builder: (_, editor, __) => Form(
-          autovalidate: true,
+          autovalidateMode: AutovalidateMode.always,
           child: Stack(
             alignment: Alignment.bottomRight,
             children: [

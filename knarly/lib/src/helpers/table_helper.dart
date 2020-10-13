@@ -89,7 +89,7 @@ abstract class TableHelper<Entry, SubEntry> {
                     color: subEntries.length == 1
                         ? subEntryColor(subEntries.single)
                         : null,
-                    border: Border.all(width: _itemPadding),
+                    border: Border.all(),
                   ),
                   children: List.generate(columns.length, (column) {
                     if (isMulti(column)) {
@@ -102,7 +102,7 @@ abstract class TableHelper<Entry, SubEntry> {
                       } else {
                         return Padding(
                           padding: const EdgeInsets.symmetric(
-                            vertical: _itemPadding,
+                            vertical: 1,
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -150,5 +150,3 @@ SubEntryPosition _position(int length, int index) {
 
   return SubEntryPosition.middle;
 }
-
-const double _itemPadding = 1;
