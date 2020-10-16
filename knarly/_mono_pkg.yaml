@@ -1,5 +1,5 @@
 # Holding off testing since this requires Flutter @ master
-# See https://github.com/dart-lang/mono_repo for details
+# See with https://github.com/google/mono_repo.dart for details on this file
 stages:
 - smoke_test:
   - group:
