@@ -26,7 +26,7 @@ class TownCandidate extends Candidate {
   int compareTo(Candidate other) => id.compareTo(other.id);
 
   @override
-  bool operator ==(other) => other is TownCandidate && id == other.id;
+  bool operator ==(Object other) => other is TownCandidate && id == other.id;
 
   @override
   int get hashCode => id.hashCode;
@@ -61,7 +61,7 @@ List<double> _slice(int itemCount, num maxValue, int sliceCount) {
   assert(maxValue > 0);
   assert(sliceCount > 1);
 
-  final values = List<double>(itemCount);
+  final values = List<double>.filled(itemCount, 0);
   var index = 0;
 
   var sliceSize = maxValue / sliceCount;

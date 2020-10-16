@@ -15,8 +15,7 @@ class RankedBallot<TCandidate extends Comparable>
   final List<TCandidate> rank;
 
   RankedBallot(this.rank)
-      : assert(rank != null),
-        assert(rank.isNotEmpty),
+      : assert(rank.isNotEmpty),
         assert(allUnique(rank));
 
   @override

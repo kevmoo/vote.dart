@@ -6,7 +6,7 @@ import 'plurality_test_shared.dart';
 void main() {
   registerPluralityTests((
     List<PluralityBallot<String>> ballots, {
-    List<String> candidates,
+    List<String>? candidates,
   }) =>
       IrvElection(
         ballots.map((e) => RankedBallot([e.choice])).toList(),
@@ -38,13 +38,13 @@ void main() {
     final firstRound = election.rounds.first;
     expect(firstRound.eliminatedCandidates, unorderedEquals([canC, canD]));
 
-    final eliminationC = firstRound.eliminationForCandidate(canC);
+    final eliminationC = firstRound.eliminationForCandidate(canC)!;
     expect(eliminationC.getTransferCount(canA), 0);
     expect(eliminationC.getTransferCount(canB), 0);
     expect(eliminationC.getTransferCount(canC), 0);
     expect(eliminationC.getTransferCount(canD), 0);
 
-    final eliminationD = firstRound.eliminationForCandidate(canD);
+    final eliminationD = firstRound.eliminationForCandidate(canD)!;
     expect(eliminationD.getTransferCount(canA), 0);
     expect(eliminationD.getTransferCount(canB), 0);
     expect(eliminationD.getTransferCount(canC), 0);

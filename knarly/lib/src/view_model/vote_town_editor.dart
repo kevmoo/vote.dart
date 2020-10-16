@@ -6,12 +6,12 @@ import 'editor.dart';
 
 class VoteTownEditor extends KnarlyEditor<VoteTown> {
   /// The scale from device pixels to the logical size of [VoteTown].
-  double townSizeRatio;
+  double? townSizeRatio;
 
-  TownCandidate get movingCandidate => _movingCandidate;
-  TownCandidate _movingCandidate;
+  TownCandidate? get movingCandidate => _movingCandidate;
+  TownCandidate? _movingCandidate;
 
-  Offset _workingPoint;
+  Offset? _workingPoint;
 
   VoteTownEditor(VoteTown value) : super(value);
 
@@ -35,10 +35,10 @@ class VoteTownEditor extends KnarlyEditor<VoteTown> {
     }
 
     assert(_workingPoint != null);
-    _workingPoint += pixelOffset * townSizeRatio;
-    final newFixedLocation = fixPoint(_workingPoint);
+    _workingPoint = _workingPoint! + pixelOffset * townSizeRatio!;
+    final newFixedLocation = fixPoint(_workingPoint!);
 
-    if (newFixedLocation.x % 2 == 0 && newFixedLocation.y % 2 == 0) {
+    if (newFixedLocation.x.isEven && newFixedLocation.y.isEven) {
       // over a voter - skip!
       return;
     }

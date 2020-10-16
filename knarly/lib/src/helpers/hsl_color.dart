@@ -33,7 +33,7 @@ class HslColor {
   int get hashCode => h.hashCode ^ s.hashCode ^ l.hashCode;
 
   @override
-  bool operator ==(other) =>
+  bool operator ==(Object other) =>
       other is HslColor && other.h == h && other.s == s && other.l == l;
 
   @override

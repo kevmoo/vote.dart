@@ -26,9 +26,5 @@ void main() {
         expect(sorted(entry.key), entry.value);
       });
     }
-
-    test('null items throw', () {
-      expect(() => sorted([null]), throwsArgumentError);
-    });
   });
 }

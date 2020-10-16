@@ -43,7 +43,11 @@ abstract class TableHelper<Entry, SubEntry> {
         ),
       );
 
-  Widget _tableCell(String content, {Color color, SubEntryPosition position}) =>
+  Widget _tableCell(
+    String content, {
+    Color? color,
+    SubEntryPosition position = SubEntryPosition.single,
+  }) =>
       Container(
         color: color,
         // This is some very nuanced logic for making sure the sizes of rows

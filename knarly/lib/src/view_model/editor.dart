@@ -12,7 +12,6 @@ abstract class KnarlyEditor<T extends ElectionData> extends ChangeNotifier
 
   @protected
   bool setValue(T value) {
-    assert(value != null);
     if (value != _value) {
       _value = value;
       notifyListeners();

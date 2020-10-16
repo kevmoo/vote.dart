@@ -6,7 +6,7 @@ import 'plurality_test_shared.dart';
 void main() {
   registerPluralityTests((
     List<PluralityBallot<String>> ballots, {
-    List<String> candidates,
+    List<String>? candidates,
   }) =>
       CondorcetElection(
         ballots.map((e) => RankedBallot([e.choice])).toList(),

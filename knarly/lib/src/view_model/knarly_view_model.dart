@@ -7,7 +7,7 @@ class KnarlyViewModel extends ChangeNotifier {
   final List<KnarlyEditor> _editors;
 
   int _currentEditorIndex = 0;
-  ElectionData _electionData;
+  ElectionData? _electionData;
 
   KnarlyViewModel(Iterable<KnarlyEditor> editors)
       : _editors = editors.toList(growable: false) {
@@ -17,15 +17,11 @@ class KnarlyViewModel extends ChangeNotifier {
 
   KnarlyEditor get _editor => _editors[_currentEditorIndex];
 
-  ElectionData get electionData {
-    assert(_editor != null);
-    assert(_editor.value != null);
-    return _editor.value;
-  }
+  ElectionData get electionData => _editor.value;
 
   KnarlyEditor get editor => _editor;
 
-  void Function() get toggleFunction {
+  void Function()? get toggleFunction {
     if (_editors.length == 1) {
       return null;
     }

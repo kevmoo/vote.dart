@@ -8,17 +8,20 @@ import 'editor.dart';
 class SimpleBallotEditor extends KnarlyEditor<ElectionData> {
   final textController = TextEditingController();
 
-  BallotLines<Candidate> _candidateLines;
-  BallotLines<Candidate> _ballotLines;
+  BallotLines<Candidate>? _candidateLines;
+  late BallotLines<Candidate> _ballotLines;
 
   SimpleBallotEditor({
-    @required ElectionData electionData,
+    required ElectionData electionData,
   }) : super(electionData) {
     _updateBallots();
   }
 
-  String validator(String input) {
-    BallotLines<Candidate> parsedValue;
+  String? validator(String? input) {
+    if (input == null) {
+      return 'Cannot be null';
+    }
+    BallotLines<Candidate>? parsedValue;
     try {
       parsedValue = BallotLines<Candidate>.parse(
         input,
@@ -42,7 +45,7 @@ class SimpleBallotEditor extends KnarlyEditor<ElectionData> {
     assert(_candidateLines != null);
     assert(_ballotLines != _candidateLines);
     updateSource(
-      ElectionData.fromData(_candidateLines.ballots.toList(growable: false)),
+      ElectionData.fromData(_candidateLines!.ballots.toList(growable: false)),
     );
   }
 

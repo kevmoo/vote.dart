@@ -21,7 +21,7 @@ class PluralityElection<TCandidate extends Comparable>
 
   factory PluralityElection(
     List<PluralityBallot<TCandidate>> ballots, {
-    Iterable<TCandidate> candidates,
+    Iterable<TCandidate>? candidates,
   }) {
     var candidateVotes = <TCandidate, int>{};
 
@@ -47,7 +47,7 @@ class PluralityElection<TCandidate extends Comparable>
         entry.key: entry.value,
     };
 
-    final groups = groupBy(candidateVotes.keys, (c) => candidateVotes[c])
+    final groups = groupBy(candidateVotes.keys, (c) => candidateVotes[c]!)
         .entries
         .toList(growable: false)
           // NOTE: reverse sorting

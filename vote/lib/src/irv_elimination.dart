@@ -8,10 +8,7 @@ class IrvElimination<TCandidate extends Comparable> {
   final Map<TCandidate, List<RankedBallot<TCandidate>>> _transfers;
   final List<RankedBallot<TCandidate>> exhausted;
 
-  const IrvElimination(this.candidate, this._transfers, this.exhausted)
-      : assert(candidate != null),
-        assert(_transfers != null),
-        assert(exhausted != null);
+  const IrvElimination(this.candidate, this._transfers, this.exhausted);
 
   Iterable<TCandidate> get transferredCandidates => _transfers.keys;
 

@@ -15,8 +15,7 @@ class VoteTown extends ElectionData {
 
   VoteTown(this.candidates);
 
-  factory VoteTown.random({int candidateCount = 5, int randomSeed}) {
-    candidateCount ??= 5;
+  factory VoteTown.random({int candidateCount = 5, int? randomSeed}) {
     assert(candidateCount > 0);
     assert(candidateCount < 2 * votersAcross);
     assert(candidateCount <= 26);
@@ -92,21 +91,21 @@ class VoteTown extends ElectionData {
 
   List<TownVoter> get voters => _voters ??= _createVoters(candidates);
 
-  List<TownVoter> _voters;
+  List<TownVoter>? _voters;
 
-  List<VoteTownDistancePlace> _distancePlaces;
+  List<VoteTownDistancePlace>? _distancePlaces;
 
   List<VoteTownDistancePlace> get distancePlaces =>
       _distancePlaces ??= VoteTownDistancePlace.create(this);
 
-  List<RankedBallot<TownCandidate>> _ballots;
+  List<RankedBallot<TownCandidate>>? _ballots;
 
   @override
   List<RankedBallot<TownCandidate>> get ballots => _ballots ??= voters
       .map((v) => RankedBallot<TownCandidate>(v.closestCandidates))
       .toList(growable: false);
 
-  double _bestDistanceCache;
+  double? _bestDistanceCache;
 
   double get _bestDistance {
     if (_bestDistanceCache == null) {
@@ -116,7 +115,7 @@ class VoteTown extends ElectionData {
 
       _bestDistanceCache = _averageVoterDistanceTo(this, locationSum);
     }
-    return _bestDistanceCache;
+    return _bestDistanceCache!;
   }
 }
 

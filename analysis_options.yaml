@@ -1,11 +1,16 @@
 analyzer:
   strong-mode:
     implicit-casts: false
+
+  enable-experiment:
+    - non-nullable
+
 linter:
   rules:
     - always_declare_return_types
     - annotate_overrides
     - avoid_catching_errors
+    - avoid_dynamic_calls
     - avoid_empty_else
     - avoid_function_literals_in_foreach_calls
     - avoid_init_to_null
@@ -60,6 +65,7 @@ linter:
     - prefer_conditional_assignment
     - prefer_const_constructors
     - prefer_const_constructors_in_immutables
+    #- prefer_const_declarations
     - prefer_const_literals_to_create_immutables
     - prefer_contains
     - prefer_equal_for_default_values
@@ -68,6 +74,7 @@ linter:
     - prefer_final_locals
     - prefer_function_declarations_over_variables
     - prefer_generic_function_type_aliases
+    - prefer_if_null_operators
     - prefer_initializing_formals
     - prefer_inlined_adds
     - prefer_interpolation_to_compose_strings
@@ -85,6 +92,7 @@ linter:
     - sort_pub_dependencies
     - test_types_in_equals
     - throw_in_finally
+    - type_annotate_public_apis
     - type_init_formals
     - unawaited_futures
     - unnecessary_brace_in_string_interps
@@ -101,6 +109,7 @@ linter:
     - unnecessary_this
     - unrelated_type_equality_checks
     - use_function_type_syntax_for_parameters
+    - use_is_even_rather_than_modulo
     - use_rethrow_when_possible
     - use_string_buffers
     - valid_regexps

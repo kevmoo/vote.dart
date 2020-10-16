@@ -1,10 +1,11 @@
-# 0.1.1-dev
+# 1.0.0
 
 - Added `ApprovalElection` and `ApprovalBallot`.
 - Added support for optional `candidates` in `IrvElection` and 
   `CondorcetElection`.
 - Added `bool get hasSingleWinner` to `Election`.
-- Require Dart `2.4.0`.
+- Require Dart `2.12.0`.
+- Null safety!
 
 # 0.1.0+2
 
