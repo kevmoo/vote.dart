@@ -25,13 +25,13 @@ class VoteTownDistancePlace extends ElectionPlace<TownCandidate> {
     final groups = groupBy(distances.keys, (key) => distances[key])
         .entries
         .toList(growable: false)
-          ..sort((a, b) => a.key.compareTo(b.key));
+          ..sort((a, b) => a.key!.compareTo(b.key!));
 
     var place = 1;
     return groups.map((e) {
       final placeValue = place;
       place += e.value.length;
-      return VoteTownDistancePlace._(e.key, placeValue, e.value);
+      return VoteTownDistancePlace._(e.key!, placeValue, e.value);
     }).toList(growable: false);
   }
 }

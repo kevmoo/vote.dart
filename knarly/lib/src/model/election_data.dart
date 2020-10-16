@@ -14,17 +14,17 @@ abstract class ElectionData {
 
   List<Candidate> get candidates;
 
-  PluralityElection<Candidate> _pluralityElection;
+  PluralityElection<Candidate>? _pluralityElection;
 
   PluralityElection<Candidate> get pluralityElection =>
       _pluralityElection ??= PluralityElection(ballots, candidates: candidates);
 
-  CondorcetElection<Candidate> _condorcetElection;
+  CondorcetElection<Candidate>? _condorcetElection;
 
   CondorcetElection<Candidate> get condorcetElection =>
       _condorcetElection ??= CondorcetElection(ballots, candidates: candidates);
 
-  IrvElection<Candidate> _irvElection;
+  IrvElection<Candidate>? _irvElection;
 
   IrvElection<Candidate> get irvElection =>
       _irvElection ??= IrvElection(ballots, candidates: candidates);
@@ -37,7 +37,7 @@ class _ElectionData extends ElectionData {
   @override
   final List<Candidate> candidates;
 
-  _ElectionData(this.ballots, {List<Candidate> candidates})
+  _ElectionData(this.ballots, {List<Candidate>? candidates})
       : candidates = candidates ??
             ballots
                 .expand((rb) => rb.referencedCandidates())

@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import 'ballot.dart';
 import 'election_place.dart';
 import 'util.dart';
@@ -7,9 +5,9 @@ import 'util.dart';
 abstract class Election<TCandidate extends Comparable,
     TElectionPlace extends ElectionPlace<TCandidate>> {
   Election({
-    @required this.candidates,
-    @required this.ballots,
-    @required this.places,
+    required this.candidates,
+    required this.ballots,
+    required this.places,
   }) {
     // Waiting on https://github.com/dart-lang/linter/commit/767c3baaab02457a9c4
     // To land in an SDK
@@ -62,7 +60,7 @@ abstract class Election<TCandidate extends Comparable,
 
   bool get hasSingleWinner => places.isNotEmpty && places.first.length == 1;
 
-  TCandidate get singleWinner {
+  TCandidate? get singleWinner {
     if (hasSingleWinner) {
       return places.first.first;
     } else {

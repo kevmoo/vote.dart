@@ -25,7 +25,7 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
   Iterable<List<Widget>> _updateElement(
     IrvElection<Candidate> election,
   ) sync* {
-    List<_Data> lastRoundData;
+    List<_Data>? lastRoundData;
     for (var round in election.rounds) {
       final roundData = [
         for (var i = 0; i < round.places.length; i++)
@@ -135,7 +135,7 @@ class _Data {
   );
 
   @override
-  bool operator ==(other) =>
+  bool operator ==(Object other) =>
       other is _Data &&
       placeNumber == other.placeNumber &&
       candidate == other.candidate;
@@ -147,10 +147,10 @@ class _Data {
 /// Returns a [Widget] with [content] surrounded by padding.
 Widget _cell(
   String content, {
-  FontWeight fontWeight,
-  Color background,
+  FontWeight? fontWeight,
+  Color? background,
   TextAlign textAlign = TextAlign.center,
-  FontStyle fontStyle,
+  FontStyle? fontStyle,
 }) =>
     Container(
       padding: const EdgeInsets.all(3),

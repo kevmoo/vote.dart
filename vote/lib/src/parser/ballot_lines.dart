@@ -66,7 +66,7 @@ class BallotLines<TCandidate extends Comparable> {
           (e) => BallotLine<TCandidate>(
             e.value,
             e.key
-                .map((string) => candidateCache[string])
+                .map((string) => candidateCache[string]!)
                 .toList(growable: false),
           ),
         )
@@ -76,7 +76,7 @@ class BallotLines<TCandidate extends Comparable> {
     return BallotLines(lines, candidateToText: candidateToText);
   }
 
-  String _text;
+  String? _text;
 
   String get text => _text ??= _lines.map((b) {
         final candidates = b.candidates

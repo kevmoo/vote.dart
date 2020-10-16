@@ -19,7 +19,7 @@ class Candidate implements Comparable<Candidate> {
   int compareTo(Candidate other) => id.compareTo(other.id);
 
   @override
-  bool operator ==(other) => other is Candidate && id == other.id;
+  bool operator ==(Object other) => other is Candidate && id == other.id;
 
   @override
   int get hashCode => id.hashCode;

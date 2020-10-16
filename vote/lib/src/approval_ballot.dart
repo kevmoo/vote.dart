@@ -6,9 +6,7 @@ import 'ballot.dart';
 class ApprovalBallot<TCandidate extends Comparable> extends Ballot<TCandidate> {
   final Set<TCandidate> choices;
 
-  ApprovalBallot(this.choices)
-      : assert(choices.isNotEmpty),
-        assert(choices.every((element) => element != null));
+  ApprovalBallot(this.choices) : assert(choices.isNotEmpty);
 
   @override
   Iterable<TCandidate> referencedCandidates() => choices;

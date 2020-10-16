@@ -7,7 +7,7 @@ import 'test_util.dart';
 
 typedef ElectionFactory = Election<String, ElectionPlace<String>> Function(
   List<PluralityBallot<String>> ballots, {
-  List<String> candidates,
+  List<String>? candidates,
 });
 
 void registerPluralityTests(ElectionFactory electionFactory) {

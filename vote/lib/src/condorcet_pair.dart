@@ -7,11 +7,11 @@ class CondorcetPair<TCandidate extends Comparable>
     implements Comparable<CondorcetPair> {
   final TCandidate candidate1, candidate2;
 
-  final int firstOverSecond;
-  final int secondOverFirst;
+  final int? firstOverSecond;
+  final int? secondOverFirst;
 
   /// Number of ballots where neither candidate was listed
-  final int ties;
+  final int? ties;
 
   const CondorcetPair._internal(
     this.candidate1,
@@ -22,9 +22,7 @@ class CondorcetPair<TCandidate extends Comparable>
   );
 
   factory CondorcetPair(TCandidate can1, TCandidate can2,
-      [List<RankedBallot<TCandidate>> ballots]) {
-    assert(can1 != null, 'can1');
-    assert(can2 != null, 'can2');
+      [List<RankedBallot<TCandidate>>? ballots]) {
     assert(can1 != can2, 'can1 and can2 must be different');
 
     if (can1.compareTo(can2) > 0) {
@@ -69,10 +67,10 @@ class CondorcetPair<TCandidate extends Comparable>
     }
   }
 
-  TCandidate get winner {
-    if (firstOverSecond > secondOverFirst) {
+  TCandidate? get winner {
+    if (firstOverSecond! > secondOverFirst!) {
       return candidate1;
-    } else if (secondOverFirst > firstOverSecond) {
+    } else if (secondOverFirst! > firstOverSecond!) {
       return candidate2;
     } else {
       assert(isTie);
@@ -83,8 +81,6 @@ class CondorcetPair<TCandidate extends Comparable>
   bool get isTie => firstOverSecond == secondOverFirst;
 
   bool matches(TCandidate can1, TCandidate can2) {
-    assert(can1 != null, 'can1');
-    assert(can2 != null, 'can2');
     assert(can1 != can2, 'can1 and can2 must be different');
 
     if (can1.compareTo(can2) > 0) {
@@ -101,8 +97,6 @@ class CondorcetPair<TCandidate extends Comparable>
     if (candidate1.compareTo(candidate2) > 0) {
       throw ArgumentError('already flipped!');
     }
-    assert(can1 != null, 'can1');
-    assert(can2 != null, 'can2');
     assert(can1 != can2, 'can1 and can2 must be different');
 
     var flipped = false;

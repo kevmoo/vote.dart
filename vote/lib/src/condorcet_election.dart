@@ -24,7 +24,7 @@ class CondorcetElection<TCandidate extends Comparable>
 
   factory CondorcetElection(
     List<RankedBallot<TCandidate>> ballots, {
-    Iterable<TCandidate> candidates,
+    Iterable<TCandidate>? candidates,
   }) {
     final ballotCandidates = ballots.expand((b) => b.rank).toSet();
 
@@ -77,7 +77,7 @@ class CondorcetElection<TCandidate extends Comparable>
     }
 
     final components = stronglyConnectedComponents<TCandidate>(
-        candidateMap.keys, (node) => candidateMap[node])
+        candidateMap.keys, (node) => candidateMap[node]!)
       ..sort((a, b) {
         final firstA = a.first;
         final firstB = b.first;

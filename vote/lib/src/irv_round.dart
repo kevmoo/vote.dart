@@ -43,11 +43,11 @@ class IrvRound<TCandidate extends Comparable> {
     final candidateAllocations =
         groupBy<_CleanedBallot<TCandidate>, TCandidate>(
       cleanedBallots.where((cb) => cb.winner != null),
-      (cb) => cb.winner,
+      (cb) => cb.winner!,
     );
 
     final voteGroups = groupBy<TCandidate, int>(
-        candidateAllocations.keys, (c) => candidateAllocations[c].length);
+        candidateAllocations.keys, (c) => candidateAllocations[c]!.length);
 
     final placeVotes = voteGroups.keys.toList(growable: false)
       // reverse sorting -> most votes first
@@ -55,7 +55,7 @@ class IrvRound<TCandidate extends Comparable> {
 
     var placeNumber = 1;
     final places = placeVotes.map((vote) {
-      final voteGroup = voteGroups[vote]..sort();
+      final voteGroup = voteGroups[vote]!..sort();
       final currentPlaceNumber = placeNumber;
       placeNumber += voteGroup.length;
       return PluralityElectionPlace<TCandidate>(
@@ -94,16 +94,15 @@ class IrvRound<TCandidate extends Comparable> {
     );
   }
 
-  IrvElimination<TCandidate> eliminationForCandidate(TCandidate candidate) =>
-      eliminations.singleWhere(
-        (e) => e.candidate == candidate,
-        orElse: () => null,
-      );
+  IrvElimination<TCandidate>? eliminationForCandidate(TCandidate candidate) =>
+      eliminations.cast<IrvElimination<TCandidate>?>().singleWhere(
+            (e) => e?.candidate == candidate,
+            orElse: () => null,
+          );
 
   static List<TCandidate>
       _getEliminatedCandidates<TCandidate extends Comparable>(
           List<PluralityElectionPlace<TCandidate>> places) {
-    assert(places != null);
     assert(places.isNotEmpty);
 
     if (places.length == 1) {
@@ -137,7 +136,7 @@ class IrvRound<TCandidate extends Comparable> {
 class _CleanedBallot<TCandidate extends Comparable> {
   final RankedBallot<TCandidate> ballot;
   final List<TCandidate> remaining;
-  final TCandidate winner;
+  final TCandidate? winner;
 
   const _CleanedBallot(this.ballot, this.remaining, this.winner);
 }

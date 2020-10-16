@@ -14,7 +14,7 @@ Iterable<BallotLine<String>> parse(String input) sync* {
     if (_scanner.isDone) break;
 
     _scanner.expect(_intRegexp, name: 'a number greater than 0');
-    final count = int.parse(_scanner.lastMatch[1]);
+    final count = int.parse(_scanner.lastMatch![1]!);
     if (count <= 0) {
       _scanner.error('expected a number greater than 0.');
     }
@@ -24,7 +24,7 @@ Iterable<BallotLine<String>> parse(String input) sync* {
     final candidates = <String>[];
     do {
       _scanner.expect(_candidate, name: 'a candidate');
-      var match = _scanner.lastMatch[1];
+      var match = _scanner.lastMatch![1]!;
 
       match = _caseMatches.putIfAbsent(match.toLowerCase(), () => match);
 

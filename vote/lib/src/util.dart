@@ -4,12 +4,8 @@ int majorityThreshold(int votes) {
 }
 
 bool sorted(Iterable<Comparable> items) {
-  Comparable last;
+  Comparable? last;
   for (var item in items) {
-    if (item == null) {
-      throw ArgumentError('null items are not supported.');
-    }
-
     if (last != null && last.compareTo(item) > 0) {
       return false;
     }
@@ -21,8 +17,6 @@ bool sorted(Iterable<Comparable> items) {
 
 /// Asserts that all [items] are not `null`.
 bool allUnique(List items) {
-  assert(items != null, 'items');
-
   for (var i = 0; i < items.length; i++) {
     final value = items[i];
     assert(value != null);

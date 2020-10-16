@@ -51,9 +51,12 @@ class _CondorcetTableHelper
 
   @override
   Widget widgetForSubEntry(
-      int columnIndex, Candidate subEntry, SubEntryPosition position) {
+    int columnIndex,
+    Candidate subEntry,
+    SubEntryPosition position,
+  ) {
     String textContent;
-    TextStyle style;
+    TextStyle? style;
 
     if (columnIndex == 1) {
       textContent = subEntry.id;
@@ -71,11 +74,18 @@ class _CondorcetTableHelper
           style = const TextStyle(fontWeight: FontWeight.bold);
         }
 
-        final comparison =
-            pair.isTie ? '=' : pair.winner == pair.candidate1 ? '>' : '<';
+        final comparison = pair.isTie
+            ? '='
+            : pair.winner == pair.candidate1
+                ? '>'
+                : '<';
         textContent =
             '${pair.firstOverSecond}$comparison${pair.secondOverFirst}';
       }
+    } else {
+      throw UnsupportedError(
+        'Not sure what to do here - columnIndex $columnIndex',
+      );
     }
 
     return Container(

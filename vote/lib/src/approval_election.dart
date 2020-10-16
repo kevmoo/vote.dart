@@ -21,7 +21,7 @@ class ApprovalElection<TCandidate extends Comparable>
 
   factory ApprovalElection(
     List<ApprovalBallot<TCandidate>> ballots, {
-    Iterable<TCandidate> candidates,
+    Iterable<TCandidate>? candidates,
   }) {
     var candidateVotes = <TCandidate, int>{};
 
@@ -49,7 +49,7 @@ class ApprovalElection<TCandidate extends Comparable>
         entry.key: entry.value,
     };
 
-    final groups = groupBy(candidateVotes.keys, (c) => candidateVotes[c])
+    final groups = groupBy(candidateVotes.keys, (c) => candidateVotes[c]!)
         .entries
         .toList(growable: false)
           // NOTE: reverse sorting

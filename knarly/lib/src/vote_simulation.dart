@@ -36,7 +36,7 @@ class VoteSimulation extends StatelessWidget {
                       constraints: const BoxConstraints(maxWidth: 500),
                       child: Column(
                         children: <Widget>[
-                          RaisedButton(
+                          ElevatedButton(
                             child: const Text('Toggle'),
                             onPressed: kvm.toggleFunction,
                           ),

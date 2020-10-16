@@ -7,11 +7,10 @@ class KGrid extends MultiChildRenderObjectWidget {
   final double maxCrossAxisExtent;
 
   KGrid({
-    Key key,
-    @required this.maxCrossAxisExtent,
+    Key? key,
+    required this.maxCrossAxisExtent,
     List<Widget> children = const <Widget>[],
-  })  : assert(maxCrossAxisExtent != null),
-        assert(maxCrossAxisExtent > 0),
+  })  : assert(maxCrossAxisExtent > 0),
         super(key: key, children: children);
 
   @override
@@ -74,6 +73,9 @@ class _KGrid extends RenderBox
   }
 
   @override
-  bool hitTestChildren(BoxHitTestResult result, {Offset position}) =>
+  bool hitTestChildren(
+    BoxHitTestResult result, {
+    required Offset position,
+  }) =>
       defaultHitTestChildren(result, position: position);
 }

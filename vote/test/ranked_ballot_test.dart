@@ -7,12 +7,6 @@ void main() {
   final c1 = 'candidate 1';
   final c2 = 'candidate 2';
 
-  test('no null candidates', () {
-    expect(() {
-      RankedBallot(null);
-    }, throwsAssertionError);
-  });
-
   test('no empty candidates', () {
     expect(() {
       RankedBallot<int>(const []);

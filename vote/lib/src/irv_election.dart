@@ -23,7 +23,7 @@ class IrvElection<TCandidate extends Comparable>
 
   factory IrvElection(
     List<RankedBallot<TCandidate>> ballots, {
-    Iterable<TCandidate> candidates,
+    Iterable<TCandidate>? candidates,
   }) {
     final ballotCandidates = ballots.expand((b) => b.rank).toSet();
 
