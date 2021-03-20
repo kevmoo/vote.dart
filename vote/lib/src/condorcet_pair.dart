@@ -21,8 +21,11 @@ class CondorcetPair<TCandidate extends Comparable>
     this.ties,
   );
 
-  factory CondorcetPair(TCandidate can1, TCandidate can2,
-      [List<RankedBallot<TCandidate>>? ballots]) {
+  factory CondorcetPair(
+    TCandidate can1,
+    TCandidate can2, [
+    List<RankedBallot<TCandidate>>? ballots,
+  ]) {
     assert(can1 != can2, 'can1 and can2 must be different');
 
     if (can1.compareTo(can2) > 0) {

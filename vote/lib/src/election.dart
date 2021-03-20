@@ -2,6 +2,7 @@ import 'ballot.dart';
 import 'election_place.dart';
 import 'util.dart';
 
+/// Baseclass of all election types.
 abstract class Election<TCandidate extends Comparable,
     TElectionPlace extends ElectionPlace<TCandidate>> {
   Election({
@@ -9,9 +10,6 @@ abstract class Election<TCandidate extends Comparable,
     required this.ballots,
     required this.places,
   }) {
-    // Waiting on https://github.com/dart-lang/linter/commit/767c3baaab02457a9c4
-    // To land in an SDK
-    // ignore: prefer_asserts_in_initializer_lists
     assert(_assert());
   }
 
@@ -45,21 +43,33 @@ abstract class Election<TCandidate extends Comparable,
       }
     }
 
-    assert(placeCandidates.containsAll(allReferencedCandidates),
-        ['', placeCandidates, allReferencedCandidates].join('\n'));
-    assert(placeCandidates.containsAll(candidates),
-        ['', placeCandidates, candidates].join('\n'));
+    assert(
+      placeCandidates.containsAll(allReferencedCandidates),
+      ['', placeCandidates, allReferencedCandidates].join('\n'),
+    );
+    assert(
+      placeCandidates.containsAll(candidates),
+      ['', placeCandidates, candidates].join('\n'),
+    );
     return true;
   }
 
+  /// All of the candidates in the election.
   final List<TCandidate> candidates;
 
+  /// All of the ballots cast in the election.
   final List<Ballot<TCandidate>> ballots;
 
+  /// The ordered result of the election.
   final List<TElectionPlace> places;
 
+  /// Returns `true` if there is a single winner in the election
+  /// (there is no tie).
   bool get hasSingleWinner => places.isNotEmpty && places.first.length == 1;
 
+  /// If [hasSingleWinner] is `true`, returns the corresponding candidate.
+  ///
+  /// Otherwise, `null`.
   TCandidate? get singleWinner {
     if (hasSingleWinner) {
       return places.first.first;
