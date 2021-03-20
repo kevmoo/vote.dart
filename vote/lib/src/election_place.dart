@@ -2,8 +2,6 @@ import 'dart:collection';
 
 import 'package:meta/meta.dart';
 
-import 'util.dart';
-
 @immutable
 class ElectionPlace<TCandidate extends Comparable>
     extends UnmodifiableListView<TCandidate> {
@@ -12,7 +10,6 @@ class ElectionPlace<TCandidate extends Comparable>
   ElectionPlace(this.place, List<TCandidate> candidates)
       : assert(place > 0),
         assert(candidates.isNotEmpty),
-        assert(sorted(candidates)),
         super(candidates);
 
   @override
