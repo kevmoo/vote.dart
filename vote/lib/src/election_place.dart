@@ -2,8 +2,6 @@ import 'dart:collection';
 
 import 'package:meta/meta.dart';
 
-import 'util.dart';
-
 @immutable
 class ElectionPlace<TCandidate extends Comparable>
     extends UnmodifiableListView<TCandidate> {
