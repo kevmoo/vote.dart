@@ -8,6 +8,9 @@ import 'parse.dart';
 
 String _defaultCandidateText(Object candidate) => candidate.toString();
 
+/// A helper for creating [RankedBallot]s by parsing text input.
+///
+/// Useful for development and debugging.
 class BallotLines<TCandidate extends Comparable> {
   final int countWidth;
   final int candidateWidth;

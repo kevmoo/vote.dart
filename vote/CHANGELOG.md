@@ -1,3 +1,8 @@
+# 1.0.1
+
+- Removed incorrect assert.
+- Improved documentation in `README.md`.
+
 # 1.0.0
 
 - Added `ApprovalElection` and `ApprovalBallot`.

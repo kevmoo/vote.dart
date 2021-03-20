@@ -1,7 +1,8 @@
 [![Pub Package](https://img.shields.io/pub/v/vote.svg)](https://pub.dartlang.org/packages/vote)
 
-## Authors
- * [Kevin Moore](https://github.com/kevmoo) ([@kevmoo](http://twitter.com/kevmoo))
+A Dart package for computing the results of a number of election methods.
 
-## More Info
- * [Condorcet Method](http://en.wikipedia.org/wiki/Condorcet_method) - Wikipedia
+ * [Approval voting](https://wikipedia.org/wiki/Approval_voting)
+ * [Condorcet Method](https://wikipedia.org/wiki/Condorcet_method)
+ * [Instant Runoff](https://wikipedia.org/wiki/Instant-runoff_voting)
+ * [Plurality voting](https://wikipedia.org/wiki/Plurality_voting)
