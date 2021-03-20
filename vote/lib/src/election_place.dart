@@ -12,7 +12,6 @@ class ElectionPlace<TCandidate extends Comparable>
   ElectionPlace(this.place, List<TCandidate> candidates)
       : assert(place > 0),
         assert(candidates.isNotEmpty),
-        assert(sorted(candidates)),
         super(candidates);
 
   @override
