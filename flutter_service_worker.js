@@ -7,15 +7,15 @@ const RESOURCES = {
 "index.html": "c5f7c587b30e225d380ee8baaa0b7865",
 "/": "c5f7c587b30e225d380ee8baaa0b7865",
 "CNAME": "ac4e7539e555d65d75d7ab6fdb594c57",
-"main.dart.js": "aee015b90f0f1ad95849af63015f1029",
+"main.dart.js": "4e75a30e4e7005b837e17816e3b5d0e5",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "manifest.json": "fd985779aa9856e839903b506bdaedb6",
 "assets/AssetManifest.json": "8f761014e51230aa2d057b1160574051",
-"assets/NOTICES": "f55759570ff5026ff71531ff3b892196",
+"assets/NOTICES": "98f869d3ed59af4774cdc5406c11a73f",
 "assets/FontManifest.json": "ac9f2bcd8d38e19917920a8f54396bd0",
-"assets/fonts/MaterialIcons-Regular.otf": "1288c9e28052e028aba623321f7826ac",
+"assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1",
 "assets/assets/fonts/RobotoMono-Regular.ttf": "b4618f1f7f4cee0ac09873fcc5a966f9"
 };
 
@@ -34,7 +34,7 @@ self.addEventListener("install", (event) => {
   return event.waitUntil(
     caches.open(TEMP).then((cache) => {
       return cache.addAll(
-        CORE.map((value) => new Request(value + '?revision=' + RESOURCES[value], {'cache': 'reload'})));
+        CORE.map((value) => new Request(value, {'cache': 'reload'})));
     })
   );
 });
