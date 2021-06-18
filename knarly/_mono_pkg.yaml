@@ -3,12 +3,12 @@
 stages:
 - smoke_test:
   - group:
-    - dartfmt
-    - dartanalyzer: --fatal-infos --fatal-warnings .
+    - format
+    - analyze: --fatal-infos .
     dart: [dev]
   - group:
-    - dartanalyzer: --fatal-warnings .
-    dart: [2.5.0-dev.1.0]
+    - dartanalyzer: .
+    dart: [2.12.0]
 
 cache:
   directories:

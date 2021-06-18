@@ -1,4 +1,4 @@
-# Created with package:mono_repo v3.4.7
+# Created with package:mono_repo v5.0.0
 name: Dart CI
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.6
         with:
           path: "~/.pub-cache/hosted"
           key: "os:ubuntu-latest;pub-cache-hosted;dart:stable"
@@ -31,52 +31,20 @@ jobs:
         with:
           sdk: stable
       - id: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
       - name: mono_repo self validate
-        run: pub global activate mono_repo 3.4.7
+        run: dart pub global activate mono_repo 5.0.0
       - name: mono_repo self validate
-        run: pub global run mono_repo generate --validate
+        run: dart pub global run mono_repo generate --validate
   job_002:
-    name: "smoke_test; Dart dev; `dartfmt -n --set-exit-if-changed .`, `dartanalyzer --fatal-infos .`"
+    name: "smoke_test; Dart 2.12.0; `dart analyze`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.6
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:vote;commands:dartfmt-dartanalyzer_0"
-          restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:vote
-            os:ubuntu-latest;pub-cache-hosted;dart:dev
-            os:ubuntu-latest;pub-cache-hosted
-            os:ubuntu-latest
-      - uses: dart-lang/setup-dart@v1.0
-        with:
-          sdk: dev
-      - id: checkout
-        uses: actions/checkout@v2
-      - id: vote_pub_upgrade
-        name: "vote; pub upgrade --no-precompile"
-        if: "always() && steps.checkout.conclusion == 'success'"
-        working-directory: vote
-        run: pub upgrade --no-precompile
-      - name: "vote; dartfmt -n --set-exit-if-changed ."
-        if: "always() && steps.vote_pub_upgrade.conclusion == 'success'"
-        working-directory: vote
-        run: dartfmt -n --set-exit-if-changed .
-      - name: "vote; dartanalyzer --fatal-infos ."
-        if: "always() && steps.vote_pub_upgrade.conclusion == 'success'"
-        working-directory: vote
-        run: dartanalyzer --fatal-infos .
-  job_003:
-    name: "smoke_test; Dart 2.12.0; `dartanalyzer .`"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cache Pub hosted dependencies
-        uses: actions/cache@v2
-        with:
-          path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:vote;commands:dartanalyzer_1"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:vote;commands:analyze_1"
           restore-keys: |
             os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:vote
             os:ubuntu-latest;pub-cache-hosted;dart:2.12.0
@@ -86,22 +54,54 @@ jobs:
         with:
           sdk: "2.12.0"
       - id: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
       - id: vote_pub_upgrade
-        name: "vote; pub upgrade --no-precompile"
+        name: vote; dart pub upgrade
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: vote
-        run: pub upgrade --no-precompile
-      - name: vote; dartanalyzer .
+        run: dart pub upgrade
+      - name: vote; dart analyze
         if: "always() && steps.vote_pub_upgrade.conclusion == 'success'"
         working-directory: vote
-        run: dartanalyzer .
-  job_004:
-    name: "unit_test; Dart 2.12.0; `pub run test`"
+        run: dart analyze
+  job_003:
+    name: "smoke_test; Dart dev; `dart format --output=none --set-exit-if-changed .`, `dart analyze --fatal-infos .`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.6
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:vote;commands:format-analyze_0"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:vote
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: dev
+      - id: checkout
+        uses: actions/checkout@v2.3.4
+      - id: vote_pub_upgrade
+        name: vote; dart pub upgrade
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: vote
+        run: dart pub upgrade
+      - name: "vote; dart format --output=none --set-exit-if-changed ."
+        if: "always() && steps.vote_pub_upgrade.conclusion == 'success'"
+        working-directory: vote
+        run: "dart format --output=none --set-exit-if-changed ."
+      - name: "vote; dart analyze --fatal-infos ."
+        if: "always() && steps.vote_pub_upgrade.conclusion == 'success'"
+        working-directory: vote
+        run: dart analyze --fatal-infos .
+  job_004:
+    name: "unit_test; Dart 2.12.0; `dart test`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2.1.6
         with:
           path: "~/.pub-cache/hosted"
           key: "os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:vote;commands:test"
@@ -114,26 +114,26 @@ jobs:
         with:
           sdk: "2.12.0"
       - id: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
       - id: vote_pub_upgrade
-        name: "vote; pub upgrade --no-precompile"
+        name: vote; dart pub upgrade
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: vote
-        run: pub upgrade --no-precompile
-      - name: vote; pub run test
+        run: dart pub upgrade
+      - name: vote; dart test
         if: "always() && steps.vote_pub_upgrade.conclusion == 'success'"
         working-directory: vote
-        run: pub run test
+        run: dart test
     needs:
       - job_001
       - job_002
       - job_003
   job_005:
-    name: "unit_test; Dart dev; `pub run test`"
+    name: "unit_test; Dart dev; `dart test`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.6
         with:
           path: "~/.pub-cache/hosted"
           key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:vote;commands:test"
@@ -146,16 +146,16 @@ jobs:
         with:
           sdk: dev
       - id: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
       - id: vote_pub_upgrade
-        name: "vote; pub upgrade --no-precompile"
+        name: vote; dart pub upgrade
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: vote
-        run: pub upgrade --no-precompile
-      - name: vote; pub run test
+        run: dart pub upgrade
+      - name: vote; dart test
         if: "always() && steps.vote_pub_upgrade.conclusion == 'success'"
         working-directory: vote
-        run: pub run test
+        run: dart test
     needs:
       - job_001
       - job_002
