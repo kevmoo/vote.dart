@@ -116,6 +116,6 @@ class CondorcetElection<TCandidate extends Comparable>
     assert(candidates.contains(c1));
     assert(candidates.contains(c2));
 
-    return _pairs.singleWhere((p) => p.matches(c1, c2)).flip(c1, c2);
+    return _pairs.singleWhere((p) => p.matches(c1, c2)).flip(c1);
   }
 }

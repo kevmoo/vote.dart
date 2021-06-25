@@ -2,6 +2,7 @@ import 'package:test/test.dart';
 import 'package:vote/vote.dart';
 
 import 'plurality_test_shared.dart';
+import 'test_util.dart';
 
 void main() {
   registerPluralityTests((
@@ -62,6 +63,18 @@ void main() {
 
     expect(ce.places[2].place, equals(3));
     expect(ce.places[2], unorderedEquals([canVan]));
+
+    expect(() => ce.getPair(canCC, canCC), throwsAssertionError);
+
+    var pair = ce.getPair(canC, canCC);
+    expect(pair.candidate1, canC);
+    expect(pair.candidate2, canCC);
+    expect(pair.firstOverSecond, 71);
+
+    pair = ce.getPair(canCC, canC);
+    expect(pair.candidate1, canCC);
+    expect(pair.candidate2, canC);
+    expect(pair.secondOverFirst, 71);
   });
 
   test('3-Way Tie For First', () {
