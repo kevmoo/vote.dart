@@ -1,3 +1,7 @@
+# 2.0.0-dev
+
+- `CollectionPair.flip` now has only one parameter.
+
 # 1.0.1
 
 - Removed incorrect assert.
@@ -6,7 +10,7 @@
 # 1.0.0
 
 - Added `ApprovalElection` and `ApprovalBallot`.
-- Added support for optional `candidates` in `IrvElection` and 
+- Added support for optional `candidates` in `IrvElection` and
   `CondorcetElection`.
 - Added `bool get hasSingleWinner` to `Election`.
 - Require Dart `2.12.0`.

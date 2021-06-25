@@ -96,27 +96,26 @@ class CondorcetPair<TCandidate extends Comparable>
   }
 
   // sometimes it's nice to deal w/ a properly aligned pair
-  CondorcetPair<TCandidate> flip(TCandidate can1, TCandidate can2) {
-    if (candidate1.compareTo(candidate2) > 0) {
-      throw ArgumentError('already flipped!');
-    }
-    assert(can1 != can2, 'can1 and can2 must be different');
+  CondorcetPair<TCandidate> flip(TCandidate firstCandidate) {
+    assert(firstCandidate == candidate1 || firstCandidate == candidate2);
+
+    var can2 = firstCandidate == candidate1 ? candidate2 : candidate1;
 
     var flipped = false;
-    if (can1.compareTo(can2) > 0) {
+    if (firstCandidate.compareTo(can2) > 0) {
       final temp = can2;
-      can2 = can1;
-      can1 = temp;
+      can2 = firstCandidate;
+      firstCandidate = temp;
       flipped = true;
     }
 
-    assert(can1 == candidate1, 'can1');
-    assert(can2 == candidate2, 'can1');
+    assert(firstCandidate == candidate1, 'can1');
+    assert(can2 == candidate2, 'can2');
 
     if (flipped) {
       return CondorcetPair._internal(
         can2,
-        can1,
+        firstCandidate,
         secondOverFirst,
         firstOverSecond,
         ties,
