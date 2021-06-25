@@ -8,7 +8,8 @@ import 'ranked_ballot.dart';
 
 @immutable
 class CondorcetElection<TCandidate extends Comparable>
-    extends Election<TCandidate, ElectionPlace<TCandidate>> {
+    extends Election<TCandidate, ElectionPlace<TCandidate>>
+    implements CondorcetElectionResult<TCandidate> {
   final Set<CondorcetPair<TCandidate>> _pairs;
 
   CondorcetElection._internal(
@@ -39,11 +40,15 @@ class CondorcetElection<TCandidate extends Comparable>
 
     final candidateList = candidateSet.toList(growable: false)..sort();
 
-    final pairs = {
-      for (var i = 0; i < candidateList.length; i++)
-        for (var j = i + 1; j < candidateList.length; j++)
-          CondorcetPair(candidateList[i], candidateList[j], ballots),
-    };
+    Iterable<CondorcetPair<TCandidate>> iteratePairs() sync* {
+      for (var i = 0; i < candidateList.length; i++) {
+        for (var j = i + 1; j < candidateList.length; j++) {
+          yield CondorcetPair(candidateList[i], candidateList[j], ballots);
+        }
+      }
+    }
+
+    final pairs = Set.unmodifiable(iteratePairs());
 
     final candidateMap = <TCandidate, Set<TCandidate>>{};
 
@@ -112,10 +117,16 @@ class CondorcetElection<TCandidate extends Comparable>
     );
   }
 
+  @override
   CondorcetPair<TCandidate> getPair(TCandidate c1, TCandidate c2) {
     assert(candidates.contains(c1));
     assert(candidates.contains(c2));
 
     return _pairs.singleWhere((p) => p.matches(c1, c2)).flip(c1);
   }
+}
+
+abstract class CondorcetElectionResult<TCandidate extends Comparable>
+    implements ElectionResult<TCandidate, ElectionPlace<TCandidate>> {
+  CondorcetPair<TCandidate> getPair(TCandidate c1, TCandidate c2);
 }

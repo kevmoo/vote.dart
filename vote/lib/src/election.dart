@@ -4,23 +4,41 @@ import 'util.dart';
 
 /// Baseclass of all election types.
 abstract class Election<TCandidate extends Comparable,
-    TElectionPlace extends ElectionPlace<TCandidate>> {
+        TElectionPlace extends ElectionPlace<TCandidate>>
+    extends ElectionResult<TCandidate, TElectionPlace> {
   Election({
-    required this.candidates,
+    required List<TCandidate> candidates,
     required this.ballots,
+    required List<TElectionPlace> places,
+  }) : super._noAssert(candidates: candidates, places: places) {
+    assert(_assert(ballots: ballots));
+  }
+
+  /// All of the ballots cast in the election.
+  final List<Ballot<TCandidate>> ballots;
+}
+
+/// The baseclass for the results of an [Election].
+///
+/// Implementations may not include ballot information, to protect the privacy
+/// of ballots – or just to allow visualization of an election result.
+abstract class ElectionResult<TCandidate extends Comparable,
+    TElectionPlace extends ElectionPlace<TCandidate>> {
+  ElectionResult({
+    required this.candidates,
     required this.places,
   }) {
     assert(_assert());
   }
 
-  bool _assert() {
+  ElectionResult._noAssert({
+    required this.candidates,
+    required this.places,
+  });
+
+  bool _assert({List<Ballot<TCandidate>>? ballots}) {
     // TODO: assert all candidates are sorted, too?
     assert(allUnique(candidates));
-
-    final allReferencedCandidates =
-        ballots.expand((b) => b.referencedCandidates()).toSet();
-
-    assert(allReferencedCandidates.every(candidates.contains));
 
     final placeCandidates = <TCandidate>{};
 
@@ -43,10 +61,17 @@ abstract class Election<TCandidate extends Comparable,
       }
     }
 
-    assert(
-      placeCandidates.containsAll(allReferencedCandidates),
-      ['', placeCandidates, allReferencedCandidates].join('\n'),
-    );
+    if (ballots != null) {
+      final allReferencedCandidates =
+          ballots.expand((b) => b.referencedCandidates()).toSet();
+
+      assert(allReferencedCandidates.every(candidates.contains));
+
+      assert(
+        placeCandidates.containsAll(allReferencedCandidates),
+        ['', placeCandidates, allReferencedCandidates].join('\n'),
+      );
+    }
     assert(
       placeCandidates.containsAll(candidates),
       ['', placeCandidates, candidates].join('\n'),
@@ -56,9 +81,6 @@ abstract class Election<TCandidate extends Comparable,
 
   /// All of the candidates in the election.
   final List<TCandidate> candidates;
-
-  /// All of the ballots cast in the election.
-  final List<Ballot<TCandidate>> ballots;
 
   /// The ordered result of the election.
   final List<TElectionPlace> places;

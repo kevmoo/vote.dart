@@ -1,6 +1,7 @@
-# 2.0.0-dev
+# 2.0.0
 
 - `CollectionPair.flip` now has only one parameter.
+- Added `ElectionResult` and `CondorcetElectionResult` classes.
 
 # 1.0.1
 
