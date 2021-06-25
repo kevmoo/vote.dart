@@ -71,7 +71,7 @@ class VoteSimulation extends StatelessWidget {
                           ),
                           _header(
                             'Ranked Pairs',
-                            Provider<CondorcetElection<Candidate>>.value(
+                            Provider<CondorcetElectionResult<Candidate>>.value(
                               value: kvm.editor.value.condorcetElection,
                               child: const CondorcetElectionResultWidget(),
                             ),

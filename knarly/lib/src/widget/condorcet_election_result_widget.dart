@@ -9,7 +9,8 @@ class CondorcetElectionResultWidget extends StatelessWidget {
   const CondorcetElectionResultWidget();
 
   @override
-  Widget build(BuildContext context) => Consumer<CondorcetElection<Candidate>>(
+  Widget build(BuildContext context) =>
+      Consumer<CondorcetElectionResult<Candidate>>(
         builder: (context, condorcetElection, __) => _CondorcetTableHelper(
           condorcetElection,
         ).build(context),
@@ -21,7 +22,7 @@ class _CondorcetTableHelper
   @override
   List<ElectionPlace<Candidate>> get places => _election.places;
 
-  final CondorcetElection<Candidate> _election;
+  final CondorcetElectionResult<Candidate> _election;
 
   const _CondorcetTableHelper(this._election);
 
