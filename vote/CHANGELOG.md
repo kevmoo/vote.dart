@@ -1,3 +1,9 @@
+# 2.1.0
+
+- `CondorcetElectionResult`
+  - Added `fromPairs` factor constructor.
+  - Added `pairs` getter. 
+
 # 2.0.0
 
 - `CollectionPair.flip` now has only one parameter.

@@ -47,34 +47,39 @@ void main() {
     ];
 
     final ce = CondorcetElection(ballots);
-
-    expect(ce.hasSingleWinner, isTrue);
-    expect(ce.singleWinner, equals(canC));
-    expect(ce.candidates, unorderedEquals([canC, canCC, canVan]));
     expect(ce.ballots, unorderedEquals(ballots));
 
-    expect(ce.places.length, equals(3));
+    void validate(CondorcetElectionResult election) {
+      expect(ce.hasSingleWinner, isTrue);
+      expect(ce.singleWinner, equals(canC));
+      expect(ce.candidates, unorderedEquals([canC, canCC, canVan]));
 
-    expect(ce.places[0].place, equals(1));
-    expect(ce.places[0], unorderedEquals([canC]));
+      expect(ce.places.length, equals(3));
 
-    expect(ce.places[1].place, equals(2));
-    expect(ce.places[1], unorderedEquals([canCC]));
+      expect(ce.places[0].place, equals(1));
+      expect(ce.places[0], unorderedEquals([canC]));
 
-    expect(ce.places[2].place, equals(3));
-    expect(ce.places[2], unorderedEquals([canVan]));
+      expect(ce.places[1].place, equals(2));
+      expect(ce.places[1], unorderedEquals([canCC]));
 
-    expect(() => ce.getPair(canCC, canCC), throwsAssertionError);
+      expect(ce.places[2].place, equals(3));
+      expect(ce.places[2], unorderedEquals([canVan]));
 
-    var pair = ce.getPair(canC, canCC);
-    expect(pair.candidate1, canC);
-    expect(pair.candidate2, canCC);
-    expect(pair.firstOverSecond, 71);
+      expect(() => ce.getPair(canCC, canCC), throwsAssertionError);
 
-    pair = ce.getPair(canCC, canC);
-    expect(pair.candidate1, canCC);
-    expect(pair.candidate2, canC);
-    expect(pair.secondOverFirst, 71);
+      var pair = ce.getPair(canC, canCC);
+      expect(pair.candidate1, canC);
+      expect(pair.candidate2, canCC);
+      expect(pair.firstOverSecond, 71);
+
+      pair = ce.getPair(canCC, canC);
+      expect(pair.candidate1, canCC);
+      expect(pair.candidate2, canC);
+      expect(pair.secondOverFirst, 71);
+    }
+
+    validate(ce);
+    validate(CondorcetElectionResult.fromPairs(ce.pairs));
   });
 
   test('3-Way Tie For First', () {
@@ -99,14 +104,19 @@ void main() {
 
     final election = CondorcetElection(ballots);
 
-    expect(election.hasSingleWinner, isFalse);
-    expect(election.singleWinner, isNull);
-    expect(election.places, [
-      ['A1', 'A2', 'A3'],
-      ['B1'],
-      ['C1', 'C2'],
-      ['D1']
-    ]);
+    void validate(CondorcetElectionResult election) {
+      expect(election.hasSingleWinner, isFalse);
+      expect(election.singleWinner, isNull);
+      expect(election.places, [
+        ['A1', 'A2', 'A3'],
+        ['B1'],
+        ['C1', 'C2'],
+        ['D1']
+      ]);
+    }
+
+    validate(election);
+    validate(CondorcetElectionResult.fromPairs(election.pairs));
   });
 
   test('parse silly', () {
@@ -130,10 +140,15 @@ void main() {
 
     final lines = BallotLines<String>.parse(value, (v) => Map.fromIterable(v));
 
-    final election = CondorcetElection(lines.ballots.toList());
+    final election = CondorcetElection<String>(lines.ballots.toList());
 
-    expect(election.places, hasLength(4));
-    expect(election.places[0], ['A']);
-    expect(election.places[3], ['E']);
+    void validate(CondorcetElectionResult election) {
+      expect(election.places, hasLength(4));
+      expect(election.places[0], ['A']);
+      expect(election.places[3], ['E']);
+    }
+
+    validate(election);
+    validate(CondorcetElectionResult.fromPairs(election.pairs));
   });
 }
