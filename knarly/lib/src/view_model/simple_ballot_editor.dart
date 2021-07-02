@@ -82,12 +82,9 @@ class SimpleBallotEditor extends KnarlyEditor<ElectionData> {
 
 Map<String, Candidate> _fromStrings(Set<String> values) {
   final sorted = values.toList(growable: false)..sort();
+  final delta = 360 / values.length;
   var offset = 0;
   return Map.fromEntries(sorted.map(
-    (e) {
-      final hue = 360 * offset / values.length;
-      offset++;
-      return MapEntry(e, Candidate(e, hue));
-    },
+    (e) => MapEntry(e, Candidate(e, offset++ * delta)),
   ));
 }

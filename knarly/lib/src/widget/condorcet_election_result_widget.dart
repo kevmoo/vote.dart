@@ -1,49 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:vote/vote.dart';
 
+import '../helpers/helpers.dart';
 import '../helpers/table_helper.dart';
 import '../model/candidate.dart';
 
-class CondorcetElectionResultWidget extends StatelessWidget {
-  const CondorcetElectionResultWidget();
+class CondorcetElectionResultWidget<TCandidate extends Comparable<TCandidate>>
+    extends StatelessWidget {
+  final CondorcetElectionResult<TCandidate> condorcetElectionResult;
+
+  const CondorcetElectionResultWidget(this.condorcetElectionResult);
 
   @override
-  Widget build(BuildContext context) =>
-      Consumer<CondorcetElectionResult<Candidate>>(
-        builder: (context, condorcetElection, __) => _CondorcetTableHelper(
-          condorcetElection,
-        ).build(context),
-      );
+  Widget build(BuildContext context) => _CondorcetTableHelper<TCandidate>(
+        condorcetElectionResult,
+      ).build(context);
 }
 
-class _CondorcetTableHelper
-    extends TableHelper<ElectionPlace<Candidate>, Candidate> {
+class _CondorcetTableHelper<TCandidate extends Comparable<TCandidate>>
+    extends TableHelper<ElectionPlace<TCandidate>, TCandidate> {
   @override
-  List<ElectionPlace<Candidate>> get places => _election.places;
+  List<ElectionPlace<TCandidate>> get places => _election.places;
 
-  final CondorcetElectionResult<Candidate> _election;
+  final CondorcetElectionResult<TCandidate> _election;
 
-  const _CondorcetTableHelper(this._election);
+  late final Map<TCandidate, Color> _candidateColors =
+      huesForCandidates(_election.candidates);
+
+  _CondorcetTableHelper(this._election);
 
   @override
   List<String> get columns => [
         'Place',
         Candidate.candidateString,
-        ..._election.candidates.map((c) => c.id),
+        ..._election.candidates.map(_idForCandidate),
       ];
 
   @override
-  Color subEntryColor(Candidate subEntry) => subEntry.color;
+  Color subEntryColor(TCandidate subEntry) => _colorForCandidate(subEntry);
 
   @override
-  List<Candidate> subEntriesForEntry(ElectionPlace<Candidate> entry) => entry;
+  List<TCandidate> subEntriesForEntry(ElectionPlace<TCandidate> entry) => entry;
 
   @override
   bool isMulti(int columnIndex) => columnIndex != 0;
 
   @override
-  String textForColumn(int columnIndex, ElectionPlace<Candidate> entry) {
+  String textForColumn(int columnIndex, ElectionPlace<TCandidate> entry) {
     if (columnIndex == 0) {
       return entry.place.toString();
     }
@@ -53,14 +56,14 @@ class _CondorcetTableHelper
   @override
   Widget widgetForSubEntry(
     int columnIndex,
-    Candidate subEntry,
+    TCandidate subEntry,
     SubEntryPosition position,
   ) {
     String textContent;
     TextStyle? style;
 
     if (columnIndex == 1) {
-      textContent = subEntry.id;
+      textContent = _idForCandidate(subEntry);
     } else if (columnIndex > 1) {
       final columnCandidate = _election.candidates.elementAt(columnIndex - 2);
 
@@ -90,7 +93,7 @@ class _CondorcetTableHelper
     }
 
     return Container(
-      color: subEntry.color,
+      color: _colorForCandidate(subEntry),
       // This is some very nuanced logic for making sure the sizes of rows
       // are consistent as they are merged and un-merged
       padding: EdgeInsets.fromLTRB(
@@ -110,4 +113,14 @@ class _CondorcetTableHelper
 
   @override
   TableColumnWidth get defaultTableColumnWidth => const IntrinsicColumnWidth();
+
+  String _idForCandidate(Object candidate) {
+    if (candidate is Candidate) {
+      return candidate.id;
+    }
+    return candidate.toString();
+  }
+
+  Color _colorForCandidate(TCandidate candidate) =>
+      _candidateColors[candidate]!;
 }
