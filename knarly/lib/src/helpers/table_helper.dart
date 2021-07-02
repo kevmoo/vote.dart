@@ -43,7 +43,7 @@ abstract class TableHelper<Entry, SubEntry> {
         ),
       );
 
-  Widget _tableCell(
+  static Widget _tableCell(
     String content, {
     Color? color,
     SubEntryPosition position = SubEntryPosition.single,
@@ -62,7 +62,10 @@ abstract class TableHelper<Entry, SubEntry> {
       );
 
   Widget widgetForSubEntry(
-          int columnIndex, SubEntry subEntry, SubEntryPosition position) =>
+    int columnIndex,
+    SubEntry subEntry,
+    SubEntryPosition position,
+  ) =>
       _tableCell(
         textForSubEntry(columnIndex, subEntry),
         position: position,
