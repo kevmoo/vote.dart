@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:vote/vote.dart';
 
 import '../helpers/helpers.dart';
-import '../helpers/table_helper.dart';
 import '../model/candidate.dart';
+import 'table_pane.dart' as tp;
 
 class CondorcetElectionResultWidget<TCandidate extends Comparable<TCandidate>>
     extends StatelessWidget {
@@ -17,11 +18,7 @@ class CondorcetElectionResultWidget<TCandidate extends Comparable<TCandidate>>
       ).build(context);
 }
 
-class _CondorcetTableHelper<TCandidate extends Comparable<TCandidate>>
-    extends TableHelper<ElectionPlace<TCandidate>, TCandidate> {
-  @override
-  List<ElectionPlace<TCandidate>> get places => _election.places;
-
+class _CondorcetTableHelper<TCandidate extends Comparable<TCandidate>> {
   final CondorcetElectionResult<TCandidate> _election;
 
   late final Map<TCandidate, Color> _candidateColors =
@@ -29,90 +26,117 @@ class _CondorcetTableHelper<TCandidate extends Comparable<TCandidate>>
 
   _CondorcetTableHelper(this._election);
 
-  @override
-  List<String> get columns => [
-        'Place',
-        Candidate.candidateString,
-        ..._election.candidates.map(_idForCandidate),
-      ];
-
-  @override
-  Color subEntryColor(TCandidate subEntry) => _colorForCandidate(subEntry);
-
-  @override
-  List<TCandidate> subEntriesForEntry(ElectionPlace<TCandidate> entry) => entry;
-
-  @override
-  bool isMulti(int columnIndex) => columnIndex != 0;
-
-  @override
-  String textForColumn(int columnIndex, ElectionPlace<TCandidate> entry) {
-    if (columnIndex == 0) {
-      return entry.place.toString();
-    }
-    return super.textForColumn(columnIndex, entry);
-  }
-
-  @override
-  Widget widgetForSubEntry(
-    int columnIndex,
-    TCandidate subEntry,
-    SubEntryPosition position,
-  ) {
-    String textContent;
-    TextStyle? style;
-
-    if (columnIndex == 1) {
-      textContent = _idForCandidate(subEntry);
-    } else if (columnIndex > 1) {
-      final columnCandidate = _election.candidates.elementAt(columnIndex - 2);
-
-      if (columnCandidate == subEntry) {
-        textContent = '';
-      } else {
-        final pair = _election.getPair(subEntry, columnCandidate);
-
-        if (pair.isTie) {
-          style = const TextStyle(fontStyle: FontStyle.italic);
-        } else if (pair.winner == subEntry) {
-          style = const TextStyle(fontWeight: FontWeight.bold);
-        }
-
-        final comparison = pair.isTie
-            ? '='
-            : pair.winner == pair.candidate1
-                ? '>'
-                : '<';
-        textContent =
-            '${pair.firstOverSecond}$comparison${pair.secondOverFirst}';
-      }
-    } else {
-      throw UnsupportedError(
-        'Not sure what to do here - columnIndex $columnIndex',
+  static Widget _paddedText(String text,
+          {TextStyle? style, Color? background}) =>
+      Container(
+        padding: const EdgeInsets.all(3),
+        alignment: Alignment.center,
+        color: background,
+        child: Text(
+          text,
+          style: style,
+          textAlign: TextAlign.center,
+        ),
       );
+
+  Widget build(BuildContext context) {
+    Iterable<tp.TableRow> rows() sync* {
+      for (var place in _election.places) {
+        var first = true;
+        for (var candidate in place) {
+          final background = _colorForCandidate(candidate);
+          yield tp.TableRow(
+            backgroundColor: place.length == 1 ? background : null,
+            children: [
+              if (first)
+                tp.TableCell(
+                  rowSpan: place.length,
+                  child: Center(child: _paddedText(place.place.toString())),
+                ),
+              if (!first) const tp.EmptyTableCell(),
+              _paddedText(_idForCandidate(candidate), background: background),
+              ...List.generate(
+                _election.candidates.length,
+                (index) {
+                  final other = _election.candidates[index];
+                  if (candidate == other) {
+                    return Container(
+                      color: background,
+                    );
+                  }
+
+                  final pair =
+                      _election.getPair(candidate, _election.candidates[index]);
+
+                  TextStyle? style;
+
+                  if (pair.isTie) {
+                    style = const TextStyle(fontStyle: FontStyle.italic);
+                  } else if (pair.winner == candidate) {
+                    style = const TextStyle(fontWeight: FontWeight.bold);
+                  }
+
+                  final comparison = pair.isTie
+                      ? '='
+                      : pair.winner == pair.candidate1
+                          ? '>'
+                          : '<';
+
+                  return _paddedText(
+                    '${pair.firstOverSecond}$comparison${pair.secondOverFirst}',
+                    style: style,
+                    background: background,
+                  );
+                },
+              )
+            ],
+          );
+          first = false;
+        }
+      }
     }
 
-    return Container(
-      color: _colorForCandidate(subEntry),
-      // This is some very nuanced logic for making sure the sizes of rows
-      // are consistent as they are merged and un-merged
-      padding: EdgeInsets.fromLTRB(
-        2,
-        position == SubEntryPosition.last || position == SubEntryPosition.middle
-            ? 4
-            : 2,
-        2,
-        2,
-      ),
-      child: Text(
-        textContent,
-        style: style,
+    return DefaultTextStyle(
+      textAlign: TextAlign.center,
+      style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.4),
+      child: tp.TablePane(
+        columns: [
+          const tp.TablePaneColumn(width: tp.IntrinsicTablePaneColumnWidth()),
+          const tp.TablePaneColumn(width: tp.IntrinsicTablePaneColumnWidth()),
+          ...List.generate(
+            _election.candidates.length,
+            (index) => const tp.TablePaneColumn(),
+          )
+        ],
+        children: [
+          DefaultTextStyle(
+            style: DefaultTextStyle.of(context).style.apply(
+                  fontSizeFactor: 1.4,
+                  fontWeightDelta: 3,
+                ),
+            child: tp.TableRow(
+              backgroundColor: Colors.grey.shade300,
+              children: [
+                _paddedText(
+                  'Place',
+                ),
+                _paddedText(
+                  Candidate.candidateString,
+                ),
+                ...List.generate(
+                  _election.candidates.length,
+                  (index) => _paddedText(
+                    _idForCandidate(_election.candidates[index]),
+                  ),
+                )
+              ],
+            ),
+          ),
+          ...rows(),
+        ],
       ),
     );
   }
-
-  @override
-  TableColumnWidth get defaultTableColumnWidth => const IntrinsicColumnWidth();
 
   String _idForCandidate(Object candidate) {
     if (candidate is Candidate) {
