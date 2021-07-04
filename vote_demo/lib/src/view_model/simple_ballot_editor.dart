@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:vote/vote.dart';
+import 'package:vote_widgets/vote_widgets.dart';
 
-import '../model/candidate.dart';
 import '../model/election_data.dart';
 import 'editor.dart';
 

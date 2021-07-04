@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vote/vote.dart';
+import 'package:vote_widgets/vote_widgets.dart';
 
 import 'helpers/k_grid.dart';
-import 'model/candidate.dart';
 import 'model/vote_town.dart';
 import 'model/vote_town_distance_place.dart';
 import 'view_model/knarly_view_model.dart';
 import 'view_model/simple_ballot_editor.dart';
 import 'view_model/vote_town_editor.dart';
-import 'widget/condorcet_election_result_widget.dart';
 import 'widget/distance_election_result_widget.dart';
-import 'widget/plurality_election_result_widget.dart';
-import 'widget/ranked_choice_election_result_widget.dart';
 import 'widget/simple_editor_widget.dart';
 import 'widget/vote_town_widget.dart';
 

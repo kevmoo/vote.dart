@@ -1,6 +1,5 @@
 import 'package:vote/vote.dart';
-
-import 'candidate.dart';
+import 'package:vote_widgets/vote_widgets.dart';
 
 abstract class ElectionData {
   ElectionData();

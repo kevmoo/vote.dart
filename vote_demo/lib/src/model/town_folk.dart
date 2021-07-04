@@ -1,7 +1,8 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'candidate.dart';
+import 'package:vote_widgets/vote_widgets.dart';
+
 import 'voter.dart';
 
 class TownCandidate extends Candidate {

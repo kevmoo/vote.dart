@@ -1,0 +1,18 @@
+name: vote_widgets
+version: 1.0.0-dev
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+dependencies:
+  collection: ^1.14.0
+  flutter:
+    sdk: flutter
+  provider: ^5.0.0
+  vote: ^2.1.0
+
+dev_dependencies:
+  pedantic: ^1.0.0
+
+flutter:
+  uses-material-design: true

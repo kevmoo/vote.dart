@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vote_widgets/vote_widgets.dart';
 
 import '../helpers/table_helper.dart';
-import '../model/candidate.dart';
 import '../model/vote_town_distance_place.dart';
 
 class DistanceElectionResultWidget extends StatelessWidget {
