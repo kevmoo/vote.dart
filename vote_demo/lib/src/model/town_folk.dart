@@ -19,8 +19,11 @@ class TownCandidate extends Candidate {
   factory TownCandidate.letter(int index, Point<int> intLocation) {
     assert(index >= 0);
     assert(index < _maxCandidateCount);
-    return TownCandidate(String.fromCharCode(index + _capitalACharCode),
-        _candidateHues[index], intLocation);
+    return TownCandidate(
+      String.fromCharCode(index + _capitalACharCode),
+      _candidateHues[index],
+      intLocation,
+    );
   }
 
   @override
