@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:vote/vote.dart';
 
 import '../helpers/helpers.dart';
-import '../model/candidate.dart';
 import 'table_pane.dart' as tp;
 
 class CondorcetElectionResultWidget<TCandidate extends Comparable<TCandidate>>
@@ -50,12 +49,12 @@ class _State<TCandidate extends Comparable<TCandidate>>
                     'Place',
                   ),
                   _paddedText(
-                    Candidate.candidateString,
+                    candidateString,
                   ),
                   ...List.generate(
                     _election.candidates.length,
                     (index) => _paddedText(
-                      _idForCandidate(_election.candidates[index]),
+                      _election.candidates[index].toString(),
                     ),
                   )
                 ],
@@ -70,7 +69,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
     for (var place in _election.places) {
       var first = true;
       for (var candidate in place) {
-        final background = _colorForCandidate(candidate);
+        final background = _candidateColors[candidate]!;
         yield tp.TableRow(
           backgroundColor: place.length == 1 ? background : null,
           children: [
@@ -80,7 +79,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
                 child: Center(child: _paddedText(place.place.toString())),
               ),
             if (!first) const tp.EmptyTableCell(),
-            _paddedText(_idForCandidate(candidate), background: background),
+            _paddedText(candidate.toString(), background: background),
             ...List.generate(
               _election.candidates.length,
               (index) {
@@ -159,7 +158,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
             ? '>'
             : '<';
 
-    final background = _colorForCandidate(primaryCandidate);
+    final background = _candidateColors[primaryCandidate]!;
     return _paddedText(
       '${pair.firstOverSecond}$comparison${pair.secondOverFirst}',
       style: pair.style,
@@ -167,18 +166,8 @@ class _State<TCandidate extends Comparable<TCandidate>>
     );
   }
 
-  String _idForCandidate(Object candidate) {
-    if (candidate is Candidate) {
-      return candidate.id;
-    }
-    return candidate.toString();
-  }
-
   late final Map<TCandidate, Color> _candidateColors =
       huesForCandidates(_election.candidates);
-
-  Color _colorForCandidate(TCandidate candidate) =>
-      _candidateColors[candidate]!;
 
   CondorcetElectionResult<TCandidate> get _election => widget._election;
 

@@ -2,11 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/painting.dart';
 
-import '../model/candidate.dart';
+const candidateString = '🙎';
 
-Map<TCandidate, Color>
-    huesForCandidates<TCandidate extends Comparable<TCandidate>>(
-  Iterable<TCandidate> candidates,
+Map<T, Color> huesForCandidates<T extends Comparable<T>>(
+  Iterable<T> candidates,
 ) {
   final sorted = candidates.toList()..sort();
 
@@ -28,10 +27,7 @@ Map<TCandidate, Color>
   return Map.fromEntries(sorted.map(
     (e) => MapEntry(
       e,
-      e is Candidate
-          ? (e as Candidate).color
-          : HSVColor.fromAHSV(1.0, offset++ * delta, colorSaturation, 1)
-              .toColor(),
+      HSVColor.fromAHSV(1.0, offset++ * delta, colorSaturation, 1).toColor(),
     ),
   ));
 }

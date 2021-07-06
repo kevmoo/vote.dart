@@ -5,8 +5,6 @@ import 'package:flutter/painting.dart';
 import '../helpers/helpers.dart';
 
 class Candidate implements Comparable<Candidate> {
-  static const candidateString = '🙎';
-
   final String id;
 
   final double hue;
@@ -27,5 +25,5 @@ class Candidate implements Comparable<Candidate> {
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'Candidate($id)';
+  String toString() => id;
 }

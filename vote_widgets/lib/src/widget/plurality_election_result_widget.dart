@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vote/vote.dart';
 
+import '../../helpers.dart';
 import '../helpers/table_helper.dart';
 import '../model/candidate.dart';
 
@@ -25,7 +26,7 @@ class _PluralityTableHelper
   @override
   List<String> get columns => const [
         'Place',
-        Candidate.candidateString,
+        candidateString,
         'Votes',
       ];
 

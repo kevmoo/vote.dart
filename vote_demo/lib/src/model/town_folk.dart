@@ -35,9 +35,6 @@ class TownCandidate extends Candidate {
 
   @override
   int get hashCode => id.hashCode;
-
-  @override
-  String toString() => 'TownCandidate($id)';
 }
 
 Point<int> fixPoint(Offset value) => Point(

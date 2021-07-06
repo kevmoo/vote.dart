@@ -25,7 +25,7 @@ class _DistancePlaceRowInfo
   @override
   List<String> get columns => const [
         'Place',
-        Candidate.candidateString,
+        candidateString,
         'Distance',
       ];
 
