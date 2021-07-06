@@ -192,6 +192,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
         child: Text(
           text,
           style: style,
+          textAlign: TextAlign.center,
         ),
       );
 }

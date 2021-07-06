@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:vote_widgets/helpers.dart';
 import 'package:vote_widgets/vote_widgets.dart';
 
 import 'voter.dart';
@@ -18,10 +19,10 @@ class TownCandidate extends Candidate {
 
   factory TownCandidate.letter(int index, Point<int> intLocation) {
     assert(index >= 0);
-    assert(index < _maxCandidateCount);
+    assert(index < maxCandidateCount);
     return TownCandidate(
       String.fromCharCode(index + _capitalACharCode),
-      _candidateHues[index],
+      candidateHues[index],
       intLocation,
     );
   }
@@ -57,37 +58,3 @@ class TownVoter extends Voter {
 }
 
 const _capitalACharCode = 65;
-final _candidateHues = _slice(_maxCandidateCount, 360, 3);
-const int _maxCandidateCount = 26;
-
-List<double> _slice(int itemCount, num maxValue, int sliceCount) {
-  assert(itemCount > 0);
-  assert(maxValue > 0);
-  assert(sliceCount > 1);
-
-  final values = List<double>.filled(itemCount, 0);
-  var index = 0;
-
-  var sliceSize = maxValue / sliceCount;
-
-  for (var i = 0; i < sliceCount; i++) {
-    if (index == itemCount) {
-      return values;
-    } else {
-      values[index++] = i * sliceSize;
-    }
-  }
-
-  for (;;) {
-    final startCount = index;
-    sliceSize = maxValue / (startCount * 2);
-
-    for (var i = 0; i < startCount; i++) {
-      if (index == itemCount) {
-        return values;
-      } else {
-        values[index++] = values[i] + sliceSize;
-      }
-    }
-  }
-}

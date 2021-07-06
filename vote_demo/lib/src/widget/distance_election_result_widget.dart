@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// ignore: implementation_imports
-import 'package:vote_widgets/src/helpers/table_helper.dart';
+import 'package:vote_widgets/helpers.dart';
 import 'package:vote_widgets/vote_widgets.dart';
 
 import '../model/vote_town_distance_place.dart';
