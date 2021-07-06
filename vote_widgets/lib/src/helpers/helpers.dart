@@ -1,6 +1,8 @@
 import 'dart:ui';
 
-import 'hsl_color.dart';
+import 'package:flutter/painting.dart';
+
+import '../model/candidate.dart';
 
 Map<TCandidate, Color>
     huesForCandidates<TCandidate extends Comparable<TCandidate>>(
@@ -10,6 +12,11 @@ Map<TCandidate, Color>
   final delta = 360 / sorted.length;
   var offset = 0;
   return Map.fromEntries(sorted.map(
-    (e) => MapEntry(e, HslColor(offset++ * delta, 1, 0.8).toColor()),
+    (e) => MapEntry(
+      e,
+      e is Candidate
+          ? (e as Candidate).color
+          : HSVColor.fromAHSV(1.0, offset++ * delta, 0.5, 1).toColor(),
+    ),
   ));
 }

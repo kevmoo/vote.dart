@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import '../helpers/hsl_color.dart';
+import 'package:flutter/painting.dart';
 
 class Candidate implements Comparable<Candidate> {
   static const candidateString = '🙎';
@@ -12,8 +12,8 @@ class Candidate implements Comparable<Candidate> {
   final Color color, darkColor;
 
   Candidate(this.id, this.hue)
-      : color = HslColor(hue, 1, 0.8).toColor(),
-        darkColor = HslColor(hue, 0.8, 0.7).toColor();
+      : color = HSVColor.fromAHSV(1.0, hue, 0.4, 1).toColor(),
+        darkColor = HSVColor.fromAHSV(1.0, hue, 0.5, 0.95).toColor();
 
   @override
   int compareTo(Candidate other) => id.compareTo(other.id);
