@@ -26,10 +26,13 @@ class _CondorcetTableHelper<TCandidate extends Comparable<TCandidate>> {
 
   _CondorcetTableHelper(this._election);
 
-  static Widget _paddedText(String text,
-          {TextStyle? style, Color? background}) =>
+  static Widget _paddedText(
+    String text, {
+    TextStyle? style,
+    Color? background,
+  }) =>
       Container(
-        padding: const EdgeInsets.all(3),
+        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
         alignment: Alignment.center,
         color: background,
         child: Text(
