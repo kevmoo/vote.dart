@@ -72,10 +72,16 @@ abstract class CondorcetElectionResult<TCandidate extends Comparable>
     final candidateList = pairs
         .expand((element) => [element.candidate1, element.candidate2])
         .toSet()
-        .toList()
-          ..sort();
+        .toList();
 
     final places = _calculatePlaces(candidateList, pairs);
+
+    final flattenedPlaces = places.expand((element) => element).toList();
+
+    candidateList.sort(
+      (a, b) =>
+          flattenedPlaces.indexOf(a).compareTo(flattenedPlaces.indexOf(b)),
+    );
 
     return _CondorcetElectionResultImpl._(pairs, candidateList, places);
   }
