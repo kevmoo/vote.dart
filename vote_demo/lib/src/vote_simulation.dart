@@ -98,7 +98,7 @@ Widget _header(String header, Widget widget) => Padding(
         children: <Widget>[
           Text(
             header,
-            textScaleFactor: 2,
+            textScaleFactor: 1.2,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           widget,

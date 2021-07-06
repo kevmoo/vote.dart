@@ -21,7 +21,7 @@ abstract class TableHelper<Entry, SubEntry> {
 
   bool isMulti(int columnIndex);
 
-  double get fontSizeFactor => 1.4;
+  double get fontSizeFactor => 1.0;
 
   double get headerTextScaleFactor => 1.0;
 

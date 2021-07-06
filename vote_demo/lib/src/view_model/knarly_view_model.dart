@@ -45,10 +45,10 @@ class KnarlyViewModel extends ChangeNotifier {
       if (_editor.updateSource(previousValue)) {
         print('Transferred data to editor successfully!');
       } else {
-        print('Transfering data not supported');
+        print('Transferring data not supported');
       }
     } catch (e) {
-      print('There was an error transfering data – hopefully nothing broke!');
+      print('There was an error transferring data – hopefully nothing broke!');
       print(e);
     }
     notifyListeners();
