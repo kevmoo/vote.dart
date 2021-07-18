@@ -41,7 +41,7 @@ class BallotLines<TCandidate extends Comparable> {
       grouped.entries
           .map((e) => BallotLine(e.value, e.key.rank))
           .toList(growable: false)
-            ..sort(),
+        ..sort(),
       candidateToText: candidateToText,
     );
   }
@@ -74,7 +74,7 @@ class BallotLines<TCandidate extends Comparable> {
           ),
         )
         .toList(growable: false)
-          ..sort();
+      ..sort();
 
     return BallotLines(lines, candidateToText: candidateToText);
   }

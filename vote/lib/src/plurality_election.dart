@@ -50,8 +50,8 @@ class PluralityElection<TCandidate extends Comparable>
     final groups = groupBy(candidateVotes.keys, (c) => candidateVotes[c]!)
         .entries
         .toList(growable: false)
-          // NOTE: reverse sorting
-          ..sort((a, b) => b.key.compareTo(a.key));
+      // NOTE: reverse sorting
+      ..sort((a, b) => b.key.compareTo(a.key));
 
     var place = 1;
     final places = <PluralityElectionPlace<TCandidate>>[];
