@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/link.dart';
 import 'package:vote/vote.dart';
 import 'package:vote_widgets/vote_widgets.dart';
 
@@ -13,12 +14,23 @@ import 'widget/distance_election_result_widget.dart';
 import 'widget/simple_editor_widget.dart';
 import 'widget/vote_town_widget.dart';
 
+const _sourceUrl = 'github.com/kevmoo/vote.dart';
+final _sourceUri = Uri.parse('https://$_sourceUrl');
+
 class VoteSimulation extends StatelessWidget {
   const VoteSimulation();
 
   @override
   Widget build(BuildContext context) => MaterialApp(
         home: Scaffold(
+          bottomNavigationBar: Link(
+            uri: _sourceUri,
+            target: LinkTarget.blank,
+            builder: (context, followLink) => ElevatedButton(
+              onPressed: followLink,
+              child: const Text('Source: $_sourceUrl'),
+            ),
+          ),
           body: Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.all(15),
