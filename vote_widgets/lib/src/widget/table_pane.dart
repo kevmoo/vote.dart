@@ -1383,7 +1383,7 @@ class _RenderTablePane extends RenderBox
         cellPositions: cellPositions,
       ));
 
-      (row.parentData as TableRowParentData)..offset = Offset(0, childY);
+      (row.parentData as TableRowParentData).offset = Offset(0, childY);
       childY += metrics.rowHeights[i] + verticalSpacing;
     }
   }

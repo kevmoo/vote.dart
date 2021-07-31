@@ -48,14 +48,14 @@ class VoteTownWidget extends StatelessWidget {
 
           return CustomPaint(
             painter: _VoteTownPainter(voteTown),
+            isComplex: true,
+            willChange: true,
             child: Flow(
+              delegate: _CandidateFlowDelegate(voteTown, _lastSizeCallback),
               children: voteTown.candidates
                   .map(candidateWidget)
                   .toList(growable: false),
-              delegate: _CandidateFlowDelegate(voteTown, _lastSizeCallback),
             ),
-            isComplex: true,
-            willChange: true,
           );
         },
       );

@@ -34,8 +34,8 @@ class VoteSimulation extends StatelessWidget {
                       child: Column(
                         children: <Widget>[
                           ElevatedButton(
-                            child: const Text('Toggle'),
                             onPressed: kvm.toggleFunction,
+                            child: const Text('Toggle'),
                           ),
                           if (kvm.editor is VoteTownEditor) ...[
                             ListenableProvider<VoteTownEditor>.value(

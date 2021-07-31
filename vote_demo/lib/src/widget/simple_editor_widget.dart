@@ -30,9 +30,9 @@ class SimpleEditorWidget extends StatelessWidget {
               ),
               if (editor.valueChanged)
                 FloatingActionButton(
-                  child: const Icon(Icons.save_alt),
                   disabledElevation: 0,
                   onPressed: editor.commitChange,
+                  child: const Icon(Icons.save_alt),
                 ),
             ],
           ),
