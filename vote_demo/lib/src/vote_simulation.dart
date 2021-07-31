@@ -22,6 +22,7 @@ class VoteSimulation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
+        title: 'Election Method Simulation',
         home: Scaffold(
           bottomNavigationBar: Link(
             uri: _sourceUri,
