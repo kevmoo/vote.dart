@@ -4996,7 +4996,6 @@ charcode
 fixnum
 glob
 http_parser
-matcher
 path
 pool
 pub_semver
@@ -5680,6 +5679,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 dart_style
+matcher
 shelf
 
 Copyright 2014, the Dart project authors. 
