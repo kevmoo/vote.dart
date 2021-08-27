@@ -8,7 +8,7 @@ dependencies:
   collection: ^1.14.0
   flutter:
     sdk: flutter
-  provider: ^5.0.0
+  provider: ^6.0.0
   vote: ^2.1.0
 
 dev_dependencies:
