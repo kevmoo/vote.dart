@@ -104,20 +104,20 @@ class VoteSimulation extends StatelessWidget {
       );
 }
 
-Widget _header(String header, Widget widget) => Padding(
-      padding: const EdgeInsets.all(5),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text(
-            header,
-            textScaleFactor: 1.2,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+Widget _header(String header, Widget widget) => Builder(
+    builder: (context) => Padding(
+          padding: const EdgeInsets.all(5),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                header,
+                style: Theme.of(context).textTheme.headline5,
+              ),
+              widget,
+            ],
           ),
-          widget,
-        ],
-      ),
-    );
+        ));
 
 KnarlyViewModel _viewModel(BuildContext ctx) {
   final data = VoteTown.random();

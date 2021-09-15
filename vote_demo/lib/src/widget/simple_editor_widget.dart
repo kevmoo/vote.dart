@@ -8,7 +8,7 @@ class SimpleEditorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Consumer<SimpleBallotEditor>(
-        builder: (_, editor, __) => Form(
+        builder: (context, editor, __) => Form(
           autovalidateMode: AutovalidateMode.always,
           child: Stack(
             alignment: Alignment.bottomRight,
@@ -18,8 +18,8 @@ class SimpleEditorWidget extends StatelessWidget {
                 height: 500,
                 padding: const EdgeInsets.all(10),
                 color: editor.error
-                    ? Colors.redAccent.shade100
-                    : Colors.grey.shade100,
+                    ? Theme.of(context).errorColor.withAlpha(85)
+                    : Theme.of(context).dialogBackgroundColor,
                 child: TextFormField(
                   controller: editor.textController,
                   validator: editor.validator,
