@@ -43,7 +43,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
             ],
             children: [
               tp.TableRow(
-                backgroundColor: Colors.grey.shade300,
+                backgroundColor: Theme.of(context).backgroundColor,
                 children: [
                   _paddedText(
                     'Place',

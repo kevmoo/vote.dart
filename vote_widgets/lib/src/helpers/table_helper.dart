@@ -76,15 +76,14 @@ abstract class TableHelper<Entry, SubEntry> {
 
   Widget build(BuildContext context) => DefaultTextStyle(
         textAlign: TextAlign.center,
-        style: DefaultTextStyle.of(context).style.apply(
-              fontSizeFactor: fontSizeFactor,
-            ),
+        style: DefaultTextStyle.of(context).style,
         child: Table(
           defaultColumnWidth: defaultTableColumnWidth,
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: <TableRow>[
             TableRow(
-              decoration: BoxDecoration(color: Colors.grey.shade300),
+              decoration:
+                  BoxDecoration(color: Theme.of(context).backgroundColor),
               children:
                   List.generate(columns.length, _tableHeader, growable: false),
             ),
