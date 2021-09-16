@@ -4,6 +4,7 @@ import 'package:vote/vote.dart';
 
 import '../helpers/helpers.dart';
 import 'table_pane.dart' as tp;
+import 'utility_widgets.dart';
 
 class CondorcetElectionResultWidget<TCandidate extends Comparable<TCandidate>>
     extends StatefulWidget {
@@ -45,16 +46,12 @@ class _State<TCandidate extends Comparable<TCandidate>>
               tp.TableRow(
                 backgroundColor: Theme.of(context).backgroundColor,
                 children: [
-                  _paddedText(
-                    'Place',
-                  ),
-                  _paddedText(
-                    candidateString,
-                  ),
+                  const PaddedText(text: 'Place'),
+                  const PaddedText(text: candidateString),
                   ...List.generate(
                     _election.candidates.length,
-                    (index) => _paddedText(
-                      _election.candidates[index].toString(),
+                    (index) => PaddedText(
+                      text: _election.candidates[index].toString(),
                     ),
                   )
                 ],
@@ -69,17 +66,17 @@ class _State<TCandidate extends Comparable<TCandidate>>
     for (var place in _election.places) {
       var first = true;
       for (var candidate in place) {
-        final background = _candidateColors[candidate]!;
+        final background = _candidateColors[candidate];
         yield tp.TableRow(
           backgroundColor: place.length == 1 ? background : null,
           children: [
             if (first)
               tp.TableCell(
                 rowSpan: place.length,
-                child: Center(child: _paddedText(place.place.toString())),
+                child: Center(child: PaddedText(text: place.place.toString())),
               ),
             if (!first) const tp.EmptyTableCell(),
-            _paddedText(candidate.toString(), background: background),
+            PaddedText(text: candidate.toString(), background: background),
             ...List.generate(
               _election.candidates.length,
               (index) {
@@ -112,39 +109,39 @@ class _State<TCandidate extends Comparable<TCandidate>>
     });
   }
 
-  Widget _getCellText(CondorcetPair<TCandidate> pair, Color background) {
+  Widget _getCellText(CondorcetPair<TCandidate> pair, Color? background) {
     switch (_display) {
       case CondorcetWidgetDisplay.comparison:
         return _comparisonText(pair);
       case CondorcetWidgetDisplay.delta:
-        return _paddedText(
-          pair.delta,
+        return PaddedText(
+          text: pair.delta,
           background: background,
         );
       case CondorcetWidgetDisplay.simple:
         if (pair.firstWins) {
-          return _cellPadding(
+          return CelPadding(
+            background: background,
             child: const Icon(
               Icons.check,
               size: 16,
             ),
-            background: background,
           );
         }
         if (pair.isTie) {
-          return _paddedText(
-            '=',
+          return PaddedText(
+            text: '=',
             style: pair.style,
             background: background,
           );
         }
-        return _cellPadding(
+        return CelPadding(
+          background: background,
           child: const Icon(
             Icons.cancel_outlined,
             size: 16,
             color: _lostDimColor,
           ),
-          background: background,
         );
     }
   }
@@ -158,9 +155,9 @@ class _State<TCandidate extends Comparable<TCandidate>>
             ? '>'
             : '<';
 
-    final background = _candidateColors[primaryCandidate]!;
-    return _paddedText(
-      '${pair.firstOverSecond}$comparison${pair.secondOverFirst}',
+    final background = _candidateColors[primaryCandidate];
+    return PaddedText(
+      text: '${pair.firstOverSecond}$comparison${pair.secondOverFirst}',
       style: pair.style,
       background: background,
     );
@@ -170,32 +167,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
       huesForCandidates(_election.candidates);
 
   CondorcetElectionResult<TCandidate> get _election => widget._election;
-
-  static Widget _paddedText(
-    String text, {
-    TextStyle? style,
-    Color? background,
-  }) =>
-      _cellPadding(
-        background: background,
-        child: Text(
-          text,
-          style: style,
-          textAlign: TextAlign.center,
-        ),
-      );
 }
-
-Widget _cellPadding({
-  required Widget child,
-  Color? background,
-}) =>
-    Container(
-      alignment: Alignment.center,
-      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 3),
-      color: background,
-      child: child,
-    );
 
 extension on CondorcetPair {
   String get delta {
