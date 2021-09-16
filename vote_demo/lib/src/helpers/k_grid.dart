@@ -64,7 +64,13 @@ class _KGrid extends RenderBox
       }
       mainAxisExtent += rowExtent;
     }
-    size = constraints.constrain(Size(constraints.maxWidth, mainAxisExtent));
+
+    size = constraints.constrain(
+      Size(
+        columnCount * columnWidth,
+        mainAxisExtent,
+      ),
+    );
   }
 
   @override

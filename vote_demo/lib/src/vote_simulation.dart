@@ -44,14 +44,14 @@ class VoteSimulation extends StatelessWidget {
                     if (data.maxWidth > 2 * _crossAxisWidth) {
                       return Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ConstrainedBox(
                             constraints:
                                 const BoxConstraints(maxWidth: _crossAxisWidth),
                             child: Column(children: _columnOneChildren(kvm)),
                           ),
-                          Expanded(
+                          Flexible(
                             child: KGrid(
                                 maxCrossAxisExtent: _crossAxisWidth,
                                 children: _columnTwoChildren(kvm)),
