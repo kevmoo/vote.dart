@@ -119,7 +119,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
         );
       case CondorcetWidgetDisplay.simple:
         if (pair.firstWins) {
-          return CelPadding(
+          return CellPadding(
             background: background,
             child: const Icon(
               Icons.check,
@@ -134,7 +134,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
             background: background,
           );
         }
-        return CelPadding(
+        return CellPadding(
           background: background,
           child: const Icon(
             Icons.cancel_outlined,

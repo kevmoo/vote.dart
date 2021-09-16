@@ -54,7 +54,6 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
           for (var item in roundData)
             PaddedText.bits(
               text: item.placeNumber.toString(),
-              fontWeight: FontWeight.bold,
             ),
           ...createFillers(),
         ];
@@ -68,7 +67,6 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
         for (var item in roundData)
           PaddedText.bits(
             text: item.candidate.id,
-            fontWeight: FontWeight.bold,
             background: item.candidate.color,
           ),
         ...createFillers(),
@@ -78,7 +76,6 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
       yield <Widget>[
         PaddedText.bits(
           text: 'Round ${round.number}',
-          fontWeight: FontWeight.bold,
         ),
         for (var item in roundData)
           PaddedText.bits(

@@ -21,10 +21,6 @@ abstract class TableHelper<Entry, SubEntry> {
 
   bool isMulti(int columnIndex);
 
-  double get fontSizeFactor => 1.0;
-
-  double get headerTextScaleFactor => 1.0;
-
   TableColumnWidth get defaultTableColumnWidth => const FlexColumnWidth();
 
   String textForColumn(int columnIndex, Entry entry) =>
@@ -35,11 +31,9 @@ abstract class TableHelper<Entry, SubEntry> {
           'Could not get a value for $columnIndex from $subEntry');
 
   Widget _tableHeader(int columnIndex) => Container(
-        padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 3),
+        padding: const EdgeInsets.symmetric(vertical: 4.5, horizontal: 3),
         child: Text(
           columns[columnIndex],
-          textScaleFactor: headerTextScaleFactor,
-          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       );
 
@@ -53,10 +47,10 @@ abstract class TableHelper<Entry, SubEntry> {
         // This is some very nuanced logic for making sure the sizes of rows
         // are consistent as they are merged and un-merged
         padding: EdgeInsets.fromLTRB(
-          3,
-          position == SubEntryPosition.first ? 2 : 3,
-          3,
-          position == SubEntryPosition.last ? 2 : 3,
+          9,
+          position == SubEntryPosition.first ? 8 : 9,
+          9,
+          position == SubEntryPosition.last ? 8 : 9,
         ),
         child: Text(content),
       );
@@ -93,7 +87,6 @@ abstract class TableHelper<Entry, SubEntry> {
                     color: subEntries.length == 1
                         ? subEntryColor(subEntries.single)
                         : null,
-                    border: Border.all(),
                   ),
                   children: List.generate(columns.length, (column) {
                     if (isMulti(column)) {

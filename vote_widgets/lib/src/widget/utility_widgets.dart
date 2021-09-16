@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class CelPadding extends StatelessWidget {
+class CellPadding extends StatelessWidget {
   final Widget child;
   final Color? background;
-  const CelPadding({
+  const CellPadding({
     Key? key,
     this.background,
     required this.child,
@@ -12,6 +12,7 @@ class CelPadding extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         padding: const EdgeInsets.all(9),
+        alignment: Alignment.bottomCenter,
         color: background,
         child: child,
       );
@@ -27,8 +28,8 @@ class PaddedText extends StatelessWidget {
     Key? key,
     required this.text,
     this.textAlign = TextAlign.center,
-    this.style,
     this.background,
+    this.style,
   }) : super(key: key);
 
   PaddedText.bits({
@@ -37,14 +38,11 @@ class PaddedText extends StatelessWidget {
     this.textAlign = TextAlign.center,
     this.background,
     FontStyle? fontStyle,
-    FontWeight? fontWeight,
-  })  : style = (fontStyle == null && fontWeight == null)
-            ? null
-            : TextStyle(fontStyle: fontStyle, fontWeight: fontWeight),
+  })  : style = (fontStyle == null) ? null : TextStyle(fontStyle: fontStyle),
         super(key: key);
 
   @override
-  Widget build(BuildContext context) => CelPadding(
+  Widget build(BuildContext context) => CellPadding(
         background: background,
         child: Text(
           text,
