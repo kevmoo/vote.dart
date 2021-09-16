@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:vote/vote.dart';
 
 import '../model/candidate.dart';
+import 'utility_widgets.dart';
 
 // TODO: display candidates that don't even make the first round
 // TODO: flip transfer rounds
@@ -51,8 +52,8 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
         yield <Widget>[
           const SizedBox(),
           for (var item in roundData)
-            _cell(
-              item.placeNumber.toString(),
+            PaddedText.bits(
+              text: item.placeNumber.toString(),
               fontWeight: FontWeight.bold,
             ),
           ...createFillers(),
@@ -65,8 +66,8 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
       yield <Widget>[
         const SizedBox(),
         for (var item in roundData)
-          _cell(
-            item.candidate.id,
+          PaddedText.bits(
+            text: item.candidate.id,
             fontWeight: FontWeight.bold,
             background: item.candidate.color,
           ),
@@ -75,13 +76,13 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
 
       // vote count
       yield <Widget>[
-        _cell(
-          'Round ${round.number}',
+        PaddedText.bits(
+          text: 'Round ${round.number}',
           fontWeight: FontWeight.bold,
         ),
         for (var item in roundData)
-          _cell(
-            item.place.voteCount.toString(),
+          PaddedText.bits(
+            text: item.place.voteCount.toString(),
             background: item.candidate.color,
             fontStyle: round.eliminationForCandidate(item.candidate) == null
                 ? null
@@ -96,19 +97,19 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
           if (candidate == elimination.candidate) {
             final content =
                 elimination.transferredCandidates.isEmpty ? '×' : '←';
-            return _cell(content);
+            return PaddedText(text: content);
           }
 
           final count = elimination.getTransferCount(candidate);
           if (count == 0) {
             return const SizedBox();
           }
-          return _cell(count.toString());
+          return PaddedText(text: count.toString());
         }
 
         yield <Widget>[
-          _cell(
-            elimination.candidate.id,
+          PaddedText.bits(
+            text: elimination.candidate.id,
             textAlign: TextAlign.right,
             fontStyle: FontStyle.italic,
           ),
@@ -143,26 +144,3 @@ class _Data {
   @override
   int get hashCode => placeNumber ^ 7 * candidate.hashCode;
 }
-
-/// Returns a [Widget] with [content] surrounded by padding.
-Widget _cell(
-  String content, {
-  FontWeight? fontWeight,
-  Color? background,
-  TextAlign textAlign = TextAlign.center,
-  FontStyle? fontStyle,
-}) =>
-    Container(
-      padding: const EdgeInsets.all(3),
-      color: background,
-      child: Text(
-        content,
-        textAlign: textAlign,
-        style: (fontWeight == null && fontStyle == null)
-            ? null
-            : TextStyle(
-                fontWeight: fontWeight,
-                fontStyle: fontStyle,
-              ),
-      ),
-    );

@@ -11,7 +11,6 @@ class CelPadding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        alignment: Alignment.center,
         padding: const EdgeInsets.all(9),
         color: background,
         child: child,
@@ -22,13 +21,27 @@ class PaddedText extends StatelessWidget {
   final String text;
   final TextStyle? style;
   final Color? background;
+  final TextAlign textAlign;
 
   const PaddedText({
     Key? key,
     required this.text,
+    this.textAlign = TextAlign.center,
     this.style,
     this.background,
   }) : super(key: key);
+
+  PaddedText.bits({
+    Key? key,
+    required this.text,
+    this.textAlign = TextAlign.center,
+    this.background,
+    FontStyle? fontStyle,
+    FontWeight? fontWeight,
+  })  : style = (fontStyle == null && fontWeight == null)
+            ? null
+            : TextStyle(fontStyle: fontStyle, fontWeight: fontWeight),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) => CelPadding(
@@ -37,7 +50,7 @@ class PaddedText extends StatelessWidget {
           text,
           style: style,
           strutStyle: const StrutStyle(forceStrutHeight: true, height: 1),
-          textAlign: TextAlign.center,
+          textAlign: textAlign,
         ),
       );
 }
