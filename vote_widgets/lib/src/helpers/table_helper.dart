@@ -82,8 +82,6 @@ abstract class TableHelper<Entry, SubEntry> {
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: <TableRow>[
             TableRow(
-              decoration:
-                  BoxDecoration(color: Theme.of(context).backgroundColor),
               children:
                   List.generate(columns.length, _tableHeader, growable: false),
             ),

@@ -44,7 +44,6 @@ class _State<TCandidate extends Comparable<TCandidate>>
             ],
             children: [
               tp.TableRow(
-                backgroundColor: Theme.of(context).backgroundColor,
                 children: [
                   const PaddedText(text: 'Place'),
                   const PaddedText(text: candidateString),
