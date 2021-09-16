@@ -38,75 +38,90 @@ class VoteSimulation extends StatelessWidget {
             value: _value,
             child: Consumer<KnarlyViewModel>(
               builder: (_, kvm, __) => SingleChildScrollView(
-                child: Container(
-                  padding: const EdgeInsets.only(left: 15, top: 15, right: 15),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 500),
-                        child: Column(
-                          children: <Widget>[
-                            ElevatedButton(
-                              onPressed: kvm.toggleFunction,
-                              child: const Text('Toggle'),
-                            ),
-                            if (kvm.editor is VoteTownEditor) ...[
-                              ListenableProvider<VoteTownEditor>.value(
-                                value: kvm.editor as VoteTownEditor,
-                                child: const VoteTownWidget(),
-                              ),
-                              Provider<List<VoteTownDistancePlace>>.value(
-                                value: (kvm.editor.value as VoteTown)
-                                    .distancePlaces,
-                                child: const DistanceElectionResultWidget(),
-                              ),
-                            ] else
-                              ListenableProvider<SimpleBallotEditor>.value(
-                                value: kvm.editor as SimpleBallotEditor,
-                                child: const SimpleEditorWidget(),
-                              ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: KGrid(
-                          maxCrossAxisExtent: 500,
-                          children: [
-                            _HeaderWidget(
-                              header: 'Plurality',
-                              child:
-                                  Provider<PluralityElection<Candidate>>.value(
-                                value: kvm.editor.value.pluralityElection,
-                                child: const PluralityElectionResultWidget(),
-                              ),
-                            ),
-                            _HeaderWidget(
-                              header: 'Condorcet',
-                              child: CondorcetElectionResultWidget<Candidate>(
-                                kvm.editor.value.condorcetElection,
-                              ),
-                            ),
-                            _HeaderWidget(
-                              header: 'Ranked Choice',
-                              child: Provider<IrvElection<Candidate>>.value(
-                                value: kvm.editor.value.irvElection,
-                                child: const RankedChoiceElectionResultWidget(),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                padding: const EdgeInsets.only(left: 15, top: 15, right: 15),
+                child: Center(
+                  child: LayoutBuilder(builder: (context, data) {
+                    if (data.maxWidth > 2 * _crossAxisWidth) {
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ConstrainedBox(
+                            constraints:
+                                const BoxConstraints(maxWidth: _crossAxisWidth),
+                            child: Column(children: _columnOneChildren(kvm)),
+                          ),
+                          Expanded(
+                            child: KGrid(
+                                maxCrossAxisExtent: _crossAxisWidth,
+                                children: _columnTwoChildren(kvm)),
+                          ),
+                        ],
+                      );
+                    }
+
+                    return ConstrainedBox(
+                      constraints:
+                          const BoxConstraints(maxWidth: _crossAxisWidth),
+                      child: Column(children: [
+                        ..._columnOneChildren(kvm),
+                        ..._columnTwoChildren(kvm),
+                      ]),
+                    );
+                  }),
                 ),
               ),
             ),
           ),
         ),
       );
+
+  List<Widget> _columnOneChildren(KnarlyViewModel kvm) => <Widget>[
+        ElevatedButton(
+          onPressed: kvm.toggleFunction,
+          child: const Text('Toggle'),
+        ),
+        if (kvm.editor is VoteTownEditor) ...[
+          ListenableProvider<VoteTownEditor>.value(
+            value: kvm.editor as VoteTownEditor,
+            child: const VoteTownWidget(),
+          ),
+          Provider<List<VoteTownDistancePlace>>.value(
+            value: (kvm.editor.value as VoteTown).distancePlaces,
+            child: const DistanceElectionResultWidget(),
+          ),
+        ] else
+          ListenableProvider<SimpleBallotEditor>.value(
+            value: kvm.editor as SimpleBallotEditor,
+            child: const SimpleEditorWidget(),
+          ),
+      ];
+
+  List<Widget> _columnTwoChildren(KnarlyViewModel kvm) => [
+        _HeaderWidget(
+          header: 'Plurality',
+          child: Provider<PluralityElection<Candidate>>.value(
+            value: kvm.editor.value.pluralityElection,
+            child: const PluralityElectionResultWidget(),
+          ),
+        ),
+        _HeaderWidget(
+          header: 'Condorcet',
+          child: CondorcetElectionResultWidget<Candidate>(
+            kvm.editor.value.condorcetElection,
+          ),
+        ),
+        _HeaderWidget(
+          header: 'Ranked Choice',
+          child: Provider<IrvElection<Candidate>>.value(
+            value: kvm.editor.value.irvElection,
+            child: const RankedChoiceElectionResultWidget(),
+          ),
+        ),
+      ];
 }
+
+const _crossAxisWidth = 500.0;
 
 class _HeaderWidget extends StatelessWidget {
   final String header;
