@@ -108,7 +108,7 @@ class VoteSimulation extends StatelessWidget {
         _HeaderWidget(
           header: 'Condorcet',
           child: CondorcetElectionResultWidget<Candidate>(
-            kvm.editor.value.condorcetElection,
+            election: kvm.editor.value.condorcetElection,
           ),
         ),
         _HeaderWidget(

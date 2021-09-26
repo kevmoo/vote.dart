@@ -7,9 +7,15 @@ import 'utility_widgets.dart';
 
 class CondorcetElectionResultWidget<TCandidate extends Comparable<TCandidate>>
     extends StatefulWidget {
-  final CondorcetElectionResult<TCandidate> _election;
+  final CondorcetElectionResult<TCandidate> election;
+  final CondorcetWidgetDisplay initialDisplay;
+  final bool clickToToggleDisplay;
 
-  const CondorcetElectionResultWidget(this._election);
+  const CondorcetElectionResultWidget({
+    required this.election,
+    this.initialDisplay = CondorcetWidgetDisplay.comparison,
+    this.clickToToggleDisplay = true,
+  });
 
   @override
   State<StatefulWidget> createState() => _State<TCandidate>();
@@ -23,41 +29,47 @@ enum CondorcetWidgetDisplay {
 
 class _State<TCandidate extends Comparable<TCandidate>>
     extends State<CondorcetElectionResultWidget<TCandidate>> {
-  CondorcetWidgetDisplay _display = CondorcetWidgetDisplay.simple;
+  late CondorcetWidgetDisplay _display = widget.initialDisplay;
 
   @override
-  Widget build(BuildContext context) => MouseRegion(
+  Widget build(BuildContext context) {
+    if (widget.clickToToggleDisplay) {
+      return MouseRegion(
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
           onTap: _onTap,
-          child: tp.TablePane(
-            columns: [
-              const tp.TablePaneColumn(
-                  width: tp.IntrinsicTablePaneColumnWidth()),
-              const tp.TablePaneColumn(
-                  width: tp.IntrinsicTablePaneColumnWidth()),
+          child: _buildCore(),
+        ),
+      );
+    }
+
+    return _buildCore();
+  }
+
+  Widget _buildCore() => tp.TablePane(
+        columns: [
+          const tp.TablePaneColumn(width: tp.IntrinsicTablePaneColumnWidth()),
+          const tp.TablePaneColumn(width: tp.IntrinsicTablePaneColumnWidth()),
+          ...List.generate(
+            _election.candidates.length,
+            (index) => const tp.TablePaneColumn(),
+          )
+        ],
+        children: [
+          tp.TableRow(
+            children: [
+              const PaddedText(text: 'Place'),
+              const PaddedText(text: candidateString),
               ...List.generate(
                 _election.candidates.length,
-                (index) => const tp.TablePaneColumn(),
+                (index) => PaddedText(
+                  text: _election.candidates[index].toString(),
+                ),
               )
             ],
-            children: [
-              tp.TableRow(
-                children: [
-                  const PaddedText(text: 'Place'),
-                  const PaddedText(text: candidateString),
-                  ...List.generate(
-                    _election.candidates.length,
-                    (index) => PaddedText(
-                      text: _election.candidates[index].toString(),
-                    ),
-                  )
-                ],
-              ),
-              ..._rows(),
-            ],
           ),
-        ),
+          ..._rows(),
+        ],
       );
 
   Iterable<tp.TableRow> _rows() sync* {
@@ -164,7 +176,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
   late final Map<TCandidate, Color> _candidateColors =
       huesForCandidates(_election.candidates);
 
-  CondorcetElectionResult<TCandidate> get _election => widget._election;
+  CondorcetElectionResult<TCandidate> get _election => widget.election;
 }
 
 extension on CondorcetPair {
