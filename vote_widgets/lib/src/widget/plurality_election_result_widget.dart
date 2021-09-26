@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:vote/vote.dart';
 
 import '../../helpers.dart';
-import '../helpers/table_helper.dart';
 import '../model/candidate.dart';
 
 class PluralityElectionResultWidget extends StatelessWidget {
