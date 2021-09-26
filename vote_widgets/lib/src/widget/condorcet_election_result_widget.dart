@@ -122,7 +122,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
             background: background,
             child: const Icon(
               Icons.check,
-              size: 16,
+              size: _iconSize,
             ),
           );
         }
@@ -137,7 +137,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
           background: background,
           child: const Icon(
             Icons.cancel_outlined,
-            size: 16,
+            size: _iconSize,
             color: _lostDimColor,
           ),
         );
@@ -188,5 +188,6 @@ extension on CondorcetPair {
   TextStyle get style => TextStyle(color: color);
 }
 
+const _iconSize = 14.0;
 const _lostDimColor = Colors.black38;
 const _tieColor = Colors.black54;
