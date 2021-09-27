@@ -1,11 +1,11 @@
 {
-    "name": "knarly",
-    "short_name": "knarly",
+    "name": "Vote Simulation",
+    "short_name": "VoteSim",
     "start_url": ".",
     "display": "minimal-ui",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "A simulation of voting methods",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
