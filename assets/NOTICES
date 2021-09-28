@@ -323,6 +323,7 @@ abseil-cpp
 angle
 boringssl
 etc1
+fuchsia-vulkan
 khronos
 libwebp
 txt
