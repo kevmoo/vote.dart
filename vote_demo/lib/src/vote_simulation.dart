@@ -5,12 +5,12 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:vote/vote.dart';
 import 'package:vote_widgets/vote_widgets.dart';
 
-import 'helpers/k_grid.dart';
 import 'model/vote_town.dart';
 import 'model/vote_town_distance_place.dart';
 import 'view_model/vote_town_editor.dart';
 import 'widget/distance_election_result_widget.dart';
 import 'widget/header_widget.dart';
+import 'widget/k_grid.dart';
 import 'widget/too_small.dart';
 import 'widget/vote_town_widget.dart';
 
