@@ -31,28 +31,30 @@ class _HeaderWidgetState extends State<HeaderWidget> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Row(children: [
-              Flexible(child: Container()),
-              Expanded(
-                flex: 6,
-                child: Text(
-                  widget.header,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline5,
+            Row(
+              children: [
+                Flexible(child: Container()),
+                Expanded(
+                  flex: 6,
+                  child: Text(
+                    widget.header,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
                 ),
-              ),
-              Flexible(
-                child: Container(
-                  alignment: Alignment.centerRight,
-                  child: widget.extraHelp == null
-                      ? null
-                      : IconButton(
-                          icon: const Icon(Icons.info_outline),
-                          onPressed: _snackHandler(context),
-                        ),
-                ),
-              )
-            ]),
+                Flexible(
+                  child: Container(
+                    alignment: Alignment.centerRight,
+                    child: widget.extraHelp == null
+                        ? null
+                        : IconButton(
+                            icon: const Icon(Icons.info_outline),
+                            onPressed: _snackHandler(context),
+                          ),
+                  ),
+                )
+              ],
+            ),
             widget.child,
           ],
         ),

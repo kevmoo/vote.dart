@@ -142,8 +142,9 @@ List<ElectionPlace<TCandidate>> _calculatePlaces<TCandidate extends Comparable>(
   }
 
   final components = stronglyConnectedComponents<TCandidate>(
-      candidateMap.keys, (node) => candidateMap[node]!)
-    ..sort((a, b) {
+    candidateMap.keys,
+    (node) => candidateMap[node]!,
+  )..sort((a, b) {
       final firstA = a.first;
       final firstB = b.first;
 

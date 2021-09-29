@@ -17,6 +17,8 @@
 // https://github.com/tvolkert/chicago/blob/master/lib/src/table_pane.dart
 // at https://github.com/tvolkert/chicago/commit/8438209727527a6679a7f6a6695286e
 
+// ignore_for_file: require_trailing_commas
+
 import 'dart:math' as math;
 
 import 'package:collection/collection.dart';

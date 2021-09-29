@@ -26,11 +26,12 @@ class VoteTownWidget extends StatelessWidget {
                   notifier.moveCandidateEnd(candidate),
               child: Container(
                 decoration: ShapeDecoration(
-                    color: candidate.color,
-                    shape: const CircleBorder(),
-                    shadows: moving
-                        ? _movingCandidateShadows
-                        : _stationaryCandidateShadows),
+                  color: candidate.color,
+                  shape: const CircleBorder(),
+                  shadows: moving
+                      ? _movingCandidateShadows
+                      : _stationaryCandidateShadows,
+                ),
                 child: Center(
                   child: Text(
                     candidate.id,
@@ -110,15 +111,19 @@ class _CandidateFlowDelegate extends FlowDelegate {
     final offsetMultiplier = _offsetMultiplier(context.size);
 
     final centerShift = Offset(
-        offsetMultiplier * _candidateScale, offsetMultiplier * _candidateScale);
+      offsetMultiplier * _candidateScale,
+      offsetMultiplier * _candidateScale,
+    );
 
     for (var i = 0; i < context.childCount; i++) {
       final location = _voteTown.candidates[i].location;
       final shift =
           (Offset(location.x, location.y) * offsetMultiplier) - centerShift;
 
-      context.paintChild(i,
-          transform: Matrix4.translationValues(shift.dx, shift.dy, 0));
+      context.paintChild(
+        i,
+        transform: Matrix4.translationValues(shift.dx, shift.dy, 0),
+      );
     }
   }
 

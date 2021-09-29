@@ -47,7 +47,9 @@ class IrvRound<TCandidate extends Comparable> {
     );
 
     final voteGroups = groupBy<TCandidate, int>(
-        candidateAllocations.keys, (c) => candidateAllocations[c]!.length);
+      candidateAllocations.keys,
+      (c) => candidateAllocations[c]!.length,
+    );
 
     final placeVotes = voteGroups.keys.toList(growable: false)
       // reverse sorting -> most votes first
@@ -59,7 +61,10 @@ class IrvRound<TCandidate extends Comparable> {
       final currentPlaceNumber = placeNumber;
       placeNumber += voteGroup.length;
       return PluralityElectionPlace<TCandidate>(
-          currentPlaceNumber, voteGroup, vote);
+        currentPlaceNumber,
+        voteGroup,
+        vote,
+      );
     }).toList(growable: false);
 
     final newlyEliminatedCandidates =
@@ -102,7 +107,8 @@ class IrvRound<TCandidate extends Comparable> {
 
   static List<TCandidate>
       _getEliminatedCandidates<TCandidate extends Comparable>(
-          List<PluralityElectionPlace<TCandidate>> places) {
+    List<PluralityElectionPlace<TCandidate>> places,
+  ) {
     assert(places.isNotEmpty);
 
     if (places.length == 1) {

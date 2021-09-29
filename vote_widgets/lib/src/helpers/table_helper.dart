@@ -28,7 +28,8 @@ abstract class TableHelper<Entry, SubEntry> {
 
   String textForSubEntry(int columnIndex, SubEntry subEntry) =>
       throw ArgumentError(
-          'Could not get a value for $columnIndex from $subEntry');
+        'Could not get a value for $columnIndex from $subEntry',
+      );
 
   Widget _tableHeader(int columnIndex) => Container(
         padding: const EdgeInsets.symmetric(vertical: 4.5, horizontal: 3),
@@ -88,39 +89,43 @@ abstract class TableHelper<Entry, SubEntry> {
                         ? subEntryColor(subEntries.single)
                         : null,
                   ),
-                  children: List.generate(columns.length, (column) {
-                    if (isMulti(column)) {
-                      if (subEntries.length == 1) {
-                        return widgetForSubEntry(
-                          column,
-                          subEntries.single,
-                          SubEntryPosition.single,
-                        );
-                      } else {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 1,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: List.generate(
-                              subEntries.length,
-                              (subEntryIndex) {
-                                final subEntry = subEntries[subEntryIndex];
-                                return widgetForSubEntry(
-                                  column,
-                                  subEntry,
-                                  _position(subEntries.length, subEntryIndex),
-                                );
-                              },
+                  children: List.generate(
+                    columns.length,
+                    (column) {
+                      if (isMulti(column)) {
+                        if (subEntries.length == 1) {
+                          return widgetForSubEntry(
+                            column,
+                            subEntries.single,
+                            SubEntryPosition.single,
+                          );
+                        } else {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 1,
                             ),
-                          ),
-                        );
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: List.generate(
+                                subEntries.length,
+                                (subEntryIndex) {
+                                  final subEntry = subEntries[subEntryIndex];
+                                  return widgetForSubEntry(
+                                    column,
+                                    subEntry,
+                                    _position(subEntries.length, subEntryIndex),
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+                        }
+                      } else {
+                        return _tableCell(textForColumn(column, entry));
                       }
-                    } else {
-                      return _tableCell(textForColumn(column, entry));
-                    }
-                  }, growable: false),
+                    },
+                    growable: false,
+                  ),
                 );
               },
             )

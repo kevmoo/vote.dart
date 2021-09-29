@@ -68,10 +68,12 @@ class IrvElection<TCandidate extends Comparable>
 
     final remaining = candidateSet.difference(candidatesInRounds);
     if (remaining.isNotEmpty) {
-      places.add(ElectionPlace(
-        places.last.place + places.last.length,
-        remaining.toList(growable: false),
-      ));
+      places.add(
+        ElectionPlace(
+          places.last.place + places.last.length,
+          remaining.toList(growable: false),
+        ),
+      );
     }
     return IrvElection._internal(
       candidateSet.toList(growable: false),

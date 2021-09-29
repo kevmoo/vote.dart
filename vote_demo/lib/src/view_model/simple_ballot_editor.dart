@@ -55,10 +55,12 @@ class SimpleBallotEditor extends KnarlyEditor<ElectionData> {
 
   @override
   bool updateSource(ElectionData data) {
-    setValue(ElectionData.fromData(
-      data.ballots,
-      candidates: data.candidates,
-    ));
+    setValue(
+      ElectionData.fromData(
+        data.ballots,
+        candidates: data.candidates,
+      ),
+    );
     return true;
   }
 
@@ -84,7 +86,9 @@ Map<String, Candidate> _fromStrings(Set<String> values) {
   final sorted = values.toList(growable: false)..sort();
   final delta = 360 / values.length;
   var offset = 0;
-  return Map.fromEntries(sorted.map(
-    (e) => MapEntry(e, Candidate(e, offset++ * delta)),
-  ));
+  return Map.fromEntries(
+    sorted.map(
+      (e) => MapEntry(e, Candidate(e, offset++ * delta)),
+    ),
+  );
 }

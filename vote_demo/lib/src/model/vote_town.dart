@@ -122,7 +122,9 @@ class VoteTown extends ElectionData {
 double _averageVoterDistanceTo(VoteTown town, Point<double> location) =>
     town.voters
         .fold<double>(
-            0, (value, voter) => value + voter.location.distanceTo(location))
+          0,
+          (value, voter) => value + voter.location.distanceTo(location),
+        )
         .roundToDouble() /
     town.voters.length;
 

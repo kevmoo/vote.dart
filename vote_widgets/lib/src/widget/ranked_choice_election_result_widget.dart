@@ -47,7 +47,9 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
       // if the place data changes.
       if (lastRoundData == null ||
           !_dataIterableEquals(
-              roundData, lastRoundData.take(roundData.length))) {
+            roundData,
+            lastRoundData.take(roundData.length),
+          )) {
         // places
         yield <Widget>[
           const SizedBox(),

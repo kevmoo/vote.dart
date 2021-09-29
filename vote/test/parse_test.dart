@@ -37,7 +37,9 @@ void main() {
 
     expect(
       BallotLines<String>.parse(
-          shuffledLines.join('\n'), (set) => Map.fromIterable(set)).text,
+        shuffledLines.join('\n'),
+        (set) => Map.fromIterable(set),
+      ).text,
       linesText,
     );
   });
@@ -178,8 +180,13 @@ Error on line 1, column 12: Cannot have duplicate values.
   ╵''',
 };
 
-Matcher _throwsAFormatException(String message) =>
-    throwsA(const TypeMatcher<StringScannerException>().having((e) {
-      printOnFailure("r'''\n$e'''");
-      return e.toString();
-    }, 'toString()', message));
+Matcher _throwsAFormatException(String message) => throwsA(
+      const TypeMatcher<StringScannerException>().having(
+        (e) {
+          printOnFailure("r'''\n$e'''");
+          return e.toString();
+        },
+        'toString()',
+        message,
+      ),
+    );

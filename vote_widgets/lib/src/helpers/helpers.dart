@@ -22,12 +22,14 @@ Map<T, Color> huesForCandidates<T extends Comparable<T>>(
 
   final delta = 360 / sorted.length;
   var offset = 0;
-  return Map.fromEntries(sorted.map(
-    (e) => MapEntry(
-      e,
-      HSVColor.fromAHSV(1.0, offset++ * delta, colorSaturation, 1).toColor(),
+  return Map.fromEntries(
+    sorted.map(
+      (e) => MapEntry(
+        e,
+        HSVColor.fromAHSV(1.0, offset++ * delta, colorSaturation, 1).toColor(),
+      ),
     ),
-  ));
+  );
 }
 
 const colorSaturation = 0.3;
