@@ -1,13 +1,9 @@
 {
-    "name": "Vote Simulation",
-    "short_name": "VoteSim",
+    "name": "Election Method Simulation",
+    "short_name": "ElectionSim",
     "start_url": ".",
-    "display": "minimal-ui",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A simulation of voting methods",
-    "orientation": "portrait-primary",
-    "prefer_related_applications": false,
+    "display": "browser",
+    "description": "Move candidates around a virtual town and see how an election turns out using different voting methods.",
     "icons": [
         {
             "src": "icons/Icon-192.png",

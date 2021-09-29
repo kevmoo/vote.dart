@@ -13,7 +13,7 @@ const RESOURCES = {
 "icons/apple-touch-icon.png": "c61573ab135106092e2128e95e148a52",
 "icons/Icon-192.png": "eb36a821391e85e926b61b472d8a48be",
 "icons/Icon-512.png": "85fdfaea44b7230afc59ed3b9d84a232",
-"manifest.json": "1e8acc6f164d3282aca19f7e22cfa094",
+"manifest.json": "d226910f98059777ec70177f23b06724",
 "assets/AssetManifest.json": "8f761014e51230aa2d057b1160574051",
 "assets/NOTICES": "b983e583c0f28dc05ec65bba5ce09ca1",
 "assets/FontManifest.json": "ac9f2bcd8d38e19917920a8f54396bd0",
