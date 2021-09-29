@@ -37,7 +37,6 @@ class VoteSimulation extends StatelessWidget {
           body: ChangeNotifierProvider<VoteTownEditor>.value(
             value: _value,
             child: SingleChildScrollView(
-              padding: const EdgeInsets.only(left: 15, top: 15, right: 15),
               child: Center(
                 child: Consumer<VoteTownEditor>(
                   builder: (_, kvm, __) => LayoutBuilder(
