@@ -15,34 +15,6 @@ class VoteTownWidget extends StatelessWidget {
         builder: (_, notifier, __) {
           final voteTown = notifier.value;
 
-          Widget candidateWidget(TownCandidate candidate) {
-            final moving = candidate == notifier.movingCandidate;
-            return GestureDetector(
-              onPanStart: (DragStartDetails details) =>
-                  notifier.moveCandidateStart(candidate),
-              onPanUpdate: (DragUpdateDetails event) =>
-                  notifier.moveCandidateUpdate(candidate, event.delta),
-              onPanEnd: (DragEndDetails details) =>
-                  notifier.moveCandidateEnd(candidate),
-              child: Container(
-                decoration: ShapeDecoration(
-                  color: candidate.color,
-                  shape: const CircleBorder(),
-                  shadows: moving
-                      ? _movingCandidateShadows
-                      : _stationaryCandidateShadows,
-                ),
-                child: Center(
-                  child: Text(
-                    candidate.id,
-                    textScaleFactor: 1.5,
-                    style: moving ? _movingWidgetTextStyle : null,
-                  ),
-                ),
-              ),
-            );
-          }
-
           void _lastSizeCallback(Size value) {
             notifier.townSizeRatio = 1 / _offsetMultiplier(value);
           }
@@ -54,14 +26,51 @@ class VoteTownWidget extends StatelessWidget {
             child: Flow(
               delegate: _CandidateFlowDelegate(voteTown, _lastSizeCallback),
               children: voteTown.candidates
-                  .map(candidateWidget)
+                  .map((c) => _CandidateWidget(candidate: c))
                   .toList(growable: false),
             ),
           );
         },
       );
+}
 
-  static const _movingWidgetTextStyle = TextStyle(fontWeight: FontWeight.bold);
+const _candidateScale = 4.5;
+
+class _CandidateWidget extends StatelessWidget {
+  final TownCandidate candidate;
+  const _CandidateWidget({Key? key, required this.candidate}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) =>
+      Consumer<VoteTownEditor>(builder: (_, notifier, __) {
+        final moving = candidate == notifier.movingCandidate;
+        return GestureDetector(
+          onPanStart: (DragStartDetails details) =>
+              notifier.moveCandidateStart(candidate),
+          onPanUpdate: (DragUpdateDetails event) =>
+              notifier.moveCandidateUpdate(candidate, event.delta),
+          onPanEnd: (DragEndDetails details) =>
+              notifier.moveCandidateEnd(candidate),
+          child: Container(
+            decoration: ShapeDecoration(
+              color: candidate.color,
+              shape: const ContinuousRectangleBorder(
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(_candidateScale * 6))),
+              shadows: moving
+                  ? _movingCandidateShadows
+                  : _stationaryCandidateShadows,
+            ),
+            child: Center(
+              child: Text(
+                candidate.id,
+                textScaleFactor: 1.5,
+                style: moving ? _movingWidgetTextStyle : null,
+              ),
+            ),
+          ),
+        );
+      });
 
   static const _stationaryCandidateShadows = [
     BoxShadow(
@@ -76,6 +85,8 @@ class VoteTownWidget extends StatelessWidget {
       blurRadius: 2,
     ),
   ];
+
+  static const _movingWidgetTextStyle = TextStyle(fontWeight: FontWeight.bold);
 }
 
 double _offsetMultiplier(Size size) =>
@@ -83,8 +94,6 @@ double _offsetMultiplier(Size size) =>
     (VoteTown.votersAcross * VoteTown.voterSpacing);
 
 class _CandidateFlowDelegate extends FlowDelegate {
-  static const _candidateScale = 4.5;
-
   final VoteTown _voteTown;
   final void Function(Size) _lastSizeCallback;
 
