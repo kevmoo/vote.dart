@@ -187,7 +187,7 @@ TextSpan _linkSpan(String url, {String? text}) => TextSpan(
         decoration: TextDecoration.underline,
         color: Colors.lightBlue,
       ),
-      mouseCursor: MaterialStateMouseCursor.clickable,
+      mouseCursor: SystemMouseCursors.click,
     );
 
 const _crossAxisWidth = 500.0;

@@ -34,43 +34,48 @@ class VoteTownWidget extends StatelessWidget {
       );
 }
 
-const _candidateScale = 4.5;
+const _candidateScale = 4.7;
 
 class _CandidateWidget extends StatelessWidget {
   final TownCandidate candidate;
   const _CandidateWidget({Key? key, required this.candidate}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) =>
-      Consumer<VoteTownEditor>(builder: (_, notifier, __) {
-        final moving = candidate == notifier.movingCandidate;
-        return GestureDetector(
-          onPanStart: (DragStartDetails details) =>
-              notifier.moveCandidateStart(candidate),
-          onPanUpdate: (DragUpdateDetails event) =>
-              notifier.moveCandidateUpdate(candidate, event.delta),
-          onPanEnd: (DragEndDetails details) =>
-              notifier.moveCandidateEnd(candidate),
-          child: Container(
-            decoration: ShapeDecoration(
-              color: candidate.color,
-              shape: const ContinuousRectangleBorder(
-                  borderRadius:
-                      BorderRadius.all(Radius.circular(_candidateScale * 6))),
-              shadows: moving
-                  ? _movingCandidateShadows
-                  : _stationaryCandidateShadows,
-            ),
-            child: Center(
-              child: Text(
-                candidate.id,
-                textScaleFactor: 1.5,
-                style: moving ? _movingWidgetTextStyle : null,
+  Widget build(BuildContext context) => Consumer<VoteTownEditor>(
+        builder: (_, notifier, __) {
+          final moving = candidate == notifier.movingCandidate;
+          return MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onPanStart: (DragStartDetails details) =>
+                  notifier.moveCandidateStart(candidate),
+              onPanUpdate: (DragUpdateDetails event) =>
+                  notifier.moveCandidateUpdate(candidate, event.delta),
+              onPanEnd: (DragEndDetails details) =>
+                  notifier.moveCandidateEnd(candidate),
+              child: Container(
+                decoration: ShapeDecoration(
+                  color: candidate.color,
+                  shape: const ContinuousRectangleBorder(
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(_candidateScale * 6)),
+                  ),
+                  shadows: moving
+                      ? _movingCandidateShadows
+                      : _stationaryCandidateShadows,
+                ),
+                child: Center(
+                  child: Text(
+                    candidate.id,
+                    textScaleFactor: 1.5,
+                    style: moving ? _movingWidgetTextStyle : null,
+                  ),
+                ),
               ),
             ),
-          ),
-        );
-      });
+          );
+        },
+      );
 
   static const _stationaryCandidateShadows = [
     BoxShadow(
