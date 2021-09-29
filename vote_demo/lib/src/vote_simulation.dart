@@ -14,10 +14,6 @@ import 'widget/header_widget.dart';
 import 'widget/too_small.dart';
 import 'widget/vote_town_widget.dart';
 
-const _sourceUrl = 'https://github.com/kevmoo/vote.dart';
-
-final _value = VoteTownEditor(VoteTown.random());
-
 class VoteSimulation extends StatelessWidget {
   const VoteSimulation({Key? key}) : super(key: key);
 
@@ -28,7 +24,7 @@ class VoteSimulation extends StatelessWidget {
           body: TooSmallWidget(
             minimumSize: const Size(_crossAxisWidth * 2, _crossAxisWidth),
             child: ChangeNotifierProvider<VoteTownEditor>.value(
-              value: _value,
+              value: _model,
               child: CustomScrollView(
                 slivers: [
                   const SliverPadding(
@@ -44,10 +40,18 @@ class VoteSimulation extends StatelessWidget {
                       child: SelectableText.rich(
                         TextSpan(
                           children: [
-                            const TextSpan(text: 'Source code: '),
-                            _linkSpan(_sourceUrl),
+                            _linkSpan(
+                              _reportAProblemUrl,
+                              text: 'Report a problem',
+                            ),
+                            const TextSpan(text: ' or '),
+                            _linkSpan(
+                              _sourceUrl,
+                              text: 'View the source code',
+                            ),
                           ],
                         ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),
@@ -222,4 +226,9 @@ TextSpan _linkSpan(
       mouseCursor: SystemMouseCursors.click,
     );
 
+const _sourceUrl = 'https://github.com/kevmoo/vote.dart/tree/master/vote_demo';
+const _reportAProblemUrl =
+    'https://github.com/kevmoo/vote.dart/issues/new?template=problem-suggestion-for-vote-j832-com.md';
+
+final _model = VoteTownEditor(VoteTown.random());
 const _crossAxisWidth = 500.0;
