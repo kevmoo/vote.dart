@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vote/vote.dart';
 import 'package:vote_widgets/vote_widgets.dart';
@@ -14,8 +13,7 @@ import 'widget/distance_election_result_widget.dart';
 import 'widget/header_widget.dart';
 import 'widget/vote_town_widget.dart';
 
-const _sourceUrl = 'github.com/kevmoo/vote.dart';
-final _sourceUri = Uri.parse('https://$_sourceUrl');
+const _sourceUrl = 'https://github.com/kevmoo/vote.dart';
 
 final _value = VoteTownEditor(VoteTown.random());
 
@@ -26,57 +24,80 @@ class VoteSimulation extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
         title: 'Election Method Simulation',
         home: Scaffold(
-          bottomNavigationBar: Link(
-            uri: _sourceUri,
-            target: LinkTarget.blank,
-            builder: (context, followLink) => ElevatedButton(
-              onPressed: followLink,
-              child: const Text('Source: $_sourceUrl'),
-            ),
-          ),
           body: ChangeNotifierProvider<VoteTownEditor>.value(
             value: _value,
-            child: SingleChildScrollView(
-              child: Center(
-                child: Consumer<VoteTownEditor>(
-                  builder: (_, kvm, __) => LayoutBuilder(
-                    builder: (context, data) {
-                      if (data.maxWidth > 2 * _crossAxisWidth) {
-                        return Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ConstrainedBox(
-                              constraints: const BoxConstraints(
-                                maxWidth: _crossAxisWidth,
-                              ),
-                              child: Column(children: _columnOneChildren(kvm)),
-                            ),
-                            Flexible(
-                              child: KGrid(
-                                maxCrossAxisExtent: _crossAxisWidth,
-                                children: _columnTwoChildren(kvm),
-                              ),
-                            ),
-                          ],
-                        );
-                      }
-
-                      return ConstrainedBox(
-                        constraints:
-                            const BoxConstraints(maxWidth: _crossAxisWidth),
-                        child: Column(
-                          children: [
-                            ..._columnOneChildren(kvm),
-                            ..._columnTwoChildren(kvm),
-                          ],
-                        ),
-                      );
-                    },
+            child: CustomScrollView(
+              slivers: [
+                const SliverPadding(
+                  padding: EdgeInsets.only(bottom: 20),
+                  sliver: SliverToBoxAdapter(child: _BodyContent()),
+                ),
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Container(
+                    color: Colors.grey.shade300,
+                    padding: const EdgeInsets.only(top: 10, bottom: 12),
+                    alignment: Alignment.topCenter,
+                    child: SelectableText.rich(
+                      TextSpan(
+                        children: [
+                          const TextSpan(text: 'Source code: '),
+                          _linkSpan(_sourceUrl),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
+          ),
+        ),
+      );
+}
+
+class _BodyContent extends StatelessWidget {
+  const _BodyContent({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => Center(
+        child: Consumer<VoteTownEditor>(
+          builder: (_, kvm, __) => LayoutBuilder(
+            builder: (context, data) {
+              if (data.maxWidth > 2 * _crossAxisWidth) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        maxWidth: _crossAxisWidth,
+                      ),
+                      child: Column(
+                        children: _columnOneChildren(kvm),
+                      ),
+                    ),
+                    Flexible(
+                      child: KGrid(
+                        maxCrossAxisExtent: _crossAxisWidth,
+                        children: _columnTwoChildren(kvm),
+                      ),
+                    ),
+                  ],
+                );
+              }
+
+              return ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxWidth: _crossAxisWidth,
+                ),
+                child: Column(
+                  children: [
+                    ..._columnOneChildren(kvm),
+                    ..._columnTwoChildren(kvm),
+                  ],
+                ),
+              );
+            },
           ),
         ),
       );
@@ -176,15 +197,20 @@ String _trimUrl(String url) {
   return url;
 }
 
-TextSpan _linkSpan(String url, {String? text}) => TextSpan(
+TextSpan _linkSpan(
+  String url, {
+  String? text,
+  Color linkColor = Colors.lightBlue,
+}) =>
+    TextSpan(
       text: text ?? _trimUrl(url),
       recognizer: TapGestureRecognizer()
         ..onTap = () {
           launch(url);
         },
-      style: const TextStyle(
+      style: TextStyle(
         decoration: TextDecoration.underline,
-        color: Colors.lightBlue,
+        color: linkColor,
       ),
       mouseCursor: SystemMouseCursors.click,
     );
