@@ -11,6 +11,7 @@ import 'model/vote_town_distance_place.dart';
 import 'view_model/vote_town_editor.dart';
 import 'widget/distance_election_result_widget.dart';
 import 'widget/header_widget.dart';
+import 'widget/too_small.dart';
 import 'widget/vote_town_widget.dart';
 
 const _sourceUrl = 'https://github.com/kevmoo/vote.dart';
@@ -24,31 +25,34 @@ class VoteSimulation extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
         title: 'Election Method Simulation',
         home: Scaffold(
-          body: ChangeNotifierProvider<VoteTownEditor>.value(
-            value: _value,
-            child: CustomScrollView(
-              slivers: [
-                const SliverPadding(
-                  padding: EdgeInsets.only(bottom: 20),
-                  sliver: SliverToBoxAdapter(child: _BodyContent()),
-                ),
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Container(
-                    color: Colors.grey.shade300,
-                    padding: const EdgeInsets.only(top: 10, bottom: 12),
-                    alignment: Alignment.topCenter,
-                    child: SelectableText.rich(
-                      TextSpan(
-                        children: [
-                          const TextSpan(text: 'Source code: '),
-                          _linkSpan(_sourceUrl),
-                        ],
+          body: TooSmallWidget(
+            minimumSize: const Size(_crossAxisWidth * 2, _crossAxisWidth),
+            child: ChangeNotifierProvider<VoteTownEditor>.value(
+              value: _value,
+              child: CustomScrollView(
+                slivers: [
+                  const SliverPadding(
+                    padding: EdgeInsets.only(bottom: 20),
+                    sliver: SliverToBoxAdapter(child: _BodyContent()),
+                  ),
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Container(
+                      color: Colors.grey.shade300,
+                      padding: const EdgeInsets.only(top: 10, bottom: 12),
+                      alignment: Alignment.topCenter,
+                      child: SelectableText.rich(
+                        TextSpan(
+                          children: [
+                            const TextSpan(text: 'Source code: '),
+                            _linkSpan(_sourceUrl),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -59,47 +63,50 @@ class _BodyContent extends StatelessWidget {
   const _BodyContent({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Center(
-        child: Consumer<VoteTownEditor>(
-          builder: (_, kvm, __) => LayoutBuilder(
-            builder: (context, data) {
-              if (data.maxWidth > 2 * _crossAxisWidth) {
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ConstrainedBox(
-                      constraints: const BoxConstraints(
-                        maxWidth: _crossAxisWidth,
+  Widget build(BuildContext context) => Stack(
+        alignment: Alignment.center,
+        children: [
+          Consumer<VoteTownEditor>(
+            builder: (_, kvm, __) => LayoutBuilder(
+              builder: (context, data) {
+                if (data.maxWidth > 2 * _crossAxisWidth) {
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ConstrainedBox(
+                        constraints: const BoxConstraints(
+                          maxWidth: _crossAxisWidth,
+                        ),
+                        child: Column(
+                          children: _columnOneChildren(kvm),
+                        ),
                       ),
-                      child: Column(
-                        children: _columnOneChildren(kvm),
+                      Flexible(
+                        child: KGrid(
+                          maxCrossAxisExtent: _crossAxisWidth,
+                          children: _columnTwoChildren(kvm),
+                        ),
                       ),
-                    ),
-                    Flexible(
-                      child: KGrid(
-                        maxCrossAxisExtent: _crossAxisWidth,
-                        children: _columnTwoChildren(kvm),
-                      ),
-                    ),
-                  ],
-                );
-              }
+                    ],
+                  );
+                }
 
-              return ConstrainedBox(
-                constraints: const BoxConstraints(
-                  maxWidth: _crossAxisWidth,
-                ),
-                child: Column(
-                  children: [
-                    ..._columnOneChildren(kvm),
-                    ..._columnTwoChildren(kvm),
-                  ],
-                ),
-              );
-            },
+                return ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxWidth: _crossAxisWidth,
+                  ),
+                  child: Column(
+                    children: [
+                      ..._columnOneChildren(kvm),
+                      ..._columnTwoChildren(kvm),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
-        ),
+        ],
       );
 
   List<Widget> _columnOneChildren(VoteTownEditor kvm) => <Widget>[
