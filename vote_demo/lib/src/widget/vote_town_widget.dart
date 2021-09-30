@@ -42,17 +42,17 @@ class _CandidateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Consumer<VoteTownEditor>(
-        builder: (_, notifier, __) {
-          final moving = candidate == notifier.movingCandidate;
+        builder: (_, model, __) {
+          final moving = candidate == model.movingCandidate;
           return MouseRegion(
             cursor: SystemMouseCursors.click,
             child: GestureDetector(
               onPanStart: (DragStartDetails details) =>
-                  notifier.moveCandidateStart(candidate),
+                  model.moveCandidateStart(candidate),
               onPanUpdate: (DragUpdateDetails event) =>
-                  notifier.moveCandidateUpdate(candidate, event.delta),
+                  model.moveCandidateUpdate(candidate, event.delta),
               onPanEnd: (DragEndDetails details) =>
-                  notifier.moveCandidateEnd(candidate),
+                  model.moveCandidateEnd(candidate),
               child: Container(
                 decoration: ShapeDecoration(
                   color: candidate.color,
