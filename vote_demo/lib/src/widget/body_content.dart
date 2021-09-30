@@ -64,15 +64,12 @@ class BodyContent extends StatelessWidget {
       );
 
   List<Widget> _columnOneChildren(VoteTownEditor kvm) => <Widget>[
-        HeaderWidget(
+        const HeaderWidget(
           header: 'Vote Town',
           extraHelp:
               'A simple town of 100 people trying to figure out where their '
               'post office should go.',
-          child: ListenableProvider<VoteTownEditor>.value(
-            value: kvm,
-            child: const VoteTownWidget(),
-          ),
+          child: VoteTownWidget(),
         ),
         HeaderWidget(
           header: 'Place by average distance',
