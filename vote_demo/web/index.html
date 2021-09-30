@@ -37,7 +37,50 @@
   Source code: https://github.com/kevmoo/vote.dart
   -->
   <script defer src="main.dart.js" type="application/javascript"></script>
+
+  <style>
+    body {
+      margin: 0;
+    }
+    #splash {
+      font-family: Verdana, Helvetica, Tahoma, Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #splash div {
+      text-align: center;
+      font-size: 180%;
+    }
+
+    #splash .header {
+      font-size: 150%;
+    }
+
+    #splash img {
+      max-width: 90vw;
+      max-height: 60vh;
+    }
+  </style>
+
 </head>
 <body>
+<div id="splash">
+  <div>
+    <p>
+    <span class="header">Loading...</span><br>
+    Works best on a laptop/desktop/tablet screen.
+    </p>
+  <img src="site_preview.png">
+  </div>
+</div>
+<script>
+  window.addEventListener('flutter-first-frame', function () {
+    window.document.getElementById('splash')?.remove();
+  });
+</script>
 </body>
 </html>
