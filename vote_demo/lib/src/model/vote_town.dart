@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:vote/vote.dart';
 
 import 'election_data.dart';
@@ -10,10 +11,12 @@ class VoteTown extends ElectionData {
   static const votersAcross = 10;
   static const voterSpacing = TownCandidate.candidateSpacing * 2;
 
-  @override
-  final List<TownCandidate> candidates;
+  final List<TownCandidate> _candidates;
 
-  VoteTown(this.candidates);
+  @override
+  late final List<TownCandidate> candidates = UnmodifiableListView(_candidates);
+
+  VoteTown(List<TownCandidate> candidates) : _candidates = candidates;
 
   factory VoteTown.random({int candidateCount = 5, int? randomSeed}) {
     assert(candidateCount > 0);
@@ -89,19 +92,13 @@ class VoteTown extends ElectionData {
     return voters;
   }
 
-  List<TownVoter> get voters => _voters ??= _createVoters(candidates);
+  late final List<TownVoter> voters = _createVoters(_candidates);
 
-  List<TownVoter>? _voters;
-
-  List<VoteTownDistancePlace>? _distancePlaces;
-
-  List<VoteTownDistancePlace> get distancePlaces =>
-      _distancePlaces ??= VoteTownDistancePlace.create(this);
-
-  List<RankedBallot<TownCandidate>>? _ballots;
+  late final List<VoteTownDistancePlace> distancePlaces =
+      VoteTownDistancePlace.create(this);
 
   @override
-  List<RankedBallot<TownCandidate>> get ballots => _ballots ??= voters
+  late final List<RankedBallot<TownCandidate>> ballots = voters
       .map((v) => RankedBallot<TownCandidate>(v.closestCandidates))
       .toList(growable: false);
 
