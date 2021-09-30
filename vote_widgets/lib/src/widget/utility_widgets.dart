@@ -12,7 +12,7 @@ class CellPadding extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         padding: const EdgeInsets.all(9),
-        alignment: Alignment.bottomCenter,
+        alignment: Alignment.center,
         color: background,
         child: child,
       );

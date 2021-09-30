@@ -83,7 +83,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
             if (first)
               tp.TableCell(
                 rowSpan: place.length,
-                child: Center(child: PaddedText(text: place.place.toString())),
+                child: PaddedText(text: place.place.toString()),
               ),
             if (!first) const tp.EmptyTableCell(),
             PaddedText(text: candidate.toString(), background: background),
