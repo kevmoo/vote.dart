@@ -8,7 +8,7 @@ const RESOURCES = {
 "index.html": "47f925e8e39a6cc8a158ac4e50efb075",
 "/": "47f925e8e39a6cc8a158ac4e50efb075",
 "CNAME": "ac4e7539e555d65d75d7ab6fdb594c57",
-"main.dart.js": "90eb047fa5813f83f28b23dd38b10080",
+"main.dart.js": "ec52960c166d387368e4ef6095171c68",
 "favicon.png": "f450858d52b9ccb6d08e217fe0f1c884",
 "icons/apple-touch-icon.png": "c61573ab135106092e2128e95e148a52",
 "icons/Icon-192.png": "eb36a821391e85e926b61b472d8a48be",
