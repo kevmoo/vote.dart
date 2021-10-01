@@ -19,16 +19,33 @@ class VoteTownWidget extends StatelessWidget {
             notifier.townSizeRatio = 1 / _offsetMultiplier(value);
           }
 
-          return CustomPaint(
-            painter: _VoteTownPainter(voteTown),
-            isComplex: true,
-            willChange: true,
-            child: Flow(
-              delegate: _CandidateFlowDelegate(voteTown, _lastSizeCallback),
-              children: voteTown.candidates
-                  .map((c) => _CandidateWidget(candidate: c))
-                  .toList(growable: false),
-            ),
+          return Column(
+            children: [
+              CustomPaint(
+                painter: _VoteTownPainter(voteTown),
+                isComplex: true,
+                willChange: true,
+                child: Flow(
+                  delegate: _CandidateFlowDelegate(voteTown, _lastSizeCallback),
+                  children: voteTown.candidates
+                      .map((c) => _CandidateWidget(candidate: c))
+                      .toList(growable: false),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  OutlinedButton(
+                    onPressed: notifier.removeCandidate,
+                    child: const Text('Remove candidate'),
+                  ),
+                  OutlinedButton(
+                    onPressed: notifier.addCandidate,
+                    child: const Text('Add candidate'),
+                  ),
+                ],
+              ),
+            ],
           );
         },
       );

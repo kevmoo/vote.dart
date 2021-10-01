@@ -15,6 +15,8 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Consumer<IrvElection<Candidate>>(
         builder: (context, irvElection, __) => Table(
+          // Work around for https://github.com/flutter/flutter/issues/91068
+          key: UniqueKey(),
           defaultColumnWidth: const IntrinsicColumnWidth(),
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: _updateElement(irvElection)

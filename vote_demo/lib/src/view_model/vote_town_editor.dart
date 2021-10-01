@@ -15,6 +15,28 @@ class VoteTownEditor extends KnarlyEditor<VoteTown> {
 
   VoteTownEditor(VoteTown value) : super(value);
 
+  void Function()? get addCandidate {
+    final candidateCount = value.candidates.length;
+    if (_movingCandidate != null || candidateCount >= 8) {
+      return null;
+    }
+
+    return () {
+      setValue(value.copyPlusACandidate());
+    };
+  }
+
+  void Function()? get removeCandidate {
+    final candidateCount = value.candidates.length;
+    if (_movingCandidate != null || candidateCount <= 1) {
+      return null;
+    }
+
+    return () {
+      setValue(VoteTown(value.candidates.sublist(0, candidateCount - 1)));
+    };
+  }
+
   void moveCandidateStart(TownCandidate candidate) {
     assert(value.candidates.contains(candidate));
     assert(_movingCandidate == null);
@@ -61,11 +83,9 @@ class VoteTownEditor extends KnarlyEditor<VoteTown> {
     final candidatesCopy = value.candidates.toList(growable: false);
     final candidateIndex = value.candidates.indexOf(candidate);
     candidatesCopy[candidateIndex] =
-        TownCandidate(candidate.id, candidate.hue, newFixedLocation);
+        TownCandidate(candidate.index, candidate.hue, newFixedLocation);
 
     setValue(VoteTown(candidatesCopy));
-
-    notifyListeners();
   }
 
   void moveCandidateEnd(TownCandidate candidate) {

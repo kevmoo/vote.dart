@@ -13,19 +13,20 @@ class TownCandidate extends Candidate {
 
   final Point<int> intLocation;
 
-  TownCandidate(String id, double hue, this.intLocation)
-      : location = _unfixPoint(intLocation),
-        super(id, hue);
+  final int index;
 
-  factory TownCandidate.letter(int index, Point<int> intLocation) {
-    assert(index >= 0);
-    assert(index < maxCandidateCount);
-    return TownCandidate(
-      String.fromCharCode(index + _capitalACharCode),
-      candidateHues[index],
-      intLocation,
-    );
-  }
+  TownCandidate(this.index, double hue, this.intLocation)
+      : location = _unfixPoint(intLocation),
+        assert(index >= 0),
+        assert(index < maxCandidateCount),
+        super(String.fromCharCode(index + _capitalACharCode), hue);
+
+  factory TownCandidate.letter(int index, Point<int> intLocation) =>
+      TownCandidate(
+        index,
+        candidateHues[index],
+        intLocation,
+      );
 
   @override
   int compareTo(Candidate other) => id.compareTo(other.id);
