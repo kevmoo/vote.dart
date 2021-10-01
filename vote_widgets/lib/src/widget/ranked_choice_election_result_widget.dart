@@ -39,7 +39,7 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
         for (var i = 0; i < round.places.length; i++)
           for (var candidate in round.places[i])
             _Data(
-              i + 1,
+              round.places[i].place,
               round.places[i],
               candidate,
             ),
@@ -62,7 +62,9 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
           const SizedBox(),
           for (var item in roundData)
             PaddedText.bits(
+              background: Colors.grey.shade100,
               text: item.placeNumber.toString(),
+              fontWeight: FontWeight.w600,
             ),
           ...createFillers(),
         ];
@@ -102,8 +104,11 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
         Widget eliminationContent(Candidate candidate) {
           if (candidate == elimination.candidate) {
             final content =
-                elimination.transferredCandidates.isEmpty ? '×' : '←';
-            return PaddedText(text: content);
+                elimination.transferredCandidates.isEmpty ? '×' : '↵';
+            return PaddedText.bits(
+              text: content,
+              fontWeight: FontWeight.w900,
+            );
           }
 
           final count = elimination.getTransferCount(candidate);

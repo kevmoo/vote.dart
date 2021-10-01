@@ -38,7 +38,10 @@ class PaddedText extends StatelessWidget {
     this.textAlign = TextAlign.center,
     this.background,
     FontStyle? fontStyle,
-  })  : style = (fontStyle == null) ? null : TextStyle(fontStyle: fontStyle),
+    FontWeight? fontWeight,
+  })  : style = (fontStyle == null && fontWeight == null)
+            ? null
+            : TextStyle(fontStyle: fontStyle, fontWeight: fontWeight),
         super(key: key);
 
   @override
