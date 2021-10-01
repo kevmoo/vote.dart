@@ -1,11 +1,16 @@
 import 'package:flutter/widgets.dart';
 
-abstract class VoteNotification extends Notification {
+abstract class VoteNotification<T> extends Notification {
+  bool get stop;
   const VoteNotification();
+
+  /// Returns `true` if `this` refers to [candidate] in some way.
+  bool relatedTo(T candidate);
 }
 
 @immutable
-class CandidateHoverNotification<T> extends VoteNotification {
+class CandidateHoverNotification<T> extends VoteNotification<T> {
+  @override
   final bool stop;
   final T candidate;
 
@@ -27,10 +32,23 @@ class CandidateHoverNotification<T> extends VoteNotification {
   @override
   String toString() =>
       'CandidateHoverNotification($candidate${stop ? ' [stop]' : ''})';
+
+  @override
+  bool operator ==(Object other) =>
+      other is CandidateHoverNotification<T> &&
+      other.stop == stop &&
+      other.candidate == candidate;
+
+  @override
+  int get hashCode => Object.hash(stop, candidate);
+
+  @override
+  bool relatedTo(T candidate) => candidate == this.candidate;
 }
 
 @immutable
-class CandidatePairHoverNotification<T> extends VoteNotification {
+class CandidatePairHoverNotification<T> extends VoteNotification<T> {
+  @override
   final bool stop;
   final T candidateA, candidateB;
 
@@ -43,6 +61,20 @@ class CandidatePairHoverNotification<T> extends VoteNotification {
   @override
   String toString() => 'CandidatePairHoverNotification'
       '($candidateA,$candidateB${stop ? ' [stop]' : ''})';
+
+  @override
+  bool operator ==(Object other) =>
+      other is CandidatePairHoverNotification<T> &&
+      other.stop == stop &&
+      other.candidateA == candidateA &&
+      other.candidateB == candidateB;
+
+  @override
+  int get hashCode => Object.hash(stop, candidateA, candidateB);
+
+  @override
+  bool relatedTo(T candidate) =>
+      candidateA == candidate || candidateB == candidate;
 }
 
 class CandidateHoverWidget<T> extends StatelessWidget {
