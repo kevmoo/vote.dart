@@ -4,6 +4,7 @@ import 'package:vote/vote.dart';
 import '../helpers/helpers.dart';
 import 'table_pane.dart' as tp;
 import 'utility_widgets.dart';
+import 'vote_hover.dart';
 
 class CondorcetElectionResultWidget<TCandidate extends Comparable<TCandidate>>
     extends StatefulWidget {
@@ -62,8 +63,11 @@ class _State<TCandidate extends Comparable<TCandidate>>
               const PaddedText(text: candidateString),
               ...List.generate(
                 _election.candidates.length,
-                (index) => PaddedText(
-                  text: _election.candidates[index].toString(),
+                (index) => CandidateHoverWidget<TCandidate>(
+                  candidate: _election.candidates[index],
+                  child: PaddedText(
+                    text: _election.candidates[index].toString(),
+                  ),
                 ),
               )
             ],
@@ -86,7 +90,13 @@ class _State<TCandidate extends Comparable<TCandidate>>
                 child: PaddedText(text: place.place.toString()),
               ),
             if (!first) const tp.EmptyTableCell(),
-            PaddedText(text: candidate.toString(), background: background),
+            CandidateHoverWidget<TCandidate>(
+              candidate: candidate,
+              child: PaddedText(
+                text: candidate.toString(),
+                background: background,
+              ),
+            ),
             ...List.generate(
               _election.candidates.length,
               (index) {
@@ -100,7 +110,11 @@ class _State<TCandidate extends Comparable<TCandidate>>
                 final pair =
                     _election.getPair(candidate, _election.candidates[index]);
 
-                return _getCellText(pair, background);
+                return CandidateHoverWidget<TCandidate>(
+                  candidate: pair.candidate1,
+                  otherCandidate: pair.candidate2,
+                  child: _getCellText(pair, background),
+                );
               },
             )
           ],
