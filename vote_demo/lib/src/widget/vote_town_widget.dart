@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vote_widgets/vote_widgets.dart';
 
 import '../model/town_folk.dart';
 import '../model/vote_town.dart';
@@ -44,17 +45,26 @@ class VoteTownWidget extends StatelessWidget {
 
           return Column(
             children: [
-              CustomPaint(
-                painter: _VoteTownPainter(voteTown),
-                isComplex: true,
-                willChange: true,
-                child: NotificationListener<_CandidateDragNotification>(
-                  onNotification: dragListener,
-                  child: Flow(
-                    delegate: flowDelegate,
-                    children: voteTown.candidates
-                        .map((c) => _CandidateWidget(candidate: c))
-                        .toList(growable: false),
+              Consumer<VoteNotification?>(
+                builder: (ctx, value, child) => CustomPaint(
+                  painter: _VoteTownPainter(voteTown, value),
+                  isComplex: true,
+                  willChange: true,
+                  child: NotificationListener<_CandidateDragNotification>(
+                    onNotification: dragListener,
+                    child: Flow(
+                      delegate: flowDelegate,
+                      children: voteTown.candidates
+                          .map(
+                            (c) => _CandidateWidget(
+                              candidate: c,
+                              primary:
+                                  value is! CandidatePairHoverNotification ||
+                                      value.relatedTo(c),
+                            ),
+                          )
+                          .toList(growable: false),
+                    ),
                   ),
                 ),
               ),
@@ -88,7 +98,12 @@ class _CandidateDragNotification extends Notification {
 
 class _CandidateWidget extends StatelessWidget {
   final TownCandidate candidate;
-  const _CandidateWidget({Key? key, required this.candidate}) : super(key: key);
+  final bool primary;
+  const _CandidateWidget({
+    Key? key,
+    required this.candidate,
+    this.primary = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Consumer<VoteTownEditor>(
@@ -105,14 +120,17 @@ class _CandidateWidget extends StatelessWidget {
               onPanEnd: handler,
               child: Container(
                 decoration: ShapeDecoration(
-                  color: candidate.color,
+                  color:
+                      primary ? candidate.color : candidate.color.withAlpha(51),
                   shape: const ContinuousRectangleBorder(
                     borderRadius:
                         BorderRadius.all(Radius.circular(_candidateScale * 6)),
                   ),
-                  shadows: moving
-                      ? _movingCandidateShadows
-                      : _stationaryCandidateShadows,
+                  shadows: primary
+                      ? moving
+                          ? _movingCandidateShadows
+                          : _stationaryCandidateShadows
+                      : null,
                 ),
                 child: Center(
                   child: Text(
@@ -199,8 +217,9 @@ class _CandidateFlowDelegate extends FlowDelegate {
 
 class _VoteTownPainter extends CustomPainter {
   final VoteTown _voteTown;
+  final VoteNotification? _notification;
 
-  _VoteTownPainter(this._voteTown);
+  _VoteTownPainter(this._voteTown, this._notification);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -211,12 +230,21 @@ class _VoteTownPainter extends CustomPainter {
       canvas.drawCircle(
         Offset(voter.location.x, voter.location.y) * offsetMultiplier,
         radius,
-        Paint()..color = voter.closestCandidates.first.darkColor,
+        Paint()..color = _pick(voter.closestCandidates).darkColor,
       );
     }
   }
 
+  TownCandidate _pick(Iterable<TownCandidate> candidates) {
+    final notification = _notification;
+    if (notification is CandidatePairHoverNotification) {
+      return candidates.firstWhere(notification.relatedTo);
+    }
+    return candidates.first;
+  }
+
   @override
   bool shouldRepaint(_VoteTownPainter oldDelegate) =>
-      _voteTown != oldDelegate._voteTown;
+      _voteTown != oldDelegate._voteTown ||
+      _notification != oldDelegate._notification;
 }

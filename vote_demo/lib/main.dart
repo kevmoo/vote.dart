@@ -5,5 +5,5 @@ import 'src/vote_simulation.dart';
 
 void main() {
   configurePlatform();
-  runApp(const VoteSimulation());
+  runApp(VoteSimulation());
 }
