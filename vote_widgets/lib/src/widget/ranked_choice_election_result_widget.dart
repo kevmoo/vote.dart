@@ -105,9 +105,12 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
           if (candidate == elimination.candidate) {
             final content =
                 elimination.transferredCandidates.isEmpty ? '×' : '↵';
-            return PaddedText.bits(
+            return PaddedText(
               text: content,
-              fontWeight: FontWeight.w900,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontFamily: 'OverpassMono',
+              ),
             );
           }
 

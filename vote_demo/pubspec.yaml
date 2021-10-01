@@ -30,6 +30,9 @@ flutter:
   uses-material-design: true
 
   fonts:
+  - family: OverpassMono
+    fonts:
+    - asset: assets/fonts/OverpassMono-Bold.ttf
   - family: RobotoMono
     fonts:
     - asset: assets/fonts/RobotoMono-Regular.ttf
