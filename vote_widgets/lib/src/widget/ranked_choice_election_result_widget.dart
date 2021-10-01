@@ -16,7 +16,8 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
   Widget build(BuildContext context) => Consumer<IrvElection<Candidate>>(
         builder: (context, irvElection, __) => Table(
           // Work around for https://github.com/flutter/flutter/issues/91068
-          key: UniqueKey(),
+          // Change the key when the candidate length changes – seems to help
+          key: ValueKey('Table bug key ${irvElection.candidates.length}'),
           defaultColumnWidth: const IntrinsicColumnWidth(),
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: _updateElement(irvElection)
