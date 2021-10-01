@@ -18,15 +18,19 @@ class RankedChoiceElectionResultWidget extends StatelessWidget {
           // Work around for https://github.com/flutter/flutter/issues/91068
           // Change the key when the candidate length changes – seems to help
           key: ValueKey('Table bug key ${irvElection.candidates.length}'),
-          defaultColumnWidth: const IntrinsicColumnWidth(),
+          columnWidths: {
+            0: const FlexColumnWidth(2),
+            for (var i = 0; i < irvElection.candidates.length; i++)
+              i + 1: const FlexColumnWidth(),
+          },
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          children: _updateElement(irvElection)
+          children: _rowsForElection(irvElection)
               .map((list) => TableRow(children: list))
               .toList(growable: false),
         ),
       );
 
-  Iterable<List<Widget>> _updateElement(
+  Iterable<List<Widget>> _rowsForElection(
     IrvElection<Candidate> election,
   ) sync* {
     List<_Data>? lastRoundData;
