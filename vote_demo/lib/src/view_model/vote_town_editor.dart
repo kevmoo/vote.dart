@@ -5,9 +5,6 @@ import '../model/vote_town.dart';
 import 'editor.dart';
 
 class VoteTownEditor extends KnarlyEditor<VoteTown> {
-  /// The scale from device pixels to the logical size of [VoteTown].
-  double? townSizeRatio;
-
   TownCandidate? get movingCandidate => _movingCandidate;
   TownCandidate? _movingCandidate;
 
@@ -51,13 +48,8 @@ class VoteTownEditor extends KnarlyEditor<VoteTown> {
     assert(value.candidates.contains(candidate));
     assert(pixelOffset.isFinite);
 
-    if (townSizeRatio == null) {
-      print('oops? - null last size');
-      return;
-    }
-
     assert(_workingPoint != null);
-    _workingPoint = _workingPoint! + pixelOffset * townSizeRatio!;
+    _workingPoint = _workingPoint! + pixelOffset;
     final newFixedLocation = fixPoint(_workingPoint!);
 
     if (newFixedLocation.x.isEven && newFixedLocation.y.isEven) {

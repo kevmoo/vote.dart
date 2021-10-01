@@ -15,8 +15,31 @@ class VoteTownWidget extends StatelessWidget {
         builder: (_, notifier, __) {
           final voteTown = notifier.value;
 
-          void _lastSizeCallback(Size value) {
-            notifier.townSizeRatio = 1 / _offsetMultiplier(value);
+          final flowDelegate = _CandidateFlowDelegate(voteTown);
+
+          bool dragListener(_CandidateDragNotification notification) {
+            final details = notification.details;
+
+            if (details is DragStartDetails) {
+              notifier.moveCandidateStart(notification.candidate);
+            } else if (details is DragUpdateDetails) {
+              final scale = 1 / _offsetMultiplier(flowDelegate._drawSize);
+              final newValue = details.delta * scale;
+
+              notifier.moveCandidateUpdate(
+                notification.candidate,
+                newValue,
+              );
+            } else if (details is DragEndDetails) {
+              notifier.moveCandidateEnd(notification.candidate);
+            } else {
+              throw UnsupportedError(
+                'We do not support details of type '
+                '${details.runtimeType} ($details).',
+              );
+            }
+
+            return true;
           }
 
           return Column(
@@ -25,11 +48,14 @@ class VoteTownWidget extends StatelessWidget {
                 painter: _VoteTownPainter(voteTown),
                 isComplex: true,
                 willChange: true,
-                child: Flow(
-                  delegate: _CandidateFlowDelegate(voteTown, _lastSizeCallback),
-                  children: voteTown.candidates
-                      .map((c) => _CandidateWidget(candidate: c))
-                      .toList(growable: false),
+                child: NotificationListener<_CandidateDragNotification>(
+                  onNotification: dragListener,
+                  child: Flow(
+                    delegate: flowDelegate,
+                    children: voteTown.candidates
+                        .map((c) => _CandidateWidget(candidate: c))
+                        .toList(growable: false),
+                  ),
                 ),
               ),
               Row(
@@ -53,23 +79,30 @@ class VoteTownWidget extends StatelessWidget {
 
 const _candidateScale = 4.7;
 
+class _CandidateDragNotification extends Notification {
+  final Object details;
+  final TownCandidate candidate;
+
+  const _CandidateDragNotification(this.candidate, this.details);
+}
+
 class _CandidateWidget extends StatelessWidget {
   final TownCandidate candidate;
   const _CandidateWidget({Key? key, required this.candidate}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Consumer<VoteTownEditor>(
-        builder: (_, model, __) {
+        builder: (context, model, __) {
+          void handler(Object details) =>
+              _CandidateDragNotification(candidate, details).dispatch(context);
+
           final moving = candidate == model.movingCandidate;
           return MouseRegion(
             cursor: SystemMouseCursors.click,
             child: GestureDetector(
-              onPanStart: (DragStartDetails details) =>
-                  model.moveCandidateStart(candidate),
-              onPanUpdate: (DragUpdateDetails event) =>
-                  model.moveCandidateUpdate(candidate, event.delta),
-              onPanEnd: (DragEndDetails details) =>
-                  model.moveCandidateEnd(candidate),
+              onPanStart: handler,
+              onPanUpdate: handler,
+              onPanEnd: handler,
               child: Container(
                 decoration: ShapeDecoration(
                   color: candidate.color,
@@ -116,18 +149,16 @@ double _offsetMultiplier(Size size) =>
     (VoteTown.votersAcross * VoteTown.voterSpacing);
 
 class _CandidateFlowDelegate extends FlowDelegate {
+  Size _drawSize = Size.zero;
   final VoteTown _voteTown;
-  final void Function(Size) _lastSizeCallback;
 
-  _CandidateFlowDelegate(this._voteTown, this._lastSizeCallback);
+  _CandidateFlowDelegate(this._voteTown);
 
   @override
   Size getSize(BoxConstraints constraints) {
-    var size = constraints.biggest;
+    final size = constraints.biggest;
     final minDimension = math.min(size.width, size.height);
-    size = Size(minDimension, minDimension);
-    _lastSizeCallback(size);
-    return size;
+    return _drawSize = Size(minDimension, minDimension);
   }
 
   @override
@@ -159,8 +190,11 @@ class _CandidateFlowDelegate extends FlowDelegate {
   }
 
   @override
-  bool shouldRepaint(_CandidateFlowDelegate oldDelegate) =>
-      oldDelegate._voteTown != _voteTown;
+  bool shouldRepaint(_CandidateFlowDelegate oldDelegate) {
+    // Make sure the previous draw scale is obtained by the new delegate!
+    _drawSize = oldDelegate._drawSize;
+    return oldDelegate._voteTown != _voteTown;
+  }
 }
 
 class _VoteTownPainter extends CustomPainter {
