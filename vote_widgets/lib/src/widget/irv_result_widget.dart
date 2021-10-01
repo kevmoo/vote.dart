@@ -9,8 +9,8 @@ import 'utility_widgets.dart';
 // TODO: display candidates that don't even make the first round
 // TODO: flip transfer rounds
 
-class RankedChoiceElectionResultWidget extends StatelessWidget {
-  const RankedChoiceElectionResultWidget();
+class IrvResultWidget extends StatelessWidget {
+  const IrvResultWidget();
 
   @override
   Widget build(BuildContext context) => Consumer<IrvElection<Candidate>>(

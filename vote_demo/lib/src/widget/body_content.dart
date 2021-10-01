@@ -141,7 +141,7 @@ class BodyContent extends StatelessWidget {
           ),
           child: Provider<IrvElection<Candidate>>.value(
             value: kvm.value.irvElection,
-            child: const RankedChoiceElectionResultWidget(),
+            child: const IrvResultWidget(),
           ),
         ),
       ];
