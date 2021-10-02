@@ -63,11 +63,11 @@ class _HeaderWidgetState extends State<HeaderWidget> {
   Widget _extraHelpContent() {
     final extraHelp = widget.extraHelp!;
     if (extraHelp is String) {
-      return SelectableText(extraHelp);
+      return SelectableText(extraHelp, textScaleFactor: 1.4);
     }
 
     if (extraHelp is TextSpan) {
-      return SelectableText.rich(extraHelp);
+      return SelectableText.rich(extraHelp, textScaleFactor: 1.4);
     }
 
     return Text('??? $extraHelp ???');
@@ -81,6 +81,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
         }
 
         final snackBar = SnackBar(
+          duration: const Duration(seconds: 10),
           content: _extraHelpContent(),
           action: SnackBarAction(
             label: 'Close',
