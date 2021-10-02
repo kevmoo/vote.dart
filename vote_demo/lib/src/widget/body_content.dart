@@ -102,7 +102,7 @@ class BodyContent extends StatelessWidget {
           ),
         ),
         HeaderWidget(
-          header: 'Ranked Pairs',
+          header: 'Condorcet',
           extraHelp: TextSpan(
             children: [
               const TextSpan(text: 'A '),
@@ -115,7 +115,7 @@ class BodyContent extends StatelessWidget {
                     ' which calculates the winner by evaluating every pair of '
                     'candidates. See ',
               ),
-              linkSpan('https://wikipedia.org/wiki/Ranked_pairs'),
+              linkSpan('https://en.wikipedia.org/wiki/Condorcet_method'),
             ],
           ),
           child: CondorcetElectionResultWidget<Candidate>(
