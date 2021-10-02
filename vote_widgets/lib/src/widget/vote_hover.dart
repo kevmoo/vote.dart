@@ -1,4 +1,5 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 abstract class VoteNotification<T> extends Notification {
   bool get stop;
@@ -16,14 +17,14 @@ class CandidateHoverNotification<T> extends VoteNotification<T> {
 
   const CandidateHoverNotification(this.candidate, {this.stop = false});
 
-  static VoteNotification create<T>(
+  static VoteNotification<T> create<T>(
     T candidate, {
     T? otherCandidate,
     bool stop = false,
   }) =>
       otherCandidate == null
-          ? CandidateHoverNotification(candidate, stop: stop)
-          : CandidatePairHoverNotification(
+          ? CandidateHoverNotification<T>(candidate, stop: stop)
+          : CandidatePairHoverNotification<T>(
               candidate,
               otherCandidate,
               stop: stop,
@@ -88,21 +89,35 @@ class CandidateHoverWidget<T> extends StatelessWidget {
     this.otherCandidate,
   }) : super(key: key);
 
+  bool _matches(VoteNotification? data) =>
+      data is CandidatePairHoverNotification<T> &&
+      data.relatedTo(candidate) &&
+      otherCandidate != null &&
+      data.relatedTo(otherCandidate!);
+
   @override
   Widget build(BuildContext context) => MouseRegion(
-        onEnter: (event) => CandidateHoverNotification.create(
+        onEnter: (event) => CandidateHoverNotification.create<T>(
           candidate,
           otherCandidate: otherCandidate,
         ).dispatch(context),
-        onExit: (event) => CandidateHoverNotification.create(
+        onExit: (event) => CandidateHoverNotification.create<T>(
           candidate,
           otherCandidate: otherCandidate,
           stop: true,
         ).dispatch(context),
-        onHover: (event) => CandidateHoverNotification.create(
+        onHover: (event) => CandidateHoverNotification.create<T>(
           candidate,
           otherCandidate: otherCandidate,
         ).dispatch(context),
-        child: child,
+        child: Consumer<VoteNotification?>(
+          builder: (context, value, _) => DefaultTextStyle(
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: _matches(value) ? FontWeight.w900 : null,
+            ),
+            child: child,
+          ),
+        ),
       );
 }
