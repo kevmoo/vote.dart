@@ -90,9 +90,9 @@ class CandidateHoverWidget<T> extends StatelessWidget {
   }) : super(key: key);
 
   bool _matches(VoteNotification? data) =>
+      otherCandidate != null &&
       data is CandidatePairHoverNotification<T> &&
       data.relatedTo(candidate) &&
-      otherCandidate != null &&
       data.relatedTo(otherCandidate!);
 
   @override
