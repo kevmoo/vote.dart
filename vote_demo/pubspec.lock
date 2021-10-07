@@ -7,14 +7,14 @@ packages:
       name: _fe_analyzer_shared
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "27.0.0"
+    version: "28.0.0"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.4.0"
+    version: "2.5.0"
   archive:
     dependency: transitive
     description:
@@ -42,7 +42,7 @@ packages:
       name: bazel_worker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   build:
     dependency: transitive
     description:
@@ -91,7 +91,7 @@ packages:
       name: build_runner_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.2.1"
+    version: "7.2.2"
   build_web_compilers:
     dependency: "direct dev"
     description:
@@ -498,7 +498,7 @@ packages:
       path: "../vote"
       relative: true
     source: path
-    version: "2.1.0"
+    version: "2.2.0-dev"
   vote_widgets:
     dependency: "direct main"
     description:
