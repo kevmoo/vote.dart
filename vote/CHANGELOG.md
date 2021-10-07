@@ -1,3 +1,7 @@
+# 2.2.0-dev
+
+- `ElectionPlace` added `topPlace` getter.
+
 # 2.1.0
 
 - `CondorcetElectionResult`

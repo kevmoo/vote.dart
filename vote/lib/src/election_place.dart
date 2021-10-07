@@ -14,6 +14,8 @@ class ElectionPlace<TCandidate extends Comparable>
         assert(candidates.isNotEmpty),
         super(candidates);
 
+  bool get topPlace => place == 1;
+
   @override
   String toString() => 'Place: $place; ${super.toString()}';
 }
