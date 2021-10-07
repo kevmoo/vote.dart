@@ -132,7 +132,7 @@ class CondorcetPair<TCandidate extends Comparable>
       candidate2 == other.candidate2;
 
   @override
-  int get hashCode => candidate1.hashCode * 37 ^ candidate2.hashCode;
+  int get hashCode => Object.hash(candidate1, candidate2);
 
   @override
   String toString() => '($candidate1, $candidate2)';

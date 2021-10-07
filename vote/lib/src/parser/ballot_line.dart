@@ -23,7 +23,7 @@ class BallotLine<TCandidate extends Comparable>
   }
 
   @override
-  int get hashCode => count.hashCode ^ const ListEquality().hash(candidates);
+  int get hashCode => Object.hash(count, Object.hashAll(candidates));
 
   @override
   int compareTo(BallotLine<Comparable> other) {

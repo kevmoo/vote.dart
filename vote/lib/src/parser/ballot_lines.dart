@@ -101,7 +101,7 @@ class BallotLines<TCandidate extends Comparable> {
       ListEquality<BallotLine<TCandidate>>().equals(other._lines, _lines);
 
   @override
-  int get hashCode => const ListEquality<BallotLine>().hash(_lines);
+  int get hashCode => Object.hashAll(_lines);
 }
 
 int _longest(Iterable<String> values) => values.fold<int>(0, (length, c) {

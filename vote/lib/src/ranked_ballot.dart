@@ -30,7 +30,7 @@ class RankedBallot<TCandidate extends Comparable>
       const ListEquality().equals(other.rank, rank);
 
   @override
-  int get hashCode => const ListEquality().hash(rank);
+  int get hashCode => Object.hashAll(rank);
 
   @override
   int compareTo(RankedBallot<TCandidate> other) =>

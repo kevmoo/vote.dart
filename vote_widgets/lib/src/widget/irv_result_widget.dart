@@ -156,5 +156,5 @@ class _Data {
       candidate == other.candidate;
 
   @override
-  int get hashCode => placeNumber ^ 7 * candidate.hashCode;
+  int get hashCode => Object.hash(placeNumber, candidate);
 }
