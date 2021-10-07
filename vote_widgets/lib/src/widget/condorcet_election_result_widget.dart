@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vote/vote.dart';
 
-import '../helpers/helpers.dart';
+import '../../helpers.dart';
 import 'table_pane.dart' as tp;
 import 'utility_widgets.dart';
 import 'vote_hover.dart';
@@ -87,7 +87,10 @@ class _State<TCandidate extends Comparable<TCandidate>>
             if (first)
               tp.TableCell(
                 rowSpan: place.length,
-                child: PaddedText(text: place.place.toString()),
+                child: PaddedText(
+                  text: place.place.toString(),
+                  style: place.topPlace ? winnerTextStyle : null,
+                ),
               ),
             if (!first) const tp.EmptyTableCell(),
             CandidateHoverWidget<TCandidate>(
@@ -95,6 +98,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
               child: PaddedText(
                 text: candidate.toString(),
                 background: background,
+                style: place.topPlace ? winnerTextStyle : null,
               ),
             ),
             ...List.generate(

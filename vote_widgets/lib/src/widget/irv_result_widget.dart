@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vote/vote.dart';
 
+import '../../helpers.dart';
 import '../model/candidate.dart';
 import 'utility_widgets.dart';
 
@@ -76,25 +77,30 @@ class IrvResultWidget extends StatelessWidget {
       yield <Widget>[
         const SizedBox(),
         for (var item in roundData)
-          PaddedText.bits(
+          PaddedText(
             text: item.candidate.id,
             background: item.candidate.color,
+            style:
+                (round.isFinal && item.place.topPlace) ? winnerTextStyle : null,
           ),
         ...createFillers(),
       ];
 
       // vote count
       yield <Widget>[
-        PaddedText.bits(
+        PaddedText(
           text: 'Round ${round.number}',
+          style: round.isFinal ? winnerTextStyle : null,
         ),
         for (var item in roundData)
-          PaddedText.bits(
+          PaddedText(
             text: item.place.voteCount.toString(),
             background: item.candidate.color,
-            fontStyle: round.eliminationForCandidate(item.candidate) == null
-                ? null
-                : FontStyle.italic,
+            style: (round.isFinal && item.place.topPlace)
+                ? winnerTextStyle
+                : round.eliminationForCandidate(item.candidate) == null
+                    ? null
+                    : const TextStyle(fontStyle: FontStyle.italic),
           ),
         ...createFillers(),
       ];

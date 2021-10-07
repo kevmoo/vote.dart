@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:vote/vote.dart';
 
 enum SubEntryPosition {
   first,
@@ -8,7 +9,7 @@ enum SubEntryPosition {
   single,
 }
 
-abstract class TableHelper<Entry, SubEntry> {
+abstract class TableHelper<Entry extends ElectionPlace, SubEntry> {
   const TableHelper();
 
   List<Entry> get places;
@@ -42,6 +43,7 @@ abstract class TableHelper<Entry, SubEntry> {
     String content, {
     Color? color,
     SubEntryPosition position = SubEntryPosition.single,
+    required bool winner,
   }) =>
       Container(
         color: color,
@@ -53,20 +55,22 @@ abstract class TableHelper<Entry, SubEntry> {
           9,
           position == SubEntryPosition.last ? 8 : 9,
         ),
-        child: Text(content),
+        child: Text(content, style: winner ? winnerTextStyle : null),
       );
 
-  Widget widgetForSubEntry(
+  Widget _widgetForSubEntry(
     int columnIndex,
     SubEntry subEntry,
-    SubEntryPosition position,
-  ) =>
+    SubEntryPosition position, {
+    required bool winner,
+  }) =>
       _tableCell(
         textForSubEntry(columnIndex, subEntry),
         position: position,
         color: position == SubEntryPosition.single
             ? null
             : subEntryColor(subEntry),
+        winner: winner,
       );
 
   Widget build(BuildContext context) => DefaultTextStyle(
@@ -94,10 +98,11 @@ abstract class TableHelper<Entry, SubEntry> {
                     (column) {
                       if (isMulti(column)) {
                         if (subEntries.length == 1) {
-                          return widgetForSubEntry(
+                          return _widgetForSubEntry(
                             column,
                             subEntries.single,
                             SubEntryPosition.single,
+                            winner: entry.topPlace,
                           );
                         } else {
                           return Padding(
@@ -110,10 +115,11 @@ abstract class TableHelper<Entry, SubEntry> {
                                 subEntries.length,
                                 (subEntryIndex) {
                                   final subEntry = subEntries[subEntryIndex];
-                                  return widgetForSubEntry(
+                                  return _widgetForSubEntry(
                                     column,
                                     subEntry,
                                     _position(subEntries.length, subEntryIndex),
+                                    winner: entry.topPlace,
                                   );
                                 },
                               ),
@@ -121,7 +127,10 @@ abstract class TableHelper<Entry, SubEntry> {
                           );
                         }
                       } else {
-                        return _tableCell(textForColumn(column, entry));
+                        return _tableCell(
+                          textForColumn(column, entry),
+                          winner: entry.topPlace,
+                        );
                       }
                     },
                     growable: false,
@@ -133,6 +142,12 @@ abstract class TableHelper<Entry, SubEntry> {
         ),
       );
 }
+
+const winnerTextStyle = TextStyle(
+  fontWeight: FontWeight.w800,
+  decoration: TextDecoration.underline,
+  decorationThickness: 0.0,
+);
 
 SubEntryPosition _position(int length, int index) {
   assert(length > 0);
