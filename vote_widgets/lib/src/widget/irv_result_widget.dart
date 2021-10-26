@@ -130,6 +130,8 @@ class IrvResultWidget extends StatelessWidget {
         yield <Widget>[
           PaddedText.bits(
             text: elimination.candidate.id,
+            tooltip: 'Candidate ${elimination.candidate.id} eliminated. '
+                'Votes redistributed.',
             textAlign: TextAlign.right,
             fontStyle: FontStyle.italic,
           ),
