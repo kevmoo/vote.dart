@@ -13,8 +13,8 @@ class VoteTownWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Consumer<VoteTownEditor>(
-        builder: (_, notifier, __) {
-          final voteTown = notifier.value;
+        builder: (_, editor, __) {
+          final voteTown = editor.value;
 
           final flowDelegate = _CandidateFlowDelegate(voteTown);
 
@@ -22,17 +22,17 @@ class VoteTownWidget extends StatelessWidget {
             final details = notification.details;
 
             if (details is DragStartDetails) {
-              notifier.moveCandidateStart(notification.candidate);
+              editor.moveCandidateStart(notification.candidate);
             } else if (details is DragUpdateDetails) {
               final scale = 1 / _offsetMultiplier(flowDelegate._drawSize);
               final newValue = details.delta * scale;
 
-              notifier.moveCandidateUpdate(
+              editor.moveCandidateUpdate(
                 notification.candidate,
                 newValue,
               );
             } else if (details is DragEndDetails) {
-              notifier.moveCandidateEnd(notification.candidate);
+              editor.moveCandidateEnd(notification.candidate);
             } else {
               throw UnsupportedError(
                 'We do not support details of type '
@@ -72,11 +72,11 @@ class VoteTownWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   OutlinedButton(
-                    onPressed: notifier.removeCandidate,
+                    onPressed: editor.removeCandidate,
                     child: const Text('Remove candidate'),
                   ),
                   OutlinedButton(
-                    onPressed: notifier.addCandidate,
+                    onPressed: editor.addCandidate,
                     child: const Text('Add candidate'),
                   ),
                 ],
