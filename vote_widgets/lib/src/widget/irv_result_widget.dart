@@ -6,15 +6,16 @@ import 'package:vote/vote.dart';
 import '../../helpers.dart';
 import '../model/candidate.dart';
 import 'utility_widgets.dart';
+import 'vote_hover.dart';
 
 // TODO: display candidates that don't even make the first round
 // TODO: flip transfer rounds
 
-class IrvResultWidget extends StatelessWidget {
+class IrvResultWidget<TCandidate extends Candidate> extends StatelessWidget {
   const IrvResultWidget();
 
   @override
-  Widget build(BuildContext context) => Consumer<IrvElection<Candidate>>(
+  Widget build(BuildContext context) => Consumer<IrvElection<TCandidate>>(
         builder: (context, irvElection, __) => Table(
           // Work around for https://github.com/flutter/flutter/issues/91068
           // Change the key when the candidate length changes – seems to help
@@ -32,7 +33,7 @@ class IrvResultWidget extends StatelessWidget {
       );
 
   Iterable<List<Widget>> _rowsForElection(
-    IrvElection<Candidate> election,
+    IrvElection<TCandidate> election,
   ) sync* {
     List<_Data>? lastRoundData;
     for (var round in election.rounds) {
@@ -88,9 +89,12 @@ class IrvResultWidget extends StatelessWidget {
 
       // vote count
       yield <Widget>[
-        PaddedText(
-          text: 'Round ${round.number}',
-          style: round.isFinal ? winnerTextStyle : null,
+        CandidateHoverWidget<TCandidate>(
+          candidates: roundData.map((e) => e.candidate).toSet(),
+          child: PaddedText(
+            text: 'Round ${round.number}',
+            style: round.isFinal ? winnerTextStyle : null,
+          ),
         ),
         for (var item in roundData)
           PaddedText(
@@ -107,7 +111,7 @@ class IrvResultWidget extends StatelessWidget {
 
       // eliminations
       for (var elimination in round.eliminations) {
-        Widget eliminationContent(Candidate candidate) {
+        Widget eliminationContent(TCandidate candidate) {
           if (candidate == elimination.candidate) {
             final content =
                 elimination.transferredCandidates.isEmpty ? '×' : '↵';
@@ -146,10 +150,10 @@ class IrvResultWidget extends StatelessWidget {
 bool _dataIterableEquals(Iterable<_Data> a, Iterable<_Data> b) =>
     const IterableEquality<_Data>().equals(a, b);
 
-class _Data {
+class _Data<TCandidate extends Candidate> {
   final int placeNumber;
-  final Candidate candidate;
-  final PluralityElectionPlace<Candidate> place;
+  final TCandidate candidate;
+  final PluralityElectionPlace<TCandidate> place;
 
   _Data(
     this.placeNumber,

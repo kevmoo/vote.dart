@@ -64,7 +64,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
               ...List.generate(
                 _election.candidates.length,
                 (index) => CandidateHoverWidget<TCandidate>(
-                  candidate: _election.candidates[index],
+                  candidates: {_election.candidates[index]},
                   child: PaddedText(
                     text: _election.candidates[index].toString(),
                   ),
@@ -94,7 +94,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
               ),
             if (!first) const tp.EmptyTableCell(),
             CandidateHoverWidget<TCandidate>(
-              candidate: candidate,
+              candidates: {candidate},
               child: PaddedText(
                 text: candidate.toString(),
                 background: background,
@@ -115,8 +115,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
                     _election.getPair(candidate, _election.candidates[index]);
 
                 return CandidateHoverWidget<TCandidate>(
-                  candidate: pair.candidate1,
-                  otherCandidate: pair.candidate2,
+                  candidates: {pair.candidate1, pair.candidate2},
                   child: _getCellText(pair, background),
                 );
               },

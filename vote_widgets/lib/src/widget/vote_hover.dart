@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../helpers.dart';
+
 abstract class VoteNotification<T> extends Notification {
   bool get stop;
   const VoteNotification();
@@ -10,106 +12,56 @@ abstract class VoteNotification<T> extends Notification {
 }
 
 @immutable
-class CandidateHoverNotification<T> extends VoteNotification<T> {
+class CandidateSetHoverNotification<T> extends VoteNotification<T> {
   @override
   final bool stop;
-  final T candidate;
+  final Set<T> candidates;
 
-  const CandidateHoverNotification(this.candidate, {this.stop = false});
-
-  static VoteNotification<T> create<T>(
-    T candidate, {
-    T? otherCandidate,
-    bool stop = false,
-  }) =>
-      otherCandidate == null
-          ? CandidateHoverNotification<T>(candidate, stop: stop)
-          : CandidatePairHoverNotification<T>(
-              candidate,
-              otherCandidate,
-              stop: stop,
-            );
-
-  @override
-  String toString() =>
-      'CandidateHoverNotification($candidate${stop ? ' [stop]' : ''})';
-
-  @override
-  bool operator ==(Object other) =>
-      other is CandidateHoverNotification<T> &&
-      other.stop == stop &&
-      other.candidate == candidate;
-
-  @override
-  int get hashCode => Object.hash(stop, candidate);
-
-  @override
-  bool relatedTo(T candidate) => candidate == this.candidate;
-}
-
-@immutable
-class CandidatePairHoverNotification<T> extends VoteNotification<T> {
-  @override
-  final bool stop;
-  final T candidateA, candidateB;
-
-  const CandidatePairHoverNotification(
-    this.candidateA,
-    this.candidateB, {
+  const CandidateSetHoverNotification(
+    this.candidates, {
     this.stop = false,
   });
 
   @override
   String toString() => 'CandidatePairHoverNotification'
-      '($candidateA,$candidateB${stop ? ' [stop]' : ''})';
+      '($candidates ${stop ? ' [stop]' : ''})';
 
   @override
   bool operator ==(Object other) =>
-      other is CandidatePairHoverNotification<T> &&
+      other is CandidateSetHoverNotification<T> &&
       other.stop == stop &&
-      other.candidateA == candidateA &&
-      other.candidateB == candidateB;
+      candidates.sameItems(other.candidates);
 
   @override
-  int get hashCode => Object.hash(stop, candidateA, candidateB);
+  int get hashCode => Object.hash(stop, Object.hashAll(candidates));
 
   @override
-  bool relatedTo(T candidate) =>
-      candidateA == candidate || candidateB == candidate;
+  bool relatedTo(T candidate) => candidates.contains(candidate);
 }
 
 class CandidateHoverWidget<T> extends StatelessWidget {
-  final T candidate;
-  final T? otherCandidate;
+  final Set<T> candidates;
   final Widget child;
   const CandidateHoverWidget({
     Key? key,
-    required this.candidate,
+    required this.candidates,
     required this.child,
-    this.otherCandidate,
   }) : super(key: key);
 
   bool _matches(VoteNotification? data) =>
-      otherCandidate != null &&
-      data is CandidatePairHoverNotification<T> &&
-      data.relatedTo(candidate) &&
-      data.relatedTo(otherCandidate!);
+      data is CandidateSetHoverNotification<T> &&
+      candidates.sameItems(data.candidates);
 
   @override
   Widget build(BuildContext context) => MouseRegion(
-        onEnter: (event) => CandidateHoverNotification.create<T>(
-          candidate,
-          otherCandidate: otherCandidate,
-        ).dispatch(context),
-        onExit: (event) => CandidateHoverNotification.create<T>(
-          candidate,
-          otherCandidate: otherCandidate,
+        onEnter: (event) =>
+            CandidateSetHoverNotification<T>(candidates).dispatch(context),
+        onExit: (event) => CandidateSetHoverNotification<T>(
+          candidates,
           stop: true,
         ).dispatch(context),
-        onHover: (event) => CandidateHoverNotification.create<T>(
-          candidate,
-          otherCandidate: otherCandidate,
-        ).dispatch(context),
+        onHover: (event) =>
+            CandidateSetHoverNotification<T>(candidates).dispatch(context),
         child: Consumer<VoteNotification?>(
           builder: (context, value, _) => DefaultTextStyle(
             style: TextStyle(

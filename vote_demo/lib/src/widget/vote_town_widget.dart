@@ -59,7 +59,7 @@ class VoteTownWidget extends StatelessWidget {
                             (c) => _CandidateWidget(
                               candidate: c,
                               primary:
-                                  value is! CandidatePairHoverNotification ||
+                                  value is! CandidateSetHoverNotification ||
                                       value.relatedTo(c),
                             ),
                           )
@@ -237,7 +237,7 @@ class _VoteTownPainter extends CustomPainter {
 
   TownCandidate _pick(Iterable<TownCandidate> candidates) {
     final notification = _notification;
-    if (notification is CandidatePairHoverNotification) {
+    if (notification is CandidateSetHoverNotification) {
       return candidates.firstWhere(notification.relatedTo);
     }
     return candidates.first;

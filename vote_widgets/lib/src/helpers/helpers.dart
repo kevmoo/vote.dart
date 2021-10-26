@@ -69,3 +69,8 @@ List<double> _slice(int itemCount, num maxValue, int sliceCount) {
     }
   }
 }
+
+extension SetExtentions<T> on Set<T> {
+  bool sameItems(Set<T> other) =>
+      length == other.length && difference(other).isEmpty;
+}
