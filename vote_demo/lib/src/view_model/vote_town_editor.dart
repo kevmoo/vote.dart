@@ -4,6 +4,8 @@ import '../model/town_folk.dart';
 import '../model/vote_town.dart';
 import 'editor.dart';
 
+const _maxCandidates = 8;
+
 class VoteTownEditor extends KnarlyEditor<VoteTown> {
   TownCandidate? get movingCandidate => _movingCandidate;
   TownCandidate? _movingCandidate;
@@ -14,7 +16,7 @@ class VoteTownEditor extends KnarlyEditor<VoteTown> {
 
   void Function()? get addCandidate {
     final candidateCount = value.candidates.length;
-    if (_movingCandidate != null || candidateCount >= 8) {
+    if (_movingCandidate != null || candidateCount >= _maxCandidates) {
       return null;
     }
 
