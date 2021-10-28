@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vote_widgets/vote_widgets.dart';
@@ -46,27 +47,48 @@ class VoteTownWidget extends StatelessWidget {
           return Column(
             children: [
               Consumer<VoteNotification?>(
-                builder: (ctx, value, child) => CustomPaint(
-                  painter: _VoteTownPainter(voteTown, value),
-                  isComplex: true,
-                  willChange: true,
-                  child: NotificationListener<_CandidateDragNotification>(
-                    onNotification: dragListener,
-                    child: Flow(
-                      delegate: flowDelegate,
-                      children: voteTown.candidates
-                          .map(
-                            (c) => _CandidateWidget(
-                              candidate: c,
-                              primary:
-                                  value is! CandidateSetHoverNotification ||
-                                      value.relatedTo(c),
-                            ),
-                          )
-                          .toList(growable: false),
+                builder: (ctx, notification, child) {
+                  int? countForCandidate(TownCandidate candidate) {
+                    if (notification == null) {
+                      return voteTown.pluralityElection.places
+                          .singleWhere((element) => element.contains(candidate))
+                          .voteCount;
+                    }
+
+                    return voteTown.voters
+                        .where(
+                          (voter) =>
+                              voter.closestCandidates
+                                  .where(notification.relatedTo)
+                                  .firstOrNull ==
+                              candidate,
+                        )
+                        .length;
+                  }
+
+                  return CustomPaint(
+                    painter: _VoteTownPainter(voteTown, notification),
+                    isComplex: true,
+                    willChange: true,
+                    child: NotificationListener<_CandidateDragNotification>(
+                      onNotification: dragListener,
+                      child: Flow(
+                        delegate: flowDelegate,
+                        children: voteTown.candidates
+                            .map(
+                              (c) => _CandidateWidget(
+                                candidate: c,
+                                primary: notification
+                                        is! CandidateSetHoverNotification ||
+                                    notification.relatedTo(c),
+                                showCount: countForCandidate(c),
+                              ),
+                            )
+                            .toList(growable: false),
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                },
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -99,10 +121,12 @@ class _CandidateDragNotification extends Notification {
 class _CandidateWidget extends StatelessWidget {
   final TownCandidate candidate;
   final bool primary;
+  final int? showCount;
   const _CandidateWidget({
     Key? key,
     required this.candidate,
-    this.primary = true,
+    required this.primary,
+    required this.showCount,
   }) : super(key: key);
 
   @override
@@ -132,12 +156,27 @@ class _CandidateWidget extends StatelessWidget {
                           : _stationaryCandidateShadows
                       : null,
                 ),
-                child: Center(
-                  child: Text(
-                    candidate.id,
-                    textScaleFactor: 1.5,
-                    style: moving ? _movingWidgetTextStyle : null,
-                  ),
+                child: Stack(
+                  children: [
+                    Center(
+                      child: Text(
+                        candidate.id,
+                        textScaleFactor: 1.5,
+                        style: moving ? _movingWidgetTextStyle : null,
+                      ),
+                    ),
+                    if (primary && showCount != null)
+                      Container(
+                        alignment: Alignment.bottomRight,
+                        child: Container(
+                          padding: const EdgeInsets.all(3),
+                          child: Text(
+                            showCount!.toString(),
+                            textScaleFactor: 0.7,
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ),
             ),
