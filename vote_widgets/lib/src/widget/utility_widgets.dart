@@ -14,18 +14,18 @@ class CellPadding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget container() => Container(
-          padding: const EdgeInsets.all(9),
-          alignment: Alignment.center,
-          color: background,
-          child: child,
-        );
+    final container = Container(
+      padding: const EdgeInsets.all(9),
+      alignment: Alignment.center,
+      color: background,
+      child: child,
+    );
 
-    if (tooltip == null) return container();
+    if (tooltip == null) return container;
 
     return Tooltip(
-      message: tooltip,
-      child: container(),
+      message: tooltip!,
+      child: container,
     );
   }
 }
