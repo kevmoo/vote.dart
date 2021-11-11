@@ -95,7 +95,7 @@ class VoteTown extends ElectionData {
       .map((v) => RankedBallot<TownCandidate>(v.closestCandidates))
       .toList(growable: false);
 
-  VoteTown copyPlusACandidate() {
+  VoteTown copyPlusACandidate({Point<int>? tryLocation}) {
     final maxIndex = _candidates.fold<int>(
       -1,
       (previousValue, element) =>
@@ -104,7 +104,13 @@ class VoteTown extends ElectionData {
 
     return VoteTown([
       ...candidates,
-      TownCandidate.letter(maxIndex + 1, _placement(candidates))
+      TownCandidate.letter(
+        maxIndex + 1,
+        _placement(
+          candidates,
+          pointToTry: tryLocation,
+        ),
+      )
     ]);
   }
 
@@ -121,16 +127,23 @@ class VoteTown extends ElectionData {
     return _bestDistanceCache!;
   }
 
-  static Point<int> _placement(List<TownCandidate> candidates, {Random? rnd}) {
-    rnd ??= Random();
-    Point<int> point;
+  static Point<int> _placement(
+    List<TownCandidate> candidates, {
+    Random? rnd,
+    Point<int>? pointToTry,
+  }) {
+    final random = rnd ?? Random();
 
-    do {
-      point = Point<int>(
-        rnd.nextInt(votersAcross - 1) * 2 + 1,
-        rnd.nextInt(votersAcross - 1) * 2 + 1,
-      );
-    } while (candidates.indexWhere((s) => s.intLocation == point) >= 0);
+    Point<int> randomPoint() => Point<int>(
+          random.nextInt(votersAcross - 1) * 2 + 1,
+          random.nextInt(votersAcross - 1) * 2 + 1,
+        );
+
+    var point = pointToTry ?? randomPoint();
+
+    while (candidates.indexWhere((s) => s.intLocation == point) >= 0) {
+      point = randomPoint();
+    }
 
     return point;
   }

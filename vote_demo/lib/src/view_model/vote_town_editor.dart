@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui' show Offset;
 
 import '../model/town_folk.dart';
@@ -7,6 +8,8 @@ import 'editor.dart';
 const _maxCandidates = 8;
 
 class VoteTownEditor extends KnarlyEditor<VoteTown> {
+  final _locationMemory = <Point<int>>[];
+
   TownCandidate? get movingCandidate => _movingCandidate;
   TownCandidate? _movingCandidate;
 
@@ -21,7 +24,13 @@ class VoteTownEditor extends KnarlyEditor<VoteTown> {
     }
 
     return () {
-      setValue(value.copyPlusACandidate());
+      setValue(
+        value.copyPlusACandidate(
+          tryLocation: _locationMemory.length > candidateCount
+              ? _locationMemory[candidateCount]
+              : null,
+        ),
+      );
     };
   }
 
@@ -31,9 +40,21 @@ class VoteTownEditor extends KnarlyEditor<VoteTown> {
       return null;
     }
 
-    return () {
+    void functionImpl() {
+      while (_locationMemory.length < candidateCount) {
+        _locationMemory.add(const Point(0, 0));
+      }
+
+      _locationMemory.setRange(
+        0,
+        candidateCount,
+        value.candidates.take(candidateCount).map((e) => e.intLocation),
+      );
+
       setValue(VoteTown(value.candidates.sublist(0, candidateCount - 1)));
-    };
+    }
+
+    return functionImpl;
   }
 
   void moveCandidateStart(TownCandidate candidate) {
