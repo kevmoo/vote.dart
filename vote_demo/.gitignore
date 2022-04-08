@@ -52,3 +52,4 @@ lib/generated_plugin_registrant.dart
 
 # plugin things
 .flutter-plugins-dependencies
+.flutter-plugins
