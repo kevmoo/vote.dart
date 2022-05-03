@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 String _trimUrl(String url) {
   const httpsStart = 'https://';
@@ -19,7 +19,7 @@ TextSpan linkSpan(
       text: text ?? _trimUrl(url),
       recognizer: TapGestureRecognizer()
         ..onTap = () {
-          launch(url);
+          launchUrlString(url);
         },
       style: TextStyle(
         decoration: TextDecoration.underline,

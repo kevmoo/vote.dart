@@ -253,6 +253,7 @@ class TablePane extends MultiChildRenderObjectWidget {
       );
 
   @override
+  // ignore: library_private_types_in_public_api
   void updateRenderObject(BuildContext context, _RenderTablePane renderObject) {
     renderObject
       ..columns = columns
@@ -284,6 +285,7 @@ class TableRow extends MultiChildRenderObjectWidget {
       );
 
   @override
+  // ignore: library_private_types_in_public_api
   void updateRenderObject(BuildContext context, _RenderTableRow renderObject) {
     renderObject
       ..height = height
@@ -334,8 +336,9 @@ class TableRowConstraints extends BoxConstraints {
     if (identical(this, other)) return true;
     return other is TableRowConstraints &&
         super == other &&
-        const ListEquality().equals(other.cellConstraints, cellConstraints) &&
-        const ListEquality().equals(other.cellPositions, cellPositions);
+        const ListEquality<Object>()
+            .equals(other.cellConstraints, cellConstraints) &&
+        const ListEquality<Object>().equals(other.cellPositions, cellPositions);
   }
 
   @override
@@ -534,7 +537,7 @@ class _RenderTablePane extends RenderBox
   List<TablePaneColumn> _columns = const <TablePaneColumn>[];
   List<TablePaneColumn> get columns => _columns;
   set columns(List<TablePaneColumn> value) {
-    if (!const ListEquality().equals(value, _columns)) {
+    if (!const ListEquality<Object>().equals(value, _columns)) {
       _columns = value;
       markNeedsMetrics();
     }
@@ -1493,11 +1496,6 @@ class _TablePaneMetrics with Diagnosticable {
 }
 
 class _LinearConstraints extends Constraints {
-  const _LinearConstraints({
-    this.min = 0,
-    this.max = double.infinity,
-  });
-
   const _LinearConstraints.tight(double value)
       : min = value,
         max = value;

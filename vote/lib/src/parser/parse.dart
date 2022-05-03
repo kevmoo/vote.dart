@@ -5,42 +5,42 @@ import 'package:string_scanner/string_scanner.dart';
 import 'ballot_line.dart';
 
 Iterable<BallotLine<String>> parse(String input) sync* {
-  final _scanner = StringScanner(input);
+  final scanner = StringScanner(input);
 
-  final _caseMatches = <String, String>{};
+  final caseMatches = <String, String>{};
 
   for (;;) {
-    _scanner.scan(_whitespace);
-    if (_scanner.isDone) break;
+    scanner.scan(_whitespace);
+    if (scanner.isDone) break;
 
-    _scanner.expect(_intRegexp, name: 'a number greater than 0');
-    final count = int.parse(_scanner.lastMatch![1]!);
+    scanner.expect(_intRegexp, name: 'a number greater than 0');
+    final count = int.parse(scanner.lastMatch![1]!);
     if (count <= 0) {
-      _scanner.error('expected a number greater than 0.');
+      scanner.error('expected a number greater than 0.');
     }
 
-    _scanner.expect(_colonRegexp, name: 'a colon (:)');
+    scanner.expect(_colonRegexp, name: 'a colon (:)');
 
     final candidates = <String>[];
     do {
-      _scanner.expect(_candidate, name: 'a candidate');
-      var match = _scanner.lastMatch![1]!;
+      scanner.expect(_candidate, name: 'a candidate');
+      var match = scanner.lastMatch![1]!;
 
-      match = _caseMatches.putIfAbsent(match.toLowerCase(), () => match);
+      match = caseMatches.putIfAbsent(match.toLowerCase(), () => match);
 
       if (candidates.contains(match)) {
-        _scanner.error('Cannot have duplicate values.');
+        scanner.error('Cannot have duplicate values.');
       }
       candidates.add(match);
-    } while (_scanner.scan(_arrow));
+    } while (scanner.scan(_arrow));
 
     yield BallotLine<String>(count, candidates);
 
-    if (_scanner.isDone) break; // Don't require a newline at EOF.
-    _scanner.expect(_newLineThanAnyWhitespace, name: 'a newline');
+    if (scanner.isDone) break; // Don't require a newline at EOF.
+    scanner.expect(_newLineThanAnyWhitespace, name: 'a newline');
   }
 
-  assert(_scanner.isDone);
+  assert(scanner.isDone);
 }
 
 const _optionalSpaceOrTab = r'[ \t]*';

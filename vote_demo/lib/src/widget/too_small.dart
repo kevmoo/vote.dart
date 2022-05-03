@@ -10,7 +10,7 @@ class TooSmallWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _TooSmallWidgetState createState() => _TooSmallWidgetState();
+  State createState() => _TooSmallWidgetState();
 }
 
 class _TooSmallWidgetState extends State<TooSmallWidget> {

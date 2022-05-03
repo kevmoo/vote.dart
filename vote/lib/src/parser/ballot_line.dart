@@ -19,7 +19,7 @@ class BallotLine<TCandidate extends Comparable>
     }
     return other is BallotLine &&
         other.count == count &&
-        const ListEquality().equals(other.candidates, candidates);
+        const ListEquality<Object>().equals(other.candidates, candidates);
   }
 
   @override

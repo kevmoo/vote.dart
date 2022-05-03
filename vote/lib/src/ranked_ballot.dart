@@ -27,7 +27,7 @@ class RankedBallot<TCandidate extends Comparable>
   @override
   bool operator ==(Object other) =>
       other is RankedBallot<TCandidate> &&
-      const ListEquality().equals(other.rank, rank);
+      const ListEquality<Object>().equals(other.rank, rank);
 
   @override
   int get hashCode => Object.hashAll(rank);

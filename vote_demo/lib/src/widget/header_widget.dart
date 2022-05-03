@@ -13,7 +13,7 @@ class HeaderWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _HeaderWidgetState createState() => _HeaderWidgetState();
+  State createState() => _HeaderWidgetState();
 }
 
 class _HeaderWidgetState extends State<HeaderWidget> {

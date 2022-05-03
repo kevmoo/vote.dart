@@ -11,9 +11,6 @@ dependencies:
   provider: ^6.0.0
   vote: ^2.1.0
 
-dev_dependencies:
-  pedantic: ^1.0.0
-
 flutter:
   uses-material-design: true
 

@@ -30,7 +30,7 @@ class NotificationMirror<T extends Notification> extends StatefulWidget {
         super(key: key);
 
   @override
-  _NotificationMirrorState<T> createState() => _NotificationMirrorState<T>();
+  State createState() => _NotificationMirrorState<T>();
 
   static T? identityTransform<T>(T? input) => input;
 }
