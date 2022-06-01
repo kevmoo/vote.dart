@@ -8,16 +8,17 @@ const RESOURCES = {
 "index.html": "95c071a4319f53d6870d85f1836fa11a",
 "/": "95c071a4319f53d6870d85f1836fa11a",
 "CNAME": "ac4e7539e555d65d75d7ab6fdb594c57",
-"main.dart.js": "7947d1402717f330bc644ced4a47ed1e",
-"flutter.js": "0816e65a103ba8ba51b174eeeeb2cb67",
+"main.dart.js": "27738306795744fd7243a78cc2494916",
+"flutter.js": "eb2682e33f25cd8f1fc59011497c35f8",
 "favicon.png": "f450858d52b9ccb6d08e217fe0f1c884",
 "icons/apple-touch-icon.png": "c61573ab135106092e2128e95e148a52",
 "icons/Icon-192.png": "eb36a821391e85e926b61b472d8a48be",
 "icons/Icon-512.png": "85fdfaea44b7230afc59ed3b9d84a232",
 "manifest.json": "d226910f98059777ec70177f23b06724",
 "assets/AssetManifest.json": "64629de21bf0db72cc22d425471603b8",
-"assets/NOTICES": "62b6fed4652e1fb69f8ae4cd212db05c",
+"assets/NOTICES": "35b436a5a16c72108f969c72268053d3",
 "assets/FontManifest.json": "f827e8c4faa32c8070234fd2dbc42904",
+"assets/shaders/ink_sparkle.frag": "72b74770dd560fe6279679c57497aec9",
 "assets/fonts/MaterialIcons-Regular.otf": "95db9098c58fd6db106f1116bae85a0b",
 "assets/assets/fonts/RobotoMono-Regular.ttf": "b4618f1f7f4cee0ac09873fcc5a966f9",
 "assets/assets/fonts/OverpassMono-Bold.ttf": "af00d19e177013385775727c1bd5e0f1",
@@ -32,7 +33,6 @@ const RESOURCES = {
 const CORE = [
   "main.dart.js",
 "index.html",
-"assets/NOTICES",
 "assets/AssetManifest.json",
 "assets/FontManifest.json"];
 // During install, the TEMP cache is populated with the application shell files.
@@ -131,9 +131,11 @@ self.addEventListener("fetch", (event) => {
     .then((cache) =>  {
       return cache.match(event.request).then((response) => {
         // Either respond with the cached resource, or perform a fetch and
-        // lazily populate the cache.
+        // lazily populate the cache only if the resource was successfully fetched.
         return response || fetch(event.request).then((response) => {
-          cache.put(event.request, response.clone());
+          if (response && Boolean(response.ok)) {
+            cache.put(event.request, response.clone());
+          }
           return response;
         });
       })
