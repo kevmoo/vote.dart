@@ -1,3 +1,4 @@
 # Configuration for https://pub.dev/packages/peanut
 
 web-renderer: canvaskit
+extra-args: "--source-maps"
