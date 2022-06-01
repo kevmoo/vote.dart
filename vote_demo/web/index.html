@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <base href="/">
-  <title>Election Method Simulation</title>
+  <base href="$FLUTTER_BASE_HREF">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <link rel="manifest" href="manifest.json">
   <meta name="title" content="Election Method Simulation">
   <meta name="description" content="Move candidates around a virtual town and see how an election turns out using different voting methods.">
   <meta property="og:type" content="website">
@@ -33,14 +34,15 @@
     gtag('config', 'G-PYXWE20TEZ');
   </script>
   <meta charset="UTF-8">
+  <script>
+    // The value below is injected by flutter build, do not touch.
+    var serviceWorkerVersion = null;
+  </script>
+  <!-- This script adds the flutter initialization JS code -->
+  <script src="flutter.js" defer></script>
   <link rel='canonical' href='https://vote.j832.com/' >
   <link rel="icon" href="https://vote.j832.com/favicon.png">
   <title>Election Method Simulation</title>
-  <!--
-  Source code: https://github.com/kevmoo/vote.dart
-  -->
-  <script defer src="main.dart.js" type="application/javascript"></script>
-
   <style>
     body {
       margin: 0;
@@ -68,7 +70,6 @@
       max-height: 60vh;
     }
   </style>
-
 </head>
 <body>
 <div id="splash">
@@ -81,8 +82,18 @@
   </div>
 </div>
 <script>
-  window.addEventListener('flutter-first-frame', function () {
-    window.document.getElementById('splash')?.remove();
+  window.addEventListener('load', function(ev) {
+    // Download main.dart.js
+    _flutter.loader.loadEntrypoint({
+      serviceWorker: {
+        serviceWorkerVersion: serviceWorkerVersion,
+      }
+    }).then(function(engineInitializer) {
+      return engineInitializer.initializeEngine();
+    }).then(function(appRunner) {
+      window.document.getElementById('splash')?.remove();
+      return appRunner.runApp();
+    });
   });
 </script>
 </body>
