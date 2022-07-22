@@ -4,10 +4,10 @@ class TooSmallWidget extends StatefulWidget {
   final Size minimumSize;
   final Widget child;
   const TooSmallWidget({
-    Key? key,
+    super.key,
     required this.minimumSize,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   State createState() => _TooSmallWidgetState();

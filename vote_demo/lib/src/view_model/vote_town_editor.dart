@@ -15,7 +15,7 @@ class VoteTownEditor extends KnarlyEditor<VoteTown> {
 
   Offset? _workingPoint;
 
-  VoteTownEditor(VoteTown value) : super(value);
+  VoteTownEditor(super.value);
 
   void Function()? get addCandidate {
     final candidateCount = value.candidates.length;

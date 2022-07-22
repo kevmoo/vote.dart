@@ -1,5 +1,5 @@
 #!/bin/bash
-# Created with package:mono_repo v6.2.0
+# Created with package:mono_repo v6.3.0
 
 # Support built in commands on windows out of the box.
 # When it is a flutter repo (check the pubspec.yaml for "sdk: flutter")
@@ -75,13 +75,25 @@ for PKG in ${PKGS}; do
         echo 'dart analyze'
         dart analyze || EXIT_CODE=$?
         ;;
+      analyze_2)
+        echo 'flutter analyze --fatal-infos .'
+        flutter analyze --fatal-infos . || EXIT_CODE=$?
+        ;;
+      analyze_3)
+        echo 'flutter analyze'
+        flutter analyze || EXIT_CODE=$?
+        ;;
       format)
         echo 'dart format --output=none --set-exit-if-changed .'
         dart format --output=none --set-exit-if-changed . || EXIT_CODE=$?
         ;;
-      test)
+      test_0)
         echo 'dart test'
         dart test || EXIT_CODE=$?
+        ;;
+      test_1)
+        echo 'flutter test'
+        flutter test || EXIT_CODE=$?
         ;;
       *)
         echo -e "\033[31mUnknown TASK '${TASK}' - TERMINATING JOB\033[0m"

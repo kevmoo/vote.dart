@@ -140,7 +140,7 @@ void main() {
  1 : A > C > B > D
  1 : C > B > D > A''';
 
-    final lines = BallotLines<String>.parse(value, (v) => Map.fromIterable(v));
+    final lines = BallotLines<String>.parse(value, Map.fromIterable);
 
     final election = CondorcetElection<String>(lines.ballots.toList());
 

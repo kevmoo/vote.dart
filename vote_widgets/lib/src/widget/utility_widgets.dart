@@ -6,11 +6,11 @@ class CellPadding extends StatelessWidget {
   final String? tooltip;
 
   const CellPadding({
-    Key? key,
+    super.key,
     this.background,
     required this.child,
     this.tooltip,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,16 +38,16 @@ class PaddedText extends StatelessWidget {
   final String? tooltip;
 
   const PaddedText({
-    Key? key,
+    super.key,
     required this.text,
     this.textAlign = TextAlign.center,
     this.background,
     this.style,
     this.tooltip,
-  }) : super(key: key);
+  });
 
   PaddedText.bits({
-    Key? key,
+    super.key,
     required this.text,
     this.textAlign = TextAlign.center,
     this.background,
@@ -56,8 +56,7 @@ class PaddedText extends StatelessWidget {
     FontWeight? fontWeight,
   })  : style = (fontStyle == null && fontWeight == null)
             ? null
-            : TextStyle(fontStyle: fontStyle, fontWeight: fontWeight),
-        super(key: key);
+            : TextStyle(fontStyle: fontStyle, fontWeight: fontWeight);
 
   @override
   Widget build(BuildContext context) => CellPadding(

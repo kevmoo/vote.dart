@@ -43,10 +43,10 @@ class CandidateHoverWidget<T> extends StatelessWidget {
   final Set<T> candidates;
   final Widget child;
   const CandidateHoverWidget({
-    Key? key,
+    super.key,
     required this.candidates,
     required this.child,
-  }) : super(key: key);
+  });
 
   bool _matches(VoteNotification? data) =>
       data is CandidateSetHoverNotification<T> &&

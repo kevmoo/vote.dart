@@ -163,13 +163,12 @@ class TableCell extends ParentDataWidget<TableCellParentData> {
   /// Creates a widget that controls the row-span and column-span of a child of
   /// [TablePane].
   const TableCell({
-    Key? key,
+    super.key,
     this.rowSpan = 1,
     this.columnSpan = 1,
-    required Widget child,
+    required super.child,
   })  : assert(rowSpan > 0),
-        assert(columnSpan > 0),
-        super(key: key, child: child);
+        assert(columnSpan > 0);
 
   /// The number of rows this cell occupies.
   final int rowSpan;
@@ -207,7 +206,7 @@ class TableCell extends ParentDataWidget<TableCellParentData> {
 }
 
 class EmptyTableCell extends LeafRenderObjectWidget {
-  const EmptyTableCell({Key? key}) : super(key: key);
+  const EmptyTableCell({super.key});
 
   @override
   RenderObject createRenderObject(BuildContext context) =>
@@ -219,7 +218,7 @@ class EmptyTableCell extends LeafRenderObjectWidget {
 /// using those column widths as the width constraints.
 class TablePane extends MultiChildRenderObjectWidget {
   TablePane({
-    Key? key,
+    super.key,
     required this.columns,
     this.horizontalSpacing = 0,
     this.verticalSpacing = 0,
@@ -228,8 +227,8 @@ class TablePane extends MultiChildRenderObjectWidget {
     this.verticalIntrinsicSize = MainAxisSize.max,
     this.verticalRelativeSize = MainAxisSize.max,
     this.metricsController,
-    required List<Widget> children,
-  }) : super(key: key, children: children);
+    required super.children,
+  });
 
   final List<TablePaneColumn> columns;
   final double horizontalSpacing;
@@ -269,11 +268,11 @@ class TablePane extends MultiChildRenderObjectWidget {
 
 class TableRow extends MultiChildRenderObjectWidget {
   TableRow({
-    Key? key,
+    super.key,
     this.height = const IntrinsicTablePaneRowHeight(),
     this.backgroundColor,
-    required List<Widget> children,
-  }) : super(key: key, children: children);
+    required super.children,
+  });
 
   final TablePaneRowHeight height;
   final Color? backgroundColor;
@@ -322,11 +321,11 @@ class TableCellParentData extends ContainerBoxParentData<RenderBox> {
 
 class TableRowConstraints extends BoxConstraints {
   const TableRowConstraints.tightFor({
-    double? width,
-    double? height,
+    super.width,
+    super.height,
     required this.cellConstraints,
     required this.cellPositions,
-  }) : super.tightFor(width: width, height: height);
+  }) : super.tightFor();
 
   final List<BoxConstraints> cellConstraints;
   final List<Offset> cellPositions;
@@ -344,8 +343,11 @@ class TableRowConstraints extends BoxConstraints {
   @override
   int get hashCode {
     assert(debugAssertIsValid());
-    return hashValues(
-        super.hashCode, hashList(cellConstraints), hashList(cellPositions));
+    return Object.hash(
+      super.hashCode,
+      Object.hashAll(cellConstraints),
+      Object.hashAll(cellPositions),
+    );
   }
 
   @override

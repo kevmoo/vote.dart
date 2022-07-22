@@ -6,11 +6,11 @@ class HeaderWidget extends StatefulWidget {
   final Object? extraHelp;
 
   const HeaderWidget({
-    Key? key,
+    super.key,
     required this.header,
     required this.child,
     this.extraHelp,
-  }) : super(key: key);
+  });
 
   @override
   State createState() => _HeaderWidgetState();

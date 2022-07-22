@@ -7,10 +7,10 @@ abstract class Election<TCandidate extends Comparable,
         TElectionPlace extends ElectionPlace<TCandidate>>
     extends ElectionResult<TCandidate, TElectionPlace> {
   Election({
-    required List<TCandidate> candidates,
+    required super.candidates,
     required this.ballots,
-    required List<TElectionPlace> places,
-  }) : super._noAssert(candidates: candidates, places: places) {
+    required super.places,
+  }) : super._noAssert() {
     assert(_assert(ballots: ballots));
   }
 
