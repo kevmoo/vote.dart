@@ -66,34 +66,6 @@ jobs:
         working-directory: vote
         run: dart analyze
   job_003:
-    name: "smoke_test; Flutter 2.17.0; PKG: vote_demo; `flutter analyze`"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cache Pub hosted dependencies
-        uses: actions/cache@4504faf7e9bcf8f3ed0bc863c4e1d21499ab8ef8
-        with:
-          path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;sdk:2.17.0;packages:vote_demo;commands:analyze_3"
-          restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;sdk:2.17.0;packages:vote_demo
-            os:ubuntu-latest;pub-cache-hosted;sdk:2.17.0
-            os:ubuntu-latest;pub-cache-hosted
-            os:ubuntu-latest
-      - uses: subosito/flutter-action@2fb73e25c9488eb544b9b14b2ce00c4c2baf789e
-        with:
-          channel: "2.17.0"
-      - id: checkout
-        uses: actions/checkout@d0651293c4a5a52e711f25b41b05b2212f385d28
-      - id: vote_demo_pub_upgrade
-        name: vote_demo; flutter pub pub upgrade
-        if: "always() && steps.checkout.conclusion == 'success'"
-        working-directory: vote_demo
-        run: flutter pub pub upgrade
-      - name: vote_demo; flutter analyze
-        if: "always() && steps.vote_demo_pub_upgrade.conclusion == 'success'"
-        working-directory: vote_demo
-        run: flutter analyze
-  job_004:
     name: "smoke_test; Dart dev; PKG: vote; `dart format --output=none --set-exit-if-changed .`, `dart analyze --fatal-infos .`"
     runs-on: ubuntu-latest
     steps:
@@ -125,7 +97,7 @@ jobs:
         if: "always() && steps.vote_pub_upgrade.conclusion == 'success'"
         working-directory: vote
         run: dart analyze --fatal-infos .
-  job_005:
+  job_004:
     name: "smoke_test; Flutter master; PKG: vote_demo; `dart format --output=none --set-exit-if-changed .`, `flutter analyze --fatal-infos .`"
     runs-on: ubuntu-latest
     steps:
@@ -157,7 +129,7 @@ jobs:
         if: "always() && steps.vote_demo_pub_upgrade.conclusion == 'success'"
         working-directory: vote_demo
         run: flutter analyze --fatal-infos .
-  job_006:
+  job_005:
     name: "unit_test; Dart 2.17.0; PKG: vote; `dart test`"
     runs-on: ubuntu-latest
     steps:
@@ -190,42 +162,7 @@ jobs:
       - job_002
       - job_003
       - job_004
-      - job_005
-  job_007:
-    name: "unit_test; Flutter 2.17.0; PKG: vote_demo; `flutter test`"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cache Pub hosted dependencies
-        uses: actions/cache@4504faf7e9bcf8f3ed0bc863c4e1d21499ab8ef8
-        with:
-          path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;sdk:2.17.0;packages:vote_demo;commands:test_1"
-          restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;sdk:2.17.0;packages:vote_demo
-            os:ubuntu-latest;pub-cache-hosted;sdk:2.17.0
-            os:ubuntu-latest;pub-cache-hosted
-            os:ubuntu-latest
-      - uses: subosito/flutter-action@2fb73e25c9488eb544b9b14b2ce00c4c2baf789e
-        with:
-          channel: "2.17.0"
-      - id: checkout
-        uses: actions/checkout@d0651293c4a5a52e711f25b41b05b2212f385d28
-      - id: vote_demo_pub_upgrade
-        name: vote_demo; flutter pub pub upgrade
-        if: "always() && steps.checkout.conclusion == 'success'"
-        working-directory: vote_demo
-        run: flutter pub pub upgrade
-      - name: vote_demo; flutter test
-        if: "always() && steps.vote_demo_pub_upgrade.conclusion == 'success'"
-        working-directory: vote_demo
-        run: flutter test
-    needs:
-      - job_001
-      - job_002
-      - job_003
-      - job_004
-      - job_005
-  job_008:
+  job_006:
     name: "unit_test; Dart dev; PKG: vote; `dart test`"
     runs-on: ubuntu-latest
     steps:
@@ -258,8 +195,7 @@ jobs:
       - job_002
       - job_003
       - job_004
-      - job_005
-  job_009:
+  job_007:
     name: "unit_test; Flutter master; PKG: vote_demo; `flutter test`"
     runs-on: ubuntu-latest
     steps:
@@ -292,4 +228,3 @@ jobs:
       - job_002
       - job_003
       - job_004
-      - job_005

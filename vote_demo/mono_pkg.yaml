@@ -1,6 +1,5 @@
 # See with https://github.com/google/mono_repo.dart for details on this file
 sdk:
-- 2.17.0
 - master
 
 stages:
@@ -8,9 +7,5 @@ stages:
   - group:
     - format
     - analyze: --fatal-infos .
-    sdk: [master]
-  - group:
-    - analyze:
-    sdk: [2.17.0]
 - unit_test:
   - test

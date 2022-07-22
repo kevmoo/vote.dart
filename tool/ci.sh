@@ -79,10 +79,6 @@ for PKG in ${PKGS}; do
         echo 'flutter analyze --fatal-infos .'
         flutter analyze --fatal-infos . || EXIT_CODE=$?
         ;;
-      analyze_3)
-        echo 'flutter analyze'
-        flutter analyze || EXIT_CODE=$?
-        ;;
       format)
         echo 'dart format --output=none --set-exit-if-changed .'
         dart format --output=none --set-exit-if-changed . || EXIT_CODE=$?
