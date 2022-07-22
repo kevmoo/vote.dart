@@ -10,7 +10,7 @@ class KGrid extends MultiChildRenderObjectWidget {
     super.key,
     required this.maxCrossAxisExtent,
     super.children,
-  })  : assert(maxCrossAxisExtent > 0);
+  }) : assert(maxCrossAxisExtent > 0);
 
   @override
   RenderObject createRenderObject(BuildContext context) => _KGrid(this);

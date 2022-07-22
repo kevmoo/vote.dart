@@ -54,7 +54,7 @@ class PaddedText extends StatelessWidget {
     this.tooltip,
     FontStyle? fontStyle,
     FontWeight? fontWeight,
-  })  : style = (fontStyle == null && fontWeight == null)
+  }) : style = (fontStyle == null && fontWeight == null)
             ? null
             : TextStyle(fontStyle: fontStyle, fontWeight: fontWeight);
 
