@@ -11,7 +11,7 @@ import 'widget/too_small.dart';
 class VoteSimulation extends StatelessWidget {
   final _model = VoteTownEditor(VoteTown.random());
 
-  VoteSimulation({Key? key}) : super(key: key);
+  VoteSimulation({super.key});
 
   @override
   Widget build(BuildContext context) => MaterialApp(

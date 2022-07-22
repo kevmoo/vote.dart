@@ -28,7 +28,7 @@ void main() {
     final linesText = BallotLines<String>.fromBallots(ballots).text;
 
     expect(
-      BallotLines<String>.parse(linesText, (set) => Map.fromIterable(set)).text,
+      BallotLines<String>.parse(linesText, Map.fromIterable).text,
       linesText,
     );
 
@@ -38,7 +38,7 @@ void main() {
     expect(
       BallotLines<String>.parse(
         shuffledLines.join('\n'),
-        (set) => Map.fromIterable(set),
+        Map.fromIterable,
       ).text,
       linesText,
     );

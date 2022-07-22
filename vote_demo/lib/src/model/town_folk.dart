@@ -52,7 +52,7 @@ class TownVoter extends Voter {
   final Point<double> location;
   final List<TownCandidate> closestCandidates;
 
-  TownVoter(int id, this.location, this.closestCandidates) : super(id);
+  TownVoter(super.id, this.location, this.closestCandidates);
 }
 
 const _capitalACharCode = 65;

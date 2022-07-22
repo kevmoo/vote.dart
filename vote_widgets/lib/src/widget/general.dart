@@ -23,11 +23,10 @@ class NotificationMirror<T extends Notification> extends StatefulWidget {
   final T? Function(T) transform;
 
   const NotificationMirror({
-    Key? key,
+    super.key,
     required this.child,
     T? Function(T)? transform,
-  })  : transform = transform ?? identityTransform,
-        super(key: key);
+  }) : transform = transform ?? identityTransform;
 
   @override
   State createState() => _NotificationMirrorState<T>();

@@ -14,7 +14,7 @@ import 'vote_town_widget.dart';
 class BodyContent extends StatelessWidget {
   final double crossAxisWidth;
 
-  const BodyContent({required this.crossAxisWidth, Key? key}) : super(key: key);
+  const BodyContent({required this.crossAxisWidth, super.key});
 
   @override
   Widget build(BuildContext context) => Stack(

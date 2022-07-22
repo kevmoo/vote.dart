@@ -1,3 +1,11 @@
 # See with https://github.com/google/mono_repo.dart for details on this file
+sdk:
+- master
 
-# TODO: need flutter support
+stages:
+- smoke_test:
+  - group:
+    - format
+    - analyze: --fatal-infos .
+- unit_test:
+  - test

@@ -123,11 +123,10 @@ class _CandidateWidget extends StatelessWidget {
   final bool primary;
   final int? showCount;
   const _CandidateWidget({
-    Key? key,
     required this.candidate,
     required this.primary,
     required this.showCount,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) => Consumer<VoteTownEditor>(
