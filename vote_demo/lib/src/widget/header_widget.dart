@@ -39,7 +39,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                   child: Text(
                     widget.header,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline5,
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ),
                 Flexible(
