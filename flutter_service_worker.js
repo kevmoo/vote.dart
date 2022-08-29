@@ -5,10 +5,10 @@ const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
   "site_preview.png": "c2e3afe8bd6958c00241d1de0ffc35bc",
 "version.json": "af9373b5acced09372fa4aeb6c99c6da",
-"index.html": "856d7691e968a1529547e4f3dba48237",
-"/": "856d7691e968a1529547e4f3dba48237",
+"index.html": "e1fd4e490cb304f11972c64e5e44c2cb",
+"/": "e1fd4e490cb304f11972c64e5e44c2cb",
 "CNAME": "ac4e7539e555d65d75d7ab6fdb594c57",
-"main.dart.js": "0293ddd48b0ae47113fda34dd38d6d4e",
+"main.dart.js": "efb96cedc79d4a8dd5142ae933a9e2f6",
 "flutter.js": "8ae00b472ec3937a5bee52055d6bc8b4",
 "favicon.png": "f450858d52b9ccb6d08e217fe0f1c884",
 "icons/apple-touch-icon.png": "c61573ab135106092e2128e95e148a52",
