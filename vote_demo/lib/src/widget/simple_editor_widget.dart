@@ -18,7 +18,7 @@ class SimpleEditorWidget extends StatelessWidget {
                 height: 500,
                 padding: const EdgeInsets.all(10),
                 color: editor.error
-                    ? Theme.of(context).errorColor.withAlpha(85)
+                    ? Theme.of(context).colorScheme.error.withAlpha(85)
                     : Theme.of(context).dialogBackgroundColor,
                 child: TextFormField(
                   controller: editor.textController,
