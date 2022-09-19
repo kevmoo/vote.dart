@@ -34,7 +34,7 @@
   <meta charset="UTF-8">
   <script>
     // The value below is injected by flutter build, do not touch.
-    var serviceWorkerVersion = '613611351';
+    var serviceWorkerVersion = '259405704';
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
@@ -85,12 +85,13 @@
     _flutter.loader.loadEntrypoint({
       serviceWorker: {
         serviceWorkerVersion: serviceWorkerVersion,
+      },
+      onEntrypointLoaded: function(engineInitializer) {
+        engineInitializer.initializeEngine().then(function(appRunner) {
+          window.document.getElementById('splash')?.remove();
+          appRunner.runApp();
+        });
       }
-    }).then(function(engineInitializer) {
-      return engineInitializer.initializeEngine();
-    }).then(function(appRunner) {
-      window.document.getElementById('splash')?.remove();
-      return appRunner.runApp();
     });
   });
 </script>
