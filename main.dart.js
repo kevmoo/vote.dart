@@ -41430,7 +41430,7 @@ q=s.a.Nr(r)
 p=s.a.Eu(q)
 o=A.j9("newSelection")
 s=p.a
-if(q.a-s<=1)o.b=A.Pm(B.DF,s)
+if(q.a<=s)o.b=A.Pm(B.DF,s)
 else o.b=A.Pm(B.El,p.b)
 n.y7g(o.D7(),a)},
 xg(a){var s,r,q,p,o=this,n=a.a,m=o.cf
