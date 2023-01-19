@@ -5,28 +5,29 @@ const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
   "site_preview.png": "c2e3afe8bd6958c00241d1de0ffc35bc",
 "version.json": "af9373b5acced09372fa4aeb6c99c6da",
-"index.html": "bf542413036e98c145b264356974fa3f",
-"/": "bf542413036e98c145b264356974fa3f",
+"index.html": "3491b3cdd16365f396d704d3d28cbfb1",
+"/": "3491b3cdd16365f396d704d3d28cbfb1",
 "CNAME": "ac4e7539e555d65d75d7ab6fdb594c57",
-"main.dart.js": "489bb9b0ede9b85fa9d2cdef4c034c1e",
+"main.dart.js": "67be7e6995610ca4117bc987665df56b",
 "flutter.js": "1cfe996e845b3a8a33f57607e8b09ee4",
 "favicon.png": "f450858d52b9ccb6d08e217fe0f1c884",
 "icons/apple-touch-icon.png": "c61573ab135106092e2128e95e148a52",
 "icons/Icon-192.png": "eb36a821391e85e926b61b472d8a48be",
 "icons/Icon-512.png": "85fdfaea44b7230afc59ed3b9d84a232",
 "manifest.json": "d226910f98059777ec70177f23b06724",
-"main.dart.js.info.json": "1628d6e68c0f9cad87e7b2f04904ac10",
+"main.dart.js.info.json": "759d5f295bf1d457fca91333c06409c7",
 "assets/AssetManifest.json": "64629de21bf0db72cc22d425471603b8",
-"assets/NOTICES": "2c125314859208440953c09e36a1289f",
+"assets/NOTICES": "6f51bdf6d8867e5aae9170e2c7aa2d40",
 "assets/FontManifest.json": "f827e8c4faa32c8070234fd2dbc42904",
 "assets/shaders/ink_sparkle.frag": "92666cc97576adbea2e2d3061a953137",
+"assets/AssetManifest.bin": "5017a22cecba3eccfb5252499c0dc661",
 "assets/fonts/MaterialIcons-Regular.otf": "e963cf802d3b774b6761a17431d09e6f",
 "assets/assets/fonts/RobotoMono-Regular.ttf": "b4618f1f7f4cee0ac09873fcc5a966f9",
 "assets/assets/fonts/OverpassMono-Bold.ttf": "af00d19e177013385775727c1bd5e0f1",
-"canvaskit/canvaskit.js": "97937cb4c2c2073c968525a3e08c86a3",
-"canvaskit/profiling/canvaskit.js": "c21852696bc1cc82e8894d851c01921a",
-"canvaskit/profiling/canvaskit.wasm": "371bc4e204443b0d5e774d64a046eb99",
-"canvaskit/canvaskit.wasm": "3de12d898ec208a5f31362cc00f09b9e"
+"canvaskit/canvaskit.js": "678d9f53b0e5c5f22543631f43279fb9",
+"canvaskit/profiling/canvaskit.js": "5a0f05139f1d43c603dcfc67d15b1ec9",
+"canvaskit/profiling/canvaskit.wasm": "09aacbc0d8b20c7ee684e310703e2d86",
+"canvaskit/canvaskit.wasm": "6972cd6e8f48c5f3c027416c7b2443a6"
 };
 
 // The application shell files that are downloaded before a service worker can
@@ -68,6 +69,8 @@ self.addEventListener("activate", function(event) {
         await caches.delete(TEMP);
         // Save the manifest to make future upgrades efficient.
         await manifestCache.put('manifest', new Response(JSON.stringify(RESOURCES)));
+        // Claim client to enable caching on first launch
+        self.clients.claim();
         return;
       }
       var oldManifest = await manifest.json();
@@ -93,6 +96,8 @@ self.addEventListener("activate", function(event) {
       await caches.delete(TEMP);
       // Save the manifest to make future upgrades efficient.
       await manifestCache.put('manifest', new Response(JSON.stringify(RESOURCES)));
+      // Claim client to enable caching on first launch
+      self.clients.claim();
       return;
     } catch (err) {
       // On an unhandled exception the state of the cache cannot be guaranteed.
