@@ -5,8 +5,8 @@ const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
   "site_preview.png": "c2e3afe8bd6958c00241d1de0ffc35bc",
 "version.json": "af9373b5acced09372fa4aeb6c99c6da",
-"index.html": "6a4d6a54edd0e73dd2ad378c00b9ee72",
-"/": "6a4d6a54edd0e73dd2ad378c00b9ee72",
+"index.html": "d7e6438decd16e324701de89974bf23a",
+"/": "d7e6438decd16e324701de89974bf23a",
 "CNAME": "ac4e7539e555d65d75d7ab6fdb594c57",
 "main.dart.js": "49bad6ce68c18811cd6a8dac37c95a48",
 "flutter.js": "a85fcf6324d3c4d3ae3be1ae4931e9c5",
@@ -15,7 +15,7 @@ const RESOURCES = {
 "icons/Icon-192.png": "eb36a821391e85e926b61b472d8a48be",
 "icons/Icon-512.png": "85fdfaea44b7230afc59ed3b9d84a232",
 "manifest.json": "d226910f98059777ec70177f23b06724",
-"main.dart.js.info.json": "377c94e940459f70916d85c1d8e97b2b",
+"main.dart.js.info.json": "ae44e4823ca8bf8ca10537514aa39342",
 "assets/AssetManifest.json": "64629de21bf0db72cc22d425471603b8",
 "assets/NOTICES": "5895d0a26b36e4330a524f022edede2e",
 "assets/FontManifest.json": "f827e8c4faa32c8070234fd2dbc42904",
@@ -24,10 +24,8 @@ const RESOURCES = {
 "assets/fonts/MaterialIcons-Regular.otf": "e963cf802d3b774b6761a17431d09e6f",
 "assets/assets/fonts/RobotoMono-Regular.ttf": "b4618f1f7f4cee0ac09873fcc5a966f9",
 "assets/assets/fonts/OverpassMono-Bold.ttf": "af00d19e177013385775727c1bd5e0f1",
-"canvaskit/canvaskit.js": "678d9f53b0e5c5f22543631f43279fb9",
-"canvaskit/profiling/canvaskit.js": "5a0f05139f1d43c603dcfc67d15b1ec9",
-"canvaskit/profiling/canvaskit.wasm": "09aacbc0d8b20c7ee684e310703e2d86",
-"canvaskit/canvaskit.wasm": "6972cd6e8f48c5f3c027416c7b2443a6"
+"canvaskit/canvaskit.js": "971260b2fcb9a1c3b5fd69fb698cf9ba",
+"canvaskit/canvaskit.wasm": "82d3564478f7741ab54ed1f1a4714e6b"
 };
 
 // The application shell files that are downloaded before a service worker can
