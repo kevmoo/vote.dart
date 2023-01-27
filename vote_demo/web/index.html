@@ -87,7 +87,9 @@
         serviceWorkerVersion: serviceWorkerVersion,
       },
       onEntrypointLoaded: function(engineInitializer) {
-        engineInitializer.initializeEngine().then(function(appRunner) {
+        engineInitializer.initializeEngine({
+          "canvasKitBaseUrl": "canvaskit/"
+        }).then(function(appRunner) {
           window.document.getElementById('splash')?.remove();
           appRunner.runApp();
         });
