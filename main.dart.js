@@ -60923,8 +60923,7 @@ A.Om.prototype={
 "["(a){var s=""+"TableRow(",r=this.b
 if(r!=null)s+=r["["](0)+", "
 r=this.c
-s=J.Ci(r)?s+"no children":s+A.d(r)
-s+=")"
+s=(J.Ci(r)?s+"no children":s+A.d(r))+")"
 return s.charCodeAt(0)==0?s:s}}
 A.jr.prototype={}
 A.x0.prototype={
