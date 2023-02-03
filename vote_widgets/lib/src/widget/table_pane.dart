@@ -217,7 +217,7 @@ class EmptyTableCell extends LeafRenderObjectWidget {
 /// column widths first with unconstrained height, then compute the row heights
 /// using those column widths as the width constraints.
 class TablePane extends MultiChildRenderObjectWidget {
-  TablePane({
+  const TablePane({
     super.key,
     required this.columns,
     this.horizontalSpacing = 0,
@@ -267,7 +267,7 @@ class TablePane extends MultiChildRenderObjectWidget {
 }
 
 class TableRow extends MultiChildRenderObjectWidget {
-  TableRow({
+  const TableRow({
     super.key,
     this.height = const IntrinsicTablePaneRowHeight(),
     this.backgroundColor,
