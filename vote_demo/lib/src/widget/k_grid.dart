@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 class KGrid extends MultiChildRenderObjectWidget {
   final double maxCrossAxisExtent;
 
-  KGrid({
+  const KGrid({
     super.key,
     required this.maxCrossAxisExtent,
     super.children,
