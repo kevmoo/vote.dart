@@ -2,39 +2,37 @@
 const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
-const RESOURCES = {
-  "site_preview.png": "c2e3afe8bd6958c00241d1de0ffc35bc",
+
+const RESOURCES = {"site_preview.png": "c2e3afe8bd6958c00241d1de0ffc35bc",
 "version.json": "af9373b5acced09372fa4aeb6c99c6da",
-"index.html": "32a7abedad97e3b961d7017ba41f59ae",
-"/": "32a7abedad97e3b961d7017ba41f59ae",
+"index.html": "09de1fa5314d14b195184eeeeefbffe7",
+"/": "09de1fa5314d14b195184eeeeefbffe7",
 "CNAME": "ac4e7539e555d65d75d7ab6fdb594c57",
-"main.dart.js": "b325b43da0fd6ee91c045a4bbd7f894f",
-"flutter.js": "a85fcf6324d3c4d3ae3be1ae4931e9c5",
+"main.dart.js": "15835af60f04d1a6a70334e5f0442356",
+"flutter.js": "4a26b3f53c55f386c65ef4ac40b0cf62",
 "favicon.png": "f450858d52b9ccb6d08e217fe0f1c884",
 "icons/apple-touch-icon.png": "c61573ab135106092e2128e95e148a52",
 "icons/Icon-192.png": "eb36a821391e85e926b61b472d8a48be",
 "icons/Icon-512.png": "85fdfaea44b7230afc59ed3b9d84a232",
 "manifest.json": "d226910f98059777ec70177f23b06724",
-"main.dart.js.info.json": "41f5e5ce497b7da51ad0c94057aef379",
+"main.dart.js.info.json": "403e51cf7a195fe2a67c1422d00aeb5c",
 "assets/AssetManifest.json": "64629de21bf0db72cc22d425471603b8",
-"assets/NOTICES": "aaa3a629aabf1234cb6cdf8e5cfa02ba",
+"assets/NOTICES": "6280e0084a8857c2158053724a249d61",
 "assets/FontManifest.json": "f827e8c4faa32c8070234fd2dbc42904",
-"assets/shaders/ink_sparkle.frag": "92666cc97576adbea2e2d3061a953137",
+"assets/shaders/ink_sparkle.frag": "57f2f020e63be0dd85efafc7b7b25d80",
 "assets/AssetManifest.bin": "5017a22cecba3eccfb5252499c0dc661",
 "assets/fonts/MaterialIcons-Regular.otf": "2a8cc96c2f82421dea0ae51544e2dcd7",
 "assets/assets/fonts/RobotoMono-Regular.ttf": "b4618f1f7f4cee0ac09873fcc5a966f9",
 "assets/assets/fonts/OverpassMono-Bold.ttf": "af00d19e177013385775727c1bd5e0f1",
-"canvaskit/canvaskit.js": "971260b2fcb9a1c3b5fd69fb698cf9ba",
-"canvaskit/canvaskit.wasm": "3b86a99506338679be977fef2d75ea19"
-};
-
+"canvaskit/canvaskit.js": "1338eccfe817956d34753284f2b1cdf6",
+"canvaskit/canvaskit.wasm": "6688164de8788320d837f03c3d1beb59"};
 // The application shell files that are downloaded before a service worker can
 // start.
-const CORE = [
-  "main.dart.js",
+const CORE = ["main.dart.js",
 "index.html",
 "assets/AssetManifest.json",
 "assets/FontManifest.json"];
+
 // During install, the TEMP cache is populated with the application shell files.
 self.addEventListener("install", (event) => {
   self.skipWaiting();
@@ -45,7 +43,6 @@ self.addEventListener("install", (event) => {
     })
   );
 });
-
 // During activate, the cache is populated with the temp files downloaded in
 // install. If this service worker is upgrading from one with a saved
 // MANIFEST, then use this to retain unchanged resource files.
@@ -106,7 +103,6 @@ self.addEventListener("activate", function(event) {
     }
   }());
 });
-
 // The fetch handler redirects requests for RESOURCE files to the service
 // worker cache.
 self.addEventListener("fetch", (event) => {
@@ -146,7 +142,6 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
-
 self.addEventListener('message', (event) => {
   // SkipWaiting can be used to immediately activate a waiting service worker.
   // This will also require a page refresh triggered by the main worker.
@@ -159,7 +154,6 @@ self.addEventListener('message', (event) => {
     return;
   }
 });
-
 // Download offline will check the RESOURCES for all files not in the cache
 // and populate them.
 async function downloadOffline() {
@@ -180,7 +174,6 @@ async function downloadOffline() {
   }
   return contentCache.addAll(resources);
 }
-
 // Attempt to download the resource online before falling back to
 // the offline cache.
 function onlineFirst(event) {
