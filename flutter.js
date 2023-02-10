@@ -373,3 +373,4 @@ _flutter.loader = null;
 
   _flutter.loader = new FlutterLoader();
 })();
+
