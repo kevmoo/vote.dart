@@ -12,7 +12,7 @@ dependencies:
   vote: ^2.1.0
 
 dev_dependencies:
-  dart_flutter_team_lints: ^0.1.0
+  dart_flutter_team_lints: ^1.0.0
 
 flutter:
   uses-material-design: true
