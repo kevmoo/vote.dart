@@ -88,7 +88,7 @@
       },
       onEntrypointLoaded: function(engineInitializer) {
         engineInitializer.initializeEngine({
-          "canvasKitBaseUrl": "canvaskit/"
+          "canvasKitBaseUrl": "https://www.gstatic.com/flutter-canvaskit/b6db201ea32fb2aaa36fd062bba83e59df22acf4/"
         }).then(function(appRunner) {
           window.document.getElementById('splash')?.remove();
           appRunner.runApp();
