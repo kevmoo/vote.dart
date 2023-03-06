@@ -801,6 +801,7 @@ spring_animation
 tonic
 txt
 url_launcher_web
+web_test_fonts
 web_unicode
 
 Copyright 2013 The Flutter Authors. All rights reserved.
