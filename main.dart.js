@@ -586,7 +586,7 @@ r.toString
 p=$.dI()
 if(p!==B.rm)p=p===B.rI
 else p=!0
-A.cC(r,"flt-glass-pane",b,p)
+A.cC(r,"flutter-view",b,p)
 p=A.Fu(self.document,"flt-element-host-node")
 s.a=p
 a.appendChild(p)
@@ -634,7 +634,7 @@ case 3:$.ou().gPf().SJ()
 $.Bn=B.VQ
 case 1:return A.y(q,r)}})
 return A.D($async$ak,r)},
-rd(){var s=0,r=A.F(t.H),q,p,o,n,m,l,k,j,i,h
+rd(){var s=0,r=A.F(t.H),q,p,o,n,m,l,k,j,i,h,g,f,e,d
 var $async$rd=A.l(function(a,b){if(a===1)return A.f(b,r)
 while(true)switch(s){case 0:if($.Bn!==B.VQ){s=1
 break}$.Bn=B.Sa
@@ -652,33 +652,47 @@ l.e=A.P6(o)
 o=$.ou()
 k=t.N
 n.cZ(0,A.EF(["flt-renderer",o.gpj()+" (requested explicitly)","flt-build-mode","release","spellcheck","false"],k,k))
-k=m.f=A.Fu(self.document,"flt-glass-pane")
+k=m.f=A.Fu(self.document,"flutter-view")
+j=m.r=A.Fu(self.document,"flt-glass-pane")
 n.Nb(k)
-j=A.ch(k,"normal normal 14px sans-serif")
-m.r=j
+k.appendChild(j)
+i=A.ch(j,"normal normal 14px sans-serif")
+m.w=i
+h=A.Fu(self.document,"flt-text-editing-host")
+g=A.Fu(self.document,"style")
+g.id="flt-text-editing-stylesheet"
+k.appendChild(g)
+j=g.sheet
+j.toString
+n=$.dI()
+if(n!==B.rm)f=n===B.rI
+else f=!0
+A.cC(j,"flutter-view","normal normal 14px sans-serif",f)
+k.appendChild(h)
+m.x=h
 k=A.Fu(self.document,"flt-scene-host")
 A.p7(k.style,"pointer-events","none")
 m.b=k
 o.Z0(0,m)
-i=A.Fu(self.document,"flt-semantics-host")
-o=i.style
+e=A.Fu(self.document,"flt-semantics-host")
+o=e.style
 A.p7(o,"position","absolute")
 A.p7(o,"transform-origin","0 0 0")
-m.d=i
+m.d=e
 m.Dm()
 o=$.dy
-h=(o==null?$.dy=A.o7():o).r.a.c9()
+d=(o==null?$.dy=A.o7():o).r.a.c9()
 o=m.b
 o.toString
-j.cs(A.QI([h,o,i],t.J))
+i.cs(A.QI([d,o],t.J))
+m.f.appendChild(e)
 o=$.JE
 if((o==null?$.JE=A.QK(self.window.flutterConfiguration):o).gWu())A.p7(m.b.style,"opacity","0.3")
 o=$.UG
 if(o==null)o=$.UG=A.uU()
-n=m.f
+k=m.f
 o=o.gmo()
-if($.GI==null){o=new A.fE(n,new A.Bw(A.Fl(t.S,t.mm)),o)
-n=$.dI()
+if($.GI==null){o=new A.fE(k,new A.Bw(A.Fl(t.S,t.mm)),o)
 if(n===B.rI)p=p===B.Gw
 else p=!1
 if(p)$.jA().JS()
@@ -774,16 +788,15 @@ case 2:return 2
 default:return B.jn.yE(1,a)}},
 ZU(a){var s=B.CD.yu(a)
 return A.xC(B.CD.yu((a-s)*1000),s)},
-w4(a,b){var s,r,q,p
-if(!J.RM(a.target,b)){s=a.target.getBoundingClientRect()
-r=b.getBoundingClientRect()
+w4(a,b){var s,r,q,p=$.dy
+if((p==null?$.dy=A.o7():p).w&&a.offsetX===0&&a.offsetY===0)return A.Y3(a,b)
+if(!J.RM(a.target,b)){p=a.target.getBoundingClientRect()
+s=b.getBoundingClientRect()
+r=p.y
 q=s.y
-p=r.y
+p=p.x
 s=s.x
-r=r.x
-return new A.B1(a.offsetX+(s-r),a.offsetY+(q-p))}s=$.dy
-if((s==null?$.dy=A.o7():s).w&&a.offsetX===0&&a.offsetY===0)return A.Y3(a,b)
-return new A.B1(a.offsetX,a.offsetY)},
+return new A.B1(a.offsetX+(p-s),a.offsetY+(r-q))}return new A.B1(a.offsetX,a.offsetY)},
 Y3(a,b){var s,r,q=a.clientX,p=a.clientY
 for(s=b;s.offsetParent!=null;s=r){q-=s.offsetLeft-s.scrollLeft
 p-=s.offsetTop-s.scrollTop
@@ -1690,7 +1703,7 @@ this.$ti=b},
 fu:function fu(a){var _=this
 _.a=a
 _.e=_.d=_.c=_.b=null
-_.r=_.f=$},
+_.x=_.w=_.r=_.f=$},
 zB:function zB(a){this.a=a},
 Gf:function Gf(a){this.a=a},
 MY:function MY(){},
@@ -21395,7 +21408,7 @@ $1(a){var s=$.JE
 s=(s==null?$.JE=A.QK(self.window.flutterConfiguration):s).b
 if(s==null)s=null
 else{s=s.canvasKitBaseUrl
-if(s==null)s=null}return(s==null?"https://www.gstatic.com/flutter-canvaskit/88501782bdf6c235e6843d7a94cb681dd5c44b62/":s)+a},
+if(s==null)s=null}return(s==null?"https://www.gstatic.com/flutter-canvaskit/8baab9d01ad27c98860c40a09a0157e7946af152/":s)+a},
 $S:79}
 A.YK.prototype={
 $1(a){this.a.remove()
@@ -23136,18 +23149,11 @@ A.fV.prototype={
 $1(a){},
 $S:22}
 A.iU.prototype={
-gB9Z(a){var s=this.a
-s===$&&A.Q4()
-return s.activeElement},
 jx(a,b){var s=this.a
 s===$&&A.Q4()
 return s.appendChild(b)},
 cs(a){return B.Nm.U(a,this.gXR(this))}}
 A.cY.prototype={
-gB9Z(a){var s=this.a
-s===$&&A.Q4()
-s=s.ownerDocument
-return s==null?null:s.activeElement},
 jx(a,b){var s=this.a
 s===$&&A.Q4()
 return s.appendChild(b)},
@@ -23813,7 +23819,7 @@ A.Ok.prototype={
 $1(a){this.a.Mm(this.b,B.H6.XO([a]))},
 $S:78}
 A.kt.prototype={
-$1(a){var s=$.cI.f
+$1(a){var s=$.cI.r
 s===$&&A.Q4()
 s.append(a)},
 $S:2}
@@ -23889,7 +23895,7 @@ q=A.Fu(self.document,"slot")
 A.p7(q.style,"display","none")
 s=A.Pe(r)
 A.bX(q,p,["name",s==null?t.K.a(s):s])
-s=$.cI.r
+s=$.cI.w
 s===$&&A.Q4()
 s.jx(0,q)
 s=A.Pe(r)
@@ -25397,16 +25403,12 @@ r=s.y
 A.p7(o,"width",A.d(r.c-r.a)+"px")
 r=s.y
 A.p7(o,"height",A.d(r.d-r.b)+"px")
-if((s.a&32)!==0){o=$.cI.r
-o===$&&A.Q4()
-o=o.gB9Z(o)
+if((s.a&32)!==0){o=self.document.activeElement
 r=p.c
 r.toString
 if(!J.RM(o,r))s.k1.d.push(new A.e7b(p))
 o=$.ZZ
-if(o!=null)o.aC(p)}else{o=$.cI.r
-o===$&&A.Q4()
-o=o.gB9Z(o)
+if(o!=null)o.aC(p)}else{o=self.document.activeElement
 s=p.c
 s.toString
 if(J.RM(o,s)){o=$.dI()
@@ -25954,11 +25956,11 @@ if(s!=null){r=q.c
 r.toString
 s.mp(r)}s=q.d
 s===$&&A.Q4()
-if(s.w==null){s=$.cI.r
+if(s.w==null){s=$.cI.x
 s===$&&A.Q4()
 r=q.c
 r.toString
-s.jx(0,r)
+s.append(r)
 q.Q=!1}q.xe()
 q.b=!0
 q.x=c
@@ -26060,9 +26062,9 @@ s=this.c
 s.toString
 r=r.a
 r.append(s)
-s=$.cI.r
+s=$.cI.x
 s===$&&A.Q4()
-s.jx(0,r)
+s.append(r)
 this.Q=!0},
 RL(a){var s,r,q=this,p=q.c
 p.toString
@@ -26208,11 +26210,11 @@ a.a.X0(s)
 s=q.d
 s===$&&A.Q4()
 if(s.w!=null)q.Jq()
-else{s=$.cI.r
+else{s=$.cI.x
 s===$&&A.Q4()
 r=q.c
 r.toString
-s.jx(0,r)}s=q.c
+s.append(r)}s=q.c
 s.toString
 a.x.dF(s)},
 we(){var s,r,q=this,p=q.d
@@ -59980,9 +59982,9 @@ r=s.c
 s=s.d
 q=t.x9
 p=t.i
-q=new A.L2U(r,new A.liz(r,30),s,A.Fl(q,p),A.Fl(q,p),A.QI([],t.D1),A.r2(q),B.vS,$.y3())
-s.ym(0,q.gAmP())
-this.d=q},
+r=new A.L2U(r,new A.liz(r,30),s,A.Fl(q,p),A.Fl(q,p),A.QI([],t.D1),A.r2(q),B.vS,$.y3())
+s.ym(0,r.gAmP())
+this.d=r},
 zH(a){var s,r
 this.Yv(a)
 s=this.a.d
