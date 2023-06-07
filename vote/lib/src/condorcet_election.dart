@@ -62,7 +62,7 @@ class CondorcetElection<TCandidate extends Comparable>
   }
 }
 
-abstract class CondorcetElectionResult<TCandidate extends Comparable>
+abstract mixin class CondorcetElectionResult<TCandidate extends Comparable>
     implements ElectionResult<TCandidate, ElectionPlace<TCandidate>> {
   Set<CondorcetPair<TCandidate>> get pairs;
 

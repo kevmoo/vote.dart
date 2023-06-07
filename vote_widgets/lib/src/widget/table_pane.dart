@@ -1161,14 +1161,11 @@ class _RenderTablePane extends RenderBox
       _computeHeight(
           _computeIntrinsicRowHeights(width, computeIntrinsicCellHeight));
 
-  double _computeIntrinsicChildHeight(RenderBox child, double width) {
-    switch (verticalIntrinsicSize) {
-      case MainAxisSize.min:
-        return child.getMinIntrinsicHeight(width);
-      case MainAxisSize.max:
-        return child.getMaxIntrinsicHeight(width);
-    }
-  }
+  double _computeIntrinsicChildHeight(RenderBox child, double width) =>
+      switch (verticalIntrinsicSize) {
+        MainAxisSize.min => child.getMinIntrinsicHeight(width),
+        MainAxisSize.max => child.getMaxIntrinsicHeight(width)
+      };
 
   double _computeMinIntrinsicChildHeight(RenderBox child, double width) =>
       child.getMinIntrinsicHeight(width);
@@ -1184,14 +1181,11 @@ class _RenderTablePane extends RenderBox
           double height, _IntrinsicComputer computeIntrinsicCellWidth) =>
       _computeWidth(_computeIntrinsicColumnWidths(computeIntrinsicCellWidth));
 
-  double _computeIntrinsicChildWidth(RenderBox child, double height) {
-    switch (horizontalIntrinsicSize) {
-      case MainAxisSize.min:
-        return child.getMinIntrinsicWidth(height);
-      case MainAxisSize.max:
-        return child.getMaxIntrinsicWidth(height);
-    }
-  }
+  double _computeIntrinsicChildWidth(RenderBox child, double height) =>
+      switch (horizontalIntrinsicSize) {
+        MainAxisSize.min => child.getMinIntrinsicWidth(height),
+        MainAxisSize.max => child.getMaxIntrinsicWidth(height)
+      };
 
   double _computeMinIntrinsicChildWidth(RenderBox child, double height) =>
       child.getMinIntrinsicWidth(height);
@@ -1513,14 +1507,11 @@ class _LinearConstraints extends Constraints {
   final double min;
   final double max;
 
-  double constrainMainAxisSize(MainAxisSize mainAxisSize) {
-    switch (mainAxisSize) {
-      case MainAxisSize.min:
-        return min;
-      case MainAxisSize.max:
-        return max;
-    }
-  }
+  double constrainMainAxisSize(MainAxisSize mainAxisSize) =>
+      switch (mainAxisSize) {
+        MainAxisSize.min => min,
+        MainAxisSize.max => max
+      };
 
   bool isSatisfiedBy(double value) => (min <= value) && (value <= max);
 

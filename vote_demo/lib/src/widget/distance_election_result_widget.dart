@@ -39,15 +39,12 @@ class _DistancePlaceRowInfo
   bool isMulti(int column) => column == 1;
 
   @override
-  String textForColumn(int columnName, VoteTownDistancePlace entry) {
-    switch (columnName) {
-      case 0:
-        return entry.place.toString();
-      case 2:
-        return entry.averageDistance.toStringAsFixed(2);
-    }
-    return super.textForColumn(columnName, entry);
-  }
+  String textForColumn(int columnName, VoteTownDistancePlace entry) =>
+      switch (columnName) {
+        0 => entry.place.toString(),
+        2 => entry.averageDistance.toStringAsFixed(2),
+        _ => super.textForColumn(columnName, entry)
+      };
 
   @override
   String textForSubEntry(int columnName, Candidate subEntry) {
