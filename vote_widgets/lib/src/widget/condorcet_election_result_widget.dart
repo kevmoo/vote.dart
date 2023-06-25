@@ -54,7 +54,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
           ...List.generate(
             _election.candidates.length,
             (index) => const tp.TablePaneColumn(),
-          )
+          ),
         ],
         children: [
           tp.TableRow(
@@ -69,7 +69,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
                     text: _election.candidates[index].toString(),
                   ),
                 ),
-              )
+              ),
             ],
           ),
           ..._rows(),
@@ -119,7 +119,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
                   child: _getCellText(pair, background),
                 );
               },
-            )
+            ),
           ],
         );
         first = false;

@@ -52,7 +52,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                             onPressed: _snackHandler(context),
                           ),
                   ),
-                )
+                ),
               ],
             ),
             widget.child,

@@ -25,7 +25,7 @@ void main() {
       for (var i = 0; i < 10; i++) RankedBallot([canA]),
       for (var i = 0; i < 8; i++) RankedBallot([canB]),
       for (var i = 0; i < 2; i++) RankedBallot([canC, canD]),
-      for (var i = 0; i < 2; i++) RankedBallot([canD, canC])
+      for (var i = 0; i < 2; i++) RankedBallot([canD, canC]),
     ];
 
     final election = IrvElection(ballots);
