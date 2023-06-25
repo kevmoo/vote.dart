@@ -45,11 +45,11 @@ class _TooSmallWidgetState extends State<TooSmallWidget> {
                         IconButton(
                           onPressed: _dismiss,
                           icon: const Icon(Icons.close),
-                        )
+                        ),
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             );
           }

@@ -110,7 +110,7 @@ class VoteTown extends ElectionData {
           candidates,
           pointToTry: tryLocation,
         ),
-      )
+      ),
     ]);
   }
 

@@ -137,7 +137,7 @@ abstract class TableHelper<Entry extends ElectionPlace, SubEntry> {
                   ),
                 );
               },
-            )
+            ),
           ],
         ),
       );

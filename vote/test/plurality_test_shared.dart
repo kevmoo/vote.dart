@@ -33,7 +33,7 @@ void registerPluralityTests(ElectionFactory electionFactory) {
     final ballots = [
       ...Iterable.generate(10, (_) => PluralityBallot(c1)),
       ...Iterable.generate(10, (_) => PluralityBallot(c2)),
-      ...Iterable.generate(9, (_) => PluralityBallot(c3))
+      ...Iterable.generate(9, (_) => PluralityBallot(c3)),
     ];
 
     final election = electionFactory(ballots);
