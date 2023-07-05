@@ -21636,7 +21636,7 @@ $1(a){var s=$.JE
 s=(s==null?$.JE=A.QK(self.window.flutterConfiguration):s).b
 if(s==null)s=null
 else{s=s.canvasKitBaseUrl
-if(s==null)s=null}return(s==null?"https://www.gstatic.com/flutter-canvaskit/54b573e9c4e5ac8b03ee62b85145fda547aa99ab/":s)+a},
+if(s==null)s=null}return(s==null?"https://www.gstatic.com/flutter-canvaskit/987b621eac4e1cbe12894d35127e3e80869591f2/":s)+a},
 $S:112}
 A.YK.prototype={
 $1(a){this.a.remove()
