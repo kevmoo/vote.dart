@@ -77,7 +77,7 @@ class BodyContent extends StatelessWidget {
               'The candidate locations ranked by their distance to the "ideal" '
               'location in the center of town.',
           child: Provider<List<VoteTownDistancePlace>>.value(
-            value: (kvm.value).distancePlaces,
+            value: kvm.value.distancePlaces,
             child: const DistanceElectionResultWidget(),
           ),
         ),
