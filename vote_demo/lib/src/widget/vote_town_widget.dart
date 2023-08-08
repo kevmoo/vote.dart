@@ -160,7 +160,7 @@ class _CandidateWidget extends StatelessWidget {
                     Center(
                       child: Text(
                         candidate.id,
-                        textScaleFactor: 1.5,
+                        textScaler: const TextScaler.linear(1.4),
                         style: moving ? _movingWidgetTextStyle : null,
                       ),
                     ),
@@ -171,7 +171,7 @@ class _CandidateWidget extends StatelessWidget {
                           padding: const EdgeInsets.all(3),
                           child: Text(
                             showCount!.toString(),
-                            textScaleFactor: 0.7,
+                            textScaler: const TextScaler.linear(0.7),
                           ),
                         ),
                       ),

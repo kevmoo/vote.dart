@@ -63,11 +63,17 @@ class _HeaderWidgetState extends State<HeaderWidget> {
   Widget _extraHelpContent() {
     final extraHelp = widget.extraHelp!;
     if (extraHelp is String) {
-      return SelectableText(extraHelp, textScaleFactor: 1.4);
+      return SelectableText(
+        extraHelp,
+        textScaler: const TextScaler.linear(1.4),
+      );
     }
 
     if (extraHelp is TextSpan) {
-      return SelectableText.rich(extraHelp, textScaleFactor: 1.4);
+      return SelectableText.rich(
+        extraHelp,
+        textScaler: const TextScaler.linear(1.4),
+      );
     }
 
     return Text('??? $extraHelp ???');
