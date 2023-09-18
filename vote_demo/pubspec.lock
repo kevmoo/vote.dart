@@ -449,12 +449,13 @@ packages:
     source: hosted
     version: "2.1.5"
   url_launcher_web:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      name: url_launcher_web
-      sha256: "2942294a500b4fa0b918685aff406773ba0a4cd34b7f42198742a94083020ce5"
-      url: "https://pub.dev"
-    source: hosted
+      path: "packages/url_launcher/url_launcher_web"
+      ref: pkg_web_wip
+      resolved-ref: "99c241d5b1864345a85072c2ed43c965f5effc9f"
+      url: "https://github.com/flutter/packages"
+    source: git
     version: "2.0.20"
   url_launcher_windows:
     dependency: transitive
@@ -536,4 +537,4 @@ packages:
     version: "3.1.2"
 sdks:
   dart: ">=3.2.0-0 <4.0.0"
-  flutter: ">=3.13.0"
+  flutter: ">=3.10.0"
