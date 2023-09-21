@@ -21911,7 +21911,7 @@ $1(a){var s=$.JE
 s=(s==null?$.JE=A.QK(self.window.flutterConfiguration):s).b
 if(s==null)s=null
 else{s=s.canvasKitBaseUrl
-if(s==null)s=null}return(s==null?"https://www.gstatic.com/flutter-canvaskit/39c0f2ea1f536eb7dc057d9147f23e3fec4a56c9/":s)+a},
+if(s==null)s=null}return(s==null?"https://www.gstatic.com/flutter-canvaskit/89d864552acdd55c4fa175a9e2c1c809135a7174/":s)+a},
 $S:153}
 A.YK.prototype={
 $1(a){this.a.remove()
@@ -39592,6 +39592,9 @@ if(s.c!=a.c||!J.cf(s.d,a.d)){s=p.d
 s===$&&A.Q4()
 r=p.gyLq()
 s.Au(r)
+s=p.d
+s.id$=$.y3()
+s.go$=0
 s=p.a
 q=s.d
 s=A.r8q(q==null?A.jI(o,o,o,o,s.c):q)
