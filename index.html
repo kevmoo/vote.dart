@@ -34,10 +34,10 @@
   <meta charset="UTF-8">
   <script>
     // The value below is injected by flutter build, do not touch.
-    const serviceWorkerVersion = "3652518607";
+    const serviceWorkerVersion = "4043020020";
   </script>
   <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
+  <script src="flutter.js"></script>
   <link rel='canonical' href='https://vote.j832.com/' >
   <link rel="icon" href="https://vote.j832.com/favicon.png">
   <title>Election Method Simulation</title>
@@ -80,19 +80,9 @@
   </div>
 </div>
 <script>
-  window.addEventListener('load', function(ev) {
-    // Download main.dart.js
-    _flutter.loader.loadEntrypoint({
-      serviceWorker: {
-        serviceWorkerVersion: serviceWorkerVersion,
-      },
-      onEntrypointLoaded: function(engineInitializer) {
-        engineInitializer.initializeEngine().then(function(appRunner) {
-          window.document.getElementById('splash')?.remove();
-          appRunner.runApp();
-        });
-      }
-    });
+  _flutter.buildConfig = {"engineRevision":"e29263212bfdd3e51f8b1cd4b07dd60e2395d5bd","builds":[{"compileTarget":"dart2wasm","renderer":"skwasm","mainWasmPath":"main.dart.wasm","jsSupportRuntimePath":"main.dart.mjs"},{"compileTarget":"dart2js","renderer":"canvaskit","mainJsPath":"main.dart.js"}]};
+  _flutter.loader.load().then(function() {
+    window.document.getElementById('splash')?.remove();
   });
 </script>
 </body>
