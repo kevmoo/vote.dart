@@ -1,0 +1,34 @@
+{
+  "hosting": {
+    "predeploy": "flutter build web --wasm",
+    "site": "vote-dart",
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*"
+    ],
+    "headers": [
+      {
+        "source": "**/*",
+        "headers": [
+          {
+            "key": "cross-origin-opener-policy",
+            "value": "same-origin"
+          },
+          {
+            "key": "cross-origin-embedder-policy",
+            "value": "require-corp"
+          }
+        ]
+      }, {
+        "source": "/?(\\?*)",
+        "headers": [
+          {
+            "key": "Link",
+            "value": "</flutter.js>; rel=preload; as=script,</assets/FontManifest.json>; rel=preload; as=fetch; crossorigin"
+          }
+        ]
+      }
+    ]
+  }
+}
