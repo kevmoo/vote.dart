@@ -9,3 +9,6 @@ macos
 # plugin things
 .flutter-plugins-dependencies
 .flutter-plugins
+
+firebase-debug.log
+.firebase
