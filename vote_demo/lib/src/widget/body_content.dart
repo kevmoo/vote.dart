@@ -107,7 +107,7 @@ class BodyContent extends StatelessWidget {
             children: [
               const TextSpan(text: 'A '),
               linkSpan(
-                'https://en.wikipedia.org/wiki/Ranked_voting',
+                'https://wikipedia.org/wiki/Ranked_voting',
                 text: 'ranked voting method',
               ),
               const TextSpan(
@@ -115,7 +115,7 @@ class BodyContent extends StatelessWidget {
                     ' which calculates the winner by evaluating every pair of '
                     'candidates. See ',
               ),
-              linkSpan('https://en.wikipedia.org/wiki/Condorcet_method'),
+              linkSpan('https://wikipedia.org/wiki/Condorcet_method'),
             ],
           ),
           child: CondorcetElectionResultWidget<Candidate>(
@@ -128,7 +128,7 @@ class BodyContent extends StatelessWidget {
             children: [
               const TextSpan(text: 'A '),
               linkSpan(
-                'https://en.wikipedia.org/wiki/Ranked_voting',
+                'https://wikipedia.org/wiki/Ranked_voting',
                 text: 'ranked voting method',
               ),
               const TextSpan(

@@ -1,3 +1,0 @@
-# Configuration for https://pub.dev/packages/peanut
-
-extra-args: "--source-maps --dump-info --no-frequency-based-minification"
