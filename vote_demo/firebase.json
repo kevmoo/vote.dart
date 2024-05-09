@@ -17,15 +17,7 @@
           },
           {
             "key": "cross-origin-embedder-policy",
-            "value": "require-corp"
-          }
-        ]
-      }, {
-        "source": "/?(\\?*)",
-        "headers": [
-          {
-            "key": "Link",
-            "value": "</assets/FontManifest.json>; rel=preload; as=fetch; crossorigin"
+            "value": "credentialless"
           }
         ]
       }
