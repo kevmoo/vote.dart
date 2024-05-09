@@ -17,9 +17,6 @@ class IrvResultWidget<TCandidate extends Candidate> extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Consumer<IrvElection<TCandidate>>(
         builder: (context, irvElection, __) => Table(
-          // Work around for https://github.com/flutter/flutter/issues/91068
-          // Change the key when the candidate length changes – seems to help
-          key: ValueKey('Table bug key ${irvElection.candidates.length}'),
           columnWidths: {
             0: const FlexColumnWidth(2),
             for (var i = 0; i < irvElection.candidates.length; i++)
