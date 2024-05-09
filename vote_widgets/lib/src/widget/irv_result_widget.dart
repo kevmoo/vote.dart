@@ -119,7 +119,6 @@ class IrvResultWidget<TCandidate extends Candidate> extends StatelessWidget {
               text: content,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                fontFamily: 'OverpassMono',
               ),
             );
           }
