@@ -16,10 +16,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link rel="preload" href="assets/fonts/MaterialIcons-Regular.otf" as="fetch" crossorigin>
-  <link rel="preload" href="assets/assets/fonts/OverpassMono-Bold.ttf" as="fetch" crossorigin>
-  <link rel="preload" href="assets/assets/fonts/RobotoMono-Regular.ttf" as="fetch" crossorigin>
-
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYXWE20TEZ"></script>
   <script>
@@ -30,12 +26,6 @@
     gtag('config', 'G-PYXWE20TEZ');
   </script>
   <meta charset="UTF-8">
-  <script>
-    // The value below is injected by flutter build, do not touch.
-    var serviceWorkerVersion = null;
-  </script>
-  <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js"></script>
   <link rel='canonical' href='https://vote.j832.com/' >
   <link rel="icon" href="favicon.png">
   <title>Election Method Simulation</title>
@@ -78,6 +68,7 @@
   </div>
 </div>
 <script>
+  {{flutter_js}}
   {{flutter_build_config}}
   const searchParams = new URLSearchParams(window.location.search);
   const forceCanvaskit = searchParams.get('force_canvaskit') === 'true';

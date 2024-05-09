@@ -25,7 +25,7 @@
         "headers": [
           {
             "key": "Link",
-            "value": "</flutter.js>; rel=preload; as=script,</assets/FontManifest.json>; rel=preload; as=fetch; crossorigin"
+            "value": "</assets/FontManifest.json>; rel=preload; as=fetch; crossorigin"
           }
         ]
       }
