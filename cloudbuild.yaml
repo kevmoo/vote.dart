@@ -10,7 +10,7 @@ steps:
     args: [
       'deploy', '--project=$PROJECT_ID', '--only', 'hosting:vote-dart'
     ]
-    dir: repo_manager_ui
+    dir: vote_demo
 
 substitutions:
   _FLUTTER_CHANNEL: master
