@@ -1,0 +1,17 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'build',
+            '-t', '${_IMAGE}',
+            '--build-arg', 'channel=${_FLUTTER_CHANNEL}',
+            '.'
+    ]
+  - name: '${_IMAGE}'
+    entrypoint: firebase
+    args: [
+      'deploy', '--project=$PROJECT_ID', '--only', 'hosting:vote-dart'
+    ]
+    dir: repo_manager_ui
+
+substitutions:
+  _FLUTTER_CHANNEL: master
+  _IMAGE: the-builder
