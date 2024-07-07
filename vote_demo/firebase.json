@@ -18,9 +18,22 @@
           {
             "key": "cross-origin-embedder-policy",
             "value": "require-corp"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "Content-Security-Policy",
+            "value": "frame-ancestors 'none'"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "DENY"
           }
         ]
-      }, {
+      },
+      {
         "source": "/?(\\?*)",
         "headers": [
           {
