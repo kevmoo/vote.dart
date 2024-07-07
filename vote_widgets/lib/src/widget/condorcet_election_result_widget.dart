@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:vote/vote.dart';
 
 import '../../helpers.dart';
-import 'table_pane.dart' as tp;
 import 'utility_widgets.dart';
 import 'vote_hover.dart';
 
@@ -47,17 +46,15 @@ class _State<TCandidate extends Comparable<TCandidate>>
     return _buildCore();
   }
 
-  Widget _buildCore() => tp.TablePane(
-        columns: [
-          const tp.TablePaneColumn(width: tp.IntrinsicTablePaneColumnWidth()),
-          const tp.TablePaneColumn(width: tp.IntrinsicTablePaneColumnWidth()),
-          ...List.generate(
-            _election.candidates.length,
-            (index) => const tp.TablePaneColumn(),
-          ),
-        ],
+  Widget _buildCore() => Table(
+        columnWidths: {
+          0: IntrinsicColumnWidth(),
+          1: IntrinsicColumnWidth(),
+          for (var i = 2; i < (_election.candidates.length + 2); i++)
+            i: FlexColumnWidth(),
+        },
         children: [
-          tp.TableRow(
+          TableRow(
             children: [
               const PaddedText(text: 'Place'),
               const PaddedText(text: candidateString),
@@ -76,23 +73,19 @@ class _State<TCandidate extends Comparable<TCandidate>>
         ],
       );
 
-  Iterable<tp.TableRow> _rows() sync* {
+  Iterable<TableRow> _rows() sync* {
     for (var place in _election.places) {
       var first = true;
       for (var candidate in place) {
         final background = _candidateColors[candidate];
-        yield tp.TableRow(
-          backgroundColor: place.length == 1 ? background : null,
+        yield TableRow(
+          decoration:
+              BoxDecoration(color: place.length == 1 ? background : null),
           children: [
-            if (first)
-              tp.TableCell(
-                rowSpan: place.length,
-                child: PaddedText(
-                  text: place.place.toString(),
-                  style: place.topPlace ? winnerTextStyle : null,
-                ),
-              ),
-            if (!first) const tp.EmptyTableCell(),
+            PaddedText(
+              text: place.place.toString(),
+              style: place.topPlace ? winnerTextStyle : null,
+            ),
             CandidateHoverWidget<TCandidate>(
               candidates: {candidate},
               child: PaddedText(
