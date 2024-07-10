@@ -110,14 +110,10 @@ class IrvResultWidget<TCandidate extends Candidate> extends StatelessWidget {
       for (var elimination in round.eliminations) {
         Widget eliminationContent(TCandidate candidate) {
           if (candidate == elimination.candidate) {
-            final content =
-                elimination.transferredCandidates.isEmpty ? '×' : '↵';
-            return PaddedText(
-              text: content,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            );
+            final content = elimination.transferredCandidates.isEmpty
+                ? Icons.close
+                : Icons.subdirectory_arrow_left;
+            return Icon(content);
           }
 
           final count = elimination.getTransferCount(candidate);
