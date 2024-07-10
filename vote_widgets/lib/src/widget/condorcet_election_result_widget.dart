@@ -57,7 +57,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
           TableRow(
             children: [
               const PaddedText(text: 'Place'),
-              const PaddedText(text: candidateString),
+              const Icon(Icons.person),
               ...List.generate(
                 _election.candidates.length,
                 (index) => CandidateHoverWidget<TCandidate>(
@@ -75,7 +75,6 @@ class _State<TCandidate extends Comparable<TCandidate>>
 
   Iterable<TableRow> _rows() sync* {
     for (var place in _election.places) {
-      var first = true;
       for (var candidate in place) {
         final background = _candidateColors[candidate];
         yield TableRow(
@@ -115,7 +114,6 @@ class _State<TCandidate extends Comparable<TCandidate>>
             ),
           ],
         );
-        first = false;
       }
     }
   }

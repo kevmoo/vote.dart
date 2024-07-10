@@ -23,9 +23,9 @@ class _PluralityTableHelper
   const _PluralityTableHelper(this.places);
 
   @override
-  List<String> get columns => const [
+  List<Object> get columns => const [
         'Place',
-        candidateString,
+        Icons.person,
         'Votes',
       ];
 

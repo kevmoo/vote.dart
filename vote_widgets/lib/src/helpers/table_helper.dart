@@ -14,7 +14,7 @@ abstract class TableHelper<Entry extends ElectionPlace, SubEntry> {
 
   List<Entry> get places;
 
-  List<String> get columns;
+  List<Object> get columns;
 
   List<SubEntry> subEntriesForEntry(Entry entry);
 
@@ -32,12 +32,20 @@ abstract class TableHelper<Entry extends ElectionPlace, SubEntry> {
         'Could not get a value for $columnIndex from $subEntry',
       );
 
-  Widget _tableHeader(int columnIndex) => Container(
-        padding: const EdgeInsets.symmetric(vertical: 4.5, horizontal: 3),
-        child: Text(
-          columns[columnIndex],
-        ),
-      );
+  Widget _tableHeader(int columnIndex) {
+    final content = columns[columnIndex];
+
+    final child = switch (content) {
+      final String text => Text(text),
+      final IconData icon => Icon(icon),
+      _ => throw UnsupportedError('Cannot party on $content'),
+    };
+
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 4.5, horizontal: 3),
+      child: child,
+    );
+  }
 
   static Widget _tableCell(
     String content, {

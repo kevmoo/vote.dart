@@ -1,7 +1,5 @@
 import 'package:flutter/painting.dart';
 
-const candidateString = '🙎';
-
 Map<T, Color> huesForCandidates<T extends Comparable<T>>(
   Iterable<T> candidates,
 ) {
