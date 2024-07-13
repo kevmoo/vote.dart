@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "predeploy": "flutter build web --wasm --no-strip-wasm",
+    "predeploy": "flutter build web --wasm --no-strip-wasm --source-maps",
     "site": "vote-dart",
     "public": "build/web",
     "ignore": [
