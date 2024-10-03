@@ -2,7 +2,8 @@ name: vote_widgets
 version: 1.0.0-dev
 
 environment:
-  sdk: ^3.4.0
+  sdk: ^3.5.0
+resolution: workspace
 
 dependencies:
   collection: ^1.14.0
@@ -16,7 +17,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
-dependency_overrides:
-  vote:
-    path: ../vote

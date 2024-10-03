@@ -1,0 +1,8 @@
+name: vote_workspace
+environment:
+  sdk: ^3.5.0
+
+workspace:
+  - vote
+  - vote_demo
+  - vote_widgets

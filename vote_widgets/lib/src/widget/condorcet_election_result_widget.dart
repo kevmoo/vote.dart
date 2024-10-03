@@ -48,10 +48,10 @@ class _State<TCandidate extends Comparable<TCandidate>>
 
   Widget _buildCore() => Table(
         columnWidths: {
-          0: IntrinsicColumnWidth(),
-          1: IntrinsicColumnWidth(),
+          0: const IntrinsicColumnWidth(),
+          1: const IntrinsicColumnWidth(),
           for (var i = 2; i < (_election.candidates.length + 2); i++)
-            i: FlexColumnWidth(),
+            i: const FlexColumnWidth(),
         },
         children: [
           TableRow(

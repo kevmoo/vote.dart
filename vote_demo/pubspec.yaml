@@ -2,7 +2,8 @@ name: vote_demo
 publish_to: none
 
 environment:
-  sdk: ^3.4.0
+  sdk: ^3.5.0
+resolution: workspace
 
 dependencies:
   collection: ^1.14.0
@@ -18,12 +19,6 @@ dependencies:
 dev_dependencies:
   dart_flutter_team_lints: ^3.0.0
   test: ^1.19.3
-
-dependency_overrides:
-  vote:
-    path: ../vote
-  vote_widgets:
-    path: ../vote_widgets
 
 flutter:
   uses-material-design: true
