@@ -1,16 +1,16 @@
 name: vote_widgets
-version: 1.0.0-dev
+version: 1.0.0-wip
 
 environment:
   sdk: ^3.5.0
 resolution: workspace
 
 dependencies:
-  collection: ^1.14.0
+  collection: ^1.19.0
   flutter:
     sdk: flutter
   provider: ^6.0.0
-  vote: ^2.1.0
+  vote: ^2.2.0-wip
 
 dev_dependencies:
   dart_flutter_team_lints: ^3.0.0

@@ -1,7 +1,7 @@
-# 2.2.0-dev
+# 2.2.0-wip
 
 - `ElectionPlace` added `topPlace` getter.
-- Require Dart 3.4
+- Require Dart 3.5
 
 # 2.1.0
 
