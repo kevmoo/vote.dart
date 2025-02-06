@@ -4,7 +4,6 @@ description: >-
   easy comparison between implementations.
 version: 2.2.0-wip
 repository: https://github.com/kevmoo/vote.dart
-resolution: workspace
 
 environment:
   sdk: ^3.5.0

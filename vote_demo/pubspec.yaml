@@ -3,7 +3,6 @@ publish_to: none
 
 environment:
   sdk: ^3.5.0
-resolution: workspace
 
 dependencies:
   collection: ^1.19.0
@@ -22,3 +21,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+dependency_overrides:
+  vote:
+    path: ../vote
+  vote_widgets:
+    path: ../vote_widgets

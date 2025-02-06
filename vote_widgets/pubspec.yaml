@@ -3,7 +3,6 @@ version: 1.0.0-wip
 
 environment:
   sdk: ^3.5.0
-resolution: workspace
 
 dependencies:
   collection: ^1.19.0
@@ -17,3 +16,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+dependency_overrides:
+  vote:
+    path: ../vote
