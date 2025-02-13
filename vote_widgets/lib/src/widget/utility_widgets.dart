@@ -23,10 +23,7 @@ class CellPadding extends StatelessWidget {
 
     if (tooltip == null) return container;
 
-    return Tooltip(
-      message: tooltip!,
-      child: container,
-    );
+    return Tooltip(message: tooltip!, child: container);
   }
 }
 
@@ -54,19 +51,20 @@ class PaddedText extends StatelessWidget {
     this.tooltip,
     FontStyle? fontStyle,
     FontWeight? fontWeight,
-  }) : style = (fontStyle == null && fontWeight == null)
-            ? null
-            : TextStyle(fontStyle: fontStyle, fontWeight: fontWeight);
+  }) : style =
+           (fontStyle == null && fontWeight == null)
+               ? null
+               : TextStyle(fontStyle: fontStyle, fontWeight: fontWeight);
 
   @override
   Widget build(BuildContext context) => CellPadding(
-        tooltip: tooltip,
-        background: background,
-        child: Text(
-          text,
-          style: style,
-          strutStyle: const StrutStyle(forceStrutHeight: true, height: 1),
-          textAlign: textAlign,
-        ),
-      );
+    tooltip: tooltip,
+    background: background,
+    child: Text(
+      text,
+      style: style,
+      strutStyle: const StrutStyle(forceStrutHeight: true, height: 1),
+      textAlign: textAlign,
+    ),
+  );
 }

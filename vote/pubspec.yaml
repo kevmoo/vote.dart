@@ -6,7 +6,7 @@ version: 2.2.0-wip
 repository: https://github.com/kevmoo/vote.dart
 
 environment:
-  sdk: ^3.5.0
+  sdk: ^3.7.0
 
 dependencies:
   collection: ^1.19.0

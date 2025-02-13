@@ -16,17 +16,13 @@ class TownCandidate extends Candidate {
   final int index;
 
   TownCandidate(this.index, double hue, this.intLocation)
-      : location = _unfixPoint(intLocation),
-        assert(index >= 0),
-        assert(index < maxCandidateCount),
-        super(String.fromCharCode(index + _capitalACharCode), hue);
+    : location = _unfixPoint(intLocation),
+      assert(index >= 0),
+      assert(index < maxCandidateCount),
+      super(String.fromCharCode(index + _capitalACharCode), hue);
 
   factory TownCandidate.letter(int index, Point<int> intLocation) =>
-      TownCandidate(
-        index,
-        candidateHues[index],
-        intLocation,
-      );
+      TownCandidate(index, candidateHues[index], intLocation);
 
   @override
   int compareTo(Candidate other) => id.compareTo(other.id);
@@ -39,14 +35,14 @@ class TownCandidate extends Candidate {
 }
 
 Point<int> fixPoint(Offset value) => Point(
-      (value.dx / TownCandidate.candidateSpacing - 1).round(),
-      (value.dy / TownCandidate.candidateSpacing - 1).round(),
-    );
+  (value.dx / TownCandidate.candidateSpacing - 1).round(),
+  (value.dy / TownCandidate.candidateSpacing - 1).round(),
+);
 
 Point<double> _unfixPoint(Point<int> value) => Point(
-      (value.x + 1) * TownCandidate.candidateSpacing,
-      (value.y + 1) * TownCandidate.candidateSpacing,
-    );
+  (value.x + 1) * TownCandidate.candidateSpacing,
+  (value.y + 1) * TownCandidate.candidateSpacing,
+);
 
 class TownVoter extends Voter {
   final Point<double> location;

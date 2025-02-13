@@ -13,11 +13,7 @@ class ApprovalElection<TCandidate extends Comparable>
     List<Ballot<TCandidate>> ballots,
     List<TCandidate> candidates,
     List<PluralityElectionPlace<TCandidate>> places,
-  ) : super(
-          candidates: candidates,
-          ballots: ballots,
-          places: places,
-        );
+  ) : super(candidates: candidates, ballots: ballots, places: places);
 
   factory ApprovalElection(
     List<ApprovalBallot<TCandidate>> ballots, {
@@ -49,9 +45,10 @@ class ApprovalElection<TCandidate extends Comparable>
         entry.key: entry.value,
     };
 
-    final groups = groupBy(candidateVotes.keys, (c) => candidateVotes[c]!)
-        .entries
-        .toList(growable: false)
+    final groups = groupBy(
+        candidateVotes.keys,
+        (c) => candidateVotes[c]!,
+      ).entries.toList(growable: false)
       // NOTE: reverse sorting
       ..sort((a, b) => b.key.compareTo(a.key));
 

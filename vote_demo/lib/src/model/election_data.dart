@@ -37,8 +37,9 @@ class _ElectionData extends ElectionData {
   final List<Candidate> candidates;
 
   _ElectionData(this.ballots, {List<Candidate>? candidates})
-      : candidates = candidates ??
-            ballots
-                .expand((rb) => rb.referencedCandidates())
-                .toList(growable: false);
+    : candidates =
+          candidates ??
+          ballots
+              .expand((rb) => rb.referencedCandidates())
+              .toList(growable: false);
 }

@@ -3,8 +3,10 @@ import 'election_place.dart';
 import 'util.dart';
 
 /// Baseclass of all election types.
-abstract class Election<TCandidate extends Comparable,
-        TElectionPlace extends ElectionPlace<TCandidate>>
+abstract class Election<
+  TCandidate extends Comparable,
+  TElectionPlace extends ElectionPlace<TCandidate>
+>
     extends ElectionResult<TCandidate, TElectionPlace> {
   Election({
     required super.candidates,
@@ -22,19 +24,15 @@ abstract class Election<TCandidate extends Comparable,
 ///
 /// Implementations may not include ballot information, to protect the privacy
 /// of ballots – or just to allow visualization of an election result.
-abstract class ElectionResult<TCandidate extends Comparable,
-    TElectionPlace extends ElectionPlace<TCandidate>> {
-  ElectionResult({
-    required this.candidates,
-    required this.places,
-  }) {
+abstract class ElectionResult<
+  TCandidate extends Comparable,
+  TElectionPlace extends ElectionPlace<TCandidate>
+> {
+  ElectionResult({required this.candidates, required this.places}) {
     assert(_assert());
   }
 
-  ElectionResult._noAssert({
-    required this.candidates,
-    required this.places,
-  });
+  ElectionResult._noAssert({required this.candidates, required this.places});
 
   bool _assert({List<Ballot<TCandidate>>? ballots}) {
     // TODO: assert all candidates are sorted, too?

@@ -46,10 +46,7 @@ class _NotificationMirrorState<T extends Notification>
 
   @override
   Widget build(BuildContext context) => NotificationListener<T>(
-        onNotification: _onNotification,
-        child: ValueListenableProvider.value(
-          value: _notifier,
-          child: widget.child,
-        ),
-      );
+    onNotification: _onNotification,
+    child: ValueListenableProvider.value(value: _notifier, child: widget.child),
+  );
 }

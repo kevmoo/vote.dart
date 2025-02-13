@@ -14,16 +14,13 @@ TextSpan linkSpan(
   String url, {
   String? text,
   Color linkColor = Colors.lightBlue,
-}) =>
-    TextSpan(
-      text: text ?? _trimUrl(url),
-      recognizer: TapGestureRecognizer()
+}) => TextSpan(
+  text: text ?? _trimUrl(url),
+  recognizer:
+      TapGestureRecognizer()
         ..onTap = () {
           launchUrlString(url);
         },
-      style: TextStyle(
-        decoration: TextDecoration.underline,
-        color: linkColor,
-      ),
-      mouseCursor: SystemMouseCursors.click,
-    );
+  style: TextStyle(decoration: TextDecoration.underline, color: linkColor),
+  mouseCursor: SystemMouseCursors.click,
+);

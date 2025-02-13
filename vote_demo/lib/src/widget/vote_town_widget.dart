@@ -14,99 +14,97 @@ class VoteTownWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Consumer<VoteTownEditor>(
-        builder: (_, editor, __) {
-          final voteTown = editor.value;
+    builder: (_, editor, __) {
+      final voteTown = editor.value;
 
-          final flowDelegate = _CandidateFlowDelegate(voteTown);
+      final flowDelegate = _CandidateFlowDelegate(voteTown);
 
-          bool dragListener(_CandidateDragNotification notification) {
-            final details = notification.details;
+      bool dragListener(_CandidateDragNotification notification) {
+        final details = notification.details;
 
-            if (details is DragStartDetails) {
-              editor.moveCandidateStart(notification.candidate);
-            } else if (details is DragUpdateDetails) {
-              final scale = 1 / _offsetMultiplier(flowDelegate._drawSize);
-              final newValue = details.delta * scale;
+        if (details is DragStartDetails) {
+          editor.moveCandidateStart(notification.candidate);
+        } else if (details is DragUpdateDetails) {
+          final scale = 1 / _offsetMultiplier(flowDelegate._drawSize);
+          final newValue = details.delta * scale;
 
-              editor.moveCandidateUpdate(
-                notification.candidate,
-                newValue,
-              );
-            } else if (details is DragEndDetails) {
-              editor.moveCandidateEnd(notification.candidate);
-            } else {
-              throw UnsupportedError(
-                'We do not support details of type '
-                '${details.runtimeType} ($details).',
-              );
-            }
+          editor.moveCandidateUpdate(notification.candidate, newValue);
+        } else if (details is DragEndDetails) {
+          editor.moveCandidateEnd(notification.candidate);
+        } else {
+          throw UnsupportedError(
+            'We do not support details of type '
+            '${details.runtimeType} ($details).',
+          );
+        }
 
-            return true;
-          }
+        return true;
+      }
 
-          return Column(
-            children: [
-              Consumer<VoteNotification?>(
-                builder: (ctx, notification, child) {
-                  int? countForCandidate(TownCandidate candidate) {
-                    if (notification == null) {
-                      return voteTown.pluralityElection.places
-                          .singleWhere((element) => element.contains(candidate))
-                          .voteCount;
-                    }
+      return Column(
+        children: [
+          Consumer<VoteNotification?>(
+            builder: (ctx, notification, child) {
+              int? countForCandidate(TownCandidate candidate) {
+                if (notification == null) {
+                  return voteTown.pluralityElection.places
+                      .singleWhere((element) => element.contains(candidate))
+                      .voteCount;
+                }
 
-                    return voteTown.voters
-                        .where(
-                          (voter) =>
-                              voter.closestCandidates
-                                  .where(notification.relatedTo)
-                                  .firstOrNull ==
-                              candidate,
+                return voteTown.voters
+                    .where(
+                      (voter) =>
+                          voter.closestCandidates
+                              .where(notification.relatedTo)
+                              .firstOrNull ==
+                          candidate,
+                    )
+                    .length;
+              }
+
+              return CustomPaint(
+                painter: _VoteTownPainter(voteTown, notification),
+                isComplex: true,
+                willChange: true,
+                child: NotificationListener<_CandidateDragNotification>(
+                  onNotification: dragListener,
+                  child: Flow(
+                    delegate: flowDelegate,
+                    children: voteTown.candidates
+                        .map(
+                          (c) => _CandidateWidget(
+                            candidate: c,
+                            primary:
+                                notification
+                                    is! CandidateSetHoverNotification ||
+                                notification.relatedTo(c),
+                            showCount: countForCandidate(c),
+                          ),
                         )
-                        .length;
-                  }
-
-                  return CustomPaint(
-                    painter: _VoteTownPainter(voteTown, notification),
-                    isComplex: true,
-                    willChange: true,
-                    child: NotificationListener<_CandidateDragNotification>(
-                      onNotification: dragListener,
-                      child: Flow(
-                        delegate: flowDelegate,
-                        children: voteTown.candidates
-                            .map(
-                              (c) => _CandidateWidget(
-                                candidate: c,
-                                primary: notification
-                                        is! CandidateSetHoverNotification ||
-                                    notification.relatedTo(c),
-                                showCount: countForCandidate(c),
-                              ),
-                            )
-                            .toList(growable: false),
-                      ),
-                    ),
-                  );
-                },
+                        .toList(growable: false),
+                  ),
+                ),
+              );
+            },
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              OutlinedButton(
+                onPressed: editor.removeCandidate,
+                child: const Text('Remove candidate'),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  OutlinedButton(
-                    onPressed: editor.removeCandidate,
-                    child: const Text('Remove candidate'),
-                  ),
-                  OutlinedButton(
-                    onPressed: editor.addCandidate,
-                    child: const Text('Add candidate'),
-                  ),
-                ],
+              OutlinedButton(
+                onPressed: editor.addCandidate,
+                child: const Text('Add candidate'),
               ),
             ],
-          );
-        },
+          ),
+        ],
       );
+    },
+  );
 }
 
 const _candidateScale = 4.7;
@@ -130,71 +128,66 @@ class _CandidateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Consumer<VoteTownEditor>(
-        builder: (context, model, __) {
-          void handler(Object details) =>
-              _CandidateDragNotification(candidate, details).dispatch(context);
+    builder: (context, model, __) {
+      void handler(Object details) =>
+          _CandidateDragNotification(candidate, details).dispatch(context);
 
-          final moving = candidate == model.movingCandidate;
-          return MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              onPanStart: handler,
-              onPanUpdate: handler,
-              onPanEnd: handler,
-              child: Container(
-                decoration: ShapeDecoration(
-                  color:
-                      primary ? candidate.color : candidate.color.withAlpha(51),
-                  shape: const ContinuousRectangleBorder(
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(_candidateScale * 6)),
-                  ),
-                  shadows: primary
+      final moving = candidate == model.movingCandidate;
+      return MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onPanStart: handler,
+          onPanUpdate: handler,
+          onPanEnd: handler,
+          child: Container(
+            decoration: ShapeDecoration(
+              color: primary ? candidate.color : candidate.color.withAlpha(51),
+              shape: const ContinuousRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(_candidateScale * 6),
+                ),
+              ),
+              shadows:
+                  primary
                       ? moving
                           ? _movingCandidateShadows
                           : _stationaryCandidateShadows
                       : null,
+            ),
+            child: Stack(
+              children: [
+                Center(
+                  child: Text(
+                    candidate.id,
+                    textScaler: const TextScaler.linear(1.4),
+                    style: moving ? _movingWidgetTextStyle : null,
+                  ),
                 ),
-                child: Stack(
-                  children: [
-                    Center(
+                if (primary && showCount != null)
+                  Container(
+                    alignment: Alignment.bottomRight,
+                    child: Container(
+                      padding: const EdgeInsets.all(3),
                       child: Text(
-                        candidate.id,
-                        textScaler: const TextScaler.linear(1.4),
-                        style: moving ? _movingWidgetTextStyle : null,
+                        showCount!.toString(),
+                        textScaler: const TextScaler.linear(0.7),
                       ),
                     ),
-                    if (primary && showCount != null)
-                      Container(
-                        alignment: Alignment.bottomRight,
-                        child: Container(
-                          padding: const EdgeInsets.all(3),
-                          child: Text(
-                            showCount!.toString(),
-                            textScaler: const TextScaler.linear(0.7),
-                          ),
-                        ),
-                      ),
-                  ],
-                ),
-              ),
+                  ),
+              ],
             ),
-          );
-        },
+          ),
+        ),
       );
+    },
+  );
 
   static const _stationaryCandidateShadows = [
-    BoxShadow(
-      offset: Offset(-1, 1),
-      blurRadius: 2,
-    ),
+    BoxShadow(offset: Offset(-1, 1), blurRadius: 2),
   ];
 
   static const _movingCandidateShadows = [
-    BoxShadow(
-      offset: Offset(-2, 2),
-      blurRadius: 2,
-    ),
+    BoxShadow(offset: Offset(-2, 2), blurRadius: 2),
   ];
 
   static const _movingWidgetTextStyle = TextStyle(fontWeight: FontWeight.bold);

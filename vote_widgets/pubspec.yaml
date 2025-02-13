@@ -2,7 +2,7 @@ name: vote_widgets
 version: 1.0.0-wip
 
 environment:
-  sdk: ^3.5.0
+  sdk: ^3.7.0
 
 dependencies:
   collection: ^1.19.0

@@ -17,13 +17,11 @@ class CandidateSetHoverNotification<T> extends VoteNotification<T> {
   final bool stop;
   final Set<T> candidates;
 
-  const CandidateSetHoverNotification(
-    this.candidates, {
-    this.stop = false,
-  });
+  const CandidateSetHoverNotification(this.candidates, {this.stop = false});
 
   @override
-  String toString() => 'CandidatePairHoverNotification'
+  String toString() =>
+      'CandidatePairHoverNotification'
       '($candidates ${stop ? ' [stop]' : ''})';
 
   @override
@@ -54,22 +52,26 @@ class CandidateHoverWidget<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MouseRegion(
-        onEnter: (event) =>
+    onEnter:
+        (event) =>
             CandidateSetHoverNotification<T>(candidates).dispatch(context),
-        onExit: (event) => CandidateSetHoverNotification<T>(
+    onExit:
+        (event) => CandidateSetHoverNotification<T>(
           candidates,
           stop: true,
         ).dispatch(context),
-        onHover: (event) =>
+    onHover:
+        (event) =>
             CandidateSetHoverNotification<T>(candidates).dispatch(context),
-        child: Consumer<VoteNotification?>(
-          builder: (context, value, _) => DefaultTextStyle(
+    child: Consumer<VoteNotification?>(
+      builder:
+          (context, value, _) => DefaultTextStyle(
             style: TextStyle(
               color: Colors.black,
               fontWeight: _matches(value) ? FontWeight.w900 : null,
             ),
             child: child,
           ),
-        ),
-      );
+    ),
+  );
 }

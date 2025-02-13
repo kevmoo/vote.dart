@@ -8,12 +8,9 @@ void main() {
   final c2 = 'Can 2';
 
   test('no dupe candidates', () {
-    expect(
-      () {
-        CondorcetPair(c1, c1);
-      },
-      throwsAssertionError,
-    );
+    expect(() {
+      CondorcetPair(c1, c1);
+    }, throwsAssertionError);
   });
 
   test('omitting some candidates', () {

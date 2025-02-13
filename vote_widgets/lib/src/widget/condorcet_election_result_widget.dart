@@ -21,11 +21,7 @@ class CondorcetElectionResultWidget<TCandidate extends Comparable<TCandidate>>
   State<StatefulWidget> createState() => _State<TCandidate>();
 }
 
-enum CondorcetWidgetDisplay {
-  comparison,
-  simple,
-  delta,
-}
+enum CondorcetWidgetDisplay { comparison, simple, delta }
 
 class _State<TCandidate extends Comparable<TCandidate>>
     extends State<CondorcetElectionResultWidget<TCandidate>> {
@@ -36,10 +32,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
     if (widget.clickToToggleDisplay) {
       return MouseRegion(
         cursor: SystemMouseCursors.click,
-        child: GestureDetector(
-          onTap: _onTap,
-          child: _buildCore(),
-        ),
+        child: GestureDetector(onTap: _onTap, child: _buildCore()),
       );
     }
 
@@ -47,39 +40,38 @@ class _State<TCandidate extends Comparable<TCandidate>>
   }
 
   Widget _buildCore() => Table(
-        columnWidths: {
-          0: const IntrinsicColumnWidth(),
-          1: const IntrinsicColumnWidth(),
-          for (var i = 2; i < (_election.candidates.length + 2); i++)
-            i: const FlexColumnWidth(),
-        },
+    columnWidths: {
+      0: const IntrinsicColumnWidth(),
+      1: const IntrinsicColumnWidth(),
+      for (var i = 2; i < (_election.candidates.length + 2); i++)
+        i: const FlexColumnWidth(),
+    },
+    children: [
+      TableRow(
         children: [
-          TableRow(
-            children: [
-              const PaddedText(text: 'Place'),
-              const Icon(Icons.person),
-              ...List.generate(
-                _election.candidates.length,
-                (index) => CandidateHoverWidget<TCandidate>(
-                  candidates: {_election.candidates[index]},
-                  child: PaddedText(
-                    text: _election.candidates[index].toString(),
-                  ),
-                ),
-              ),
-            ],
+          const PaddedText(text: 'Place'),
+          const Icon(Icons.person),
+          ...List.generate(
+            _election.candidates.length,
+            (index) => CandidateHoverWidget<TCandidate>(
+              candidates: {_election.candidates[index]},
+              child: PaddedText(text: _election.candidates[index].toString()),
+            ),
           ),
-          ..._rows(),
         ],
-      );
+      ),
+      ..._rows(),
+    ],
+  );
 
   Iterable<TableRow> _rows() sync* {
     for (var place in _election.places) {
       for (var candidate in place) {
         final background = _candidateColors[candidate];
         yield TableRow(
-          decoration:
-              BoxDecoration(color: place.length == 1 ? background : null),
+          decoration: BoxDecoration(
+            color: place.length == 1 ? background : null,
+          ),
           children: [
             PaddedText(
               text: place.place.toString(),
@@ -93,25 +85,22 @@ class _State<TCandidate extends Comparable<TCandidate>>
                 style: place.topPlace ? winnerTextStyle : null,
               ),
             ),
-            ...List.generate(
-              _election.candidates.length,
-              (index) {
-                final other = _election.candidates[index];
-                if (candidate == other) {
-                  return Container(
-                    color: background,
-                  );
-                }
+            ...List.generate(_election.candidates.length, (index) {
+              final other = _election.candidates[index];
+              if (candidate == other) {
+                return Container(color: background);
+              }
 
-                final pair =
-                    _election.getPair(candidate, _election.candidates[index]);
+              final pair = _election.getPair(
+                candidate,
+                _election.candidates[index],
+              );
 
-                return CandidateHoverWidget<TCandidate>(
-                  candidates: {pair.candidate1, pair.candidate2},
-                  child: _getCellText(pair, background),
-                );
-              },
-            ),
+              return CandidateHoverWidget<TCandidate>(
+                candidates: {pair.candidate1, pair.candidate2},
+                child: _getCellText(pair, background),
+              );
+            }),
           ],
         );
       }
@@ -119,8 +108,9 @@ class _State<TCandidate extends Comparable<TCandidate>>
   }
 
   void _onTap() {
-    final next = CondorcetWidgetDisplay.values[
-        (CondorcetWidgetDisplay.values.indexOf(_display) + 1) %
+    final next =
+        CondorcetWidgetDisplay
+            .values[(CondorcetWidgetDisplay.values.indexOf(_display) + 1) %
             CondorcetWidgetDisplay.values.length];
     setState(() {
       _display = next;
@@ -132,18 +122,12 @@ class _State<TCandidate extends Comparable<TCandidate>>
       case CondorcetWidgetDisplay.comparison:
         return _comparisonText(pair);
       case CondorcetWidgetDisplay.delta:
-        return PaddedText(
-          text: pair.delta,
-          background: background,
-        );
+        return PaddedText(text: pair.delta, background: background);
       case CondorcetWidgetDisplay.simple:
         if (pair.firstWins) {
           return CellPadding(
             background: background,
-            child: const Icon(
-              Icons.check,
-              size: _iconSize,
-            ),
+            child: const Icon(Icons.check, size: _iconSize),
           );
         }
         if (pair.isTie) {
@@ -167,9 +151,10 @@ class _State<TCandidate extends Comparable<TCandidate>>
   Widget _comparisonText(CondorcetPair<TCandidate> pair) {
     final primaryCandidate = pair.candidate1;
 
-    final comparison = pair.isTie
-        ? '='
-        : pair.winner == primaryCandidate
+    final comparison =
+        pair.isTie
+            ? '='
+            : pair.winner == primaryCandidate
             ? '>'
             : '<';
 
@@ -181,8 +166,9 @@ class _State<TCandidate extends Comparable<TCandidate>>
     );
   }
 
-  late final Map<TCandidate, Color> _candidateColors =
-      huesForCandidates(_election.candidates);
+  late final Map<TCandidate, Color> _candidateColors = huesForCandidates(
+    _election.candidates,
+  );
 
   CondorcetElectionResult<TCandidate> get _election => widget.election;
 }
@@ -199,9 +185,10 @@ extension on CondorcetPair {
 
   bool get firstWins => winner == candidate1;
 
-  Color get color => firstWins
-      ? Colors.black
-      : isTie
+  Color get color =>
+      firstWins
+          ? Colors.black
+          : isTie
           ? _tieColor
           : _lostDimColor;
 

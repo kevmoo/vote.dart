@@ -49,13 +49,9 @@ void main() {
 
     _test('whitespace', '  \n\t  \t', []);
 
-    _test(
-      'simple',
-      '1:a',
-      [
-        BallotLine(1, ['a']),
-      ],
-    );
+    _test('simple', '1:a', [
+      BallotLine(1, ['a']),
+    ]);
 
     _test(
       'case normalized',
@@ -70,13 +66,9 @@ void main() {
       ],
     );
 
-    _test(
-      'simple with extra whitespace',
-      '\n\t  1  :   a   \n\n',
-      [
-        BallotLine(1, ['a']),
-      ],
-    );
+    _test('simple with extra whitespace', '\n\t  1  :   a   \n\n', [
+      BallotLine(1, ['a']),
+    ]);
 
     _test(
       'candidates with whitespace',
@@ -181,12 +173,12 @@ Error on line 1, column 12: Cannot have duplicate values.
 };
 
 Matcher _throwsAFormatException(String message) => throwsA(
-      const TypeMatcher<StringScannerException>().having(
-        (e) {
-          printOnFailure("r'''\n$e'''");
-          return e.toString();
-        },
-        'toString()',
-        message,
-      ),
-    );
+  const TypeMatcher<StringScannerException>().having(
+    (e) {
+      printOnFailure("r'''\n$e'''");
+      return e.toString();
+    },
+    'toString()',
+    message,
+  ),
+);

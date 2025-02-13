@@ -10,9 +10,10 @@ class DistanceElectionResultWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Consumer<List<VoteTownDistancePlace>>(
-        builder: (context, distancePlaces, __) =>
+    builder:
+        (context, distancePlaces, __) =>
             _DistancePlaceRowInfo(distancePlaces).build(context),
-      );
+  );
 }
 
 class _DistancePlaceRowInfo
@@ -23,11 +24,7 @@ class _DistancePlaceRowInfo
   const _DistancePlaceRowInfo(this.places);
 
   @override
-  List<Object> get columns => const [
-        'Place',
-        Icons.person,
-        'Distance',
-      ];
+  List<Object> get columns => const ['Place', Icons.person, 'Distance'];
 
   @override
   Color subEntryColor(Candidate subEntry) => subEntry.color;
@@ -43,7 +40,7 @@ class _DistancePlaceRowInfo
       switch (columnName) {
         0 => entry.place.toString(),
         2 => entry.averageDistance.toStringAsFixed(2),
-        _ => super.textForColumn(columnName, entry)
+        _ => super.textForColumn(columnName, entry),
       };
 
   @override

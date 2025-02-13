@@ -15,11 +15,7 @@ class IrvElection<TCandidate extends Comparable>
     List<RankedBallot<TCandidate>> ballots,
     List<ElectionPlace<TCandidate>> places,
     this.rounds,
-  ) : super(
-          candidates: candidates,
-          ballots: ballots,
-          places: places,
-        );
+  ) : super(candidates: candidates, ballots: ballots, places: places);
 
   factory IrvElection(
     List<RankedBallot<TCandidate>> ballots, {
@@ -54,8 +50,9 @@ class IrvElection<TCandidate extends Comparable>
     final places = <ElectionPlace<TCandidate>>[];
     for (var round in rounds.reversed) {
       for (var roundPlace in round.places) {
-        final copy = roundPlace.toList()
-          ..removeWhere(places.expand((candidate) => candidate).contains);
+        final copy =
+            roundPlace.toList()
+              ..removeWhere(places.expand((candidate) => candidate).contains);
 
         if (copy.isNotEmpty) {
           candidatesInRounds.addAll(copy);

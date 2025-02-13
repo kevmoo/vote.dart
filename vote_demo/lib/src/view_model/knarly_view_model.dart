@@ -10,7 +10,7 @@ class KnarlyViewModel extends ChangeNotifier {
   ElectionData? _electionData;
 
   KnarlyViewModel(Iterable<KnarlyEditor> editors)
-      : _editors = editors.toList(growable: false) {
+    : _editors = editors.toList(growable: false) {
     assert(_editors.isNotEmpty);
     _editor.addListener(_editorValueUpdated);
   }

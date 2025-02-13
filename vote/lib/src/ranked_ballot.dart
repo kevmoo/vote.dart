@@ -14,9 +14,7 @@ class RankedBallot<TCandidate extends Comparable>
 
   final List<TCandidate> rank;
 
-  RankedBallot(this.rank)
-      : assert(rank.isNotEmpty),
-        assert(allUnique(rank));
+  RankedBallot(this.rank) : assert(rank.isNotEmpty), assert(allUnique(rank));
 
   @override
   Iterable<TCandidate> referencedCandidates() => rank;

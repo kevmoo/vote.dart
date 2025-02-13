@@ -9,8 +9,8 @@ class BallotLine<TCandidate extends Comparable>
   final List<TCandidate> candidates;
 
   BallotLine(this.count, this.candidates)
-      : assert(count > 0),
-        assert(allUnique(candidates));
+    : assert(count > 0),
+      assert(allUnique(candidates));
 
   @override
   bool operator ==(Object other) {

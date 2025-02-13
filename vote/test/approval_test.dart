@@ -5,14 +5,11 @@ import 'plurality_test_shared.dart';
 
 void main() {
   registerPluralityTests(
-    (
-      List<PluralityBallot<String>> ballots, {
-      List<String>? candidates,
-    }) =>
+    (List<PluralityBallot<String>> ballots, {List<String>? candidates}) =>
         ApprovalElection(
-      ballots.map((e) => ApprovalBallot({e.choice})).toList(),
-      candidates: candidates,
-    ),
+          ballots.map((e) => ApprovalBallot({e.choice})).toList(),
+          candidates: candidates,
+        ),
   );
 
   group('common favorite', () {

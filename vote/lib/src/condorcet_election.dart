@@ -18,11 +18,7 @@ class CondorcetElection<TCandidate extends Comparable>
     List<TCandidate> candidates,
     List<RankedBallot<TCandidate>> ballots,
     List<ElectionPlace<TCandidate>> places,
-  ) : super(
-          candidates: candidates,
-          ballots: ballots,
-          places: places,
-        );
+  ) : super(candidates: candidates, ballots: ballots, places: places);
 
   factory CondorcetElection(
     List<RankedBallot<TCandidate>> ballots, {
@@ -69,10 +65,11 @@ abstract mixin class CondorcetElectionResult<TCandidate extends Comparable>
   factory CondorcetElectionResult.fromPairs(
     Set<CondorcetPair<TCandidate>> pairs,
   ) {
-    final candidateList = pairs
-        .expand((element) => [element.candidate1, element.candidate2])
-        .toSet()
-        .toList();
+    final candidateList =
+        pairs
+            .expand((element) => [element.candidate1, element.candidate2])
+            .toSet()
+            .toList();
 
     final places = _calculatePlaces(candidateList, pairs);
 
@@ -145,22 +142,22 @@ List<ElectionPlace<TCandidate>> _calculatePlaces<TCandidate extends Comparable>(
     candidateMap.keys,
     (node) => candidateMap[node]!,
   )..sort((a, b) {
-      final firstA = a.first;
-      final firstB = b.first;
+    final firstA = a.first;
+    final firstB = b.first;
 
-      final pair = pairs.singleWhere((p) => p.matches(firstA, firstB));
+    final pair = pairs.singleWhere((p) => p.matches(firstA, firstB));
 
-      if (pair.isTie) {
-        return 0;
-      }
+    if (pair.isTie) {
+      return 0;
+    }
 
-      if (pair.winner == firstA) {
-        return -1;
-      }
+    if (pair.winner == firstA) {
+      return -1;
+    }
 
-      assert(pair.winner == firstB);
-      return 1;
-    });
+    assert(pair.winner == firstB);
+    return 1;
+  });
 
   final places = <ElectionPlace<TCandidate>>[];
   var placeNumber = 1;

@@ -26,9 +26,10 @@ class VoteTownEditor extends KnarlyEditor<VoteTown> {
     return () {
       setValue(
         value.copyPlusACandidate(
-          tryLocation: _locationMemory.length > candidateCount
-              ? _locationMemory[candidateCount]
-              : null,
+          tryLocation:
+              _locationMemory.length > candidateCount
+                  ? _locationMemory[candidateCount]
+                  : null,
         ),
       );
     };
@@ -97,8 +98,11 @@ class VoteTownEditor extends KnarlyEditor<VoteTown> {
 
     final candidatesCopy = value.candidates.toList(growable: false);
     final candidateIndex = value.candidates.indexOf(candidate);
-    candidatesCopy[candidateIndex] =
-        TownCandidate(candidate.index, candidate.hue, newFixedLocation);
+    candidatesCopy[candidateIndex] = TownCandidate(
+      candidate.index,
+      candidate.hue,
+      newFixedLocation,
+    );
 
     setValue(VoteTown(candidatesCopy));
   }

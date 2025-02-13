@@ -5,10 +5,11 @@ import 'package:vote/src/plurality_ballot.dart';
 
 import 'test_util.dart';
 
-typedef ElectionFactory = Election<String, ElectionPlace<String>> Function(
-  List<PluralityBallot<String>> ballots, {
-  List<String>? candidates,
-});
+typedef ElectionFactory =
+    Election<String, ElectionPlace<String>> Function(
+      List<PluralityBallot<String>> ballots, {
+      List<String>? candidates,
+    });
 
 void registerPluralityTests(ElectionFactory electionFactory) {
   test('single vote, single winner', () {
@@ -51,10 +52,7 @@ void registerPluralityTests(ElectionFactory electionFactory) {
   });
 
   test('include candidate with no votes', () {
-    const ballots = [
-      PluralityBallot('2'),
-      PluralityBallot('1'),
-    ];
+    const ballots = [PluralityBallot('2'), PluralityBallot('1')];
 
     final election = electionFactory(
       ballots,
@@ -67,10 +65,7 @@ void registerPluralityTests(ElectionFactory electionFactory) {
   });
 
   test('assert if ballot includes candidate that is not present', () {
-    const ballots = [
-      PluralityBallot('2'),
-      PluralityBallot('1'),
-    ];
+    const ballots = [PluralityBallot('2'), PluralityBallot('1')];
 
     expect(
       () => electionFactory(ballots, candidates: const ['3']),

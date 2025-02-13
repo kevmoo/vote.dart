@@ -8,7 +8,7 @@ class PluralityElectionPlace<TCandidate extends Comparable>
   final int voteCount;
 
   PluralityElectionPlace(super.place, super.candidates, this.voteCount)
-      : assert(voteCount >= 0);
+    : assert(voteCount >= 0);
 
   @override
   String toString() => 'Votes: $voteCount; ${super.toString()}';

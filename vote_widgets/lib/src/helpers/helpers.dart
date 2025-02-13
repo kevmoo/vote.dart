@@ -11,8 +11,12 @@ Map<T, Color> huesForCandidates<T extends Comparable<T>>(
         sorted.length,
         (index) => MapEntry(
           sorted[index],
-          HSVColor.fromAHSV(1, candidateHues[index], colorSaturation, 1)
-              .toColor(),
+          HSVColor.fromAHSV(
+            1,
+            candidateHues[index],
+            colorSaturation,
+            1,
+          ).toColor(),
         ),
       ),
     );

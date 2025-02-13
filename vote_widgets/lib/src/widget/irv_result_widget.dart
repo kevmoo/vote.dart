@@ -16,18 +16,19 @@ class IrvResultWidget<TCandidate extends Candidate> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Consumer<IrvElection<TCandidate>>(
-        builder: (context, irvElection, __) => Table(
+    builder:
+        (context, irvElection, __) => Table(
           columnWidths: {
             0: const FlexColumnWidth(2),
             for (var i = 0; i < irvElection.candidates.length; i++)
               i + 1: const FlexColumnWidth(),
           },
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          children: _rowsForElection(irvElection)
-              .map((list) => TableRow(children: list))
-              .toList(growable: false),
+          children: _rowsForElection(
+            irvElection,
+          ).map((list) => TableRow(children: list)).toList(growable: false),
         ),
-      );
+  );
 
   Iterable<List<Widget>> _rowsForElection(
     IrvElection<TCandidate> election,
@@ -37,17 +38,13 @@ class IrvResultWidget<TCandidate extends Candidate> extends StatelessWidget {
       final roundData = [
         for (var i = 0; i < round.places.length; i++)
           for (var candidate in round.places[i])
-            _Data(
-              round.places[i].place,
-              round.places[i],
-              candidate,
-            ),
+            _Data(round.places[i].place, round.places[i], candidate),
       ];
 
       List<Widget> createFillers() => List<Widget>.generate(
-            election.candidates.length - roundData.length,
-            (_) => const SizedBox(),
-          );
+        election.candidates.length - roundData.length,
+        (_) => const SizedBox(),
+      );
 
       // Only output place numbers on the first round and follow-up rounds
       // if the place data changes.
@@ -97,9 +94,10 @@ class IrvResultWidget<TCandidate extends Candidate> extends StatelessWidget {
           PaddedText(
             text: item.place.voteCount.toString(),
             background: item.candidate.color,
-            style: (round.isFinal && item.place.topPlace)
-                ? winnerTextStyle
-                : round.eliminationForCandidate(item.candidate) == null
+            style:
+                (round.isFinal && item.place.topPlace)
+                    ? winnerTextStyle
+                    : round.eliminationForCandidate(item.candidate) == null
                     ? null
                     : const TextStyle(fontStyle: FontStyle.italic),
           ),
@@ -110,9 +108,10 @@ class IrvResultWidget<TCandidate extends Candidate> extends StatelessWidget {
       for (var elimination in round.eliminations) {
         Widget eliminationContent(TCandidate candidate) {
           if (candidate == elimination.candidate) {
-            final content = elimination.transferredCandidates.isEmpty
-                ? Icons.close
-                : Icons.subdirectory_arrow_left;
+            final content =
+                elimination.transferredCandidates.isEmpty
+                    ? Icons.close
+                    : Icons.subdirectory_arrow_left;
             return Icon(content);
           }
 
@@ -126,7 +125,8 @@ class IrvResultWidget<TCandidate extends Candidate> extends StatelessWidget {
         yield <Widget>[
           PaddedText.bits(
             text: elimination.candidate.id,
-            tooltip: 'Candidate ${elimination.candidate.id} eliminated.\n'
+            tooltip:
+                'Candidate ${elimination.candidate.id} eliminated.\n'
                 'Votes redistributed.',
             textAlign: TextAlign.right,
             fontStyle: FontStyle.italic,
@@ -147,11 +147,7 @@ class _Data<TCandidate extends Candidate> {
   final TCandidate candidate;
   final PluralityElectionPlace<TCandidate> place;
 
-  _Data(
-    this.placeNumber,
-    this.place,
-    this.candidate,
-  );
+  _Data(this.placeNumber, this.place, this.candidate);
 
   @override
   bool operator ==(Object other) =>

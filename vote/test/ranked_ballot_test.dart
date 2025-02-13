@@ -8,21 +8,15 @@ void main() {
   final c2 = 'candidate 2';
 
   test('no empty candidates', () {
-    expect(
-      () {
-        RankedBallot<int>(const []);
-      },
-      throwsAssertionError,
-    );
+    expect(() {
+      RankedBallot<int>(const []);
+    }, throwsAssertionError);
   });
 
   test('no dupe candidates', () {
-    expect(
-      () {
-        RankedBallot([c1, c1]);
-      },
-      throwsAssertionError,
-    );
+    expect(() {
+      RankedBallot([c1, c1]);
+    }, throwsAssertionError);
   });
 
   test('1 candidate is cool', () {

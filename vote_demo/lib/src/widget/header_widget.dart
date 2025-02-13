@@ -27,38 +27,39 @@ class _HeaderWidgetState extends State<HeaderWidget> {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(5),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Row(
-              children: [
-                Flexible(child: Container()),
-                Expanded(
-                  flex: 6,
-                  child: Text(
-                    widget.header,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                ),
-                Flexible(
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    child: widget.extraHelp == null
+    padding: const EdgeInsets.all(5),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Row(
+          children: [
+            Flexible(child: Container()),
+            Expanded(
+              flex: 6,
+              child: Text(
+                widget.header,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+            ),
+            Flexible(
+              child: Container(
+                alignment: Alignment.centerRight,
+                child:
+                    widget.extraHelp == null
                         ? null
                         : IconButton(
-                            icon: const Icon(Icons.info_outline),
-                            onPressed: _snackHandler(context),
-                          ),
-                  ),
-                ),
-              ],
+                          icon: const Icon(Icons.info_outline),
+                          onPressed: _snackHandler(context),
+                        ),
+              ),
             ),
-            widget.child,
           ],
         ),
-      );
+        widget.child,
+      ],
+    ),
+  );
 
   Widget _extraHelpContent() {
     final extraHelp = widget.extraHelp!;
@@ -80,28 +81,25 @@ class _HeaderWidgetState extends State<HeaderWidget> {
   }
 
   void Function() _snackHandler(BuildContext context) => () {
-        final messenger = ScaffoldMessenger.of(context);
+    final messenger = ScaffoldMessenger.of(context);
 
-        if (_closeSnackbarIfOpen()) {
-          return;
-        }
+    if (_closeSnackbarIfOpen()) {
+      return;
+    }
 
-        final snackBar = SnackBar(
-          duration: const Duration(seconds: 10),
-          content: _extraHelpContent(),
-          action: SnackBarAction(
-            label: 'Close',
-            onPressed: _closeSnackbarIfOpen,
-          ),
-        );
+    final snackBar = SnackBar(
+      duration: const Duration(seconds: 10),
+      content: _extraHelpContent(),
+      action: SnackBarAction(label: 'Close', onPressed: _closeSnackbarIfOpen),
+    );
 
-        messenger.clearSnackBars();
+    messenger.clearSnackBars();
 
-        _snackbarController = messenger.showSnackBar(snackBar);
-        _snackbarController!.closed.then((value) {
-          _snackbarController = null;
-        });
-      };
+    _snackbarController = messenger.showSnackBar(snackBar);
+    _snackbarController!.closed.then((value) {
+      _snackbarController = null;
+    });
+  };
 
   bool _closeSnackbarIfOpen() {
     final controller = _snackbarController;

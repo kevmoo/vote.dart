@@ -25,7 +25,7 @@ class IrvRound<TCandidate extends Comparable> {
   Iterable<TCandidate> get candidates => places.expand((p) => p);
 
   const IrvRound._internal(this.number, this.places, this.eliminations)
-      : assert(number > 0);
+    : assert(number > 0);
 
   factory IrvRound(
     int roundNumber,
@@ -42,9 +42,9 @@ class IrvRound<TCandidate extends Comparable> {
 
     final candidateAllocations =
         groupBy<_CleanedBallot<TCandidate>, TCandidate>(
-      cleanedBallots.where((cb) => cb.winner != null),
-      (cb) => cb.winner!,
-    );
+          cleanedBallots.where((cb) => cb.winner != null),
+          (cb) => cb.winner!,
+        );
 
     final voteGroups = groupBy<TCandidate, int>(
       candidateAllocations.keys,
@@ -56,59 +56,60 @@ class IrvRound<TCandidate extends Comparable> {
       ..sort((a, b) => b.compareTo(a));
 
     var placeNumber = 1;
-    final places = placeVotes.map((vote) {
-      final voteGroup = voteGroups[vote]!..sort();
-      final currentPlaceNumber = placeNumber;
-      placeNumber += voteGroup.length;
-      return PluralityElectionPlace<TCandidate>(
-        currentPlaceNumber,
-        voteGroup,
-        vote,
-      );
-    }).toList(growable: false);
+    final places = placeVotes
+        .map((vote) {
+          final voteGroup = voteGroups[vote]!..sort();
+          final currentPlaceNumber = placeNumber;
+          placeNumber += voteGroup.length;
+          return PluralityElectionPlace<TCandidate>(
+            currentPlaceNumber,
+            voteGroup,
+            vote,
+          );
+        })
+        .toList(growable: false);
 
-    final newlyEliminatedCandidates =
-        _getEliminatedCandidates<TCandidate>(places);
-
-    final eliminations = newlyEliminatedCandidates.map((TCandidate c) {
-      final transfers = <TCandidate, List<RankedBallot<TCandidate>>>{};
-
-      final exhausted = <RankedBallot<TCandidate>>[];
-
-      for (var cb in cleanedBallots.where((cb) => cb.winner == c)) {
-        final rb = cb.ballot;
-        final pruned =
-            cb.remaining.where((c) => !newlyEliminatedCandidates.contains(c));
-        if (pruned.isEmpty) {
-          // we're exhausted
-          exhausted.add(rb);
-        } else {
-          // #2 gets the transfer
-          final runnerUp = pruned.first;
-          transfers.putIfAbsent(runnerUp, () => []).add(rb);
-        }
-      }
-
-      return IrvElimination<TCandidate>(c, transfers, exhausted);
-    }).toList(growable: false);
-
-    return IrvRound<TCandidate>._internal(
-      roundNumber,
+    final newlyEliminatedCandidates = _getEliminatedCandidates<TCandidate>(
       places,
-      eliminations,
     );
+
+    final eliminations = newlyEliminatedCandidates
+        .map((TCandidate c) {
+          final transfers = <TCandidate, List<RankedBallot<TCandidate>>>{};
+
+          final exhausted = <RankedBallot<TCandidate>>[];
+
+          for (var cb in cleanedBallots.where((cb) => cb.winner == c)) {
+            final rb = cb.ballot;
+            final pruned = cb.remaining.where(
+              (c) => !newlyEliminatedCandidates.contains(c),
+            );
+            if (pruned.isEmpty) {
+              // we're exhausted
+              exhausted.add(rb);
+            } else {
+              // #2 gets the transfer
+              final runnerUp = pruned.first;
+              transfers.putIfAbsent(runnerUp, () => []).add(rb);
+            }
+          }
+
+          return IrvElimination<TCandidate>(c, transfers, exhausted);
+        })
+        .toList(growable: false);
+
+    return IrvRound<TCandidate>._internal(roundNumber, places, eliminations);
   }
 
   IrvElimination<TCandidate>? eliminationForCandidate(TCandidate candidate) =>
       eliminations.cast<IrvElimination<TCandidate>?>().singleWhere(
-            (e) => e?.candidate == candidate,
-            orElse: () => null,
-          );
+        (e) => e?.candidate == candidate,
+        orElse: () => null,
+      );
 
-  static List<TCandidate>
-      _getEliminatedCandidates<TCandidate extends Comparable>(
-    List<PluralityElectionPlace<TCandidate>> places,
-  ) {
+  static List<TCandidate> _getEliminatedCandidates<
+    TCandidate extends Comparable
+  >(List<PluralityElectionPlace<TCandidate>> places) {
     assert(places.isNotEmpty);
 
     if (places.length == 1) {
@@ -119,8 +120,9 @@ class IrvRound<TCandidate extends Comparable> {
     // duh, I know. Being paranoid.
     assert(places.length >= 2);
 
-    final totalVotes =
-        places.map((p) => p.voteCount * p.length).fold<int>(0, (a, b) => a + b);
+    final totalVotes = places
+        .map((p) => p.voteCount * p.length)
+        .fold<int>(0, (a, b) => a + b);
 
     final majorityCount = majorityThreshold(totalVotes);
 

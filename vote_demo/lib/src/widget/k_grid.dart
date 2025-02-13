@@ -6,11 +6,8 @@ import 'package:flutter/widgets.dart';
 class KGrid extends MultiChildRenderObjectWidget {
   final double maxCrossAxisExtent;
 
-  const KGrid({
-    super.key,
-    required this.maxCrossAxisExtent,
-    super.children,
-  }) : assert(maxCrossAxisExtent > 0);
+  const KGrid({super.key, required this.maxCrossAxisExtent, super.children})
+    : assert(maxCrossAxisExtent > 0);
 
   @override
   RenderObject createRenderObject(BuildContext context) => _KGrid(this);
@@ -42,20 +39,25 @@ class _KGrid extends RenderBox
       constraints.maxWidth ~/ _kStackParent.maxCrossAxisExtent,
     );
 
-    final columnWidth =
-        math.min(_kStackParent.maxCrossAxisExtent, constraints.maxWidth);
+    final columnWidth = math.min(
+      _kStackParent.maxCrossAxisExtent,
+      constraints.maxWidth,
+    );
     final innerConstraints = BoxConstraints.tightFor(width: columnWidth);
 
     var child = firstChild;
     while (child != null) {
       var rowExtent = 0.0;
 
-      for (var currentColumn = 0;
-          currentColumn < columnCount && child != null;
-          currentColumn++) {
+      for (
+        var currentColumn = 0;
+        currentColumn < columnCount && child != null;
+        currentColumn++
+      ) {
         child.layout(innerConstraints, parentUsesSize: true);
-        final childParentData = (child.parentData as _KGridParentData)
-          ..offset = Offset(currentColumn * columnWidth, mainAxisExtent);
+        final childParentData =
+            (child.parentData as _KGridParentData)
+              ..offset = Offset(currentColumn * columnWidth, mainAxisExtent);
 
         rowExtent = math.max(rowExtent, child.size.height);
 
@@ -65,10 +67,7 @@ class _KGrid extends RenderBox
     }
 
     size = constraints.constrain(
-      Size(
-        columnCount * columnWidth,
-        mainAxisExtent,
-      ),
+      Size(columnCount * columnWidth, mainAxisExtent),
     );
   }
 
@@ -78,9 +77,6 @@ class _KGrid extends RenderBox
   }
 
   @override
-  bool hitTestChildren(
-    BoxHitTestResult result, {
-    required Offset position,
-  }) =>
+  bool hitTestChildren(BoxHitTestResult result, {required Offset position}) =>
       defaultHitTestChildren(result, position: position);
 }

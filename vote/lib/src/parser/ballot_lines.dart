@@ -18,12 +18,11 @@ class BallotLines<TCandidate extends Comparable> {
 
   final String Function(TCandidate) candidateToText;
 
-  BallotLines(
-    this._lines, {
-    this.candidateToText = _defaultCandidateText,
-  })  : countWidth = _longest(_lines.map((l) => l.count.toString())),
-        candidateWidth =
-            _longest(_lines.expand((l) => l.candidates).map(candidateToText));
+  BallotLines(this._lines, {this.candidateToText = _defaultCandidateText})
+    : countWidth = _longest(_lines.map((l) => l.count.toString())),
+      candidateWidth = _longest(
+        _lines.expand((l) => l.candidates).map(candidateToText),
+      );
 
   factory BallotLines.fromBallots(
     Iterable<RankedBallot<TCandidate>> ballots, {
@@ -39,9 +38,8 @@ class BallotLines<TCandidate extends Comparable> {
 
     return BallotLines(
       grouped.entries
-          .map((e) => BallotLine(e.value, e.key.rank))
-          .toList(growable: false)
-        ..sort(),
+        .map((e) => BallotLine(e.value, e.key.rank))
+        .toList(growable: false)..sort(),
       candidateToText: candidateToText,
     );
   }
@@ -65,28 +63,30 @@ class BallotLines<TCandidate extends Comparable> {
     final candidateCache = candidateFromText(candidateStrings);
 
     final lines = map.entries
-        .map(
-          (e) => BallotLine<TCandidate>(
-            e.value,
-            e.key
-                .map((string) => candidateCache[string]!)
-                .toList(growable: false),
-          ),
-        )
-        .toList(growable: false)
-      ..sort();
+      .map(
+        (e) => BallotLine<TCandidate>(
+          e.value,
+          e.key
+              .map((string) => candidateCache[string]!)
+              .toList(growable: false),
+        ),
+      )
+      .toList(growable: false)..sort();
 
     return BallotLines(lines, candidateToText: candidateToText);
   }
 
   String? _text;
 
-  String get text => _text ??= _lines.map((b) {
-        final candidates = b.candidates
-            .map((c) => candidateToText(c).padRight(candidateWidth))
-            .join(' > ');
-        return '${b.count.toString().padLeft(countWidth)} : $candidates';
-      }).join('\n');
+  String get text =>
+      _text ??= _lines
+          .map((b) {
+            final candidates = b.candidates
+                .map((c) => candidateToText(c).padRight(candidateWidth))
+                .join(' > ');
+            return '${b.count.toString().padLeft(countWidth)} : $candidates';
+          })
+          .join('\n');
 
   Iterable<RankedBallot<TCandidate>> get ballots sync* {
     for (var line in _lines) {
@@ -105,8 +105,8 @@ class BallotLines<TCandidate extends Comparable> {
 }
 
 int _longest(Iterable<String> values) => values.fold<int>(0, (length, c) {
-      if (c.length > length) {
-        return c.length;
-      }
-      return length;
-    });
+  if (c.length > length) {
+    return c.length;
+  }
+  return length;
+});
