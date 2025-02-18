@@ -431,7 +431,7 @@ class CompiledApp {
       _1534: f => finalizeWrapper(f, function(x0,x1) { return dartInstance.exports._1534(f,arguments.length,x0,x1) }),
       _1535: x0 => new Promise(x0),
       _1539: x0 => x0.length,
-      _1631: (x0,x1,x2,x3) => x0.open(x1,x2,x3),
+      _1622: (x0,x1,x2,x3) => x0.open(x1,x2,x3),
       _1651: x0 => new Array(x0),
       _1653: x0 => x0.length,
       _1655: (x0,x1) => x0[x1],

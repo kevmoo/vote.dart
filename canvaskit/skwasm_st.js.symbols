@@ -17,9 +17,9 @@
 16:__wasi_fd_close
 17:__syscall_fcntl64
 18:skwasm_setAssociatedObjectOnThread
-19:skwasm_resolveAndPostImages
-20:skwasm_resizeCanvas
-21:skwasm_postRasterizeResult
+19:skwasm_resizeCanvas
+20:skwasm_postRasterizeResult
+21:skwasm_postImages
 22:skwasm_getAssociatedObject
 23:skwasm_disposeAssociatedObjectOnThread
 24:skwasm_dispatchRenderPictures
