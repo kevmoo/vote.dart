@@ -1,0 +1,19 @@
+{
+    "name": "Election Method Simulation",
+    "short_name": "ElectionSim",
+    "start_url": ".",
+    "display": "browser",
+    "description": "Move candidates around a virtual town and see how an election turns out using different voting methods.",
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
