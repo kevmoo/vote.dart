@@ -23017,7 +23017,7 @@ A.aeX.prototype={
 $1(a){var s=A.dC().b
 if(s==null)s=null
 else{s=s.canvasKitBaseUrl
-if(s==null)s=null}return(s==null?"https://www.gstatic.com/flutter-canvaskit/a8d1b6238219f585c462b11276574c323b8014f4/":s)+a},
+if(s==null)s=null}return(s==null?"https://www.gstatic.com/flutter-canvaskit/e039a911c5e5d5d526b88b6e86c5f30fb8d71f7e/":s)+a},
 $S:175}
 A.Sa.prototype={
 e6(a,b){var s,r=this.a
