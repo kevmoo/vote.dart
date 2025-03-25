@@ -982,7 +982,7 @@
 981:SkSL::Analysis::UpdateVariableRefKind\28SkSL::Expression*\2c\20SkSL::VariableRefKind\2c\20SkSL::ErrorReporter*\29
 982:SkRegion::setEmpty\28\29
 983:SkRasterPipeline::run\28unsigned\20long\2c\20unsigned\20long\2c\20unsigned\20long\2c\20unsigned\20long\29\20const
-984:SkRasterPipeline::appendLoadDst\28SkColorType\2c\20SkRasterPipeline_MemoryCtx\20const*\29
+984:SkRasterPipeline::appendLoadDst\28SkColorType\2c\20SkRasterPipelineContexts::MemoryCtx\20const*\29
 985:SkRRect::setRectRadii\28SkRect\20const&\2c\20SkPoint\20const*\29
 986:SkPointPriv::DistanceToLineSegmentBetweenSqd\28SkPoint\20const&\2c\20SkPoint\20const&\2c\20SkPoint\20const&\29
 987:SkPath::arcTo\28SkRect\20const&\2c\20float\2c\20float\2c\20bool\29
@@ -1139,7 +1139,7 @@
 1138:SkRegion::SkRegion\28SkIRect\20const&\29
 1139:SkRect::toQuad\28SkPoint*\29\20const
 1140:SkRasterPipeline::appendTransferFunction\28skcms_TransferFunction\20const&\29
-1141:SkRasterPipeline::appendStore\28SkColorType\2c\20SkRasterPipeline_MemoryCtx\20const*\29
+1141:SkRasterPipeline::appendStore\28SkColorType\2c\20SkRasterPipelineContexts::MemoryCtx\20const*\29
 1142:SkRasterClip::SkRasterClip\28\29
 1143:SkRRect::checkCornerContainment\28float\2c\20float\29\20const
 1144:SkPictureData::getImage\28SkReadBuffer*\29\20const
@@ -2586,7 +2586,7 @@
 2585:skia_private::TArray<unsigned\20short\2c\20true>::resize_back\28int\29
 2586:skia_private::TArray<skia_private::THashMap<SkSL::Variable\20const*\2c\20SkSL::Expression\20const*\2c\20SkGoodHash>\2c\20false>::move\28void*\29
 2587:skia_private::TArray<SkResourceCache::PurgeSharedIDMessage\2c\20true>::operator=\28skia_private::TArray<SkResourceCache::PurgeSharedIDMessage\2c\20true>&&\29
-2588:skia_private::TArray<SkRasterPipeline_MemoryCtxInfo\2c\20true>::push_back\28SkRasterPipeline_MemoryCtxInfo&&\29
+2588:skia_private::TArray<SkRasterPipelineContexts::MemoryCtxInfo\2c\20true>::push_back\28SkRasterPipelineContexts::MemoryCtxInfo&&\29
 2589:skia_private::TArray<SkPath\2c\20true>::push_back_raw\28int\29
 2590:skia_private::TArray<GrGLAttribArrayState::AttribArrayState\2c\20true>::resize_back\28int\29
 2591:skia_png_write_chunk
@@ -2932,7 +2932,7 @@
 2931:SkRasterPipelineBlitter::blitRect\28int\2c\20int\2c\20int\2c\20int\29
 2932:SkRasterPipelineBlitter::blitMask\28SkMask\20const&\2c\20SkIRect\20const&\29
 2933:SkRasterPipelineBlitter::Create\28SkPixmap\20const&\2c\20SkPaint\20const&\2c\20SkRGBA4f<\28SkAlphaType\293>\20const&\2c\20SkArenaAlloc*\2c\20SkRasterPipeline\20const&\2c\20bool\2c\20bool\2c\20SkShader\20const*\29
-2934:SkRasterPipeline::appendLoad\28SkColorType\2c\20SkRasterPipeline_MemoryCtx\20const*\29
+2934:SkRasterPipeline::appendLoad\28SkColorType\2c\20SkRasterPipelineContexts::MemoryCtx\20const*\29
 2935:SkRasterClip::op\28SkPath\20const&\2c\20SkMatrix\20const&\2c\20SkClipOp\2c\20bool\29
 2936:SkRRectPriv::ConservativeIntersect\28SkRRect\20const&\2c\20SkRRect\20const&\29
 2937:SkRRect::scaleRadii\28\29
@@ -4608,7 +4608,7 @@
 4607:SkReadBuffer::readArray\28void*\2c\20unsigned\20long\2c\20unsigned\20long\29
 4608:SkRasterPipeline::tailPointer\28\29
 4609:SkRasterPipeline::appendSetRGB\28SkArenaAlloc*\2c\20float\20const*\29
-4610:SkRasterPipeline::addMemoryContext\28SkRasterPipeline_MemoryCtx*\2c\20int\2c\20bool\2c\20bool\29
+4610:SkRasterPipeline::addMemoryContext\28SkRasterPipelineContexts::MemoryCtx*\2c\20int\2c\20bool\2c\20bool\29
 4611:SkRasterClipStack::SkRasterClipStack\28int\2c\20int\29
 4612:SkRTreeFactory::operator\28\29\28\29\20const
 4613:SkRTree::search\28SkRTree::Node*\2c\20SkRect\20const&\2c\20std::__2::vector<int\2c\20std::__2::allocator<int>>*\29\20const
@@ -7042,7 +7042,7 @@
 7041:portable::store_1010102_xr\28portable::Params*\2c\20SkRasterPipelineStage*\2c\20float\2c\20float\2c\20float\2c\20float\29
 7042:portable::store_1010102\28portable::Params*\2c\20SkRasterPipelineStage*\2c\20float\2c\20float\2c\20float\2c\20float\29
 7043:portable::store_10101010_xr\28portable::Params*\2c\20SkRasterPipelineStage*\2c\20float\2c\20float\2c\20float\2c\20float\29
-7044:portable::start_pipeline\28unsigned\20long\2c\20unsigned\20long\2c\20unsigned\20long\2c\20unsigned\20long\2c\20SkRasterPipelineStage*\2c\20SkSpan<SkRasterPipeline_MemoryCtxPatch>\2c\20unsigned\20char*\29
+7044:portable::start_pipeline\28unsigned\20long\2c\20unsigned\20long\2c\20unsigned\20long\2c\20unsigned\20long\2c\20SkRasterPipelineStage*\2c\20SkSpan<SkRasterPipelineContexts::MemoryCtxPatch>\2c\20unsigned\20char*\29
 7045:portable::stack_rewind\28portable::Params*\2c\20SkRasterPipelineStage*\2c\20float\2c\20float\2c\20float\2c\20float\29
 7046:portable::stack_checkpoint\28portable::Params*\2c\20SkRasterPipelineStage*\2c\20float\2c\20float\2c\20float\2c\20float\29
 7047:portable::srcover_rgba_8888\28portable::Params*\2c\20SkRasterPipelineStage*\2c\20float\2c\20float\2c\20float\2c\20float\29
