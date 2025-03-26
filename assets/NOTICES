@@ -1881,7 +1881,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 boringssl
 
-Copyright (c) 2025, Google Inc.
+Copyright 2025 The BoringSSL Authors
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
@@ -4609,7 +4609,7 @@ Exhibit B - "Incompatible With Secondary Licenses" Notice
   This Source Code Form is "Incompatible With Secondary Licenses", as
   defined by the Mozilla Public License, v. 2.0.
 
-You may obtain a copy of this library's Source Code Form from: https://dart.googlesource.com/sdk/+/31df9f4a0c1222b72359c2ff2a6309b3ea17cfcd
+You may obtain a copy of this library's Source Code Form from: https://dart.googlesource.com/sdk/+/e28bf080514a2d520dfe0663d5a15b41a9c77186
 /third_party/fallback_root_certificates/
 
 --------------------------------------------------------------------------------
