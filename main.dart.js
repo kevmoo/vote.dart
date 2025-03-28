@@ -23175,7 +23175,7 @@ A.afN.prototype={
 $1(a){var s=A.dS().b
 if(s==null)s=null
 else{s=s.canvasKitBaseUrl
-if(s==null)s=null}return(s==null?"https://www.gstatic.com/flutter-canvaskit/a59795e812f22c59450995b16936a7ef07c50b75/":s)+a},
+if(s==null)s=null}return(s==null?"https://www.gstatic.com/flutter-canvaskit/5e94f8a9d431b7b3bec9da9f4f9d47076e591f59/":s)+a},
 $S:172}
 A.SH.prototype={
 e8(a,b){var s,r=this.a
