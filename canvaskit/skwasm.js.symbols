@@ -5338,7 +5338,7 @@
 5337:skgpu::RectanizerSkyline::addRect\28int\2c\20int\2c\20SkIPoint16*\29
 5338:skgpu::RectanizerSkyline::RectanizerSkyline\28int\2c\20int\29
 5339:skgpu::Plot::~Plot\28\29
-5340:skgpu::Plot::resetRects\28\29
+5340:skgpu::Plot::resetRects\28bool\29
 5341:skgpu::Plot::Plot\28int\2c\20int\2c\20skgpu::AtlasGenerationCounter*\2c\20int\2c\20int\2c\20int\2c\20int\2c\20SkColorType\2c\20unsigned\20long\29
 5342:skgpu::KeyBuilder::flush\28\29
 5343:skgpu::KeyBuilder::addBits\28unsigned\20int\2c\20unsigned\20int\2c\20std::__2::basic_string_view<char\2c\20std::__2::char_traits<char>>\29

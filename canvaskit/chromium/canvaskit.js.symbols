@@ -1755,7 +1755,7 @@
 1754:skgpu::ganesh::ClipStack::getConservativeBounds\28\29\20const
 1755:skgpu::TAsyncReadResult<GrGpuBuffer\2c\20GrDirectContext::DirectContextID\2c\20skgpu::ganesh::SurfaceContext::PixelTransferResult>::addTransferResult\28skgpu::ganesh::SurfaceContext::PixelTransferResult\20const&\2c\20SkISize\2c\20unsigned\20long\2c\20skgpu::TClientMappedBufferManager<GrGpuBuffer\2c\20GrDirectContext::DirectContextID>*\29
 1756:skgpu::Swizzle::apply\28SkRasterPipeline*\29\20const
-1757:skgpu::Plot::resetRects\28\29
+1757:skgpu::Plot::resetRects\28bool\29
 1758:skcms_TransferFunction_invert
 1759:ps_dimension_add_t1stem
 1760:powf
