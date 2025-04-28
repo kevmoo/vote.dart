@@ -474,16 +474,16 @@ class CompiledApp {
       _1378: Function.prototype.call.bind(DataView.prototype.setFloat32),
       _1379: Function.prototype.call.bind(DataView.prototype.getFloat64),
       _1380: Function.prototype.call.bind(DataView.prototype.setFloat64),
-      _1397: o => Object.keys(o),
-      _1398: (ms, c) =>
+      _1393: (ms, c) =>
       setTimeout(() => dartInstance.exports.$invokeCallback(c),ms),
-      _1399: (handle) => clearTimeout(handle),
-      _1400: (ms, c) =>
+      _1394: (handle) => clearTimeout(handle),
+      _1395: (ms, c) =>
       setInterval(() => dartInstance.exports.$invokeCallback(c), ms),
-      _1401: (handle) => clearInterval(handle),
-      _1402: (c) =>
+      _1396: (handle) => clearInterval(handle),
+      _1397: (c) =>
       queueMicrotask(() => dartInstance.exports.$invokeCallback(c)),
-      _1403: () => Date.now(),
+      _1398: () => Date.now(),
+      _1403: o => Object.keys(o),
       _1430: (s, m) => {
         try {
           return new RegExp(s, m);
@@ -2519,10 +2519,12 @@ class CompiledApp {
 "ThemeMode.",
 "_delegateState",
 "vertical",
+"firstIsTop",
 "hardEdge",
 "opaque",
 "HitTestBehavior.",
 "DragStartBehavior.",
+"SliverPaintOrder.",
 "Axis.",
 "onDrag",
 "ScrollViewKeyboardDismissBehavior.",
@@ -2542,6 +2544,7 @@ class CompiledApp {
 "SemanticsRole.",
 "_semantics",
 "RenderViewport.twoPane",
+"lastIsTop",
 "A RenderObject does not have any constraints before it has been laid out.",
 "reverse",
 "GrowthDirection.",
@@ -5305,6 +5308,7 @@ class CompiledApp {
 "mixed",
 "isCheckStateMixed",
 "aria-selected",
+"aria-current",
 "isSelected",
 "valid",
 "invalid",
