@@ -23273,7 +23273,7 @@ $S:2}
 A.ag9.prototype={
 $1(a){var s=A.dS().b
 s=s==null?null:s.canvasKitBaseUrl
-return(s==null?"https://www.gstatic.com/flutter-canvaskit/fe60a2b0b7af1645334c6920ffb401b5ca29f31c/":s)+a},
+return(s==null?"https://www.gstatic.com/flutter-canvaskit/e1a7dafb6914ad8279abda67c1f1688ff76853d4/":s)+a},
 $S:132}
 A.SV.prototype={
 e8(a,b){var s,r=this.a
