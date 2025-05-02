@@ -5333,6 +5333,7 @@ class CompiledApp {
 "-webkit-text-security",
 "EngineSemanticsRole.",
 "tabBar",
+"searchBox",
 "dragHandle",
 "spinButton",
 "comboBox",
