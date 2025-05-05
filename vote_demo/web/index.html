@@ -72,7 +72,13 @@
   {{flutter_build_config}}
   const searchParams = new URLSearchParams(window.location.search);
   const forceCanvaskit = searchParams.get('force_canvaskit') === 'true';
-  const userConfig = forceCanvaskit ? {'renderer': 'canvaskit'} : {};
+  const userConfig = forceCanvaskit ?
+      {'renderer': 'canvaskit'} :
+      {'wasmAllowList': {
+        'gecko': true,
+        'webkit': true,
+        }
+      };
   _flutter.loader.load({
     config: userConfig,
   });
