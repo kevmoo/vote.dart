@@ -1,2 +1,2 @@
 # Configuration for https://pub.dev/packages/peanut
-extra-args: "--wasm --source-maps --pwa-strategy none --base-href /vote.dart/"
+extra-args: "--dump-info --wasm --source-maps --pwa-strategy none --base-href /vote.dart/"

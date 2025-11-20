@@ -50,23 +50,24 @@ class VoteTown extends ElectionData {
         voterSpacing / 2 + y * voterSpacing,
       );
 
-      final rankedCandidates = candidates.toList(growable: false)..sort((a, b) {
-        // using distanceSquared because it's fine for comparison -
-        // and it avoids a square-root
-        final distanceA = (a.location - location).squaredDistanceTo(
-          const Point(0, 0),
-        );
-        final distanceB = (b.location - location).squaredDistanceTo(
-          const Point(0, 0),
-        );
+      final rankedCandidates = candidates.toList(growable: false)
+        ..sort((a, b) {
+          // using distanceSquared because it's fine for comparison -
+          // and it avoids a square-root
+          final distanceA = (a.location - location).squaredDistanceTo(
+            const Point(0, 0),
+          );
+          final distanceB = (b.location - location).squaredDistanceTo(
+            const Point(0, 0),
+          );
 
-        var value = distanceA.compareTo(distanceB);
+          var value = distanceA.compareTo(distanceB);
 
-        if (value == 0) {
-          value = a.id.compareTo(b.id);
-        }
-        return value;
-      });
+          if (value == 0) {
+            value = a.id.compareTo(b.id);
+          }
+          return value;
+        });
 
       return TownVoter(x + y * votersAcross, location, rankedCandidates);
     }

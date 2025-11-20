@@ -147,12 +147,11 @@ class _CandidateWidget extends StatelessWidget {
                   Radius.circular(_candidateScale * 6),
                 ),
               ),
-              shadows:
-                  primary
-                      ? moving
-                          ? _movingCandidateShadows
-                          : _stationaryCandidateShadows
-                      : null,
+              shadows: primary
+                  ? moving
+                        ? _movingCandidateShadows
+                        : _stationaryCandidateShadows
+                  : null,
             ),
             child: Stack(
               children: [

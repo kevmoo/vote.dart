@@ -26,10 +26,9 @@ class VoteTownEditor extends KnarlyEditor<VoteTown> {
     return () {
       setValue(
         value.copyPlusACandidate(
-          tryLocation:
-              _locationMemory.length > candidateCount
-                  ? _locationMemory[candidateCount]
-                  : null,
+          tryLocation: _locationMemory.length > candidateCount
+              ? _locationMemory[candidateCount]
+              : null,
         ),
       );
     };

@@ -55,9 +55,8 @@ class _KGrid extends RenderBox
         currentColumn++
       ) {
         child.layout(innerConstraints, parentUsesSize: true);
-        final childParentData =
-            (child.parentData as _KGridParentData)
-              ..offset = Offset(currentColumn * columnWidth, mainAxisExtent);
+        final childParentData = (child.parentData as _KGridParentData)
+          ..offset = Offset(currentColumn * columnWidth, mainAxisExtent);
 
         rowExtent = math.max(rowExtent, child.size.height);
 

@@ -9,8 +9,9 @@ void main() {
     // ignore: avoid_redundant_argument_values
     final editor = VoteTownEditor(VoteTown.random(candidateCount: count));
 
-    final locations =
-        editor.value.candidates.map((e) => e.intLocation).toList();
+    final locations = editor.value.candidates
+        .map((e) => e.intLocation)
+        .toList();
     expect(locations, hasLength(count));
 
     while (editor.value.candidates.length > 1) {

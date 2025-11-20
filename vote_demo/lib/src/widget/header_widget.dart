@@ -45,13 +45,12 @@ class _HeaderWidgetState extends State<HeaderWidget> {
             Flexible(
               child: Container(
                 alignment: Alignment.centerRight,
-                child:
-                    widget.extraHelp == null
-                        ? null
-                        : IconButton(
-                          icon: const Icon(Icons.info_outline),
-                          onPressed: _snackHandler(context),
-                        ),
+                child: widget.extraHelp == null
+                    ? null
+                    : IconButton(
+                        icon: const Icon(Icons.info_outline),
+                        onPressed: _snackHandler(context),
+                      ),
               ),
             ),
           ],

@@ -68,11 +68,10 @@ class SimpleBallotEditor extends KnarlyEditor<ElectionData> {
   }
 
   void _updateBallots() {
-    _candidateLines =
-        _ballotLines = BallotLines<Candidate>.fromBallots(
-          value.ballots,
-          candidateToText: (c) => c.id,
-        );
+    _candidateLines = _ballotLines = BallotLines<Candidate>.fromBallots(
+      value.ballots,
+      candidateToText: (c) => c.id,
+    );
     textController.text = _ballotLines.text;
   }
 }

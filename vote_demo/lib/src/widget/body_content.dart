@@ -21,39 +21,38 @@ class BodyContent extends StatelessWidget {
     alignment: Alignment.center,
     children: [
       Consumer<VoteTownEditor>(
-        builder:
-            (_, kvm, __) => LayoutBuilder(
-              builder: (context, data) {
-                if (data.maxWidth > 2 * crossAxisWidth) {
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: crossAxisWidth),
-                        child: Column(children: _columnOneChildren(kvm)),
-                      ),
-                      Flexible(
-                        child: KGrid(
-                          maxCrossAxisExtent: crossAxisWidth,
-                          children: _columnTwoChildren(kvm),
-                        ),
-                      ),
-                    ],
-                  );
-                }
-
-                return ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: crossAxisWidth),
-                  child: Column(
-                    children: [
-                      ..._columnOneChildren(kvm),
-                      ..._columnTwoChildren(kvm),
-                    ],
+        builder: (_, kvm, __) => LayoutBuilder(
+          builder: (context, data) {
+            if (data.maxWidth > 2 * crossAxisWidth) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: crossAxisWidth),
+                    child: Column(children: _columnOneChildren(kvm)),
                   ),
-                );
-              },
-            ),
+                  Flexible(
+                    child: KGrid(
+                      maxCrossAxisExtent: crossAxisWidth,
+                      children: _columnTwoChildren(kvm),
+                    ),
+                  ),
+                ],
+              );
+            }
+
+            return ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: crossAxisWidth),
+              child: Column(
+                children: [
+                  ..._columnOneChildren(kvm),
+                  ..._columnTwoChildren(kvm),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     ],
   );

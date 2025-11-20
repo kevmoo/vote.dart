@@ -10,9 +10,8 @@ class DistanceElectionResultWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Consumer<List<VoteTownDistancePlace>>(
-    builder:
-        (context, distancePlaces, __) =>
-            _DistancePlaceRowInfo(distancePlaces).build(context),
+    builder: (context, distancePlaces, __) =>
+        _DistancePlaceRowInfo(distancePlaces).build(context),
   );
 }
 

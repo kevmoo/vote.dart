@@ -16,11 +16,8 @@ class VoteTownDistancePlace extends ElectionPlace<TownCandidate> {
   static List<VoteTownDistancePlace> create(VoteTown town) {
     final distances = Map<TownCandidate, double>.fromIterable(
       town.candidates,
-      value:
-          (candidate) => averageVoterDistanceTo(
-            town,
-            (candidate as TownCandidate).location,
-          ),
+      value: (candidate) =>
+          averageVoterDistanceTo(town, (candidate as TownCandidate).location),
     );
 
     final groups = groupBy(
