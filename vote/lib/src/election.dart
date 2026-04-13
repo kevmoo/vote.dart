@@ -36,7 +36,7 @@ abstract class ElectionResult<
 
   bool _assert({List<Ballot<TCandidate>>? ballots}) {
     // TODO: assert all candidates are sorted, too?
-    assert(allUnique(candidates));
+    assert(candidates.allUnique);
 
     final placeCandidates = <TCandidate>{};
 

@@ -15,16 +15,13 @@ bool sorted(Iterable<Comparable> items) {
   return true;
 }
 
-/// Asserts that all [items] are not `null`.
-bool allUnique(List items) {
-  for (var i = 0; i < items.length; i++) {
-    final value = items[i];
-    assert(value != null);
-    for (var j = i + 1; j < items.length; j++) {
-      if (value == items[j]) {
-        return false;
-      }
+extension ListExt<T> on List<T> {
+  bool get allUnique {
+    final seen = <T>{};
+    for (var item in this) {
+      assert(item != null);
+      if (!seen.add(item)) return false;
     }
+    return true;
   }
-  return true;
 }
