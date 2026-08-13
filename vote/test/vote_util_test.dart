@@ -27,4 +27,22 @@ void main() {
       });
     }
   });
+
+  group('allUnique', () {
+    test('empty list is unique', () {
+      expect(<int>[].allUnique, isTrue);
+    });
+
+    test('single element is unique', () {
+      expect([1].allUnique, isTrue);
+    });
+
+    test('distinct elements are unique', () {
+      expect([1, 2, 3].allUnique, isTrue);
+    });
+
+    test('duplicate elements return false', () {
+      expect([1, 2, 1].allUnique, isFalse);
+    });
+  });
 }
