@@ -36,38 +36,21 @@ class CondorcetPair<TCandidate extends Comparable>
 
     if (ballots == null) {
       return CondorcetPair._internal(can1, can2, null, null, null);
-    } else {
-      var firstOverSecond = 0;
-      var secondOverFirst = 0;
-      var ties = 0;
-      for (var b in ballots) {
-        final firstIndex = b.rank.indexOf(can1);
-        final secondIndex = b.rank.indexOf(can2);
-
-        if (firstIndex < 0) {
-          if (secondIndex < 0) {
-            // neither candidate is in the ballot
-            ties++;
-          } else {
-            secondOverFirst++;
-          }
-        } else if (secondIndex < 0) {
-          firstOverSecond++;
-        } else if (firstIndex < secondIndex) {
-          firstOverSecond++;
-        } else {
-          secondOverFirst++;
-        }
-      }
-
-      return CondorcetPair._internal(
-        can1,
-        can2,
-        firstOverSecond,
-        secondOverFirst,
-        ties,
-      );
     }
+
+    final (:firstOverSecond, :secondOverFirst, :ties) = _tallyBallots(
+      can1,
+      can2,
+      ballots,
+    );
+
+    return CondorcetPair._internal(
+      can1,
+      can2,
+      firstOverSecond,
+      secondOverFirst,
+      ties,
+    );
   }
 
   TCandidate? get winner {
@@ -145,4 +128,34 @@ class CondorcetPair<TCandidate extends Comparable>
     }
     return value;
   }
+}
+
+({int firstOverSecond, int secondOverFirst, int ties}) _tallyBallots<
+  TCandidate extends Comparable
+>(TCandidate can1, TCandidate can2, List<RankedBallot<TCandidate>> ballots) {
+  var firstOverSecond = 0;
+  var secondOverFirst = 0;
+  var ties = 0;
+  for (final b in ballots) {
+    final firstIndex = b.rank.indexOf(can1);
+    final secondIndex = b.rank.indexOf(can2);
+
+    switch ((firstIndex, secondIndex)) {
+      case (< 0, < 0):
+        ties++;
+      case (< 0, _):
+        secondOverFirst++;
+      case (_, < 0):
+        firstOverSecond++;
+      case _ when firstIndex < secondIndex:
+        firstOverSecond++;
+      case _:
+        secondOverFirst++;
+    }
+  }
+  return (
+    firstOverSecond: firstOverSecond,
+    secondOverFirst: secondOverFirst,
+    ties: ties,
+  );
 }

@@ -69,46 +69,53 @@ class _State<TCandidate extends Comparable<TCandidate>>
   );
 
   Iterable<TableRow> _rows() sync* {
-    for (var place in _election.places) {
-      for (var candidate in place) {
-        final background = _candidateColors[candidate];
-        yield TableRow(
-          decoration: BoxDecoration(
-            color: place.length == 1 ? background : null,
-          ),
-          children: [
-            PaddedText(
-              text: place.place.toString(),
-              style: place.topPlace ? winnerTextStyle : null,
-            ),
-            CandidateHoverWidget<TCandidate>(
-              candidates: {candidate},
-              child: PaddedText(
-                text: candidate.toString(),
-                background: background,
-                style: place.topPlace ? winnerTextStyle : null,
-              ),
-            ),
-            ...List.generate(_election.candidates.length, (index) {
-              final other = _election.candidates[index];
-              if (candidate == other) {
-                return Container(color: background);
-              }
-
-              final pair = _election.getPair(
-                candidate,
-                _election.candidates[index],
-              );
-
-              return CandidateHoverWidget<TCandidate>(
-                candidates: {pair.candidate1, pair.candidate2},
-                child: _getCellText(pair, background),
-              );
-            }),
-          ],
-        );
+    for (final place in _election.places) {
+      for (final candidate in place) {
+        yield _rowForCandidate(place, candidate);
       }
     }
+  }
+
+  TableRow _rowForCandidate(
+    ElectionPlace<TCandidate> place,
+    TCandidate candidate,
+  ) {
+    final background = _candidateColors[candidate];
+    return TableRow(
+      decoration: BoxDecoration(color: place.length == 1 ? background : null),
+      children: [
+        PaddedText(
+          text: place.place.toString(),
+          style: place.topPlace ? winnerTextStyle : null,
+        ),
+        CandidateHoverWidget<TCandidate>(
+          candidates: {candidate},
+          child: PaddedText(
+            text: candidate.toString(),
+            background: background,
+            style: place.topPlace ? winnerTextStyle : null,
+          ),
+        ),
+        for (final other in _election.candidates)
+          _buildPairCell(candidate, other, background),
+      ],
+    );
+  }
+
+  Widget _buildPairCell(
+    TCandidate candidate,
+    TCandidate other,
+    Color? background,
+  ) {
+    if (candidate == other) {
+      return Container(color: background);
+    }
+
+    final pair = _election.getPair(candidate, other);
+    return CandidateHoverWidget<TCandidate>(
+      candidates: {pair.candidate1, pair.candidate2},
+      child: _getCellText(pair, background),
+    );
   }
 
   void _onTap() {

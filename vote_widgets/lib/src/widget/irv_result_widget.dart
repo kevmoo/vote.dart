@@ -17,7 +17,7 @@ class IrvResultWidget<TCandidate extends Candidate> extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Consumer<IrvElection<TCandidate>>(
     builder:
-        (context, irvElection, __) => Table(
+        (context, irvElection, _) => Table(
           columnWidths: {
             0: const FlexColumnWidth(2),
             for (var i = 0; i < irvElection.candidates.length; i++)
@@ -33,18 +33,9 @@ class IrvResultWidget<TCandidate extends Candidate> extends StatelessWidget {
   Iterable<List<Widget>> _rowsForElection(
     IrvElection<TCandidate> election,
   ) sync* {
-    List<_Data>? lastRoundData;
-    for (var round in election.rounds) {
-      final roundData = [
-        for (var i = 0; i < round.places.length; i++)
-          for (var candidate in round.places[i])
-            _Data(round.places[i].place, round.places[i], candidate),
-      ];
-
-      List<Widget> createFillers() => List<Widget>.generate(
-        election.candidates.length - roundData.length,
-        (_) => const SizedBox(),
-      );
+    List<_Data<TCandidate>>? lastRoundData;
+    for (final round in election.rounds) {
+      final roundData = _roundDataFor(round);
 
       // Only output place numbers on the first round and follow-up rounds
       // if the place data changes.
@@ -53,91 +44,129 @@ class IrvResultWidget<TCandidate extends Candidate> extends StatelessWidget {
             roundData,
             lastRoundData.take(roundData.length),
           )) {
-        // places
-        yield <Widget>[
-          const SizedBox(),
-          for (var item in roundData)
-            PaddedText.bits(
-              background: Colors.grey.shade100,
-              text: item.placeNumber.toString(),
-              fontWeight: FontWeight.w600,
-            ),
-          ...createFillers(),
-        ];
+        yield _buildPlacesRow(roundData, election.candidates.length);
       }
 
       lastRoundData = roundData;
 
-      // candidates
-      yield <Widget>[
-        const SizedBox(),
-        for (var item in roundData)
-          PaddedText(
-            text: item.candidate.id,
-            background: item.candidate.color,
-            style:
-                (round.isFinal && item.place.topPlace) ? winnerTextStyle : null,
-          ),
-        ...createFillers(),
-      ];
+      yield _buildCandidatesRow(round, roundData, election.candidates.length);
+      yield _buildVoteCountRow(round, roundData, election.candidates.length);
 
-      // vote count
-      yield <Widget>[
-        CandidateHoverWidget<TCandidate>(
-          candidates: roundData.map((e) => e.candidate).toSet(),
-          child: PaddedText(
-            text: 'Round ${round.number}',
-            style: round.isFinal ? winnerTextStyle : null,
-          ),
-        ),
-        for (var item in roundData)
-          PaddedText(
-            text: item.place.voteCount.toString(),
-            background: item.candidate.color,
-            style:
-                (round.isFinal && item.place.topPlace)
-                    ? winnerTextStyle
-                    : round.eliminationForCandidate(item.candidate) == null
-                    ? null
-                    : const TextStyle(fontStyle: FontStyle.italic),
-          ),
-        ...createFillers(),
-      ];
-
-      // eliminations
-      for (var elimination in round.eliminations) {
-        Widget eliminationContent(TCandidate candidate) {
-          if (candidate == elimination.candidate) {
-            final content =
-                elimination.transferredCandidates.isEmpty
-                    ? Icons.close
-                    : Icons.subdirectory_arrow_left;
-            return Icon(content);
-          }
-
-          final count = elimination.getTransferCount(candidate);
-          if (count == 0) {
-            return const SizedBox();
-          }
-          return PaddedText(text: count.toString());
-        }
-
-        yield <Widget>[
-          PaddedText.bits(
-            text: elimination.candidate.id,
-            tooltip:
-                'Candidate ${elimination.candidate.id} eliminated.\n'
-                'Votes redistributed.',
-            textAlign: TextAlign.right,
-            fontStyle: FontStyle.italic,
-          ),
-          for (var item in roundData) eliminationContent(item.candidate),
-          ...createFillers(),
-        ];
+      for (final elimination in round.eliminations) {
+        yield _buildEliminationRow(
+          elimination,
+          roundData,
+          election.candidates.length,
+        );
       }
     }
   }
 }
+
+List<_Data<TCandidate>> _roundDataFor<TCandidate extends Candidate>(
+  IrvRound<TCandidate> round,
+) => [
+  for (final place in round.places)
+    for (final candidate in place) _Data(place.place, place, candidate),
+];
+
+List<Widget> _createFillers(int candidateCount, int roundDataCount) =>
+    List<Widget>.generate(
+      candidateCount - roundDataCount,
+      (_) => const SizedBox(),
+    );
+
+List<Widget> _buildPlacesRow<TCandidate extends Candidate>(
+  List<_Data<TCandidate>> roundData,
+  int candidateCount,
+) => [
+  const SizedBox(),
+  for (final item in roundData)
+    PaddedText.bits(
+      background: Colors.grey.shade100,
+      text: item.placeNumber.toString(),
+      fontWeight: FontWeight.w600,
+    ),
+  ..._createFillers(candidateCount, roundData.length),
+];
+
+List<Widget> _buildCandidatesRow<TCandidate extends Candidate>(
+  IrvRound<TCandidate> round,
+  List<_Data<TCandidate>> roundData,
+  int candidateCount,
+) => [
+  const SizedBox(),
+  for (final item in roundData)
+    PaddedText(
+      text: item.candidate.id,
+      background: item.candidate.color,
+      style: (round.isFinal && item.place.topPlace) ? winnerTextStyle : null,
+    ),
+  ..._createFillers(candidateCount, roundData.length),
+];
+
+List<Widget> _buildVoteCountRow<TCandidate extends Candidate>(
+  IrvRound<TCandidate> round,
+  List<_Data<TCandidate>> roundData,
+  int candidateCount,
+) => [
+  CandidateHoverWidget<TCandidate>(
+    candidates: roundData.map((e) => e.candidate).toSet(),
+    child: PaddedText(
+      text: 'Round ${round.number}',
+      style: round.isFinal ? winnerTextStyle : null,
+    ),
+  ),
+  for (final item in roundData)
+    PaddedText(
+      text: item.place.voteCount.toString(),
+      background: item.candidate.color,
+      style:
+          (round.isFinal && item.place.topPlace)
+              ? winnerTextStyle
+              : round.eliminationForCandidate(item.candidate) == null
+              ? null
+              : const TextStyle(fontStyle: FontStyle.italic),
+    ),
+  ..._createFillers(candidateCount, roundData.length),
+];
+
+Widget _eliminationContent<TCandidate extends Candidate>(
+  IrvElimination<TCandidate> elimination,
+  TCandidate candidate,
+) {
+  if (candidate == elimination.candidate) {
+    final icon =
+        elimination.transferredCandidates.isEmpty
+            ? Icons.close
+            : Icons.subdirectory_arrow_left;
+    return Icon(icon);
+  }
+
+  final count = elimination.getTransferCount(candidate);
+  if (count == 0) {
+    return const SizedBox();
+  }
+  return PaddedText(text: count.toString());
+}
+
+List<Widget> _buildEliminationRow<TCandidate extends Candidate>(
+  IrvElimination<TCandidate> elimination,
+  List<_Data<TCandidate>> roundData,
+  int candidateCount,
+) => [
+  PaddedText.bits(
+    text: elimination.candidate.id,
+    tooltip:
+        'Candidate ${elimination.candidate.id} eliminated.\n'
+        'Votes redistributed.',
+    textAlign: TextAlign.right,
+    fontStyle: FontStyle.italic,
+  ),
+  for (final item in roundData)
+    _eliminationContent(elimination, item.candidate),
+  ..._createFillers(candidateCount, roundData.length),
+];
 
 bool _dataIterableEquals(Iterable<_Data> a, Iterable<_Data> b) =>
     const IterableEquality<_Data>().equals(a, b);

@@ -108,56 +108,15 @@ List<ElectionPlace<TCandidate>> _calculatePlaces<TCandidate extends Comparable>(
   List<TCandidate> candidateList,
   Set<CondorcetPair<TCandidate>> pairs,
 ) {
-  final candidateMap = <TCandidate, Set<TCandidate>>{};
-
-  for (final candidate in candidateList) {
-    final lostTo = <TCandidate>[];
-    final beat = <TCandidate>[];
-    final tied = <TCandidate>[];
-
-    final lostTiedSet = <TCandidate>{};
-
-    for (final pair in pairs) {
-      if (pair.candidate1 == candidate || pair.candidate2 == candidate) {
-        final other =
-            (pair.candidate1 == candidate) ? pair.candidate2 : pair.candidate1;
-
-        if (pair.isTie) {
-          tied.add(other);
-          lostTiedSet.add(other);
-        } else if (pair.winner == candidate) {
-          beat.add(other);
-        } else {
-          assert(pair.winner == other);
-          lostTo.add(other);
-          lostTiedSet.add(other);
-        }
-      }
-    }
-
-    candidateMap[candidate] = lostTiedSet;
-  }
+  final candidateMap = <TCandidate, Set<TCandidate>>{
+    for (final candidate in candidateList)
+      candidate: _getLostOrTied(candidate, pairs),
+  };
 
   final components = stronglyConnectedComponents<TCandidate>(
     candidateMap.keys,
     (node) => candidateMap[node]!,
-  )..sort((a, b) {
-    final firstA = a.first;
-    final firstB = b.first;
-
-    final pair = pairs.singleWhere((p) => p.matches(firstA, firstB));
-
-    if (pair.isTie) {
-      return 0;
-    }
-
-    if (pair.winner == firstA) {
-      return -1;
-    }
-
-    assert(pair.winner == firstB);
-    return 1;
-  });
+  )..sort((a, b) => _compareComponents(a, b, pairs));
 
   final places = <ElectionPlace<TCandidate>>[];
   var placeNumber = 1;
@@ -168,4 +127,36 @@ List<ElectionPlace<TCandidate>> _calculatePlaces<TCandidate extends Comparable>(
   }
 
   return places;
+}
+
+Set<TCandidate> _getLostOrTied<TCandidate extends Comparable>(
+  TCandidate candidate,
+  Set<CondorcetPair<TCandidate>> pairs,
+) => {
+  for (final pair in pairs)
+    if (pair.candidate1 == candidate || pair.candidate2 == candidate)
+      if (pair.isTie || pair.winner != candidate)
+        (pair.candidate1 == candidate) ? pair.candidate2 : pair.candidate1,
+};
+
+int _compareComponents<TCandidate extends Comparable>(
+  List<TCandidate> a,
+  List<TCandidate> b,
+  Set<CondorcetPair<TCandidate>> pairs,
+) {
+  final firstA = a.first;
+  final firstB = b.first;
+
+  final pair = pairs.singleWhere((p) => p.matches(firstA, firstB));
+
+  if (pair.isTie) {
+    return 0;
+  }
+
+  if (pair.winner == firstA) {
+    return -1;
+  }
+
+  assert(pair.winner == firstB);
+  return 1;
 }
