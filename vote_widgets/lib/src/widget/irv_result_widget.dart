@@ -63,6 +63,8 @@ class IrvResultWidget<TCandidate extends Candidate> extends StatelessWidget {
   }
 }
 
+/// Flattens the candidate place entries of [round] into an ordered list of
+/// [_Data].
 List<_Data<TCandidate>> _roundDataFor<TCandidate extends Candidate>(
   IrvRound<TCandidate> round,
 ) => [
@@ -70,12 +72,16 @@ List<_Data<TCandidate>> _roundDataFor<TCandidate extends Candidate>(
     for (final candidate in place) _Data(place.place, place, candidate),
 ];
 
+/// Generates empty [SizedBox] filler widgets to pad row widths for eliminated
+/// candidates.
 List<Widget> _createFillers(int candidateCount, int roundDataCount) =>
     List<Widget>.generate(
       candidateCount - roundDataCount,
       (_) => const SizedBox(),
     );
 
+/// Builds the table row containing place number header indicators for active
+/// candidates.
 List<Widget> _buildPlacesRow<TCandidate extends Candidate>(
   List<_Data<TCandidate>> roundData,
   int candidateCount,
@@ -90,6 +96,7 @@ List<Widget> _buildPlacesRow<TCandidate extends Candidate>(
   ..._createFillers(candidateCount, roundData.length),
 ];
 
+/// Builds the table row displaying candidate ID labels and their theme colors.
 List<Widget> _buildCandidatesRow<TCandidate extends Candidate>(
   IrvRound<TCandidate> round,
   List<_Data<TCandidate>> roundData,
@@ -105,6 +112,7 @@ List<Widget> _buildCandidatesRow<TCandidate extends Candidate>(
   ..._createFillers(candidateCount, roundData.length),
 ];
 
+/// Builds the table row displaying the round number and current vote tallies.
 List<Widget> _buildVoteCountRow<TCandidate extends Candidate>(
   IrvRound<TCandidate> round,
   List<_Data<TCandidate>> roundData,
@@ -131,6 +139,8 @@ List<Widget> _buildVoteCountRow<TCandidate extends Candidate>(
   ..._createFillers(candidateCount, roundData.length),
 ];
 
+/// Renders the elimination indicator icon or vote transfer count cell for
+/// [candidate].
 Widget _eliminationContent<TCandidate extends Candidate>(
   IrvElimination<TCandidate> elimination,
   TCandidate candidate,
@@ -150,6 +160,8 @@ Widget _eliminationContent<TCandidate extends Candidate>(
   return PaddedText(text: count.toString());
 }
 
+/// Builds the table row displaying vote transfer distributions from an
+/// eliminated candidate.
 List<Widget> _buildEliminationRow<TCandidate extends Candidate>(
   IrvElimination<TCandidate> elimination,
   List<_Data<TCandidate>> roundData,

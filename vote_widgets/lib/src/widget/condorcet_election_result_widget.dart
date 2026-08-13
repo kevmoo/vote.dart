@@ -76,6 +76,7 @@ class _State<TCandidate extends Comparable<TCandidate>>
     }
   }
 
+  /// Builds the [TableRow] corresponding to [candidate] at [place].
   TableRow _rowForCandidate(
     ElectionPlace<TCandidate> place,
     TCandidate candidate,
@@ -102,6 +103,8 @@ class _State<TCandidate extends Comparable<TCandidate>>
     );
   }
 
+  /// Builds the table cell representing the pairwise match between [candidate]
+  /// and [other].
   Widget _buildPairCell(
     TCandidate candidate,
     TCandidate other,

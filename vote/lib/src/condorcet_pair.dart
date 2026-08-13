@@ -26,13 +26,7 @@ class CondorcetPair<TCandidate extends Comparable>
     TCandidate can2, [
     List<RankedBallot<TCandidate>>? ballots,
   ]) {
-    assert(can1 != can2, 'can1 and can2 must be different');
-
-    if (can1.compareTo(can2) > 0) {
-      final temp = can2;
-      can2 = can1;
-      can1 = temp;
-    }
+    (can1, can2) = _sortPair(can1, can2);
 
     if (ballots == null) {
       return CondorcetPair._internal(can1, can2, null, null, null);
@@ -67,45 +61,24 @@ class CondorcetPair<TCandidate extends Comparable>
   bool get isTie => firstOverSecond == secondOverFirst;
 
   bool matches(TCandidate can1, TCandidate can2) {
-    assert(can1 != can2, 'can1 and can2 must be different');
-
-    if (can1.compareTo(can2) > 0) {
-      final temp = can2;
-      can2 = can1;
-      can1 = temp;
-    }
-
-    return (candidate1 == can1) && (candidate2 == can2);
+    final (sorted1, sorted2) = _sortPair(can1, can2);
+    return candidate1 == sorted1 && candidate2 == sorted2;
   }
 
   // sometimes it's nice to deal w/ a properly aligned pair
   CondorcetPair<TCandidate> flip(TCandidate firstCandidate) {
     assert(firstCandidate == candidate1 || firstCandidate == candidate2);
 
-    var can2 = firstCandidate == candidate1 ? candidate2 : candidate1;
-
-    var flipped = false;
-    if (firstCandidate.compareTo(can2) > 0) {
-      final temp = can2;
-      can2 = firstCandidate;
-      firstCandidate = temp;
-      flipped = true;
-    }
-
-    assert(firstCandidate == candidate1, 'can1');
-    assert(can2 == candidate2, 'can2');
-
-    if (flipped) {
+    if (firstCandidate == candidate2) {
       return CondorcetPair._internal(
-        can2,
-        firstCandidate,
+        candidate2,
+        candidate1,
         secondOverFirst,
         firstOverSecond,
         ties,
       );
-    } else {
-      return this;
     }
+    return this;
   }
 
   @override
@@ -130,6 +103,9 @@ class CondorcetPair<TCandidate extends Comparable>
   }
 }
 
+/// Tallies head-to-head ballot preferences between [can1] and [can2],
+/// returning counts for [can1] ranked over [can2], [can2] over [can1], and
+/// ballots with neither.
 ({int firstOverSecond, int secondOverFirst, int ties}) _tallyBallots<
   TCandidate extends Comparable
 >(TCandidate can1, TCandidate can2, List<RankedBallot<TCandidate>> ballots) {
@@ -158,4 +134,14 @@ class CondorcetPair<TCandidate extends Comparable>
     secondOverFirst: secondOverFirst,
     ties: ties,
   );
+}
+
+/// Normalizes a candidate pair such that the first candidate precedes the
+/// second according to [Comparable.compareTo].
+(TCandidate, TCandidate) _sortPair<TCandidate extends Comparable>(
+  TCandidate can1,
+  TCandidate can2,
+) {
+  assert(can1 != can2, 'can1 and can2 must be different');
+  return can1.compareTo(can2) > 0 ? (can2, can1) : (can1, can2);
 }

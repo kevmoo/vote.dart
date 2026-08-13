@@ -5,6 +5,7 @@ import 'condorcet_pair.dart';
 import 'election.dart';
 import 'election_place.dart';
 import 'ranked_ballot.dart';
+import 'util.dart';
 
 @immutable
 class CondorcetElection<TCandidate extends Comparable>
@@ -24,16 +25,7 @@ class CondorcetElection<TCandidate extends Comparable>
     List<RankedBallot<TCandidate>> ballots, {
     Iterable<TCandidate>? candidates,
   }) {
-    final ballotCandidates = ballots.expand((b) => b.rank).toSet();
-
-    final candidateSet =
-        candidates == null ? ballotCandidates : candidates.toSet();
-
-    assert(
-      candidates == null || candidateSet.containsAll(ballotCandidates),
-      'If `candidates` is provided, then every candidate in `ballots` should '
-      'exist in `candidates`.',
-    );
+    final candidateSet = validateRankedBallotCandidates(ballots, candidates);
 
     final candidateList = candidateSet.toList(growable: false)..sort();
 
@@ -104,6 +96,9 @@ class _CondorcetElectionResultImpl<TCandidate extends Comparable>
   ) : super(candidates: candidates, places: places);
 }
 
+/// Calculates the [ElectionPlace] rankings for a Condorcet election by
+/// resolving strongly connected components across pairwise head-to-head
+/// results.
 List<ElectionPlace<TCandidate>> _calculatePlaces<TCandidate extends Comparable>(
   List<TCandidate> candidateList,
   Set<CondorcetPair<TCandidate>> pairs,
@@ -129,6 +124,8 @@ List<ElectionPlace<TCandidate>> _calculatePlaces<TCandidate extends Comparable>(
   return places;
 }
 
+/// Collects all opponent candidates that [candidate] either lost to or tied
+/// against in the provided head-to-head [pairs].
 Set<TCandidate> _getLostOrTied<TCandidate extends Comparable>(
   TCandidate candidate,
   Set<CondorcetPair<TCandidate>> pairs,
@@ -139,6 +136,8 @@ Set<TCandidate> _getLostOrTied<TCandidate extends Comparable>(
         (pair.candidate1 == candidate) ? pair.candidate2 : pair.candidate1,
 };
 
+/// Compares two strongly connected components [a] and [b] using the
+/// head-to-head pair outcome between their representative candidates.
 int _compareComponents<TCandidate extends Comparable>(
   List<TCandidate> a,
   List<TCandidate> b,

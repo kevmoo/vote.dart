@@ -4,6 +4,7 @@ import 'election.dart';
 import 'election_place.dart';
 import 'irv_round.dart';
 import 'ranked_ballot.dart';
+import 'util.dart';
 
 @immutable
 class IrvElection<TCandidate extends Comparable>
@@ -21,16 +22,7 @@ class IrvElection<TCandidate extends Comparable>
     List<RankedBallot<TCandidate>> ballots, {
     Iterable<TCandidate>? candidates,
   }) {
-    final ballotCandidates = ballots.expand((b) => b.rank).toSet();
-
-    final candidateSet =
-        candidates == null ? ballotCandidates : candidates.toSet();
-
-    assert(
-      candidates == null || candidateSet.containsAll(ballotCandidates),
-      'If `candidates` is provided, then every candidate in `ballots` should '
-      'exist in `candidates`.',
-    );
+    final candidateSet = validateRankedBallotCandidates(ballots, candidates);
 
     final rounds = <IrvRound<TCandidate>>[];
 
