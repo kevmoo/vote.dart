@@ -14,4 +14,11 @@ class PluralityBallot<TCandidate extends Comparable>
 
   @override
   String toString() => 'PluralityBallot($choice)';
+
+  @override
+  bool operator ==(Object other) =>
+      other is PluralityBallot<TCandidate> && other.choice == choice;
+
+  @override
+  int get hashCode => choice.hashCode;
 }

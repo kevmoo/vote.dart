@@ -30,13 +30,13 @@ void main() {
     expect(find.text('3>2'), findsOneWidget);
 
     // Tap to cycle to simple display mode
-    await tester.tap(find.text('Place'));
+    await tester.tap(find.byType(CondorcetElectionResultWidget<Candidate>));
     await tester.pumpAndSettle();
 
     expect(find.byIcon(Icons.check), findsOneWidget);
 
     // Tap to cycle to delta display mode
-    await tester.tap(find.text('Place'));
+    await tester.tap(find.byType(CondorcetElectionResultWidget<Candidate>));
     await tester.pumpAndSettle();
 
     expect(find.text('+1'), findsOneWidget);

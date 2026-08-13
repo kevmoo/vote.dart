@@ -32,7 +32,11 @@ class _State<TCandidate extends Comparable<TCandidate>>
     if (widget.clickToToggleDisplay) {
       return MouseRegion(
         cursor: SystemMouseCursors.click,
-        child: GestureDetector(onTap: _onTap, child: _buildCore()),
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: _onTap,
+          child: _buildCore(),
+        ),
       );
     }
 

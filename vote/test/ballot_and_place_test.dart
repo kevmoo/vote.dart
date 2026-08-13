@@ -13,7 +13,16 @@ void main() {
       final b = ApprovalBallot(const {'A', 'B'});
       expect(b.choices, {'A', 'B'});
       expect(b.referencedCandidates(), {'A', 'B'});
-      expect(b.toString(), 'ApprovalBallot(A ,B)');
+      expect(b.toString(), 'ApprovalBallot(A, B)');
+    });
+
+    test('equality and hashCode', () {
+      final b1 = ApprovalBallot(const {'A', 'B'});
+      final b2 = ApprovalBallot(const {'B', 'A'});
+      final b3 = ApprovalBallot(const {'A'});
+      expect(b1, equals(b2));
+      expect(b1.hashCode, equals(b2.hashCode));
+      expect(b1, isNot(equals(b3)));
     });
   });
 
@@ -23,6 +32,15 @@ void main() {
       expect(b.choice, 'Candidate A');
       expect(b.referencedCandidates(), ['Candidate A']);
       expect(b.toString(), 'PluralityBallot(Candidate A)');
+    });
+
+    test('equality and hashCode', () {
+      const b1 = PluralityBallot('A');
+      const b2 = PluralityBallot('A');
+      const b3 = PluralityBallot('B');
+      expect(b1, equals(b2));
+      expect(b1.hashCode, equals(b2.hashCode));
+      expect(b1, isNot(equals(b3)));
     });
   });
 
