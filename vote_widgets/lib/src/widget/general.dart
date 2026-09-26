@@ -2,10 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-class NotificationNotifier<T extends Notification> extends ChangeNotifier
+class NotificationNotifier<T extends Notification>._()
+    extends ChangeNotifier
     implements ValueListenable<T?> {
-  NotificationNotifier._();
-
   @override
   T? get value => _value;
   T? _value;
@@ -17,16 +16,12 @@ class NotificationNotifier<T extends Notification> extends ChangeNotifier
   }
 }
 
-class NotificationMirror<T extends Notification> extends StatefulWidget {
-  final Widget child;
-
-  final T? Function(T) transform;
-
-  const NotificationMirror({
-    super.key,
-    required this.child,
-    T? Function(T)? transform,
-  }) : transform = transform ?? identityTransform;
+class const NotificationMirror<T extends Notification>({
+  super.key,
+  required final Widget child,
+  T? Function(T)? transform,
+}) extends StatefulWidget {
+  final T? Function(T) transform = transform ?? identityTransform;
 
   @override
   State createState() => _NotificationMirrorState<T>();
@@ -34,7 +29,7 @@ class NotificationMirror<T extends Notification> extends StatefulWidget {
   static T? identityTransform<T>(T? input) => input;
 }
 
-class _NotificationMirrorState<T extends Notification>
+class _NotificationMirrorState<T extends Notification>()
     extends State<NotificationMirror<T>> {
   final _notifier = NotificationNotifier<T>._();
 

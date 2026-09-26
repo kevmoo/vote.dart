@@ -4,14 +4,11 @@ import 'package:meta/meta.dart';
 
 @immutable
 /// The resulting place a candidate received in an election.
-class ElectionPlace<TCandidate extends Comparable<dynamic>>
-    extends UnmodifiableListView<TCandidate> {
-  final int place;
-
-  ElectionPlace(this.place, List<TCandidate> candidates)
-    : assert(place > 0),
-      assert(candidates.isNotEmpty),
-      super(candidates);
+class ElectionPlace<TCandidate extends Comparable<dynamic>>(
+  final int place,
+  List<TCandidate> super.candidates,
+) extends UnmodifiableListView<TCandidate> {
+  this : assert(place > 0), assert(candidates.isNotEmpty);
 
   bool get topPlace => place == 1;
 

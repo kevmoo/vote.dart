@@ -4,8 +4,8 @@ import 'package:vote/vote.dart';
 import 'test_util.dart';
 
 void main() {
-  final c1 = 'Can 1';
-  final c2 = 'Can 2';
+  const c1 = 'Can 1';
+  const c2 = 'Can 2';
 
   test('no dupe candidates', () {
     expect(() {
@@ -14,7 +14,7 @@ void main() {
   });
 
   test('omitting some candidates', () {
-    final b1 = RankedBallot([c1]);
+    final b1 = RankedBallot(const [c1]);
     final pair = CondorcetPair(c1, c2, [b1]);
 
     expect(pair.candidate1, c1);
@@ -23,7 +23,7 @@ void main() {
     expect(pair.secondOverFirst, 0);
     expect(pair.ties, 0);
 
-    final b2 = RankedBallot([c2]);
+    final b2 = RankedBallot(const [c2]);
     final pair2 = CondorcetPair(c1, c2, [b2]);
 
     expect(pair2.candidate1, c1);
@@ -46,23 +46,23 @@ void main() {
   });
 
   test('one ballot is cool', () {
-    final b1 = RankedBallot([c1, c2]);
+    final b1 = RankedBallot(const [c1, c2]);
     final pair = CondorcetPair(c1, c2, [b1]);
     expect(pair.firstOverSecond, equals(1));
     expect(pair.secondOverFirst, equals(0));
   });
 
   test('two ballot is cool', () {
-    final b1 = RankedBallot([c1, c2]);
-    final b2 = RankedBallot([c1, c2]);
+    final b1 = RankedBallot(const [c1, c2]);
+    final b2 = RankedBallot(const [c1, c2]);
     final pair = CondorcetPair(c1, c2, [b1, b2]);
     expect(pair.firstOverSecond, equals(2));
     expect(pair.secondOverFirst, equals(0));
   });
 
   test('two ballot tie', () {
-    final b1 = RankedBallot([c1, c2]);
-    final b2 = RankedBallot([c2, c1]);
+    final b1 = RankedBallot(const [c1, c2]);
+    final b2 = RankedBallot(const [c2, c1]);
     final pair = CondorcetPair(c1, c2, [b1, b2]);
     expect(pair.firstOverSecond, equals(1));
     expect(pair.secondOverFirst, equals(1));
@@ -86,7 +86,7 @@ void main() {
   group('winner and isTie', () {
     test('first candidate wins', () {
       final pair = CondorcetPair(c1, c2, [
-        RankedBallot([c1, c2]),
+        RankedBallot(const [c1, c2]),
       ]);
       expect(pair.winner, c1);
       expect(pair.isTie, isFalse);
@@ -94,7 +94,7 @@ void main() {
 
     test('second candidate wins', () {
       final pair = CondorcetPair(c1, c2, [
-        RankedBallot([c2, c1]),
+        RankedBallot(const [c2, c1]),
       ]);
       expect(pair.winner, c2);
       expect(pair.isTie, isFalse);
@@ -102,8 +102,8 @@ void main() {
 
     test('tie has no winner', () {
       final pair = CondorcetPair(c1, c2, [
-        RankedBallot([c1, c2]),
-        RankedBallot([c2, c1]),
+        RankedBallot(const [c1, c2]),
+        RankedBallot(const [c2, c1]),
       ]);
       expect(pair.winner, isNull);
       expect(pair.isTie, isTrue);
@@ -134,16 +134,16 @@ void main() {
   group('flip', () {
     test('flip with candidate1 returns identical instance', () {
       final pair = CondorcetPair(c1, c2, [
-        RankedBallot([c1, c2]),
+        RankedBallot(const [c1, c2]),
       ]);
       expect(pair.flip(c1), same(pair));
     });
 
     test('flip with candidate2 returns flipped instance', () {
       final pair = CondorcetPair(c1, c2, [
-        RankedBallot([c1, c2]),
-        RankedBallot([c1, c2]),
-        RankedBallot([c2, c1]),
+        RankedBallot(const [c1, c2]),
+        RankedBallot(const [c1, c2]),
+        RankedBallot(const [c2, c1]),
       ]);
       final flipped = pair.flip(c2);
       expect(flipped.candidate1, c2);

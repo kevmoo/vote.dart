@@ -5,17 +5,16 @@ import 'package:vote/src/plurality_ballot.dart';
 
 import 'test_util.dart';
 
-typedef ElectionFactory =
-    Election<String, ElectionPlace<String>> Function(
-      List<PluralityBallot<String>> ballots, {
-      List<String>? candidates,
-    });
+typedef ElectionFactory = Election<String, ElectionPlace<String>> Function(
+  List<PluralityBallot<String>> ballots, {
+  List<String>? candidates,
+});
 
 void registerPluralityTests(ElectionFactory electionFactory) {
   test('single vote, single winner', () {
-    final c1 = 'candidate 1';
+    const c1 = 'candidate 1';
 
-    final ballots = [PluralityBallot(c1)];
+    final ballots = [const PluralityBallot(c1)];
 
     final election = electionFactory(ballots);
     expect(election.singleWinner, equals(c1));
@@ -27,14 +26,14 @@ void registerPluralityTests(ElectionFactory electionFactory) {
   });
 
   test('tied for 1st', () {
-    final c1 = 'candidate 1';
-    final c2 = 'candidate 2';
-    final c3 = 'candidate 3';
+    const c1 = 'candidate 1';
+    const c2 = 'candidate 2';
+    const c3 = 'candidate 3';
 
     final ballots = [
-      ...Iterable.generate(10, (_) => PluralityBallot(c1)),
-      ...Iterable.generate(10, (_) => PluralityBallot(c2)),
-      ...Iterable.generate(9, (_) => PluralityBallot(c3)),
+      ...Iterable.generate(10, (_) => const PluralityBallot(c1)),
+      ...Iterable.generate(10, (_) => const PluralityBallot(c2)),
+      ...Iterable.generate(9, (_) => const PluralityBallot(c3)),
     ];
 
     final election = electionFactory(ballots);

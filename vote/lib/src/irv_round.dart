@@ -7,16 +7,14 @@ import 'ranked_ballot.dart';
 import 'util.dart';
 
 @immutable
-class IrvRound<TCandidate extends Comparable<dynamic>> {
+class const IrvRound<TCandidate extends Comparable<dynamic>>._internal(
   /// 1-indexed number of the round.
   ///
   /// The first round in an election is `1` and so on.
-  final int number;
-
-  final List<PluralityElectionPlace<TCandidate>> places;
-
-  final List<IrvElimination<TCandidate>> eliminations;
-
+  final int number,
+  final List<PluralityElectionPlace<TCandidate>> places,
+  final List<IrvElimination<TCandidate>> eliminations,
+) {
   bool get isFinal => eliminations.isEmpty;
 
   Iterable<TCandidate> get eliminatedCandidates =>
@@ -24,10 +22,9 @@ class IrvRound<TCandidate extends Comparable<dynamic>> {
 
   Iterable<TCandidate> get candidates => places.expand((p) => p);
 
-  const IrvRound._internal(this.number, this.places, this.eliminations)
-    : assert(number > 0);
+  this : assert(number > 0);
 
-  factory IrvRound(
+  factory(
     int roundNumber,
     List<RankedBallot<TCandidate>> ballots,
     Iterable<TCandidate> eliminatedCandidates,
@@ -141,10 +138,8 @@ class IrvRound<TCandidate extends Comparable<dynamic>> {
   }
 }
 
-class _CleanedBallot<TCandidate extends Comparable<dynamic>> {
-  final RankedBallot<TCandidate> ballot;
-  final List<TCandidate> remaining;
-  final TCandidate? winner;
-
-  const _CleanedBallot(this.ballot, this.remaining, this.winner);
-}
+class const _CleanedBallot<TCandidate extends Comparable<dynamic>>(
+  final RankedBallot<TCandidate> ballot,
+  final List<TCandidate> remaining,
+  final TCandidate? winner,
+);

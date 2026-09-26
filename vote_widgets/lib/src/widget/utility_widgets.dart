@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 
-class CellPadding extends StatelessWidget {
-  final Widget child;
-  final Color? background;
-  final String? tooltip;
-
-  const CellPadding({
-    super.key,
-    this.background,
-    required this.child,
-    this.tooltip,
-  });
-
+class const CellPadding({
+  super.key,
+  final Color? background,
+  required final Widget child,
+  final String? tooltip,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final container = Container(
@@ -34,7 +28,7 @@ class PaddedText extends StatelessWidget {
   final TextAlign textAlign;
   final String? tooltip;
 
-  const PaddedText({
+  const new({
     super.key,
     required this.text,
     this.textAlign = TextAlign.center,
@@ -43,7 +37,7 @@ class PaddedText extends StatelessWidget {
     this.tooltip,
   });
 
-  PaddedText.bits({
+  new bits({
     super.key,
     required this.text,
     this.textAlign = TextAlign.center,
@@ -51,10 +45,9 @@ class PaddedText extends StatelessWidget {
     this.tooltip,
     FontStyle? fontStyle,
     FontWeight? fontWeight,
-  }) : style =
-           (fontStyle == null && fontWeight == null)
-               ? null
-               : TextStyle(fontStyle: fontStyle, fontWeight: fontWeight);
+  }) : style = (fontStyle == null && fontWeight == null)
+           ? null
+           : TextStyle(fontStyle: fontStyle, fontWeight: fontWeight);
 
   @override
   Widget build(BuildContext context) => CellPadding(

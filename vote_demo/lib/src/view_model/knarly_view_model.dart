@@ -3,14 +3,13 @@ import 'package:flutter/widgets.dart' show ChangeNotifier;
 import '../model/election_data.dart';
 import 'editor.dart';
 
-class KnarlyViewModel extends ChangeNotifier {
-  final List<KnarlyEditor> _editors;
+class KnarlyViewModel(Iterable<KnarlyEditor> editors) extends ChangeNotifier {
+  final List<KnarlyEditor> _editors = editors.toList(growable: false);
 
   int _currentEditorIndex = 0;
   ElectionData? _electionData;
 
-  KnarlyViewModel(Iterable<KnarlyEditor> editors)
-    : _editors = editors.toList(growable: false) {
+  this {
     assert(_editors.isNotEmpty);
     _editor.addListener(_editorValueUpdated);
   }

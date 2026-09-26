@@ -2,15 +2,9 @@ import 'package:flutter/painting.dart';
 
 import '../helpers/helpers.dart';
 
-class Candidate implements Comparable<Candidate> {
-  final String id;
-
-  final double hue;
-
-  final Color color, darkColor;
-
-  Candidate(this.id, this.hue)
-    : color = HSVColor.fromAHSV(1.0, hue, colorSaturation, 1).toColor(),
+class Candidate(final String id, final double hue)
+    implements Comparable<Candidate> {
+  final Color color = HSVColor.fromAHSV(1.0, hue, colorSaturation, 1).toColor(),
       darkColor = HSVColor.fromAHSV(1.0, hue, 0.5, 0.95).toColor();
 
   @override

@@ -3,14 +3,11 @@ import 'package:collection/collection.dart';
 import '../ranked_ballot.dart' show RankedBallot;
 import '../util.dart';
 
-class BallotLine<TCandidate extends Comparable<dynamic>>
-    implements Comparable<BallotLine<Comparable<dynamic>>> {
-  final int count;
-  final List<TCandidate> candidates;
-
-  BallotLine(this.count, this.candidates)
-    : assert(count > 0),
-      assert(candidates.allUnique);
+class BallotLine<TCandidate extends Comparable<dynamic>>(
+  final int count,
+  final List<TCandidate> candidates,
+) implements Comparable<BallotLine<Comparable<dynamic>>> {
+  this : assert(count > 0), assert(candidates.allUnique);
 
   @override
   bool operator ==(Object other) {

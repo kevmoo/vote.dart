@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 
-class TooSmallWidget extends StatefulWidget {
-  final Size minimumSize;
-  final Widget child;
-  const TooSmallWidget({
-    super.key,
-    required this.minimumSize,
-    required this.child,
-  });
-
+class const TooSmallWidget({
+  super.key,
+  required final Size minimumSize,
+  required final Widget child,
+}) extends StatefulWidget {
   @override
   State createState() => _TooSmallWidgetState();
 }
 
-class _TooSmallWidgetState extends State<TooSmallWidget> {
+class _TooSmallWidgetState() extends State<TooSmallWidget> {
   bool _dismissed = false;
 
   @override

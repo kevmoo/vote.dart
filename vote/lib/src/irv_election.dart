@@ -7,18 +7,15 @@ import 'ranked_ballot.dart';
 import 'util.dart';
 
 @immutable
-class IrvElection<TCandidate extends Comparable<dynamic>>
-    extends Election<TCandidate, ElectionPlace<TCandidate>> {
-  final List<IrvRound<TCandidate>> rounds;
+class IrvElection<TCandidate extends Comparable<dynamic>>._internal(
+  List<TCandidate> candidates,
+  List<RankedBallot<TCandidate>> ballots,
+  List<ElectionPlace<TCandidate>> places,
+  final List<IrvRound<TCandidate>> rounds,
+) extends Election<TCandidate, ElectionPlace<TCandidate>> {
+  this : super(candidates: candidates, ballots: ballots, places: places);
 
-  IrvElection._internal(
-    List<TCandidate> candidates,
-    List<RankedBallot<TCandidate>> ballots,
-    List<ElectionPlace<TCandidate>> places,
-    this.rounds,
-  ) : super(candidates: candidates, ballots: ballots, places: places);
-
-  factory IrvElection(
+  factory(
     List<RankedBallot<TCandidate>> ballots, {
     Iterable<TCandidate>? candidates,
   }) {
@@ -42,14 +39,14 @@ class IrvElection<TCandidate extends Comparable<dynamic>>
     final places = <ElectionPlace<TCandidate>>[];
     for (var round in rounds.reversed) {
       for (var roundPlace in round.places) {
-        final copy =
-            roundPlace.toList()
-              ..removeWhere(places.expand((candidate) => candidate).contains);
+        final copy = roundPlace.toList()
+          ..removeWhere(places.expand((candidate) => candidate).contains);
 
         if (copy.isNotEmpty) {
           candidatesInRounds.addAll(copy);
-          final place =
-              places.isEmpty ? 1 : places.last.place + places.last.length;
+          final place = places.isEmpty
+              ? 1
+              : places.last.place + places.last.length;
           places.add(ElectionPlace(place, copy));
         }
       }

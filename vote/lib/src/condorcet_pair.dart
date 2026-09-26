@@ -3,25 +3,16 @@ import 'package:meta/meta.dart';
 import 'ranked_ballot.dart';
 
 @immutable
-class CondorcetPair<TCandidate extends Comparable<dynamic>>
-    implements Comparable<CondorcetPair<Comparable<dynamic>>> {
-  final TCandidate candidate1, candidate2;
-
-  final int? firstOverSecond;
-  final int? secondOverFirst;
+class const CondorcetPair<TCandidate extends Comparable<dynamic>>._internal(
+  final TCandidate candidate1,
+  final TCandidate candidate2,
+  final int? firstOverSecond,
+  final int? secondOverFirst,
 
   /// Number of ballots where neither candidate was listed
-  final int? ties;
-
-  const CondorcetPair._internal(
-    this.candidate1,
-    this.candidate2,
-    this.firstOverSecond,
-    this.secondOverFirst,
-    this.ties,
-  );
-
-  factory CondorcetPair(
+  final int? ties,
+) implements Comparable<CondorcetPair<Comparable<dynamic>>> {
+  factory(
     TCandidate can1,
     TCandidate can2, [
     List<RankedBallot<TCandidate>>? ballots,

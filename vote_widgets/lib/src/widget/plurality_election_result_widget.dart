@@ -5,24 +5,17 @@ import 'package:vote/vote.dart';
 import '../../helpers.dart';
 import '../model/candidate.dart';
 
-class PluralityElectionResultWidget extends StatelessWidget {
-  const PluralityElectionResultWidget();
-
+class const PluralityElectionResultWidget() extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Consumer<PluralityElection<Candidate>>(
-    builder:
-        (context, value, _) =>
-            _PluralityTableHelper(value.places).build(context),
+    builder: (context, value, _) =>
+        _PluralityTableHelper(value.places).build(context),
   );
 }
 
-class _PluralityTableHelper
-    extends TableHelper<PluralityElectionPlace<Candidate>, Candidate> {
-  @override
-  final List<PluralityElectionPlace<Candidate>> places;
-
-  const _PluralityTableHelper(this.places);
-
+class const _PluralityTableHelper(
+  @override final List<PluralityElectionPlace<Candidate>> places,
+) extends TableHelper<PluralityElectionPlace<Candidate>, Candidate> {
   @override
   List<Object> get columns => const ['Place', Icons.person, 'Votes'];
 

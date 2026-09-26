@@ -8,20 +8,16 @@ import 'ranked_ballot.dart';
 import 'util.dart';
 
 @immutable
-class CondorcetElection<TCandidate extends Comparable<dynamic>>
-    extends Election<TCandidate, ElectionPlace<TCandidate>>
+class CondorcetElection<TCandidate extends Comparable<dynamic>>._internal(
+  @override final Set<CondorcetPair<TCandidate>> pairs,
+  List<TCandidate> candidates,
+  List<RankedBallot<TCandidate>> ballots,
+  List<ElectionPlace<TCandidate>> places,
+) extends Election<TCandidate, ElectionPlace<TCandidate>>
     with CondorcetElectionResult<TCandidate> {
-  @override
-  final Set<CondorcetPair<TCandidate>> pairs;
+  this : super(candidates: candidates, ballots: ballots, places: places);
 
-  CondorcetElection._internal(
-    this.pairs,
-    List<TCandidate> candidates,
-    List<RankedBallot<TCandidate>> ballots,
-    List<ElectionPlace<TCandidate>> places,
-  ) : super(candidates: candidates, ballots: ballots, places: places);
-
-  factory CondorcetElection(
+  factory(
     List<RankedBallot<TCandidate>> ballots, {
     Iterable<TCandidate>? candidates,
   }) {
@@ -56,14 +52,11 @@ abstract mixin class CondorcetElectionResult<
     implements ElectionResult<TCandidate, ElectionPlace<TCandidate>> {
   Set<CondorcetPair<TCandidate>> get pairs;
 
-  factory CondorcetElectionResult.fromPairs(
-    Set<CondorcetPair<TCandidate>> pairs,
-  ) {
-    final candidateList =
-        pairs
-            .expand((element) => [element.candidate1, element.candidate2])
-            .toSet()
-            .toList();
+  factory fromPairs(Set<CondorcetPair<TCandidate>> pairs) {
+    final candidateList = pairs
+        .expand((element) => [element.candidate1, element.candidate2])
+        .toSet()
+        .toList();
 
     final places = _calculatePlaces(candidateList, pairs);
 
@@ -85,17 +78,13 @@ abstract mixin class CondorcetElectionResult<
   }
 }
 
-class _CondorcetElectionResultImpl<TCandidate extends Comparable<dynamic>>
-    extends ElectionResult<TCandidate, ElectionPlace<TCandidate>>
+class _CondorcetElectionResultImpl<TCandidate extends Comparable<dynamic>>._(
+  @override final Set<CondorcetPair<TCandidate>> pairs,
+  List<TCandidate> candidates,
+  List<ElectionPlace<TCandidate>> places,
+) extends ElectionResult<TCandidate, ElectionPlace<TCandidate>>
     with CondorcetElectionResult<TCandidate> {
-  @override
-  final Set<CondorcetPair<TCandidate>> pairs;
-
-  _CondorcetElectionResultImpl._(
-    this.pairs,
-    List<TCandidate> candidates,
-    List<ElectionPlace<TCandidate>> places,
-  ) : super(candidates: candidates, places: places);
+  this : super(candidates: candidates, places: places);
 }
 
 /// Calculates the [ElectionPlace] rankings for a Condorcet election by

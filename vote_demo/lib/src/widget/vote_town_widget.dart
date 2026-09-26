@@ -9,9 +9,7 @@ import '../model/town_folk.dart';
 import '../model/vote_town.dart';
 import '../view_model/vote_town_editor.dart';
 
-class VoteTownWidget extends StatelessWidget {
-  const VoteTownWidget();
-
+class const VoteTownWidget() extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Consumer<VoteTownEditor>(
     builder: (_, editor, _) {
@@ -109,23 +107,16 @@ class VoteTownWidget extends StatelessWidget {
 
 const _candidateScale = 4.7;
 
-class _CandidateDragNotification extends Notification {
-  final Object details;
-  final TownCandidate candidate;
+class const _CandidateDragNotification(
+  final TownCandidate candidate,
+  final Object details,
+) extends Notification;
 
-  const _CandidateDragNotification(this.candidate, this.details);
-}
-
-class _CandidateWidget extends StatelessWidget {
-  final TownCandidate candidate;
-  final bool primary;
-  final int? showCount;
-  const _CandidateWidget({
-    required this.candidate,
-    required this.primary,
-    required this.showCount,
-  });
-
+class const _CandidateWidget({
+  required final TownCandidate candidate,
+  required final bool primary,
+  required final int? showCount,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Consumer<VoteTownEditor>(
     builder: (context, model, _) {
@@ -196,12 +187,8 @@ double _offsetMultiplier(Size size) =>
     math.min(size.height, size.width) /
     (VoteTown.votersAcross * VoteTown.voterSpacing);
 
-class _CandidateFlowDelegate extends FlowDelegate {
+class _CandidateFlowDelegate(final VoteTown _voteTown) extends FlowDelegate {
   Size _drawSize = Size.zero;
-  final VoteTown _voteTown;
-
-  _CandidateFlowDelegate(this._voteTown);
-
   @override
   Size getSize(BoxConstraints constraints) {
     final size = constraints.biggest;
@@ -245,12 +232,10 @@ class _CandidateFlowDelegate extends FlowDelegate {
   }
 }
 
-class _VoteTownPainter extends CustomPainter {
-  final VoteTown _voteTown;
-  final VoteNotification<dynamic>? _notification;
-
-  _VoteTownPainter(this._voteTown, this._notification);
-
+class _VoteTownPainter(
+  final VoteTown _voteTown,
+  final VoteNotification<dynamic>? _notification,
+) extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final offsetMultiplier = _offsetMultiplier(size);

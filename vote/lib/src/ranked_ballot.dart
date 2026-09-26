@@ -5,16 +5,13 @@ import 'plurality_ballot.dart';
 import 'util.dart';
 
 @immutable
-class RankedBallot<TCandidate extends Comparable<dynamic>>
-    implements
-        PluralityBallot<TCandidate>,
-        Comparable<RankedBallot<TCandidate>> {
+class RankedBallot<TCandidate extends Comparable<dynamic>>(
+  final List<TCandidate> rank,
+) implements PluralityBallot<TCandidate>, Comparable<RankedBallot<TCandidate>> {
   @override
   TCandidate get choice => rank.first;
 
-  final List<TCandidate> rank;
-
-  RankedBallot(this.rank) : assert(rank.isNotEmpty), assert(rank.allUnique);
+  this : assert(rank.isNotEmpty), assert(rank.allUnique);
 
   @override
   Iterable<TCandidate> referencedCandidates() => rank;

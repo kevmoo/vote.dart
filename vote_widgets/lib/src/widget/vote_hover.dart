@@ -3,22 +3,18 @@ import 'package:provider/provider.dart';
 
 import '../../helpers.dart';
 
-abstract class VoteNotification<T> extends Notification {
+abstract class const VoteNotification<T>() extends Notification {
   bool get stop;
-  const VoteNotification();
 
   /// Returns `true` if `this` refers to [candidate] in some way.
   bool relatedTo(T candidate);
 }
 
 @immutable
-class CandidateSetHoverNotification<T> extends VoteNotification<T> {
-  @override
-  final bool stop;
-  final Set<T> candidates;
-
-  const CandidateSetHoverNotification(this.candidates, {this.stop = false});
-
+class const CandidateSetHoverNotification<T>(
+  final Set<T> candidates, {
+  @override final bool stop = false,
+}) extends VoteNotification<T> {
   @override
   String toString() =>
       'CandidatePairHoverNotification'
@@ -37,41 +33,33 @@ class CandidateSetHoverNotification<T> extends VoteNotification<T> {
   bool relatedTo(T candidate) => candidates.contains(candidate);
 }
 
-class CandidateHoverWidget<T> extends StatelessWidget {
-  final Set<T> candidates;
-  final Widget child;
-  const CandidateHoverWidget({
-    super.key,
-    required this.candidates,
-    required this.child,
-  });
-
+class const CandidateHoverWidget<T>({
+  super.key,
+  required final Set<T> candidates,
+  required final Widget child,
+}) extends StatelessWidget {
   bool _matches(VoteNotification<dynamic>? data) =>
       data is CandidateSetHoverNotification<T> &&
       candidates.sameItems(data.candidates);
 
   @override
   Widget build(BuildContext context) => MouseRegion(
-    onEnter:
-        (event) =>
-            CandidateSetHoverNotification<T>(candidates).dispatch(context),
-    onExit:
-        (event) => CandidateSetHoverNotification<T>(
-          candidates,
-          stop: true,
-        ).dispatch(context),
-    onHover:
-        (event) =>
-            CandidateSetHoverNotification<T>(candidates).dispatch(context),
+    onEnter: (event) =>
+        CandidateSetHoverNotification<T>(candidates).dispatch(context),
+    onExit: (event) => CandidateSetHoverNotification<T>(
+      candidates,
+      stop: true,
+    ).dispatch(context),
+    onHover: (event) =>
+        CandidateSetHoverNotification<T>(candidates).dispatch(context),
     child: Consumer<VoteNotification<dynamic>?>(
-      builder:
-          (context, value, _) => DefaultTextStyle(
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: _matches(value) ? FontWeight.w900 : null,
-            ),
-            child: child,
-          ),
+      builder: (context, value, _) => DefaultTextStyle(
+        style: TextStyle(
+          color: Colors.black,
+          fontWeight: _matches(value) ? FontWeight.w900 : null,
+        ),
+        child: child,
+      ),
     ),
   );
 }

@@ -4,11 +4,10 @@ import 'package:meta/meta.dart';
 import 'ballot.dart';
 
 @immutable
-class ApprovalBallot<TCandidate extends Comparable<dynamic>>
-    extends Ballot<TCandidate> {
-  final Set<TCandidate> choices;
-
-  ApprovalBallot(this.choices) : assert(choices.isNotEmpty);
+class ApprovalBallot<TCandidate extends Comparable<dynamic>>(
+  final Set<TCandidate> choices,
+) extends Ballot<TCandidate> {
+  this : assert(choices.isNotEmpty);
 
   @override
   Iterable<TCandidate> referencedCandidates() => choices;

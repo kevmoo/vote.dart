@@ -11,23 +11,21 @@ import 'vote_hover.dart';
 // TODO: display candidates that don't even make the first round
 // TODO: flip transfer rounds
 
-class IrvResultWidget<TCandidate extends Candidate> extends StatelessWidget {
-  const IrvResultWidget();
-
+class const IrvResultWidget<TCandidate extends Candidate>()
+    extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Consumer<IrvElection<TCandidate>>(
-    builder:
-        (context, irvElection, _) => Table(
-          columnWidths: {
-            0: const FlexColumnWidth(2),
-            for (var i = 0; i < irvElection.candidates.length; i++)
-              i + 1: const FlexColumnWidth(),
-          },
-          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          children: _rowsForElection(
-            irvElection,
-          ).map((list) => TableRow(children: list)).toList(growable: false),
-        ),
+    builder: (context, irvElection, _) => Table(
+      columnWidths: {
+        0: const FlexColumnWidth(2),
+        for (var i = 0; i < irvElection.candidates.length; i++)
+          i + 1: const FlexColumnWidth(),
+      },
+      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+      children: _rowsForElection(irvElection)
+          .map((list) => TableRow(children: list))
+          .toList(growable: false),
+    ),
   );
 
   Iterable<List<Widget>> _rowsForElection(
@@ -129,12 +127,11 @@ List<Widget> _buildVoteCountRow<TCandidate extends Candidate>(
     PaddedText(
       text: item.place.voteCount.toString(),
       background: item.candidate.color,
-      style:
-          (round.isFinal && item.place.topPlace)
-              ? winnerTextStyle
-              : round.eliminationForCandidate(item.candidate) == null
-              ? null
-              : const TextStyle(fontStyle: FontStyle.italic),
+      style: (round.isFinal && item.place.topPlace)
+          ? winnerTextStyle
+          : round.eliminationForCandidate(item.candidate) == null
+          ? null
+          : const TextStyle(fontStyle: FontStyle.italic),
     ),
   ..._createFillers(candidateCount, roundData.length),
 ];
@@ -146,10 +143,9 @@ Widget _eliminationContent<TCandidate extends Candidate>(
   TCandidate candidate,
 ) {
   if (candidate == elimination.candidate) {
-    final icon =
-        elimination.transferredCandidates.isEmpty
-            ? Icons.close
-            : Icons.subdirectory_arrow_left;
+    final icon = elimination.transferredCandidates.isEmpty
+        ? Icons.close
+        : Icons.subdirectory_arrow_left;
     return Icon(icon);
   }
 
@@ -183,13 +179,11 @@ List<Widget> _buildEliminationRow<TCandidate extends Candidate>(
 bool _dataIterableEquals(Iterable<_Data> a, Iterable<_Data> b) =>
     const IterableEquality<_Data>().equals(a, b);
 
-class _Data<TCandidate extends Candidate> {
-  final int placeNumber;
-  final TCandidate candidate;
-  final PluralityElectionPlace<TCandidate> place;
-
-  _Data(this.placeNumber, this.place, this.candidate);
-
+class _Data<TCandidate extends Candidate>(
+  final int placeNumber,
+  final PluralityElectionPlace<TCandidate> place,
+  final TCandidate candidate,
+) {
   @override
   bool operator ==(Object other) =>
       other is _Data &&

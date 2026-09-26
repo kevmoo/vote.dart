@@ -8,10 +8,8 @@ import 'widget/body_content.dart';
 import 'widget/link_span.dart';
 import 'widget/too_small.dart';
 
-class VoteSimulation extends StatelessWidget {
+class VoteSimulation({super.key}) extends StatelessWidget {
   final _model = VoteTownEditor(VoteTown.random());
-
-  VoteSimulation({super.key});
 
   @override
   Widget build(BuildContext context) => MaterialApp(

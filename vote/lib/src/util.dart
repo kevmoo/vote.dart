@@ -49,12 +49,13 @@ calculatePluralityPlaces<TCandidate extends Comparable<dynamic>>(
       entry.key: entry.value,
   };
 
-  final groups = groupBy(
-      sortedVotes.keys,
-      (c) => sortedVotes[c]!,
-    ).entries.toList(growable: false)
-    // NOTE: reverse sorting
-    ..sort((a, b) => b.key.compareTo(a.key));
+  final groups =
+      groupBy(
+          sortedVotes.keys,
+          (c) => sortedVotes[c]!,
+        ).entries.toList(growable: false)
+        // NOTE: reverse sorting
+        ..sort((a, b) => b.key.compareTo(a.key));
 
   var place = 1;
   final places = <PluralityElectionPlace<TCandidate>>[];
@@ -73,8 +74,9 @@ Set<TCandidate> validateRankedBallotCandidates<
   TCandidate extends Comparable<dynamic>
 >(List<RankedBallot<TCandidate>> ballots, Iterable<TCandidate>? candidates) {
   final ballotCandidates = ballots.expand((b) => b.rank).toSet();
-  final candidateSet =
-      candidates == null ? ballotCandidates : candidates.toSet();
+  final candidateSet = candidates == null
+      ? ballotCandidates
+      : candidates.toSet();
 
   assert(
     candidates == null || candidateSet.containsAll(ballotCandidates),
