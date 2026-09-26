@@ -11,11 +11,8 @@ import 'k_grid.dart';
 import 'link_span.dart';
 import 'vote_town_widget.dart';
 
-class BodyContent extends StatelessWidget {
-  final double crossAxisWidth;
-
-  const BodyContent({required this.crossAxisWidth, super.key});
-
+class const BodyContent({required final double crossAxisWidth, super.key})
+    extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Stack(
     alignment: Alignment.center,

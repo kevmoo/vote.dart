@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:vote/vote.dart';
 
-enum SubEntryPosition { first, middle, last, single }
+enum SubEntryPosition() {
+  first,
+  middle,
+  last,
+  single,
+}
 
-abstract class TableHelper<Entry extends ElectionPlace, SubEntry> {
-  const TableHelper();
-
+abstract class const TableHelper<Entry extends ElectionPlace, SubEntry>() {
   List<Entry> get places;
 
   List<Object> get columns;
@@ -90,10 +93,9 @@ abstract class TableHelper<Entry extends ElectionPlace, SubEntry> {
           final subEntries = subEntriesForEntry(entry);
           return TableRow(
             decoration: BoxDecoration(
-              color:
-                  subEntries.length == 1
-                      ? subEntryColor(subEntries.single)
-                      : null,
+              color: subEntries.length == 1
+                  ? subEntryColor(subEntries.single)
+                  : null,
             ),
             children: List.generate(columns.length, (column) {
               if (isMulti(column)) {

@@ -3,25 +3,16 @@ import 'package:meta/meta.dart';
 import 'ranked_ballot.dart';
 
 @immutable
-class CondorcetPair<TCandidate extends Comparable<dynamic>>
-    implements Comparable<CondorcetPair<Comparable<dynamic>>> {
-  final TCandidate candidate1, candidate2;
-
-  final int? firstOverSecond;
-  final int? secondOverFirst;
+class const CondorcetPair<TCandidate extends Comparable<Object>>._internal(
+  final TCandidate candidate1,
+  final TCandidate candidate2,
+  final int? firstOverSecond,
+  final int? secondOverFirst,
 
   /// Number of ballots where neither candidate was listed
-  final int? ties;
-
-  const CondorcetPair._internal(
-    this.candidate1,
-    this.candidate2,
-    this.firstOverSecond,
-    this.secondOverFirst,
-    this.ties,
-  );
-
-  factory CondorcetPair(
+  final int? ties,
+) implements Comparable<CondorcetPair<Comparable<Object>>> {
+  factory(
     TCandidate can1,
     TCandidate can2, [
     List<RankedBallot<TCandidate>>? ballots,
@@ -94,7 +85,7 @@ class CondorcetPair<TCandidate extends Comparable<dynamic>>
   String toString() => '($candidate1, $candidate2)';
 
   @override
-  int compareTo(CondorcetPair<Comparable<dynamic>> other) {
+  int compareTo(CondorcetPair<Comparable<Object>> other) {
     var value = candidate1.compareTo(other.candidate1);
     if (value == 0) {
       value = candidate2.compareTo(other.candidate2);
@@ -107,7 +98,7 @@ class CondorcetPair<TCandidate extends Comparable<dynamic>>
 /// returning counts for [can1] ranked over [can2], [can2] over [can1], and
 /// ballots with neither.
 ({int firstOverSecond, int secondOverFirst, int ties}) _tallyBallots<
-  TCandidate extends Comparable<dynamic>
+  TCandidate extends Comparable<Object>
 >(TCandidate can1, TCandidate can2, List<RankedBallot<TCandidate>> ballots) {
   var firstOverSecond = 0;
   var secondOverFirst = 0;
@@ -138,7 +129,7 @@ class CondorcetPair<TCandidate extends Comparable<dynamic>>
 
 /// Normalizes a candidate pair such that the first candidate precedes the
 /// second according to [Comparable.compareTo].
-(TCandidate, TCandidate) _sortPair<TCandidate extends Comparable<dynamic>>(
+(TCandidate, TCandidate) _sortPair<TCandidate extends Comparable<Object>>(
   TCandidate can1,
   TCandidate can2,
 ) {

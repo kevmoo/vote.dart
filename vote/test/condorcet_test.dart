@@ -14,8 +14,8 @@ void main() {
   );
 
   test('simple', () {
-    final c = 'Candidate 1';
-    final b = RankedBallot([c]);
+    const c = 'Candidate 1';
+    final b = RankedBallot(const [c]);
 
     final ce = CondorcetElection([b]);
 
@@ -30,19 +30,19 @@ void main() {
   });
 
   test('ice cream', () {
-    final canC = 'Chocolate';
-    final canCC = 'Chocolate Chunk';
-    final canVan = 'Vanilla';
+    const canC = 'Chocolate';
+    const canCC = 'Chocolate Chunk';
+    const canVan = 'Vanilla';
 
     final ballots = [
       // 29 cc, c, v
-      for (var i = 0; i < 29; i++) RankedBallot([canCC, canC, canVan]),
+      for (var i = 0; i < 29; i++) RankedBallot(const [canCC, canC, canVan]),
 
       // 31 c, cc, v
-      for (var i = 0; i < 31; i++) RankedBallot([canC, canCC, canVan]),
+      for (var i = 0; i < 31; i++) RankedBallot(const [canC, canCC, canVan]),
 
       // 40 v, c, cc
-      for (var i = 0; i < 40; i++) RankedBallot([canVan, canC, canCC]),
+      for (var i = 0; i < 40; i++) RankedBallot(const [canVan, canC, canCC]),
     ];
 
     final ce = CondorcetElection(ballots);
@@ -84,21 +84,21 @@ void main() {
   test('3-Way Tie For First', () {
     // 1st, 4th, 5th, 7th
     // 3,   1,   2,   1
-    final cA1 = 'A1';
-    final cA2 = 'A2';
-    final cA3 = 'A3';
-    final cB1 = 'B1';
-    final cC1 = 'C1';
-    final cC2 = 'C2';
-    final cD1 = 'D1';
+    const cA1 = 'A1';
+    const cA2 = 'A2';
+    const cA3 = 'A3';
+    const cB1 = 'B1';
+    const cC1 = 'C1';
+    const cC2 = 'C2';
+    const cD1 = 'D1';
 
     final ballots = [
-      RankedBallot([cA1, cA2, cA3, cB1, cC1, cC2, cD1]),
-      RankedBallot([cA1, cA2, cA3, cB1, cC2, cC1, cD1]),
-      RankedBallot([cA2, cA3, cA1, cB1, cC1, cC2, cD1]),
-      RankedBallot([cA2, cA3, cA1, cB1, cC2, cC1, cD1]),
-      RankedBallot([cA3, cA1, cA2, cB1, cC1, cC2, cD1]),
-      RankedBallot([cA3, cA1, cA2, cB1, cC2, cC1, cD1]),
+      RankedBallot(const [cA1, cA2, cA3, cB1, cC1, cC2, cD1]),
+      RankedBallot(const [cA1, cA2, cA3, cB1, cC2, cC1, cD1]),
+      RankedBallot(const [cA2, cA3, cA1, cB1, cC1, cC2, cD1]),
+      RankedBallot(const [cA2, cA3, cA1, cB1, cC2, cC1, cD1]),
+      RankedBallot(const [cA3, cA1, cA2, cB1, cC1, cC2, cD1]),
+      RankedBallot(const [cA3, cA1, cA2, cB1, cC2, cC1, cD1]),
     ];
 
     final election = CondorcetElection(ballots);
@@ -119,7 +119,7 @@ void main() {
   });
 
   test('parse silly', () {
-    final value = r'''
+    const value = r'''
 20 : E
 19 : D > A > C > B
 14 : A > B > C > D

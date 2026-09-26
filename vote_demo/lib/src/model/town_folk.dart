@@ -6,22 +6,18 @@ import 'package:vote_widgets/vote_widgets.dart';
 
 import 'voter.dart';
 
-class TownCandidate extends Candidate {
+class TownCandidate(final int index, double hue, final Point<int> intLocation)
+    extends Candidate {
   static const candidateSpacing = 5.0;
 
-  final Point<double> location;
+  final Point<double> location = _unfixPoint(intLocation);
 
-  final Point<int> intLocation;
-
-  final int index;
-
-  TownCandidate(this.index, double hue, this.intLocation)
-    : location = _unfixPoint(intLocation),
-      assert(index >= 0),
+  this
+    : assert(index >= 0),
       assert(index < maxCandidateCount),
       super(String.fromCharCode(index + _capitalACharCode), hue);
 
-  factory TownCandidate.letter(int index, Point<int> intLocation) =>
+  factory letter(int index, Point<int> intLocation) =>
       TownCandidate(index, candidateHues[index], intLocation);
 
   @override
@@ -44,11 +40,10 @@ Point<double> _unfixPoint(Point<int> value) => Point(
   (value.y + 1) * TownCandidate.candidateSpacing,
 );
 
-class TownVoter extends Voter {
-  final Point<double> location;
-  final List<TownCandidate> closestCandidates;
-
-  TownVoter(super.id, this.location, this.closestCandidates);
-}
+class TownVoter(
+  super.id,
+  final Point<double> location,
+  final List<TownCandidate> closestCandidates,
+) extends Voter;
 
 const _capitalACharCode = 65;

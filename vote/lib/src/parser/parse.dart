@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_interpolation_to_compose_strings
-
 import 'package:string_scanner/string_scanner.dart';
 
 import 'ballot_line.dart';

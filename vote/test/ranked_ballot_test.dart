@@ -4,8 +4,8 @@ import 'package:vote/vote.dart';
 import 'test_util.dart';
 
 void main() {
-  final c1 = 'candidate 1';
-  final c2 = 'candidate 2';
+  const c1 = 'candidate 1';
+  const c2 = 'candidate 2';
 
   test('no empty candidates', () {
     expect(() {
@@ -15,16 +15,16 @@ void main() {
 
   test('no dupe candidates', () {
     expect(() {
-      RankedBallot([c1, c1]);
+      RankedBallot(const [c1, c1]);
     }, throwsAssertionError);
   });
 
   test('1 candidate is cool', () {
-    RankedBallot([c1]);
+    RankedBallot(const [c1]);
   });
 
   test('2 candidates is cool', () {
-    RankedBallot([c1, c2]);
+    RankedBallot(const [c1, c2]);
   });
 
   test('compare', () {

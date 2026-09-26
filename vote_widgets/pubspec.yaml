@@ -3,7 +3,7 @@ version: 1.0.0-wip
 publish_to: none
 
 environment:
-  sdk: ^3.7.0
+  sdk: ^3.13.0
 resolution: workspace
 
 dependencies:

@@ -13,16 +13,19 @@ void main() {
   );
 
   group('common favorite', () {
-    final a = 'a', b = 'b', c = 'c', d = 'd';
+    const a = 'a', b = 'b', c = 'c', d = 'd';
 
     test('tie one vote', () {
       final ballots = [
-        ApprovalBallot({a}),
-        ApprovalBallot({b}),
-        ApprovalBallot({c}),
+        ApprovalBallot(const {a}),
+        ApprovalBallot(const {b}),
+        ApprovalBallot(const {c}),
       ];
 
-      final election = ApprovalElection(ballots, candidates: {a, b, c, d});
+      final election = ApprovalElection(
+        ballots,
+        candidates: const {a, b, c, d},
+      );
 
       expect(election.hasSingleWinner, isFalse);
       expect(election.singleWinner, isNull);
@@ -33,12 +36,15 @@ void main() {
 
     test('tie circular vote', () {
       final ballots = [
-        ApprovalBallot({a, b}),
-        ApprovalBallot({b, c}),
-        ApprovalBallot({c, a}),
+        ApprovalBallot(const {a, b}),
+        ApprovalBallot(const {b, c}),
+        ApprovalBallot(const {c, a}),
       ];
 
-      final election = ApprovalElection(ballots, candidates: {a, b, c, d});
+      final election = ApprovalElection(
+        ballots,
+        candidates: const {a, b, c, d},
+      );
 
       expect(election.hasSingleWinner, isFalse);
       expect(election.singleWinner, isNull);
@@ -49,12 +55,15 @@ void main() {
 
     test('common favorite', () {
       final ballots = [
-        ApprovalBallot({a, d}),
-        ApprovalBallot({b, d}),
-        ApprovalBallot({c, d}),
+        ApprovalBallot(const {a, d}),
+        ApprovalBallot(const {b, d}),
+        ApprovalBallot(const {c, d}),
       ];
 
-      final election = ApprovalElection(ballots, candidates: {a, b, c, d});
+      final election = ApprovalElection(
+        ballots,
+        candidates: const {a, b, c, d},
+      );
 
       expect(election.hasSingleWinner, isTrue);
       expect(election.singleWinner, d);
@@ -65,13 +74,16 @@ void main() {
 
     test('liking everyone changes nothing', () {
       final ballots = [
-        ApprovalBallot({a, d}),
-        ApprovalBallot({b, d}),
-        ApprovalBallot({c, d}),
-        ApprovalBallot({a, b, c, d}),
+        ApprovalBallot(const {a, d}),
+        ApprovalBallot(const {b, d}),
+        ApprovalBallot(const {c, d}),
+        ApprovalBallot(const {a, b, c, d}),
       ];
 
-      final election = ApprovalElection(ballots, candidates: {a, b, c, d});
+      final election = ApprovalElection(
+        ballots,
+        candidates: const {a, b, c, d},
+      );
 
       expect(election.hasSingleWinner, isTrue);
       expect(election.singleWinner, d);

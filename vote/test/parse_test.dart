@@ -15,14 +15,17 @@ void _test(String name, String input, List<BallotLine> expectedResult) {
 
 void main() {
   test('parse', () {
-    final chocolate = 'Chocolate';
-    final fudge = 'Fudge';
-    final vanilla = 'Vanilla';
+    const chocolate = 'Chocolate';
+    const fudge = 'Fudge';
+    const vanilla = 'Vanilla';
 
     final ballots = [
-      for (var i = 0; i < 31; i++) RankedBallot([fudge, chocolate, vanilla]),
-      for (var i = 0; i < 29; i++) RankedBallot([chocolate, fudge, vanilla]),
-      for (var i = 0; i < 40; i++) RankedBallot([vanilla, chocolate, fudge]),
+      for (var i = 0; i < 31; i++)
+        RankedBallot(const [fudge, chocolate, vanilla]),
+      for (var i = 0; i < 29; i++)
+        RankedBallot(const [chocolate, fudge, vanilla]),
+      for (var i = 0; i < 40; i++)
+        RankedBallot(const [vanilla, chocolate, fudge]),
     ];
 
     final linesText = BallotLines<String>.fromBallots(ballots).text;

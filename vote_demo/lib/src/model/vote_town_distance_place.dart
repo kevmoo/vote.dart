@@ -4,15 +4,11 @@ import 'package:vote/vote.dart';
 import 'town_folk.dart';
 import 'vote_town.dart';
 
-class VoteTownDistancePlace extends ElectionPlace<TownCandidate> {
-  final double averageDistance;
-
-  VoteTownDistancePlace._(
-    this.averageDistance,
-    int place,
-    List<TownCandidate> candidates,
-  ) : super(place, candidates);
-
+class VoteTownDistancePlace._(
+  final double averageDistance,
+  super.place,
+  super.candidates,
+) extends ElectionPlace<TownCandidate> {
   static List<VoteTownDistancePlace> create(VoteTown town) {
     final distances = Map<TownCandidate, double>.fromIterable(
       town.candidates,

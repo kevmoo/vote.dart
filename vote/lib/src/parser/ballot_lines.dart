@@ -11,20 +11,16 @@ String _defaultCandidateText(Object candidate) => candidate.toString();
 /// A helper for creating [RankedBallot]s by parsing text input.
 ///
 /// Useful for development and debugging.
-class BallotLines<TCandidate extends Comparable<dynamic>> {
-  final int countWidth;
-  final int candidateWidth;
-  final List<BallotLine<TCandidate>> _lines;
+class BallotLines<TCandidate extends Comparable<Object>>(
+  final List<BallotLine<TCandidate>> _lines, {
+  final String Function(TCandidate) candidateToText = _defaultCandidateText,
+}) {
+  final int countWidth = _longest(_lines.map((l) => l.count.toString()));
+  final int candidateWidth = _longest(
+    _lines.expand((l) => l.candidates).map(candidateToText),
+  );
 
-  final String Function(TCandidate) candidateToText;
-
-  BallotLines(this._lines, {this.candidateToText = _defaultCandidateText})
-    : countWidth = _longest(_lines.map((l) => l.count.toString())),
-      candidateWidth = _longest(
-        _lines.expand((l) => l.candidates).map(candidateToText),
-      );
-
-  factory BallotLines.fromBallots(
+  factory fromBallots(
     Iterable<RankedBallot<TCandidate>> ballots, {
     String Function(TCandidate) candidateToText = _defaultCandidateText,
   }) {
@@ -38,13 +34,14 @@ class BallotLines<TCandidate extends Comparable<dynamic>> {
 
     return BallotLines(
       grouped.entries
-        .map((e) => BallotLine(e.value, e.key.rank))
-        .toList(growable: false)..sort(),
+          .map((e) => BallotLine(e.value, e.key.rank))
+          .toList(growable: false)
+        ..sort(),
       candidateToText: candidateToText,
     );
   }
 
-  factory BallotLines.parse(
+  factory parse(
     String input,
     Map<String, TCandidate> Function(Set<String>) candidateFromText, {
     String Function(TCandidate) candidateToText = _defaultCandidateText,
@@ -62,31 +59,32 @@ class BallotLines<TCandidate extends Comparable<dynamic>> {
 
     final candidateCache = candidateFromText(candidateStrings);
 
-    final lines = map.entries
-      .map(
-        (e) => BallotLine<TCandidate>(
-          e.value,
-          e.key
-              .map((string) => candidateCache[string]!)
-              .toList(growable: false),
-        ),
-      )
-      .toList(growable: false)..sort();
+    final lines =
+        map.entries
+            .map(
+              (e) => BallotLine<TCandidate>(
+                e.value,
+                e.key
+                    .map((string) => candidateCache[string]!)
+                    .toList(growable: false),
+              ),
+            )
+            .toList(growable: false)
+          ..sort();
 
     return BallotLines(lines, candidateToText: candidateToText);
   }
 
   String? _text;
 
-  String get text =>
-      _text ??= _lines
-          .map((b) {
-            final candidates = b.candidates
-                .map((c) => candidateToText(c).padRight(candidateWidth))
-                .join(' > ');
-            return '${b.count.toString().padLeft(countWidth)} : $candidates';
-          })
-          .join('\n');
+  String get text => _text ??= _lines
+      .map((b) {
+        final candidates = b.candidates
+            .map((c) => candidateToText(c).padRight(candidateWidth))
+            .join(' > ');
+        return '${b.count.toString().padLeft(countWidth)} : $candidates';
+      })
+      .join('\n');
 
   Iterable<RankedBallot<TCandidate>> get ballots sync* {
     for (var line in _lines) {

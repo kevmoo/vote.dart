@@ -7,18 +7,14 @@ import 'election_data.dart';
 import 'town_folk.dart';
 import 'vote_town_distance_place.dart';
 
-class VoteTown extends ElectionData {
+class VoteTown(final List<TownCandidate> _candidates) extends ElectionData {
   static const votersAcross = 10;
   static const voterSpacing = TownCandidate.candidateSpacing * 2;
-
-  final List<TownCandidate> _candidates;
 
   @override
   late final List<TownCandidate> candidates = UnmodifiableListView(_candidates);
 
-  VoteTown(List<TownCandidate> candidates) : _candidates = candidates;
-
-  factory VoteTown.random({int candidateCount = 5, int? randomSeed}) {
+  factory random({int candidateCount = 5, int? randomSeed}) {
     assert(candidateCount > 0);
     assert(candidateCount < 2 * votersAcross);
     assert(candidateCount <= 26);

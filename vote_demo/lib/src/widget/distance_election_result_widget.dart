@@ -5,9 +5,7 @@ import 'package:vote_widgets/vote_widgets.dart';
 
 import '../model/vote_town_distance_place.dart';
 
-class DistanceElectionResultWidget extends StatelessWidget {
-  const DistanceElectionResultWidget();
-
+class const DistanceElectionResultWidget() extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Consumer<List<VoteTownDistancePlace>>(
     builder: (context, distancePlaces, _) =>
@@ -15,13 +13,9 @@ class DistanceElectionResultWidget extends StatelessWidget {
   );
 }
 
-class _DistancePlaceRowInfo
-    extends TableHelper<VoteTownDistancePlace, Candidate> {
-  @override
-  final List<VoteTownDistancePlace> places;
-
-  const _DistancePlaceRowInfo(this.places);
-
+class const _DistancePlaceRowInfo(
+  @override final List<VoteTownDistancePlace> places,
+) extends TableHelper<VoteTownDistancePlace, Candidate> {
   @override
   List<Object> get columns => const ['Place', Icons.person, 'Distance'];
 

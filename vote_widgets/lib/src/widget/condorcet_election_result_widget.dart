@@ -5,25 +5,25 @@ import '../../helpers.dart';
 import 'utility_widgets.dart';
 import 'vote_hover.dart';
 
-class CondorcetElectionResultWidget<TCandidate extends Comparable<TCandidate>>
-    extends StatefulWidget {
-  final CondorcetElectionResult<TCandidate> election;
-  final CondorcetWidgetDisplay initialDisplay;
-  final bool clickToToggleDisplay;
-
-  const CondorcetElectionResultWidget({
-    required this.election,
-    this.initialDisplay = CondorcetWidgetDisplay.comparison,
-    this.clickToToggleDisplay = true,
-  });
-
+class const CondorcetElectionResultWidget<
+  TCandidate extends Comparable<TCandidate>
+>({
+  required final CondorcetElectionResult<TCandidate> election,
+  final CondorcetWidgetDisplay initialDisplay =
+      CondorcetWidgetDisplay.comparison,
+  final bool clickToToggleDisplay = true,
+}) extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _State<TCandidate>();
 }
 
-enum CondorcetWidgetDisplay { comparison, simple, delta }
+enum CondorcetWidgetDisplay() {
+  comparison,
+  simple,
+  delta,
+}
 
-class _State<TCandidate extends Comparable<TCandidate>>
+class _State<TCandidate extends Comparable<TCandidate>>()
     extends State<CondorcetElectionResultWidget<TCandidate>> {
   late CondorcetWidgetDisplay _display = widget.initialDisplay;
 
@@ -123,8 +123,10 @@ class _State<TCandidate extends Comparable<TCandidate>>
 
   void _onTap() {
     final next =
-        CondorcetWidgetDisplay
-            .values[(CondorcetWidgetDisplay.values.indexOf(_display) + 1) %
+        CondorcetWidgetDisplay.values[(CondorcetWidgetDisplay.values.indexOf(
+                  _display,
+                ) +
+                1) %
             CondorcetWidgetDisplay.values.length];
     setState(() {
       _display = next;
@@ -165,12 +167,11 @@ class _State<TCandidate extends Comparable<TCandidate>>
   Widget _comparisonText(CondorcetPair<TCandidate> pair) {
     final primaryCandidate = pair.candidate1;
 
-    final comparison =
-        pair.isTie
-            ? '='
-            : pair.winner == primaryCandidate
-            ? '>'
-            : '<';
+    final comparison = pair.isTie
+        ? '='
+        : pair.winner == primaryCandidate
+        ? '>'
+        : '<';
 
     final background = _candidateColors[primaryCandidate];
     return PaddedText(
@@ -199,12 +200,11 @@ extension on CondorcetPair {
 
   bool get firstWins => winner == candidate1;
 
-  Color get color =>
-      firstWins
-          ? Colors.black
-          : isTie
-          ? _tieColor
-          : _lostDimColor;
+  Color get color => firstWins
+      ? Colors.black
+      : isTie
+      ? _tieColor
+      : _lostDimColor;
 
   TextStyle get style => TextStyle(color: color);
 }

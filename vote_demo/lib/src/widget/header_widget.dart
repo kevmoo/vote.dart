@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
 
-class HeaderWidget extends StatefulWidget {
-  final String header;
-  final Widget child;
-  final Object? extraHelp;
-
-  const HeaderWidget({
-    super.key,
-    required this.header,
-    required this.child,
-    this.extraHelp,
-  });
-
+class const HeaderWidget({
+  super.key,
+  required final String header,
+  required final Widget child,
+  final Object? extraHelp,
+}) extends StatefulWidget {
   @override
   State<HeaderWidget> createState() => _HeaderWidgetState();
 }
 
-class _HeaderWidgetState extends State<HeaderWidget> {
+class _HeaderWidgetState() extends State<HeaderWidget> {
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason>?
   _snackbarController;
 

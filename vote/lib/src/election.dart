@@ -4,20 +4,18 @@ import 'util.dart';
 
 /// Baseclass of all election types.
 abstract class Election<
-  TCandidate extends Comparable<dynamic>,
+  TCandidate extends Comparable<Object>,
   TElectionPlace extends ElectionPlace<TCandidate>
->
-    extends ElectionResult<TCandidate, TElectionPlace> {
-  Election({
-    required super.candidates,
-    required this.ballots,
-    required super.places,
-  }) : super._noAssert() {
-    assert(_assert(ballots: ballots));
-  }
+>({
+  required super.candidates,
 
   /// All of the ballots cast in the election.
-  final List<Ballot<TCandidate>> ballots;
+  required final List<Ballot<TCandidate>> ballots,
+  required super.places,
+}) extends ElectionResult<TCandidate, TElectionPlace> {
+  this : super._noAssert() {
+    assert(_assert(ballots: ballots));
+  }
 }
 
 /// The baseclass for the results of an [Election].
@@ -25,14 +23,14 @@ abstract class Election<
 /// Implementations may not include ballot information, to protect the privacy
 /// of ballots – or just to allow visualization of an election result.
 abstract class ElectionResult<
-  TCandidate extends Comparable<dynamic>,
+  TCandidate extends Comparable<Object>,
   TElectionPlace extends ElectionPlace<TCandidate>
 > {
-  ElectionResult({required this.candidates, required this.places}) {
+  new({required this.candidates, required this.places}) {
     assert(_assert());
   }
 
-  ElectionResult._noAssert({required this.candidates, required this.places});
+  new _noAssert({required this.candidates, required this.places});
 
   bool _assert({List<Ballot<TCandidate>>? ballots}) {
     // TODO: assert all candidates are sorted, too?
@@ -60,8 +58,9 @@ abstract class ElectionResult<
     }
 
     if (ballots != null) {
-      final allReferencedCandidates =
-          ballots.expand((b) => b.referencedCandidates()).toSet();
+      final allReferencedCandidates = ballots
+          .expand((b) => b.referencedCandidates())
+          .toSet();
 
       assert(allReferencedCandidates.every(candidates.contains));
 

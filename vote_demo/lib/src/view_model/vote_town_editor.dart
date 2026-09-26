@@ -7,15 +7,13 @@ import 'editor.dart';
 
 const _maxCandidates = 8;
 
-class VoteTownEditor extends KnarlyEditor<VoteTown> {
+class VoteTownEditor(super.value) extends KnarlyEditor<VoteTown> {
   final _locationMemory = <Point<int>>[];
 
   TownCandidate? get movingCandidate => _movingCandidate;
   TownCandidate? _movingCandidate;
 
   Offset? _workingPoint;
-
-  VoteTownEditor(super.value);
 
   void Function()? get addCandidate {
     final candidateCount = value.candidates.length;

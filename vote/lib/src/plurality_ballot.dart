@@ -3,12 +3,9 @@ import 'package:meta/meta.dart';
 import 'ballot.dart';
 
 @immutable
-class PluralityBallot<TCandidate extends Comparable<dynamic>>
-    extends Ballot<TCandidate> {
-  final TCandidate choice;
-
-  const PluralityBallot(this.choice);
-
+class const PluralityBallot<TCandidate extends Comparable<Object>>(
+  final TCandidate choice,
+) extends Ballot<TCandidate> {
   @override
   Iterable<TCandidate> referencedCandidates() => [choice];
 

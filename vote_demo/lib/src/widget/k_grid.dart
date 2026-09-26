@@ -3,26 +3,24 @@ import 'dart:math' as math;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
-class KGrid extends MultiChildRenderObjectWidget {
-  final double maxCrossAxisExtent;
-
-  const KGrid({super.key, required this.maxCrossAxisExtent, super.children})
-    : assert(maxCrossAxisExtent > 0);
+class const KGrid({
+  super.key,
+  required final double maxCrossAxisExtent,
+  super.children,
+}) extends MultiChildRenderObjectWidget {
+  this : assert(maxCrossAxisExtent > 0);
 
   @override
   RenderObject createRenderObject(BuildContext context) => _KGrid(this);
 }
 
-class _KGridParentData extends ContainerBoxParentData<RenderBox> {}
+class _KGridParentData() extends ContainerBoxParentData<RenderBox>;
 
-class _KGrid extends RenderBox
+class _KGrid(final KGrid _kStackParent)
+    extends RenderBox
     with
         ContainerRenderObjectMixin<RenderBox, _KGridParentData>,
         RenderBoxContainerDefaultsMixin<RenderBox, _KGridParentData> {
-  _KGrid(this._kStackParent);
-
-  final KGrid _kStackParent;
-
   @override
   void setupParentData(RenderBox child) {
     if (child.parentData is! _KGridParentData) {

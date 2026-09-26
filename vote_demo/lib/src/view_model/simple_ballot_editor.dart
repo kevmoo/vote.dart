@@ -5,14 +5,14 @@ import 'package:vote_widgets/vote_widgets.dart';
 import '../model/election_data.dart';
 import 'editor.dart';
 
-class SimpleBallotEditor extends KnarlyEditor<ElectionData> {
+class SimpleBallotEditor({required ElectionData electionData})
+    extends KnarlyEditor<ElectionData> {
   final textController = TextEditingController();
 
   BallotLines<Candidate>? _candidateLines;
   late BallotLines<Candidate> _ballotLines;
 
-  SimpleBallotEditor({required ElectionData electionData})
-    : super(electionData) {
+  this : super(electionData) {
     _updateBallots();
   }
 

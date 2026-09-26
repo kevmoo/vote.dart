@@ -1,7 +1,5 @@
-class Voter implements Comparable<Voter> {
-  final int id;
-
-  Voter(this.id) : assert(id >= 0);
+class Voter(final int id) implements Comparable<Voter> {
+  this : assert(id >= 0);
 
   @override
   int compareTo(Voter other) => id.compareTo(other.id);

@@ -7,15 +7,14 @@ import 'plurality_election_place.dart';
 import 'util.dart';
 
 @immutable
-class PluralityElection<TCandidate extends Comparable<dynamic>>
-    extends Election<TCandidate, PluralityElectionPlace<TCandidate>> {
-  PluralityElection._internal(
-    List<Ballot<TCandidate>> ballots,
-    List<TCandidate> candidates,
-    List<PluralityElectionPlace<TCandidate>> places,
-  ) : super(candidates: candidates, ballots: ballots, places: places);
+class PluralityElection<TCandidate extends Comparable<Object>>._internal(
+  List<Ballot<TCandidate>> ballots,
+  List<TCandidate> candidates,
+  List<PluralityElectionPlace<TCandidate>> places,
+) extends Election<TCandidate, PluralityElectionPlace<TCandidate>> {
+  this : super(candidates: candidates, ballots: ballots, places: places);
 
-  factory PluralityElection(
+  factory(
     List<PluralityBallot<TCandidate>> ballots, {
     Iterable<TCandidate>? candidates,
   }) {
