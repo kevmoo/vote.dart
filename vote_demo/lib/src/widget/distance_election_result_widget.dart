@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vote_widgets/helpers.dart';
-import 'package:vote_widgets/vote_widgets.dart';
 
 import '../model/vote_town_distance_place.dart';
 
@@ -15,32 +14,13 @@ class const DistanceElectionResultWidget() extends StatelessWidget {
 
 class const _DistancePlaceRowInfo(
   @override final List<VoteTownDistancePlace> places,
-) extends TableHelper<VoteTownDistancePlace, Candidate> {
+) extends TableHelper<VoteTownDistancePlace> {
   @override
   List<Object> get columns => const ['Place', Icons.person, 'Distance'];
 
   @override
-  Color subEntryColor(Candidate subEntry) => subEntry.color;
-
-  @override
-  List<Candidate> subEntriesForEntry(VoteTownDistancePlace entry) => entry;
-
-  @override
-  bool isMulti(int column) => column == 1;
-
-  @override
   String textForColumn(int columnName, VoteTownDistancePlace entry) =>
-      switch (columnName) {
-        0 => entry.place.toString(),
-        2 => entry.averageDistance.toStringAsFixed(2),
-        _ => super.textForColumn(columnName, entry),
-      };
-
-  @override
-  String textForSubEntry(int columnName, Candidate subEntry) {
-    if (columnName == 1) {
-      return subEntry.id;
-    }
-    return super.textForSubEntry(columnName, subEntry);
-  }
+      columnName == 2
+      ? entry.averageDistance.toStringAsFixed(2)
+      : super.textForColumn(columnName, entry);
 }

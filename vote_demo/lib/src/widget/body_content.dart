@@ -95,20 +95,9 @@ class const BodyContent({required final double crossAxisWidth, super.key})
     ),
     HeaderWidget(
       header: 'Condorcet',
-      extraHelp: TextSpan(
-        children: [
-          const TextSpan(text: 'A '),
-          linkSpan(
-            'https://wikipedia.org/wiki/Ranked_voting',
-            text: 'ranked voting method',
-          ),
-          const TextSpan(
-            text:
-                ' which calculates the winner by evaluating every pair of '
-                'candidates. See ',
-          ),
-          linkSpan('https://wikipedia.org/wiki/Condorcet_method'),
-        ],
+      extraHelp: _rankedMethodHelp(
+        'evaluating every pair of candidates',
+        'https://wikipedia.org/wiki/Condorcet_method',
       ),
       child: CondorcetElectionResultWidget<Candidate>(
         election: kvm.value.condorcetElection,
@@ -116,21 +105,10 @@ class const BodyContent({required final double crossAxisWidth, super.key})
     ),
     HeaderWidget(
       header: 'Instant-runoff voting',
-      extraHelp: TextSpan(
-        children: [
-          const TextSpan(text: 'A '),
-          linkSpan(
-            'https://wikipedia.org/wiki/Ranked_voting',
-            text: 'ranked voting method',
-          ),
-          const TextSpan(
-            text:
-                ' which calculates the winner by repeatedly calculating '
-                'run-offs where the candidate with the fewest #1 rankings '
-                'is eliminated. See ',
-          ),
-          linkSpan('https://wikipedia.org/wiki/Instant-runoff_voting'),
-        ],
+      extraHelp: _rankedMethodHelp(
+        'repeatedly calculating run-offs where the candidate with the fewest '
+            '#1 rankings is eliminated',
+        'https://wikipedia.org/wiki/Instant-runoff_voting',
       ),
       child: Provider<IrvElection<Candidate>>.value(
         value: kvm.value.irvElection,
@@ -138,4 +116,17 @@ class const BodyContent({required final double crossAxisWidth, super.key})
       ),
     ),
   ];
+
+  static TextSpan _rankedMethodHelp(String description, String wikiUrl) =>
+      TextSpan(
+        children: [
+          const TextSpan(text: 'A '),
+          linkSpan(
+            'https://wikipedia.org/wiki/Ranked_voting',
+            text: 'ranked voting method',
+          ),
+          TextSpan(text: ' which calculates the winner by $description. See '),
+          linkSpan(wikiUrl),
+        ],
+      );
 }

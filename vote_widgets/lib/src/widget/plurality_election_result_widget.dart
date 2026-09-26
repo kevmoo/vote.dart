@@ -15,39 +15,15 @@ class const PluralityElectionResultWidget() extends StatelessWidget {
 
 class const _PluralityTableHelper(
   @override final List<PluralityElectionPlace<Candidate>> places,
-) extends TableHelper<PluralityElectionPlace<Candidate>, Candidate> {
+) extends TableHelper<PluralityElectionPlace<Candidate>> {
   @override
   List<Object> get columns => const ['Place', Icons.person, 'Votes'];
-
-  @override
-  Color subEntryColor(Candidate subEntry) => subEntry.color;
-
-  @override
-  List<Candidate> subEntriesForEntry(PluralityElectionPlace<Candidate> entry) =>
-      entry;
-
-  @override
-  bool isMulti(int column) => column == 1;
 
   @override
   String textForColumn(
     int columnName,
     PluralityElectionPlace<Candidate> entry,
-  ) {
-    switch (columnName) {
-      case 0:
-        return entry.place.toString();
-      case 2:
-        return entry.voteCount.toString();
-    }
-    return super.textForColumn(columnName, entry);
-  }
-
-  @override
-  String textForSubEntry(int columnName, Candidate subEntry) {
-    if (columnName == 1) {
-      return subEntry.id;
-    }
-    return super.textForSubEntry(columnName, subEntry);
-  }
+  ) => columnName == 2
+      ? entry.voteCount.toString()
+      : super.textForColumn(columnName, entry);
 }
