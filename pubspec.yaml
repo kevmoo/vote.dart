@@ -1,0 +1,13 @@
+name: _vote_workspace
+publish_to: none
+
+environment:
+  sdk: ^3.7.0
+
+workspace:
+  - vote
+  - vote_widgets
+  - vote_demo
+
+dev_dependencies:
+  dart_flutter_team_lints: ^3.0.0

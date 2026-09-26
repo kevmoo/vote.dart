@@ -11,7 +11,7 @@ class PluralityElectionResultWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Consumer<PluralityElection<Candidate>>(
     builder:
-        (context, value, __) =>
+        (context, value, _) =>
             _PluralityTableHelper(value.places).build(context),
   );
 }

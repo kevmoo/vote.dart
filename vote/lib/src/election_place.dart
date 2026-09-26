@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 /// The resulting place a candidate received in an election.
-class ElectionPlace<TCandidate extends Comparable>
+class ElectionPlace<TCandidate extends Comparable<dynamic>>
     extends UnmodifiableListView<TCandidate> {
   final int place;
 

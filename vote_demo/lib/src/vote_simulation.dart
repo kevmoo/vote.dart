@@ -21,7 +21,7 @@ class VoteSimulation extends StatelessWidget {
         minimumSize: const Size(_crossAxisWidth * 2, _crossAxisWidth),
         child: ChangeNotifierProvider<VoteTownEditor>.value(
           value: _model,
-          child: NotificationMirror<VoteNotification>(
+          child: NotificationMirror<VoteNotification<dynamic>>(
             transform: (input) => input.stop ? null : input,
             child: CustomScrollView(
               slivers: [

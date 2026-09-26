@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 import 'ballot.dart';
 
 @immutable
-class PluralityBallot<TCandidate extends Comparable>
+class PluralityBallot<TCandidate extends Comparable<dynamic>>
     extends Ballot<TCandidate> {
   final TCandidate choice;
 

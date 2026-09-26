@@ -14,7 +14,7 @@ class VoteTownWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Consumer<VoteTownEditor>(
-    builder: (_, editor, __) {
+    builder: (_, editor, _) {
       final voteTown = editor.value;
 
       final flowDelegate = _CandidateFlowDelegate(voteTown);
@@ -43,7 +43,7 @@ class VoteTownWidget extends StatelessWidget {
 
       return Column(
         children: [
-          Consumer<VoteNotification?>(
+          Consumer<VoteNotification<dynamic>?>(
             builder: (ctx, notification, child) {
               int? countForCandidate(TownCandidate candidate) {
                 if (notification == null) {
@@ -128,7 +128,7 @@ class _CandidateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Consumer<VoteTownEditor>(
-    builder: (context, model, __) {
+    builder: (context, model, _) {
       void handler(Object details) =>
           _CandidateDragNotification(candidate, details).dispatch(context);
 
@@ -247,7 +247,7 @@ class _CandidateFlowDelegate extends FlowDelegate {
 
 class _VoteTownPainter extends CustomPainter {
   final VoteTown _voteTown;
-  final VoteNotification? _notification;
+  final VoteNotification<dynamic>? _notification;
 
   _VoteTownPainter(this._voteTown, this._notification);
 

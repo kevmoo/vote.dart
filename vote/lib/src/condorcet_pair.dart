@@ -3,8 +3,8 @@ import 'package:meta/meta.dart';
 import 'ranked_ballot.dart';
 
 @immutable
-class CondorcetPair<TCandidate extends Comparable>
-    implements Comparable<CondorcetPair> {
+class CondorcetPair<TCandidate extends Comparable<dynamic>>
+    implements Comparable<CondorcetPair<Comparable<dynamic>>> {
   final TCandidate candidate1, candidate2;
 
   final int? firstOverSecond;
@@ -94,7 +94,7 @@ class CondorcetPair<TCandidate extends Comparable>
   String toString() => '($candidate1, $candidate2)';
 
   @override
-  int compareTo(CondorcetPair<Comparable> other) {
+  int compareTo(CondorcetPair<Comparable<dynamic>> other) {
     var value = candidate1.compareTo(other.candidate1);
     if (value == 0) {
       value = candidate2.compareTo(other.candidate2);
@@ -107,7 +107,7 @@ class CondorcetPair<TCandidate extends Comparable>
 /// returning counts for [can1] ranked over [can2], [can2] over [can1], and
 /// ballots with neither.
 ({int firstOverSecond, int secondOverFirst, int ties}) _tallyBallots<
-  TCandidate extends Comparable
+  TCandidate extends Comparable<dynamic>
 >(TCandidate can1, TCandidate can2, List<RankedBallot<TCandidate>> ballots) {
   var firstOverSecond = 0;
   var secondOverFirst = 0;
@@ -138,7 +138,7 @@ class CondorcetPair<TCandidate extends Comparable>
 
 /// Normalizes a candidate pair such that the first candidate precedes the
 /// second according to [Comparable.compareTo].
-(TCandidate, TCandidate) _sortPair<TCandidate extends Comparable>(
+(TCandidate, TCandidate) _sortPair<TCandidate extends Comparable<dynamic>>(
   TCandidate can1,
   TCandidate can2,
 ) {
