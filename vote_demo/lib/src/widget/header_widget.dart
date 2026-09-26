@@ -13,11 +13,12 @@ class HeaderWidget extends StatefulWidget {
   });
 
   @override
-  State createState() => _HeaderWidgetState();
+  State<HeaderWidget> createState() => _HeaderWidgetState();
 }
 
 class _HeaderWidgetState extends State<HeaderWidget> {
-  ScaffoldFeatureController? _snackbarController;
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason>?
+  _snackbarController;
 
   @override
   void dispose() {

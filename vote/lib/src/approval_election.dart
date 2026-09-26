@@ -7,7 +7,7 @@ import 'plurality_election_place.dart';
 import 'util.dart';
 
 @immutable
-class ApprovalElection<TCandidate extends Comparable>
+class ApprovalElection<TCandidate extends Comparable<dynamic>>
     extends Election<TCandidate, PluralityElectionPlace<TCandidate>> {
   ApprovalElection._internal(
     List<Ballot<TCandidate>> ballots,

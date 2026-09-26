@@ -8,7 +8,7 @@ import 'ranked_ballot.dart';
 import 'util.dart';
 
 @immutable
-class CondorcetElection<TCandidate extends Comparable>
+class CondorcetElection<TCandidate extends Comparable<dynamic>>
     extends Election<TCandidate, ElectionPlace<TCandidate>>
     with CondorcetElectionResult<TCandidate> {
   @override
@@ -50,7 +50,9 @@ class CondorcetElection<TCandidate extends Comparable>
   }
 }
 
-abstract mixin class CondorcetElectionResult<TCandidate extends Comparable>
+abstract mixin class CondorcetElectionResult<
+  TCandidate extends Comparable<dynamic>
+>
     implements ElectionResult<TCandidate, ElectionPlace<TCandidate>> {
   Set<CondorcetPair<TCandidate>> get pairs;
 
@@ -83,7 +85,7 @@ abstract mixin class CondorcetElectionResult<TCandidate extends Comparable>
   }
 }
 
-class _CondorcetElectionResultImpl<TCandidate extends Comparable>
+class _CondorcetElectionResultImpl<TCandidate extends Comparable<dynamic>>
     extends ElectionResult<TCandidate, ElectionPlace<TCandidate>>
     with CondorcetElectionResult<TCandidate> {
   @override
@@ -99,10 +101,9 @@ class _CondorcetElectionResultImpl<TCandidate extends Comparable>
 /// Calculates the [ElectionPlace] rankings for a Condorcet election by
 /// resolving strongly connected components across pairwise head-to-head
 /// results.
-List<ElectionPlace<TCandidate>> _calculatePlaces<TCandidate extends Comparable>(
-  List<TCandidate> candidateList,
-  Set<CondorcetPair<TCandidate>> pairs,
-) {
+List<ElectionPlace<TCandidate>> _calculatePlaces<
+  TCandidate extends Comparable<dynamic>
+>(List<TCandidate> candidateList, Set<CondorcetPair<TCandidate>> pairs) {
   final candidateMap = <TCandidate, Set<TCandidate>>{
     for (final candidate in candidateList)
       candidate: _getLostOrTied(candidate, pairs),
@@ -126,7 +127,7 @@ List<ElectionPlace<TCandidate>> _calculatePlaces<TCandidate extends Comparable>(
 
 /// Collects all opponent candidates that [candidate] either lost to or tied
 /// against in the provided head-to-head [pairs].
-Set<TCandidate> _getLostOrTied<TCandidate extends Comparable>(
+Set<TCandidate> _getLostOrTied<TCandidate extends Comparable<dynamic>>(
   TCandidate candidate,
   Set<CondorcetPair<TCandidate>> pairs,
 ) => {
@@ -138,7 +139,7 @@ Set<TCandidate> _getLostOrTied<TCandidate extends Comparable>(
 
 /// Compares two strongly connected components [a] and [b] using the
 /// head-to-head pair outcome between their representative candidates.
-int _compareComponents<TCandidate extends Comparable>(
+int _compareComponents<TCandidate extends Comparable<dynamic>>(
   List<TCandidate> a,
   List<TCandidate> b,
   Set<CondorcetPair<TCandidate>> pairs,

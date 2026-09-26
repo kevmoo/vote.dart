@@ -7,7 +7,7 @@ import 'ranked_ballot.dart';
 import 'util.dart';
 
 @immutable
-class IrvRound<TCandidate extends Comparable> {
+class IrvRound<TCandidate extends Comparable<dynamic>> {
   /// 1-indexed number of the round.
   ///
   /// The first round in an election is `1` and so on.
@@ -108,7 +108,7 @@ class IrvRound<TCandidate extends Comparable> {
       );
 
   static List<TCandidate> _getEliminatedCandidates<
-    TCandidate extends Comparable
+    TCandidate extends Comparable<dynamic>
   >(List<PluralityElectionPlace<TCandidate>> places) {
     assert(places.isNotEmpty);
 
@@ -141,7 +141,7 @@ class IrvRound<TCandidate extends Comparable> {
   }
 }
 
-class _CleanedBallot<TCandidate extends Comparable> {
+class _CleanedBallot<TCandidate extends Comparable<dynamic>> {
   final RankedBallot<TCandidate> ballot;
   final List<TCandidate> remaining;
   final TCandidate? winner;

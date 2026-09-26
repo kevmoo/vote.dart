@@ -5,7 +5,7 @@ import 'plurality_ballot.dart';
 import 'util.dart';
 
 @immutable
-class RankedBallot<TCandidate extends Comparable>
+class RankedBallot<TCandidate extends Comparable<dynamic>>
     implements
         PluralityBallot<TCandidate>,
         Comparable<RankedBallot<TCandidate>> {
@@ -34,7 +34,7 @@ class RankedBallot<TCandidate extends Comparable>
   int compareTo(RankedBallot<TCandidate> other) =>
       compareRanks(rank, other.rank);
 
-  static int compareRanks<T extends Comparable>(List<T> a, List<T> b) {
+  static int compareRanks<T extends Comparable<dynamic>>(List<T> a, List<T> b) {
     int value;
     for (var i = 0; i < a.length; i++) {
       if (b.length <= i) {

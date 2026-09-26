@@ -8,8 +8,8 @@ int majorityThreshold(int votes) {
   return votes ~/ 2 + 1;
 }
 
-bool sorted(Iterable<Comparable> items) {
-  Comparable? last;
+bool sorted(Iterable<Comparable<dynamic>> items) {
+  Comparable<dynamic>? last;
   for (var item in items) {
     if (last != null && last.compareTo(item) > 0) {
       return false;
@@ -27,7 +27,7 @@ bool sorted(Iterable<Comparable> items) {
 /// Ensures all nominated [candidates] are represented (padding zero-vote
 /// tallies) and groups tied vote counts in descending order.
 ({List<TCandidate> candidates, List<PluralityElectionPlace<TCandidate>> places})
-calculatePluralityPlaces<TCandidate extends Comparable>(
+calculatePluralityPlaces<TCandidate extends Comparable<dynamic>>(
   Map<TCandidate, int> candidateVotes,
   Iterable<TCandidate>? candidates,
 ) {
@@ -69,10 +69,9 @@ calculatePluralityPlaces<TCandidate extends Comparable>(
 
 /// Extracts all candidate identifiers referenced across [ballots] and validates
 /// that they are a subset of the explicit [candidates] roster if provided.
-Set<TCandidate> validateRankedBallotCandidates<TCandidate extends Comparable>(
-  List<RankedBallot<TCandidate>> ballots,
-  Iterable<TCandidate>? candidates,
-) {
+Set<TCandidate> validateRankedBallotCandidates<
+  TCandidate extends Comparable<dynamic>
+>(List<RankedBallot<TCandidate>> ballots, Iterable<TCandidate>? candidates) {
   final ballotCandidates = ballots.expand((b) => b.rank).toSet();
   final candidateSet =
       candidates == null ? ballotCandidates : candidates.toSet();

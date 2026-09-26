@@ -46,7 +46,7 @@ class CandidateHoverWidget<T> extends StatelessWidget {
     required this.child,
   });
 
-  bool _matches(VoteNotification? data) =>
+  bool _matches(VoteNotification<dynamic>? data) =>
       data is CandidateSetHoverNotification<T> &&
       candidates.sameItems(data.candidates);
 
@@ -63,7 +63,7 @@ class CandidateHoverWidget<T> extends StatelessWidget {
     onHover:
         (event) =>
             CandidateSetHoverNotification<T>(candidates).dispatch(context),
-    child: Consumer<VoteNotification?>(
+    child: Consumer<VoteNotification<dynamic>?>(
       builder:
           (context, value, _) => DefaultTextStyle(
             style: TextStyle(

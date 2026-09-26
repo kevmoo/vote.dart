@@ -21,7 +21,7 @@ class BodyContent extends StatelessWidget {
     alignment: Alignment.center,
     children: [
       Consumer<VoteTownEditor>(
-        builder: (_, kvm, __) => LayoutBuilder(
+        builder: (_, kvm, _) => LayoutBuilder(
           builder: (context, data) {
             if (data.maxWidth > 2 * crossAxisWidth) {
               return Row(
