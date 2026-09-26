@@ -1,3 +1,4 @@
+// undead:ignore_for_file
 import 'package:flutter/widgets.dart';
 import 'package:vote/vote.dart';
 import 'package:vote_widgets/vote_widgets.dart';

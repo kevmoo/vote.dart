@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:vote/vote.dart';
 
+import '../model/candidate.dart';
+
 enum SubEntryPosition() {
   first,
   middle,
@@ -9,26 +11,31 @@ enum SubEntryPosition() {
   single,
 }
 
-abstract class const TableHelper<Entry extends ElectionPlace, SubEntry>() {
+abstract class const TableHelper<Entry extends ElectionPlace<Candidate>>() {
   List<Entry> get places;
 
   List<Object> get columns;
 
-  List<SubEntry> subEntriesForEntry(Entry entry);
+  List<Candidate> subEntriesForEntry(Entry entry) => entry;
 
-  Color subEntryColor(SubEntry subEntry);
+  Color subEntryColor(Candidate subEntry) => subEntry.color;
 
-  bool isMulti(int columnIndex);
+  bool isMulti(int columnIndex) => columnIndex == 1;
 
   TableColumnWidth get defaultTableColumnWidth => const FlexColumnWidth();
 
-  String textForColumn(int columnIndex, Entry entry) =>
-      throw ArgumentError('Could not get a value for $columnIndex from $entry');
+  String textForColumn(int columnIndex, Entry entry) => columnIndex == 0
+      ? entry.place.toString()
+      : throw ArgumentError(
+          'Could not get a value for $columnIndex from $entry',
+        );
 
-  String textForSubEntry(int columnIndex, SubEntry subEntry) =>
-      throw ArgumentError(
-        'Could not get a value for $columnIndex from $subEntry',
-      );
+  String textForSubEntry(int columnIndex, Candidate subEntry) =>
+      columnIndex == 1
+      ? subEntry.id
+      : throw ArgumentError(
+          'Could not get a value for $columnIndex from $subEntry',
+        );
 
   Widget _tableHeader(int columnIndex) {
     final content = columns[columnIndex];
@@ -65,7 +72,7 @@ abstract class const TableHelper<Entry extends ElectionPlace, SubEntry>() {
 
   Widget _widgetForSubEntry(
     int columnIndex,
-    SubEntry subEntry,
+    Candidate subEntry,
     SubEntryPosition position, {
     required bool winner,
   }) => _tableCell(

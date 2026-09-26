@@ -1,3 +1,4 @@
+// undead:ignore_for_file
 import 'package:flutter/widgets.dart' show ChangeNotifier;
 
 import '../model/election_data.dart';

@@ -8,18 +8,6 @@ int majorityThreshold(int votes) {
   return votes ~/ 2 + 1;
 }
 
-bool sorted(Iterable<Comparable<Object>> items) {
-  Comparable<Object>? last;
-  for (var item in items) {
-    if (last != null && last.compareTo(item) > 0) {
-      return false;
-    }
-    last = item;
-  }
-
-  return true;
-}
-
 /// Calculates the sorted list of candidates and corresponding
 /// [PluralityElectionPlace]s based on the raw [candidateVotes] map and an
 /// optional [candidates] roster.
