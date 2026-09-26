@@ -8,7 +8,7 @@ import 'ranked_ballot.dart';
 import 'util.dart';
 
 @immutable
-class CondorcetElection<TCandidate extends Comparable<dynamic>>._internal(
+class CondorcetElection<TCandidate extends Comparable<Object>>._internal(
   @override final Set<CondorcetPair<TCandidate>> pairs,
   List<TCandidate> candidates,
   List<RankedBallot<TCandidate>> ballots,
@@ -47,7 +47,7 @@ class CondorcetElection<TCandidate extends Comparable<dynamic>>._internal(
 }
 
 abstract mixin class CondorcetElectionResult<
-  TCandidate extends Comparable<dynamic>
+  TCandidate extends Comparable<Object>
 >
     implements ElectionResult<TCandidate, ElectionPlace<TCandidate>> {
   Set<CondorcetPair<TCandidate>> get pairs;
@@ -78,7 +78,7 @@ abstract mixin class CondorcetElectionResult<
   }
 }
 
-class _CondorcetElectionResultImpl<TCandidate extends Comparable<dynamic>>._(
+class _CondorcetElectionResultImpl<TCandidate extends Comparable<Object>>._(
   @override final Set<CondorcetPair<TCandidate>> pairs,
   List<TCandidate> candidates,
   List<ElectionPlace<TCandidate>> places,
@@ -91,7 +91,7 @@ class _CondorcetElectionResultImpl<TCandidate extends Comparable<dynamic>>._(
 /// resolving strongly connected components across pairwise head-to-head
 /// results.
 List<ElectionPlace<TCandidate>> _calculatePlaces<
-  TCandidate extends Comparable<dynamic>
+  TCandidate extends Comparable<Object>
 >(List<TCandidate> candidateList, Set<CondorcetPair<TCandidate>> pairs) {
   final candidateMap = <TCandidate, Set<TCandidate>>{
     for (final candidate in candidateList)
@@ -116,7 +116,7 @@ List<ElectionPlace<TCandidate>> _calculatePlaces<
 
 /// Collects all opponent candidates that [candidate] either lost to or tied
 /// against in the provided head-to-head [pairs].
-Set<TCandidate> _getLostOrTied<TCandidate extends Comparable<dynamic>>(
+Set<TCandidate> _getLostOrTied<TCandidate extends Comparable<Object>>(
   TCandidate candidate,
   Set<CondorcetPair<TCandidate>> pairs,
 ) => {
@@ -128,7 +128,7 @@ Set<TCandidate> _getLostOrTied<TCandidate extends Comparable<dynamic>>(
 
 /// Compares two strongly connected components [a] and [b] using the
 /// head-to-head pair outcome between their representative candidates.
-int _compareComponents<TCandidate extends Comparable<dynamic>>(
+int _compareComponents<TCandidate extends Comparable<Object>>(
   List<TCandidate> a,
   List<TCandidate> b,
   Set<CondorcetPair<TCandidate>> pairs,

@@ -4,7 +4,7 @@ import 'util.dart';
 
 /// Baseclass of all election types.
 abstract class Election<
-  TCandidate extends Comparable<dynamic>,
+  TCandidate extends Comparable<Object>,
   TElectionPlace extends ElectionPlace<TCandidate>
 >({
   required super.candidates,
@@ -23,7 +23,7 @@ abstract class Election<
 /// Implementations may not include ballot information, to protect the privacy
 /// of ballots – or just to allow visualization of an election result.
 abstract class ElectionResult<
-  TCandidate extends Comparable<dynamic>,
+  TCandidate extends Comparable<Object>,
   TElectionPlace extends ElectionPlace<TCandidate>
 > {
   new({required this.candidates, required this.places}) {

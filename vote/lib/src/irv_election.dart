@@ -7,7 +7,7 @@ import 'ranked_ballot.dart';
 import 'util.dart';
 
 @immutable
-class IrvElection<TCandidate extends Comparable<dynamic>>._internal(
+class IrvElection<TCandidate extends Comparable<Object>>._internal(
   List<TCandidate> candidates,
   List<RankedBallot<TCandidate>> ballots,
   List<ElectionPlace<TCandidate>> places,

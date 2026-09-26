@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 import 'election_place.dart';
 
 @immutable
-class PluralityElectionPlace<TCandidate extends Comparable<dynamic>>(
+class PluralityElectionPlace<TCandidate extends Comparable<Object>>(
   super.place,
   super.candidates,
   final int voteCount,

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 import 'ballot.dart';
 
 @immutable
-class const PluralityBallot<TCandidate extends Comparable<dynamic>>(
+class const PluralityBallot<TCandidate extends Comparable<Object>>(
   final TCandidate choice,
 ) extends Ballot<TCandidate> {
   @override

@@ -3,10 +3,10 @@ import 'package:collection/collection.dart';
 import '../ranked_ballot.dart' show RankedBallot;
 import '../util.dart';
 
-class BallotLine<TCandidate extends Comparable<dynamic>>(
+class BallotLine<TCandidate extends Comparable<Object>>(
   final int count,
   final List<TCandidate> candidates,
-) implements Comparable<BallotLine<Comparable<dynamic>>> {
+) implements Comparable<BallotLine<Comparable<Object>>> {
   this : assert(count > 0), assert(candidates.allUnique);
 
   @override
@@ -23,7 +23,7 @@ class BallotLine<TCandidate extends Comparable<dynamic>>(
   int get hashCode => Object.hash(count, Object.hashAll(candidates));
 
   @override
-  int compareTo(BallotLine<Comparable<dynamic>> other) {
+  int compareTo(BallotLine<Comparable<Object>> other) {
     var value = other.count.compareTo(count);
     if (value == 0) {
       value = RankedBallot.compareRanks(candidates, other.candidates);
