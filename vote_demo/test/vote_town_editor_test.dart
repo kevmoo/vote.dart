@@ -1,4 +1,5 @@
 import 'package:test/test.dart';
+import 'package:vote_demo/src/model/strategic_simulator.dart';
 import 'package:vote_demo/src/model/vote_town.dart';
 import 'package:vote_demo/src/view_model/vote_town_editor.dart';
 
@@ -34,5 +35,34 @@ void main() {
         reason: 'Candidate added back at index $i should match old location.',
       );
     }
+  });
+
+  test('applyPreset, stepSimulation, and moleBadgeFor', () {
+    final editor = VoteTownEditor(VoteTown.random());
+    addTearDown(editor.dispose);
+
+    editor.applyPreset(VoteTownPreset.pluralitySpoiler);
+    expect(editor.value.candidates, hasLength(3));
+    expect(editor.nextCandidateIndex, 0);
+    expect(editor.lastMovedCandidate, isNull);
+    expect(editor.isMole(editor.value.candidates.last), isFalse);
+
+    editor.simulationMode = SimulationMode.moleHelpsA;
+    expect(editor.isMole(editor.value.candidates.last), isTrue);
+    expect(editor.moleBadgeFor(editor.value.candidates.last), '+A');
+    expect(editor.moleBadgeFor(editor.value.candidates.first), isNull);
+
+    editor.simulationMode = SimulationMode.moleHurtsA;
+    expect(editor.moleBadgeFor(editor.value.candidates.last), '−A');
+
+    final step1 = editor.stepSimulation();
+    expect(step1.candidate.id, 'A');
+    expect(editor.lastMovedCandidate?.id, 'A');
+    expect(editor.nextCandidateIndex, 1);
+
+    editor.scatterCandidates();
+    expect(editor.value.candidates, hasLength(3));
+    expect(editor.nextCandidateIndex, 0);
+    expect(editor.lastMovedCandidate, isNull);
   });
 }

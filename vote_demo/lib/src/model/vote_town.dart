@@ -14,18 +14,28 @@ class VoteTown(final List<TownCandidate> _candidates) extends ElectionData {
   @override
   late final List<TownCandidate> candidates = UnmodifiableListView(_candidates);
 
-  factory random({int candidateCount = 5, int? randomSeed}) {
+  factory fromLocations(Iterable<Point<int>> locations) => VoteTown([
+    for (final (index, point) in locations.indexed)
+      TownCandidate.letter(index, point),
+  ]);
+
+  factory random({
+    int candidateCount = 5,
+    int? randomSeed,
+    bool centerFirstCandidate = true,
+  }) {
     assert(candidateCount > 0);
     assert(candidateCount < 2 * votersAcross);
     assert(candidateCount <= 26);
 
     var candidateNumber = 0;
 
-    final candidates = [
-      TownCandidate.letter(
-        candidateNumber++,
-        const Point(votersAcross - 1, votersAcross - 1),
-      ),
+    final candidates = <TownCandidate>[
+      if (centerFirstCandidate)
+        TownCandidate.letter(
+          candidateNumber++,
+          const Point(votersAcross - 1, votersAcross - 1),
+        ),
     ];
 
     final rnd = Random(randomSeed);
