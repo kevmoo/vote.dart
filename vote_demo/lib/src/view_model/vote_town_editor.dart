@@ -8,10 +8,16 @@ import '../model/vote_town.dart';
 import 'editor.dart';
 
 const _maxCandidates = 8;
-const _simulationTick = Duration(milliseconds: 350);
+const _physicsFrameDuration = Duration(milliseconds: 16);
+const _physicsDtSeconds = 0.016;
 
 class VoteTownEditor(super.value) extends KnarlyEditor<VoteTown> {
-  final _locationMemory = <Point<int>>[];
+  final _locationMemory = <Point<double>>[];
+
+  var _velocities = <Point<double>>[];
+  var _targets = <Point<double>>[];
+  int _frameCounter = 0;
+  int _settledFrames = 0;
 
   TownCandidate? get movingCandidate => _movingCandidate;
   TownCandidate? _movingCandidate;
@@ -23,7 +29,10 @@ class VoteTownEditor(super.value) extends KnarlyEditor<VoteTown> {
   set targetMethod(TargetElectionMethod value) {
     if (_targetMethod == value) return;
     _targetMethod = value;
-    _consecutiveNoMoveSteps = 0;
+    _settledFrames = 0;
+    if (isSimulating) {
+      _refreshAllTargets();
+    }
     notifyListeners();
   }
 
@@ -32,7 +41,10 @@ class VoteTownEditor(super.value) extends KnarlyEditor<VoteTown> {
   set simulationMode(SimulationMode value) {
     if (_simulationMode == value) return;
     _simulationMode = value;
-    _consecutiveNoMoveSteps = 0;
+    _settledFrames = 0;
+    if (isSimulating) {
+      _refreshAllTargets();
+    }
     notifyListeners();
   }
 
@@ -48,9 +60,10 @@ class VoteTownEditor(super.value) extends KnarlyEditor<VoteTown> {
   TownCandidate? _lastMovedCandidate;
 
   Timer? _simulationTimer;
-  int _consecutiveNoMoveSteps = 0;
+  bool _isContinuousPlay = false;
 
-  bool get isSimulating => _simulationTimer != null;
+  bool get isSimulating => _simulationTimer != null && _isContinuousPlay;
+  bool get isStepAnimating => _simulationTimer != null && !_isContinuousPlay;
 
   bool isMole(TownCandidate candidate) =>
       _simulationMode.hasMole &&
@@ -66,6 +79,31 @@ class VoteTownEditor(super.value) extends KnarlyEditor<VoteTown> {
     };
   }
 
+  void _syncPhysicsState({bool resetVelocities = false}) {
+    final candidates = value.candidates;
+    if (resetVelocities || _velocities.length != candidates.length) {
+      _velocities = List<Point<double>>.filled(
+        candidates.length,
+        const Point(0, 0),
+      );
+    }
+    if (_targets.length != candidates.length) {
+      _targets = [for (final c in candidates) c.location];
+    }
+  }
+
+  void _refreshAllTargets() {
+    _syncPhysicsState();
+    for (var i = 0; i < value.candidates.length; i++) {
+      _targets[i] = computeStrategicMove(
+        value,
+        candidateIndex: i,
+        method: _targetMethod,
+        mode: _simulationMode,
+      ).toLocation;
+    }
+  }
+
   void toggleSimulation() {
     if (isSimulating) {
       pauseSimulation();
@@ -76,17 +114,55 @@ class VoteTownEditor(super.value) extends KnarlyEditor<VoteTown> {
 
   void startSimulation() {
     if (isSimulating || value.candidates.isEmpty) return;
-    _consecutiveNoMoveSteps = 0;
-    stepSimulation();
-    _simulationTimer = Timer.periodic(_simulationTick, (_) {
-      final result = stepSimulation();
-      if (!result.moved) {
-        _consecutiveNoMoveSteps++;
-        if (_consecutiveNoMoveSteps >= value.candidates.length) {
+    _simulationTimer?.cancel();
+    _isContinuousPlay = true;
+    _frameCounter = 0;
+    _settledFrames = 0;
+    _lastMovedCandidate = null;
+    _syncPhysicsState();
+    _refreshAllTargets();
+
+    _simulationTimer = Timer.periodic(_physicsFrameDuration, (_) {
+      final count = value.candidates.length;
+      if (count == 0) {
+        pauseSimulation();
+        return;
+      }
+
+      // Stagger lookahead target recalculation: 1 candidate refreshes its
+      // desired target every 2 frames (~32ms) so all candidates continuously
+      // adapt at 60fps with minimal CPU overhead.
+      if (_frameCounter.isEven) {
+        final idx = nextCandidateIndex;
+        final step = computeStrategicMove(
+          value,
+          candidateIndex: idx,
+          method: _targetMethod,
+          mode: _simulationMode,
+        );
+        _targets[idx] = step.toLocation;
+        _nextCandidateIndex = (idx + 1) % count;
+      }
+      _frameCounter++;
+
+      final frame = advancePhysicsFrame(
+        value,
+        velocities: _velocities,
+        targets: _targets,
+        dtSeconds: _physicsDtSeconds,
+      );
+      _velocities = frame.velocities;
+
+      if (frame.maxDisplacement > 0.03) {
+        _settledFrames = 0;
+        setValue(frame.town);
+      } else {
+        _settledFrames++;
+        // Auto-pause once all candidates have settled into equilibrium for
+        // ~1.2 seconds.
+        if (_settledFrames >= 75) {
           pauseSimulation();
         }
-      } else {
-        _consecutiveNoMoveSteps = 0;
       }
     });
     notifyListeners();
@@ -96,10 +172,17 @@ class VoteTownEditor(super.value) extends KnarlyEditor<VoteTown> {
     if (_simulationTimer == null) return;
     _simulationTimer?.cancel();
     _simulationTimer = null;
+    _isContinuousPlay = false;
     notifyListeners();
   }
 
-  SimulationStepResult stepSimulation() {
+  /// Smoothly glides the next candidate toward its computed strategic target
+  /// over ~280ms at 60fps.
+  void animateSingleStep() {
+    if (value.candidates.isEmpty) return;
+    pauseSimulation();
+    _syncPhysicsState(resetVelocities: true);
+
     final idx = nextCandidateIndex;
     final step = computeStrategicMove(
       value,
@@ -109,6 +192,54 @@ class VoteTownEditor(super.value) extends KnarlyEditor<VoteTown> {
     );
     _nextCandidateIndex = (idx + 1) % value.candidates.length;
     _lastMovedCandidate = step.candidate;
+
+    if (!step.moved) {
+      notifyListeners();
+      return;
+    }
+
+    _targets = [for (final c in value.candidates) c.location];
+    _targets[idx] = step.toLocation;
+    _isContinuousPlay = false;
+
+    var framesRemaining = 20;
+    _simulationTimer = Timer.periodic(_physicsFrameDuration, (_) {
+      framesRemaining--;
+      final frame = advancePhysicsFrame(
+        value,
+        velocities: _velocities,
+        targets: _targets,
+        dtSeconds: _physicsDtSeconds,
+        onlyCandidateIndex: idx,
+        maxSpeed: 95.0,
+      );
+      _velocities = frame.velocities;
+      setValue(frame.town);
+
+      final distLeft = frame.town.candidates[idx].location.distanceTo(
+        step.toLocation,
+      );
+      if (framesRemaining <= 0 || distLeft < 0.35) {
+        pauseSimulation();
+      }
+    });
+    notifyListeners();
+  }
+
+  /// Synchronously executes one candidate's strategic move (used by tests and
+  /// deterministic stepping).
+  SimulationStepResult stepSimulation() {
+    pauseSimulation();
+    final idx = nextCandidateIndex;
+    final step = computeStrategicMove(
+      value,
+      candidateIndex: idx,
+      method: _targetMethod,
+      mode: _simulationMode,
+    );
+    _nextCandidateIndex = (idx + 1) % value.candidates.length;
+    _lastMovedCandidate = step.candidate;
+    _syncPhysicsState(resetVelocities: true);
     if (step.moved) {
       setValue(step.town);
     } else {
@@ -121,21 +252,23 @@ class VoteTownEditor(super.value) extends KnarlyEditor<VoteTown> {
     pauseSimulation();
     _nextCandidateIndex = 0;
     _lastMovedCandidate = null;
-    _consecutiveNoMoveSteps = 0;
+    _settledFrames = 0;
     setValue(
       VoteTown.random(
         candidateCount: value.candidates.length,
         centerFirstCandidate: false,
       ),
     );
+    _syncPhysicsState(resetVelocities: true);
   }
 
   void applyPreset(VoteTownPreset preset) {
     pauseSimulation();
     _nextCandidateIndex = 0;
     _lastMovedCandidate = null;
-    _consecutiveNoMoveSteps = 0;
+    _settledFrames = 0;
     setValue(preset.createTown());
+    _syncPhysicsState(resetVelocities: true);
   }
 
   void Function()? get addCandidate {
@@ -154,6 +287,7 @@ class VoteTownEditor(super.value) extends KnarlyEditor<VoteTown> {
               : null,
         ),
       );
+      _syncPhysicsState(resetVelocities: true);
     };
   }
 
@@ -173,11 +307,12 @@ class VoteTownEditor(super.value) extends KnarlyEditor<VoteTown> {
       _locationMemory.setRange(
         0,
         candidateCount,
-        value.candidates.take(candidateCount).map((e) => e.intLocation),
+        value.candidates.take(candidateCount).map((e) => e.location),
       );
 
       setValue(VoteTown(value.candidates.sublist(0, candidateCount - 1)));
       _nextCandidateIndex %= value.candidates.length;
+      _syncPhysicsState(resetVelocities: true);
     }
 
     return functionImpl;
@@ -201,37 +336,19 @@ class VoteTownEditor(super.value) extends KnarlyEditor<VoteTown> {
 
     assert(_workingPoint != null);
     _workingPoint = _workingPoint! + pixelOffset;
-    final newFixedLocation = fixPoint(_workingPoint!);
 
-    if (newFixedLocation.x.isEven && newFixedLocation.y.isEven) {
-      // over a voter - skip!
-      return;
-    }
-
-    const candidateLocationUpper = VoteTown.votersAcross * 2 - 1;
-
-    if (newFixedLocation.x < 0 ||
-        newFixedLocation.y < 0 ||
-        newFixedLocation.x >= candidateLocationUpper ||
-        newFixedLocation.y >= candidateLocationUpper) {
-      // off the edge – skip!
-      return;
-    }
-
-    if (value.candidates.any((c) => c.intLocation == newFixedLocation)) {
-      // don't overlap an existing candidate – skip!
-      return;
-    }
-
-    final candidatesCopy = value.candidates.toList(growable: false);
     final candidateIndex = value.candidates.indexOf(candidate);
-    candidatesCopy[candidateIndex] = TownCandidate(
-      candidate.index,
-      candidate.hue,
-      newFixedLocation,
+    final resolvedLocation = resolveSingleCandidatePosition(
+      value.candidates,
+      candidateIndex,
+      Point<double>(_workingPoint!.dx, _workingPoint!.dy),
     );
 
+    final candidatesCopy = value.candidates.toList(growable: false);
+    candidatesCopy[candidateIndex] = candidate.withLocation(resolvedLocation);
+
     setValue(VoteTown(candidatesCopy));
+    _syncPhysicsState(resetVelocities: true);
   }
 
   void moveCandidateEnd(TownCandidate candidate) {

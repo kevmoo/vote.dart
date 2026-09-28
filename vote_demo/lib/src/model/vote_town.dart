@@ -8,15 +8,28 @@ import 'town_folk.dart';
 import 'vote_town_distance_place.dart';
 
 class VoteTown(final List<TownCandidate> _candidates) extends ElectionData {
-  static const votersAcross = 10;
+  static const votersAcross = 15;
   static const voterSpacing = TownCandidate.candidateSpacing * 2;
+  static const townSize = votersAcross * voterSpacing;
+  static const center = Point<double>(townSize / 2, townSize / 2);
+
+  static Point<double> clampToBounds(Point<double> point) => Point<double>(
+    point.x.clamp(
+      TownCandidate.boardMargin,
+      townSize - TownCandidate.boardMargin,
+    ),
+    point.y.clamp(
+      TownCandidate.boardMargin,
+      townSize - TownCandidate.boardMargin,
+    ),
+  );
 
   @override
   late final List<TownCandidate> candidates = UnmodifiableListView(_candidates);
 
-  factory fromLocations(Iterable<Point<int>> locations) => VoteTown([
+  factory fromLocations(Iterable<Point<double>> locations) => VoteTown([
     for (final (index, point) in locations.indexed)
-      TownCandidate.letter(index, point),
+      TownCandidate.letter(index, clampToBounds(point)),
   ]);
 
   factory random({
@@ -31,11 +44,7 @@ class VoteTown(final List<TownCandidate> _candidates) extends ElectionData {
     var candidateNumber = 0;
 
     final candidates = <TownCandidate>[
-      if (centerFirstCandidate)
-        TownCandidate.letter(
-          candidateNumber++,
-          const Point(votersAcross - 1, votersAcross - 1),
-        ),
+      if (centerFirstCandidate) TownCandidate.letter(candidateNumber++, center),
     ];
 
     final rnd = Random(randomSeed);
@@ -96,7 +105,7 @@ class VoteTown(final List<TownCandidate> _candidates) extends ElectionData {
       .map((v) => RankedBallot<TownCandidate>(v.closestCandidates))
       .toList(growable: false);
 
-  VoteTown copyPlusACandidate({Point<int>? tryLocation}) {
+  VoteTown copyPlusACandidate({Point<double>? tryLocation}) {
     final maxIndex = _candidates.fold<int>(
       -1,
       (previousValue, element) =>
@@ -125,22 +134,29 @@ class VoteTown(final List<TownCandidate> _candidates) extends ElectionData {
     return _bestDistanceCache!;
   }
 
-  static Point<int> _placement(
+  static Point<double> _placement(
     List<TownCandidate> candidates, {
     Random? rnd,
-    Point<int>? pointToTry,
+    Point<double>? pointToTry,
   }) {
     final random = rnd ?? Random();
+    const minCoord = TownCandidate.boardMargin + 4.0;
+    const span = townSize - 2 * minCoord;
 
-    Point<int> randomPoint() => Point<int>(
-      random.nextInt(votersAcross - 1) * 2 + 1,
-      random.nextInt(votersAcross - 1) * 2 + 1,
+    Point<double> randomPoint() => Point<double>(
+      minCoord + random.nextDouble() * span,
+      minCoord + random.nextDouble() * span,
     );
 
-    var point = pointToTry ?? randomPoint();
+    var point = pointToTry != null ? clampToBounds(pointToTry) : randomPoint();
 
-    while (candidates.indexWhere((s) => s.intLocation == point) >= 0) {
+    var attempts = 0;
+    while (attempts < 200 &&
+        candidates.any(
+          (s) => s.location.distanceTo(point) < TownCandidate.minSeparation,
+        )) {
       point = randomPoint();
+      attempts++;
     }
 
     return point;

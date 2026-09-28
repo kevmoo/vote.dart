@@ -38,19 +38,19 @@ enum VoteTownPreset(final String label, final String description) {
 
   VoteTown createTown() => switch (this) {
     VoteTownPreset.twoCandidates => VoteTown.fromLocations(const [
-      Point(7, 9),
-      Point(15, 9),
+      Point(58, 75),
+      Point(115, 75),
     ]),
     VoteTownPreset.pluralitySpoiler => VoteTown.fromLocations(const [
-      Point(7, 9),
-      Point(15, 9),
-      Point(3, 5),
+      Point(58, 75),
+      Point(115, 75),
+      Point(28, 48),
     ]),
     VoteTownPreset.irvCenterSqueeze => VoteTown.fromLocations(const [
-      Point(9, 9),
-      Point(5, 7),
-      Point(13, 7),
-      Point(9, 13),
+      Point(75, 75),
+      Point(45, 55),
+      Point(105, 55),
+      Point(75, 108),
     ]),
   };
 }
@@ -58,12 +58,18 @@ enum VoteTownPreset(final String label, final String description) {
 class const SimulationStepResult({
   required final VoteTown town,
   required final TownCandidate candidate,
-  required final Point<int> fromLocation,
-  required final Point<int> toLocation,
+  required final Point<double> fromLocation,
+  required final Point<double> toLocation,
   required final bool isMole,
 }) {
-  bool get moved => fromLocation != toLocation;
+  bool get moved => fromLocation.distanceTo(toLocation) > 0.25;
 }
+
+class const PhysicsFrameResult({
+  required final VoteTown town,
+  required final List<Point<double>> velocities,
+  required final double maxDisplacement,
+});
 
 class const PluralitySpoilerInfo({
   required final Candidate pluralityWinner,
@@ -128,47 +134,93 @@ PluralitySpoilerInfo? detectPluralitySpoiler(VoteTown town) {
   );
 }
 
-/// Computes a single turn-based strategic move for the candidate at
-/// [candidateIndex] within [maxStepDistance] grid units.
+/// Computes a continuous desired target move for the candidate at
+/// [candidateIndex] within [maxStepDistance] town units.
 SimulationStepResult computeStrategicMove(
   VoteTown town, {
   required int candidateIndex,
   required TargetElectionMethod method,
   required SimulationMode mode,
-  double maxStepDistance = 4.0,
+  double maxStepDistance = 28.0,
 }) {
   RangeError.checkValidIndex(candidateIndex, town.candidates);
 
   final movingCandidate = town.candidates[candidateIndex];
-  final startPoint = movingCandidate.intLocation;
+  final startPoint = movingCandidate.location;
   final isMole =
       mode.hasMole &&
       town.candidates.length >= 2 &&
       candidateIndex == town.candidates.length - 1;
 
-  final occupiedByOthers = {
+  final otherLocations = [
     for (var i = 0; i < town.candidates.length; i++)
-      if (i != candidateIndex) town.candidates[i].intLocation,
-  };
+      if (i != candidateIndex) town.candidates[i].location,
+  ];
 
-  final maxDistSq = (maxStepDistance * maxStepDistance).round();
-  const upperBound = VoteTown.votersAcross * 2 - 1;
+  bool isLegalPoint(Point<double> p) => otherLocations.every(
+    (other) => other.distanceTo(p) >= TownCandidate.minSeparation + 1.5,
+  );
 
-  final reachablePoints = <Point<int>>[startPoint];
-  for (var y = 0; y < upperBound; y++) {
-    for (var x = 0; x < upperBound; x++) {
-      if (x.isEven && y.isEven) {
-        // Directly over a voter - skip!
-        continue;
-      }
-      final point = Point(x, y);
-      if (point == startPoint || occupiedByOthers.contains(point)) {
-        continue;
-      }
-      if (startPoint.squaredDistanceTo(point) <= maxDistSq) {
-        reachablePoints.add(point);
+  final candidatePoints = <Point<double>>[];
+
+  void tryAddPoint(Point<double> rawPoint) {
+    final clamped = VoteTown.clampToBounds(rawPoint);
+    if (startPoint.distanceTo(clamped) > maxStepDistance + 1e-6) {
+      return;
+    }
+    if (!isLegalPoint(clamped)) {
+      return;
+    }
+    candidatePoints.add(clamped);
+  }
+
+  // Sample concentric radial rings around startPoint.
+  const ringFractions = [0.12, 0.28, 0.50, 0.75, 1.0];
+  const directions = 16;
+  for (final fraction in ringFractions) {
+    final radius = maxStepDistance * fraction;
+    for (var d = 0; d < directions; d++) {
+      final angle = (2 * pi * d) / directions;
+      tryAddPoint(
+        Point<double>(
+          startPoint.x + cos(angle) * radius,
+          startPoint.y + sin(angle) * radius,
+        ),
+      );
+    }
+  }
+
+  // Also sample direct probes toward key landmarks (center, A, rivals).
+  void addProbeToward(Point<double> landmark) {
+    final delta = landmark - startPoint;
+    final dist = delta.magnitude;
+    if (dist < 0.5) return;
+    final stepDist = min(dist, maxStepDistance);
+    final unit = delta * (1.0 / dist);
+    tryAddPoint(startPoint + unit * stepDist);
+    // For landmarks occupied by another candidate, also probe just outside
+    // minSeparation around that landmark.
+    for (var d = 0; d < 8; d++) {
+      final angle = (2 * pi * d) / 8;
+      final offset = Point<double>(
+        cos(angle) * (TownCandidate.minSeparation + 2.0),
+        sin(angle) * (TownCandidate.minSeparation + 2.0),
+      );
+      final flankTarget = landmark + offset;
+      final flankDelta = flankTarget - startPoint;
+      final flankDist = flankDelta.magnitude;
+      if (flankDist > 0.5) {
+        tryAddPoint(
+          startPoint +
+              flankDelta * (min(flankDist, maxStepDistance) / flankDist),
+        );
       }
     }
+  }
+
+  addProbeToward(VoteTown.center);
+  for (final other in otherLocations) {
+    addProbeToward(other);
   }
 
   var bestPoint = startPoint;
@@ -181,14 +233,11 @@ SimulationStepResult computeStrategicMove(
     mode: mode,
   );
 
-  for (final candidatePoint in reachablePoints.skip(1)) {
+  for (final candidatePoint in candidatePoints) {
     final updatedCandidates = town.candidates.toList(growable: false);
-    final updatedMoving = TownCandidate(
-      movingCandidate.index,
-      movingCandidate.hue,
+    updatedCandidates[candidateIndex] = movingCandidate.withLocation(
       candidatePoint,
     );
-    updatedCandidates[candidateIndex] = updatedMoving;
     final trialTown = VoteTown(updatedCandidates);
 
     final trialScore = _evaluateTownForMove(
@@ -212,6 +261,182 @@ SimulationStepResult computeStrategicMove(
     fromLocation: startPoint,
     toLocation: bestPoint,
     isMole: isMole,
+  );
+}
+
+/// Projects [desired] for the candidate at [movingIndex] so it remains within
+/// board bounds and at least [TownCandidate.minSeparation] away from all other
+/// candidates.
+Point<double> resolveSingleCandidatePosition(
+  List<TownCandidate> candidates,
+  int movingIndex,
+  Point<double> desired,
+) {
+  var pos = VoteTown.clampToBounds(desired);
+  for (var pass = 0; pass < 3; pass++) {
+    for (var i = 0; i < candidates.length; i++) {
+      if (i == movingIndex) continue;
+      final other = candidates[i].location;
+      final diff = pos - other;
+      final dist = diff.magnitude;
+      if (dist < TownCandidate.minSeparation) {
+        final unit = dist > 1e-4
+            ? diff * (1.0 / dist)
+            : Point<double>(cos(movingIndex + i), sin(movingIndex + i));
+        pos = VoteTown.clampToBounds(
+          other + unit * TownCandidate.minSeparation,
+        );
+      }
+    }
+  }
+  return pos;
+}
+
+/// Advances continuous candidate positions and velocities by [dtSeconds] with
+/// target seeking, arrival damping, momentum, and steeply ramping candidate
+/// repulsion.
+PhysicsFrameResult advancePhysicsFrame(
+  VoteTown town, {
+  required List<Point<double>> velocities,
+  required List<Point<double>> targets,
+  required double dtSeconds,
+  int? onlyCandidateIndex,
+  double maxSpeed = 48.0,
+}) {
+  final dt = dtSeconds.clamp(0.001, 0.05);
+  final count = town.candidates.length;
+  final positions = [for (final c in town.candidates) c.location];
+  final nextVelocities = List<Point<double>>.of(velocities);
+
+  const arrivalRadius = 10.0;
+  const repulsionRadius = TownCandidate.repulsionRadius;
+  const minSep = TownCandidate.minSeparation;
+  const repulsionSpan = repulsionRadius - minSep;
+  final steerBlend = 1.0 - exp(-dt * 7.5);
+
+  for (var i = 0; i < count; i++) {
+    if (onlyCandidateIndex != null && i != onlyCandidateIndex) {
+      nextVelocities[i] = const Point(0, 0);
+      continue;
+    }
+
+    final pos = positions[i];
+    final target = targets[i];
+    final toTarget = target - pos;
+    final distToTarget = toTarget.magnitude;
+
+    var desiredVel = const Point<double>(0, 0);
+    if (distToTarget > 0.15) {
+      final speed = distToTarget < arrivalRadius
+          ? maxSpeed * (distToTarget / arrivalRadius)
+          : maxSpeed;
+      desiredVel = toTarget * (speed / distToTarget);
+    }
+
+    // Steeply ramping repulsion from nearby candidates + tangential deflection
+    // of inward desired velocity so candidates slide around each other and
+    // strongly resist overlap.
+    var repelVel = const Point<double>(0, 0);
+    for (var j = 0; j < count; j++) {
+      if (i == j) continue;
+      final away = pos - positions[j];
+      final dist = away.magnitude;
+      if (dist < repulsionRadius && dist > 1e-4) {
+        final awayUnit = away * (1.0 / dist);
+        final u = ((repulsionRadius - dist) / repulsionSpan).clamp(0.0, 2.0);
+        final u2 = u * u;
+        // Gentle outer cushion (0.35 * u) + fast quartic barrier (3.2 * u^4).
+        final strength = (0.35 * u + 3.2 * u2 * u2) * maxSpeed;
+        repelVel += awayUnit * strength;
+
+        // Strip inward velocity component when approaching personal space so
+        // desiredVel slides tangentially around the neighbor.
+        if (dist < minSep + 6.0) {
+          final inwardDot =
+              desiredVel.x * awayUnit.x + desiredVel.y * awayUnit.y;
+          if (inwardDot < 0) {
+            final block = ((minSep + 6.0 - dist) / 6.0).clamp(0.0, 1.0);
+            desiredVel -= awayUnit * (inwardDot * block);
+          }
+        }
+      }
+    }
+
+    final combinedDesired = desiredVel + repelVel;
+    var vel = velocities[i] + (combinedDesired - velocities[i]) * steerBlend;
+
+    // Extra damping when settled at target with minimal repulsion.
+    if (distToTarget < 1.0 && repelVel.magnitude < 1.0) {
+      vel *= 0.7;
+    }
+
+    final maxAllowedSpeed = repelVel.magnitude > maxSpeed
+        ? min(maxSpeed * 1.8, repelVel.magnitude)
+        : maxSpeed;
+    final speed = vel.magnitude;
+    if (speed > maxAllowedSpeed) {
+      vel = vel * (maxAllowedSpeed / speed);
+    }
+
+    nextVelocities[i] = vel;
+    positions[i] = VoteTown.clampToBounds(pos + vel * dt);
+  }
+
+  // Enforce hard minimum separation safety net and strip inward normal
+  // velocity so candidates never overlap.
+  for (var pass = 0; pass < 4; pass++) {
+    for (var i = 0; i < count; i++) {
+      for (var j = i + 1; j < count; j++) {
+        final diff = positions[i] - positions[j];
+        final dist = diff.magnitude;
+        if (dist < minSep) {
+          final overlap = minSep - dist;
+          final unit = dist > 1e-4
+              ? diff * (1.0 / dist)
+              : Point<double>(cos(i + j), sin(i + j));
+          if (onlyCandidateIndex == i) {
+            positions[i] = VoteTown.clampToBounds(positions[j] + unit * minSep);
+          } else if (onlyCandidateIndex == j) {
+            positions[j] = VoteTown.clampToBounds(positions[i] - unit * minSep);
+          } else {
+            positions[i] = VoteTown.clampToBounds(
+              positions[i] + unit * (overlap * 0.5),
+            );
+            positions[j] = VoteTown.clampToBounds(
+              positions[j] - unit * (overlap * 0.5),
+            );
+          }
+
+          final relVel = nextVelocities[i] - nextVelocities[j];
+          final vn = relVel.x * unit.x + relVel.y * unit.y;
+          if (vn < 0) {
+            final impulse = unit * (vn * 0.5);
+            if (onlyCandidateIndex == null || onlyCandidateIndex == i) {
+              nextVelocities[i] -= impulse;
+            }
+            if (onlyCandidateIndex == null || onlyCandidateIndex == j) {
+              nextVelocities[j] += impulse;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  var maxDisplacement = 0.0;
+  final updatedCandidates = <TownCandidate>[];
+  for (var i = 0; i < count; i++) {
+    final disp = positions[i].distanceTo(town.candidates[i].location);
+    if (disp > maxDisplacement) {
+      maxDisplacement = disp;
+    }
+    updatedCandidates.add(town.candidates[i].withLocation(positions[i]));
+  }
+
+  return PhysicsFrameResult(
+    town: VoteTown(updatedCandidates),
+    velocities: nextVelocities,
+    maxDisplacement: maxDisplacement,
   );
 }
 

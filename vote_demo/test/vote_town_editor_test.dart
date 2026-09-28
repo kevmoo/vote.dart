@@ -10,9 +10,7 @@ void main() {
     // ignore: avoid_redundant_argument_values
     final editor = VoteTownEditor(VoteTown.random(candidateCount: count));
 
-    final locations = editor.value.candidates
-        .map((e) => e.intLocation)
-        .toList();
+    final locations = editor.value.candidates.map((e) => e.location).toList();
     expect(locations, hasLength(count));
 
     while (editor.value.candidates.length > 1) {
@@ -20,7 +18,7 @@ void main() {
     }
 
     expect(editor.value.candidates, hasLength(1));
-    expect(editor.value.candidates.single.intLocation, locations.first);
+    expect(editor.value.candidates.single.location, locations.first);
 
     while (editor.value.candidates.length < count) {
       editor.addCandidate!();
@@ -30,7 +28,7 @@ void main() {
 
     for (var i = 0; i < count; i++) {
       expect(
-        editor.value.candidates[i].intLocation,
+        editor.value.candidates[i].location,
         locations[i],
         reason: 'Candidate added back at index $i should match old location.',
       );

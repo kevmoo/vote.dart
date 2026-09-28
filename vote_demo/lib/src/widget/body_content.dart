@@ -59,7 +59,7 @@ class const BodyContent({required final double crossAxisWidth, super.key})
     const HeaderWidget(
       header: 'Vote Town',
       extraHelp:
-          'A simple town of 100 people trying to figure out where their '
+          'A simple town of 225 people trying to figure out where their '
           'post office should go.',
       child: VoteTownWidget(),
     ),

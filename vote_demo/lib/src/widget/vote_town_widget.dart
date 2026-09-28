@@ -184,9 +184,18 @@ class const _StrategicSimulationControls({required final VoteTownEditor editor})
                 'Strategic Candidate Simulation',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
               ),
-              if (nextCandidate != null)
+              if (editor.isSimulating)
                 Text(
-                  'Next turn: ${nextCandidate.id}'
+                  'All agents moving (60fps)',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.indigo.shade700,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )
+              else if (nextCandidate != null)
+                Text(
+                  'Next step: ${nextCandidate.id}'
                   '${editor.isMole(nextCandidate) ? " (Mole)" : ""}',
                   style: TextStyle(
                     fontSize: 12,
@@ -275,7 +284,9 @@ class const _StrategicSimulationControls({required final VoteTownEditor editor})
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               OutlinedButton.icon(
-                onPressed: editor.isSimulating ? null : editor.stepSimulation,
+                onPressed: editor.isSimulating || editor.isStepAnimating
+                    ? null
+                    : editor.animateSingleStep,
                 icon: const Icon(Icons.skip_next, size: 18),
                 label: Text(
                   nextCandidate == null ? 'Step' : 'Step (${nextCandidate.id})',
@@ -298,7 +309,7 @@ class const _StrategicSimulationControls({required final VoteTownEditor editor})
   }
 }
 
-const _candidateScale = 4.7;
+const _candidateScale = 6.5;
 
 class const _CandidateDragNotification(
   final TownCandidate candidate,

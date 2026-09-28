@@ -45,15 +45,15 @@ void main() {
     });
   });
 
-  group('computeStrategicMove', () {
+  group('computeStrategicMove & advancePhysicsFrame', () {
     test(
       'All Selfish under Condorcet converges from corners toward center',
       () {
         var town = VoteTown.fromLocations(const [
-          Point(1, 1),
-          Point(17, 1),
-          Point(1, 17),
-          Point(17, 17),
+          Point(15, 15),
+          Point(135, 15),
+          Point(15, 135),
+          Point(135, 135),
         ]);
 
         double totalDistance(VoteTown t) => t.candidates.fold<double>(
@@ -79,12 +79,12 @@ void main() {
 
     test('Kingmaker Mole (moleHelpsA) splits rival B vote so trailing A wins '
         'Plurality', () {
-      // A is off-center (left), B is near center and winning 1-on-1, C (Mole)
+      // A is off-center (left), B is at center (75,75) winning 1-on-1, C (Mole)
       // starts in a far corner.
       var town = VoteTown.fromLocations(const [
-        Point(3, 9), // A
-        Point(9, 9), // B (currently winning)
-        Point(17, 17), // C (Mole helping A)
+        Point(35, 75), // A
+        Point(75, 75), // B (currently winning)
+        Point(135, 135), // C (Mole helping A)
       ]);
       expect(town.pluralityElection.singleWinner?.id, 'B');
 
@@ -104,11 +104,11 @@ void main() {
 
     test('Saboteur Mole (moleHurtsA) shadows A to make A lose Plurality, but '
         'cannot dethrone center A in Condorcet', () {
-      // A is at center (9,9) beating B at (13,9); C is the Saboteur Mole.
+      // A is at center (75,75) beating B at (105,75); C is the Saboteur Mole.
       var town = VoteTown.fromLocations(const [
-        Point(9, 9), // A (center)
-        Point(13, 9), // B
-        Point(1, 1), // C (Mole hurting A)
+        Point(75, 75), // A (center)
+        Point(105, 75), // B
+        Point(15, 15), // C (Mole hurting A)
       ]);
       expect(town.pluralityElection.singleWinner?.id, 'A');
       expect(town.condorcetElection.singleWinner?.id, 'A');
@@ -123,14 +123,36 @@ void main() {
       }
 
       // Mole C successfully spoiled Plurality against A (squeezing A down to
-      // last place in Plurality), yet A still finishes in 1st place in
-      // Condorcet!
+      // last place in Plurality), yet A still wins Condorcet outright on the
+      // 15x15 grid!
       expect(town.pluralityElection.singleWinner?.id, isNot('A'));
       expect(town.pluralityElection.places.last.single.id, 'A');
-      expect(
-        town.condorcetElection.places.first.map((c) => c.id),
-        contains('A'),
-      );
+      expect(town.condorcetElection.singleWinner?.id, 'A');
+    });
+
+    test('advancePhysicsFrame steers with momentum and enforces minimum '
+        'candidate separation', () {
+      var town = VoteTown.fromLocations(const [Point(20, 75), Point(130, 75)]);
+      var velocities = <Point<double>>[const Point(0, 0), const Point(0, 0)];
+      // Both candidates aim for the exact same center point (75, 75).
+      final targets = <Point<double>>[VoteTown.center, VoteTown.center];
+
+      for (var frame = 0; frame < 180; frame++) {
+        final res = advancePhysicsFrame(
+          town,
+          velocities: velocities,
+          targets: targets,
+          dtSeconds: 0.016,
+        );
+        town = res.town;
+        velocities = res.velocities;
+      }
+
+      final posA = town.candidates[0].location;
+      final posB = town.candidates[1].location;
+      expect(posA.distanceTo(VoteTown.center), lessThan(18.0));
+      expect(posB.distanceTo(VoteTown.center), lessThan(18.0));
+      expect(posA.distanceTo(posB), greaterThanOrEqualTo(17.49));
     });
   });
 }
