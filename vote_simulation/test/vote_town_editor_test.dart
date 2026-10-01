@@ -1,7 +1,5 @@
 import 'package:test/test.dart';
-import 'package:vote_demo/src/model/strategic_simulator.dart';
-import 'package:vote_demo/src/model/vote_town.dart';
-import 'package:vote_demo/src/view_model/vote_town_editor.dart';
+import 'package:vote_simulation/vote_simulation.dart';
 
 void main() {
   test('stable add and remove', () {

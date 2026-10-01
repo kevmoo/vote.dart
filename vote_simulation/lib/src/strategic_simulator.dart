@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:collection/collection.dart';
-import 'package:vote_widgets/vote_widgets.dart';
 
+import 'candidate.dart';
 import 'town_folk.dart';
 import 'vote_town.dart';
 
@@ -613,7 +613,7 @@ _CandidateStanding _evaluateIrv(VoteTown town, TownCandidate target) {
   // round in which target participated and measure how many votes short target
   // was of surviving that round.
   var lastRoundVotes = 0;
-  var votesToSurvive = 100;
+  var votesToSurvive = 1000;
   for (final round in election.rounds.reversed) {
     final myRoundPlace = round.places.firstWhereOrNull(
       (p) => p.contains(target),

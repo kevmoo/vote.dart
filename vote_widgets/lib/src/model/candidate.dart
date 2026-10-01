@@ -1,21 +1,10 @@
 import 'package:flutter/painting.dart';
+import 'package:vote_simulation/vote_simulation.dart';
 
-import '../helpers/helpers.dart';
+export 'package:vote_simulation/vote_simulation.dart' show Candidate;
 
-class Candidate(final String id, final double hue)
-    implements Comparable<Candidate> {
-  final Color color = HSVColor.fromAHSV(1.0, hue, colorSaturation, 1).toColor(),
-      darkColor = HSVColor.fromAHSV(1.0, hue, 0.5, 0.95).toColor();
+extension CandidateColorExtension on Candidate {
+  Color get color => HSVColor.fromAHSV(1.0, hue, colorSaturation, 1).toColor();
 
-  @override
-  int compareTo(Candidate other) => id.compareTo(other.id);
-
-  @override
-  bool operator ==(Object other) => other is Candidate && id == other.id;
-
-  @override
-  int get hashCode => id.hashCode;
-
-  @override
-  String toString() => id;
+  Color get darkColor => HSVColor.fromAHSV(1.0, hue, 0.5, 0.95).toColor();
 }

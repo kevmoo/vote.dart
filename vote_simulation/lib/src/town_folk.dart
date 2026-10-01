@@ -1,8 +1,6 @@
 import 'dart:math';
 
-import 'package:vote_widgets/helpers.dart';
-import 'package:vote_widgets/vote_widgets.dart';
-
+import 'candidate.dart';
 import 'voter.dart';
 
 class TownCandidate(final int index, double hue, final Point<double> location)

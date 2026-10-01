@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'dart:math';
-import 'dart:ui' show Offset;
 
-import '../model/strategic_simulator.dart';
-import '../model/town_folk.dart';
-import '../model/vote_town.dart';
 import 'editor.dart';
+import 'strategic_simulator.dart';
+import 'town_folk.dart';
+import 'vote_town.dart';
 
 const _maxCandidates = 8;
 const _physicsFrameDuration = Duration(milliseconds: 16);
@@ -22,7 +21,7 @@ class VoteTownEditor(super.value) extends KnarlyEditor<VoteTown> {
   TownCandidate? get movingCandidate => _movingCandidate;
   TownCandidate? _movingCandidate;
 
-  Offset? _workingPoint;
+  Point<double>? _workingPoint;
 
   TargetElectionMethod get targetMethod => _targetMethod;
   TargetElectionMethod _targetMethod = TargetElectionMethod.plurality;
@@ -325,23 +324,23 @@ class VoteTownEditor(super.value) extends KnarlyEditor<VoteTown> {
     assert(_movingCandidate == null);
     assert(_workingPoint == null);
     _movingCandidate = candidate;
-    _workingPoint = Offset(candidate.location.x, candidate.location.y);
+    _workingPoint = candidate.location;
     notifyListeners();
   }
 
-  void moveCandidateUpdate(TownCandidate candidate, Offset pixelOffset) {
+  void moveCandidateUpdate(TownCandidate candidate, Point<double> delta) {
     assert(candidate == _movingCandidate);
     assert(value.candidates.contains(candidate));
-    assert(pixelOffset.isFinite);
+    assert(delta.x.isFinite && delta.y.isFinite);
 
     assert(_workingPoint != null);
-    _workingPoint = _workingPoint! + pixelOffset;
+    _workingPoint = _workingPoint! + delta;
 
     final candidateIndex = value.candidates.indexOf(candidate);
     final resolvedLocation = resolveSingleCandidatePosition(
       value.candidates,
       candidateIndex,
-      Point<double>(_workingPoint!.dx, _workingPoint!.dy),
+      _workingPoint!,
     );
 
     final candidatesCopy = value.candidates.toList(growable: false);

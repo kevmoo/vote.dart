@@ -1,8 +1,7 @@
 import 'dart:math';
 
 import 'package:test/test.dart';
-import 'package:vote_demo/src/model/strategic_simulator.dart';
-import 'package:vote_demo/src/model/vote_town.dart';
+import 'package:vote_simulation/vote_simulation.dart';
 
 void main() {
   group('VoteTownPreset & detectPluralitySpoiler', () {

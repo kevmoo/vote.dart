@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vote/vote.dart';
+import 'package:vote_simulation/vote_simulation.dart';
 import 'package:vote_widgets/vote_widgets.dart';
 
-import '../model/strategic_simulator.dart';
-import '../model/vote_town_distance_place.dart';
-import '../view_model/vote_town_editor.dart';
 import 'distance_election_result_widget.dart';
 import 'header_widget.dart';
 import 'k_grid.dart';

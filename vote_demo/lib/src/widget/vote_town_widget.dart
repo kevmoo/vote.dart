@@ -3,12 +3,8 @@ import 'dart:math' as math;
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vote_simulation/vote_simulation.dart';
 import 'package:vote_widgets/vote_widgets.dart';
-
-import '../model/strategic_simulator.dart';
-import '../model/town_folk.dart';
-import '../model/vote_town.dart';
-import '../view_model/vote_town_editor.dart';
 
 class const VoteTownWidget() extends StatelessWidget {
   @override
@@ -27,7 +23,10 @@ class const VoteTownWidget() extends StatelessWidget {
           final scale = 1 / _offsetMultiplier(flowDelegate._drawSize);
           final newValue = details.delta * scale;
 
-          editor.moveCandidateUpdate(notification.candidate, newValue);
+          editor.moveCandidateUpdate(
+            notification.candidate,
+            math.Point(newValue.dx, newValue.dy),
+          );
         } else if (details is DragEndDetails) {
           editor.moveCandidateEnd(notification.candidate);
         } else {
