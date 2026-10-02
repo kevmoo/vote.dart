@@ -149,6 +149,7 @@ class VoteTownEditor(super.value) extends KnarlyEditor<VoteTown> {
         velocities: _velocities,
         targets: _targets,
         dtSeconds: _physicsDtSeconds,
+        mode: _simulationMode,
       );
       _velocities = frame.velocities;
 
@@ -176,7 +177,7 @@ class VoteTownEditor(super.value) extends KnarlyEditor<VoteTown> {
   }
 
   /// Smoothly glides the next candidate toward its computed strategic target
-  /// over ~280ms at 60fps.
+  /// over ~380ms at 60fps.
   void animateSingleStep() {
     if (value.candidates.isEmpty) return;
     pauseSimulation();
@@ -201,7 +202,7 @@ class VoteTownEditor(super.value) extends KnarlyEditor<VoteTown> {
     _targets[idx] = step.toLocation;
     _isContinuousPlay = false;
 
-    var framesRemaining = 20;
+    var framesRemaining = 24;
     _simulationTimer = Timer.periodic(_physicsFrameDuration, (_) {
       framesRemaining--;
       final frame = advancePhysicsFrame(
@@ -209,17 +210,20 @@ class VoteTownEditor(super.value) extends KnarlyEditor<VoteTown> {
         velocities: _velocities,
         targets: _targets,
         dtSeconds: _physicsDtSeconds,
+        mode: _simulationMode,
         onlyCandidateIndex: idx,
-        maxSpeed: 95.0,
+        maxSpeed: 120.0,
       );
       _velocities = frame.velocities;
-      setValue(frame.town);
 
       final distLeft = frame.town.candidates[idx].location.distanceTo(
         step.toLocation,
       );
-      if (framesRemaining <= 0 || distLeft < 0.35) {
+      if (framesRemaining <= 0 || distLeft < 0.5) {
+        setValue(step.town);
         pauseSimulation();
+      } else {
+        setValue(frame.town);
       }
     });
     notifyListeners();

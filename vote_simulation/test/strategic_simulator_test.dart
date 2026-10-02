@@ -151,7 +151,156 @@ void main() {
       final posB = town.candidates[1].location;
       expect(posA.distanceTo(VoteTown.center), lessThan(18.0));
       expect(posB.distanceTo(VoteTown.center), lessThan(18.0));
-      expect(posA.distanceTo(posB), greaterThanOrEqualTo(17.49));
+      expect(
+        posA.distanceTo(posB),
+        greaterThanOrEqualTo(TownCandidate.minSeparation - 0.01),
+      );
+    });
+
+    test('twoCandidates reaches exact center equilibrium for A across all '
+        'methods', () {
+      for (final method in TargetElectionMethod.values) {
+        final editor = VoteTownEditor(VoteTownPreset.twoCandidates.createTown())
+          ..targetMethod = method;
+
+        var unmoved = 0;
+        for (var turn = 0; turn < 12; turn++) {
+          final step = editor.stepSimulation();
+          if (step.moved) {
+            unmoved = 0;
+          } else {
+            unmoved++;
+            if (unmoved >= 2) break;
+          }
+        }
+
+        expect(unmoved, greaterThanOrEqualTo(2));
+        expect(editor.value.candidates.first.location, VoteTown.center);
+        expect(editor.value.pluralityElection.singleWinner?.id, 'A');
+        expect(editor.value.condorcetElection.singleWinner?.id, 'A');
+        expect(editor.value.irvElection.singleWinner?.id, 'A');
+        editor.dispose();
+      }
+    });
+
+    test('irvCenterSqueeze forces center candidate A to leave (75, 75) on Turn '
+        '1 under IRV and Plurality, but keeps A at (75, 75) under '
+        'Condorcet', () {
+      final initial = VoteTownPreset.irvCenterSqueeze.createTown();
+
+      final condorcetStep = computeStrategicMove(
+        initial,
+        candidateIndex: 0,
+        method: TargetElectionMethod.condorcet,
+        mode: SimulationMode.selfish,
+      );
+      expect(condorcetStep.moved, isFalse);
+      expect(condorcetStep.toLocation, VoteTown.center);
+
+      final irvStep = computeStrategicMove(
+        initial,
+        candidateIndex: 0,
+        method: TargetElectionMethod.irv,
+        mode: SimulationMode.selfish,
+      );
+      expect(irvStep.moved, isTrue);
+
+      final pluralityStep = computeStrategicMove(
+        initial,
+        candidateIndex: 0,
+        method: TargetElectionMethod.plurality,
+        mode: SimulationMode.selfish,
+      );
+      expect(pluralityStep.moved, isTrue);
+    });
+
+    test('Condorcet reaches equilibrium with A at (75, 75) winning across all '
+        'modes, even when Mole Hurts A spoils Plurality and IRV', () {
+      for (final preset in [
+        VoteTownPreset.pluralitySpoiler,
+        VoteTownPreset.irvCenterSqueeze,
+      ]) {
+        for (final mode in SimulationMode.values) {
+          final editor = VoteTownEditor(preset.createTown())
+            ..targetMethod = TargetElectionMethod.condorcet
+            ..simulationMode = mode;
+
+          var unmoved = 0;
+          for (var turn = 0; turn < 24; turn++) {
+            final step = editor.stepSimulation();
+            if (step.moved) {
+              unmoved = 0;
+            } else {
+              unmoved++;
+              if (unmoved >= editor.value.candidates.length) break;
+            }
+          }
+
+          expect(
+            unmoved,
+            greaterThanOrEqualTo(editor.value.candidates.length),
+            reason: '${preset.label} | ${mode.label} should reach equilibrium',
+          );
+          expect(editor.value.candidates.first.location, VoteTown.center);
+          expect(editor.value.condorcetElection.singleWinner?.id, 'A');
+
+          if (mode == SimulationMode.moleHurtsA) {
+            expect(editor.value.pluralityElection.singleWinner?.id, isNot('A'));
+            expect(editor.value.irvElection.singleWinner?.id, isNot('A'));
+          } else if (mode == SimulationMode.moleHelpsA) {
+            expect(editor.value.pluralityElection.singleWinner?.id, 'A');
+            expect(editor.value.irvElection.singleWinner?.id, 'A');
+          }
+          editor.dispose();
+        }
+      }
+    });
+
+    test('Mole Helps A vs Mole Hurts A produces opposite winners for A across '
+        'Plurality and IRV in multi-turn simulation', () {
+      for (final preset in [
+        VoteTownPreset.pluralitySpoiler,
+        VoteTownPreset.irvCenterSqueeze,
+      ]) {
+        for (final method in [
+          TargetElectionMethod.plurality,
+          TargetElectionMethod.irv,
+        ]) {
+          final helpEditor = VoteTownEditor(preset.createTown())
+            ..targetMethod = method
+            ..simulationMode = SimulationMode.moleHelpsA;
+          final hurtEditor = VoteTownEditor(preset.createTown())
+            ..targetMethod = method
+            ..simulationMode = SimulationMode.moleHurtsA;
+
+          for (var turn = 0; turn < 24; turn++) {
+            helpEditor.stepSimulation();
+            hurtEditor.stepSimulation();
+          }
+
+          final helpWinner = method == TargetElectionMethod.plurality
+              ? helpEditor.value.pluralityElection.singleWinner?.id
+              : helpEditor.value.irvElection.singleWinner?.id;
+          final hurtWinner = method == TargetElectionMethod.plurality
+              ? hurtEditor.value.pluralityElection.singleWinner?.id
+              : hurtEditor.value.irvElection.singleWinner?.id;
+
+          expect(
+            helpWinner,
+            'A',
+            reason: '${preset.label} | ${method.label} | Mole Helps A',
+          );
+          expect(helpEditor.value.candidates.first.location, VoteTown.center);
+          expect(
+            hurtWinner,
+            'B',
+            reason: '${preset.label} | ${method.label} | Mole Hurts A',
+          );
+
+          helpEditor.dispose();
+          hurtEditor.dispose();
+        }
+      }
     });
   });
 }

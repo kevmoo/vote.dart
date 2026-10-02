@@ -6,8 +6,8 @@ import 'voter.dart';
 class TownCandidate(final int index, double hue, final Point<double> location)
     extends Candidate {
   static const candidateSpacing = 5.0;
-  static const minSeparation = 17.5;
-  static const repulsionRadius = 29.0;
+  static const minSeparation = 18.0;
+  static const repulsionRadius = 21.5;
   static const boardMargin = 6.5;
 
   this

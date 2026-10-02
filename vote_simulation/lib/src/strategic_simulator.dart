@@ -48,9 +48,8 @@ enum VoteTownPreset(final String label, final String description) {
     ]),
     VoteTownPreset.irvCenterSqueeze => VoteTown.fromLocations(const [
       Point(75, 75),
-      Point(45, 55),
-      Point(105, 55),
-      Point(75, 108),
+      Point(50, 75),
+      Point(100, 72),
     ]),
   };
 }
@@ -151,6 +150,7 @@ SimulationStepResult computeStrategicMove(
       mode.hasMole &&
       town.candidates.length >= 2 &&
       candidateIndex == town.candidates.length - 1;
+  final effectiveMaxStep = isMole ? maxStepDistance * 1.35 : maxStepDistance;
 
   final otherLocations = [
     for (var i = 0; i < town.candidates.length; i++)
@@ -158,27 +158,35 @@ SimulationStepResult computeStrategicMove(
   ];
 
   bool isLegalPoint(Point<double> p) => otherLocations.every(
-    (other) => other.distanceTo(p) >= TownCandidate.minSeparation + 1.5,
+    (other) => other.distanceTo(p) >= TownCandidate.repulsionRadius,
   );
 
   final candidatePoints = <Point<double>>[];
 
   void tryAddPoint(Point<double> rawPoint) {
     final clamped = VoteTown.clampToBounds(rawPoint);
-    if (startPoint.distanceTo(clamped) > maxStepDistance + 1e-6) {
-      return;
-    }
     if (!isLegalPoint(clamped)) {
       return;
     }
     candidatePoints.add(clamped);
   }
 
-  // Sample concentric radial rings around startPoint.
-  const ringFractions = [0.12, 0.28, 0.50, 0.75, 1.0];
+  // 1. Always consider staying put and probing toward the center of town.
+  tryAddPoint(startPoint);
+  final toCenter = VoteTown.center - startPoint;
+  if (toCenter.magnitude <= effectiveMaxStep) {
+    tryAddPoint(VoteTown.center);
+  } else {
+    tryAddPoint(
+      startPoint + toCenter * (effectiveMaxStep / toCenter.magnitude),
+    );
+  }
+
+  // 2. Local concentric radial rings around startPoint.
+  const ringFractions = [0.15, 0.35, 0.65, 1.0];
   const directions = 16;
   for (final fraction in ringFractions) {
-    final radius = maxStepDistance * fraction;
+    final radius = effectiveMaxStep * fraction;
     for (var d = 0; d < directions; d++) {
       final angle = (2 * pi * d) / directions;
       tryAddPoint(
@@ -190,41 +198,47 @@ SimulationStepResult computeStrategicMove(
     }
   }
 
-  // Also sample direct probes toward key landmarks (center, A, rivals).
-  void addProbeToward(Point<double> landmark) {
-    final delta = landmark - startPoint;
-    final dist = delta.magnitude;
-    if (dist < 0.5) return;
-    final stepDist = min(dist, maxStepDistance);
-    final unit = delta * (1.0 / dist);
-    tryAddPoint(startPoint + unit * stepDist);
-    // For landmarks occupied by another candidate, also probe just outside
-    // minSeparation around that landmark.
-    for (var d = 0; d < 8; d++) {
-      final angle = (2 * pi * d) / 8;
-      final offset = Point<double>(
-        cos(angle) * (TownCandidate.minSeparation + 2.0),
-        sin(angle) * (TownCandidate.minSeparation + 2.0),
+  // 3. The Mole has no attachment to its own voter base: it searches globally
+  // around every candidate's flanks and across the board to find where it can
+  // best help or hurt A.
+  if (isMole) {
+    for (final landmark in [VoteTown.center, ...otherLocations]) {
+      for (final radius in [
+        TownCandidate.repulsionRadius + 0.5,
+        TownCandidate.repulsionRadius + 10.0,
+      ]) {
+        for (var d = 0; d < 16; d++) {
+          final angle = (2 * pi * d) / 16;
+          tryAddPoint(
+            Point<double>(
+              landmark.x + cos(angle) * radius,
+              landmark.y + sin(angle) * radius,
+            ),
+          );
+        }
+      }
+    }
+    for (var y = 15.0; y <= 135.0; y += 20.0) {
+      for (var x = 15.0; x <= 135.0; x += 20.0) {
+        tryAddPoint(Point<double>(x, y));
+      }
+    }
+  } else {
+    // For selfish candidates, also sample points just outside personal space
+    // around the center if within step reach.
+    for (var d = 0; d < 16; d++) {
+      final angle = (2 * pi * d) / 16;
+      final p = Point<double>(
+        VoteTown.center.x + cos(angle) * (TownCandidate.repulsionRadius + 0.5),
+        VoteTown.center.y + sin(angle) * (TownCandidate.repulsionRadius + 0.5),
       );
-      final flankTarget = landmark + offset;
-      final flankDelta = flankTarget - startPoint;
-      final flankDist = flankDelta.magnitude;
-      if (flankDist > 0.5) {
-        tryAddPoint(
-          startPoint +
-              flankDelta * (min(flankDist, maxStepDistance) / flankDist),
-        );
+      if (startPoint.distanceTo(p) <= effectiveMaxStep) {
+        tryAddPoint(p);
       }
     }
   }
 
-  addProbeToward(VoteTown.center);
-  for (final other in otherLocations) {
-    addProbeToward(other);
-  }
-
-  var bestPoint = startPoint;
-  var bestTown = town;
+  var bestGlobalPoint = startPoint;
   var bestScore = _evaluateTownForMove(
     town,
     movingCandidateIndex: candidateIndex,
@@ -250,16 +264,61 @@ SimulationStepResult computeStrategicMove(
 
     if (trialScore.compareTo(bestScore) > 0) {
       bestScore = trialScore;
-      bestPoint = candidatePoint;
-      bestTown = trialTown;
+      bestGlobalPoint = candidatePoint;
     }
   }
 
+  // When stepping toward bestGlobalPoint, avoid cutting straight through A's
+  // personal space if the Mole is trying to help A.
+  var stepPoint = bestGlobalPoint;
+  final distToBest = startPoint.distanceTo(bestGlobalPoint);
+  if (distToBest > effectiveMaxStep) {
+    final targetA = town.candidates.first.location;
+    final dir = (bestGlobalPoint - startPoint) * (1.0 / distToBest);
+    var rawStep = startPoint + dir * effectiveMaxStep;
+    if (isMole &&
+        mode == SimulationMode.moleHelpsA &&
+        rawStep.distanceTo(targetA) < TownCandidate.repulsionRadius + 10.0) {
+      // Deflect around A so the Mole doesn't trample A's center voters while
+      // crossing the board to flank a rival.
+      final awayFromA = rawStep - targetA;
+      final awayDist = awayFromA.magnitude;
+      if (awayDist > 1e-4) {
+        final deflected =
+            targetA +
+            awayFromA * ((TownCandidate.repulsionRadius + 12.0) / awayDist);
+        final defDelta = deflected - startPoint;
+        if (defDelta.magnitude > 1e-4) {
+          rawStep =
+              startPoint + defDelta * (effectiveMaxStep / defDelta.magnitude);
+        }
+      }
+    }
+    if (isLegalPoint(rawStep)) {
+      stepPoint = VoteTown.clampToBounds(rawStep);
+    } else {
+      var minRemainingDist = double.infinity;
+      for (final p in candidatePoints) {
+        if (startPoint.distanceTo(p) <= effectiveMaxStep + 1e-5) {
+          final rem = p.distanceTo(bestGlobalPoint);
+          if (rem < minRemainingDist) {
+            minRemainingDist = rem;
+            stepPoint = p;
+          }
+        }
+      }
+    }
+  }
+
+  final finalCandidates = town.candidates.toList(growable: false);
+  finalCandidates[candidateIndex] = movingCandidate.withLocation(stepPoint);
+  final finalTown = VoteTown(finalCandidates);
+
   return SimulationStepResult(
-    town: bestTown,
-    candidate: bestTown.candidates[candidateIndex],
+    town: finalTown,
+    candidate: finalTown.candidates[candidateIndex],
     fromLocation: startPoint,
-    toLocation: bestPoint,
+    toLocation: stepPoint,
     isMole: isMole,
   );
 }
@@ -300,25 +359,29 @@ PhysicsFrameResult advancePhysicsFrame(
   required List<Point<double>> velocities,
   required List<Point<double>> targets,
   required double dtSeconds,
+  SimulationMode mode = SimulationMode.selfish,
   int? onlyCandidateIndex,
-  double maxSpeed = 48.0,
+  double maxSpeed = 52.0,
 }) {
   final dt = dtSeconds.clamp(0.001, 0.05);
   final count = town.candidates.length;
   final positions = [for (final c in town.candidates) c.location];
   final nextVelocities = List<Point<double>>.of(velocities);
 
-  const arrivalRadius = 10.0;
+  const arrivalRadius = 8.0;
   const repulsionRadius = TownCandidate.repulsionRadius;
   const minSep = TownCandidate.minSeparation;
   const repulsionSpan = repulsionRadius - minSep;
-  final steerBlend = 1.0 - exp(-dt * 7.5);
+  final steerBlend = 1.0 - exp(-dt * 9.0);
 
   for (var i = 0; i < count; i++) {
     if (onlyCandidateIndex != null && i != onlyCandidateIndex) {
       nextVelocities[i] = const Point(0, 0);
       continue;
     }
+
+    final isMole = mode.hasMole && count >= 2 && i == count - 1;
+    final candidateMaxSpeed = isMole ? maxSpeed * 1.35 : maxSpeed;
 
     final pos = positions[i];
     final target = targets[i];
@@ -328,34 +391,43 @@ PhysicsFrameResult advancePhysicsFrame(
     var desiredVel = const Point<double>(0, 0);
     if (distToTarget > 0.15) {
       final speed = distToTarget < arrivalRadius
-          ? maxSpeed * (distToTarget / arrivalRadius)
-          : maxSpeed;
+          ? candidateMaxSpeed * (distToTarget / arrivalRadius)
+          : candidateMaxSpeed;
       desiredVel = toTarget * (speed / distToTarget);
     }
 
-    // Steeply ramping repulsion from nearby candidates + tangential deflection
-    // of inward desired velocity so candidates slide around each other and
-    // strongly resist overlap.
-    var repelVel = const Point<double>(0, 0);
-    for (var j = 0; j < count; j++) {
-      if (i == j) continue;
-      final away = pos - positions[j];
-      final dist = away.magnitude;
-      if (dist < repulsionRadius && dist > 1e-4) {
-        final awayUnit = away * (1.0 / dist);
-        final u = ((repulsionRadius - dist) / repulsionSpan).clamp(0.0, 2.0);
-        final u2 = u * u;
-        // Gentle outer cushion (0.35 * u) + fast quartic barrier (3.2 * u^4).
-        final strength = (0.35 * u + 3.2 * u2 * u2) * maxSpeed;
-        repelVel += awayUnit * strength;
+    // Scale repulsion by how actively this candidate is moving toward a target
+    // so a stationary candidate sitting at its chosen target cannot be shoved
+    // off its spot by approaching rivals.
+    final mobilityFactor = (distToTarget / 5.0).clamp(0.0, 1.0);
 
-        // Strip inward velocity component when approaching personal space so
-        // desiredVel slides tangentially around the neighbor.
-        if (dist < minSep + 6.0) {
+    var repelVel = const Point<double>(0, 0);
+    if (mobilityFactor > 0.01) {
+      for (var j = 0; j < count; j++) {
+        if (i == j) continue;
+        final away = pos - positions[j];
+        final dist = away.magnitude;
+        if (dist < repulsionRadius + 3.0 && dist > 1e-4) {
+          final awayUnit = away * (1.0 / dist);
+          if (dist < repulsionRadius) {
+            final u = ((repulsionRadius - dist) / repulsionSpan).clamp(
+              0.0,
+              2.0,
+            );
+            final u2 = u * u;
+            final strength =
+                (0.35 * u + 3.0 * u2 * u2) * candidateMaxSpeed * mobilityFactor;
+            repelVel += awayUnit * strength;
+          }
+
+          // Tangential deflection when approaching personal space.
           final inwardDot =
               desiredVel.x * awayUnit.x + desiredVel.y * awayUnit.y;
           if (inwardDot < 0) {
-            final block = ((minSep + 6.0 - dist) / 6.0).clamp(0.0, 1.0);
+            final block = ((repulsionRadius + 3.0 - dist) / 5.0).clamp(
+              0.0,
+              1.0,
+            );
             desiredVel -= awayUnit * (inwardDot * block);
           }
         }
@@ -365,25 +437,21 @@ PhysicsFrameResult advancePhysicsFrame(
     final combinedDesired = desiredVel + repelVel;
     var vel = velocities[i] + (combinedDesired - velocities[i]) * steerBlend;
 
-    // Extra damping when settled at target with minimal repulsion.
-    if (distToTarget < 1.0 && repelVel.magnitude < 1.0) {
-      vel *= 0.7;
+    if (distToTarget < 0.8 && repelVel.magnitude < 0.5) {
+      vel *= 0.5;
     }
 
-    final maxAllowedSpeed = repelVel.magnitude > maxSpeed
-        ? min(maxSpeed * 1.8, repelVel.magnitude)
-        : maxSpeed;
     final speed = vel.magnitude;
-    if (speed > maxAllowedSpeed) {
-      vel = vel * (maxAllowedSpeed / speed);
+    if (speed > candidateMaxSpeed * 1.4) {
+      vel = vel * ((candidateMaxSpeed * 1.4) / speed);
     }
 
     nextVelocities[i] = vel;
     positions[i] = VoteTown.clampToBounds(pos + vel * dt);
   }
 
-  // Enforce hard minimum separation safety net and strip inward normal
-  // velocity so candidates never overlap.
+  // Hard minimum separation safety net: weight projection by candidate speed
+  // so anchored candidates aren't bulldozed by moving challengers.
   for (var pass = 0; pass < 4; pass++) {
     for (var i = 0; i < count; i++) {
       for (var j = i + 1; j < count; j++) {
@@ -394,30 +462,24 @@ PhysicsFrameResult advancePhysicsFrame(
           final unit = dist > 1e-4
               ? diff * (1.0 / dist)
               : Point<double>(cos(i + j), sin(i + j));
-          if (onlyCandidateIndex == i) {
-            positions[i] = VoteTown.clampToBounds(positions[j] + unit * minSep);
-          } else if (onlyCandidateIndex == j) {
-            positions[j] = VoteTown.clampToBounds(positions[i] - unit * minSep);
-          } else {
-            positions[i] = VoteTown.clampToBounds(
-              positions[i] + unit * (overlap * 0.5),
-            );
-            positions[j] = VoteTown.clampToBounds(
-              positions[j] - unit * (overlap * 0.5),
-            );
-          }
+          final speedI = nextVelocities[i].magnitude;
+          final speedJ = nextVelocities[j].magnitude;
+          final totalSpeed = speedI + speedJ;
+          final weightI = onlyCandidateIndex == i
+              ? 1.0
+              : onlyCandidateIndex == j
+              ? 0.0
+              : totalSpeed > 1e-3
+              ? speedI / totalSpeed
+              : 0.5;
+          final weightJ = 1.0 - weightI;
 
-          final relVel = nextVelocities[i] - nextVelocities[j];
-          final vn = relVel.x * unit.x + relVel.y * unit.y;
-          if (vn < 0) {
-            final impulse = unit * (vn * 0.5);
-            if (onlyCandidateIndex == null || onlyCandidateIndex == i) {
-              nextVelocities[i] -= impulse;
-            }
-            if (onlyCandidateIndex == null || onlyCandidateIndex == j) {
-              nextVelocities[j] += impulse;
-            }
-          }
+          positions[i] = VoteTown.clampToBounds(
+            positions[i] + unit * (overlap * weightI),
+          );
+          positions[j] = VoteTown.clampToBounds(
+            positions[j] - unit * (overlap * weightJ),
+          );
         }
       }
     }
@@ -450,51 +512,134 @@ _MoveScore _evaluateTownForMove(
   final movingCandidate = town.candidates[movingCandidateIndex];
 
   if (!isMole) {
-    final standing = _evaluateStanding(town, movingCandidate, method);
+    final standing = _evaluateStanding(
+      town,
+      movingCandidate,
+      method,
+      forSelfishMover: true,
+    );
     // Tie-break by moving closer to the geometric center of town.
     final centerBonus = -averageVoterDistanceTo(town, movingCandidate.location);
     return _MoveScore(standing, centerBonus);
   }
 
   final targetA = town.candidates.first;
-  final standingA = _evaluateStanding(town, targetA, method);
+  final rivals = town.candidates
+      .where((c) => c != targetA && c != movingCandidate)
+      .toList(growable: false);
+
+  // Measure how many first-choice voters the Mole steals from A compared to
+  // the election without the Mole, and how many votes the top rival has.
+  final townWithoutMole = VoteTown([targetA, ...rivals]);
+  final aVotesWithoutMole = townWithoutMole.pluralityElection.places
+      .firstWhere((p) => p.contains(targetA))
+      .voteCount;
+  final aVotesWithMole = town.pluralityElection.places
+      .firstWhere((p) => p.contains(targetA))
+      .voteCount;
+  final stolenFromA = aVotesWithoutMole - aVotesWithMole;
+
+  var maxRivalVotesWithMole = 0;
+  for (final r in rivals) {
+    final v = town.pluralityElection.places
+        .firstWhere((p) => p.contains(r))
+        .voteCount;
+    if (v > maxRivalVotesWithMole) {
+      maxRivalVotesWithMole = v;
+    }
+  }
+
+  final standingA = _evaluateStanding(
+    town,
+    targetA,
+    method,
+    forSelfishMover: false,
+    moleCandidate: movingCandidate,
+    mode: mode,
+  );
+  final standingMole = _evaluateStanding(
+    town,
+    movingCandidate,
+    method,
+    forSelfishMover: false,
+  );
 
   if (mode == SimulationMode.moleHelpsA) {
-    // Find A's strongest non-Mole rival so the Mole walks toward that rival
-    // when local steps haven't flipped a voter yet.
-    final rivals = town.candidates
-        .where((c) => c != targetA && c != movingCandidate)
-        .toList(growable: false);
+    // A Kingmaker Mole (+A) wants A to win, must not win the election itself,
+    // and wants to maximize A's margin over real rivals while not stealing A's
+    // own voters.
+    final moleWinsElection = standingMole.metrics.first;
+    final aMarginOverRivals = aVotesWithMole - maxRivalVotesWithMole;
 
     var tieBreak = 0.0;
     if (rivals.isNotEmpty) {
       final topRival = maxBy(
         rivals,
-        (r) => _evaluateStanding(town, r, method),
+        (r) => _evaluateStanding(town, r, method, forSelfishMover: false),
       )!;
       tieBreak = -movingCandidate.location.distanceTo(topRival.location);
     }
-    return _MoveScore(standingA, tieBreak);
+    return _MoveScore(
+      _CandidateStanding([
+        standingA.metrics.first, // 1 if A is sole winner of target method
+        -moleWinsElection, // 0 if Mole doesn't win, -1 if Mole wins itself
+        aMarginOverRivals,
+        ...standingA.metrics.skip(1),
+        -stolenFromA,
+      ]),
+      tieBreak,
+    );
   } else {
     assert(mode == SimulationMode.moleHurtsA);
-    // Saboteur Mole wants to minimize A's standing, and breaks flat ties by
-    // moving closer to A to shadow/squeeze A.
+    // Saboteur Mole (−A) wants A to lose (preferably to a real rival).
     final tieBreak = -movingCandidate.location.distanceTo(targetA.location);
-    return _MoveScore(standingA.negated(), tieBreak);
+    final negatedMetrics = [for (final m in standingA.metrics) -m];
+    final rivalMarginOverA = maxRivalVotesWithMole - aVotesWithMole;
+    return _MoveScore(
+      _CandidateStanding([
+        negatedMetrics
+            .first, // 0 if A is not sole winner, -1 if A is sole winner
+        rivalMarginOverA,
+        stolenFromA,
+        ...negatedMetrics.skip(1),
+      ]),
+      tieBreak,
+    );
   }
 }
 
 _CandidateStanding _evaluateStanding(
   VoteTown town,
   TownCandidate target,
-  TargetElectionMethod method,
-) => switch (method) {
-  TargetElectionMethod.plurality => _evaluatePlurality(town, target),
-  TargetElectionMethod.condorcet => _evaluateCondorcet(town, target),
-  TargetElectionMethod.irv => _evaluateIrv(town, target),
+  TargetElectionMethod method, {
+  required bool forSelfishMover,
+  TownCandidate? moleCandidate,
+  SimulationMode? mode,
+}) => switch (method) {
+  TargetElectionMethod.plurality => _evaluatePlurality(
+    town,
+    target,
+    forSelfishMover: forSelfishMover,
+  ),
+  TargetElectionMethod.condorcet => _evaluateCondorcet(
+    town,
+    target,
+    forSelfishMover: forSelfishMover,
+    moleCandidate: moleCandidate,
+    mode: mode,
+  ),
+  TargetElectionMethod.irv => _evaluateIrv(
+    town,
+    target,
+    forSelfishMover: forSelfishMover,
+  ),
 };
 
-_CandidateStanding _evaluatePlurality(VoteTown town, TownCandidate target) {
+_CandidateStanding _evaluatePlurality(
+  VoteTown town,
+  TownCandidate target, {
+  required bool forSelfishMover,
+}) {
   final election = town.pluralityElection;
   final myPlace = election.places.firstWhere((p) => p.contains(target));
   final myVotes = myPlace.voteCount;
@@ -509,10 +654,22 @@ _CandidateStanding _evaluatePlurality(VoteTown town, TownCandidate target) {
   }
 
   final margin = myVotes - maxOtherVotes;
-  return _CandidateStanding([-myPlace.place, margin, myVotes]);
+  final isSoleWinner = myPlace.place == 1 && myPlace.length == 1;
+  if (forSelfishMover && isSoleWinner && margin >= 10) {
+    // Already winning Plurality with a safe cushion; prefer staying/moving
+    // closer to the center of town rather than chasing grid-tilt margins.
+    return const _CandidateStanding([1, 1000]);
+  }
+  return _CandidateStanding([isSoleWinner ? 1 : 0, margin, myVotes]);
 }
 
-_CandidateStanding _evaluateCondorcet(VoteTown town, TownCandidate target) {
+_CandidateStanding _evaluateCondorcet(
+  VoteTown town,
+  TownCandidate target, {
+  required bool forSelfishMover,
+  TownCandidate? moleCandidate,
+  SimulationMode? mode,
+}) {
   final election = town.condorcetElection;
   final myPlace = election.places.firstWhere((p) => p.contains(target));
 
@@ -529,25 +686,49 @@ _CandidateStanding _evaluateCondorcet(VoteTown town, TownCandidate target) {
     if (diff > 0) {
       pairwiseWins++;
     }
+
+    // In Mole Helps A, don't incentivize the Mole to run to the corner just to
+    // inflate how badly A beats the Mole itself, as long as A beats the Mole.
+    if (mode == SimulationMode.moleHelpsA &&
+        other == moleCandidate &&
+        diff > 0) {
+      continue;
+    }
+
     if (diff < minimaxMargin) {
       minimaxMargin = diff;
     }
     totalMargin += diff;
   }
 
-  if (town.candidates.length <= 1) {
+  if (minimaxMargin == 1000) {
     minimaxMargin = 0;
   }
 
+  final isSoleWinner =
+      myPlace.place == 1 &&
+      myPlace.length == 1 &&
+      pairwiseWins == town.candidates.length - 1;
+
+  if (forSelfishMover && isSoleWinner && minimaxMargin >= 8) {
+    // Sole Condorcet winner with a solid pairwise margin: prefer closeness to
+    // the median voter (center) over chasing off-center opponents.
+    return const _CandidateStanding([1, 1000]);
+  }
+
   return _CandidateStanding([
-    -myPlace.place,
-    pairwiseWins,
+    isSoleWinner ? 1 : 0,
     minimaxMargin,
+    pairwiseWins,
     totalMargin,
   ]);
 }
 
-_CandidateStanding _evaluateIrv(VoteTown town, TownCandidate target) {
+_CandidateStanding _evaluateIrv(
+  VoteTown town,
+  TownCandidate target, {
+  required bool forSelfishMover,
+}) {
   final election = town.irvElection;
   final myOverallPlace = election.places.firstWhere((p) => p.contains(target));
 
@@ -556,11 +737,13 @@ _CandidateStanding _evaluateIrv(VoteTown town, TownCandidate target) {
   );
   final round1Votes = round1Place?.voteCount ?? 0;
 
-  if (myOverallPlace.place == 1) {
+  final isSoleWinner = myOverallPlace.place == 1 && myOverallPlace.length == 1;
+  if (isSoleWinner) {
     // Target wins IRV! Measure minimum survival/victory margin across all
     // rounds so both the winner and any Saboteur Mole recognize center-squeeze
     // vulnerability in early rounds.
     var minMargin = 1000;
+    var finalMargin = 0;
     for (final round in election.rounds) {
       final myRoundPlace = round.places.firstWhereOrNull(
         (p) => p.contains(target),
@@ -577,6 +760,7 @@ _CandidateStanding _evaluateIrv(VoteTown town, TownCandidate target) {
             }
           }
         }
+        finalMargin = myVotes - compareVotes;
       } else {
         // Margin over the lowest-vote candidate in this elimination round.
         compareVotes = 1000;
@@ -606,7 +790,12 @@ _CandidateStanding _evaluateIrv(VoteTown town, TownCandidate target) {
       }
     }
 
-    return _CandidateStanding([-1, minMargin, round1Votes]);
+    if (forSelfishMover && minMargin >= 10 && finalMargin >= 10) {
+      // Comfortably winning IRV without center-squeeze risk: prefer center.
+      return const _CandidateStanding([1, 1000]);
+    }
+
+    return _CandidateStanding([1, minMargin, finalMargin, round1Votes]);
   }
 
   // Target was eliminated (or tied/lost in the final round). Find the last
@@ -633,7 +822,7 @@ _CandidateStanding _evaluateIrv(VoteTown town, TownCandidate target) {
   }
 
   final deficit = lastRoundVotes - votesToSurvive;
-  return _CandidateStanding([-myOverallPlace.place, deficit, round1Votes]);
+  return _CandidateStanding([0, -myOverallPlace.place, deficit, round1Votes]);
 }
 
 class const _CandidateStanding(final List<int> metrics)
