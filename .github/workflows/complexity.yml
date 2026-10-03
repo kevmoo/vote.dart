@@ -26,4 +26,4 @@ jobs:
           diff-base: origin/${{ github.base_ref }}
           fail-threshold: 15
           fail-on-increase: true
-          targets: 'vote/lib vote_widgets/lib vote_demo/lib'
+          targets: 'vote/lib vote_simulation/lib vote_widgets/lib vote_demo/lib'

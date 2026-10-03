@@ -1,6 +1,7 @@
-import 'package:flutter/foundation.dart';
+import 'package:listen/listen.dart';
+import 'package:meta/meta.dart';
 
-import '../model/election_data.dart';
+import 'election_data.dart';
 
 abstract class KnarlyEditor<T extends ElectionData>(var T _value)
     extends ChangeNotifier

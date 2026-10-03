@@ -14,11 +14,11 @@ dependencies:
   provider: ^6.0.0
   url_launcher: ^6.0.9
   vote: ^2.2.0-wip
+  vote_simulation: ^0.1.0-wip
   vote_widgets: ^1.0.0-wip
 
 dev_dependencies:
   dart_flutter_team_lints: ^3.0.0
-  test: ^1.19.3
 
 flutter:
   uses-material-design: true
