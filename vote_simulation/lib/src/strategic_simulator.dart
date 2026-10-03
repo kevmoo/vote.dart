@@ -8,8 +8,8 @@ import 'vote_town.dart';
 
 enum TargetElectionMethod(final String label) {
   plurality('Plurality'),
-  condorcet('Condorcet'),
   irv('IRV'),
+  condorcet('Condorcet'),
 }
 
 enum SimulationMode(final String label, final String shortDescription) {

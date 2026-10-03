@@ -103,16 +103,6 @@ class const BodyContent({required final double crossAxisWidth, super.key})
         ),
       ),
       HeaderWidget(
-        header: 'Condorcet',
-        extraHelp: _rankedMethodHelp(
-          'evaluating every pair of candidates',
-          'https://wikipedia.org/wiki/Condorcet_method',
-        ),
-        child: CondorcetElectionResultWidget<Candidate>(
-          election: kvm.value.condorcetElection,
-        ),
-      ),
-      HeaderWidget(
         header: 'Instant-runoff voting',
         extraHelp: _rankedMethodHelp(
           'repeatedly calculating run-offs where the candidate with the fewest '
@@ -122,6 +112,16 @@ class const BodyContent({required final double crossAxisWidth, super.key})
         child: Provider<IrvElection<Candidate>>.value(
           value: kvm.value.irvElection,
           child: const IrvResultWidget(),
+        ),
+      ),
+      HeaderWidget(
+        header: 'Condorcet',
+        extraHelp: _rankedMethodHelp(
+          'evaluating every pair of candidates',
+          'https://wikipedia.org/wiki/Condorcet_method',
+        ),
+        child: CondorcetElectionResultWidget<Candidate>(
+          election: kvm.value.condorcetElection,
         ),
       ),
     ];
