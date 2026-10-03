@@ -11,80 +11,38 @@ class const VoteTownWidget() extends StatelessWidget {
   Widget build(BuildContext context) => Consumer<VoteTownEditor>(
     builder: (_, editor, _) {
       final voteTown = editor.value;
-
       final flowDelegate = _CandidateFlowDelegate(voteTown);
-
-      bool dragListener(_CandidateDragNotification notification) {
-        final details = notification.details;
-
-        if (details is DragStartDetails) {
-          editor.moveCandidateStart(notification.candidate);
-        } else if (details is DragUpdateDetails) {
-          final scale = 1 / _offsetMultiplier(flowDelegate._drawSize);
-          final newValue = details.delta * scale;
-
-          editor.moveCandidateUpdate(
-            notification.candidate,
-            math.Point(newValue.dx, newValue.dy),
-          );
-        } else if (details is DragEndDetails) {
-          editor.moveCandidateEnd(notification.candidate);
-        } else {
-          throw UnsupportedError(
-            'We do not support details of type '
-            '${details.runtimeType} ($details).',
-          );
-        }
-
-        return true;
-      }
 
       return Column(
         children: [
           Consumer<VoteNotification<dynamic>?>(
-            builder: (ctx, notification, child) {
-              int? countForCandidate(TownCandidate candidate) {
-                if (notification == null) {
-                  return voteTown.pluralityElection.places
-                      .singleWhere((element) => element.contains(candidate))
-                      .voteCount;
-                }
-
-                return voteTown.voters
-                    .where(
-                      (voter) =>
-                          voter.closestCandidates
-                              .where(notification.relatedTo)
-                              .firstOrNull ==
-                          candidate,
-                    )
-                    .length;
-              }
-
-              return CustomPaint(
-                painter: _VoteTownPainter(voteTown, notification),
-                isComplex: true,
-                willChange: true,
-                child: NotificationListener<_CandidateDragNotification>(
-                  onNotification: dragListener,
-                  child: Flow(
-                    delegate: flowDelegate,
-                    children: voteTown.candidates
-                        .map(
-                          (c) => _CandidateWidget(
-                            candidate: c,
-                            primary:
-                                notification
-                                    is! CandidateSetHoverNotification ||
-                                notification.relatedTo(c),
-                            showCount: countForCandidate(c),
+            builder: (ctx, notification, child) => CustomPaint(
+              painter: _VoteTownPainter(voteTown, notification),
+              isComplex: true,
+              willChange: true,
+              child: NotificationListener<_CandidateDragNotification>(
+                onNotification: (drag) =>
+                    _handleDrag(editor, flowDelegate, drag),
+                child: Flow(
+                  delegate: flowDelegate,
+                  children: voteTown.candidates
+                      .map(
+                        (c) => _CandidateWidget(
+                          candidate: c,
+                          primary:
+                              notification is! CandidateSetHoverNotification ||
+                              notification.relatedTo(c),
+                          showCount: _countForCandidate(
+                            voteTown,
+                            notification,
+                            c,
                           ),
-                        )
-                        .toList(growable: false),
-                  ),
+                        ),
+                      )
+                      .toList(growable: false),
                 ),
-              );
-            },
+              ),
+            ),
           ),
           const SizedBox(height: 8),
           Wrap(
@@ -108,202 +66,251 @@ class const VoteTownWidget() extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          Wrap(
-            spacing: 6,
-            runSpacing: 6,
-            alignment: WrapAlignment.center,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              const Text(
-                'Presets:',
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
-              ),
-              for (final preset in VoteTownPreset.values)
-                Tooltip(
-                  message: preset.description,
-                  child: ActionChip(
-                    label: Text(
-                      preset.label,
-                      style: const TextStyle(fontSize: 12),
-                    ),
-                    visualDensity: VisualDensity.compact,
-                    onPressed: () => editor.applyPreset(preset),
-                  ),
-                ),
-            ],
-          ),
+          _PresetsWrap(editor: editor),
           const SizedBox(height: 10),
           _StrategicSimulationControls(editor: editor),
         ],
       );
     },
   );
+
+  static bool _handleDrag(
+    VoteTownEditor editor,
+    _CandidateFlowDelegate flowDelegate,
+    _CandidateDragNotification notification,
+  ) {
+    final details = notification.details;
+    if (details is DragStartDetails) {
+      editor.moveCandidateStart(notification.candidate);
+    } else if (details is DragUpdateDetails) {
+      final scale = 1 / _offsetMultiplier(flowDelegate._drawSize);
+      final newValue = details.delta * scale;
+      editor.moveCandidateUpdate(
+        notification.candidate,
+        math.Point(newValue.dx, newValue.dy),
+      );
+    } else if (details is DragEndDetails) {
+      editor.moveCandidateEnd(notification.candidate);
+    } else {
+      throw UnsupportedError(
+        'We do not support details of type '
+        '${details.runtimeType} ($details).',
+      );
+    }
+    return true;
+  }
+
+  static int _countForCandidate(
+    VoteTown voteTown,
+    VoteNotification<dynamic>? notification,
+    TownCandidate candidate,
+  ) {
+    if (notification == null) {
+      return voteTown.pluralityElection.places
+          .singleWhere((element) => element.contains(candidate))
+          .voteCount;
+    }
+
+    return voteTown.voters
+        .where(
+          (voter) =>
+              voter.closestCandidates
+                  .where(notification.relatedTo)
+                  .firstOrNull ==
+              candidate,
+        )
+        .length;
+  }
+}
+
+class const _PresetsWrap({required final VoteTownEditor editor})
+    extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => Wrap(
+    spacing: 6,
+    runSpacing: 6,
+    alignment: WrapAlignment.center,
+    crossAxisAlignment: WrapCrossAlignment.center,
+    children: [
+      const Text(
+        'Presets:',
+        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+      ),
+      for (final preset in VoteTownPreset.values)
+        Tooltip(
+          message: preset.description,
+          child: ActionChip(
+            label: Text(preset.label, style: const TextStyle(fontSize: 12)),
+            visualDensity: VisualDensity.compact,
+            onPressed: () => editor.applyPreset(preset),
+          ),
+        ),
+    ],
+  );
 }
 
 class const _StrategicSimulationControls({required final VoteTownEditor editor})
     extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    final nextCandidate = editor.nextCandidate;
+  Widget build(BuildContext context) => Container(
+    margin: const EdgeInsets.symmetric(horizontal: 8),
+    padding: const EdgeInsets.all(10),
+    decoration: BoxDecoration(
+      color: Colors.grey.shade100,
+      borderRadius: BorderRadius.circular(8),
+      border: Border.all(color: Colors.grey.shade300),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _buildHeaderRow(),
+        const SizedBox(height: 8),
+        _buildMethodRow(),
+        const SizedBox(height: 6),
+        _buildModeRow(),
+        const SizedBox(height: 6),
+        Text(
+          _modeCaption(),
+          style: TextStyle(fontSize: 11, color: Colors.grey.shade700),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 8),
+        _buildTransportRow(),
+      ],
+    ),
+  );
+
+  String _modeCaption() {
     final candidates = editor.value.candidates;
-    final moleCandidate =
-        editor.simulationMode.hasMole && candidates.length >= 2
-        ? candidates.last
-        : null;
+    if (!editor.simulationMode.hasMole || candidates.length < 2) {
+      return editor.simulationMode.shortDescription;
+    }
+    final moleId = candidates.last.id;
+    return editor.simulationMode == SimulationMode.moleHelpsA
+        ? 'Candidate $moleId (+A) is a Mole trying to help A win.'
+        : 'Candidate $moleId (−A) is a Mole trying to make A lose.';
+  }
 
-    final modeCaption = switch (editor.simulationMode) {
-      SimulationMode.selfish => editor.simulationMode.shortDescription,
-      SimulationMode.moleHelpsA =>
-        moleCandidate != null
-            ? 'Candidate ${moleCandidate.id} (+A) is a Mole trying to help A '
-                  'win.'
-            : editor.simulationMode.shortDescription,
-      SimulationMode.moleHurtsA =>
-        moleCandidate != null
-            ? 'Candidate ${moleCandidate.id} (−A) is a Mole trying to make A '
-                  'lose.'
-            : editor.simulationMode.shortDescription,
-    };
-
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8),
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey.shade300),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Strategic Candidate Simulation',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-              ),
-              if (editor.isSimulating)
-                Text(
-                  'All agents moving (60fps)',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.indigo.shade700,
-                    fontWeight: FontWeight.w600,
-                  ),
-                )
-              else if (nextCandidate != null)
-                Text(
-                  'Next step: ${nextCandidate.id}'
-                  '${editor.isMole(nextCandidate) ? " (Mole)" : ""}',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey.shade700,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              const SizedBox(
-                width: 64,
-                child: Text(
-                  'Method:',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-                ),
-              ),
-              Expanded(
-                child: SegmentedButton<TargetElectionMethod>(
-                  showSelectedIcon: false,
-                  style: const ButtonStyle(
-                    visualDensity: VisualDensity.compact,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  segments: [
-                    for (final method in TargetElectionMethod.values)
-                      ButtonSegment<TargetElectionMethod>(
-                        value: method,
-                        label: Text(
-                          method.label,
-                          style: const TextStyle(fontSize: 12),
-                        ),
-                      ),
-                  ],
-                  selected: {editor.targetMethod},
-                  onSelectionChanged: (selected) =>
-                      editor.targetMethod = selected.first,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 6),
-          Row(
-            children: [
-              const SizedBox(
-                width: 64,
-                child: Text(
-                  'Agents:',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-                ),
-              ),
-              Expanded(
-                child: SegmentedButton<SimulationMode>(
-                  showSelectedIcon: false,
-                  style: const ButtonStyle(
-                    visualDensity: VisualDensity.compact,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  segments: [
-                    for (final mode in SimulationMode.values)
-                      ButtonSegment<SimulationMode>(
-                        value: mode,
-                        label: Text(
-                          mode.label,
-                          style: const TextStyle(fontSize: 12),
-                        ),
-                      ),
-                  ],
-                  selected: {editor.simulationMode},
-                  onSelectionChanged: (selected) =>
-                      editor.simulationMode = selected.first,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 6),
+  Widget _buildHeaderRow() {
+    final nextCandidate = editor.nextCandidate;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const Text(
+          'Strategic Candidate Simulation',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+        ),
+        if (editor.isSimulating)
           Text(
-            modeCaption,
-            style: TextStyle(fontSize: 11, color: Colors.grey.shade700),
-            textAlign: TextAlign.center,
+            'All agents moving (60fps)',
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.indigo.shade700,
+              fontWeight: FontWeight.w600,
+            ),
+          )
+        else if (nextCandidate != null)
+          Text(
+            _nextStepLabel(nextCandidate),
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.grey.shade700,
+              fontWeight: FontWeight.w500,
+            ),
           ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              OutlinedButton.icon(
-                onPressed: editor.isSimulating || editor.isStepAnimating
-                    ? null
-                    : editor.animateSingleStep,
-                icon: const Icon(Icons.skip_next, size: 18),
-                label: Text(
-                  nextCandidate == null ? 'Step' : 'Step (${nextCandidate.id})',
-                ),
-              ),
-              const SizedBox(width: 12),
-              FilledButton.icon(
-                onPressed: editor.toggleSimulation,
-                icon: Icon(
-                  editor.isSimulating ? Icons.pause : Icons.play_arrow,
-                  size: 18,
-                ),
-                label: Text(editor.isSimulating ? 'Pause' : 'Play'),
-              ),
-            ],
-          ),
-        ],
+      ],
+    );
+  }
+
+  String _nextStepLabel(TownCandidate next) => editor.isMole(next)
+      ? 'Next step: ${next.id} (Mole)'
+      : 'Next step: ${next.id}';
+
+  Widget _buildMethodRow() => Row(
+    children: [
+      const SizedBox(
+        width: 64,
+        child: Text(
+          'Method:',
+          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+        ),
       ),
+      Expanded(
+        child: SegmentedButton<TargetElectionMethod>(
+          showSelectedIcon: false,
+          style: const ButtonStyle(
+            visualDensity: VisualDensity.compact,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          segments: [
+            for (final method in TargetElectionMethod.values)
+              ButtonSegment<TargetElectionMethod>(
+                value: method,
+                label: Text(method.label, style: const TextStyle(fontSize: 12)),
+              ),
+          ],
+          selected: {editor.targetMethod},
+          onSelectionChanged: (selected) =>
+              editor.targetMethod = selected.first,
+        ),
+      ),
+    ],
+  );
+
+  Widget _buildModeRow() => Row(
+    children: [
+      const SizedBox(
+        width: 64,
+        child: Text(
+          'Agents:',
+          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+        ),
+      ),
+      Expanded(
+        child: SegmentedButton<SimulationMode>(
+          showSelectedIcon: false,
+          style: const ButtonStyle(
+            visualDensity: VisualDensity.compact,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          segments: [
+            for (final mode in SimulationMode.values)
+              ButtonSegment<SimulationMode>(
+                value: mode,
+                label: Text(mode.label, style: const TextStyle(fontSize: 12)),
+              ),
+          ],
+          selected: {editor.simulationMode},
+          onSelectionChanged: (selected) =>
+              editor.simulationMode = selected.first,
+        ),
+      ),
+    ],
+  );
+
+  Widget _buildTransportRow() {
+    final nextCandidate = editor.nextCandidate;
+    final stepDisabled = editor.isSimulating || editor.isStepAnimating;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        OutlinedButton.icon(
+          onPressed: stepDisabled ? null : editor.animateSingleStep,
+          icon: const Icon(Icons.skip_next, size: 18),
+          label: Text(
+            nextCandidate == null ? 'Step' : 'Step (${nextCandidate.id})',
+          ),
+        ),
+        const SizedBox(width: 12),
+        FilledButton.icon(
+          onPressed: editor.toggleSimulation,
+          icon: Icon(
+            editor.isSimulating ? Icons.pause : Icons.play_arrow,
+            size: 18,
+          ),
+          label: Text(editor.isSimulating ? 'Pause' : 'Play'),
+        ),
+      ],
     );
   }
 }
@@ -337,23 +344,10 @@ class const _CandidateWidget({
           onPanUpdate: handler,
           onPanEnd: handler,
           child: Container(
-            decoration: ShapeDecoration(
-              color: primary ? candidate.color : candidate.color.withAlpha(51),
-              shape: ContinuousRectangleBorder(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(_candidateScale * 6),
-                ),
-                side: moleBadge != null
-                    ? const BorderSide(width: 2)
-                    : lastMoved
-                    ? const BorderSide(color: Colors.black54, width: 1.5)
-                    : BorderSide.none,
-              ),
-              shadows: primary
-                  ? moving
-                        ? _movingCandidateShadows
-                        : _stationaryCandidateShadows
-                  : null,
+            decoration: _buildDecoration(
+              moving: moving,
+              lastMoved: lastMoved,
+              hasMoleBadge: moleBadge != null,
             ),
             child: Stack(
               children: [
@@ -364,46 +358,75 @@ class const _CandidateWidget({
                     style: moving || lastMoved ? _movingWidgetTextStyle : null,
                   ),
                 ),
-                if (primary && moleBadge != null)
-                  Positioned(
-                    top: 1,
-                    left: 2,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 2,
-                        vertical: 0.5,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.black87,
-                        borderRadius: BorderRadius.circular(3),
-                      ),
-                      child: Text(
-                        moleBadge,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 8,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                if (primary && showCount != null)
-                  Container(
-                    alignment: Alignment.bottomRight,
-                    child: Container(
-                      padding: const EdgeInsets.all(3),
-                      child: Text(
-                        showCount!.toString(),
-                        textScaler: const TextScaler.linear(0.7),
-                      ),
-                    ),
-                  ),
+                if (primary && moleBadge != null) _buildMoleBadge(moleBadge),
+                if (primary && showCount != null) _buildCountBadge(showCount!),
               ],
             ),
           ),
         ),
       );
     },
+  );
+
+  ShapeDecoration _buildDecoration({
+    required bool moving,
+    required bool lastMoved,
+    required bool hasMoleBadge,
+  }) => ShapeDecoration(
+    color: primary ? candidate.color : candidate.color.withAlpha(51),
+    shape: ContinuousRectangleBorder(
+      borderRadius: const BorderRadius.all(
+        Radius.circular(_candidateScale * 6),
+      ),
+      side: _borderSide(lastMoved: lastMoved, hasMoleBadge: hasMoleBadge),
+    ),
+    shadows: _shadows(moving: moving),
+  );
+
+  BorderSide _borderSide({
+    required bool lastMoved,
+    required bool hasMoleBadge,
+  }) {
+    if (hasMoleBadge) {
+      return const BorderSide(width: 2);
+    }
+    if (lastMoved) {
+      return const BorderSide(color: Colors.black54, width: 1.5);
+    }
+    return BorderSide.none;
+  }
+
+  List<BoxShadow>? _shadows({required bool moving}) {
+    if (!primary) return null;
+    return moving ? _movingCandidateShadows : _stationaryCandidateShadows;
+  }
+
+  static Widget _buildMoleBadge(String moleBadge) => Positioned(
+    top: 1,
+    left: 2,
+    child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 0.5),
+      decoration: BoxDecoration(
+        color: Colors.black87,
+        borderRadius: BorderRadius.circular(3),
+      ),
+      child: Text(
+        moleBadge,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 8,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+  );
+
+  static Widget _buildCountBadge(int count) => Container(
+    alignment: Alignment.bottomRight,
+    child: Container(
+      padding: const EdgeInsets.all(3),
+      child: Text(count.toString(), textScaler: const TextScaler.linear(0.7)),
+    ),
   );
 
   static const _stationaryCandidateShadows = [
