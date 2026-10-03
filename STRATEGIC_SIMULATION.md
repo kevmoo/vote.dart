@@ -84,7 +84,8 @@ We added integrated simulation controls to
 
 ### Phase 2: From Stilted $10 \times 10$ Integer Grid to $15 \times 15$ Continuous 60fps Physics (`75806a6`)
 
-After seeing the initial discrete grid in action, we observed why the $10 \times
+After seeing the initial discrete grid in action, we observed why the
+$10 \times
 10$ integer lattice felt stilted and hit local equilibria early:
 
 1. **Coarse $19 \times 19$ Integer Lattice & 100 Voter-Dot "Holes"**: Candidates
@@ -202,11 +203,11 @@ deliberate modeling choices ("thumbs on the scale")**:
        `28px` local vision, `A(75, 75)` sits like a wall in the middle—stepping
        toward `B` initially steals _more_ votes from `A`, trapping a myopic Mole
        in the top-left corner.
-     - **Speed (`1.35x`)**: Rival `B` orbits `A` on an **inside track** (~`22px`
-       radius), while the Kingmaker Mole has to reach the **outside flank** of
-       `B` (~`43px` radius). Because the outer circle has nearly $2\times$ the
-       circumference of the inner circle, a Mole moving at `1.0x` speed on the
-       outside track could never catch `B` on the inside track.
+     - **Speed (`1.35x`)**: Rival `B` orbits `A` on an **inside track**
+       (~~`22px` radius), while the Kingmaker Mole has to reach the **outside
+       flank** of `B` (~~`43px` radius). Because the outer circle has nearly
+       $2\times$ the circumference of the inner circle, a Mole moving at `1.0x`
+       speed on the outside track could never catch `B` on the inside track.
 
 ---
 
