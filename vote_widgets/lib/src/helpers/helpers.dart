@@ -1,4 +1,8 @@
 import 'package:flutter/painting.dart';
+import 'package:vote_simulation/vote_simulation.dart';
+
+export 'package:vote_simulation/vote_simulation.dart'
+    show candidateHues, colorSaturation, maxCandidateCount;
 
 Map<T, Color> huesForCandidates<T extends Comparable<T>>(
   Iterable<T> candidates,
@@ -32,44 +36,6 @@ Map<T, Color> huesForCandidates<T extends Comparable<T>>(
       ),
     ),
   );
-}
-
-const colorSaturation = 0.3;
-
-const int maxCandidateCount = 26;
-
-final candidateHues = _slice(maxCandidateCount, 360, 3);
-
-List<double> _slice(int itemCount, num maxValue, int sliceCount) {
-  assert(itemCount > 0);
-  assert(maxValue > 0);
-  assert(sliceCount > 1);
-
-  final values = List<double>.filled(itemCount, 0);
-  var index = 0;
-
-  var sliceSize = maxValue / sliceCount;
-
-  for (var i = 0; i < sliceCount; i++) {
-    if (index == itemCount) {
-      return values;
-    } else {
-      values[index++] = i * sliceSize;
-    }
-  }
-
-  for (;;) {
-    final startCount = index;
-    sliceSize = maxValue / (startCount * 2);
-
-    for (var i = 0; i < startCount; i++) {
-      if (index == itemCount) {
-        return values;
-      } else {
-        values[index++] = values[i] + sliceSize;
-      }
-    }
-  }
 }
 
 extension SetExtentions<T> on Set<T> {
