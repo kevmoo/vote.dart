@@ -1,8 +1,6 @@
 // undead:ignore_for_file
 import 'package:flutter/widgets.dart' show ChangeNotifier;
-
-import '../model/election_data.dart';
-import 'editor.dart';
+import 'package:vote_simulation/vote_simulation.dart';
 
 class KnarlyViewModel(Iterable<KnarlyEditor> editors) extends ChangeNotifier {
   final List<KnarlyEditor> _editors = editors.toList(growable: false);

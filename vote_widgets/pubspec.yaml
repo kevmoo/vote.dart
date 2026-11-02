@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   provider: ^6.0.0
   vote: ^2.2.0-wip
+  vote_simulation: ^0.1.0-wip
 
 dev_dependencies:
   dart_flutter_team_lints: ^3.0.0

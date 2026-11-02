@@ -1,10 +1,7 @@
 // undead:ignore_for_file
 import 'package:flutter/widgets.dart';
 import 'package:vote/vote.dart';
-import 'package:vote_widgets/vote_widgets.dart';
-
-import '../model/election_data.dart';
-import 'editor.dart';
+import 'package:vote_simulation/vote_simulation.dart';
 
 class SimpleBallotEditor({required ElectionData electionData})
     extends KnarlyEditor<ElectionData> {

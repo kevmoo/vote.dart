@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vote_simulation/vote_simulation.dart';
 import 'package:vote_widgets/vote_widgets.dart';
 
-import 'model/vote_town.dart';
-import 'view_model/vote_town_editor.dart';
 import 'widget/body_content.dart';
 import 'widget/link_span.dart';
 import 'widget/too_small.dart';

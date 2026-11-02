@@ -1,0 +1,17 @@
+name: vote_simulation
+version: 0.1.0-wip
+publish_to: none
+
+environment:
+  sdk: ^3.13.0
+resolution: workspace
+
+dependencies:
+  collection: ^1.19.0
+  listen: ^1.0.0
+  meta: ^1.15.0
+  vote: ^2.2.0-wip
+
+dev_dependencies:
+  dart_flutter_team_lints: ^3.0.0
+  test: ^1.19.3
