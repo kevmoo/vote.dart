@@ -36,10 +36,10 @@ jobs:
         working-directory: vote
         run: dart test
 
+      - name: Run vote_simulation tests
+        working-directory: vote_simulation
+        run: dart test
+
       - name: Run vote_widgets tests
         working-directory: vote_widgets
-        run: flutter test
-
-      - name: Run vote_demo tests
-        working-directory: vote_demo
         run: flutter test
